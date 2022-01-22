@@ -1,0 +1,75 @@
+import { Connection, ConnectionOptions } from "./connection";
+export * from "./client/fee";
+export * from "./client/ledger";
+export * from "./client/account_info";
+export * from "./client/account_nfts";
+
+export const dropsInXRP = 1000000;
+export let feeCushion: number = 1.3;
+let Connections: Connection[] = [];
+
+export interface ClientOptions extends ConnectionOptions {
+  feeCushion?: number;
+  maxFeeXRP?: string;
+}
+
+export interface ClientConnection {
+  url: string;
+  type?: string;
+}
+
+export function setup(servers: ClientConnection[], options: ClientOptions = {}) {
+  // servers has to be initiated only once
+  if (servers) {
+    // reset list of connections
+    disconnect();
+    Connections = [];
+    for (const server of servers) {
+      Connections.push(new Connection(server.url, server.type));
+    }
+  }
+
+  if (options.feeCushion) {
+    feeCushion = options.feeCushion;
+  }
+}
+
+export async function connect() {
+  for (const connection of Connections) {
+    await connection.connect();
+  }
+}
+
+export function disconnect() {
+  for (const connection of Connections) {
+    connection.disconnect();
+  }
+}
+
+export function findConnection(type: string = "regular"): Connection | null {
+  // get connections by type
+  let connections = Connections.filter((connection) => {
+    if (type === "history") return connection.type === type;
+
+    return true;
+  });
+
+  // no any, use all what we have
+  if (connections.length === 0) {
+    connections = [...Connections];
+  }
+
+  // get the fastest one
+  connections = connections.sort((a, b) => {
+    if (a.getLatenceMs() < b.getLatenceMs()) {
+      return -1;
+    }
+    if (a.getLatenceMs() > b.getLatenceMs()) {
+      return 1;
+    }
+
+    return 0;
+  });
+
+  return connections[0];
+}
