@@ -3,6 +3,7 @@ export * from "./client/fee";
 export * from "./client/ledger";
 export * from "./client/account_info";
 export * from "./client/account_nfts";
+export * from "./client/account_objects";
 
 export const dropsInXRP = 1000000;
 export let feeCushion: number = 1.3;
