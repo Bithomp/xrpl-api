@@ -1,6 +1,6 @@
 import * as Client from "../client";
 
-export interface GetAccountNFTOptions {
+export interface GetAccountNftsOptions {
   ledgerVersion?: number | string;
 }
 
@@ -16,7 +16,7 @@ export interface GetAccountNFTOptions {
   }
 ]
 */
-export async function getAccountNFTAsync(account: string, options: GetAccountNFTOptions = {}) {
+export async function getAccountNftsAsync(account: string, options: GetAccountNftsOptions = {}) {
   const connection: any = Client.findConnection();
   if (!connection) {
     console.warn(`There is no connection`);
@@ -48,4 +48,86 @@ export async function getAccountNFTAsync(account: string, options: GetAccountNFT
   }
 
   return response?.result?.account_nfts;
+}
+
+export interface GetAccountNftSellOffersOptions {
+  ledgerVersion?: number | string;
+}
+
+/**
+ ???
+*/
+export async function getAccountNftSellOffersAsync(tokenid: string, options: GetAccountNftSellOffersOptions = {}) {
+  const connection: any = Client.findConnection();
+  if (!connection) {
+    console.warn(`There is no connection`);
+    return null;
+  }
+
+  await connection.connect();
+  const response = await connection.request({
+    command: "nft_sell_offers",
+    tokenid: tokenid,
+    ledger_index: options.ledgerVersion || "validated",
+  });
+
+  if (!response) {
+    return null;
+  }
+
+  if (response.error) {
+    const { error, error_code, error_message, status, validated } = response;
+
+    return {
+      tokenid,
+      error,
+      error_code,
+      error_message,
+      status,
+      validated,
+    };
+  }
+
+  return response?.result?.nft_sell_offers;
+}
+
+export interface GetAccountNftBuyOffersOptions {
+  ledgerVersion?: number | string;
+}
+
+/**
+ ???
+*/
+export async function getAccountNftBuyOffersAsync(tokenid: string, options: GetAccountNftBuyOffersOptions = {}) {
+  const connection: any = Client.findConnection();
+  if (!connection) {
+    console.warn(`There is no connection`);
+    return null;
+  }
+
+  await connection.connect();
+  const response = await connection.request({
+    command: "nft_buy_offers",
+    tokenid: tokenid,
+    ledger_index: options.ledgerVersion || "validated",
+  });
+
+  if (!response) {
+    return null;
+  }
+
+  if (response.error) {
+    const { error, error_code, error_message, status, validated } = response;
+
+    return {
+      tokenid,
+      error,
+      error_code,
+      error_message,
+      status,
+      validated,
+    };
+  }
+
+  return response?.result?.nft_buy_offers;
 }

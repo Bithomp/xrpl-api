@@ -5,7 +5,7 @@ const config = `config/test.json`;
 nconf.argv().env("_").file(config);
 
 before(async function () {
-  Client.setup(nconf.get("ripple:connections:testnet"));
+  Client.setup(nconf.get("xrpl:connections:testnet"));
   await Client.connect();
 });
 

@@ -5,7 +5,7 @@ import { Client, Wallet } from "../src/index";
 describe("Client", () => {
   describe("getFeeAsync", () => {
     before(async function () {
-      Client.setup(nconf.get("ripple:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"));
       await Client.connect();
     });
 
@@ -16,7 +16,7 @@ describe("Client", () => {
 
   describe("getLedgerAsync", () => {
     before(async function () {
-      Client.setup(nconf.get("ripple:connections:mainnet"));
+      Client.setup(nconf.get("xrpl:connections:mainnet"));
       await Client.connect();
     });
 
@@ -115,7 +115,7 @@ describe("Client", () => {
 
   describe("isActivatedAsync", () => {
     before(async function () {
-      Client.setup(nconf.get("ripple:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"));
       await Client.connect();
     });
 
@@ -132,7 +132,7 @@ describe("Client", () => {
 
   describe("getAccountInfoAsync", () => {
     before(async function () {
-      Client.setup(nconf.get("ripple:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"));
       await Client.connect();
     });
 
@@ -167,22 +167,54 @@ describe("Client", () => {
     });
   });
 
-  describe("getAccountNFTAsync", () => {
+  describe("getAccountNftsAsync", () => {
     before(async function () {
-      Client.setup(nconf.get("ripple:connections:xls20net"));
+      Client.setup(nconf.get("xrpl:connections:xls20net"));
       await Client.connect();
     });
 
     it("works", async function () {
       this.timeout(15000);
-      const result: any = await Client.getAccountNFTAsync("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
+      const result: any = await Client.getAccountNftsAsync("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
+      expect(result[0].Issuer).to.eql("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
+    });
+  });
+
+  describe("getAccountNftSellOffersAsync", () => {
+    before(async function () {
+      Client.setup(nconf.get("xrpl:connections:xls20net"));
+      await Client.connect();
+    });
+
+    it("works", async function () {
+      this.timeout(15000);
+      const result: any = await Client.getAccountNftSellOffersAsync(
+        "00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD0000099B00000000"
+      );
+      console.log(result);
+      expect(result[0].Issuer).to.eql("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
+    });
+  });
+
+  describe("getAccountNftBuyOffersAsync", () => {
+    before(async function () {
+      Client.setup(nconf.get("xrpl:connections:xls20net"));
+      await Client.connect();
+    });
+
+    it("works", async function () {
+      this.timeout(15000);
+      const result: any = await Client.getAccountNftBuyOffersAsync(
+        "00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD0000099B00000000"
+      );
+      console.log(result);
       expect(result[0].Issuer).to.eql("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
     });
   });
 
   describe("getSettingsAsync", () => {
     before(async function () {
-      Client.setup(nconf.get("ripple:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"));
       await Client.connect();
     });
 
