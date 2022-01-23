@@ -3,10 +3,8 @@ import * as Client from "../client";
 
 export async function getFeeAsync() {
   const connection: any = Client.findConnection();
-
   if (!connection) {
-    console.warn(`There is no configuration for s1`);
-    return null;
+    throw new Error("There is no connection");
   }
 
   await connection.connect();

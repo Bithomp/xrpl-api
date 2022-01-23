@@ -29,14 +29,13 @@ export interface GetAccountInfoOptions {
 export async function getAccountInfoAsync(account: string, options: GetAccountInfoOptions = {}) {
   const connection: any = Client.findConnection();
   if (!connection) {
-    console.warn(`There is no connection`);
-    return null;
+    throw new Error("There is no connection");
   }
 
   await connection.connect();
   const response = await connection.request({
     command: "account_info",
-    account: account,
+    account,
     ledger_index: options.ledgerVersion || "validated",
     signer_lists: !!options.signerLists,
   });
@@ -46,7 +45,7 @@ export async function getAccountInfoAsync(account: string, options: GetAccountIn
   }
 
   if (response.error) {
-    const { account, error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, status, validated } = response;
 
     return {
       account,
@@ -64,7 +63,7 @@ export async function getAccountInfoAsync(account: string, options: GetAccountIn
 export async function isActivatedAsync(account: string) {
   const response: any = await getAccountInfoAsync(account);
 
-  if (!response || response.error == "actNotFound") {
+  if (!response || response.error === "actNotFound") {
     return false;
   }
 

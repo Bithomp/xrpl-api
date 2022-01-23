@@ -29,8 +29,7 @@ export interface GetLedgerOptions {
 export async function getLedgerAsync(options: GetLedgerOptions = {}) {
   const connection: any = Client.findConnection("history");
   if (!connection) {
-    console.warn(`There is no connection`);
-    return null;
+    throw new Error("There is no connection");
   }
 
   await connection.connect();

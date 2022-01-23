@@ -1,4 +1,5 @@
 import { Wallet } from "xrpl";
+export { Wallet } from "xrpl";
 
 export function generateAddress() {
   const wallet = Wallet.generate();

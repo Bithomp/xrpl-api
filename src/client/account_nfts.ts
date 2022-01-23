@@ -19,14 +19,13 @@ export interface GetAccountNftsOptions {
 export async function getAccountNftsAsync(account: string, options: GetAccountNftsOptions = {}) {
   const connection: any = Client.findConnection();
   if (!connection) {
-    console.warn(`There is no connection`);
-    return null;
+    throw new Error("There is no connection");
   }
 
   await connection.connect();
   const response = await connection.request({
     command: "account_nfts",
-    account: account,
+    account,
     ledger_index: options.ledgerVersion || "validated",
   });
 
@@ -67,14 +66,13 @@ export interface GetAccountNftSellOffersOptions {
 export async function getAccountNftSellOffersAsync(tokenid: string, options: GetAccountNftSellOffersOptions = {}) {
   const connection: any = Client.findConnection();
   if (!connection) {
-    console.warn(`There is no connection`);
-    return null;
+    throw new Error("There is no connection");
   }
 
   await connection.connect();
   const response = await connection.request({
     command: "nft_sell_offers",
-    tokenid: tokenid,
+    tokenid,
     ledger_index: options.ledgerVersion || "validated",
   });
 
@@ -95,7 +93,6 @@ export async function getAccountNftSellOffersAsync(tokenid: string, options: Get
     };
   }
 
-  console.log(response?.result)
   return response?.result?.offers;
 }
 
@@ -116,14 +113,13 @@ export interface GetAccountNftBuyOffersOptions {
 export async function getAccountNftBuyOffersAsync(tokenid: string, options: GetAccountNftBuyOffersOptions = {}) {
   const connection: any = Client.findConnection();
   if (!connection) {
-    console.warn(`There is no connection`);
-    return null;
+    throw new Error("There is no connection");
   }
 
   await connection.connect();
   const response = await connection.request({
     command: "nft_buy_offers",
-    tokenid: tokenid,
+    tokenid,
     ledger_index: options.ledgerVersion || "validated",
   });
 

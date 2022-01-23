@@ -1,6 +1,7 @@
 import { Client, Request, Response } from "xrpl";
 
 export interface ConnectionOptions {}
+
 export interface LatencyInfo {
   timestamp: Date;
   delta: number;
