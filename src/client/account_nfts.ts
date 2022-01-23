@@ -1,7 +1,7 @@
 import * as Client from "../client";
 
 export interface GetAccountNftsOptions {
-  ledgerVersion?: number | string;
+  ledgerVersion?: number | ("validated" | "closed" | "current");
 }
 
 /**
@@ -50,7 +50,7 @@ export async function getAccountNftsAsync(account: string, options: GetAccountNf
 }
 
 export interface GetAccountNftSellOffersOptions {
-  ledgerVersion?: number | string;
+  ledgerVersion?: number | ("validated" | "closed" | "current");
 }
 
 /**
@@ -97,7 +97,7 @@ export async function getAccountNftSellOffersAsync(tokenid: string, options: Get
 }
 
 export interface GetAccountNftBuyOffersOptions {
-  ledgerVersion?: number | string;
+  ledgerVersion?: number | ("validated" | "closed" | "current");
 }
 
 /**

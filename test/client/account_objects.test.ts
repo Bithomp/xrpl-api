@@ -2,7 +2,7 @@ import nconf from "nconf";
 import { expect } from "chai";
 import { Client, Wallet } from "../../src/index";
 
-describe.only("Client", () => {
+describe("Client", () => {
   describe("getAccountObjectsAsync", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:testnet"));

@@ -3,12 +3,8 @@ import BigNumber from "bignumber.js";
 import * as Client from "../client";
 import { Settings, AccountFlags, AccountFields } from "../common/constants";
 
-// import * as constants from "../common/constants";
-// const AccountFlags = constants.AccountFlags;
-// const AccountFields = constants.AccountFields;
-
 export interface GetAccountInfoOptions {
-  ledgerVersion?: number | string;
+  ledgerVersion?: number | ("validated" | "closed" | "current");
   signerLists?: boolean;
 }
 

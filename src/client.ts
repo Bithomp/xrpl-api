@@ -2,6 +2,7 @@ import { Connection, ConnectionOptions } from "./connection";
 export * from "./client/fee";
 export * from "./client/ledger";
 export * from "./client/account_info";
+export * from "./client/account_lines";
 export * from "./client/account_nfts";
 export * from "./client/account_objects";
 

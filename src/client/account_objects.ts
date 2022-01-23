@@ -3,7 +3,7 @@ import * as Client from "../client";
 export interface GetAccountObjectsOptions {
   type?: string | ("check" | "escrow" | "offer" | "payment_channel" | "signer_list" | "state");
   ledgerHash?: string;
-  ledgerIndex?: number | ("validated" | "closed" | "current");
+  ledgerVersion?: number | ("validated" | "closed" | "current");
   limit?: number;
   marker?: string;
 }
@@ -48,7 +48,7 @@ export async function getAccountObjectsAsync(account: string, options: GetAccoun
     account,
     type: options.type,
     ledger_hash: options.ledgerHash,
-    ledger_index: options.ledgerIndex,
+    ledger_index: options.ledgerVersion,
     limit: options.limit,
     marker: options.marker,
   });
