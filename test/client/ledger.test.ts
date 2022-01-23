@@ -1,19 +1,8 @@
 import nconf from "nconf";
 import { expect } from "chai";
-import { Client, Wallet } from "../src/index";
+import { Client, Wallet } from "../../src/index";
 
 describe("Client", () => {
-  describe("getFeeAsync", () => {
-    before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
-      await Client.connect();
-    });
-
-    it("returns fee", async function () {
-      expect(await Client.getFeeAsync()).to.eql("0.000013");
-    });
-  });
-
   describe("getLedgerAsync", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:mainnet"));
@@ -110,130 +99,6 @@ describe("Client", () => {
 
       const transactions: any = result.transactions.sort((a: any, b: any) => a.hash.localeCompare(b.hash));
       expect(transactions[0].hash).to.eql("05403FE48CCFCB45888FB3FDA0A791B0B3AA29360050412B95FCA436E1A41DCF");
-    });
-  });
-
-  describe("isActivatedAsync", () => {
-    before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
-      await Client.connect();
-    });
-
-    it("is true for activated", async function () {
-      const result: any = await Client.isActivatedAsync("rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz");
-      expect(result).to.eql(true);
-    });
-
-    it("is false for not activated", async function () {
-      const result: any = await Client.isActivatedAsync(Wallet.generateAddress().address);
-      expect(result).to.eql(false);
-    });
-  });
-
-  describe("getAccountInfoAsync", () => {
-    before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
-      await Client.connect();
-    });
-
-    it("is for activated", async function () {
-      const result: any = await Client.getAccountInfoAsync("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
-      expect(result).to.eql({
-        Account: "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
-        Balance: "999999976",
-        Domain: "746573742E626974686F6D702E636F6D",
-        Flags: 786432,
-        LedgerEntryType: "AccountRoot",
-        OwnerCount: 1,
-        PreviousTxnID: "3F369023F112D844619805ED2C5F8D9CB0BCE7DB18CAE681A92785164A61A8B5",
-        PreviousTxnLgrSeq: 22442907,
-        Sequence: 22442870,
-        index: "D88BB94773475A04F50EA227E03A67D0FBC5D70DC17CFDB256BCC9F1FA8C1A6E",
-      });
-    });
-
-    it("is for not activated", async function () {
-      const account: string = Wallet.generateAddress().address;
-      const result: any = await Client.getAccountInfoAsync(account);
-
-      expect(result).to.eql({
-        account: account,
-        error: "actNotFound",
-        error_code: 19,
-        error_message: "Account not found.",
-        status: "error",
-        validated: true,
-      });
-    });
-  });
-
-  describe("getAccountNftsAsync", () => {
-    before(async function () {
-      Client.setup(nconf.get("xrpl:connections:xls20net"));
-      await Client.connect();
-    });
-
-    it("works", async function () {
-      this.timeout(15000);
-      const result: any = await Client.getAccountNftsAsync("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
-      expect(result[0].Issuer).to.eql("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
-    });
-  });
-
-  describe("getAccountNftSellOffersAsync", () => {
-    before(async function () {
-      Client.setup(nconf.get("xrpl:connections:xls20net"));
-      await Client.connect();
-    });
-
-    it("works", async function () {
-      this.timeout(15000);
-      const result: any = await Client.getAccountNftSellOffersAsync(
-        "00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD2DCBAB9D00000002"
-      );
-      expect(result[0]).to.eql({
-        amount: "1000000",
-        flags: 1,
-        index: "98491D03DD3CC3658D99754C05DF26E6FCC0F69719697B85A6587CBD1455F387",
-        owner: "rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA",
-      });
-    });
-  });
-
-  describe("getAccountNftBuyOffersAsync", () => {
-    before(async function () {
-      Client.setup(nconf.get("xrpl:connections:xls20net"));
-      await Client.connect();
-    });
-
-    it("works", async function () {
-      this.timeout(15000);
-      const result: any = await Client.getAccountNftBuyOffersAsync(
-        "00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD44B17C9E00000003"
-      );
-      expect(result[0]).to.eql({
-        amount: "1000000",
-        flags: 0,
-        index: "8FC4CA005C0E67050929452CE174300DF3880556E464FAF48B30446BDAF2A26E",
-        owner: "rMT4oxZyhN8rWMtJbnqRtpkiGmzWDnqwnF",
-      });
-    });
-  });
-
-  describe("getSettingsAsync", () => {
-    before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
-      await Client.connect();
-    });
-
-    it("works", async function () {
-      this.timeout(15000);
-      const result: any = await Client.getSettingsAsync("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
-      expect(result).to.eql({
-        requireAuthorization: true,
-        disallowIncomingXRP: true,
-        domain: "test.bithomp.com",
-      });
     });
   });
 });

@@ -60,16 +60,18 @@ export function findConnection(type: string = "regular"): Connection | null {
   }
 
   // get the fastest one
-  connections = connections.sort((a, b) => {
-    if (a.getLatenceMs() < b.getLatenceMs()) {
-      return -1;
-    }
-    if (a.getLatenceMs() > b.getLatenceMs()) {
-      return 1;
-    }
-
-    return 0;
-  });
+  connections = connections.sort(sortHelperConnections);
 
   return connections[0];
+}
+
+function sortHelperConnections(a: Connection, b: Connection): -1 | 0 | 1 {
+  if (a.getLatenceMs() < b.getLatenceMs()) {
+    return -1;
+  }
+  if (a.getLatenceMs() > b.getLatenceMs()) {
+    return 1;
+  }
+
+  return 0;
 }
