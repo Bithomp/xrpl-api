@@ -1,4 +1,5 @@
 import { BigNumber } from "bignumber.js";
+
 import * as Client from "../client";
 
 export async function getFeeAsync() {
