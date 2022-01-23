@@ -189,10 +189,9 @@ describe("Client", () => {
     it("works", async function () {
       this.timeout(15000);
       const result: any = await Client.getAccountNftSellOffersAsync(
-        "00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD0000099B00000000"
+        "00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD2DCBAB9D00000002"
       );
-      console.log(result);
-      expect(result[0].Issuer).to.eql("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
+      expect(result[0].owner).to.eql("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
     });
   });
 
@@ -205,10 +204,9 @@ describe("Client", () => {
     it("works", async function () {
       this.timeout(15000);
       const result: any = await Client.getAccountNftBuyOffersAsync(
-        "00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD0000099B00000000"
+        "00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD44B17C9E00000003"
       );
-      console.log(result);
-      expect(result[0].Issuer).to.eql("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
+      expect(result[0].owner).to.eql("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
     });
   });
 

@@ -55,7 +55,14 @@ export interface GetAccountNftSellOffersOptions {
 }
 
 /**
- ???
+[
+  {
+    amount: '1000000',
+    flags: 1,
+    index: '98491D03DD3CC3658D99754C05DF26E6FCC0F69719697B85A6587CBD1455F387',
+    owner: 'rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA'
+  }
+]
 */
 export async function getAccountNftSellOffersAsync(tokenid: string, options: GetAccountNftSellOffersOptions = {}) {
   const connection: any = Client.findConnection();
@@ -88,7 +95,8 @@ export async function getAccountNftSellOffersAsync(tokenid: string, options: Get
     };
   }
 
-  return response?.result?.nft_sell_offers;
+  console.log(response?.result)
+  return response?.result?.offers;
 }
 
 export interface GetAccountNftBuyOffersOptions {
@@ -96,7 +104,14 @@ export interface GetAccountNftBuyOffersOptions {
 }
 
 /**
- ???
+[
+  {
+    amount: '1000000',
+    flags: 1,
+    index: '98491D03DD3CC3658D99754C05DF26E6FCC0F69719697B85A6587CBD1455F387',
+    owner: 'rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA'
+  }
+]
 */
 export async function getAccountNftBuyOffersAsync(tokenid: string, options: GetAccountNftBuyOffersOptions = {}) {
   const connection: any = Client.findConnection();
@@ -129,5 +144,5 @@ export async function getAccountNftBuyOffersAsync(tokenid: string, options: GetA
     };
   }
 
-  return response?.result?.nft_buy_offers;
+  return response?.result?.offers;
 }
