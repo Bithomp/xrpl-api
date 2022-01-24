@@ -9,11 +9,14 @@ export * from "./client/transaction";
 
 export const dropsInXRP = 1000000;
 export let feeCushion: number = 1.3;
+export let logger: any;
+
 let Connections: Connection[] = [];
 
 export interface ClientOptions extends ConnectionOptions {
   feeCushion?: number;
   maxFeeXRP?: string;
+  logger?: any;
 }
 
 export interface ClientConnection {
@@ -22,13 +25,20 @@ export interface ClientConnection {
 }
 
 export function setup(servers: ClientConnection[], options: ClientOptions = {}) {
+  logger = options.logger;
+
+  logger?.debug({
+    service: "XRPL::Client",
+    function: "setup",
+  });
+
   // servers has to be initiated only once
   if (servers) {
     // reset list of connections
     disconnect();
     Connections = [];
     for (const server of servers) {
-      Connections.push(new Connection(server.url, server.type));
+      Connections.push(new Connection(server.url, server.type, { logger: options.logger }));
     }
   }
 
@@ -38,12 +48,22 @@ export function setup(servers: ClientConnection[], options: ClientOptions = {}) 
 }
 
 export async function connect() {
+  logger?.debug({
+    service: "XRPL::Client",
+    function: "connect",
+  });
+
   for (const connection of Connections) {
     await connection.connect();
   }
 }
 
 export function disconnect() {
+  logger?.debug({
+    service: "XRPL::Client",
+    function: "disconnect",
+  });
+
   for (const connection of Connections) {
     connection.disconnect();
   }

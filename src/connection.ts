@@ -1,6 +1,8 @@
 import { Client, Request, Response } from "xrpl";
 
-export interface ConnectionOptions {}
+export interface ConnectionOptions {
+  logger?: any;
+}
 
 export interface LatencyInfo {
   timestamp: Date;
@@ -12,12 +14,14 @@ class Connection {
   public readonly url: string;
   public readonly type?: string;
   public latency: LatencyInfo[];
+  public readonly logger?: any;
 
   public constructor(url: string, type?: string, options: ConnectionOptions = {}) {
     this.url = url;
     this.type = type;
     this.latency = [];
     this.client = new Client(url);
+    this.logger = options.logger;
   }
 
   public async connect() {
@@ -39,6 +43,13 @@ class Connection {
       return response;
     } catch (e: any) {
       this.updateLatence(1000);
+      this.logger?.debug({
+        service: "XRPL::Connection",
+        function: "request",
+        url: this.url,
+        error: e.message || e.name || e,
+      });
+
       return e.data;
     }
   }
