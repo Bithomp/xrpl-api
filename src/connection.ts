@@ -143,7 +143,9 @@ class Connection {
     }
 
     if (!this.shotdown) {
-      this.connectionTimer = setTimeout(this.connectionValidationTimeout, LEDGER_CLOSED_TIMEOUT);
+      this.connectionTimer = setTimeout(() => {
+        this.connectionValidationTimeout;
+      }, LEDGER_CLOSED_TIMEOUT);
     } else {
       this.client.disconnect();
     }
