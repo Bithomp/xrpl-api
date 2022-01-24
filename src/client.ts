@@ -28,7 +28,7 @@ export function setup(servers: ClientConnection[], options: ClientOptions = {}) 
   logger = options.logger;
 
   logger?.debug({
-    service: "XRPL::Client",
+    service: "Bithomp::XRPL::Client",
     function: "setup",
   });
 
@@ -49,7 +49,7 @@ export function setup(servers: ClientConnection[], options: ClientOptions = {}) 
 
 export async function connect() {
   logger?.debug({
-    service: "XRPL::Client",
+    service: "Bithomp::XRPL::Client",
     function: "connect",
   });
 
@@ -60,7 +60,7 @@ export async function connect() {
 
 export function disconnect() {
   logger?.debug({
-    service: "XRPL::Client",
+    service: "Bithomp::XRPL::Client",
     function: "disconnect",
   });
 
