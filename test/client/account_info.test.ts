@@ -55,17 +55,10 @@ describe("Client", () => {
         validated: true,
       });
     });
-  });
 
-  describe("getSettingsAsync", () => {
-    before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
-      await Client.connect();
-    });
-
-    it("works", async function () {
-      this.timeout(15000);
-      const result: any = await Client.getSettingsAsync("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+    it("parses getSettings", async function () {
+      const accountInfo: any = await Client.getAccountInfoAsync("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+      const result: any = await Client.getSettings(accountInfo);
       expect(result).to.eql({
         requireAuthorization: true,
         disallowIncomingXRP: true,

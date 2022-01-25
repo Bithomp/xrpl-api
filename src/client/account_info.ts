@@ -77,15 +77,9 @@ export type SettingsOptions = {
   domain: "test.bithomp.com",
 }
  */
-export async function getSettingsAsync(account: string, options: SettingsOptions = {}) {
-  const response: any = await getAccountInfoAsync(account, options);
-
-  if (response.error) {
-    return response;
-  }
-
-  const parsedFlags: object = parseAccountFlags(response.Flags, { excludeFalse: true });
-  const parsedFields: object = parseFields(response);
+export async function getSettings(accountInfo: any) {
+  const parsedFlags: object = parseAccountFlags(accountInfo.Flags, { excludeFalse: true });
+  const parsedFields: object = parseFields(accountInfo);
   const settings: object = Object.assign({}, parsedFlags, parsedFields);
 
   return settings;
