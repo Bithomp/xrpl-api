@@ -100,9 +100,14 @@ class Connection {
 
         await this.client.connect();
       } catch (e) {
-        // will try reconnect later
-        this.connectionValidation();
+        this.logger?.error({
+          service: "Bithomp::XRPL::Connection",
+          function: "reconnect",
+          error: e,
+        });
       }
+
+      this.connectionValidation();
     }
   }
 
