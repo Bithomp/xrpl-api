@@ -1,6 +1,7 @@
 import { Client, Request, Response } from "xrpl";
 
 const LEDGER_CLOSED_TIMEOUT = 1000 * 10; // 10 sec
+const RIPPLE_UNIX_DIFF = 946684800;
 
 export interface ConnectionOptions {
   logger?: any;
@@ -102,7 +103,15 @@ class Connection {
       }
     });
 
-    this.client.on("ledgerClosed", () => {
+    this.client.on("ledgerClosed", (ledgerStream) => {
+      const time: number = new Date().getTime();
+      const ledgerTime: number = (ledgerStream.ledger_time + RIPPLE_UNIX_DIFF) * 1000;
+
+      // ledgerTime could be more then current time
+      if (ledgerTime < time) {
+        this.updateLatence(time - ledgerTime);
+      }
+
       this.connectionValidation();
     });
 
@@ -162,6 +171,7 @@ class Connection {
     this.connectionTimer = null;
 
     if (!this.shotdown) {
+      this.updateLatence(LEDGER_CLOSED_TIMEOUT);
       await this.client.disconnect();
       await this.client.connect();
     }
