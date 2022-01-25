@@ -84,11 +84,34 @@ class Connection {
     this.latency.splice(0, this.latency.length - 10);
   }
 
+  private async reconnect(): Promise<void> {
+    this.logger?.debug({
+      service: "Bithomp::XRPL::Connection",
+      function: "reconnect",
+      url: this.url,
+      shotdown: this.shotdown,
+    });
+
+    if (!this.shotdown) {
+      try {
+        if (this.isConnected()) {
+          await this.client.disconnect();
+        }
+
+        await this.client.connect();
+      } catch (e) {
+        // will try reconnect later
+        this.connectionValidation();
+      }
+    }
+  }
+
   private setupEmitter(): void {
     this.client.on("connected", () => {
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         function: "connected",
+        url: this.url,
       });
     });
 
@@ -96,11 +119,10 @@ class Connection {
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         function: "disconnected",
+        url: this.url,
       });
 
-      if (!this.shotdown) {
-        this.client.connect();
-      }
+      this.reconnect();
     });
 
     this.client.on("ledgerClosed", (ledgerStream) => {
@@ -166,15 +188,13 @@ class Connection {
       function: "connectionValidationTimeout",
       url: this.url,
       timeout: LEDGER_CLOSED_TIMEOUT,
+      shotdown: this.shotdown,
     });
 
     this.connectionTimer = null;
 
-    if (!this.shotdown) {
-      this.updateLatence(LEDGER_CLOSED_TIMEOUT);
-      await this.client.disconnect();
-      await this.client.connect();
-    }
+    this.updateLatence(LEDGER_CLOSED_TIMEOUT);
+    await this.reconnect();
   }
 }
 
