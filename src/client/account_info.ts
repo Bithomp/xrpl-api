@@ -120,10 +120,6 @@ function parseFields(data: any): object {
     }
   }
 
-  if (data.RegularKey) {
-    settings.regularKey = data.RegularKey;
-  }
-
   // Since an account can own at most one SignerList,
   // this array must have exactly one member if it is present.
   if (data.signer_lists && data.signer_lists.length === 1) {
