@@ -31,8 +31,8 @@ class Connection {
   }
 
   public async connect(): Promise<void> {
-    await this.subscribeClosedLedger();
     await this.client.connect();
+    await this.subscribeClosedLedger();
 
     this.connectionValidation();
   }
@@ -144,7 +144,7 @@ class Connection {
 
     if (!this.shotdown) {
       this.connectionTimer = setTimeout(() => {
-        this.connectionValidationTimeout;
+        this.connectionValidationTimeout();
       }, LEDGER_CLOSED_TIMEOUT);
     } else {
       this.client.disconnect();
