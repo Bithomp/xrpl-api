@@ -21,7 +21,7 @@ export function isValidClassicAddress(address: string): boolean {
     return false;
   }
 
-  var checksum = checksumClassicAddress(buffer);
+  const checksum: Buffer = checksumClassicAddress(buffer);
   if (
     checksum[0] != buffer[21] ||
     checksum[1] != buffer[22] ||
@@ -34,10 +34,10 @@ export function isValidClassicAddress(address: string): boolean {
   return true;
 }
 
-function checksumClassicAddress(buffer: Buffer) {
+export function checksumClassicAddress(buffer: Buffer): Buffer {
   const hash: Buffer = buffer.slice(0, 21);
-  var checksum_prepare = Crypto.createHash("sha256").update(Buffer.from(hash)).digest();
-  var checksum = Crypto.createHash("sha256").update(checksum_prepare).digest();
+  const checksumPrepare: Buffer = Crypto.createHash("sha256").update(Buffer.from(hash)).digest();
+  const checksum: Buffer = Crypto.createHash("sha256").update(checksumPrepare).digest();
 
   return checksum;
 }
