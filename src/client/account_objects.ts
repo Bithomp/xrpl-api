@@ -1,4 +1,7 @@
+import { LedgerEntry } from "xrpl";
 import * as Client from "../client";
+
+const { RippleStateFlags } = LedgerEntry;
 
 export interface GetAccountObjectsOptions {
   type?: string | ("check" | "escrow" | "offer" | "payment_channel" | "signer_list" | "state");
@@ -71,4 +74,95 @@ export async function getAccountObjectsAsync(account: string, options: GetAccoun
   }
 
   return response?.result?.account_objects;
+}
+
+export interface GetAccountLinesObjectsOptions {
+  ledgerHash?: string;
+  ledgerVersion?: number | ("validated" | "closed" | "current");
+}
+
+export async function getAccountLinesObjectsAsync(account: string, options: GetAccountLinesObjectsOptions = {}) {
+  const connection: any = Client.findConnection();
+  if (!connection) {
+    throw new Error("There is no connection");
+  }
+
+  await connection.connect();
+  const response = await connection.request({
+    command: "account_objects",
+    account,
+    type: "state",
+    ledger_hash: options.ledgerHash,
+    ledger_index: options.ledgerVersion,
+  });
+
+  if (!response) {
+    return null;
+  }
+
+  if (response.error) {
+    const { error, error_code, error_message, status, validated } = response;
+
+    return {
+      account,
+      error,
+      error_code,
+      error_message,
+      status,
+      validated,
+    };
+  }
+
+  const accountObjects = response?.result?.account_objects;
+  if (!accountObjects) {
+    return accountObjects;
+  }
+
+  return accountObjectsToAccountLines(account, accountObjects, false);
+}
+
+/**
+ * https://gist.github.com/WietseWind/5df413334385367c548a148de3d8a713
+ *
+ * This function returns account_lines line results
+ * based on account_objects (type = state) results,
+ * » Returns only the account_lines to show based on:
+ *   - Counts towards your reserve
+ */
+export function accountObjectsToAccountLines(account: string, accountObjects: any, suppressIncoming: boolean) {
+  const notInDefaultState = accountObjects.filter((obj: any) => {
+    return obj.Flags & RippleStateFlags[obj.HighLimit.issuer === account ? "lsfHighReserve" : "lsfLowReserve"];
+  });
+
+  const accountLinesFormatted = notInDefaultState.map((obj: any) => {
+    const parties = [obj.HighLimit, obj.LowLimit];
+    const [self, counterparty] = obj.HighLimit.issuer === account ? parties : parties.reverse();
+
+    const ripplingFlags = [
+      (RippleStateFlags.lsfHighNoRipple & obj.Flags) == RippleStateFlags.lsfHighNoRipple,
+      (RippleStateFlags.lsfLowNoRipple & obj.Flags) == RippleStateFlags.lsfLowNoRipple,
+    ];
+    const [no_ripple, no_ripple_peer] = obj.HighLimit.issuer === account ? ripplingFlags : ripplingFlags.reverse();
+
+    const balance = obj.Balance.value === "0" ? obj.Balance.value : obj.Balance.value.slice(1);
+
+    return {
+      account: counterparty.issuer,
+      balance,
+      currency: self.currency,
+      limit: self.value,
+      limit_peer: counterparty.value,
+      no_ripple,
+      no_ripple_peer,
+    };
+  });
+
+  return accountLinesFormatted.filter((l) => {
+    if (suppressIncoming) {
+      if (l.limit === "0" && (l.balance === "0" || l.balance.slice(0, 1) === "-")) {
+        return false;
+      }
+    }
+    return true;
+  });
 }
