@@ -9,20 +9,25 @@ export interface GetAccountInfoOptions {
 }
 
 /**
-{
-  Account: 'rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz',
-  Balance: '958859539',
-  Domain: '746573742E626974686F6D702E636F6D',
-  Flags: 0,
-  LedgerEntryType: 'AccountRoot',
-  OwnerCount: 0,
-  PreviousTxnID: '70412C213409FF78EC2244F46754B9AFBA87E71361A1CC2030076DA7A64261A0',
-  PreviousTxnLgrSeq: 22330597,
-  Sequence: 1952,
-  index: 'E81B13BE87D0BEE807EE2AB986B4C39B911AD9EAB64946A98AF149367CBEAE93'
-}
-*/
-export async function getAccountInfoAsync(account: string, options: GetAccountInfoOptions = {}) {
+ * @returns {Promise<object | null>} like
+ * {
+ *   Account: 'rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz',
+ *   Balance: '958859539',
+ *   Domain: '746573742E626974686F6D702E636F6D',
+ *   Flags: 0,
+ *   LedgerEntryType: 'AccountRoot',
+ *   OwnerCount: 0,
+ *   PreviousTxnID: '70412C213409FF78EC2244F46754B9AFBA87E71361A1CC2030076DA7A64261A0',
+ *   PreviousTxnLgrSeq: 22330597,
+ *   Sequence: 1952,
+ *   index: 'E81B13BE87D0BEE807EE2AB986B4C39B911AD9EAB64946A98AF149367CBEAE93'
+ * }
+ * @exception {Error}
+ */
+export async function getAccountInfoAsync(
+  account: string,
+  options: GetAccountInfoOptions = {}
+): Promise<object | null> {
   const connection: any = Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
@@ -56,7 +61,7 @@ export async function getAccountInfoAsync(account: string, options: GetAccountIn
   return response?.result?.account_data;
 }
 
-export async function isActivatedAsync(account: string) {
+export async function isActivatedAsync(account: string): Promise<boolean> {
   const response: any = await getAccountInfoAsync(account);
 
   if (!response || response.error === "actNotFound") {
@@ -71,13 +76,14 @@ export type SettingsOptions = {
 };
 
 /**
-{
-  requireAuthorization: true,
-  disallowIncomingXRP: true,
-  domain: "test.bithomp.com",
-}
+ * @returns {object} like
+ * {
+ *   requireAuthorization: true,
+ *   disallowIncomingXRP: true,
+ *   domain: "test.bithomp.com",
+ * }
  */
-export function getSettings(accountInfo: any) {
+export function getSettings(accountInfo: any): object {
   const parsedFlags: object = parseAccountFlags(accountInfo.Flags, { excludeFalse: true });
   const parsedFields: object = parseFields(accountInfo);
   const settings: object = Object.assign({}, parsedFlags, parsedFields);
@@ -88,6 +94,7 @@ export function getSettings(accountInfo: any) {
 function parseAccountFlags(value: number, options: { excludeFalse?: boolean } = {}): Settings {
   const settings = {};
   for (const flagName in AccountFlags) {
+    // tslint:disable-next-line:no-bitwise
     if (value & AccountFlags[flagName]) {
       settings[flagName] = true;
     } else {
@@ -112,6 +119,7 @@ function parseField(info: any, value: any) {
 
 function parseFields(data: any): object {
   const settings: any = {};
+  // tslint:disable-next-line:forin
   for (const fieldName in AccountFields) {
     const fieldValue = data[fieldName];
     if (fieldValue != null) {

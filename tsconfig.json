@@ -8,7 +8,9 @@
     "strict": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "noUnusedLocals": true,
     "noImplicitAny": false,
+    "removeComments": true,
     "typeRoots": ["./node_modules/@types", "./@types"]
   },
   "include": ["src/**/*","samples/*.ts"],

@@ -1,6 +1,6 @@
 import nconf from "nconf";
 import { expect } from "chai";
-import { Client, Wallet } from "../../src/index";
+import { Client } from "../../src/index";
 
 describe("Client", () => {
   describe("getTransactionAsync", () => {

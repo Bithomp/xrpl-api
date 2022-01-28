@@ -2,7 +2,11 @@ import { BigNumber } from "bignumber.js";
 
 import * as Client from "../client";
 
-export async function getFeeAsync() {
+/**
+ * @returns {string | null}
+ * @exception {Error}
+ */
+export async function getFeeAsync(): Promise<string | null> {
   const connection: any = Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");

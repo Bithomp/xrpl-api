@@ -23,10 +23,10 @@ export function isValidClassicAddress(address: string): boolean {
 
   const checksum: Buffer = checksumClassicAddress(buffer);
   if (
-    checksum[0] != buffer[21] ||
-    checksum[1] != buffer[22] ||
-    checksum[2] != buffer[23] ||
-    checksum[3] != buffer[24]
+    checksum[0] !== buffer[21] ||
+    checksum[1] !== buffer[22] ||
+    checksum[2] !== buffer[23] ||
+    checksum[3] !== buffer[24]
   ) {
     return false;
   }

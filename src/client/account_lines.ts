@@ -1,28 +1,30 @@
 import * as Client from "../client";
 
 export interface GetTrustlinesOptions {
-  counterparty?: string
-  currency?: string
+  counterparty?: string;
+  currency?: string;
   ledgerVersion?: number | ("validated" | "closed" | "current");
   limit?: number;
 }
 
 /**
-[
-  {
-    account: "rNTvdxPWujQn2sUXYBGxmWrGe4ethkLyhb",
-    balance: "123.45",
-    currency: "FOO",
-    limit: "1000000000",
-    limit_peer: "0",
-    no_ripple: false,
-    no_ripple_peer: false,
-    quality_in: 0,
-    quality_out: 0,
-  },
-]
-*/
-export async function getTrustlinesAsync(account: string, options: GetTrustlinesOptions = {}) {
+ * @returns {Promise<object | null>} like
+ * [
+ *   {
+ *     account: "rNTvdxPWujQn2sUXYBGxmWrGe4ethkLyhb",
+ *     balance: "123.45",
+ *     currency: "FOO",
+ *     limit: "1000000000",
+ *     limit_peer: "0",
+ *     no_ripple: false,
+ *     no_ripple_peer: false,
+ *     quality_in: 0,
+ *     quality_out: 0,
+ *   },
+ * ]
+ * @exception {Error}
+ */
+export async function getTrustlinesAsync(account: string, options: GetTrustlinesOptions = {}): Promise<object | null> {
   const connection: any = Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
