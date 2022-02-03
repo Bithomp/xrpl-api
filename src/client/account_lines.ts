@@ -1,9 +1,10 @@
 import * as Client from "../client";
+import { LedgerIndex } from "../models/ledger_index";
 
 export interface GetTrustlinesOptions {
   counterparty?: string;
   currency?: string;
-  ledgerVersion?: number | ("validated" | "closed" | "current");
+  ledgerIndex?: LedgerIndex;
   limit?: number;
 }
 
@@ -24,7 +25,7 @@ export interface GetTrustlinesOptions {
  * ]
  * @exception {Error}
  */
-export async function getTrustlinesAsync(account: string, options: GetTrustlinesOptions = {}): Promise<object | null> {
+export async function getTrustlines(account: string, options: GetTrustlinesOptions = {}): Promise<object | null> {
   const connection: any = Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
@@ -36,7 +37,7 @@ export async function getTrustlinesAsync(account: string, options: GetTrustlines
     account,
     counterparty: options.counterparty,
     currency: options.currency,
-    ledger_index: options.ledgerVersion,
+    ledger_index: options.ledgerIndex || "validated",
     limit: options.limit,
   });
 

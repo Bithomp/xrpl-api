@@ -2,8 +2,8 @@ import * as Client from "../client";
 
 export interface GetTransactionOptions {
   binary?: boolean;
-  minLedgerVersion?: number;
-  maxLedgerVersion?: number;
+  minLedger?: number;
+  maxLedger?: number;
 }
 
 /**
@@ -33,11 +33,11 @@ export interface GetTransactionOptions {
  * }
  * @exception {Error}
  */
-export async function getTransactionAsync(
+export async function getTransaction(
   transaction: string,
   options: GetTransactionOptions = {}
 ): Promise<object | null> {
-  const connection: any = Client.findConnection();
+  const connection: any = Client.findConnection("history");
   if (!connection) {
     throw new Error("There is no connection");
   }
@@ -47,8 +47,8 @@ export async function getTransactionAsync(
     command: "tx",
     transaction,
     binary: !!options.binary,
-    minLedgerVersion: options.minLedgerVersion,
-    maxLedgerVersion: options.maxLedgerVersion,
+    min_ledger: options.minLedger,
+    max_ledger: options.maxLedger,
   });
 
   if (!response) {

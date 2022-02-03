@@ -3,31 +3,31 @@ import { expect } from "chai";
 import { Client, Wallet } from "../../src/index";
 
 describe("Client", () => {
-  describe("isActivatedAsync", () => {
+  describe("isActivated", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:testnet"));
       await Client.connect();
     });
 
     it("is true for activated", async function () {
-      const result: any = await Client.isActivatedAsync("rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz");
+      const result: any = await Client.isActivated("rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz");
       expect(result).to.eql(true);
     });
 
     it("is false for not activated", async function () {
-      const result: any = await Client.isActivatedAsync(Wallet.generateAddress().address);
+      const result: any = await Client.isActivated(Wallet.generateAddress().address);
       expect(result).to.eql(false);
     });
   });
 
-  describe("getAccountInfoAsync", () => {
+  describe("getAccountInfo", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:testnet"));
       await Client.connect();
     });
 
     it("is for activated", async function () {
-      const result: any = await Client.getAccountInfoAsync("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+      const result: any = await Client.getAccountInfo("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
       expect(result).to.eql({
         Account: "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
         Balance: "999999976",
@@ -44,7 +44,7 @@ describe("Client", () => {
 
     it("is for not activated", async function () {
       const account: string = Wallet.generateAddress().address;
-      const result: any = await Client.getAccountInfoAsync(account);
+      const result: any = await Client.getAccountInfo(account);
 
       expect(result).to.eql({
         account: account,
@@ -57,11 +57,11 @@ describe("Client", () => {
     });
 
     it("parses getSettings", async function () {
-      const accountInfo: any = await Client.getAccountInfoAsync("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+      const accountInfo: any = await Client.getAccountInfo("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
       const result: any = Client.getSettings(accountInfo);
       expect(result).to.eql({
-        requireAuthorization: true,
-        disallowIncomingXRP: true,
+        requireAuth: true,
+        disallowXRP: true,
         domain: "test.bithomp.com",
       });
     });

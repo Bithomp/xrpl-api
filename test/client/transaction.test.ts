@@ -3,14 +3,14 @@ import { expect } from "chai";
 import { Client } from "../../src/index";
 
 describe("Client", () => {
-  describe("getTransactionAsync", () => {
+  describe("getTransaction", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:mainnet"));
       await Client.connect();
     });
 
     it("works", async function () {
-      const result: any = await Client.getTransactionAsync(
+      const result: any = await Client.getTransaction(
         "A34F834AA65C01458FC0AFCDDE7F8F433DAD7B871282E8511ECDEE8E28758DCE"
       );
       delete result.warnings;
@@ -20,7 +20,7 @@ describe("Client", () => {
     });
 
     it("works with binary", async function () {
-      const result: any = await Client.getTransactionAsync(
+      const result: any = await Client.getTransaction(
         "A34F834AA65C01458FC0AFCDDE7F8F433DAD7B871282E8511ECDEE8E28758DCE",
         { binary: true }
       );
@@ -31,7 +31,7 @@ describe("Client", () => {
     });
 
     it("works with not found", async function () {
-      const result = await Client.getTransactionAsync(
+      const result = await Client.getTransaction(
         "EC47759FE9691B6BFFEABB49FFFF8FCC46D3DF2AE4CBAE4F06A002AF2688EC1E"
       );
 

@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { Client } from "../../src/index";
 
 describe("Client", () => {
-  describe("getAccountNftsAsync", () => {
+  describe("getAccountNfts", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:xls20net"));
       await Client.connect();
@@ -11,20 +11,20 @@ describe("Client", () => {
 
     it("works", async function () {
       this.timeout(15000);
-      const result: any = await Client.getAccountNftsAsync("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
+      const result: any = await Client.getAccountNfts("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
       expect(result[0].Issuer).to.eql("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
     });
   });
 
-  describe("getAccountNftSellOffersAsync", () => {
+  describe("getAccountNftSellOffers", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:xls20net"));
       await Client.connect();
     });
 
-    it("works", async function () {
+    it.skip("works", async function () {
       this.timeout(15000);
-      const result: any = await Client.getAccountNftSellOffersAsync(
+      const result: any = await Client.getAccountNftSellOffers(
         "00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD2DCBAB9D00000002"
       );
       expect(result[0]).to.eql({
@@ -36,15 +36,15 @@ describe("Client", () => {
     });
   });
 
-  describe("getAccountNftBuyOffersAsync", () => {
+  describe("getAccountNftBuyOffers", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:xls20net"));
       await Client.connect();
     });
 
-    it("works", async function () {
+    it.skip("works", async function () {
       this.timeout(15000);
-      const result: any = await Client.getAccountNftBuyOffersAsync(
+      const result: any = await Client.getAccountNftBuyOffers(
         "00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD44B17C9E00000003"
       );
       expect(result[0]).to.eql({

@@ -50,11 +50,11 @@ const accountRootFlags = {
 
 const AccountFlags = {
   passwordSpent: accountRootFlags.PasswordSpent,
-  requireDestinationTag: accountRootFlags.RequireDestTag,
-  requireAuthorization: accountRootFlags.RequireAuth,
+  requireDestTag: accountRootFlags.RequireDestTag,
+  requireAuth: accountRootFlags.RequireAuth,
   depositAuth: accountRootFlags.DepositAuth,
-  disallowIncomingXRP: accountRootFlags.DisallowXRP,
-  disableMasterKey: accountRootFlags.DisableMaster,
+  disallowXRP: accountRootFlags.DisallowXRP,
+  disableMaster: accountRootFlags.DisableMaster,
   noFreeze: accountRootFlags.NoFreeze,
   globalFreeze: accountRootFlags.GlobalFreeze,
   defaultRipple: accountRootFlags.DefaultRipple,
@@ -62,22 +62,22 @@ const AccountFlags = {
 
 export interface Settings {
   passwordSpent?: boolean;
-  requireDestinationTag?: boolean;
-  requireAuthorization?: boolean;
+  requireDestTag?: boolean;
+  requireAuth?: boolean;
   depositAuth?: boolean;
-  disallowIncomingXRP?: boolean;
-  disableMasterKey?: boolean;
+  disallowXRP?: boolean;
+  disableMaster?: boolean;
   noFreeze?: boolean;
   globalFreeze?: boolean;
   defaultRipple?: boolean;
 }
 
 const AccountSetFlags = {
-  requireDestinationTag: txFlagIndices.AccountSet.asfRequireDest,
-  requireAuthorization: txFlagIndices.AccountSet.asfRequireAuth,
+  requireDestTag: txFlagIndices.AccountSet.asfRequireDest,
+  requireAuth: txFlagIndices.AccountSet.asfRequireAuth,
   depositAuth: txFlagIndices.AccountSet.asfDepositAuth,
-  disallowIncomingXRP: txFlagIndices.AccountSet.asfDisallowXRP,
-  disableMasterKey: txFlagIndices.AccountSet.asfDisableMaster,
+  disallowXRP: txFlagIndices.AccountSet.asfDisallowXRP,
+  disableMaster: txFlagIndices.AccountSet.asfDisableMaster,
   enableTransactionIDTracking: txFlagIndices.AccountSet.asfAccountTxnID,
   noFreeze: txFlagIndices.AccountSet.asfNoFreeze,
   globalFreeze: txFlagIndices.AccountSet.asfGlobalFreeze,

@@ -5,6 +5,7 @@ export * from "./client/account_info";
 export * from "./client/account_lines";
 export * from "./client/account_nfts";
 export * from "./client/account_objects";
+export * from "./client/account_tx";
 export * from "./client/transaction";
 
 export const dropsInXRP = 1000000;

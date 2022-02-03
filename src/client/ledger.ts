@@ -1,11 +1,12 @@
 import * as Client from "../client";
+import { LedgerIndex } from "../models/ledger_index";
 
 const RIPPLE_UNIX_DIFF = 946684800;
 
 export interface GetLedgerOptions {
-  ledgerVersion?: number | string;
-  includeTransactions?: boolean;
-  includeAllData?: boolean;
+  ledgerIndex?: LedgerIndex;
+  transactions?: boolean;
+  expand?: boolean;
 }
 
 /**
@@ -30,7 +31,7 @@ export interface GetLedgerOptions {
  * }
  * @exception {Error}
  */
-export async function getLedgerAsync(options: GetLedgerOptions = {}): Promise<object | null> {
+export async function getLedger(options: GetLedgerOptions = {}): Promise<object | null> {
   const connection: any = Client.findConnection("history");
   if (!connection) {
     throw new Error("There is no connection");
@@ -39,9 +40,9 @@ export async function getLedgerAsync(options: GetLedgerOptions = {}): Promise<ob
   await connection.connect();
   const response: any = await connection.request({
     command: "ledger",
-    ledger_index: options.ledgerVersion ? options.ledgerVersion : "validated",
-    transactions: !!options.includeTransactions,
-    expand: !!options.includeAllData,
+    ledger_index: options.ledgerIndex || "validated",
+    transactions: !!options.transactions,
+    expand: !!options.expand,
   });
 
   return response?.result?.ledger;

@@ -2,14 +2,15 @@ import { LedgerEntry } from "xrpl";
 import * as Client from "../client";
 
 import { Trustline } from "../models/trustline";
-import { AccountObject } from "../models/account_object";
+import { AccountObject, AccountObjectType } from "../models/account_object";
+import { LedgerIndex } from "../models/ledger_index";
 
 const { RippleStateFlags } = LedgerEntry;
 
 export interface GetAccountObjectsOptions {
-  type?: string | ("check" | "escrow" | "offer" | "payment_channel" | "signer_list" | "state");
+  type?: AccountObjectType;
   ledgerHash?: string;
-  ledgerVersion?: number | ("validated" | "closed" | "current");
+  ledgerIndex?: LedgerIndex;
   limit?: number;
   marker?: string;
 }
@@ -44,7 +45,7 @@ export interface GetAccountObjectsOptions {
  * ]
  * @exception {Error}
  */
-export async function getAccountObjectsAsync(
+export async function getAccountObjects(
   account: string,
   options: GetAccountObjectsOptions = {}
 ): Promise<object[] | object | null> {
@@ -59,7 +60,7 @@ export async function getAccountObjectsAsync(
     account,
     type: options.type,
     ledger_hash: options.ledgerHash,
-    ledger_index: options.ledgerVersion,
+    ledger_index: options.ledgerIndex || "validated",
     limit: options.limit,
     marker: options.marker,
   });
@@ -86,7 +87,7 @@ export async function getAccountObjectsAsync(
 
 export interface GetAccountLinesObjectsOptions {
   ledgerHash?: string;
-  ledgerVersion?: number | ("validated" | "closed" | "current");
+  ledgerIndex?: LedgerIndex;
 }
 
 /**
@@ -108,7 +109,7 @@ export async function getAccountLinesObjectsAsync(
     account,
     type: "state",
     ledger_hash: options.ledgerHash,
-    ledger_index: options.ledgerVersion,
+    ledger_index: options.ledgerIndex || "validated",
   });
 
   if (!response) {

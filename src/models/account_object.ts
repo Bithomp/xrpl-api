@@ -14,3 +14,12 @@ export type AccountObject =
   | LedgerEntry.SignerList
   | LedgerEntry.Ticket
   | LedgerEntry.RippleState;
+
+// https://github.com/XRPLF/xrpl.js/blob/2b424276344b2aa8b8b76d621500f4d9e1436663/packages/xrpl/src/models/common/index.ts#L3
+export type AccountObjectType =
+  | 'check'
+  | 'escrow'
+  | 'offer'
+  | 'payment_channel'
+  | 'signer_list'
+  | 'state'

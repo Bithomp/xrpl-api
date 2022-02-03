@@ -6,7 +6,7 @@ import * as Client from "../client";
  * @returns {string | null}
  * @exception {Error}
  */
-export async function getFeeAsync(): Promise<string | null> {
+export async function getFee(): Promise<string | null> {
   const connection: any = Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");

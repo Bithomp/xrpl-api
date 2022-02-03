@@ -3,14 +3,14 @@ import { expect } from "chai";
 import { Client } from "../../src/index";
 
 describe("Client", () => {
-  describe("getFeeAsync", () => {
+  describe("getFee", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:testnet"));
       await Client.connect();
     });
 
     it("returns fee", async function () {
-      expect(await Client.getFeeAsync()).to.eql("0.000013");
+      expect(await Client.getFee()).to.eql("0.000013");
     });
   });
 });

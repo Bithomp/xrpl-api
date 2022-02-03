@@ -1,7 +1,8 @@
 import * as Client from "../client";
+import { LedgerIndex } from "../models/ledger_index";
 
 export interface GetAccountNftsOptions {
-  ledgerVersion?: number | ("validated" | "closed" | "current");
+  ledgerIndex?: LedgerIndex;
 }
 
 /**
@@ -18,7 +19,7 @@ export interface GetAccountNftsOptions {
  * ]
  * @exception {Error}
  */
-export async function getAccountNftsAsync(
+export async function getAccountNfts(
   account: string,
   options: GetAccountNftsOptions = {}
 ): Promise<object[] | object | null> {
@@ -31,7 +32,7 @@ export async function getAccountNftsAsync(
   const response = await connection.request({
     command: "account_nfts",
     account,
-    ledger_index: options.ledgerVersion || "validated",
+    ledger_index: options.ledgerIndex || "validated",
   });
 
   if (!response) {
@@ -55,7 +56,7 @@ export async function getAccountNftsAsync(
 }
 
 export interface GetAccountNftSellOffersOptions {
-  ledgerVersion?: number | ("validated" | "closed" | "current");
+  ledgerIndex?: number | ("validated" | "closed" | "current");
 }
 
 /**
@@ -70,7 +71,7 @@ export interface GetAccountNftSellOffersOptions {
  * ]
  * @exception {Error}
  */
-export async function getAccountNftSellOffersAsync(
+export async function getAccountNftSellOffers(
   tokenid: string,
   options: GetAccountNftSellOffersOptions = {}
 ): Promise<object[] | object | null> {
@@ -83,7 +84,7 @@ export async function getAccountNftSellOffersAsync(
   const response = await connection.request({
     command: "nft_sell_offers",
     tokenid,
-    ledger_index: options.ledgerVersion || "validated",
+    ledger_index: options.ledgerIndex || "validated",
   });
 
   if (!response) {
@@ -107,7 +108,7 @@ export async function getAccountNftSellOffersAsync(
 }
 
 export interface GetAccountNftBuyOffersOptions {
-  ledgerVersion?: number | ("validated" | "closed" | "current");
+  ledgerIndex?: number | ("validated" | "closed" | "current");
 }
 
 /**
@@ -122,7 +123,7 @@ export interface GetAccountNftBuyOffersOptions {
  * ]
  * @exception {Error}
  */
-export async function getAccountNftBuyOffersAsync(
+export async function getAccountNftBuyOffers(
   tokenid: string,
   options: GetAccountNftBuyOffersOptions = {}
 ): Promise<object[] | object | null> {
@@ -135,7 +136,7 @@ export async function getAccountNftBuyOffersAsync(
   const response = await connection.request({
     command: "nft_buy_offers",
     tokenid,
-    ledger_index: options.ledgerVersion || "validated",
+    ledger_index: options.ledgerIndex || "validated",
   });
 
   if (!response) {

@@ -2,9 +2,10 @@ import BigNumber from "bignumber.js";
 
 import * as Client from "../client";
 import { Settings, AccountFlags, AccountFields } from "../common/constants";
+import { LedgerIndex } from "../models/ledger_index";
 
 export interface GetAccountInfoOptions {
-  ledgerVersion?: number | ("validated" | "closed" | "current");
+  ledgerIndex?: LedgerIndex;
   signerLists?: boolean;
 }
 
@@ -24,7 +25,7 @@ export interface GetAccountInfoOptions {
  * }
  * @exception {Error}
  */
-export async function getAccountInfoAsync(
+export async function getAccountInfo(
   account: string,
   options: GetAccountInfoOptions = {}
 ): Promise<object | null> {
@@ -37,7 +38,7 @@ export async function getAccountInfoAsync(
   const response = await connection.request({
     command: "account_info",
     account,
-    ledger_index: options.ledgerVersion || "validated",
+    ledger_index: options.ledgerIndex || "validated",
     signer_lists: !!options.signerLists,
   });
 
@@ -61,8 +62,8 @@ export async function getAccountInfoAsync(
   return response?.result?.account_data;
 }
 
-export async function isActivatedAsync(account: string): Promise<boolean> {
-  const response: any = await getAccountInfoAsync(account);
+export async function isActivated(account: string): Promise<boolean> {
+  const response: any = await getAccountInfo(account);
 
   if (!response || response.error === "actNotFound") {
     return false;
@@ -70,10 +71,6 @@ export async function isActivatedAsync(account: string): Promise<boolean> {
 
   return true;
 }
-
-export type SettingsOptions = {
-  ledgerVersion?: number | "validated" | "closed" | "current";
-};
 
 /**
  * @returns {object} like

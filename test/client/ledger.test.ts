@@ -3,21 +3,21 @@ import { expect } from "chai";
 import { Client } from "../../src/index";
 
 describe("Client", () => {
-  describe("getLedgerAsync", () => {
+  describe("getLedger", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:mainnet"));
       await Client.connect();
     });
 
     it("current", async function () {
-      const result: any = await Client.getLedgerAsync();
+      const result: any = await Client.getLedger();
 
       expect(parseInt(result.ledger_index)).to.gt(0);
     });
 
     it("by ledger_index", async function () {
-      const result: any = await Client.getLedgerAsync({
-        ledgerVersion: 66816622,
+      const result: any = await Client.getLedger({
+        ledgerIndex: 66816622,
       });
 
       expect(result.ledger_hash).to.eql("E5C1E68EED45C6A72B9BA777AC9BA08F3D34C23D42B52B19276C3E2F5E9E1EFC");
@@ -25,9 +25,9 @@ describe("Client", () => {
     });
 
     it("with transactions", async function () {
-      const result: any = await Client.getLedgerAsync({
-        ledgerVersion: 66816622,
-        includeTransactions: true,
+      const result: any = await Client.getLedger({
+        ledgerIndex: 66816622,
+        transactions: true,
       });
 
       expect(result.transactions.sort()).to.eql([
@@ -91,10 +91,10 @@ describe("Client", () => {
     });
 
     it("with expand", async function () {
-      const result: any = await Client.getLedgerAsync({
-        ledgerVersion: 66816622,
-        includeTransactions: true,
-        includeAllData: true,
+      const result: any = await Client.getLedger({
+        ledgerIndex: 66816622,
+        transactions: true,
+        expand: true,
       });
 
       const transactions: any = result.transactions.sort((a: any, b: any) => a.hash.localeCompare(b.hash));
