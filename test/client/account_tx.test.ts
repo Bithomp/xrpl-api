@@ -81,7 +81,7 @@ describe("Client", () => {
         forward: true,
         excludeFailures: true,
         types: ["Payment"],
-        start: "5252FE36681D56CB1218B34BBF7509C4B8008D45C0FE31A4168A83E87478B877",
+        startTxHash: "5252FE36681D56CB1218B34BBF7509C4B8008D45C0FE31A4168A83E87478B877",
         timeout: 4000,
       });
 

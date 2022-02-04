@@ -1,7 +1,7 @@
 {
   "name": "@bithomp/xrpl-api",
-  "version": "2.0.0-beta.20",
-  "description": "Bithomp AB XRPL Library",
+  "version": "2.0.0-beta.21",
+  "description": "A Bithomp JavaScript/TypeScript library for interacting with the XRP Ledger",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "author": "Bithomp AB",

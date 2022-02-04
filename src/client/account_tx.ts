@@ -136,7 +136,7 @@ export async function getTransactions(
 }
 
 export interface FindTransactionsOptions extends GetTransactionsOptions {
-  start?: string;
+  startTxHash?: string;
   excludeFailures?: boolean;
   initiated?: boolean;
   counterparty?: string;
@@ -144,6 +144,9 @@ export interface FindTransactionsOptions extends GetTransactionsOptions {
   sourceTag?: number;
   destinationTag?: number;
   timeout?: number;
+}
+
+interface FindProcessTransactionsOptions extends FindTransactionsOptions {
   startTx?: any;
 }
 
@@ -166,19 +169,19 @@ export async function findTransactions(
   }
 
   // https://github.com/XRPLF/xrpl.js/blob/6e0fff2ad642c2f94ddb83a23f57dff49d1678ec/src/ledger/transactions.ts#L205
-  if (options.start) {
-    const accountTransaction: any = await Client.getTransaction(options.start);
+  if (options.startTxHash) {
+    const accountTransaction: any = await Client.getTransaction(options.startTxHash);
     if (accountTransaction && !accountTransaction.error) {
       // set transaction to search after
-      options.startTx = {
+      (options as FindProcessTransactionsOptions).startTx = {
         tx: accountTransaction,
         meta: accountTransaction.meta,
       };
       // set min/max ledger to search from
       if (options.forward === true) {
-        options.ledgerIndexMin = options.startTx.tx.ledger_index;
+        options.ledgerIndexMin = (options as FindProcessTransactionsOptions).startTx.tx.ledger_index;
       } else {
-        options.ledgerIndexMax = options.startTx.tx.ledger_index;
+        options.ledgerIndexMax = (options as FindProcessTransactionsOptions).startTx.tx.ledger_index;
       }
     }
   }
@@ -213,7 +216,7 @@ export async function findTransactions(
 }
 
 // https://github.com/XRPLF/xrpl.js/blob/6e0fff2ad642c2f94ddb83a23f57dff49d1678ec/src/ledger/transactions.ts#L87
-function filterHelperStartTx(options: FindTransactionsOptions, transaction: any): boolean {
+function filterHelperStartTx(options: FindProcessTransactionsOptions, transaction: any): boolean {
   return (
     !options.startTx ||
     (options.forward === true
@@ -223,7 +226,7 @@ function filterHelperStartTx(options: FindTransactionsOptions, transaction: any)
 }
 
 // https://github.com/XRPLF/xrpl.js/blob/6e0fff2ad642c2f94ddb83a23f57dff49d1678ec/src/ledger/transactions.ts#L64
-function filterHelperTransactions(account: string, options: FindTransactionsOptions, transaction: any): boolean {
+function filterHelperTransactions(account: string, options: FindProcessTransactionsOptions, transaction: any): boolean {
   // validated transaction
   if (transaction.validated === false) {
     return false;
@@ -255,19 +258,19 @@ function filterHelperTransactions(account: string, options: FindTransactionsOpti
   }
 
   // filter sourceTag
-  if (options.sourceTag !== undefined && transaction.tx.SourceTag !== options.sourceTag) {
+  if (typeof options.sourceTag === "number" && transaction.tx.SourceTag !== options.sourceTag) {
     return false;
   }
 
   // filter destinationTag
-  if (options.destinationTag !== undefined && transaction.tx.DestinationTag !== options.destinationTag) {
+  if (typeof options.destinationTag === "number" && transaction.tx.DestinationTag !== options.destinationTag) {
     return false;
   }
 
   return true;
 }
 
-function counterpartyFilter(options: FindTransactionsOptions, transaction: any) {
+function counterpartyFilter(options: FindProcessTransactionsOptions, transaction: any) {
   if (transaction.tx.Account === options.counterparty) {
     return true;
   }
