@@ -94,7 +94,7 @@ export interface GetAccountLinesObjectsOptions {
  * @returns {Promise<object[] | object | null>}
  * @exception {Error}
  */
-export async function getAccountLinesObjectsAsync(
+export async function getAccountLinesObjects(
   account: string,
   options: GetAccountLinesObjectsOptions = {}
 ): Promise<object[] | object | null> {

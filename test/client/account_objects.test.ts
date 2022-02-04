@@ -17,14 +17,14 @@ describe("Client", () => {
     });
   });
 
-  describe("getAccountLinesObjectsAsync", () => {
+  describe("getAccountLinesObjects", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:testnet"));
       await Client.connect();
     });
 
     it("works", async function () {
-      const result: any = await Client.getAccountLinesObjectsAsync("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+      const result: any = await Client.getAccountLinesObjects("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
       expect(result).to.eql([
         {
           account: "rNTvdxPWujQn2sUXYBGxmWrGe4ethkLyhb",
