@@ -4,6 +4,11 @@ import * as Client from "../client";
 import { Settings, AccountFlags, AccountFields } from "../common/constants";
 import { LedgerIndex } from "../models/ledger_index";
 
+const BLACKHOLE_ACCOUNTS = [
+  "rrrrrrrrrrrrrrrrrrrrBZbvji",
+  "rrrrrrrrrrrrrrrrrrrrrhoLvTp"
+];
+
 export interface GetAccountInfoOptions {
   ledgerIndex?: LedgerIndex;
   signerLists?: boolean;
@@ -25,10 +30,7 @@ export interface GetAccountInfoOptions {
  * }
  * @exception {Error}
  */
-export async function getAccountInfo(
-  account: string,
-  options: GetAccountInfoOptions = {}
-): Promise<object | null> {
+export async function getAccountInfo(account: string, options: GetAccountInfoOptions = {}): Promise<object | null> {
   const connection: any = Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
@@ -81,11 +83,13 @@ export async function isActivated(account: string): Promise<boolean> {
  * }
  */
 export function getSettings(accountInfo: any): object {
-  const parsedFlags: object = parseAccountFlags(accountInfo.Flags, { excludeFalse: true });
-  const parsedFields: object = parseFields(accountInfo);
-  const settings: object = Object.assign({}, parsedFlags, parsedFields);
+  const parsedFlags = parseAccountFlags(accountInfo.Flags, { excludeFalse: true });
+  const parsedFields = parseFields(accountInfo);
 
-  return settings;
+  return {
+    ...parsedFlags,
+    ...parsedFields,
+  };
 }
 
 function parseAccountFlags(value: number, options: { excludeFalse?: boolean } = {}): Settings {
@@ -116,6 +120,12 @@ function parseField(info: any, value: any) {
 
 function parseFields(data: any): object {
   const settings: any = {};
+
+  // tslint:disable-next-line:no-bitwise
+  if (data.Flags & AccountFlags.disableMaster) {
+    settings.blackholed = BLACKHOLE_ACCOUNTS.includes(data.RegularKey) && !data.signer_lists;
+  }
+
   // tslint:disable-next-line:forin
   for (const fieldName in AccountFields) {
     const fieldValue = data[fieldName];
@@ -141,5 +151,6 @@ function parseFields(data: any): object {
       });
     }
   }
+
   return settings;
 }
