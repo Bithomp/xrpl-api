@@ -1,5 +1,4 @@
 import { Wallet } from "xrpl";
-export { Wallet } from "xrpl";
 
 import * as Base58 from "./base58";
 import * as Crypto from "crypto";

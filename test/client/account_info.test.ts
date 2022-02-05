@@ -66,6 +66,24 @@ describe("Client", () => {
           domain: "test.bithomp.com",
         });
       });
+
+      it("parses getSettings show false", async function () {
+        const accountInfo: any = await Client.getAccountInfo("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+        const result: any = Client.getSettings(accountInfo, false);
+        expect(result).to.eql({
+          blackholed: false,
+          defaultRipple: false,
+          depositAuth: false,
+          disableMaster: false,
+          disallowXRP: true,
+          domain: "test.bithomp.com",
+          globalFreeze: false,
+          noFreeze: false,
+          passwordSpent: false,
+          requireAuth: true,
+          requireDestTag: false,
+        });
+      });
     });
 
     describe("mainnet", () => {
@@ -85,6 +103,25 @@ describe("Client", () => {
           domain: "bithomp.com",
           emailHash: "576EDA7E0D04BC218DAA8A501FCA50B6",
           passwordSpent: true,
+        });
+      });
+
+      it("parses getSettings for blackholed show false", async function () {
+        const accountInfo: any = await Client.getAccountInfo("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW");
+        const result: any = Client.getSettings(accountInfo, false);
+        expect(result).to.eql({
+          blackholed: true,
+          defaultRipple: true,
+          depositAuth: false,
+          disableMaster: true,
+          disallowXRP: true,
+          domain: "bithomp.com",
+          emailHash: "576EDA7E0D04BC218DAA8A501FCA50B6",
+          globalFreeze: false,
+          noFreeze: false,
+          passwordSpent: true,
+          requireAuth: false,
+          requireDestTag: false,
         });
       });
     });

@@ -4,10 +4,7 @@ import * as Client from "../client";
 import { Settings, AccountFlags, AccountFields } from "../common/constants";
 import { LedgerIndex } from "../models/ledger_index";
 
-const BLACKHOLE_ACCOUNTS = [
-  "rrrrrrrrrrrrrrrrrrrrBZbvji",
-  "rrrrrrrrrrrrrrrrrrrrrhoLvTp"
-];
+const BLACKHOLE_ACCOUNTS = ["rrrrrrrrrrrrrrrrrrrrBZbvji", "rrrrrrrrrrrrrrrrrrrrrhoLvTp"];
 
 export interface GetAccountInfoOptions {
   ledgerIndex?: LedgerIndex;
@@ -82,9 +79,9 @@ export async function isActivated(account: string): Promise<boolean> {
  *   domain: "test.bithomp.com",
  * }
  */
-export function getSettings(accountInfo: any): object {
-  const parsedFlags = parseAccountFlags(accountInfo.Flags, { excludeFalse: true });
-  const parsedFields = parseFields(accountInfo);
+export function getSettings(accountInfo: any, excludeFalse: boolean = true): object {
+  const parsedFlags = parseAccountFlags(accountInfo.Flags, { excludeFalse });
+  const parsedFields = parseFields(accountInfo, { excludeFalse });
 
   return {
     ...parsedFlags,
@@ -118,12 +115,14 @@ function parseField(info: any, value: any) {
   return value;
 }
 
-function parseFields(data: any): object {
+function parseFields(data: any, options: { excludeFalse?: boolean } = {}): object {
   const settings: any = {};
 
   // tslint:disable-next-line:no-bitwise
-  if (data.Flags & AccountFlags.disableMaster) {
-    settings.blackholed = BLACKHOLE_ACCOUNTS.includes(data.RegularKey) && !data.signer_lists;
+  if (data.Flags & AccountFlags.disableMaster && BLACKHOLE_ACCOUNTS.includes(data.RegularKey) && !data.signer_lists) {
+    settings.blackholed = true;
+  } else if (!options.excludeFalse) {
+    settings.blackholed = false;
   }
 
   // tslint:disable-next-line:forin
