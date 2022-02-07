@@ -28,8 +28,8 @@ describe("Client", () => {
       });
 
       it("is for activated", async function () {
-        const result: any = await Client.getAccountInfo("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
-        expect(result).to.eql({
+        const accountInfo: any = await Client.getAccountInfo("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+        expect(accountInfo).to.eql({
           Account: "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
           Balance: "999999976",
           Domain: "746573742E626974686F6D702E636F6D",
@@ -40,6 +40,25 @@ describe("Client", () => {
           PreviousTxnLgrSeq: 22442907,
           Sequence: 22442870,
           index: "D88BB94773475A04F50EA227E03A67D0FBC5D70DC17CFDB256BCC9F1FA8C1A6E",
+        });
+      });
+
+      it("is for activated with signers", async function () {
+        const accountInfo: any = await Client.getAccountInfo("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf", {
+          signerLists: true,
+        });
+        expect(accountInfo).to.eql({
+          Account: "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
+          Balance: "999999976",
+          Domain: "746573742E626974686F6D702E636F6D",
+          Flags: 786432,
+          LedgerEntryType: "AccountRoot",
+          OwnerCount: 1,
+          PreviousTxnID: "3F369023F112D844619805ED2C5F8D9CB0BCE7DB18CAE681A92785164A61A8B5",
+          PreviousTxnLgrSeq: 22442907,
+          Sequence: 22442870,
+          index: "D88BB94773475A04F50EA227E03A67D0FBC5D70DC17CFDB256BCC9F1FA8C1A6E",
+          signer_lists: [],
         });
       });
 
@@ -122,6 +141,90 @@ describe("Client", () => {
           passwordSpent: true,
           requireAuth: false,
           requireDestTag: false,
+        });
+      });
+
+      it("parses getSettings for signers show false", async function () {
+        const accountInfo: any = await Client.getAccountInfo("rBg2FuZT91C52Nny68houguJ4vt5x1o91m", {
+          signerLists: true,
+        });
+
+        expect(accountInfo.signer_lists).to.eql([
+          {
+            Flags: 65536,
+            LedgerEntryType: "SignerList",
+            OwnerNode: "0",
+            PreviousTxnID: "61BFDE1442D491B58B5976D48F2354DF5E563B2E21A23D649FE1552CE54BF560",
+            PreviousTxnLgrSeq: 54051274,
+            SignerEntries: [
+              {
+                SignerEntry: {
+                  Account: "re3LGjhrCvthtWWwrfKbVJjXN9PYDeQDJ",
+                  SignerWeight: 1,
+                },
+              },
+              {
+                SignerEntry: {
+                  Account: "rngZ9RUfH6qfpY7M4sb4hgtsPddTtXtLeQ",
+                  SignerWeight: 1,
+                },
+              },
+              {
+                SignerEntry: {
+                  Account: "rfL4znSWfaFkYj8Jrh9184K8EYAN4574Yd",
+                  SignerWeight: 1,
+                },
+              },
+              {
+                SignerEntry: {
+                  Account: "rfkTDtYGVg4N3ru1JoJAZoCpoYYUSHLCiP",
+                  SignerWeight: 1,
+                },
+              },
+              {
+                SignerEntry: {
+                  Account: "rUjBSLwaGxJzBLvt5eVj8VEBzLLgALsx1T",
+                  SignerWeight: 1,
+                },
+              },
+              {
+                SignerEntry: {
+                  Account: "rHH2gS6XikKoEt9i1xAxEBvXLHKFr7oLn8",
+                  SignerWeight: 1,
+                },
+              },
+              {
+                SignerEntry: {
+                  Account: "rLW75SfEdnGVsa3fTFkSaDTzXuFapwNYtf",
+                  SignerWeight: 1,
+                },
+              },
+              {
+                SignerEntry: {
+                  Account: "rMY6Wm2RWQLN4d3Jjz15MKP74GJWVQE2pb",
+                  SignerWeight: 1,
+                },
+              },
+            ],
+            SignerListID: 0,
+            SignerQuorum: 3,
+            index: "407C155CFD9D93415764E5F5456D530B727CB674BF91F253C9C617561EFD4C94",
+          },
+        ]);
+
+        const result: any = Client.getSettings(accountInfo, false);
+
+        expect(result).to.eql({
+          passwordSpent: false,
+          requireDestTag: false,
+          requireAuth: false,
+          depositAuth: false,
+          disallowXRP: false,
+          disableMaster: true,
+          noFreeze: false,
+          globalFreeze: false,
+          defaultRipple: false,
+          blackholed: false,
         });
       });
     });

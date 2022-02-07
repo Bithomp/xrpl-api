@@ -115,11 +115,15 @@ function parseField(info: any, value: any) {
   return value;
 }
 
-function parseFields(data: any, options: { excludeFalse?: boolean } = {}): object {
+function parseFields(accountInfo: any, options: { excludeFalse?: boolean } = {}): object {
   const settings: any = {};
 
-  // tslint:disable-next-line:no-bitwise
-  if (data.Flags & AccountFlags.disableMaster && BLACKHOLE_ACCOUNTS.includes(data.RegularKey) && !data.signer_lists) {
+  if (
+    // tslint:disable-next-line:no-bitwise
+    accountInfo.Flags & AccountFlags.disableMaster &&
+    BLACKHOLE_ACCOUNTS.includes(accountInfo.RegularKey) &&
+    !accountInfo.signer_lists
+  ) {
     settings.blackholed = true;
   } else if (!options.excludeFalse) {
     settings.blackholed = false;
@@ -127,27 +131,10 @@ function parseFields(data: any, options: { excludeFalse?: boolean } = {}): objec
 
   // tslint:disable-next-line:forin
   for (const fieldName in AccountFields) {
-    const fieldValue = data[fieldName];
+    const fieldValue = accountInfo[fieldName];
     if (fieldValue != null) {
       const info = AccountFields[fieldName];
       settings[info.name] = parseField(info, fieldValue);
-    }
-  }
-
-  // Since an account can own at most one SignerList,
-  // this array must have exactly one member if it is present.
-  if (data.signer_lists && data.signer_lists.length === 1) {
-    settings.signers = {};
-    if (data.signer_lists[0].SignerQuorum) {
-      settings.signers.threshold = data.signer_lists[0].SignerQuorum;
-    }
-    if (data.signer_lists[0].SignerEntries) {
-      settings.signers.weights = data.signer_lists[0].SignerEntries.map((entry: any) => {
-        return {
-          address: entry.SignerEntry.Account,
-          weight: entry.SignerEntry.SignerWeight,
-        };
-      });
     }
   }
 
