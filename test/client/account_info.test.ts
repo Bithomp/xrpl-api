@@ -29,7 +29,33 @@ describe("Client", () => {
 
       it("is for activated", async function () {
         const accountInfo: any = await Client.getAccountInfo("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
-        expect(accountInfo).to.eql({
+        console.log(accountInfo)
+        expect(accountInfo.account_data).to.eql({
+          Account: "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
+          Balance: "999999976",
+          Domain: "746573742E626974686F6D702E636F6D",
+          Flags: 786432,
+          LedgerEntryType: "AccountRoot",
+          OwnerCount: 1,
+          PreviousTxnID: "3F369023F112D844619805ED2C5F8D9CB0BCE7DB18CAE681A92785164A61A8B5",
+          PreviousTxnLgrSeq: 22442907,
+          Sequence: 22442870,
+          index: "D88BB94773475A04F50EA227E03A67D0FBC5D70DC17CFDB256BCC9F1FA8C1A6E",
+        });
+      });
+    });
+  });
+
+  describe("getAccountInfoData", () => {
+    describe("testnet", () => {
+      before(async function () {
+        Client.setup(nconf.get("xrpl:connections:testnet"));
+        await Client.connect();
+      });
+
+      it("is for activated", async function () {
+        const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+        expect(accountInfoData).to.eql({
           Account: "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
           Balance: "999999976",
           Domain: "746573742E626974686F6D702E636F6D",
@@ -44,10 +70,10 @@ describe("Client", () => {
       });
 
       it("is for activated with signers", async function () {
-        const accountInfo: any = await Client.getAccountInfo("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf", {
+        const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf", {
           signerLists: true,
         });
-        expect(accountInfo).to.eql({
+        expect(accountInfoData).to.eql({
           Account: "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
           Balance: "999999976",
           Domain: "746573742E626974686F6D702E636F6D",
@@ -64,7 +90,7 @@ describe("Client", () => {
 
       it("is for not activated", async function () {
         const account: string = Wallet.generateAddress().address;
-        const result: any = await Client.getAccountInfo(account);
+        const result: any = await Client.getAccountInfoData(account);
 
         expect(result).to.eql({
           account: account,
@@ -77,8 +103,8 @@ describe("Client", () => {
       });
 
       it("parses getSettings", async function () {
-        const accountInfo: any = await Client.getAccountInfo("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
-        const result: any = Client.getSettings(accountInfo);
+        const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+        const result: any = Client.getSettings(accountInfoData);
         expect(result).to.eql({
           requireAuth: true,
           disallowXRP: true,
@@ -87,8 +113,8 @@ describe("Client", () => {
       });
 
       it("parses getSettings show false", async function () {
-        const accountInfo: any = await Client.getAccountInfo("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
-        const result: any = Client.getSettings(accountInfo, false);
+        const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+        const result: any = Client.getSettings(accountInfoData, false);
         expect(result).to.eql({
           blackholed: false,
           defaultRipple: false,
@@ -112,8 +138,8 @@ describe("Client", () => {
       });
 
       it("parses getSettings for blackholed", async function () {
-        const accountInfo: any = await Client.getAccountInfo("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW");
-        const result: any = Client.getSettings(accountInfo);
+        const accountInfoData: any = await Client.getAccountInfoData("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW");
+        const result: any = Client.getSettings(accountInfoData);
         expect(result).to.eql({
           blackholed: true,
           defaultRipple: true,
@@ -126,8 +152,8 @@ describe("Client", () => {
       });
 
       it("parses getSettings for blackholed show false", async function () {
-        const accountInfo: any = await Client.getAccountInfo("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW");
-        const result: any = Client.getSettings(accountInfo, false);
+        const accountInfoData: any = await Client.getAccountInfoData("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW");
+        const result: any = Client.getSettings(accountInfoData, false);
         expect(result).to.eql({
           blackholed: true,
           defaultRipple: true,
@@ -145,11 +171,11 @@ describe("Client", () => {
       });
 
       it("parses getSettings for signers show false", async function () {
-        const accountInfo: any = await Client.getAccountInfo("rBg2FuZT91C52Nny68houguJ4vt5x1o91m", {
+        const accountInfoData: any = await Client.getAccountInfoData("rBg2FuZT91C52Nny68houguJ4vt5x1o91m", {
           signerLists: true,
         });
 
-        expect(accountInfo.signer_lists).to.eql([
+        expect(accountInfoData.signer_lists).to.eql([
           {
             Flags: 65536,
             LedgerEntryType: "SignerList",
@@ -212,7 +238,7 @@ describe("Client", () => {
           },
         ]);
 
-        const result: any = Client.getSettings(accountInfo, false);
+        const result: any = Client.getSettings(accountInfoData, false);
 
         expect(result).to.eql({
           passwordSpent: false,
