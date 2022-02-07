@@ -29,7 +29,6 @@ describe("Client", () => {
 
       it("is for activated", async function () {
         const accountInfo: any = await Client.getAccountInfo("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
-        console.log(accountInfo)
         expect(accountInfo.account_data).to.eql({
           Account: "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
           Balance: "999999976",

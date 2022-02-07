@@ -4,7 +4,13 @@ import * as Client from "../client";
 import { Settings, AccountFlags, AccountFields } from "../common/constants";
 import { LedgerIndex } from "../models/ledger_index";
 
-const BLACKHOLE_ACCOUNTS = ["rrrrrrrrrrrrrrrrrrrrBZbvji", "rrrrrrrrrrrrrrrrrrrrrhoLvTp"];
+// https://xrpl.org/accounts.html#special-addresses
+const BLACKHOLE_ACCOUNTS = [
+  "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+  "rrrrrrrrrrrrrrrrrrrrBZbvji",
+  "rrrrrrrrrrrrrrrrrNAMEtxvNvQ",
+  "rrrrrrrrrrrrrrrrrrrn5RM1rHd",
+];
 
 export interface GetAccountInfoOptions {
   ledgerIndex?: LedgerIndex;
