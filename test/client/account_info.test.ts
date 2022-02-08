@@ -111,8 +111,22 @@ describe("Client", () => {
         });
       });
 
+      it("parses getSettings with signers", async function () {
+        const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf", {
+          signerLists: true,
+        });
+        const result: any = Client.getSettings(accountInfoData);
+        expect(result).to.eql({
+          requireAuth: true,
+          disallowXRP: true,
+          domain: "test.bithomp.com",
+        });
+      });
+
       it("parses getSettings show false", async function () {
-        const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+        const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf", {
+          signerLists: true,
+        });
         const result: any = Client.getSettings(accountInfoData, false);
         expect(result).to.eql({
           blackholed: false,
@@ -137,7 +151,9 @@ describe("Client", () => {
       });
 
       it("parses getSettings for blackholed", async function () {
-        const accountInfoData: any = await Client.getAccountInfoData("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW");
+        const accountInfoData: any = await Client.getAccountInfoData("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW", {
+          signerLists: true,
+        });
         const result: any = Client.getSettings(accountInfoData);
         expect(result).to.eql({
           blackholed: true,
@@ -151,8 +167,10 @@ describe("Client", () => {
       });
 
       it("parses getSettings for blackholed show false", async function () {
-        const accountInfoData: any = await Client.getAccountInfoData("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW");
-        const result: any = Client.getSettings(accountInfoData, false);
+        const accountInfo: any = await Client.getAccountInfo("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW", {
+          signerLists: true,
+        });
+        const result: any = Client.getSettings(accountInfo.account_data, false);
         expect(result).to.eql({
           blackholed: true,
           defaultRipple: true,

@@ -148,15 +148,17 @@ export function parseAccountFlags(value: number, options: { excludeFalse?: boole
 export function parseAccountFields(accountInfo: any, options: { excludeFalse?: boolean } = {}): object {
   const settings: any = {};
 
-  if (
-    // tslint:disable-next-line:no-bitwise
-    accountInfo.Flags & AccountFlags.disableMaster &&
-    BLACKHOLE_ACCOUNTS.includes(accountInfo.RegularKey) &&
-    !accountInfo.signer_lists
-  ) {
-    settings.blackholed = true;
-  } else if (!options.excludeFalse) {
-    settings.blackholed = false;
+  if (accountInfo.hasOwnProperty("signer_lists")) {
+    if (
+      // tslint:disable-next-line:no-bitwise
+      accountInfo.Flags & AccountFlags.disableMaster &&
+      BLACKHOLE_ACCOUNTS.includes(accountInfo.RegularKey) &&
+      accountInfo.signer_lists.length === 0
+    ) {
+      settings.blackholed = true;
+    } else if (!options.excludeFalse) {
+      settings.blackholed = false;
+    }
   }
 
   // tslint:disable-next-line:forin
