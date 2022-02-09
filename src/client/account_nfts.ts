@@ -1,5 +1,6 @@
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger_index";
+import { NFTokenFlagsInterface, NFTokenFlagsKeys } from "../models/account_nfts";
 
 export interface GetAccountNftsOptions {
   ledgerIndex?: LedgerIndex;
@@ -157,4 +158,19 @@ export async function getAccountNftBuyOffers(
   }
 
   return response?.result?.offers;
+}
+
+export function parseNFTokenFlags(value: number, options: { excludeFalse?: boolean } = {}): NFTokenFlagsInterface {
+  const settings = {};
+  for (const flagName in NFTokenFlagsKeys) {
+    // tslint:disable-next-line:no-bitwise
+    if (value & NFTokenFlagsKeys[flagName]) {
+      settings[flagName] = true;
+    } else {
+      if (!options.excludeFalse) {
+        settings[flagName] = false;
+      }
+    }
+  }
+  return settings;
 }

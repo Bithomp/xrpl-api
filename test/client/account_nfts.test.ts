@@ -55,4 +55,16 @@ describe("Client", () => {
       });
     });
   });
+
+  describe("parseNFTokenFlags", () => {
+    it("parses flags", async function () {
+      const result: any = await Client.parseNFTokenFlags(2147483659);
+      expect(result).to.eql({
+        burnable: true,
+        onlyXRP: true,
+        transferable: true,
+        trustLine: false,
+      });
+    });
+  });
 });

@@ -1,7 +1,9 @@
 import BigNumber from "bignumber.js";
 
+import { LedgerEntry } from "xrpl";
+
 import * as Client from "../client";
-import { Settings, AccountFlags, AccountFields } from "../common/constants";
+import { AccountRootFlagsKeys, AccountFields } from "../models/account_info";
 import { LedgerIndex } from "../models/ledger_index";
 
 // https://xrpl.org/accounts.html#special-addresses
@@ -130,11 +132,11 @@ export function getSettings(accountInfo: any, excludeFalse: boolean = true): obj
   };
 }
 
-export function parseAccountFlags(value: number, options: { excludeFalse?: boolean } = {}): Settings {
+export function parseAccountFlags(value: number, options: { excludeFalse?: boolean } = {}): LedgerEntry.AccountRootFlagsInterface {
   const settings = {};
-  for (const flagName in AccountFlags) {
+  for (const flagName in AccountRootFlagsKeys) {
     // tslint:disable-next-line:no-bitwise
-    if (value & AccountFlags[flagName]) {
+    if (value & AccountRootFlagsKeys[flagName]) {
       settings[flagName] = true;
     } else {
       if (!options.excludeFalse) {
@@ -151,7 +153,7 @@ export function parseAccountFields(accountInfo: any, options: { excludeFalse?: b
   if (accountInfo.hasOwnProperty("signer_lists")) {
     if (
       // tslint:disable-next-line:no-bitwise
-      accountInfo.Flags & AccountFlags.disableMaster &&
+      accountInfo.Flags & AccountRootFlagsKeys.disableMaster &&
       BLACKHOLE_ACCOUNTS.includes(accountInfo.RegularKey) &&
       accountInfo.signer_lists.length === 0
     ) {
