@@ -7,3 +7,11 @@ export const NFTokenFlagsKeys = {
   transferable: NFTokenMintFlags.tfTransferable,
   // reservedFlag: NFTokenMintFlags.tfReservedFlag,
 };
+
+export interface NFTokenFlagsKeysInterface {
+  burnable?: boolean;
+  onlyXRP?: boolean;
+  trustLine?: boolean;
+  transferable?: boolean;
+  // reservedFlag?: boolean
+}

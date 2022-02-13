@@ -99,11 +99,11 @@ class Connection {
         }
 
         await this.client.connect();
-      } catch (e) {
-        this.logger?.error({
+      } catch (e: any) {
+        this.logger?.warn({
           service: "Bithomp::XRPL::Connection",
           function: "reconnect",
-          error: e,
+          error: e.message,
         });
       }
 

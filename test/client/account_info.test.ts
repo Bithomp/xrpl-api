@@ -272,4 +272,20 @@ describe("Client", () => {
       });
     });
   });
+
+  describe("parseSignerListFlags", () => {
+    it("returns decoed flags", async function () {
+      const result: any = Client.parseSignerListFlags(65536);
+      expect(result).to.eql({
+        oneOwnerCount: true,
+      });
+    });
+
+    it("returns decoed flags", async function () {
+      const result: any = Client.parseSignerListFlags(0);
+      expect(result).to.eql({
+        oneOwnerCount: false,
+      });
+    });
+  });
 });

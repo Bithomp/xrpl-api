@@ -1,9 +1,14 @@
 import BigNumber from "bignumber.js";
 
-import { LedgerEntry } from "xrpl";
-
+import { parseFlags } from "../common/utils";
 import * as Client from "../client";
-import { AccountRootFlagsKeys, AccountFields } from "../models/account_info";
+import {
+  AccountRootFlagsKeys,
+  AccountRootFlagsKeysInterface,
+  AccountFields,
+  SignerListFlagsKeys,
+  SignerListFlagsKeysInterface,
+} from "../models/account_info";
 import { LedgerIndex } from "../models/ledger_index";
 
 // https://xrpl.org/accounts.html#special-addresses
@@ -132,19 +137,11 @@ export function getSettings(accountInfo: any, excludeFalse: boolean = true): obj
   };
 }
 
-export function parseAccountFlags(value: number, options: { excludeFalse?: boolean } = {}): LedgerEntry.AccountRootFlagsInterface {
-  const settings = {};
-  for (const flagName in AccountRootFlagsKeys) {
-    // tslint:disable-next-line:no-bitwise
-    if (value & AccountRootFlagsKeys[flagName]) {
-      settings[flagName] = true;
-    } else {
-      if (!options.excludeFalse) {
-        settings[flagName] = false;
-      }
-    }
-  }
-  return settings;
+export function parseAccountFlags(
+  value: number,
+  options: { excludeFalse?: boolean } = {}
+): AccountRootFlagsKeysInterface {
+  return parseFlags(value, AccountRootFlagsKeys, options);
 }
 
 export function parseAccountFields(accountInfo: any, options: { excludeFalse?: boolean } = {}): object {
@@ -184,4 +181,11 @@ export function parseAccountFields(accountInfo: any, options: { excludeFalse?: b
   }
 
   return settings;
+}
+
+export function parseSignerListFlags(
+  value: number,
+  options: { excludeFalse?: boolean } = {}
+): SignerListFlagsKeysInterface {
+  return parseFlags(value, SignerListFlagsKeys, options);
 }

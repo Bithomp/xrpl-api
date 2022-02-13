@@ -1,8 +1,7 @@
-import { NFTokenMintFlagsInterface } from "xrpl";
-
+import { parseFlags } from "../common/utils";
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger_index";
-import { NFTokenFlagsKeys } from "../models/account_nfts";
+import { NFTokenFlagsKeys, NFTokenFlagsKeysInterface } from "../models/account_nfts";
 
 export interface GetAccountNftsOptions {
   ledgerIndex?: LedgerIndex;
@@ -162,17 +161,6 @@ export async function getAccountNftBuyOffers(
   return response?.result?.offers;
 }
 
-export function parseNFTokenFlags(value: number, options: { excludeFalse?: boolean } = {}): NFTokenMintFlagsInterface {
-  const settings = {};
-  for (const flagName in NFTokenFlagsKeys) {
-    // tslint:disable-next-line:no-bitwise
-    if (value & NFTokenFlagsKeys[flagName]) {
-      settings[flagName] = true;
-    } else {
-      if (!options.excludeFalse) {
-        settings[flagName] = false;
-      }
-    }
-  }
-  return settings;
+export function parseNFTokenFlags(value: number, options: { excludeFalse?: boolean } = {}): NFTokenFlagsKeysInterface {
+  return parseFlags(value, NFTokenFlagsKeys, options);
 }

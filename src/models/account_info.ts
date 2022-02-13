@@ -12,6 +12,26 @@ export const AccountRootFlagsKeys = {
   defaultRipple: LedgerEntry.AccountRootFlags.lsfDefaultRipple,
 };
 
+export interface AccountRootFlagsKeysInterface {
+  passwordSpent?: boolean;
+  requireDestTag?: boolean;
+  requireAuth?: boolean;
+  depositAuth?: boolean;
+  disallowXRP?: boolean;
+  disableMaster?: boolean;
+  noFreeze?: boolean;
+  globalFreeze?: boolean;
+  defaultRipple?: boolean;
+}
+
+export const SignerListFlagsKeys = {
+  oneOwnerCount: LedgerEntry.SignerListFlags.lsfOneOwnerCount,
+};
+
+export interface SignerListFlagsKeysInterface {
+  oneOwnerCount?: boolean;
+}
+
 export const AccountFields = {
   EmailHash: { name: "emailHash", encoding: "hex", length: 32, defaults: "00000000000000000000000000000000" },
   WalletLocator: { name: "walletLocator" },
