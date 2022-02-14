@@ -1,4 +1,6 @@
 import * as _ from "lodash";
+import { getBalanceChanges } from "xrpl";
+
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger_index";
 import { compareTransactions } from "../common/utils";
@@ -144,6 +146,7 @@ export interface FindTransactionsOptions extends GetTransactionsOptions {
   sourceTag?: number;
   destinationTag?: number;
   timeout?: number;
+  balanceChanges?: boolean;
 }
 
 interface FindProcessTransactionsOptions extends FindTransactionsOptions {
@@ -168,23 +171,7 @@ export async function findTransactions(
     }
   }
 
-  // https://github.com/XRPLF/xrpl.js/blob/6e0fff2ad642c2f94ddb83a23f57dff49d1678ec/src/ledger/transactions.ts#L205
-  if (options.startTxHash) {
-    const accountTransaction: any = await Client.getTransaction(options.startTxHash);
-    if (accountTransaction && !accountTransaction.error) {
-      // set transaction to search after
-      (options as FindProcessTransactionsOptions).startTx = {
-        tx: accountTransaction,
-        meta: accountTransaction.meta,
-      };
-      // set min/max ledger to search from
-      if (options.forward === true) {
-        options.ledgerIndexMin = (options as FindProcessTransactionsOptions).startTx.tx.ledger_index;
-      } else {
-        options.ledgerIndexMax = (options as FindProcessTransactionsOptions).startTx.tx.ledger_index;
-      }
-    }
-  }
+  await updateStartTxOptions(options);
 
   while (transactions.length !== options.limit) {
     const currentTime = new Date();
@@ -205,6 +192,12 @@ export async function findTransactions(
       .filter(_.partial(filterHelperTransactions, account, options))
       .filter(_.partial(filterHelperStartTx, options));
 
+    if (options.balanceChanges === true) {
+      for (let newTransaction of newTransactions) {
+        newTransaction.balanceChanges = getBalanceChanges(newTransaction.meta);
+      }
+    }
+
     // save transactions
     transactions = transactions.concat(newTransactions);
 
@@ -213,6 +206,26 @@ export async function findTransactions(
   }
 
   return transactions;
+}
+
+async function updateStartTxOptions(options: FindProcessTransactionsOptions) {
+  // https://github.com/XRPLF/xrpl.js/blob/6e0fff2ad642c2f94ddb83a23f57dff49d1678ec/src/ledger/transactions.ts#L205
+  if (options.startTxHash) {
+    const accountTransaction: any = await Client.getTransaction(options.startTxHash);
+    if (accountTransaction && !accountTransaction.error) {
+      // set transaction to search after
+      (options as FindProcessTransactionsOptions).startTx = {
+        tx: accountTransaction,
+        meta: accountTransaction.meta,
+      };
+      // set min/max ledger to search from
+      if (options.forward === true) {
+        options.ledgerIndexMin = (options as FindProcessTransactionsOptions).startTx.tx.ledger_index;
+      } else {
+        options.ledgerIndexMax = (options as FindProcessTransactionsOptions).startTx.tx.ledger_index;
+      }
+    }
+  }
 }
 
 // https://github.com/XRPLF/xrpl.js/blob/6e0fff2ad642c2f94ddb83a23f57dff49d1678ec/src/ledger/transactions.ts#L87
