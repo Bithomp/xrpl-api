@@ -1,9 +1,11 @@
+import { getBalanceChanges } from "xrpl";
 import * as Client from "../client";
 
 export interface GetTransactionOptions {
   binary?: boolean;
   minLedger?: number;
   maxLedger?: number;
+  balanceChanges?: boolean;
 }
 
 /**
@@ -33,10 +35,7 @@ export interface GetTransactionOptions {
  * }
  * @exception {Error}
  */
-export async function getTransaction(
-  transaction: string,
-  options: GetTransactionOptions = {}
-): Promise<object | null> {
+export async function getTransaction(transaction: string, options: GetTransactionOptions = {}): Promise<object | null> {
   const connection: any = Client.findConnection("history");
   if (!connection) {
     throw new Error("There is no connection");
@@ -68,5 +67,11 @@ export async function getTransaction(
     };
   }
 
-  return response?.result;
+  const result = response?.result;
+
+  if (options.balanceChanges === true && typeof result?.meta === "object") {
+    result.balanceChanges = getBalanceChanges(result.meta);
+  }
+
+  return result;
 }

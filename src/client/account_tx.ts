@@ -18,6 +18,7 @@ export interface GetTransactionsOptions {
   forward?: boolean;
   limit: number;
   marker?: unknown;
+  balanceChanges?: boolean;
 }
 
 /**
@@ -134,7 +135,14 @@ export async function getTransactions(
     };
   }
 
-  return response?.result;
+  const result = response?.result;
+  if (options.balanceChanges === true && Array.isArray(result.transactions)) {
+    for (const transaction of result.transactions) {
+      transaction.balanceChanges = getBalanceChanges(transaction.meta);
+    }
+  }
+
+  return result;
 }
 
 export interface FindTransactionsOptions extends GetTransactionsOptions {
@@ -146,7 +154,6 @@ export interface FindTransactionsOptions extends GetTransactionsOptions {
   sourceTag?: number;
   destinationTag?: number;
   timeout?: number;
-  balanceChanges?: boolean;
 }
 
 interface FindProcessTransactionsOptions extends FindTransactionsOptions {
@@ -161,17 +168,10 @@ export async function findTransactions(
   const timeStart = new Date();
 
   // limit if sourceTag or destinationTag was used
-  if ((options.sourceTag as number) > 0 || (options.destinationTag as number) > 0) {
-    if (options.limit > MAX_WITH_TAG) {
-      options.limit = MAX_WITH_TAG;
-    }
-  } else if (options.types || options.initiated || options.counterparty) {
-    if (options.limit > MAX_LIMIT_WITH_FILTER) {
-      options.limit = MAX_LIMIT_WITH_FILTER;
-    }
-  }
+  applyLimitOptions(options);
 
-  await updateStartTxOptions(options);
+  // apply start transaction parameters to options
+  await applyStartTxOptions(options);
 
   while (transactions.length !== options.limit) {
     const currentTime = new Date();
@@ -180,7 +180,8 @@ export async function findTransactions(
       break;
     }
 
-    const accountTransactions: any = await getTransactions(account, options);
+    // request without balanceChanges to reduce unnecessary work
+    const accountTransactions: any = await getTransactions(account, { ...options, ...{ balanceChanges: false } });
     if (!accountTransactions || accountTransactions.error) {
       break;
     }
@@ -193,7 +194,7 @@ export async function findTransactions(
       .filter(_.partial(filterHelperStartTx, options));
 
     if (options.balanceChanges === true) {
-      for (let newTransaction of newTransactions) {
+      for (const newTransaction of newTransactions) {
         newTransaction.balanceChanges = getBalanceChanges(newTransaction.meta);
       }
     }
@@ -208,7 +209,19 @@ export async function findTransactions(
   return transactions;
 }
 
-async function updateStartTxOptions(options: FindProcessTransactionsOptions) {
+function applyLimitOptions(options: FindProcessTransactionsOptions) {
+  if ((options.sourceTag as number) > 0 || (options.destinationTag as number) > 0) {
+    if (options.limit > MAX_WITH_TAG) {
+      options.limit = MAX_WITH_TAG;
+    }
+  } else if (options.types || options.initiated || options.counterparty) {
+    if (options.limit > MAX_LIMIT_WITH_FILTER) {
+      options.limit = MAX_LIMIT_WITH_FILTER;
+    }
+  }
+}
+
+async function applyStartTxOptions(options: FindProcessTransactionsOptions) {
   // https://github.com/XRPLF/xrpl.js/blob/6e0fff2ad642c2f94ddb83a23f57dff49d1678ec/src/ledger/transactions.ts#L205
   if (options.startTxHash) {
     const accountTransaction: any = await Client.getTransaction(options.startTxHash);

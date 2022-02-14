@@ -19,6 +19,33 @@ describe("Client", () => {
       );
     });
 
+    it("works with balanceChanges", async function () {
+      const result: any = await Client.getTransaction(
+        "A34F834AA65C01458FC0AFCDDE7F8F433DAD7B871282E8511ECDEE8E28758DCE",
+        { balanceChanges: true }
+      );
+      expect(result.balanceChanges).to.eql([
+        {
+          account: "rhUYLd2aUiUVYkBZYwTc5RYgCAbNHAwkeZ",
+          balances: [
+            {
+              currency: "XRP",
+              value: "-20.000013",
+            },
+          ],
+        },
+        {
+          account: "rKHdxvrzyCQvNzcsjLRX2mz7XiqdQHwyBH",
+          balances: [
+            {
+              currency: "XRP",
+              value: "20",
+            },
+          ],
+        },
+      ]);
+    });
+
     it("works with binary", async function () {
       const result: any = await Client.getTransaction(
         "A34F834AA65C01458FC0AFCDDE7F8F433DAD7B871282E8511ECDEE8E28758DCE",
@@ -31,9 +58,7 @@ describe("Client", () => {
     });
 
     it("works with not found", async function () {
-      const result = await Client.getTransaction(
-        "EC47759FE9691B6BFFEABB49FFFF8FCC46D3DF2AE4CBAE4F06A002AF2688EC1E"
-      );
+      const result = await Client.getTransaction("EC47759FE9691B6BFFEABB49FFFF8FCC46D3DF2AE4CBAE4F06A002AF2688EC1E");
 
       expect(JSON.stringify(result)).to.eq(
         '{"transaction":"EC47759FE9691B6BFFEABB49FFFF8FCC46D3DF2AE4CBAE4F06A002AF2688EC1E","error":"txnNotFound","error_code":29,"error_message":"Transaction not found.","status":"error"}'

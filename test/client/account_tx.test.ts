@@ -33,6 +33,32 @@ describe("Client", () => {
         '[{"meta":{"AffectedNodes":[{"ModifiedNode":{"FinalFields":{"Account":"rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk","Balance":"19897873078","Flags":393216,"OwnerCount":1,"Sequence":98303},"LedgerEntryType":"AccountRoot","LedgerIndex":"A1C341684C7E01E81208A9F59BF6C0DAD245BEA5ED399E52D109AEFFB29B0C69","PreviousFields":{"Balance":"19928893080","Sequence":98302},"PreviousTxnID":"9EFDB125992DB9F12C3389D34045B1D4C87B3D8B5B82F05B8B541EFC4579EA53","PreviousTxnLgrSeq":16658441}},{"CreatedNode":{"LedgerEntryType":"AccountRoot","LedgerIndex":"EE994230153E2207737ACE5CDA73F8275E81D05A45C6937B62B0FF24C81140BA","NewFields":{"Account":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","Balance":"31000000","Sequence":1}}}],"TransactionIndex":4,"TransactionResult":"tesSUCCESS","delivered_amount":"31000000"},"tx":{"Account":"rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk","Amount":"31000000","Destination":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","Fee":"20002","Flags":2147483648,"Sequence":98302,"SigningPubKey":"02F81DBCD76D399BCF49F3812870A1234FF004DC62169915588AF7749A4D57499F","SourceTag":1617004677,"TransactionType":"Payment","TxnSignature":"304502210082B18C90FBDA585C5527C6D2C9D244C6482A2E439FD152F37A2E2AE7F33315C102205CDC77D7909EA8D7FB8E5A51EA674EF514D251EDAE0101FAB0C1BD3F42E01AA7","date":498983820,"hash":"2D6894BCCA14919218576E8204E4715301989D98CAEDA304BB465949459972D3","inLedger":16658556,"ledger_index":16658556},"validated":true}]'
       );
     });
+
+    it("transactions with balanceChanges", async function () {
+      const address = "rKHdxvrzyCQvNzcsjLRX2mz7XiqdQHwyBH";
+      const result: any = await Client.getTransactions(address, { limit: 1, balanceChanges: true });
+
+      expect(result.transactions[0].balanceChanges).to.eql([
+        {
+          account: "rhUYLd2aUiUVYkBZYwTc5RYgCAbNHAwkeZ",
+          balances: [
+            {
+              currency: "XRP",
+              value: "-20.000013",
+            },
+          ],
+        },
+        {
+          account: "rKHdxvrzyCQvNzcsjLRX2mz7XiqdQHwyBH",
+          balances: [
+            {
+              currency: "XRP",
+              value: "20",
+            },
+          ],
+        },
+      ]);
+    });
   });
 
   describe("findTransactions", () => {
