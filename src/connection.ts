@@ -32,8 +32,17 @@ class Connection {
   }
 
   public async connect(): Promise<void> {
-    await this.client.connect();
-    await this.subscribeClosedLedger();
+    try {
+      await this.client.connect();
+      await this.subscribeClosedLedger();
+    } catch (e: any) {
+      this.logger?.warn({
+        service: "Bithomp::XRPL::Connection",
+        function: "connect",
+        url: this.url,
+        error: e.message || e.name || e,
+      });
+    }
 
     this.connectionValidation();
   }
