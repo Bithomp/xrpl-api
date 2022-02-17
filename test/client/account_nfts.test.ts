@@ -22,16 +22,16 @@ describe("Client", () => {
       await Client.connect();
     });
 
-    it.skip("works", async function () {
+    it("works", async function () {
       this.timeout(15000);
       const result: any = await Client.getAccountNftSellOffers(
-        "00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD2DCBAB9D00000002"
+        "00000000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000"
       );
       expect(result[0]).to.eql({
-        amount: "1000000",
+        amount: "1000000000000000",
         flags: 1,
-        index: "98491D03DD3CC3658D99754C05DF26E6FCC0F69719697B85A6587CBD1455F387",
-        owner: "rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA",
+        index: "A38DDBC95D49A8490BC867094FE96616FADC4F784B3E4F89EAF6DBB8459FAA02",
+        owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
       });
     });
   });
@@ -42,16 +42,16 @@ describe("Client", () => {
       await Client.connect();
     });
 
-    it.skip("works", async function () {
+    it("works", async function () {
       this.timeout(15000);
       const result: any = await Client.getAccountNftBuyOffers(
-        "00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD44B17C9E00000003"
+        "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF44B17C9E00000003"
       );
       expect(result[0]).to.eql({
         amount: "1000000",
         flags: 0,
-        index: "8FC4CA005C0E67050929452CE174300DF3880556E464FAF48B30446BDAF2A26E",
-        owner: "rMT4oxZyhN8rWMtJbnqRtpkiGmzWDnqwnF",
+        index: "18D7B7B33A566997638B6C7A58266DB647C669C0B28655B42702A4B5A967316A",
+        owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
       });
     });
   });
