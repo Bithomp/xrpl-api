@@ -163,9 +163,13 @@ interface FindProcessTransactionsOptions extends FindTransactionsOptions {
 export async function findTransactions(
   account: string,
   options: FindTransactionsOptions = { limit: DEFAULT_LIMIT, timeout: 15000 }
-): Promise<object[]> {
+): Promise<object[] | object> {
   let transactions = [];
+  let accountTransactionsError = null;
   const timeStart = new Date();
+
+  // TODO: Add support for bynary
+  options.binary = false;
 
   // limit if sourceTag or destinationTag was used
   applyLimitOptions(options);
@@ -182,7 +186,9 @@ export async function findTransactions(
 
     // request without balanceChanges to reduce unnecessary work
     const accountTransactions: any = await getTransactions(account, { ...options, ...{ balanceChanges: false } });
+    console.log(accountTransactions)
     if (!accountTransactions || accountTransactions.error) {
+      accountTransactionsError = accountTransactions;
       break;
     }
     let newTransactions = accountTransactions.transactions;
@@ -208,6 +214,19 @@ export async function findTransactions(
     if (options.marker === undefined) {
       break;
     }
+  }
+
+  // return error infromation
+  if (accountTransactionsError) {
+    return accountTransactionsError;
+  }
+
+  // return timeout and marker infromation if nothing was found
+  if (options.marker && transactions.length === 0) {
+    return {
+      error: "searchTimeout",
+      marker: options.marker,
+    };
   }
 
   return transactions;
