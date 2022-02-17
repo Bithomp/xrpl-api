@@ -57,13 +57,29 @@ describe("Client", () => {
   });
 
   describe("parseNFTokenFlags", () => {
-    it("parses flags", async function () {
-      const result: any = await Client.parseNFTokenFlags(2147483659);
+    it("parses flags", function () {
+      const result: any = Client.parseNFTokenFlags(2147483659);
       expect(result).to.eql({
         burnable: true,
         onlyXRP: true,
         transferable: true,
         trustLine: false,
+      });
+    });
+  });
+
+  describe("parseNFTokenFlags", () => {
+    it("parses flags sell", function () {
+      const result: any = Client.parseNFTOfferFlags(1);
+      expect(result).to.eql({
+        sellToken: true,
+      });
+    });
+
+    it("parses flags buy", function () {
+      const result: any = Client.parseNFTOfferFlags(0);
+      expect(result).to.eql({
+        sellToken: false,
       });
     });
   });
