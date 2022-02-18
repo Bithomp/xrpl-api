@@ -78,6 +78,7 @@ function removeEmptyCounterpartyInOrderbookChanges(orderbookChanges: Orderbook) 
 }
 
 function isPartialPayment(tx: any) {
+  // tslint:disable-next-line:no-bitwise
   return (tx.Flags & common.txFlags.Payment.PartialPayment) !== 0
 }
 
@@ -137,8 +138,11 @@ function parseOutcome(tx: any): any | undefined {
     result: tx.meta.TransactionResult,
     timestamp: parseTimestamp(tx.date),
     fee: common.dropsToXrp(tx.Fee),
+    // tslint:disable-next-line:object-literal-shorthand
     balanceChanges: balanceChanges,
+    // tslint:disable-next-line:object-literal-shorthand
     orderbookChanges: orderbookChanges,
+    // tslint:disable-next-line:object-literal-shorthand
     channelChanges: channelChanges,
     ledgerVersion: tx.ledger_index,
     indexInLedger: tx.meta.TransactionIndex,
@@ -150,6 +154,7 @@ function hexToString(hex: string): string | undefined {
   return hex ? Buffer.from(hex, 'hex').toString('utf-8') : undefined
 }
 
+// tslint:disable-next-line:array-type
 function parseMemos(tx: any): Array<Memo> | undefined {
   if (!Array.isArray(tx.Memos) || tx.Memos.length === 0) {
     return undefined

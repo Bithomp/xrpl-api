@@ -14,7 +14,9 @@ function parsePaymentChannelClaim(tx: any): object {
     amount: tx.Amount && parseAmount(tx.Amount).value,
     signature: tx.Signature,
     publicKey: tx.PublicKey,
+    // tslint:disable-next-line:no-bitwise
     renew: Boolean(tx.Flags & claimFlags.Renew) || undefined,
+    // tslint:disable-next-line:no-bitwise
     close: Boolean(tx.Flags & claimFlags.Close) || undefined
   })
 }

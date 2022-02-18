@@ -16,6 +16,7 @@ function parseField(info, value) {
 
 function parseFields(data: any): object {
   const settings: any = {}
+  // tslint:disable-next-line:forin
   for (const fieldName in AccountFields) {
     const fieldValue = data[fieldName]
     if (fieldValue != null) {

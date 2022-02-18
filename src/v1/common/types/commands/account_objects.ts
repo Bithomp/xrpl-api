@@ -57,6 +57,7 @@ export interface AccountObjectsResponse {
 
   // Array of objects owned by this account.
   // from the getAccountObjects section of the dev center
+  // tslint:disable-next-line:array-type
   account_objects: Array<
     | CheckLedgerEntry
     | RippleStateLedgerEntry

@@ -16,9 +16,12 @@ export type FormattedLedger = {
   parentCloseTime: string
   totalDrops: string
   transactionHash: string
+  // tslint:disable-next-line:array-type
   transactions?: Array<object>
+  // tslint:disable-next-line:array-type
   transactionHashes?: Array<string>
   rawState?: string
+  // tslint:disable-next-line:array-type
   stateHashes?: Array<string>
 }
 
@@ -74,6 +77,7 @@ export function parseLedger(ledger: Ledger): FormattedLedger {
         closeTimeResolution: ledger.close_time_resolution,
         closeFlags: ledger.close_flags as number,
         ledgerHash: ledger.ledger_hash,
+        // tslint:disable-next-line:object-literal-shorthand
         ledgerVersion: ledgerVersion,
         parentLedgerHash: ledger.parent_hash,
         parentCloseTime: rippleTimeToISO8601(ledger.parent_close_time as number),

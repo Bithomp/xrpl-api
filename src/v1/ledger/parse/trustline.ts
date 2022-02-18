@@ -4,9 +4,11 @@ import {txFlags, removeUndefined} from '../../common'
 const flags = txFlags.TrustSet
 
 function parseFlag(flagsValue, trueValue, falseValue) {
+  // tslint:disable-next-line:no-bitwise
   if (flagsValue & trueValue) {
     return true
   }
+  // tslint:disable-next-line:no-bitwise
   if (flagsValue & falseValue) {
     return false
   }

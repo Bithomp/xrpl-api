@@ -22,6 +22,7 @@ function createAdjustment(
   const amountKey = Object.keys(adjustmentWithoutAddress)[0]
   const amount = adjustmentWithoutAddress[amountKey]
   return _.set(
+    // tslint:disable-next-line:object-literal-shorthand
     {address: address},
     amountKey,
     removeAnyCounterpartyEncoding(address, amount)

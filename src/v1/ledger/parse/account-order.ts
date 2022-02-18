@@ -26,6 +26,7 @@ export function parseAccountOrder(
   address: string,
   order: any
 ): FormattedAccountOrder {
+  // tslint:disable-next-line:no-bitwise
   const direction = (order.flags & orderFlags.Sell) === 0 ? 'buy' : 'sell'
   const takerGetsAmount = parseAmount(order.taker_gets)
   const takerPaysAmount = parseAmount(order.taker_pays)
@@ -35,9 +36,13 @@ export function parseAccountOrder(
   // note: immediateOrCancel and fillOrKill orders cannot enter the order book
   // so we can omit those flags here
   const specification = removeUndefined({
+    // tslint:disable-next-line:object-literal-shorthand
     direction: direction,
+    // tslint:disable-next-line:object-literal-shorthand
     quantity: quantity,
+    // tslint:disable-next-line:object-literal-shorthand
     totalPrice: totalPrice,
+    // tslint:disable-next-line:no-bitwise
     passive: (order.flags & orderFlags.Passive) !== 0 || undefined,
     // rippled currently does not provide "expiration" in account_offers
     expirationTime: parseTimestamp(order.expiration)
@@ -53,6 +58,7 @@ export function parseAccountOrder(
   const properties = {
     maker: address,
     sequence: order.seq,
+    // tslint:disable-next-line:object-literal-shorthand
     makerExchangeRate: makerExchangeRate
   }
 

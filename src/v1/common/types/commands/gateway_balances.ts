@@ -3,6 +3,7 @@ import {Amount} from '../objects'
 export interface GatewayBalancesRequest {
   account: string
   strict?: boolean
+  // tslint:disable-next-line:array-type
   hotwallet: string | Array<string>
   ledger_hash?: string
   ledger_index?: number | ('validated' | 'closed' | 'current')

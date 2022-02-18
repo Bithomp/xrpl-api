@@ -5,10 +5,12 @@ import {txFlags, removeUndefined} from '../../common'
 import parseAmount from './amount'
 
 function isNoDirectRipple(tx) {
+  // tslint:disable-next-line:no-bitwise
   return (tx.Flags & txFlags.Payment.NoRippleDirect) !== 0
 }
 
 function isQualityLimited(tx) {
+  // tslint:disable-next-line:no-bitwise
   return (tx.Flags & txFlags.Payment.LimitQuality) !== 0
 }
 
