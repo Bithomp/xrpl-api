@@ -1,6 +1,6 @@
 import nconf from "nconf";
 import { expect } from "chai";
-import { Client, Wallet } from "../../src/index";
+import { Client } from "../../src/index";
 
 describe("Client", () => {
   describe("getTransactions", () => {
@@ -175,7 +175,7 @@ describe("Client", () => {
       });
     });
 
-    it("finds the fist activation tranaction with balanceChanges", async function () {
+    it("returns tranaction with balanceChanges", async function () {
       const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
       const result: any = await Client.findTransactions(address, {
         limit: 1,
