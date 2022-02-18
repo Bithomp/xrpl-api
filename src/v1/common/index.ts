@@ -1,7 +1,5 @@
 import * as constants from './constants'
 import * as errors from './errors'
-import * as validate from './validate'
-import * as serverInfo from './serverinfo'
 import {xAddressToClassicAddress, isValidXAddress} from 'ripple-address-codec'
 
 export function ensureClassicAddress(account: string): string {
@@ -24,7 +22,7 @@ export function ensureClassicAddress(account: string): string {
   }
 }
 
-export {constants, errors, validate, serverInfo}
+export {constants, errors}
 export {
   dropsToXrp,
   xrpToDrops,
@@ -34,5 +32,5 @@ export {
   iso8601ToRippleTime,
   rippleTimeToISO8601
 } from './utils'
-export {Connection} from './connection'
+//export {Connection} from './connection'
 export {txFlags} from './txflags'
