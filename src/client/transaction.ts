@@ -1,11 +1,13 @@
 import { getBalanceChanges } from "xrpl";
 import * as Client from "../client";
+import { getTxDetails } from "../models/transaction";
 
 export interface GetTransactionOptions {
   binary?: boolean;
   minLedger?: number;
   maxLedger?: number;
   balanceChanges?: boolean;
+  specification?: boolean;
 }
 
 /**
@@ -69,8 +71,17 @@ export async function getTransaction(transaction: string, options: GetTransactio
 
   const result = response?.result;
 
-  if (options.balanceChanges === true && typeof result?.meta === "object") {
-    result.balanceChanges = getBalanceChanges(result.meta);
+  if (typeof result === "object") {
+    if (options.balanceChanges === true && typeof result.meta === "object") {
+      result.balanceChanges = getBalanceChanges(result.meta);
+    }
+
+    if (options.specification === true) {
+      const details = getTxDetails(transaction);
+      result.specification = details.specification;
+      result.outcome = details.outcome;
+      result.rawTransaction = details.rawTransaction;
+    }
   }
 
   return result;

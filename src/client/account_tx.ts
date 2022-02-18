@@ -4,7 +4,7 @@ import { getBalanceChanges } from "xrpl";
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger_index";
 import { compareTransactions } from "../common/utils";
-import { getSpecification } from "../models/transaction";
+import { getAccountTxDetails } from "../models/transaction";
 
 const DEFAULT_LIMIT = 200;
 const MAX_LIMIT_WITH_FILTER = 20;
@@ -146,7 +146,10 @@ export async function getTransactions(
         }
 
         if (options.specification === true) {
-          transaction.specification = getSpecification(transaction);
+          const details = getAccountTxDetails(transaction);
+          transaction.specification = details.specification;
+          transaction.outcome = details.outcome;
+          transaction.rawTransaction = details.rawTransaction;
         }
       }
     }
@@ -218,7 +221,10 @@ export async function findTransactions(
         }
 
         if (options.specification === true) {
-          newTransaction.specification = getSpecification(newTransaction.meta);
+          const details = getAccountTxDetails(newTransaction);
+          newTransaction.specification = details.specification;
+          newTransaction.outcome = details.outcome;
+          newTransaction.rawTransaction = details.rawTransaction;
         }
       }
     }
