@@ -4,6 +4,7 @@ import { getBalanceChanges } from "xrpl";
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger_index";
 import { compareTransactions } from "../common/utils";
+import { getSpecification } from "../models/transaction";
 
 const DEFAULT_LIMIT = 200;
 const MAX_LIMIT_WITH_FILTER = 20;
@@ -19,6 +20,7 @@ export interface GetTransactionsOptions {
   limit: number;
   marker?: unknown;
   balanceChanges?: boolean;
+  specification?: boolean;
 }
 
 /**
@@ -136,9 +138,17 @@ export async function getTransactions(
   }
 
   const result = response?.result;
-  if (options.balanceChanges === true && Array.isArray(result.transactions)) {
-    for (const transaction of result.transactions) {
-      transaction.balanceChanges = getBalanceChanges(transaction.meta);
+  if (Array.isArray(result.transactions)) {
+    if (options.balanceChanges === true || options.specification === true) {
+      for (const transaction of result.transactions) {
+        if (options.balanceChanges === true) {
+          transaction.balanceChanges = getBalanceChanges(transaction.meta);
+        }
+
+        if (options.specification === true) {
+          transaction.specification = getSpecification(transaction);
+        }
+      }
     }
   }
 
@@ -184,9 +194,11 @@ export async function findTransactions(
       break;
     }
 
-    // request without balanceChanges to reduce unnecessary work
-    const accountTransactions: any = await getTransactions(account, { ...options, ...{ balanceChanges: false } });
-    console.log(accountTransactions)
+    // request without balanceChanges and specification to reduce unnecessary work
+    const accountTransactions: any = await getTransactions(account, {
+      ...options,
+      ...{ balanceChanges: false, specification: false },
+    });
     if (!accountTransactions || accountTransactions.error) {
       accountTransactionsError = accountTransactions;
       break;
@@ -199,9 +211,15 @@ export async function findTransactions(
       .filter(_.partial(filterHelperTransactions, account, options))
       .filter(_.partial(filterHelperStartTx, options));
 
-    if (options.balanceChanges === true) {
+    if (options.balanceChanges === true || options.specification === true) {
       for (const newTransaction of newTransactions) {
-        newTransaction.balanceChanges = getBalanceChanges(newTransaction.meta);
+        if (options.balanceChanges === true) {
+          newTransaction.balanceChanges = getBalanceChanges(newTransaction.meta);
+        }
+
+        if (options.specification === true) {
+          newTransaction.specification = getSpecification(newTransaction.meta);
+        }
       }
     }
 

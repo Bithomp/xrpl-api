@@ -175,7 +175,7 @@ describe("Client", () => {
       });
     });
 
-    it("returns tranaction with balanceChanges", async function () {
+    it.only("returns tranaction with balanceChanges", async function () {
       const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
       const result: any = await Client.findTransactions(address, {
         limit: 1,
@@ -191,6 +191,21 @@ describe("Client", () => {
         { account: "rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk", balances: [{ currency: "XRP", value: "-31.020002" }] },
         { account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z", balances: [{ currency: "XRP", value: "31" }] },
       ]);
+    });
+
+    it.only("returns tranaction with specification", async function () {
+      const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
+      const result: any = await Client.findTransactions(address, {
+        limit: 1,
+        initiated: false,
+        forward: true,
+        excludeFailures: true,
+        types: ["Payment"],
+        timeout: 4000,
+        specification: true,
+      });
+
+      expect(result[0].specification).to.eql({});
     });
   });
 });
