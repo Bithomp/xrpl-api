@@ -15,8 +15,8 @@ export type FormattedOrderbookOrder = {
     makerExchangeRate: string
   }
   state?: {
-    fundedAmount: Amount
-    priceOfFundedAmount: Amount
+    fundedAmount?: Amount
+    priceOfFundedAmount?: Amount
   }
   data: BookOffer
 }
@@ -42,7 +42,7 @@ export function parseOrderbookOrder(data: BookOffer): FormattedOrderbookOrder {
     maker: data.Account,
     sequence: data.Sequence,
     makerExchangeRate: adjustQualityForXRP(
-      data.quality,
+      data.quality as string,
       takerGetsAmount.currency,
       takerPaysAmount.currency
     )
