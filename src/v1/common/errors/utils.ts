@@ -8,7 +8,7 @@ function getConstructorName(object: object): string | undefined {
   const classConstructor = constructorString.match(/^class\s([^\s]*)/);
 
   if (functionConstructor) {
-    functionConstructor[1];
+    return functionConstructor[1];
   } else if (classConstructor) {
     return classConstructor[1];
   }
