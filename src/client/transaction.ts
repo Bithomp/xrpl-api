@@ -77,7 +77,7 @@ export async function getTransaction(transaction: string, options: GetTransactio
     }
 
     if (options.specification === true) {
-      const details = getTxDetails(transaction);
+      const details = getTxDetails(result);
       result.specification = details.specification;
       result.outcome = details.outcome;
       result.rawTransaction = details.rawTransaction;

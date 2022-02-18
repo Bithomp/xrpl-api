@@ -175,7 +175,7 @@ describe("Client", () => {
       });
     });
 
-    it.only("returns tranaction with balanceChanges", async function () {
+    it("returns tranaction with balanceChanges", async function () {
       const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
       const result: any = await Client.findTransactions(address, {
         limit: 1,
@@ -193,7 +193,7 @@ describe("Client", () => {
       ]);
     });
 
-    it.only("returns tranaction with specification", async function () {
+    it("returns tranaction with specification", async function () {
       const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
       const result: any = await Client.findTransactions(address, {
         limit: 1,

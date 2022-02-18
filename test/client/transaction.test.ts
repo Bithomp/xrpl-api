@@ -64,5 +64,55 @@ describe("Client", () => {
         '{"transaction":"EC47759FE9691B6BFFEABB49FFFF8FCC46D3DF2AE4CBAE4F06A002AF2688EC1E","error":"txnNotFound","error_code":29,"error_message":"Transaction not found.","status":"error"}'
       );
     });
+
+    it("works with specification", async function () {
+      const result: any = await Client.getTransaction(
+        "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
+        { specification: true }
+      );
+      expect(result.specification).to.eql({
+        depositAuth: false,
+      });
+      expect(result.outcome).to.eql({
+        balanceChanges: {
+          rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [
+            {
+              currency: "XRP",
+              value: "-0.00001",
+            },
+          ],
+        },
+        fee: "0.00001",
+        indexInLedger: 42,
+        ledgerVersion: 69773479,
+        orderbookChanges: {},
+        result: "tesSUCCESS",
+        timestamp: "2022-02-18T13:13:21.000Z",
+      });
+    });
+
+    it("works with specification", async function () {
+      const result: any = await Client.getTransaction(
+        "52D37283A4AF8D4DAEF745442B534E13E69861A8F4719BEC1211379ED8C42116",
+        { specification: true }
+      );
+      expect(result.specification).to.eql({});
+      expect(result.outcome).to.eql({
+        balanceChanges: {
+          rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [
+            {
+              currency: "XRP",
+              value: "-0.01",
+            },
+          ],
+        },
+        fee: "0.01",
+        indexInLedger: 4,
+        ledgerVersion: 69754983,
+        orderbookChanges: {},
+        result: "tesSUCCESS",
+        timestamp: "2022-02-17T16:58:50.000Z",
+      });
+    });
   });
 });
