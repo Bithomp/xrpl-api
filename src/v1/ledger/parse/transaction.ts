@@ -22,61 +22,34 @@ import parseTrustline from './trustline'
 import parseAmendment from './amendment' // pseudo-transaction
 import parseFeeUpdate from './fee-update' // pseudo-transaction
 
-function parseTransactionType(type) {
-  // Ordering matches https://developers.ripple.com/transaction-types.html
-  const mapping = {
-    AccountSet: 'settings',
-    AccountDelete: 'accountDelete',
-    CheckCancel: 'checkCancel',
-    CheckCash: 'checkCash',
-    CheckCreate: 'checkCreate',
-    DepositPreauth: 'depositPreauth',
-    EscrowCancel: 'escrowCancellation',
-    EscrowCreate: 'escrowCreation',
-    EscrowFinish: 'escrowExecution',
-    OfferCancel: 'orderCancellation',
-    OfferCreate: 'order',
-    Payment: 'payment',
-    PaymentChannelClaim: 'paymentChannelClaim',
-    PaymentChannelCreate: 'paymentChannelCreate',
-    PaymentChannelFund: 'paymentChannelFund',
-    SetRegularKey: 'settings',
-    SignerListSet: 'settings',
-    TicketCreate: 'ticketCreate',
-    TrustSet: 'trustline',
+const TransactionsParserMaping = {
+    AccountSet: parseSettings,
+    AccountDelete: parseAccountDelete,
+    CheckCancel: parseCheckCancel,
+    CheckCash: parseCheckCash,
+    CheckCreate: parseCheckCreate,
+    DepositPreauth: parseDepositPreauth,
+    EscrowCancel: parseEscrowCancellation,
+    EscrowCreate: parseEscrowCreation,
+    EscrowFinish: parseEscrowExecution,
+    OfferCancel: parseOrderCancellation,
+    OfferCreate: parseOrder,
+    Payment: parsePayment,
+    PaymentChannelClaim: parsePaymentChannelClaim,
+    PaymentChannelCreate: parsePaymentChannelCreate,
+    PaymentChannelFund: parsePaymentChannelFund,
+    SetRegularKey: parseSettings,
+    SignerListSet: parseSettings,
+    TicketCreate: parseTicketCreate,
+    TrustSet: parseTrustline,
 
-    EnableAmendment: 'amendment', // pseudo-transaction
-    SetFee: 'feeUpdate' // pseudo-transaction
-  }
-  return mapping[type] || null
+    EnableAmendment: parseAmendment, // pseudo-transaction
+    SetFee: parseFeeUpdate // pseudo-transaction
 }
 
 // includeRawTransaction: undefined by default (getTransaction)
 function parseTransaction(tx: any, includeRawTransaction: boolean): any {
-  const type = parseTransactionType(tx.TransactionType)
-  const mapping = {
-    settings: parseSettings,
-    accountDelete: parseAccountDelete,
-    checkCancel: parseCheckCancel,
-    checkCash: parseCheckCash,
-    checkCreate: parseCheckCreate,
-    depositPreauth: parseDepositPreauth,
-    escrowCancellation: parseEscrowCancellation,
-    escrowCreation: parseEscrowCreation,
-    escrowExecution: parseEscrowExecution,
-    orderCancellation: parseOrderCancellation,
-    order: parseOrder,
-    payment: parsePayment,
-    paymentChannelClaim: parsePaymentChannelClaim,
-    paymentChannelCreate: parsePaymentChannelCreate,
-    paymentChannelFund: parsePaymentChannelFund,
-    ticketCreate: parseTicketCreate,
-    trustline: parseTrustline,
-
-    amendment: parseAmendment, // pseudo-transaction
-    feeUpdate: parseFeeUpdate // pseudo-transaction
-  }
-  const parser: Function = mapping[type]
+  const parser: Function = TransactionsParserMaping[tx.TransactionType]
 
   const specification = parser
     ? parser(tx)
@@ -91,10 +64,6 @@ function parseTransaction(tx: any, includeRawTransaction: boolean): any {
 
   const outcome = parseOutcome(tx)
   return removeUndefined({
-    type: type,
-    address: tx.Account,
-    sequence: tx.Sequence,
-    id: tx.hash,
     specification: removeUndefined(specification),
     outcome: outcome ? removeUndefined(outcome) : undefined,
     rawTransaction: includeRawTransaction ? JSON.stringify(tx) : undefined

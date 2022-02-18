@@ -121,7 +121,7 @@ function toRippledAmount(amount: RippledAmount): RippledAmount {
   let tag: number | false = false;
 
   try {
-    ({classicAddress: issuer, tag} = xAddressToClassicAddress(issuer))
+    ({classicAddress: issuer, tag} = xAddressToClassicAddress(issuer as string))
   } catch (e) { /* not an X-address */ }
   
   if (tag !== false) {
