@@ -1,4 +1,4 @@
-import { NFTokenMintFlags } from "xrpl";
+import { NFTokenMintFlags, NFTokenCreateOfferFlags } from "xrpl";
 
 export const NFTokenFlagsKeys = {
   burnable: NFTokenMintFlags.tfBurnable,
@@ -15,3 +15,11 @@ export interface NFTokenFlagsKeysInterface {
   transferable?: boolean;
   // reservedFlag?: boolean
 }
+
+export interface NFTokenOfferFlagsKeysInterface {
+  sellToken?: boolean;
+}
+
+export const NFTokenOfferFlagsKeys = {
+  sellToken: NFTokenCreateOfferFlags.tfSellToken,
+};
