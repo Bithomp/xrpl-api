@@ -10,9 +10,49 @@ describe("Client", () => {
     });
 
     it("works", async function () {
-      this.timeout(15000);
-      const result: any = await Client.getAccountNfts("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
-      expect(result[0].Issuer).to.eql("rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA");
+      const result: any = await Client.getAccountNfts("rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz");
+      expect(result).to.eql([
+        {
+          Flags: 0,
+          Issuer: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          TokenID: "00000000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000",
+          TokenTaxon: 0,
+          URI: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+          nft_serial: 0,
+        },
+        {
+          Flags: 0,
+          Issuer: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          TokenID: "00000000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+          TokenTaxon: 0,
+          URI: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+          nft_serial: 1,
+        },
+        {
+          Flags: 0,
+          Issuer: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          TokenID: "00000000C124E14881533A9AFE4A5F481795C17003A9FACF2DCBAB9D00000002",
+          TokenTaxon: 0,
+          URI: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+          nft_serial: 2,
+        },
+        {
+          Flags: 11,
+          Issuer: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          TokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF44B17C9E00000003",
+          TokenTaxon: 0,
+          URI: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+          nft_serial: 3,
+        },
+        {
+          Flags: 11,
+          Issuer: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          TokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF5B974D9F00000004",
+          TokenTaxon: 0,
+          URI: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+          nft_serial: 4,
+        },
+      ]);
     });
   });
 
