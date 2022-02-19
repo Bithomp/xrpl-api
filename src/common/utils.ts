@@ -1,5 +1,7 @@
+export type SortDirection = -1 | 0 | 1;
+
 // https://github.com/XRPLF/xrpl.js/blob/6e0fff2ad642c2f94ddb83a23f57dff49d1678ec/src/ledger/utils.ts#L80
-export function signum(num: number): -1 | 0 | 1 {
+export function signum(num: number): SortDirection {
   return num === 0 ? 0 : num > 0 ? 1 : -1;
 }
 
@@ -10,7 +12,7 @@ export function signum(num: number): -1 | 0 | 1 {
  *  them based on TransactionIndex
  *  See: https://developers.ripple.com/transaction-metadata.html
  */
-export function compareTransactions(first: any, second: any): -1 | 0 | 1 {
+export function compareTransactions(first: any, second: any): SortDirection {
   if (!first.tx || !first.meta || !second.tx || !second.meta) {
     return 0;
   }

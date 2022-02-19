@@ -83,4 +83,63 @@ describe("Client", () => {
       });
     });
   });
+
+  describe("sortHelperAccountNFToken", () => {
+    it("sorts tokens", function () {
+      const account_nfts = [
+        {
+          Flags: 0,
+          Issuer: "issuer3",
+          TokenID: "string",
+          TokenTaxons: 0,
+          nft_serial: 56,
+        },
+        {
+          Flags: 0,
+          Issuer: "issuer1",
+          TokenID: "string",
+          TokenTaxons: 0,
+          nft_serial: 2,
+        },
+        {
+          Flags: 0,
+          Issuer: "issuer1",
+          TokenID: "string",
+          TokenTaxons: 0,
+          nft_serial: 1,
+        },
+        {
+          Flags: 0,
+          Issuer: "issuer2",
+          TokenID: "string",
+          TokenTaxons: 0,
+          nft_serial: 56,
+        },
+        {
+          Flags: 0,
+          Issuer: "issuer3",
+          TokenID: "string",
+          TokenTaxons: 0,
+          nft_serial: 1,
+        },
+      ];
+
+      const result = account_nfts.sort(Client.sortHelperAccountNFToken);
+
+      expect(result[0].Issuer).to.eql("issuer1");
+      expect(result[0].nft_serial).to.eql(1);
+
+      expect(result[1].Issuer).to.eql("issuer1");
+      expect(result[1].nft_serial).to.eql(2);
+
+      expect(result[2].Issuer).to.eql("issuer2");
+      expect(result[2].nft_serial).to.eql(56);
+
+      expect(result[3].Issuer).to.eql("issuer3");
+      expect(result[3].nft_serial).to.eql(1);
+
+      expect(result[4].Issuer).to.eql("issuer3");
+      expect(result[4].nft_serial).to.eql(56);
+    });
+  });
 });

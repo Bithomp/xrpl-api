@@ -1,7 +1,13 @@
-import { parseFlags } from "../common/utils";
+import { parseFlags, SortDirection } from "../common/utils";
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger_index";
-import { NFTokenFlagsKeys, NFTokenFlagsKeysInterface, NFTokenOfferFlagsKeys, NFTokenOfferFlagsKeysInterface } from "../models/account_nfts";
+import { AccountNFToken } from "../models/account_nfts";
+import {
+  NFTokenFlagsKeys,
+  NFTokenFlagsKeysInterface,
+  NFTokenOfferFlagsKeys,
+  NFTokenOfferFlagsKeysInterface,
+} from "../models/account_nfts";
 
 export interface GetAccountNftsOptions {
   ledgerIndex?: LedgerIndex;
@@ -54,7 +60,36 @@ export async function getAccountNfts(
     };
   }
 
-  return response?.result?.account_nfts;
+  let account_nfts = response?.result?.account_nfts;
+  if (Array.isArray(account_nfts)) {
+    account_nfts = account_nfts.sort(sortHelperAccountNFToken);
+  }
+
+  return account_nfts;
+}
+
+/**
+ * Sort account NFTs by issuer and serial
+ * issuer1 serial 1
+ * issuer1 serial 2
+ * issuer2 serial 56
+ * issuer3 serial 1
+ * issuer3 serial 56
+ */
+export function sortHelperAccountNFToken(a: AccountNFToken, b: AccountNFToken): SortDirection {
+  const cmpIssuer = a.Issuer.localeCompare(b.Issuer);
+  if (cmpIssuer !== 0) {
+    return cmpIssuer as SortDirection;
+  }
+
+  if (a.nft_serial < b.nft_serial) {
+    return -1;
+  }
+  if (a.nft_serial > b.nft_serial) {
+    return 1;
+  }
+
+  return 0;
 }
 
 export interface GetAccountNftSellOffersOptions {
