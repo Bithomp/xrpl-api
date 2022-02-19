@@ -8,6 +8,7 @@ export interface GetTransactionOptions {
   maxLedger?: number;
   balanceChanges?: boolean;
   specification?: boolean;
+  legacy?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification
 }
 
 /**
@@ -72,6 +73,10 @@ export async function getTransaction(transaction: string, options: GetTransactio
   const result = response?.result;
 
   if (typeof result === "object") {
+    if (options.legacy === true) {
+      return getTxDetails(result);
+    }
+
     if (options.balanceChanges === true && typeof result.meta === "object") {
       result.balanceChanges = getBalanceChanges(result.meta);
     }

@@ -167,6 +167,7 @@ export interface FindTransactionsOptions extends GetTransactionsOptions {
   sourceTag?: number;
   destinationTag?: number;
   timeout?: number;
+  legacy?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification
 }
 
 interface FindProcessTransactionsOptions extends FindTransactionsOptions {
@@ -214,7 +215,7 @@ export async function findTransactions(
       .filter(_.partial(filterHelperTransactions, account, options))
       .filter(_.partial(filterHelperStartTx, options));
 
-    if (options.balanceChanges === true || options.specification === true) {
+    if (options.legacy !== true && (options.balanceChanges === true || options.specification === true)) {
       for (const newTransaction of newTransactions) {
         if (options.balanceChanges === true) {
           newTransaction.balanceChanges = getBalanceChanges(newTransaction.meta);
@@ -251,6 +252,10 @@ export async function findTransactions(
       error: "searchTimeout",
       marker: options.marker,
     };
+  }
+
+  if (options.legacy === true) {
+    transactions = transactions.map((transaction) => getAccountTxDetails(transaction)) as any;
   }
 
   return transactions;
