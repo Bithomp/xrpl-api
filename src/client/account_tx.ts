@@ -4,6 +4,7 @@ import { getBalanceChanges } from "xrpl";
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger_index";
 import { compareTransactions } from "../common/utils";
+import { getAccountTxDetails } from "../models/transaction";
 
 const DEFAULT_LIMIT = 200;
 const MAX_LIMIT_WITH_FILTER = 20;
@@ -19,6 +20,7 @@ export interface GetTransactionsOptions {
   limit: number;
   marker?: unknown;
   balanceChanges?: boolean;
+  specification?: boolean;
 }
 
 /**
@@ -136,9 +138,20 @@ export async function getTransactions(
   }
 
   const result = response?.result;
-  if (options.balanceChanges === true && Array.isArray(result.transactions)) {
-    for (const transaction of result.transactions) {
-      transaction.balanceChanges = getBalanceChanges(transaction.meta);
+  if (Array.isArray(result.transactions)) {
+    if (options.balanceChanges === true || options.specification === true) {
+      for (const transaction of result.transactions) {
+        if (options.balanceChanges === true) {
+          transaction.balanceChanges = getBalanceChanges(transaction.meta);
+        }
+
+        if (options.specification === true) {
+          const details = getAccountTxDetails(transaction);
+          transaction.specification = details.specification;
+          transaction.outcome = details.outcome;
+          transaction.rawTransaction = details.rawTransaction;
+        }
+      }
     }
   }
 
@@ -154,6 +167,7 @@ export interface FindTransactionsOptions extends GetTransactionsOptions {
   sourceTag?: number;
   destinationTag?: number;
   timeout?: number;
+  legacy?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification
 }
 
 interface FindProcessTransactionsOptions extends FindTransactionsOptions {
@@ -163,9 +177,13 @@ interface FindProcessTransactionsOptions extends FindTransactionsOptions {
 export async function findTransactions(
   account: string,
   options: FindTransactionsOptions = { limit: DEFAULT_LIMIT, timeout: 15000 }
-): Promise<object[]> {
+): Promise<object[] | object> {
   let transactions = [];
+  let accountTransactionsError = null;
   const timeStart = new Date();
+
+  // TODO: Add support for bynary
+  options.binary = false;
 
   // limit if sourceTag or destinationTag was used
   applyLimitOptions(options);
@@ -180,9 +198,13 @@ export async function findTransactions(
       break;
     }
 
-    // request without balanceChanges to reduce unnecessary work
-    const accountTransactions: any = await getTransactions(account, { ...options, ...{ balanceChanges: false } });
+    // request without balanceChanges and specification to reduce unnecessary work
+    const accountTransactions: any = await getTransactions(account, {
+      ...options,
+      ...{ balanceChanges: false, specification: false },
+    });
     if (!accountTransactions || accountTransactions.error) {
+      accountTransactionsError = accountTransactions;
       break;
     }
     let newTransactions = accountTransactions.transactions;
@@ -193,9 +215,18 @@ export async function findTransactions(
       .filter(_.partial(filterHelperTransactions, account, options))
       .filter(_.partial(filterHelperStartTx, options));
 
-    if (options.balanceChanges === true) {
+    if (options.legacy !== true && (options.balanceChanges === true || options.specification === true)) {
       for (const newTransaction of newTransactions) {
-        newTransaction.balanceChanges = getBalanceChanges(newTransaction.meta);
+        if (options.balanceChanges === true) {
+          newTransaction.balanceChanges = getBalanceChanges(newTransaction.meta);
+        }
+
+        if (options.specification === true) {
+          const details = getAccountTxDetails(newTransaction);
+          newTransaction.specification = details.specification;
+          newTransaction.outcome = details.outcome;
+          newTransaction.rawTransaction = details.rawTransaction;
+        }
       }
     }
 
@@ -208,6 +239,23 @@ export async function findTransactions(
     if (options.marker === undefined) {
       break;
     }
+  }
+
+  // return error infromation
+  if (accountTransactionsError) {
+    return accountTransactionsError;
+  }
+
+  // return timeout and marker infromation if nothing was found
+  if (options.marker && transactions.length === 0) {
+    return {
+      error: "searchTimeout",
+      marker: options.marker,
+    };
+  }
+
+  if (options.legacy === true) {
+    transactions = transactions.map((transaction) => getAccountTxDetails(transaction)) as any;
   }
 
   return transactions;

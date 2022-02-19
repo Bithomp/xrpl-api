@@ -64,5 +64,90 @@ describe("Client", () => {
         '{"transaction":"EC47759FE9691B6BFFEABB49FFFF8FCC46D3DF2AE4CBAE4F06A002AF2688EC1E","error":"txnNotFound","error_code":29,"error_message":"Transaction not found.","status":"error"}'
       );
     });
+
+    it("works with specification", async function () {
+      const result: any = await Client.getTransaction(
+        "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
+        { specification: true }
+      );
+      expect(result.specification).to.eql({
+        depositAuth: false,
+      });
+      expect(result.outcome).to.eql({
+        balanceChanges: {
+          rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [
+            {
+              currency: "XRP",
+              value: "-0.00001",
+            },
+          ],
+        },
+        fee: "0.00001",
+        indexInLedger: 42,
+        ledgerVersion: 69773479,
+        orderbookChanges: {},
+        result: "tesSUCCESS",
+        timestamp: "2022-02-18T13:13:21.000Z",
+      });
+    });
+
+    it("works with specification", async function () {
+      const result: any = await Client.getTransaction(
+        "52D37283A4AF8D4DAEF745442B534E13E69861A8F4719BEC1211379ED8C42116",
+        { specification: true }
+      );
+      expect(result.specification).to.eql({});
+      expect(result.outcome).to.eql({
+        balanceChanges: {
+          rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [
+            {
+              currency: "XRP",
+              value: "-0.01",
+            },
+          ],
+        },
+        fee: "0.01",
+        indexInLedger: 4,
+        ledgerVersion: 69754983,
+        orderbookChanges: {},
+        result: "tesSUCCESS",
+        timestamp: "2022-02-17T16:58:50.000Z",
+      });
+    });
+
+    it("works with legacy", async function () {
+      const result: any = await Client.getTransaction(
+        "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
+        { legacy: true }
+      );
+
+      expect(result).to.eql({
+        type: "settings",
+        address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6",
+        sequence: 865,
+        id: "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
+        specification: {
+          depositAuth: false,
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2022-02-18T13:13:21.000Z",
+          fee: "0.00001",
+          balanceChanges: {
+            rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [
+              {
+                currency: "XRP",
+                value: "-0.00001",
+              },
+            ],
+          },
+          orderbookChanges: {},
+          ledgerVersion: 69773479,
+          indexInLedger: 42,
+        },
+        rawTransaction:
+          '{"Account":"rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6","ClearFlag":9,"Fee":"10","Flags":2147483648,"LastLedgerSequence":69774474,"Memos":[{"Memo":{"MemoData":"32386165313937642D373661302D343262642D613730332D653666373933633235633134"}}],"Sequence":865,"SigningPubKey":"03CAB36D34D50AB099579EA052474AB00645C558B9D8BFA352D0A30B55829A5596","TransactionType":"AccountSet","TxnSignature":"3045022100917B37A4F49C88436BDB62C3F1E61F122823AD42F1DBB4627D7E0A8D02C8A5F2022064D59F622A0867409FD461046678CBA534CEB6CC88724B8E513C0F8311CE70F4","date":698505201,"hash":"B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C","inLedger":69773479,"ledger_index":69773479,"meta":{"AffectedNodes":[{"ModifiedNode":{"FinalFields":{"Account":"rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6","Balance":"75638764","Flags":0,"OwnerCount":30,"Sequence":866,"TicketCount":4},"LedgerEntryType":"AccountRoot","LedgerIndex":"0AA9CA59404D4F9F75F6B0AA011C25F51F56611CA1D711C5FDBFBE60D72700F7","PreviousFields":{"Balance":"75638774","Flags":16777216,"Sequence":865},"PreviousTxnID":"AC0250E4A20599E30A45F5E04D189A3298156C525854583C178FC820F41860D8","PreviousTxnLgrSeq":69773468}}],"TransactionIndex":42,"TransactionResult":"tesSUCCESS"},"validated":true}',
+      });
+    });
   });
 });

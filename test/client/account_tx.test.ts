@@ -80,7 +80,6 @@ describe("Client", () => {
       );
     });
 
-
     it("finds the fist activation tranaction", async function () {
       const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
       const result: any = await Client.findTransactions(address, {
@@ -145,7 +144,7 @@ describe("Client", () => {
       );
     });
 
-    it("finds the fist send tranaction with counterparty", async function () {
+    it("finds the fist send tranaction with destinationTag", async function () {
       this.timeout(15000);
       const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
       const result: any = await Client.findTransactions(address, {
@@ -159,7 +158,24 @@ describe("Client", () => {
       );
     });
 
-    it("finds the fist activation tranaction with balanceChanges", async function () {
+    it("returns search timeout and marker", async function () {
+      const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
+      const result: any = await Client.findTransactions(address, {
+        limit: 10,
+        destinationTag: 119954610,
+        timeout: 1, // only 1 request will be send
+      });
+
+      expect(result).to.eql({
+        error: "searchTimeout",
+        marker: {
+          ledger: 68168775,
+          seq: 18,
+        },
+      });
+    });
+
+    it("returns tranaction with balanceChanges", async function () {
       const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
       const result: any = await Client.findTransactions(address, {
         limit: 1,
@@ -175,6 +191,123 @@ describe("Client", () => {
         { account: "rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk", balances: [{ currency: "XRP", value: "-31.020002" }] },
         { account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z", balances: [{ currency: "XRP", value: "31" }] },
       ]);
+    });
+
+    it("returns tranaction with specification", async function () {
+      const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
+      const result: any = await Client.findTransactions(address, {
+        limit: 1,
+        initiated: false,
+        forward: true,
+        excludeFailures: true,
+        types: ["Payment"],
+        timeout: 4000,
+        specification: true,
+      });
+
+      expect(result[0].specification).to.eql({
+        destination: {
+          address: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+        },
+        source: {
+          address: "rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk",
+          maxAmount: {
+            currency: "XRP",
+            value: "31",
+          },
+          tag: 1617004677,
+        },
+      });
+      expect(result[0].outcome).to.eql({
+        balanceChanges: {
+          rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk: [
+            {
+              currency: "XRP",
+              value: "-31.020002",
+            },
+          ],
+          rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z: [
+            {
+              currency: "XRP",
+              value: "31",
+            },
+          ],
+        },
+        deliveredAmount: {
+          currency: "XRP",
+          value: "31",
+        },
+        fee: "0.020002",
+        indexInLedger: 4,
+        ledgerVersion: 16658556,
+        orderbookChanges: {},
+        result: "tesSUCCESS",
+        timestamp: "2015-10-24T06:37:00.000Z",
+      });
+      expect(result[0].rawTransaction).to.eql(
+        '{"Account":"rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk","Amount":"31000000","Destination":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","Fee":"20002","Flags":2147483648,"Sequence":98302,"SigningPubKey":"02F81DBCD76D399BCF49F3812870A1234FF004DC62169915588AF7749A4D57499F","SourceTag":1617004677,"TransactionType":"Payment","TxnSignature":"304502210082B18C90FBDA585C5527C6D2C9D244C6482A2E439FD152F37A2E2AE7F33315C102205CDC77D7909EA8D7FB8E5A51EA674EF514D251EDAE0101FAB0C1BD3F42E01AA7","date":498983820,"hash":"2D6894BCCA14919218576E8204E4715301989D98CAEDA304BB465949459972D3","inLedger":16658556,"ledger_index":16658556,"meta":{"AffectedNodes":[{"ModifiedNode":{"FinalFields":{"Account":"rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk","Balance":"19897873078","Flags":393216,"OwnerCount":1,"Sequence":98303},"LedgerEntryType":"AccountRoot","LedgerIndex":"A1C341684C7E01E81208A9F59BF6C0DAD245BEA5ED399E52D109AEFFB29B0C69","PreviousFields":{"Balance":"19928893080","Sequence":98302},"PreviousTxnID":"9EFDB125992DB9F12C3389D34045B1D4C87B3D8B5B82F05B8B541EFC4579EA53","PreviousTxnLgrSeq":16658441}},{"CreatedNode":{"LedgerEntryType":"AccountRoot","LedgerIndex":"EE994230153E2207737ACE5CDA73F8275E81D05A45C6937B62B0FF24C81140BA","NewFields":{"Account":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","Balance":"31000000","Sequence":1}}}],"TransactionIndex":4,"TransactionResult":"tesSUCCESS","delivered_amount":"31000000"},"validated":true}'
+      );
+    });
+
+    it("returns tranaction with legacy", async function () {
+      const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
+      const result: any = await Client.findTransactions(address, {
+        limit: 1,
+        initiated: false,
+        forward: true,
+        excludeFailures: true,
+        types: ["Payment"],
+        timeout: 4000,
+        legacy: true,
+      });
+
+      expect(result[0]).to.eql({
+        type: "payment",
+        address: "rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk",
+        sequence: 98302,
+        id: "2D6894BCCA14919218576E8204E4715301989D98CAEDA304BB465949459972D3",
+        specification: {
+          source: {
+            address: "rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk",
+            maxAmount: {
+              currency: "XRP",
+              value: "31",
+            },
+            tag: 1617004677,
+          },
+          destination: {
+            address: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2015-10-24T06:37:00.000Z",
+          fee: "0.020002",
+          balanceChanges: {
+            rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk: [
+              {
+                currency: "XRP",
+                value: "-31.020002",
+              },
+            ],
+            rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z: [
+              {
+                currency: "XRP",
+                value: "31",
+              },
+            ],
+          },
+          orderbookChanges: {},
+          ledgerVersion: 16658556,
+          indexInLedger: 4,
+          deliveredAmount: {
+            currency: "XRP",
+            value: "31",
+          },
+        },
+        rawTransaction:
+          '{"Account":"rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk","Amount":"31000000","Destination":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","Fee":"20002","Flags":2147483648,"Sequence":98302,"SigningPubKey":"02F81DBCD76D399BCF49F3812870A1234FF004DC62169915588AF7749A4D57499F","SourceTag":1617004677,"TransactionType":"Payment","TxnSignature":"304502210082B18C90FBDA585C5527C6D2C9D244C6482A2E439FD152F37A2E2AE7F33315C102205CDC77D7909EA8D7FB8E5A51EA674EF514D251EDAE0101FAB0C1BD3F42E01AA7","date":498983820,"hash":"2D6894BCCA14919218576E8204E4715301989D98CAEDA304BB465949459972D3","inLedger":16658556,"ledger_index":16658556,"meta":{"AffectedNodes":[{"ModifiedNode":{"FinalFields":{"Account":"rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk","Balance":"19897873078","Flags":393216,"OwnerCount":1,"Sequence":98303},"LedgerEntryType":"AccountRoot","LedgerIndex":"A1C341684C7E01E81208A9F59BF6C0DAD245BEA5ED399E52D109AEFFB29B0C69","PreviousFields":{"Balance":"19928893080","Sequence":98302},"PreviousTxnID":"9EFDB125992DB9F12C3389D34045B1D4C87B3D8B5B82F05B8B541EFC4579EA53","PreviousTxnLgrSeq":16658441}},{"CreatedNode":{"LedgerEntryType":"AccountRoot","LedgerIndex":"EE994230153E2207737ACE5CDA73F8275E81D05A45C6937B62B0FF24C81140BA","NewFields":{"Account":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","Balance":"31000000","Sequence":1}}}],"TransactionIndex":4,"TransactionResult":"tesSUCCESS","delivered_amount":"31000000"},"validated":true}',
+      });
     });
   });
 });
