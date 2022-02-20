@@ -146,7 +146,7 @@ export async function getTransactions(
         }
 
         if (options.specification === true) {
-          const details = getAccountTxDetails(transaction);
+          const details = getAccountTxDetails(transaction, true);
           transaction.specification = details.specification;
           transaction.outcome = details.outcome;
           transaction.rawTransaction = details.rawTransaction;
@@ -168,6 +168,7 @@ export interface FindTransactionsOptions extends GetTransactionsOptions {
   destinationTag?: number;
   timeout?: number;
   legacy?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification
+  includeRawTransactions?: boolean; // for legacy
 }
 
 interface FindProcessTransactionsOptions extends FindTransactionsOptions {
@@ -222,7 +223,7 @@ export async function findTransactions(
         }
 
         if (options.specification === true) {
-          const details = getAccountTxDetails(newTransaction);
+          const details = getAccountTxDetails(newTransaction, true);
           newTransaction.specification = details.specification;
           newTransaction.outcome = details.outcome;
           newTransaction.rawTransaction = details.rawTransaction;
@@ -255,7 +256,9 @@ export async function findTransactions(
   }
 
   if (options.legacy === true) {
-    transactions = transactions.map((transaction) => getAccountTxDetails(transaction)) as any;
+    transactions = transactions.map((transaction) =>
+      getAccountTxDetails(transaction, options.includeRawTransactions === true)
+    ) as any;
   }
 
   return transactions;

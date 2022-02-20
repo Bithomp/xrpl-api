@@ -1,11 +1,11 @@
 import parseTransaction from "../v1/ledger/parse/transaction";
 
-export function getAccountTxDetails(transaction: any): any {
-  return getTxDetails(AccountTxToTx(transaction));
+export function getAccountTxDetails(transaction: any, includeRawTransaction: boolean): any {
+  return getTxDetails(AccountTxToTx(transaction), includeRawTransaction);
 }
 
-export function getTxDetails(tx: any): any {
-  const specification = parseTransaction(tx, true);
+export function getTxDetails(tx: any, includeRawTransaction: boolean): any {
+  const specification = parseTransaction(tx, includeRawTransaction);
 
   return specification;
 }

@@ -145,8 +145,41 @@ describe("Client", () => {
           ledgerVersion: 69773479,
           indexInLedger: 42,
         },
+      });
+    });
+
+    it("works with legacy with includeRawTransaction", async function () {
+      const result: any = await Client.getTransaction(
+        "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
+        { legacy: true, includeRawTransaction: true }
+      );
+
+      expect(result).to.eql({
+        address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6",
+        id: "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2022-02-18T13:13:21.000Z",
+          fee: "0.00001",
+          balanceChanges: {
+            rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [
+              {
+                currency: "XRP",
+                value: "-0.00001",
+              },
+            ],
+          },
+          orderbookChanges: {},
+          ledgerVersion: 69773479,
+          indexInLedger: 42,
+        },
         rawTransaction:
           '{"Account":"rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6","ClearFlag":9,"Fee":"10","Flags":2147483648,"LastLedgerSequence":69774474,"Memos":[{"Memo":{"MemoData":"32386165313937642D373661302D343262642D613730332D653666373933633235633134"}}],"Sequence":865,"SigningPubKey":"03CAB36D34D50AB099579EA052474AB00645C558B9D8BFA352D0A30B55829A5596","TransactionType":"AccountSet","TxnSignature":"3045022100917B37A4F49C88436BDB62C3F1E61F122823AD42F1DBB4627D7E0A8D02C8A5F2022064D59F622A0867409FD461046678CBA534CEB6CC88724B8E513C0F8311CE70F4","date":698505201,"hash":"B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C","inLedger":69773479,"ledger_index":69773479,"meta":{"AffectedNodes":[{"ModifiedNode":{"FinalFields":{"Account":"rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6","Balance":"75638764","Flags":0,"OwnerCount":30,"Sequence":866,"TicketCount":4},"LedgerEntryType":"AccountRoot","LedgerIndex":"0AA9CA59404D4F9F75F6B0AA011C25F51F56611CA1D711C5FDBFBE60D72700F7","PreviousFields":{"Balance":"75638774","Flags":16777216,"Sequence":865},"PreviousTxnID":"AC0250E4A20599E30A45F5E04D189A3298156C525854583C178FC820F41860D8","PreviousTxnLgrSeq":69773468}}],"TransactionIndex":42,"TransactionResult":"tesSUCCESS"},"validated":true}',
+        type: "settings",
+        sequence: 865,
+        specification: {
+          depositAuth: false,
+        },
       });
     });
   });

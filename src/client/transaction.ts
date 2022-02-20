@@ -9,6 +9,7 @@ export interface GetTransactionOptions {
   balanceChanges?: boolean;
   specification?: boolean;
   legacy?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification
+  includeRawTransaction?: boolean; // for legacy
 }
 
 /**
@@ -74,7 +75,7 @@ export async function getTransaction(transaction: string, options: GetTransactio
 
   if (typeof result === "object") {
     if (options.legacy === true) {
-      return getTxDetails(result);
+      return getTxDetails(result, options.includeRawTransaction === true);
     }
 
     if (options.balanceChanges === true && typeof result.meta === "object") {
@@ -82,7 +83,7 @@ export async function getTransaction(transaction: string, options: GetTransactio
     }
 
     if (options.specification === true) {
-      const details = getTxDetails(result);
+      const details = getTxDetails(result, true);
       result.specification = details.specification;
       result.outcome = details.outcome;
       result.rawTransaction = details.rawTransaction;
