@@ -1,5 +1,13 @@
 import { NFTokenMintFlags, NFTokenCreateOfferFlags } from "xrpl";
 
+ export interface AccountNFToken {
+  Flags: number
+  Issuer: string
+  TokenID: string
+  TokenTaxons: number
+  nft_serial: number
+}
+
 export const NFTokenFlagsKeys = {
   burnable: NFTokenMintFlags.tfBurnable,
   onlyXRP: NFTokenMintFlags.tfOnlyXRP,
