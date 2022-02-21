@@ -230,7 +230,7 @@ export function parseNFTokenID(tokenID: string): NFTokenInterface | null {
   }
 
   const flags = new BigNumber(tokenID.slice(0, 4), 16).toNumber();
-  const transferFee = new BigNumber(tokenID.slice(4, 8), 16).shiftedBy(-3).toNumber();
+  const transferFee = new BigNumber(tokenID.slice(4, 8), 16).toNumber();
   const issuer = AddressCodec.encodeAccountID(Buffer.from(tokenID.slice(8, 48), "hex"));
   const scrambledTaxon = new BigNumber(tokenID.slice(48, 56), 16).toNumber();
   const sequence = new BigNumber(tokenID.slice(56, 64), 16).toNumber();

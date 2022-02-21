@@ -191,7 +191,7 @@ describe("Client", () => {
       expect(result).to.eql({
         TokenID: tokenID,
         Flags: 8,
-        TransferFee: 25.0,
+        TransferFee: 25000,
         Issuer: "rGJn1uZxDX4ksxRPYuj2smP7ZshdwjeSTG",
         TokenTaxon: 0,
         Sequence: 1,
@@ -205,7 +205,7 @@ describe("Client", () => {
       expect(result).to.eql({
         TokenID: tokenID,
         Flags: 11,
-        TransferFee: 3.14,
+        TransferFee: 3140,
         Issuer: "rNCFjv8Ek5oDrNiMJ3pw6eLLFtMjZLJnf2",
         TokenTaxon: 146999694,
         Sequence: 3429,
