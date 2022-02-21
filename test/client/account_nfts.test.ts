@@ -182,4 +182,34 @@ describe("Client", () => {
       expect(result[4].nft_serial).to.eql(56);
     });
   });
+
+  describe("parseNFTokenID", () => {
+    it("parses tokenID", function () {
+      const tokenID = "000861A8A7C507A12088BF6A6BB62BAFEE9CDAABA2961DB216E5DA9C00000001";
+      const result: any = Client.parseNFTokenID(tokenID);
+
+      expect(result).to.eql({
+        TokenID: tokenID,
+        Flags: 8,
+        TransferFee: 25.0,
+        Issuer: "rGJn1uZxDX4ksxRPYuj2smP7ZshdwjeSTG",
+        TokenTaxon: 0,
+        Sequence: 1,
+      });
+    });
+
+    it("parses tokenID with big taxon", function () {
+      const tokenID = "000B0C4495F14B0E44F78A264E41713C64B5F89242540EE2BC8B858E00000D65";
+      const result: any = Client.parseNFTokenID(tokenID);
+
+      expect(result).to.eql({
+        TokenID: tokenID,
+        Flags: 11,
+        TransferFee: 3.14,
+        Issuer: "rNCFjv8Ek5oDrNiMJ3pw6eLLFtMjZLJnf2",
+        TokenTaxon: 146999694,
+        Sequence: 3429,
+      });
+    });
+  });
 });

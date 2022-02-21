@@ -1,7 +1,10 @@
+import BigNumber from "bignumber.js";
+import AddressCodec = require("ripple-address-codec");
+
 import { parseFlags, SortDirection } from "../common/utils";
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger_index";
-import { AccountNFToken } from "../models/account_nfts";
+import { NFTokenInterface, AccountNFTokenInterface, cipheredTaxon } from "../models/account_nfts";
 import {
   NFTokenFlagsKeys,
   NFTokenFlagsKeysInterface,
@@ -76,7 +79,7 @@ export async function getAccountNfts(
  * issuer3 serial 1
  * issuer3 serial 56
  */
-export function sortHelperAccountNFToken(a: AccountNFToken, b: AccountNFToken): SortDirection {
+export function sortHelperAccountNFToken(a: AccountNFTokenInterface, b: AccountNFTokenInterface): SortDirection {
   const cmpIssuer = a.Issuer.localeCompare(b.Issuer);
   if (cmpIssuer !== 0) {
     return cmpIssuer as SortDirection;
@@ -205,4 +208,39 @@ export function parseNFTOfferFlags(
   options: { excludeFalse?: boolean } = {}
 ): NFTokenOfferFlagsKeysInterface {
   return parseFlags(value, NFTokenOfferFlagsKeys, options);
+}
+
+/**
+ * 000B 0C44 95F14B0E44F78A264E41713C64B5F89242540EE2 BC8B858E 00000D65
+ * +--- +--- +--------------------------------------- +------- +-------
+ * |    |    |                                        |        |
+ * |    |    |                                        |        `---> Sequence: 3,429
+ * |    |    |                                        |
+ * |    |    |                                        `---> Taxon: 146,999,694
+ * |    |    |
+ * |    |    `---> Issuer: rNCFjv8Ek5oDrNiMJ3pw6eLLFtMjZLJnf2
+ * |    |
+ * |    `---> TransferFee: 314.0 bps or 3.140%
+ * |
+ * `---> Flags: 11 -> lsfBurnable, lsfOnlyXRP and lsfTransferable
+ */
+export function parseNFTokenID(tokenID: string): NFTokenInterface | null {
+  if (typeof tokenID !== "string" || tokenID.length !== 64) {
+    return null;
+  }
+
+  const flags = new BigNumber(tokenID.slice(0, 4), 16).toNumber();
+  const transferFee = new BigNumber(tokenID.slice(4, 8), 16).shiftedBy(-3).toNumber();
+  const issuer = AddressCodec.encodeAccountID(Buffer.from(tokenID.slice(8, 48), "hex"));
+  const scrambledTaxon = new BigNumber(tokenID.slice(48, 56), 16).toNumber();
+  const sequence = new BigNumber(tokenID.slice(56, 64), 16).toNumber();
+
+  return {
+    TokenID: tokenID,
+    Flags: flags,
+    TransferFee: transferFee,
+    Issuer: issuer,
+    TokenTaxon: cipheredTaxon(sequence, scrambledTaxon),
+    Sequence: sequence,
+  };
 }
