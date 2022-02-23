@@ -43,6 +43,31 @@ describe("Client", () => {
         });
       });
     });
+
+    describe("xls20", () => {
+      before(async function () {
+        Client.setup(nconf.get("xrpl:connections:xls20net"));
+        await Client.connect();
+      });
+
+      it("is for activated", async function () {
+        const accountInfo: any = await Client.getAccountInfo("rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw");
+        console.log(accountInfo.d);
+        expect(accountInfo.account_data).to.eql({
+          Account: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+          Balance: "999999916",
+          Flags: 0,
+          LedgerEntryType: "AccountRoot",
+          MintedTokens: 1,
+          Minter: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          OwnerCount: 1,
+          PreviousTxnID: "6E365C825DF9FB0EA4F41B2D9245B3A7BE0B67BA044988FA8FB3A6C4DB5B0396",
+          PreviousTxnLgrSeq: 1135421,
+          Sequence: 980203,
+          index: "54277D360ADA73E32426A83392E9443737A62EAEA4555F885F0EFE2440AC6C4C",
+        });
+      });
+    });
   });
 
   describe("getAccountInfoData", () => {

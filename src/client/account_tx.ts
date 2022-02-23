@@ -364,5 +364,15 @@ function counterpartyFilter(options: FindProcessTransactionsOptions, transaction
     return true;
   }
 
+  // NFTokenMint
+  if (transaction.tx.Issuer === options.counterparty) {
+    return true;
+  }
+
+  // AccountSet for NFT
+  if (transaction.tx.Minter === options.counterparty) {
+    return true;
+  }
+
   return false;
 }
