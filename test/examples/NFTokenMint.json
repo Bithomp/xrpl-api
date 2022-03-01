@@ -1,0 +1,60 @@
+{
+  "Account": "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+  "Fee": "12",
+  "Flags": 2147483659,
+  "LastLedgerSequence": 1309390,
+  "Sequence": 1309348,
+  "SigningPubKey": "0328E8357D60924D2970854CFD37B5F43AEAF8EB10FA0CAFD0AD87C6CAE0786FA7",
+  "TokenTaxon": 0,
+  "TransactionType": "NFTokenMint",
+  "TxnSignature": "3044022023B962628FABB3C5A639B9B63706A1D2E9EE51F00C69F3B275F613C8019FB80902201BCB3C91E91C750A089E926C31D637FD3D5B86E6C4AD46E6FCB794E6A08A920D",
+  "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+  "date": 699440082,
+  "hash": "E9AC3902CF5C65EFBE203C7669EF1C4412ECE02AA26BD03F40FF987526079F01",
+  "inLedger": 1309371,
+  "ledger_index": 1309371,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+            "Balance": "999999988",
+            "Flags": 0,
+            "MintedTokens": 1,
+            "OwnerCount": 1,
+            "Sequence": 1309349
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "89D55290BB2AB2C53BBE069F9EF3519420975570BDAE9D88736BA3A46235D217",
+          "PreviousFields": {
+            "Balance": "1000000000",
+            "OwnerCount": 0,
+            "Sequence": 1309348
+          },
+          "PreviousTxnID": "62B19DECA01B715BB47AAF7A28DB66A6C6569FA6B939BE9052CA1AE1A343E459",
+          "PreviousTxnLgrSeq": 1309348
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "NFTokenPage",
+          "LedgerIndex": "E79C2D0D5F8FD6425722AE21C61D731DCA80ABC9FFFFFFFFFFFFFFFFFFFFFFFF",
+          "NewFields": {
+            "NonFungibleTokens": [
+              {
+                "NonFungibleToken": {
+                  "TokenID": "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+                  "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

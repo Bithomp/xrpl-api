@@ -5,6 +5,8 @@ import parseAmount from './amount'
 
 import {Amount, Memo} from '../../common/types/objects'
 
+import { parseNFTokenChanges } from "../../../models/account_nfts";
+
 type OfferDescription = {
   direction: string,
   quantity: any,
@@ -130,6 +132,7 @@ function parseOutcome(tx: any): any | undefined {
   const balanceChanges = transactionParser.parseBalanceChanges(metadata)
   const orderbookChanges = transactionParser.parseOrderbookChanges(metadata)
   const channelChanges = transactionParser.parseChannelChanges(metadata)
+  const nfokenChanges = parseNFTokenChanges(metadata);
 
   removeEmptyCounterpartyInBalanceChanges(balanceChanges)
   removeEmptyCounterpartyInOrderbookChanges(orderbookChanges)
@@ -138,12 +141,10 @@ function parseOutcome(tx: any): any | undefined {
     result: tx.meta.TransactionResult,
     timestamp: parseTimestamp(tx.date),
     fee: common.dropsToXrp(tx.Fee),
-    // tslint:disable-next-line:object-literal-shorthand
-    balanceChanges: balanceChanges,
-    // tslint:disable-next-line:object-literal-shorthand
-    orderbookChanges: orderbookChanges,
-    // tslint:disable-next-line:object-literal-shorthand
-    channelChanges: channelChanges,
+    balanceChanges,
+    orderbookChanges,
+    channelChanges,
+    nfokenChanges,
     ledgerVersion: tx.ledger_index,
     indexInLedger: tx.meta.TransactionIndex,
     deliveredAmount: parseDeliveredAmount(tx)

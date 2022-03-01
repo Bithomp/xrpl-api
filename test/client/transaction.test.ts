@@ -86,6 +86,7 @@ describe("Client", () => {
         indexInLedger: 42,
         ledgerVersion: 69773479,
         orderbookChanges: {},
+        nfokenChanges: {},
         result: "tesSUCCESS",
         timestamp: "2022-02-18T13:13:21.000Z",
       });
@@ -110,6 +111,7 @@ describe("Client", () => {
         indexInLedger: 4,
         ledgerVersion: 69754983,
         orderbookChanges: {},
+        nfokenChanges: {},
         result: "tesSUCCESS",
         timestamp: "2022-02-17T16:58:50.000Z",
       });
@@ -142,6 +144,7 @@ describe("Client", () => {
             ],
           },
           orderbookChanges: {},
+          nfokenChanges: {},
           ledgerVersion: 69773479,
           indexInLedger: 42,
         },
@@ -170,6 +173,7 @@ describe("Client", () => {
             ],
           },
           orderbookChanges: {},
+          nfokenChanges: {},
           ledgerVersion: 69773479,
           indexInLedger: 42,
         },

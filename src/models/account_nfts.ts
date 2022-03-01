@@ -1,4 +1,10 @@
+import * as assert from "assert";
+import BigNumber from "bignumber.js";
+import AddressCodec = require("ripple-address-codec");
+
 import { NFTokenMintFlags, NFTokenCreateOfferFlags } from "xrpl";
+import { removeUndefined } from "../v1/common";
+import { parseFlags } from "../common/utils";
 
 export interface NFTokenInterface {
   Flags: number;
@@ -33,6 +39,10 @@ export interface NFTokenFlagsKeysInterface {
   // reservedFlag?: boolean
 }
 
+export function parseNFTokenFlags(value: number, options: { excludeFalse?: boolean } = {}): NFTokenFlagsKeysInterface {
+  return parseFlags(value, NFTokenFlagsKeys, options);
+}
+
 export interface NFTokenOfferFlagsKeysInterface {
   sellToken?: boolean;
 }
@@ -40,6 +50,13 @@ export interface NFTokenOfferFlagsKeysInterface {
 export const NFTokenOfferFlagsKeys = {
   sellToken: NFTokenCreateOfferFlags.tfSellToken,
 };
+
+export function parseNFTOfferFlags(
+  value: number,
+  options: { excludeFalse?: boolean } = {}
+): NFTokenOfferFlagsKeysInterface {
+  return parseFlags(value, NFTokenOfferFlagsKeys, options);
+}
 
 export function cipheredTaxon(tokenSeq: number, taxon: number) {
   // An issuer may issue several NFTs with the same taxon; to ensure that NFTs
@@ -62,4 +79,127 @@ export function cipheredTaxon(tokenSeq: number, taxon: number) {
   //               were generated with the old code.
   // tslint:disable-next-line:no-bitwise
   return taxon ^ (384160001 * tokenSeq + 2459);
+}
+
+/**
+ * 000B 0C44 95F14B0E44F78A264E41713C64B5F89242540EE2 BC8B858E 00000D65
+ * +--- +--- +--------------------------------------- +------- +-------
+ * |    |    |                                        |        |
+ * |    |    |                                        |        `---> Sequence: 3,429
+ * |    |    |                                        |
+ * |    |    |                                        `---> Taxon: 146,999,694
+ * |    |    |
+ * |    |    `---> Issuer: rNCFjv8Ek5oDrNiMJ3pw6eLLFtMjZLJnf2
+ * |    |
+ * |    `---> TransferFee: 314.0 bps or 3.140%
+ * |
+ * `---> Flags: 11 -> lsfBurnable, lsfOnlyXRP and lsfTransferable
+ */
+export function parseNFTokenID(tokenID: string): NFTokenInterface | null {
+  if (typeof tokenID !== "string" || tokenID.length !== 64) {
+    return null;
+  }
+
+  const flags = new BigNumber(tokenID.slice(0, 4), 16).toNumber();
+  const transferFee = new BigNumber(tokenID.slice(4, 8), 16).toNumber();
+  const issuer = AddressCodec.encodeAccountID(Buffer.from(tokenID.slice(8, 48), "hex"));
+  const scrambledTaxon = new BigNumber(tokenID.slice(48, 56), 16).toNumber();
+  const sequence = new BigNumber(tokenID.slice(56, 64), 16).toNumber();
+
+  return {
+    TokenID: tokenID,
+    Flags: flags,
+    TransferFee: transferFee,
+    Issuer: issuer,
+    TokenTaxon: cipheredTaxon(sequence, scrambledTaxon),
+    Sequence: sequence,
+  };
+}
+
+interface FormattedNFTokenBurn {
+  account: string;
+  tokenID: string;
+}
+
+export function parseNFTokenBurn(tx: any): FormattedNFTokenBurn {
+  assert.ok(tx.TransactionType === "NFTokenBurn");
+
+  return removeUndefined({
+    account: tx.Account,
+    tokenID: tx.TokenID,
+  });
+}
+
+interface FormattedNFTokenMint {
+  tokenTaxon: number;
+  issuer?: string;
+  transferFee?: number;
+  uri?: string;
+  flags?: NFTokenFlagsKeysInterface;
+}
+
+export function parseNFTokenMint(tx: any): FormattedNFTokenMint {
+  assert.ok(tx.TransactionType === "NFTokenMint");
+
+  return removeUndefined({
+    tokenTaxon: tx.TokenTaxon,
+    issuer: tx.Issuer,
+    transferFee: tx.TransferFee,
+    uri: tx.URI,
+    flags: parseNFTokenFlags(tx.Flags),
+  });
+}
+
+interface FormattedNFTokenCancelOffer {
+  tokenOffers: string[];
+}
+
+export function parseNFTokenCancelOffer(tx: any): FormattedNFTokenCancelOffer {
+  assert.ok(tx.TransactionType === "NFTokenCancelOffer");
+
+  return removeUndefined({
+    tokenOffers: tx.TokenOffers,
+  });
+}
+
+interface FormattedNFTokenCreateOffer {
+  tokenID: string;
+  amount: string;
+  owner?: string;
+  destination?: string;
+  expiration?: number;
+  flags?: NFTokenOfferFlagsKeysInterface;
+}
+
+export function parseNFTokenCreateOffer(tx: any): FormattedNFTokenCreateOffer {
+  assert.ok(tx.TransactionType === "NFTokenCreateOffer");
+
+  return removeUndefined({
+    tokenID: tx.TokenID,
+    amount: tx.Amount,
+    owner: tx.Owner,
+    destination: tx.Destination,
+    expiration: tx.Expiration,
+    flags: parseNFTOfferFlags(tx.Flags),
+  });
+}
+
+interface FormattedNFTokenAcceptOffer {
+  sellOffer?: string;
+  buyOffer?: string;
+  brokerFee?: string;
+}
+
+export function parseNFTokenAcceptOffer(tx: any): FormattedNFTokenAcceptOffer {
+  assert.ok(tx.TransactionType === "NFTokenAcceptOffer");
+
+  return removeUndefined({
+    sellOffer: tx.SellOffer,
+    buyOffer: tx.BuyOffer,
+    brokerFee: tx.BrokerFee,
+  });
+}
+
+export function parseNFTokenChanges(tx: any): any {
+  return {};
 }

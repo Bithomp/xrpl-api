@@ -8,6 +8,9 @@ export * from "./client/account_objects";
 export * from "./client/account_tx";
 export * from "./client/transaction";
 
+export * from "./models/account_info";
+export * from "./models/account_nfts";
+
 export const dropsInXRP = 1000000;
 export let feeCushion: number = 1.3;
 export let logger: any;

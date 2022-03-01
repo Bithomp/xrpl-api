@@ -1,0 +1,83 @@
+{
+  "Account": "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+  "Fee": "12",
+  "Flags": 0,
+  "LastLedgerSequence": 1309497,
+  "Sequence": 1309351,
+  "SigningPubKey": "0328E8357D60924D2970854CFD37B5F43AEAF8EB10FA0CAFD0AD87C6CAE0786FA7",
+  "TokenOffers": [
+    "D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8"
+  ],
+  "TransactionType": "NFTokenCancelOffer",
+  "TxnSignature": "3044022057B27292FA91C7E5CE32C07B247876C0FDCDF462E852705DFBBBFD5679838A990220520EF0FAA4E54DFFF90CAD3B020E023B331D29108A5741A1DC5304E0C381EC29",
+  "date": 699440410,
+  "hash": "B88123B63CF0FAD1549E17A50C2F51A6B6EB4ADFC85EEAEF1EDCFBA62E1A1882",
+  "inLedger": 1309479,
+  "ledger_index": 1309479,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "Flags": 2,
+            "RootIndex": "29132CCC8333869F181D2F96A0D12C33F3163C03F88F2DA62177CF6A6F6E84A0",
+            "TokenID": "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "29132CCC8333869F181D2F96A0D12C33F3163C03F88F2DA62177CF6A6F6E84A0"
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+            "RootIndex": "33BE8550EC6431839A530DD01C3D35248EA9C3089ED3F1B4D1B567D62C70513A"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "33BE8550EC6431839A530DD01C3D35248EA9C3089ED3F1B4D1B567D62C70513A"
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+            "Balance": "999999952",
+            "Flags": 0,
+            "MintedTokens": 2,
+            "OwnerCount": 1,
+            "Sequence": 1309352
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "89D55290BB2AB2C53BBE069F9EF3519420975570BDAE9D88736BA3A46235D217",
+          "PreviousFields": {
+            "Balance": "999999964",
+            "OwnerCount": 2,
+            "Sequence": 1309351
+          },
+          "PreviousTxnID": "B4E6A932FE89C120423E07D58487953A487EE89DED728D71B0CF9A61A4ED58F0",
+          "PreviousTxnLgrSeq": 1309392
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "Amount": "1000000000000000",
+            "Flags": 1,
+            "OfferNode": "0",
+            "Owner": "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+            "OwnerNode": "0",
+            "PreviousTxnID": "B4E6A932FE89C120423E07D58487953A487EE89DED728D71B0CF9A61A4ED58F0",
+            "PreviousTxnLgrSeq": 1309392,
+            "TokenID": "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000"
+          },
+          "LedgerEntryType": "NFTokenOffer",
+          "LedgerIndex": "D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8"
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}
