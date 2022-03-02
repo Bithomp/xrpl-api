@@ -200,6 +200,45 @@ export function parseNFTokenAcceptOffer(tx: any): FormattedNFTokenAcceptOffer {
   });
 }
 
-export function parseNFTokenChanges(tx: any): any {
-  return {};
+export function parseNonFungibleTokenChanges(tx: any): any {
+  const changes = {};
+
+  if (tx.meta.AffectedNodes.length === 0) {
+    return changes;
+  }
+
+  for (const node of tx.meta.AffectedNodes) {
+    if (
+      node.CreatedNode?.LedgerEntryType === "NFTokenPage" &&
+      Array.isArray(node.CreatedNode?.NewFields?.NonFungibleTokens)
+    ) {
+      for (const tokenNode of node.CreatedNode?.NewFields?.NonFungibleTokens) {
+        if (tokenNode.NonFungibleToken) {
+          if (!changes[tx.Account]) {
+            changes[tx.Account] = [];
+          }
+
+          changes[tx.Account].push(
+            removeUndefined({
+              status: "minted",
+              tokenID: tokenNode.NonFungibleToken.TokenID,
+              uri: tokenNode.NonFungibleToken.URI,
+            })
+          );
+        }
+      }
+    }
+  }
+
+  return changes;
+}
+
+export function parseNonFungibleTokenOfferChanges(tx: any): any {
+  const changes = {};
+
+  if (tx.meta.AffectedNodes.length === 0) {
+    return changes;
+  }
+
+  return changes;
 }
