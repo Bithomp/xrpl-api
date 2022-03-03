@@ -112,7 +112,7 @@ describe("Client", () => {
       );
     });
 
-    it("finds the second send tranaction", async function () {
+    it("finds the 10 send tranaction after first one", async function () {
       const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
       const result: any = await Client.findTransactions(address, {
         limit: 10,
@@ -124,10 +124,11 @@ describe("Client", () => {
         timeout: 4000,
       });
 
+      expect(result.length).to.eq(10);
       expect(result[0].tx.hash).to.eq("A92198925ABAA11D1EB3F5967D88D5D1F5FF1D1D356BE3B10477F774906262E6");
     });
 
-    it("finds previous with startTxHash", async function () {
+    it("finds one previous with startTxHash", async function () {
       const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
       const result: any = await Client.findTransactions(address, {
         limit: 1,
@@ -135,7 +136,20 @@ describe("Client", () => {
         timeout: 4000,
       });
 
+      expect(result.length).to.eq(1);
       expect(result[0].tx.hash).to.eq("EB467EEDE37080F926766246A9D1883665B29545685013B3CB502394ECEF2476");
+    });
+
+    it("finds 10 previous with startTxHash", async function () {
+      const address = "rDCngTUntDFsDKUUuck6iF2C1iQ9fZXiLD";
+      const result: any = await Client.findTransactions(address, {
+        limit: 10,
+        startTxHash: "61B338B97DA9081EBA34FA90D2606D8EA56099ABF1344F29588031744C3BF631",
+        timeout: 4000,
+      });
+
+      expect(result.length).to.eq(10);
+      expect(result[0].tx.hash).to.eq("4366EAD2976FDDE7CA02166181FAE65DE36C5B0705E174D6546D61CF5FEF74A1");
     });
 
     it("finds the fist send tranaction with counterparty", async function () {

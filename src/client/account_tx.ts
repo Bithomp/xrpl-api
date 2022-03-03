@@ -114,8 +114,8 @@ export async function getTransactions(
     ledger_index_max: options.ledgerIndexMax,
     ledger_hash: options.ledgerHash,
     ledger_index: options.ledgerIndex,
-    binary: options.binary,
-    forward: options.forward,
+    binary: !!options.binary,
+    forward: !!options.forward,
     limit: options.limit,
     marker: options.marker,
   });
@@ -235,7 +235,7 @@ export async function findTransactions(
     transactions = transactions.concat(newTransactions);
 
     // clenup last transactions over limit
-    transactions.splice(-1, transactions.length - options.limit);
+    transactions = transactions.slice(0, options.limit)
 
     if (options.marker === undefined) {
       break;
