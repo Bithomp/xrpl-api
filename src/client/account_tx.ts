@@ -202,13 +202,14 @@ export async function findTransactions(
     let limit = options.limit;
     // increase limit to make sure we can get all transaction with single request
     if (transactions.length === 0 && options.startTxHash) {
-      limit + 2;
+      limit += 2;
     }
     // request without balanceChanges and specification to reduce unnecessary work
     const accountTransactions: any = await getTransactions(account, {
       ...options,
       ...{ balanceChanges: false, specification: false, limit },
     });
+    // check for error
     if (!accountTransactions || accountTransactions.error) {
       accountTransactionsError = accountTransactions;
       break;
@@ -217,6 +218,7 @@ export async function findTransactions(
     // save marker for next request
     options.marker = accountTransactions.marker;
 
+    // filter transactions
     newTransactions = newTransactions
       .filter(_.partial(filterHelperTransactions, account, options))
       .filter(_.partial(filterHelperStartTx, options));
