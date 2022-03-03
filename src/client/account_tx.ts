@@ -234,8 +234,8 @@ export async function findTransactions(
     // merge found newly found transactions with old ones
     transactions = transactions.concat(newTransactions);
 
-    // clenup transactions over limit
-    transactions.splice(0, transactions.length - options.limit);
+    // clenup last transactions over limit
+    transactions.splice(-1, transactions.length - options.limit);
 
     if (options.marker === undefined) {
       break;

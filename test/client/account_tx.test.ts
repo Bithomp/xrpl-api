@@ -115,7 +115,7 @@ describe("Client", () => {
     it("finds the second send tranaction", async function () {
       const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
       const result: any = await Client.findTransactions(address, {
-        limit: 1,
+        limit: 10,
         initiated: true,
         forward: true,
         excludeFailures: true,
@@ -124,9 +124,18 @@ describe("Client", () => {
         timeout: 4000,
       });
 
-      expect(JSON.stringify(result)).to.eq(
-        '[{"meta":{"AffectedNodes":[{"ModifiedNode":{"FinalFields":{"Balance":{"currency":"USD","issuer":"rrrrrrrrrrrrrrrrrrrrBZbvji","value":"-0.500883360914644"},"Flags":2228224,"HighLimit":{"currency":"USD","issuer":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","value":"1000000000"},"HighNode":"0","LowLimit":{"currency":"USD","issuer":"rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B","value":"0"},"LowNode":"372"},"LedgerEntryType":"RippleState","LedgerIndex":"67F3EB1AC9089489308E69850D09A8E283B029DB89C6480F809CAEF68EBF6A28","PreviousFields":{"Balance":{"currency":"USD","issuer":"rrrrrrrrrrrrrrrrrrrrBZbvji","value":"-0.860883360914644"}},"PreviousTxnID":"5252FE36681D56CB1218B34BBF7509C4B8008D45C0FE31A4168A83E87478B877","PreviousTxnLgrSeq":16659000}},{"ModifiedNode":{"FinalFields":{"Account":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","Balance":"60940000","Flags":0,"OwnerCount":3,"Sequence":6},"LedgerEntryType":"AccountRoot","LedgerIndex":"EE994230153E2207737ACE5CDA73F8275E81D05A45C6937B62B0FF24C81140BA","PreviousFields":{"Balance":"60952000","Sequence":5},"PreviousTxnID":"D5D12F4922F2AD6E893E6F4805FAD4B1CA0F56977D6D904BA2C1724B9B99444D","PreviousTxnLgrSeq":16659038}}],"TransactionIndex":0,"TransactionResult":"tesSUCCESS","delivered_amount":{"currency":"USD","issuer":"rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B","value":"0.36"}},"tx":{"Account":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","Amount":{"currency":"USD","issuer":"rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B","value":"0.36"},"Destination":"rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B","DestinationTag":96212512,"Fee":"12000","Flags":0,"LastLedgerSequence":16660325,"Memos":[{"Memo":{"MemoData":"7274312E352E342D35302D6762616536396263","MemoFormat":"746578742F706C61696E","MemoType":"636C69656E74"}}],"SendMax":{"currency":"USD","issuer":"rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B","value":"0.36036"},"Sequence":5,"SigningPubKey":"036C288D95A4268D268F8CAFC262FC77EB7265535805B760BD8A0E544C1C5740A7","TransactionType":"Payment","TxnSignature":"3045022100E6E58DA4148299A40A9C91E887551924EC9986153B7D11D1A1D13D17831A281A0220511F746337A807E6692D55DF91341743201596D90DD55904D7227414B3024C47","date":498992460,"hash":"A92198925ABAA11D1EB3F5967D88D5D1F5FF1D1D356BE3B10477F774906262E6","inLedger":16660323,"ledger_index":16660323},"validated":true}]'
-      );
+      expect(result[0].tx.hash).to.eq("A92198925ABAA11D1EB3F5967D88D5D1F5FF1D1D356BE3B10477F774906262E6");
+    });
+
+    it("finds previous with startTxHash", async function () {
+      const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
+      const result: any = await Client.findTransactions(address, {
+        limit: 1,
+        startTxHash: "262CF9482A2BD8EAF3F1210AD6F5B2D9D4FA710533D75C5E1855C631B337A297",
+        timeout: 4000,
+      });
+
+      expect(result[0].tx.hash).to.eq("EB467EEDE37080F926766246A9D1883665B29545685013B3CB502394ECEF2476");
     });
 
     it("finds the fist send tranaction with counterparty", async function () {
