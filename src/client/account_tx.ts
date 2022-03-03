@@ -199,10 +199,15 @@ export async function findTransactions(
       break;
     }
 
+    let limit = options.limit;
+    // increase limit to make sure we can get all transaction with single request
+    if (transactions.length === 0 && options.startTxHash) {
+      limit + 2;
+    }
     // request without balanceChanges and specification to reduce unnecessary work
     const accountTransactions: any = await getTransactions(account, {
       ...options,
-      ...{ balanceChanges: false, specification: false },
+      ...{ balanceChanges: false, specification: false, limit },
     });
     if (!accountTransactions || accountTransactions.error) {
       accountTransactionsError = accountTransactions;
@@ -235,7 +240,7 @@ export async function findTransactions(
     transactions = transactions.concat(newTransactions);
 
     // clenup last transactions over limit
-    transactions = transactions.slice(0, options.limit)
+    transactions = transactions.slice(0, options.limit);
 
     if (options.marker === undefined) {
       break;
