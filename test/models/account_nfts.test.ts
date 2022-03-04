@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { Client } from "../../src/index";
 
-describe.only("Client", () => {
+describe("Client", () => {
   describe("parseNFTokenFlags", () => {
     it("parses flags", function () {
       const result: any = Client.parseNFTokenFlags(2147483659);
@@ -161,8 +161,8 @@ describe.only("Client", () => {
   });
 
   describe("parseNFTokenCreateOffer", () => {
-    it("works", function () {
-      const tx = require("../examples/responses/NFTokenCreateOffer.json");
+    it("works for sell", function () {
+      const tx = require("../examples/responses/NFTokenCreateOfferSell.json");
       const result: any = Client.parseNFTokenCreateOffer(tx);
 
       expect(result).to.eql({
@@ -176,8 +176,8 @@ describe.only("Client", () => {
   });
 
   describe("parseNFTokenAcceptOffer", () => {
-    it("works", function () {
-      const tx = require("../examples/responses/NFTokenAcceptOffer.json");
+    it("works for sell", function () {
+      const tx = require("../examples/responses/NFTokenAcceptOfferSell.json");
       const result: any = Client.parseNFTokenAcceptOffer(tx);
 
       expect(result).to.eql({
@@ -187,16 +187,133 @@ describe.only("Client", () => {
   });
 
   describe("parseNonFungibleTokenChanges", () => {
-    it.only("NFTokenMint", function () {
+    it("NFTokenMint", function () {
       const tx = require("../examples/responses/NFTokenMint.json");
       const result: any = Client.parseNonFungibleTokenChanges(tx);
 
       expect(result).to.eql({
         r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
           {
-            status: "minted",
+            status: "added",
             tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
             uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+          },
+        ],
+      });
+    });
+
+    it("NFTokenBurn", function () {
+      const tx = require("../examples/responses/NFTokenBurn.json");
+      const result: any = Client.parseNonFungibleTokenChanges(tx);
+
+      expect(result).to.eql({
+        r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
+          {
+            status: "removed",
+            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
+            uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+          },
+        ],
+      });
+    });
+
+    it("NFTokenAcceptOfferSell", function () {
+      const tx = require("../examples/responses/NFTokenAcceptOfferSell.json");
+      const result: any = Client.parseNonFungibleTokenChanges(tx);
+
+      expect(result).to.eql({
+        rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
+          {
+            status: "added",
+            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+            uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+          },
+        ],
+        r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
+          {
+            status: "removed",
+            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+          },
+        ],
+      });
+    });
+
+    it("NFTokenCreateOfferSell", function () {
+      const tx = require("../examples/responses/NFTokenCreateOfferSell.json");
+      const result: any = Client.parseNonFungibleTokenChanges(tx);
+
+      expect(result).to.eql({});
+    });
+
+    it("NFTokenCancelOffer", function () {
+      const tx = require("../examples/responses/NFTokenCancelOffer.json");
+      const result: any = Client.parseNonFungibleTokenChanges(tx);
+
+      expect(result).to.eql({});
+    });
+  });
+
+  describe("parseNonFungibleTokenOfferChanges", () => {
+    it("NFTokenMint", function () {
+      const tx = require("../examples/responses/NFTokenMint.json");
+      const result: any = Client.parseNonFungibleTokenOfferChanges(tx);
+
+      expect(result).to.eql({});
+    });
+
+    it("NFTokenBurn", function () {
+      const tx = require("../examples/responses/NFTokenBurn.json");
+      const result: any = Client.parseNonFungibleTokenOfferChanges(tx);
+
+      expect(result).to.eql({});
+    });
+
+    it("NFTokenCreateOfferSell", function () {
+      const tx = require("../examples/responses/NFTokenCreateOfferSell.json");
+      const result: any = Client.parseNonFungibleTokenOfferChanges(tx);
+
+      expect(result).to.eql({
+        r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
+          {
+            status: "created",
+            Owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+            amount: "1000000000000000",
+            flags: 1,
+            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+          },
+        ],
+      });
+    });
+
+    it("NFTokenCancelOffer", function () {
+      const tx = require("../examples/responses/NFTokenCancelOffer.json");
+      const result: any = Client.parseNonFungibleTokenOfferChanges(tx);
+
+      expect(result).to.eql({
+        r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
+          {
+            status: "deleted",
+            Owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+            amount: "1000000000000000",
+            flags: 1,
+            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+          },
+        ],
+      });
+    });
+
+    it("NFTokenAcceptOfferSell", function () {
+      const tx = require("../examples/responses/NFTokenAcceptOfferSell.json");
+      const result: any = Client.parseNonFungibleTokenOfferChanges(tx);
+
+      expect(result).to.eql({
+        r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
+          {
+            status: "deleted",
+            Owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+            amount: "0",
+            flags: 1,
+            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
           },
         ],
       });

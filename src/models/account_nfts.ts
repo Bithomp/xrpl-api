@@ -208,6 +208,7 @@ export function parseNonFungibleTokenChanges(tx: any): any {
   }
 
   for (const node of tx.meta.AffectedNodes) {
+    // added NFToken
     if (
       node.CreatedNode?.LedgerEntryType === "NFTokenPage" &&
       Array.isArray(node.CreatedNode?.NewFields?.NonFungibleTokens)
@@ -220,12 +221,51 @@ export function parseNonFungibleTokenChanges(tx: any): any {
 
           changes[tx.Account].push(
             removeUndefined({
-              status: "minted",
+              status: "added",
               tokenID: tokenNode.NonFungibleToken.TokenID,
               uri: tokenNode.NonFungibleToken.URI,
             })
           );
         }
+      }
+    }
+
+    // removed NFToken
+    if (
+      node.DeletedNode?.LedgerEntryType === "NFTokenPage" &&
+      Array.isArray(node.DeletedNode?.FinalFields?.NonFungibleTokens)
+    ) {
+      for (const tokenNode of node.DeletedNode?.FinalFields?.NonFungibleTokens) {
+        if (tokenNode.NonFungibleToken) {
+          if (!changes[tx.Account]) {
+            changes[tx.Account] = [];
+          }
+
+          changes[tx.Account].push(
+            removeUndefined({
+              status: "removed",
+              tokenID: tokenNode.NonFungibleToken.TokenID,
+              uri: tokenNode.NonFungibleToken.URI,
+            })
+          );
+        }
+      }
+    }
+
+    // removed NFTokenOffer
+    if (tx.TransactionType === "NFTokenAcceptOffer" && node.DeletedNode?.LedgerEntryType === "NFTokenOffer") {
+      if (node.DeletedNode?.FinalFields?.Owner) {
+        const account = node.DeletedNode.FinalFields.Owner;
+        if (!changes[account]) {
+          changes[account] = [];
+        }
+
+        changes[account].push(
+          removeUndefined({
+            status: "removed",
+            tokenID: node.DeletedNode?.FinalFields.TokenID,
+          })
+        );
       }
     }
   }
@@ -238,6 +278,45 @@ export function parseNonFungibleTokenOfferChanges(tx: any): any {
 
   if (tx.meta.AffectedNodes.length === 0) {
     return changes;
+  }
+
+  for (const node of tx.meta.AffectedNodes) {
+    // added NFTokenOffer
+    if (node.CreatedNode?.LedgerEntryType === "NFTokenOffer") {
+      if (node.CreatedNode?.NewFields) {
+        if (!changes[tx.Account]) {
+          changes[tx.Account] = [];
+        }
+
+        changes[tx.Account].push(
+          removeUndefined({
+            status: "created",
+            amount: node.CreatedNode?.NewFields.Amount,
+            flags: node.CreatedNode?.NewFields.Flags,
+            tokenID: node.CreatedNode?.NewFields.TokenID,
+            Owner: node.CreatedNode?.NewFields.Owner,
+          })
+        );
+      }
+    }
+
+    if (node.DeletedNode?.LedgerEntryType === "NFTokenOffer") {
+      if (node.DeletedNode?.FinalFields) {
+        if (!changes[tx.Account]) {
+          changes[tx.Account] = [];
+        }
+
+        changes[tx.Account].push(
+          removeUndefined({
+            status: "deleted",
+            amount: node.DeletedNode.FinalFields.Amount,
+            flags: node.DeletedNode.FinalFields.Flags,
+            tokenID: node.DeletedNode.FinalFields.TokenID,
+            Owner: node.DeletedNode.FinalFields.Owner,
+          })
+        );
+      }
+    }
   }
 
   return changes;
