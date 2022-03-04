@@ -219,9 +219,28 @@ export function parseNonFungibleTokenChanges(tx: any): any {
             changes[tx.Account] = [];
           }
 
+          let status: string | undefined = undefined;
+
+          if (tx.TransactionType === "NFTokenMint") {
+            status = "added";
+          } else if (tx.TransactionType === "NFTokenAcceptOffer") {
+            for (const searchNode of tx.meta.AffectedNodes) {
+              if (
+                searchNode.DeletedNode?.LedgerEntryType === "NFTokenOffer" &&
+                searchNode.DeletedNode?.FinalFields?.TokenID === tokenNode.NonFungibleToken.TokenID
+              ) {
+                if (tx.BuyOffer == searchNode.DeletedNode?.LedgerIndex) {
+                  status = "removed";
+                } else if (tx.SellOffer == searchNode.DeletedNode?.LedgerIndex) {
+                  status = "added";
+                }
+              }
+            }
+          }
+
           changes[tx.Account].push(
             removeUndefined({
-              status: "added",
+              status,
               tokenID: tokenNode.NonFungibleToken.TokenID,
               uri: tokenNode.NonFungibleToken.URI,
             })
@@ -260,9 +279,11 @@ export function parseNonFungibleTokenChanges(tx: any): any {
           changes[account] = [];
         }
 
+        // sold
+        const status = node.DeletedNode?.FinalFields.Flags & NFTokenOfferFlagsKeys.sellToken ? "removed" : "added";
         changes[account].push(
           removeUndefined({
-            status: "removed",
+            status: status,
             tokenID: node.DeletedNode?.FinalFields.TokenID,
           })
         );
@@ -302,11 +323,13 @@ export function parseNonFungibleTokenOfferChanges(tx: any): any {
 
     if (node.DeletedNode?.LedgerEntryType === "NFTokenOffer") {
       if (node.DeletedNode?.FinalFields) {
-        if (!changes[tx.Account]) {
-          changes[tx.Account] = [];
+        const account = node.DeletedNode.FinalFields.Owner;
+
+        if (!changes[account]) {
+          changes[account] = [];
         }
 
-        changes[tx.Account].push(
+        changes[account].push(
           removeUndefined({
             status: "deleted",
             amount: node.DeletedNode.FinalFields.Amount,

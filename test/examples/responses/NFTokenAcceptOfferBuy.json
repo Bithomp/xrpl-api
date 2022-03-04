@@ -1,0 +1,175 @@
+{
+  "Account": "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+  "BuyOffer": "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
+  "Fee": "12",
+  "Flags": 0,
+  "LastLedgerSequence": 75463,
+  "Sequence": 75147,
+  "SigningPubKey": "0392163A3DA4EE3F68645F0BF0E413C1CF28E157CD5B0EE2BED58ACB6B99A0F278",
+  "TransactionType": "NFTokenAcceptOffer",
+  "TxnSignature": "3044022028269EA470CC06DF1DA562592006753DBB552BCB235E996360EDFF9ED123ABAB02207D153724CAD91C830DC31FD9973DA2FC26B97712811B1A25A2DC8CD7B8AB5BFA",
+  "date": 699721280,
+  "hash": "41D2E1E3EE5554ADE84F15FFFA8A6A9E7C9EB0464CAAFA822CFAE1DD895DE724",
+  "inLedger": 75445,
+  "ledger_index": 75445,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 1,
+            "RootIndex": "4B160B26AEAB8874307386F11A2160A2DF2C7F9B90C6D83DEC5BA1AD97A7EF09",
+            "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "4B160B26AEAB8874307386F11A2160A2DF2C7F9B90C6D83DEC5BA1AD97A7EF09"
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+            "Balance": "999999951",
+            "Flags": 0,
+            "MintedTokens": 1,
+            "Minter": "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+            "OwnerCount": 2,
+            "Sequence": 75152
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "54277D360ADA73E32426A83392E9443737A62EAEA4555F885F0EFE2440AC6C4C",
+          "PreviousFields": {
+            "Balance": "999999952"
+          },
+          "PreviousTxnID": "E41A3C2EDBA485A813D4E109D7A1A7BB6AFFFB5CAD1F37AB9D0EF4BB714E4B5B",
+          "PreviousTxnLgrSeq": 75425
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+            "RootIndex": "9F57486C9FE0FDF7FAE8426611ED1BF278A6B7874EEA71F045BFE76E8879A909"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "9F57486C9FE0FDF7FAE8426611ED1BF278A6B7874EEA71F045BFE76E8879A909"
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "Amount": "1",
+            "Flags": 0,
+            "OfferNode": "0",
+            "Owner": "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+            "OwnerNode": "0",
+            "PreviousTxnID": "9009887ACAEA08E7DE821CF15C410670E8469A98695FC33DCB8A86096930A4AF",
+            "PreviousTxnLgrSeq": 75358,
+            "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001"
+          },
+          "LedgerEntryType": "NFTokenOffer",
+          "LedgerIndex": "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021"
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "NonFungibleTokens": [
+              {
+                "NonFungibleToken": {
+                  "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000",
+                  "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
+                }
+              },
+              {
+                "NonFungibleToken": {
+                  "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF2DCBAB9D00000002",
+                  "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
+                }
+              },
+              {
+                "NonFungibleToken": {
+                  "TokenID": "00000000DCBED2CF425AFDA5095FDD3633E5E89DE0D485D80000099B00000000",
+                  "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
+                }
+              }
+            ]
+          },
+          "LedgerEntryType": "NFTokenPage",
+          "LedgerIndex": "C124E14881533A9AFE4A5F481795C17003A9FACFFFFFFFFFFFFFFFFFFFFFFFFF",
+          "PreviousFields": {
+            "NonFungibleTokens": [
+              {
+                "NonFungibleToken": {
+                  "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000",
+                  "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
+                }
+              },
+              {
+                "NonFungibleToken": {
+                  "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+                  "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
+                }
+              },
+              {
+                "NonFungibleToken": {
+                  "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF2DCBAB9D00000002",
+                  "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
+                }
+              },
+              {
+                "NonFungibleToken": {
+                  "TokenID": "00000000DCBED2CF425AFDA5095FDD3633E5E89DE0D485D80000099B00000000",
+                  "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
+                }
+              }
+            ]
+          },
+          "PreviousTxnID": "DEAE8494CCCEC2A2CE2C8476230BB34DA236F8687C9253B858D517638F8D43B7",
+          "PreviousTxnLgrSeq": 75225
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "NFTokenPage",
+          "LedgerIndex": "DCBED2CF425AFDA5095FDD3633E5E89DE0D485D8FFFFFFFFFFFFFFFFFFFFFFFF",
+          "NewFields": {
+            "NonFungibleTokens": [
+              {
+                "NonFungibleToken": {
+                  "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+                  "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+            "Balance": "999999917",
+            "Flags": 0,
+            "MintedTokens": 3,
+            "OwnerCount": 3,
+            "Sequence": 75148
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "E81B13BE87D0BEE807EE2AB986B4C39B911AD9EAB64946A98AF149367CBEAE93",
+          "PreviousFields": {
+            "Balance": "999999928",
+            "Sequence": 75147
+          },
+          "PreviousTxnID": "ECE064CC23B00D2D9957344A68EE1155F7A5EC4F4BF0BCF00FB69F564EF6AF2D",
+          "PreviousTxnLgrSeq": 75329
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

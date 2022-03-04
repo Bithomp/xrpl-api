@@ -173,6 +173,20 @@ describe("Client", () => {
         tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
       });
     });
+
+    it("works for buy", function () {
+      const tx = require("../examples/responses/NFTokenCreateOfferBuy.json");
+      const result: any = Client.parseNFTokenCreateOffer(tx);
+
+      expect(result).to.eql({
+        amount: "1",
+        flags: {
+          sellToken: false,
+        },
+        owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+        tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+      });
+    });
   });
 
   describe("parseNFTokenAcceptOffer", () => {
@@ -182,6 +196,15 @@ describe("Client", () => {
 
       expect(result).to.eql({
         sellOffer: "D3C21058E60B6597BCB33A7A77B5FC90959082C96057EDBB388CE365E8D3245D",
+      });
+    });
+
+    it("works for buy", function () {
+      const tx = require("../examples/responses/NFTokenAcceptOfferBuy.json");
+      const result: any = Client.parseNFTokenAcceptOffer(tx);
+
+      expect(result).to.eql({
+        buyOffer: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
       });
     });
   });
@@ -238,8 +261,38 @@ describe("Client", () => {
       });
     });
 
+    it("NFTokenAcceptOfferBuy", function () {
+      const tx = require("../examples/responses/NFTokenAcceptOfferBuy.json");
+      const result: any = Client.parseNonFungibleTokenChanges(tx);
+
+      // rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz;
+
+      expect(result).to.eql({
+        rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz: [
+          {
+            status: "removed",
+            tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+            uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+          },
+        ],
+        rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
+          {
+            status: "added",
+            tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+          },
+        ],
+      });
+    });
+
     it("NFTokenCreateOfferSell", function () {
       const tx = require("../examples/responses/NFTokenCreateOfferSell.json");
+      const result: any = Client.parseNonFungibleTokenChanges(tx);
+
+      expect(result).to.eql({});
+    });
+
+    it("NFTokenCreateOfferBuy", function () {
+      const tx = require("../examples/responses/NFTokenCreateOfferBuy.json");
       const result: any = Client.parseNonFungibleTokenChanges(tx);
 
       expect(result).to.eql({});
@@ -268,23 +321,6 @@ describe("Client", () => {
       expect(result).to.eql({});
     });
 
-    it("NFTokenCreateOfferSell", function () {
-      const tx = require("../examples/responses/NFTokenCreateOfferSell.json");
-      const result: any = Client.parseNonFungibleTokenOfferChanges(tx);
-
-      expect(result).to.eql({
-        r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
-          {
-            status: "created",
-            Owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
-            amount: "1000000000000000",
-            flags: 1,
-            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
-          },
-        ],
-      });
-    });
-
     it("NFTokenCancelOffer", function () {
       const tx = require("../examples/responses/NFTokenCancelOffer.json");
       const result: any = Client.parseNonFungibleTokenOfferChanges(tx);
@@ -302,6 +338,39 @@ describe("Client", () => {
       });
     });
 
+    it("NFTokenCreateOfferSell", function () {
+      const tx = require("../examples/responses/NFTokenCreateOfferSell.json");
+      const result: any = Client.parseNonFungibleTokenOfferChanges(tx);
+
+      expect(result).to.eql({
+        r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
+          {
+            status: "created",
+            Owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+            amount: "1000000000000000",
+            flags: 1,
+            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+          },
+        ],
+      });
+    });
+
+    it("NFTokenCreateOfferBuy", function () {
+      const tx = require("../examples/responses/NFTokenCreateOfferBuy.json");
+      const result: any = Client.parseNonFungibleTokenOfferChanges(tx);
+
+      expect(result).to.eql({
+        rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
+          {
+            status: "created",
+            Owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+            amount: "1",
+            tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+          },
+        ],
+      });
+    });
+
     it("NFTokenAcceptOfferSell", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferSell.json");
       const result: any = Client.parseNonFungibleTokenOfferChanges(tx);
@@ -314,6 +383,23 @@ describe("Client", () => {
             amount: "0",
             flags: 1,
             tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+          },
+        ],
+      });
+    });
+
+    it("NFTokenAcceptOfferBuy", function () {
+      const tx = require("../examples/responses/NFTokenAcceptOfferBuy.json");
+      const result: any = Client.parseNonFungibleTokenOfferChanges(tx);
+
+      expect(result).to.eql({
+        rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
+          {
+            status: "deleted",
+            Owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+            amount: "1",
+            flags: 0,
+            tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
           },
         ],
       });
