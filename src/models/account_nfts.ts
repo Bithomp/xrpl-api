@@ -223,7 +223,7 @@ export function parseNonFungibleTokenChanges(tx: any): any {
             changes[tx.Account] = [];
           }
 
-          let status: string | undefined = undefined;
+          let status: string | undefined;
 
           if (tx.TransactionType === "NFTokenMint") {
             status = "added";
@@ -233,9 +233,9 @@ export function parseNonFungibleTokenChanges(tx: any): any {
                 searchNode.DeletedNode?.LedgerEntryType === "NFTokenOffer" &&
                 searchNode.DeletedNode?.FinalFields?.TokenID === tokenNode.NonFungibleToken.TokenID
               ) {
-                if (tx.BuyOffer == searchNode.DeletedNode?.LedgerIndex) {
+                if (tx.BuyOffer === searchNode.DeletedNode?.LedgerIndex) {
                   status = "removed";
-                } else if (tx.SellOffer == searchNode.DeletedNode?.LedgerIndex) {
+                } else if (tx.SellOffer === searchNode.DeletedNode?.LedgerIndex) {
                   status = "added";
                 }
               }
@@ -283,11 +283,11 @@ export function parseNonFungibleTokenChanges(tx: any): any {
           changes[account] = [];
         }
 
-        // sold
+        // tslint:disable-next-line:no-bitwise
         const status = node.DeletedNode?.FinalFields.Flags & NFTokenOfferFlagsKeys.sellToken ? "removed" : "added";
         changes[account].push(
           removeUndefined({
-            status: status,
+            status,
             tokenID: node.DeletedNode?.FinalFields.TokenID,
           })
         );
