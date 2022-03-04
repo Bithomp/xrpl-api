@@ -329,7 +329,7 @@ describe("Client", () => {
         r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
           {
             status: "deleted",
-            Owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+            owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
             amount: "1000000000000000",
             flags: 1,
             tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
@@ -346,7 +346,7 @@ describe("Client", () => {
         r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
           {
             status: "created",
-            Owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+            owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
             amount: "1000000000000000",
             flags: 1,
             tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
@@ -363,7 +363,7 @@ describe("Client", () => {
         rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
           {
             status: "created",
-            Owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+            owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
             amount: "1",
             tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
           },
@@ -379,7 +379,7 @@ describe("Client", () => {
         r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
           {
             status: "deleted",
-            Owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+            owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
             amount: "0",
             flags: 1,
             tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
@@ -396,7 +396,7 @@ describe("Client", () => {
         rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
           {
             status: "deleted",
-            Owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+            owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
             amount: "1",
             flags: 0,
             tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",

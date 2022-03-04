@@ -77,7 +77,7 @@ describe("Client", () => {
           nonFungibleTokenOfferChanges: {
             rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
               {
-                Owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+                owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
                 amount: "1",
                 flags: 0,
                 status: "deleted",
@@ -127,7 +127,7 @@ describe("Client", () => {
           nonFungibleTokenOfferChanges: {
             r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
               {
-                Owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+                owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
                 amount: "0",
                 flags: 1,
                 status: "deleted",
@@ -210,7 +210,7 @@ describe("Client", () => {
                 status: "created",
                 amount: "1",
                 tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
-                Owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+                owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
               },
             ],
           },
@@ -244,7 +244,7 @@ describe("Client", () => {
                 amount: "1000000000000000",
                 flags: 1,
                 tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
-                Owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+                owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
               },
             ],
           },
