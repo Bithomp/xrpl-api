@@ -54,15 +54,15 @@ describe("Client", () => {
         const accountInfo: any = await Client.getAccountInfo("rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw");
         expect(accountInfo.account_data).to.eql({
           Account: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
-          Balance: "999999904",
+          Balance: "999999951",
           Flags: 0,
           LedgerEntryType: "AccountRoot",
           MintedTokens: 1,
           Minter: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
           OwnerCount: 2,
-          PreviousTxnID: "F3B39252F4F13BAE93AB82E55DF8EB701AF4980FB6F38EB81889285B10DDEB5E",
-          PreviousTxnLgrSeq: 1310248,
-          Sequence: 980204,
+          PreviousTxnID: "41D2E1E3EE5554ADE84F15FFFA8A6A9E7C9EB0464CAAFA822CFAE1DD895DE724",
+          PreviousTxnLgrSeq: 75445,
+          Sequence: 75152,
           index: "54277D360ADA73E32426A83392E9443737A62EAEA4555F885F0EFE2440AC6C4C",
         });
       });

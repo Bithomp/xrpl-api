@@ -203,7 +203,11 @@ export function parseNFTokenAcceptOffer(tx: any): FormattedNFTokenAcceptOffer {
 export function parseNonFungibleTokenChanges(tx: any): any {
   const changes = {};
 
-  if (tx.meta.AffectedNodes.length === 0) {
+  if (tx.meta?.AffectedNodes === undefined) {
+    return changes;
+  }
+
+  if (tx.meta?.AffectedNodes?.length === 0) {
     return changes;
   }
 
@@ -296,6 +300,10 @@ export function parseNonFungibleTokenChanges(tx: any): any {
 
 export function parseNonFungibleTokenOfferChanges(tx: any): any {
   const changes = {};
+
+  if (tx.meta?.AffectedNodes === undefined) {
+    return changes;
+  }
 
   if (tx.meta.AffectedNodes.length === 0) {
     return changes;
