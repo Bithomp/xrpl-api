@@ -132,8 +132,8 @@ function parseOutcome(tx: any): any | undefined {
   const balanceChanges = transactionParser.parseBalanceChanges(metadata)
   const orderbookChanges = transactionParser.parseOrderbookChanges(metadata)
   const channelChanges = transactionParser.parseChannelChanges(metadata)
-  const nonFungibleTokenChanges = parseNonFungibleTokenChanges(metadata);
-  const nonFungibleTokenOfferChanges = parseNonFungibleTokenOfferChanges(metadata);
+  const nonFungibleTokenChanges = parseNonFungibleTokenChanges(tx);
+  const nonFungibleTokenOfferChanges = parseNonFungibleTokenOfferChanges(tx);
 
   removeEmptyCounterpartyInBalanceChanges(balanceChanges)
   removeEmptyCounterpartyInOrderbookChanges(orderbookChanges)

@@ -5,9 +5,7 @@ export function getAccountTxDetails(transaction: any, includeRawTransaction: boo
 }
 
 export function getTxDetails(tx: any, includeRawTransaction: boolean): any {
-  const specification = parseTransaction(tx, includeRawTransaction);
-
-  return specification;
+  return parseTransaction(tx, includeRawTransaction);
 }
 
 export function AccountTxToTx(transaction: any): any {
