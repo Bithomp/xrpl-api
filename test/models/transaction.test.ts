@@ -253,5 +253,38 @@ describe("Client", () => {
         },
       });
     });
+
+    it("AccountSetMinter", function () {
+      const tx = require("../examples/responses/AccountSetMinter.json");
+      const result: any = Client.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        address: "rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz",
+        id: "18B19F840ED19A27F539006412A5D61986F27B2C2A71A73AA4ED6869009D6BB0",
+        outcome: {
+          balanceChanges: {
+            rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz: [
+              {
+                currency: "XRP",
+                value: "-0.000015",
+              },
+            ],
+          },
+          fee: "0.000015",
+          indexInLedger: 0,
+          ledgerVersion: 44093,
+          nonFungibleTokenChanges: {},
+          nonFungibleTokenOfferChanges: {},
+          orderbookChanges: {},
+          result: "tesSUCCESS",
+          timestamp: "2022-03-03T12:47:41.000Z",
+        },
+        sequence: 42030,
+        specification: {
+          minter: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+        },
+        type: "settings",
+      });
+    });
   });
 });
