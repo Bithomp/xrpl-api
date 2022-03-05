@@ -34,7 +34,6 @@
     "bignumber.js": "^9.0.2",
     "lodash": "^4.17.21",
     "ripple-address-codec": "^4.2.3",
-    "ripple-hashes": "^0.3.4",
     "xrpl": "^2.1.1"
   },
   "devDependencies": {
