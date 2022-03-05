@@ -141,6 +141,7 @@ class NonFungibleTokenChanges {
       return;
     }
 
+    // tslint:disable-next-line:no-bitwise
     const status = offerNode.DeletedNode.FinalFields.Flags & NFTokenOfferFlagsKeys.sellToken ? "removed" : "added";
     const tokenID = offerNode.DeletedNode.FinalFields.TokenID;
 

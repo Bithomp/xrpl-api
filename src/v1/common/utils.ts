@@ -168,10 +168,10 @@ function iso8601ToRippleTime(iso8601: string): number {
 }
 
 function normalizeNode(affectedNode) {
-  var diffType = Object.keys(affectedNode)[0]
-  var node = affectedNode[diffType]
+  const diffType = Object.keys(affectedNode)[0]
+  const node = affectedNode[diffType]
   return Object.assign({}, node, {
-    diffType: diffType,
+    diffType,
     entryType: node.LedgerEntryType,
     ledgerIndex: node.LedgerIndex,
     newFields: node.NewFields || {},

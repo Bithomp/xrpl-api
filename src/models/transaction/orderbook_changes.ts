@@ -2,11 +2,12 @@
 import * as _ from 'lodash';
 import { BigNumber as GlobalBigNumber } from 'bignumber.js';
 const BigNumber = GlobalBigNumber.clone({DECIMAL_PLACES: 40})
-
 import { parseCurrencyAmount, normalizeNodes } from'../../v1/common/utils';
 import { parseQuality } from'./quality';
 
-var lsfSell = 0x00020000 // see "lsfSell" flag in rippled source code
+/* tslint:disable:prefer-const only-arrow-functions object-literal-shorthand no-var-keyword */
+
+const lsfSell = 0x00020000 // see "lsfSell" flag in rippled source code
 
 function removeUndefined(obj) {
   return _.omitBy(obj, _.isUndefined)
@@ -106,6 +107,7 @@ function parseOrderChange(node) {
   var orderChange = convertOrderChange({
     taker_pays: parseChangeAmount(node, 'TakerPays'),
     taker_gets: parseChangeAmount(node, 'TakerGets'),
+    // tslint:disable-next-line:no-bitwise
     sell: (node.finalFields.Flags & lsfSell) !== 0,
     sequence: node.finalFields.Sequence || node.newFields.Sequence,
     status: parseOrderStatus(node),

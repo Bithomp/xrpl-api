@@ -1,7 +1,8 @@
 import * as _ from 'lodash';
 import BigNumber from 'bignumber.js';
-
 import { dropsToXrp, normalizeNodes } from'../../v1/common/utils';
+
+/* tslint:disable:prefer-const only-arrow-functions no-var-keyword */
 
 function groupByAddress(balanceChanges) {
   var grouped = _.groupBy(balanceChanges, function(node) {

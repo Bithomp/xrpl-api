@@ -1,6 +1,8 @@
 import * as assert from 'assert'
 import BigNumber from 'bignumber.js';
 
+/* tslint:disable:prefer-const no-var-keyword */
+
 /*
 The quality, as stored in the last 64 bits of a directory index, is stored as
 the quotient of TakerPays/TakerGets. It uses drops (1e-6 XRP) for XRP values.
