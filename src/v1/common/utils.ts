@@ -167,6 +167,45 @@ function iso8601ToRippleTime(iso8601: string): number {
   return unixToRippleTimestamp(Date.parse(iso8601))
 }
 
+function normalizeNode(affectedNode) {
+  var diffType = Object.keys(affectedNode)[0]
+  var node = affectedNode[diffType]
+  return Object.assign({}, node, {
+    diffType: diffType,
+    entryType: node.LedgerEntryType,
+    ledgerIndex: node.LedgerIndex,
+    newFields: node.NewFields || {},
+    finalFields: node.FinalFields || {},
+    previousFields: node.PreviousFields || {}
+  })
+}
+
+function normalizeNodes(metadata) {
+  if (!metadata.AffectedNodes) {
+    return []
+  }
+  return metadata.AffectedNodes.map(normalizeNode)
+}
+
+function parseCurrencyAmount(currencyAmount) {
+  if (currencyAmount === undefined) {
+    return undefined
+  }
+  if (typeof currencyAmount === 'string') {
+    return {
+      currency: 'XRP',
+      value: dropsToXrp(new BigNumber(currencyAmount)).toString()
+    }
+  }
+
+  return {
+    currency: currencyAmount.currency,
+    counterparty: currencyAmount.issuer,
+    value: currencyAmount.value
+  }
+}
+
+
 export {
   dropsToXrp,
   xrpToDrops,
@@ -174,5 +213,7 @@ export {
   removeUndefined,
   rippleTimeToISO8601,
   iso8601ToRippleTime,
-  isValidSecret
+  isValidSecret,
+  normalizeNodes,
+  parseCurrencyAmount
 }

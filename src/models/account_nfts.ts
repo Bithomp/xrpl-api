@@ -6,9 +6,6 @@ import { NFTokenMintFlags, NFTokenCreateOfferFlags } from "xrpl";
 import { removeUndefined } from "../v1/common";
 import { parseFlags } from "../common/utils";
 
-export { parseNonFungibleTokenChanges } from "./account_nfts/nfoken_changes";
-export { parseNonFungibleTokenOfferChanges } from "./account_nfts/nfoken_offer_changes";
-
 export interface NFTokenInterface {
   Flags: number;
   Issuer: string;

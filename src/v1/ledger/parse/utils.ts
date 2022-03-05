@@ -1,11 +1,16 @@
-import transactionParser from 'ripple-lib-transactionparser'
 import BigNumber from 'bignumber.js'
 import * as common from '../../common'
 import parseAmount from './amount'
 
 import {Amount, Memo} from '../../common/types/objects'
 
-import { parseNonFungibleTokenChanges, parseNonFungibleTokenOfferChanges } from "../../../models/account_nfts";
+import {
+  parseBalanceChanges,
+  parseChannelChanges,
+  parseOrderbookChanges,
+  parseNonFungibleTokenChanges,
+  parseNonFungibleTokenOfferChanges,
+} from "../../../models/transaction";
 
 type OfferDescription = {
   direction: string,
@@ -129,9 +134,9 @@ function parseOutcome(tx: any): any | undefined {
   if (!metadata) {
     return undefined
   }
-  const balanceChanges = transactionParser.parseBalanceChanges(metadata)
-  const orderbookChanges = transactionParser.parseOrderbookChanges(metadata)
-  const channelChanges = transactionParser.parseChannelChanges(metadata)
+  const balanceChanges = parseBalanceChanges(metadata)
+  const orderbookChanges = parseOrderbookChanges(metadata)
+  const channelChanges = parseChannelChanges(metadata)
   const nonFungibleTokenChanges = parseNonFungibleTokenChanges(tx);
   const nonFungibleTokenOfferChanges = parseNonFungibleTokenOfferChanges(tx);
 
