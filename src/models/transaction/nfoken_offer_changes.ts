@@ -63,8 +63,9 @@ class NonFungibleTokenOfferChanges {
     const flags: string = affectedNode.CreatedNode.NewFields.Flags;
     const tokenID: string = affectedNode.CreatedNode.NewFields.TokenID;
     const owner: string = affectedNode.CreatedNode.NewFields.Owner;
+    const index: string = affectedNode.CreatedNode.LedgerIndex;
 
-    this.addChange(this.tx.Account, { status, amount, flags, tokenID, owner });
+    this.addChange(this.tx.Account, { status, amount, flags, tokenID, owner, index });
   }
 
   private isNFTokensDeleteOfferNode(affectedNode: any): boolean {
@@ -77,7 +78,8 @@ class NonFungibleTokenOfferChanges {
     const flags: string = affectedNode.DeletedNode.FinalFields.Flags;
     const tokenID: string = affectedNode.DeletedNode.FinalFields.TokenID;
     const owner: string = affectedNode.DeletedNode.FinalFields.Owner;
+    const index: string = affectedNode.DeletedNode.LedgerIndex;
 
-    this.addChange(owner, { status, amount, flags, tokenID, owner });
+    this.addChange(owner, { status, amount, flags, tokenID, owner, index });
   }
 }
