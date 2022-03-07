@@ -1,4 +1,4 @@
-import * as Client from "../client";
+import * as Client from ".";
 import { LedgerIndex } from "../models/ledger_index";
 
 export interface GetTrustlinesOptions {

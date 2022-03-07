@@ -1,7 +1,6 @@
-import { SortDirection } from "../common/utils";
-import * as Client from "../client";
+import * as Client from ".";
 import { LedgerIndex } from "../models/ledger_index";
-import { AccountNFTokenInterface } from "../models/account_nfts";
+import { sortHelperAccountNFToken } from "../models/account_nfts";
 
 export interface GetAccountNftsOptions {
   ledgerIndex?: LedgerIndex;
@@ -60,30 +59,6 @@ export async function getAccountNfts(
   }
 
   return account_nfts;
-}
-
-/**
- * Sort account NFTs by issuer and serial
- * issuer1 serial 1
- * issuer1 serial 2
- * issuer2 serial 56
- * issuer3 serial 1
- * issuer3 serial 56
- */
-export function sortHelperAccountNFToken(a: AccountNFTokenInterface, b: AccountNFTokenInterface): SortDirection {
-  const cmpIssuer = a.Issuer.localeCompare(b.Issuer);
-  if (cmpIssuer !== 0) {
-    return cmpIssuer as SortDirection;
-  }
-
-  if (a.nft_serial < b.nft_serial) {
-    return -1;
-  }
-  if (a.nft_serial > b.nft_serial) {
-    return 1;
-  }
-
-  return 0;
 }
 
 export interface GetAccountNftSellOffersOptions {

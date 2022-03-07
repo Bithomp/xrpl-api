@@ -1,6 +1,7 @@
 import { BigNumber } from "bignumber.js";
 
-import * as Client from "../client";
+import * as Client from ".";
+import { dropsInXRP } from "../common";
 
 /**
  * @returns {string | null}
@@ -24,7 +25,7 @@ export async function getFee(): Promise<string | null> {
     return null;
   }
 
-  const fee: any = new BigNumber(baseFee).multipliedBy(Client.feeCushion).dividedBy(Client.dropsInXRP);
+  const fee: any = new BigNumber(baseFee).multipliedBy(Client.feeCushion).dividedBy(dropsInXRP);
 
   return fee.toString();
 }

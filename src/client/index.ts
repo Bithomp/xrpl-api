@@ -1,18 +1,13 @@
 import { Connection, ConnectionOptions } from "./connection";
-export * from "./client/fee";
-export * from "./client/ledger";
-export * from "./client/account_info";
-export * from "./client/account_lines";
-export * from "./client/account_nfts";
-export * from "./client/account_objects";
-export * from "./client/account_tx";
-export * from "./client/transaction";
+export * from "./fee";
+export * from "./ledger";
+export * from "./account_info";
+export * from "./account_lines";
+export * from "./account_nfts";
+export * from "./account_objects";
+export * from "./account_tx";
+export * from "./transaction";
 
-export * from "./models/account_info";
-export * from "./models/account_nfts";
-export * from "./models/transaction";
-
-export const dropsInXRP = 1000000;
 export let feeCushion: number = 1.3;
 export let logger: any;
 
