@@ -333,6 +333,7 @@ describe("Client", () => {
             amount: "1000000000000000",
             flags: 1,
             tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+            index: "D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8",
           },
         ],
       });
@@ -350,6 +351,7 @@ describe("Client", () => {
             amount: "1000000000000000",
             flags: 1,
             tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+            index: "D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8",
           },
         ],
       });
@@ -366,6 +368,7 @@ describe("Client", () => {
             owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
             amount: "1",
             tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+            index: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
           },
         ],
       });
@@ -383,6 +386,7 @@ describe("Client", () => {
             amount: "0",
             flags: 1,
             tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+            index: "D3C21058E60B6597BCB33A7A77B5FC90959082C96057EDBB388CE365E8D3245D",
           },
         ],
       });
@@ -400,6 +404,7 @@ describe("Client", () => {
             amount: "1",
             flags: 0,
             tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+            index: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
           },
         ],
       });
