@@ -23,7 +23,6 @@ jobs:
             - v1-dependencies-
 
       - run: echo "$XRPL_API_CONFIG" | base64 --decode > config/test.json
-      - run: echo "//npm.pkg.github.com/:_authToken=\"$GITHUB_ACCESS_TOKEN\"" >> ~/.npmrc
       - run: npm install
 
       - save_cache:
