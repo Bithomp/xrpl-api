@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 
 import { parseFlags } from "../common/utils";
-import * as Client from "../client";
+import * as Client from ".";
 import {
   AccountRootFlagsKeys,
   AccountRootFlagsKeysInterface,

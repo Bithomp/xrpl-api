@@ -1,5 +1,5 @@
 import { getBalanceChanges } from "xrpl";
-import * as Client from "../client";
+import * as Client from ".";
 import { getTxDetails } from "../models/transaction";
 
 export interface GetTransactionOptions {

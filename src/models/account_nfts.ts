@@ -4,7 +4,7 @@ import AddressCodec = require("ripple-address-codec");
 
 import { NFTokenMintFlags, NFTokenCreateOfferFlags } from "xrpl";
 import { removeUndefined } from "../v1/common";
-import { parseFlags } from "../common/utils";
+import { parseFlags, SortDirection } from "../common/utils";
 
 export interface NFTokenInterface {
   Flags: number;
@@ -21,6 +21,30 @@ export interface AccountNFTokenInterface {
   TokenID: string;
   TokenTaxons: number;
   nft_serial: number;
+}
+
+/**
+ * Sort account NFTs by issuer and serial
+ * issuer1 serial 1
+ * issuer1 serial 2
+ * issuer2 serial 56
+ * issuer3 serial 1
+ * issuer3 serial 56
+ */
+ export function sortHelperAccountNFToken(a: AccountNFTokenInterface, b: AccountNFTokenInterface): SortDirection {
+  const cmpIssuer = a.Issuer.localeCompare(b.Issuer);
+  if (cmpIssuer !== 0) {
+    return cmpIssuer as SortDirection;
+  }
+
+  if (a.nft_serial < b.nft_serial) {
+    return -1;
+  }
+  if (a.nft_serial > b.nft_serial) {
+    return 1;
+  }
+
+  return 0;
 }
 
 export const NFTokenFlagsKeys = {

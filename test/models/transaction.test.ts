@@ -1,11 +1,11 @@
 import { expect } from "chai";
-import { Client } from "../../src/index";
+import { Models } from "../../src/index";
 
-describe("Client", () => {
+describe("Models", () => {
   describe("getTxDetails", () => {
     it("NFTokenMint", function () {
       const tx = require("../examples/responses/NFTokenMint.json");
-      const result: any = Client.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false);
 
       expect(result).to.eql({
         address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
@@ -46,7 +46,7 @@ describe("Client", () => {
 
     it("NFTokenAcceptOfferBuy", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy.json");
-      const result: any = Client.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false);
 
       expect(result).to.eql({
         address: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
@@ -100,7 +100,7 @@ describe("Client", () => {
 
     it("NFTokenAcceptOfferSell", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferSell.json");
-      const result: any = Client.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false);
 
       expect(result).to.eql({
         address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
@@ -151,7 +151,7 @@ describe("Client", () => {
 
     it("NFTokenBurn", function () {
       const tx = require("../examples/responses/NFTokenBurn.json");
-      const result: any = Client.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false);
 
       expect(result).to.eql({
         type: "nftokenBurn",
@@ -186,7 +186,7 @@ describe("Client", () => {
 
     it("NFTokenCreateOfferBuy", function () {
       const tx = require("../examples/responses/NFTokenCreateOfferBuy.json");
-      const result: any = Client.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false);
 
       expect(result).to.eql({
         type: "nftokenCreate",
@@ -225,7 +225,7 @@ describe("Client", () => {
 
     it("NFTokenCancelOffer", function () {
       const tx = require("../examples/responses/NFTokenCancelOffer.json");
-      const result: any = Client.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false);
 
       expect(result).to.eql({
         type: "nftokenOffer",
@@ -260,7 +260,7 @@ describe("Client", () => {
 
     it("AccountSetMinter", function () {
       const tx = require("../examples/responses/AccountSetMinter.json");
-      const result: any = Client.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false);
 
       expect(result).to.eql({
         address: "rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz",
@@ -293,7 +293,7 @@ describe("Client", () => {
 
     it("OfferCreate", function () {
       const tx = require("../examples/responses/OfferCreate.json");
-      const result: any = Client.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false);
 
       expect(result).to.eql({
         address: "rogue5HnPRSszD9CWGSUz8UGHMVwSSKF6",
@@ -387,7 +387,7 @@ describe("Client", () => {
 
     it("PaymentChannelCreate", function () {
       const tx = require("../examples/responses/PaymentChannelCreate.json");
-      const result: any = Client.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false);
 
       expect(result).to.eql({
         type: "paymentChannelCreate",
