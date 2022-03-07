@@ -30,4 +30,5 @@ export type FormattedSettings = {
   signers?: Signers
   transferRate?: number | null
   tickSize?: number
+  minter?: string
 }

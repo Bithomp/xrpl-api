@@ -79,7 +79,8 @@ const AccountSetFlags = {
   enableTransactionIDTracking: txFlagIndices.AccountSet.asfAccountTxnID,
   noFreeze: txFlagIndices.AccountSet.asfNoFreeze,
   globalFreeze: txFlagIndices.AccountSet.asfGlobalFreeze,
-  defaultRipple: txFlagIndices.AccountSet.asfDefaultRipple
+  defaultRipple: txFlagIndices.AccountSet.asfDefaultRipple,
+  authorizedMinter: txFlagIndices.AccountSet.asfAuthorizedMinter,
 }
 
 const AccountFields = {

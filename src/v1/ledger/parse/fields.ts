@@ -29,6 +29,10 @@ function parseFields(data: any): object {
     settings.regularKey = data.RegularKey
   }
 
+  if (data.Minter) {
+    settings.minter = data.Minter;
+  }
+
   // Since an account can own at most one SignerList,
   // this array must have exactly one member if it is present.
   if (data.signer_lists && data.signer_lists.length === 1) {

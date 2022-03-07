@@ -1,0 +1,44 @@
+{
+  "Account": "rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz",
+  "Fee": "15",
+  "Flags": 2147483648,
+  "LastLedgerSequence": 44102,
+  "Minter": "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+  "Sequence": 42030,
+  "SetFlag": 10,
+  "SigningPubKey": "03EB895F8F99B2F6F46A1CD22E870861F76F51FAF61A93F051E54C691257B7064C",
+  "TransactionType": "AccountSet",
+  "TxnSignature": "30440220106EE064AEC6514D1132024FCB385D8291988B65E283324786E3D9B278C2A4390220247AD5FE11B0407FEAD6F018BF96F5B90797236429D1B0754DE258D47CDB9D77",
+  "date": 699626861,
+  "hash": "18B19F840ED19A27F539006412A5D61986F27B2C2A71A73AA4ED6869009D6BB0",
+  "inLedger": 44093,
+  "ledger_index": 44093,
+  "meta": {
+      "AffectedNodes": [
+          {
+              "ModifiedNode": {
+                  "FinalFields": {
+                      "Account": "rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz",
+                      "Balance": "999999970",
+                      "Flags": 0,
+                      "Minter": "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+                      "OwnerCount": 0,
+                      "Sequence": 42031
+                  },
+                  "LedgerEntryType": "AccountRoot",
+                  "LedgerIndex": "0999B6A418D4F62355EC49623BA3DB1FDC658DC20C8C2210467F684F2855CE58",
+                  "PreviousFields": {
+                      "Balance": "999999985",
+                      "Minter": "raMjuzZYRZ4yza9DAd5Szt9tz9ZDzD4QzP",
+                      "Sequence": 42030
+                  },
+                  "PreviousTxnID": "62AFD6A669912C2F450CCE46ABDB8F61620570DEB6CB40ECAFA0961A15AA59CB",
+                  "PreviousTxnLgrSeq": 44068
+              }
+          }
+      ],
+      "TransactionIndex": 0,
+      "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

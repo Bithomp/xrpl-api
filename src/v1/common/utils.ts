@@ -135,27 +135,6 @@ function toRippledAmount(amount: RippledAmount): RippledAmount {
   }
 }
 
-function convertKeysFromSnakeCaseToCamelCase(obj: any): any {
-  if (typeof obj === 'object') {
-    const accumulator = Array.isArray(obj) ? [] : {}
-    let newKey
-    return Object.entries(obj).reduce(
-      (result, [key, value]) => {
-        newKey = key
-        // taking this out of function leads to error in PhantomJS
-        const FINDSNAKE = /([a-zA-Z]_[a-zA-Z])/g
-        if (FINDSNAKE.test(key)) {
-          newKey = key.replace(FINDSNAKE, (r) => r[0] + r[2].toUpperCase())
-        }
-        result[newKey] = convertKeysFromSnakeCaseToCamelCase(value)
-        return result
-      },
-      accumulator
-    )
-  }
-  return obj
-}
-
 function removeUndefined<T extends object>(obj: T): T {
   return _.omitBy(obj, value => value == null) as T
 }
@@ -188,13 +167,53 @@ function iso8601ToRippleTime(iso8601: string): number {
   return unixToRippleTimestamp(Date.parse(iso8601))
 }
 
+function normalizeNode(affectedNode) {
+  const diffType = Object.keys(affectedNode)[0]
+  const node = affectedNode[diffType]
+  return Object.assign({}, node, {
+    diffType,
+    entryType: node.LedgerEntryType,
+    ledgerIndex: node.LedgerIndex,
+    newFields: node.NewFields || {},
+    finalFields: node.FinalFields || {},
+    previousFields: node.PreviousFields || {}
+  })
+}
+
+function normalizeNodes(metadata) {
+  if (!metadata.AffectedNodes) {
+    return []
+  }
+  return metadata.AffectedNodes.map(normalizeNode)
+}
+
+function parseCurrencyAmount(currencyAmount) {
+  if (currencyAmount === undefined) {
+    return undefined
+  }
+  if (typeof currencyAmount === 'string') {
+    return {
+      currency: 'XRP',
+      value: dropsToXrp(new BigNumber(currencyAmount)).toString()
+    }
+  }
+
+  return {
+    currency: currencyAmount.currency,
+    counterparty: currencyAmount.issuer,
+    value: currencyAmount.value
+  }
+}
+
+
 export {
   dropsToXrp,
   xrpToDrops,
   toRippledAmount,
-  convertKeysFromSnakeCaseToCamelCase,
   removeUndefined,
   rippleTimeToISO8601,
   iso8601ToRippleTime,
-  isValidSecret
+  isValidSecret,
+  normalizeNodes,
+  parseCurrencyAmount
 }

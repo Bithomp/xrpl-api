@@ -264,6 +264,8 @@ describe("Client", () => {
         indexInLedger: 4,
         ledgerVersion: 16658556,
         orderbookChanges: {},
+        nonFungibleTokenChanges: {},
+        nonFungibleTokenOfferChanges: {},
         result: "tesSUCCESS",
         timestamp: "2015-10-24T06:37:00.000Z",
       });
@@ -321,6 +323,8 @@ describe("Client", () => {
             ],
           },
           orderbookChanges: {},
+          nonFungibleTokenChanges: {},
+          nonFungibleTokenOfferChanges: {},
           ledgerVersion: 16658556,
           indexInLedger: 4,
           deliveredAmount: {
@@ -381,6 +385,8 @@ describe("Client", () => {
             ],
           },
           orderbookChanges: {},
+          nonFungibleTokenChanges: {},
+          nonFungibleTokenOfferChanges: {},
           ledgerVersion: 16658556,
           indexInLedger: 4,
           deliveredAmount: {

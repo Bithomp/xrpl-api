@@ -18,66 +18,87 @@ import parsePaymentChannelCreate from './payment-channel-create'
 import parsePaymentChannelFund from './payment-channel-fund'
 import parseTicketCreate from './ticket-create'
 import parseTrustline from './trustline'
-
+import {
+  parseNFTokenBurn,
+  parseNFTokenMint,
+  parseNFTokenCancelOffer,
+  parseNFTokenCreateOffer,
+  parseNFTokenAcceptOffer,
+} from "../../../models/account_nfts";
 import parseAmendment from './amendment' // pseudo-transaction
 import parseFeeUpdate from './fee-update' // pseudo-transaction
 
-function parseTransactionType(type) {
-  // Ordering matches https://developers.ripple.com/transaction-types.html
-  const mapping = {
-    AccountSet: 'settings',
-    AccountDelete: 'accountDelete',
-    CheckCancel: 'checkCancel',
-    CheckCash: 'checkCash',
-    CheckCreate: 'checkCreate',
-    DepositPreauth: 'depositPreauth',
-    EscrowCancel: 'escrowCancellation',
-    EscrowCreate: 'escrowCreation',
-    EscrowFinish: 'escrowExecution',
-    OfferCancel: 'orderCancellation',
-    OfferCreate: 'order',
-    Payment: 'payment',
-    PaymentChannelClaim: 'paymentChannelClaim',
-    PaymentChannelCreate: 'paymentChannelCreate',
-    PaymentChannelFund: 'paymentChannelFund',
-    SetRegularKey: 'settings',
-    SignerListSet: 'settings',
-    TicketCreate: 'ticketCreate',
-    TrustSet: 'trustline',
+// Ordering matches https://developers.ripple.com/transaction-types.html
+const transactionTypeToType = {
+  AccountSet: 'settings',
+  AccountDelete: 'accountDelete',
+  CheckCancel: 'checkCancel',
+  CheckCash: 'checkCash',
+  CheckCreate: 'checkCreate',
+  DepositPreauth: 'depositPreauth',
+  EscrowCancel: 'escrowCancellation',
+  EscrowCreate: 'escrowCreation',
+  EscrowFinish: 'escrowExecution',
+  OfferCancel: 'orderCancellation',
+  OfferCreate: 'order',
+  Payment: 'payment',
+  PaymentChannelClaim: 'paymentChannelClaim',
+  PaymentChannelCreate: 'paymentChannelCreate',
+  PaymentChannelFund: 'paymentChannelFund',
+  SetRegularKey: 'settings',
+  SignerListSet: 'settings',
+  TicketCreate: 'ticketCreate',
+  TrustSet: 'trustline',
 
-    EnableAmendment: 'amendment', // pseudo-transaction
-    SetFee: 'feeUpdate' // pseudo-transaction
-  }
-  return mapping[type] || null
+  NFTokenBurn: 'nftokenBurn',
+  NFTokenMint: 'nftokenMint',
+  NFTokenCancelOffer: 'nftokenOffer',
+  NFTokenCreateOffer: 'nftokenCreate',
+  NFTokenAcceptOffer: 'nftokenAcceptOffer',
+
+  EnableAmendment: 'amendment', // pseudo-transaction
+  SetFee: 'feeUpdate' // pseudo-transaction
+}
+
+function parseTransactionType(type) {  
+  return transactionTypeToType[type] || null
+}
+
+const parserTypeFunc = {
+  settings: parseSettings,
+  accountDelete: parseAccountDelete,
+  checkCancel: parseCheckCancel,
+  checkCash: parseCheckCash,
+  checkCreate: parseCheckCreate,
+  depositPreauth: parseDepositPreauth,
+  escrowCancellation: parseEscrowCancellation,
+  escrowCreation: parseEscrowCreation,
+  escrowExecution: parseEscrowExecution,
+  orderCancellation: parseOrderCancellation,
+  order: parseOrder,
+  payment: parsePayment,
+  paymentChannelClaim: parsePaymentChannelClaim,
+  paymentChannelCreate: parsePaymentChannelCreate,
+  paymentChannelFund: parsePaymentChannelFund,
+  ticketCreate: parseTicketCreate,
+  trustline: parseTrustline,
+
+  nftokenBurn: parseNFTokenBurn,
+  nftokenMint: parseNFTokenMint,
+  nftokenOffer: parseNFTokenCancelOffer,
+  nftokenCreate: parseNFTokenCreateOffer,
+  nftokenAcceptOffer: parseNFTokenAcceptOffer,
+
+  amendment: parseAmendment, // pseudo-transaction
+  feeUpdate: parseFeeUpdate // pseudo-transaction
 }
 
 // includeRawTransaction: undefined by default (getTransaction)
 function parseTransaction(tx: any, includeRawTransaction: boolean): any {
   const type = parseTransactionType(tx.TransactionType)
-  const mapping = {
-    settings: parseSettings,
-    accountDelete: parseAccountDelete,
-    checkCancel: parseCheckCancel,
-    checkCash: parseCheckCash,
-    checkCreate: parseCheckCreate,
-    depositPreauth: parseDepositPreauth,
-    escrowCancellation: parseEscrowCancellation,
-    escrowCreation: parseEscrowCreation,
-    escrowExecution: parseEscrowExecution,
-    orderCancellation: parseOrderCancellation,
-    order: parseOrder,
-    payment: parsePayment,
-    paymentChannelClaim: parsePaymentChannelClaim,
-    paymentChannelCreate: parsePaymentChannelCreate,
-    paymentChannelFund: parsePaymentChannelFund,
-    ticketCreate: parseTicketCreate,
-    trustline: parseTrustline,
-
-    amendment: parseAmendment, // pseudo-transaction
-    feeUpdate: parseFeeUpdate // pseudo-transaction
-  }
+  
   // tslint:disable-next-line:ban-types
-  const parser: Function = mapping[type]
+  const parser: Function = parserTypeFunc[type]
 
   const specification = parser
     ? parser(tx)
