@@ -74,14 +74,14 @@ export function disconnect() {
 export function findConnection(type: string = "regular"): Connection | null {
   // get connections by type
   let connections = Connections.filter((con) => {
-    if (typeof type === "string") {
-      if (con.types.length === 0) {
-        return false;
-      } else {
-        return con.types.includes(type);
-      }
+    if (typeof type !== "string") {
+      return true;
+    }
+
+    if (con.types.length === 0) {
+      return false;
     } else {
-      true;
+      return con.types.includes(type);
     }
   });
 
