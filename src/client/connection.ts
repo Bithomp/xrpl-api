@@ -15,7 +15,8 @@ export interface LatencyInfo {
 class Connection {
   public readonly client: Client;
   public readonly url: string;
-  public readonly types?: string[];
+  public readonly type?: string;
+  public readonly types: string[];
   public latency: LatencyInfo[];
   public readonly logger?: any;
   private shotdown: boolean = false;
@@ -23,7 +24,13 @@ class Connection {
 
   public constructor(url: string, type?: string, options: ConnectionOptions = {}) {
     this.url = url;
-    this.types = type?.split(",").map((v) => v.trim());
+    this.type = type;
+    if (typeof this.type === "string") {
+      this.types = this.type.split(",").map((v) => v.trim());
+    } else {
+      this.types = [];
+    }
+
     this.latency = [];
     this.client = new Client(url);
     this.logger = options.logger;

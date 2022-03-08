@@ -73,8 +73,16 @@ export function disconnect() {
 
 export function findConnection(type: string = "regular"): Connection | null {
   // get connections by type
-  let connections = Connections.filter((connection) => {
-    return connection.types?.includes(type);
+  let connections = Connections.filter((con) => {
+    if (typeof type !== "string") {
+      return true;
+    }
+
+    if (con.types.length === 0) {
+      return false;
+    } else {
+      return con.types.includes(type);
+    }
   });
 
   // no any, use all what we have
