@@ -72,12 +72,22 @@ export function disconnect() {
 }
 
 export function findConnection(type: string = "regular"): Connection | null {
+  // no connection
+  if (Connections.length === 0) {
+    return null;
+    // single connection mode
+  } else if (Connections.length === 1) {
+    return Connections[0];
+  }
+
   // get connections by type
   let connections = Connections.filter((con) => {
+    // invalid type, skipping filtering
     if (typeof type !== "string") {
       return true;
     }
 
+    // no types have been setup
     if (con.types.length === 0) {
       return false;
     } else {
