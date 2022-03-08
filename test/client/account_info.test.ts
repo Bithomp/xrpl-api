@@ -1,6 +1,6 @@
 import nconf from "nconf";
 import { expect } from "chai";
-import { Client, Wallet } from "../../src/index";
+import { Client, Models, Wallet } from "../../src/index";
 
 describe("Client", () => {
   describe("isActivated", () => {
@@ -127,7 +127,7 @@ describe("Client", () => {
 
       it("parses getSettings", async function () {
         const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
-        const result: any = Client.getSettings(accountInfoData);
+        const result: any = Models.getSettings(accountInfoData);
         expect(result).to.eql({
           requireAuth: true,
           disallowXRP: true,
@@ -139,7 +139,7 @@ describe("Client", () => {
         const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf", {
           signerLists: true,
         });
-        const result: any = Client.getSettings(accountInfoData);
+        const result: any = Models.getSettings(accountInfoData);
         expect(result).to.eql({
           requireAuth: true,
           disallowXRP: true,
@@ -151,7 +151,7 @@ describe("Client", () => {
         const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf", {
           signerLists: true,
         });
-        const result: any = Client.getSettings(accountInfoData, false);
+        const result: any = Models.getSettings(accountInfoData, false);
         expect(result).to.eql({
           blackholed: false,
           defaultRipple: false,
@@ -178,7 +178,7 @@ describe("Client", () => {
         const accountInfoData: any = await Client.getAccountInfoData("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW", {
           signerLists: true,
         });
-        const result: any = Client.getSettings(accountInfoData);
+        const result: any = Models.getSettings(accountInfoData);
         expect(result).to.eql({
           blackholed: true,
           defaultRipple: true,
@@ -194,7 +194,7 @@ describe("Client", () => {
         const accountInfo: any = await Client.getAccountInfo("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW", {
           signerLists: true,
         });
-        const result: any = Client.getSettings(accountInfo.account_data, false);
+        const result: any = Models.getSettings(accountInfo.account_data, false);
         expect(result).to.eql({
           blackholed: true,
           defaultRipple: true,
@@ -279,7 +279,7 @@ describe("Client", () => {
           },
         ]);
 
-        const result: any = Client.getSettings(accountInfoData, false);
+        const result: any = Models.getSettings(accountInfoData, false);
 
         expect(result).to.eql({
           passwordSpent: false,
@@ -293,22 +293,6 @@ describe("Client", () => {
           defaultRipple: false,
           blackholed: false,
         });
-      });
-    });
-  });
-
-  describe("parseSignerListFlags", () => {
-    it("returns decoed flags", async function () {
-      const result: any = Client.parseSignerListFlags(65536);
-      expect(result).to.eql({
-        oneOwnerCount: true,
-      });
-    });
-
-    it("returns decoed flags", async function () {
-      const result: any = Client.parseSignerListFlags(0);
-      expect(result).to.eql({
-        oneOwnerCount: false,
       });
     });
   });

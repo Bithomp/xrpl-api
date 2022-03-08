@@ -1,11 +1,13 @@
 import { Connection, ConnectionOptions } from "./connection";
-export * from "./fee";
-export * from "./ledger";
+
 export * from "./account_info";
 export * from "./account_lines";
 export * from "./account_nfts";
 export * from "./account_objects";
 export * from "./account_tx";
+export * from "./fee";
+export * from "./gateway_balances";
+export * from "./ledger";
 export * from "./transaction";
 
 export let feeCushion: number = 1.3;
@@ -72,9 +74,7 @@ export function disconnect() {
 export function findConnection(type: string = "regular"): Connection | null {
   // get connections by type
   let connections = Connections.filter((connection) => {
-    if (type === "history") return connection.type === type;
-
-    return true;
+    return connection.types?.includes(type);
   });
 
   // no any, use all what we have

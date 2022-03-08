@@ -1,0 +1,55 @@
+import * as Client from ".";
+import { LedgerIndex } from "../models/ledger_index";
+
+export interface GetBalanceSheetOptions {
+  ledgerIndex?: LedgerIndex;
+  hotwallet?: string;
+  strict?: boolean;
+}
+
+/**
+ * @returns {Promise<object | null>} like
+ * {
+ *   account: 'rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW',
+ *   ledger_hash: 'D99FE8D8E104DD899B73F451DF41FA9A44FBB8B609ED1103DBC9641AC07D40F7',
+ *   ledger_index: 70169206,
+ *   obligations: { BTH: '9999.999' },
+ *   validated: true,
+ *   _nodepref: 'nonfh'
+ * }
+ * @exception {Error}
+ */
+export async function getBalanceSheet(account: string, options: GetBalanceSheetOptions = {}): Promise<object | null> {
+  const connection: any = Client.findConnection("gateway_balances");
+  if (!connection) {
+    throw new Error("There is no connection");
+  }
+
+  await connection.connect();
+  const response = await connection.request({
+    command: "gateway_balances",
+    account,
+    ledger_index: options.ledgerIndex || "validated",
+    hotwallet: options.hotwallet,
+    strict: !!options.strict,
+  });
+
+  if (!response) {
+    return null;
+  }
+
+  if (response.error) {
+    const { error, error_code, error_message, status, validated } = response;
+
+    return {
+      account,
+      error,
+      error_code,
+      error_message,
+      status,
+      validated,
+    };
+  }
+
+  return response?.result;
+}

@@ -1,23 +1,5 @@
-import BigNumber from "bignumber.js";
-
-import { parseFlags } from "../common/utils";
 import * as Client from ".";
-import {
-  AccountRootFlagsKeys,
-  AccountRootFlagsKeysInterface,
-  AccountFields,
-  SignerListFlagsKeys,
-  SignerListFlagsKeysInterface,
-} from "../models/account_info";
 import { LedgerIndex } from "../models/ledger_index";
-
-// https://xrpl.org/accounts.html#special-addresses
-const BLACKHOLE_ACCOUNTS = [
-  "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
-  "rrrrrrrrrrrrrrrrrrrrBZbvji",
-  "rrrrrrrrrrrrrrrrrNAMEtxvNvQ",
-  "rrrrrrrrrrrrrrrrrrrn5RM1rHd",
-];
 
 export interface GetAccountInfoOptions {
   ledgerIndex?: LedgerIndex;
@@ -117,75 +99,4 @@ export async function isActivated(account: string): Promise<boolean> {
   }
 
   return true;
-}
-
-/**
- * @returns {object} like
- * {
- *   requireAuthorization: true,
- *   disallowIncomingXRP: true,
- *   domain: "test.bithomp.com",
- * }
- */
-export function getSettings(accountInfo: any, excludeFalse: boolean = true): object {
-  const parsedFlags = parseAccountFlags(accountInfo.Flags, { excludeFalse });
-  const parsedFields = parseAccountFields(accountInfo, { excludeFalse });
-
-  return {
-    ...parsedFlags,
-    ...parsedFields,
-  };
-}
-
-export function parseAccountFlags(
-  value: number,
-  options: { excludeFalse?: boolean } = {}
-): AccountRootFlagsKeysInterface {
-  return parseFlags(value, AccountRootFlagsKeys, options);
-}
-
-export function parseAccountFields(accountInfo: any, options: { excludeFalse?: boolean } = {}): object {
-  const settings: any = {};
-
-  if (accountInfo.hasOwnProperty("signer_lists")) {
-    if (
-      // tslint:disable-next-line:no-bitwise
-      accountInfo.Flags & AccountRootFlagsKeys.disableMaster &&
-      BLACKHOLE_ACCOUNTS.includes(accountInfo.RegularKey) &&
-      accountInfo.signer_lists.length === 0
-    ) {
-      settings.blackholed = true;
-    } else if (!options.excludeFalse) {
-      settings.blackholed = false;
-    }
-  }
-
-  // tslint:disable-next-line:forin
-  for (const fieldName in AccountFields) {
-    const fieldValue = accountInfo[fieldName];
-    if (fieldValue != null) {
-      const info = AccountFields[fieldName];
-      settings[info.name] = parseField(info, fieldValue);
-    }
-  }
-
-  function parseField(info: any, value: any) {
-    if (info.encoding === "hex" && !info.length) {
-      // e.g. "domain"
-      return Buffer.from(value, "hex").toString("ascii");
-    }
-    if (info.shift) {
-      return new BigNumber(value).shiftedBy(-info.shift).toNumber();
-    }
-    return value;
-  }
-
-  return settings;
-}
-
-export function parseSignerListFlags(
-  value: number,
-  options: { excludeFalse?: boolean } = {}
-): SignerListFlagsKeysInterface {
-  return parseFlags(value, SignerListFlagsKeys, options);
 }
