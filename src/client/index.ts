@@ -1,11 +1,12 @@
 import { Connection, ConnectionOptions } from "./connection";
-export * from "./fee";
-export * from "./ledger";
+
 export * from "./account_info";
 export * from "./account_lines";
 export * from "./account_nfts";
 export * from "./account_objects";
 export * from "./account_tx";
+export * from "./fee";
+export * from "./ledger";
 export * from "./transaction";
 
 export let feeCushion: number = 1.3;
