@@ -2,6 +2,7 @@ export * from "./client/account_info";
 export * from "./client/account_lines";
 export * from "./client/account_nfts";
 export * from "./client/account_objects";
+export * from "./client/account_offers";
 export * from "./client/account_tx";
 export * from "./client/fee";
 export * from "./client/gateway_balances";

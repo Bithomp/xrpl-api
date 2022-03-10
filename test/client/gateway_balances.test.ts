@@ -9,9 +9,15 @@ describe("Client", () => {
       await Client.connect();
     });
 
-    it("works", async function () {
+    it("works with obligations", async function () {
       const result: any = await Client.getBalanceSheet("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW");
       expect(parseFloat(result.obligations.BTH)).to.gt(0);
+    });
+
+    it("works with assets", async function () {
+      const result: any = await Client.getBalanceSheet("rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z");
+      expect(result.assets.rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW[0].currency).to.eq('BTH');
+      expect(parseFloat(result.assets.rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW[0].value)).to.gt(0);
     });
   });
 });

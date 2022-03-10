@@ -1,31 +1,31 @@
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger_index";
 
-export interface GetAccountLinesOptions {
-  counterparty?: string;
-  currency?: string;
+export interface GetAccountOffers {
   ledgerIndex?: LedgerIndex;
   limit?: number;
 }
 
 /**
  * @returns {Promise<object | null>} like
- * [
- *   {
- *     account: "rNTvdxPWujQn2sUXYBGxmWrGe4ethkLyhb",
- *     balance: "123.45",
- *     currency: "FOO",
- *     limit: "1000000000",
- *     limit_peer: "0",
- *     no_ripple: false,
- *     no_ripple_peer: false,
- *     quality_in: 0,
- *     quality_out: 0,
- *   },
- * ]
+ * {
+ *   account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+ *   ledger_hash: "BD24686C403D2FB1B1C38C56BF0A672C4073B0376F842EDD59BA0937FD68BABC",
+ *   ledger_index: 70215272,
+ *   offers: [
+ *     {
+ *       flags: 131072,
+ *       quality: "1000",
+ *       seq: 290,
+ *       taker_gets: { currency: "BTH", issuer: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW", value: "499.9328329801284" },
+ *       taker_pays: { currency: "USD", issuer: "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", value: "499932.8329801284" },
+ *     },
+ *   ],
+ *   validated: true,
+ * }
  * @exception {Error}
  */
-export async function getAccountLines(account: string, options: GetAccountLinesOptions = {}): Promise<object | null> {
+export async function getAccountOffers(account: string, options: GetAccountOffers = {}): Promise<object | null> {
   const connection: any = Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
@@ -33,10 +33,8 @@ export async function getAccountLines(account: string, options: GetAccountLinesO
 
   await connection.connect();
   const response = await connection.request({
-    command: "account_lines",
+    command: "account_offers",
     account,
-    counterparty: options.counterparty,
-    currency: options.currency,
     ledger_index: options.ledgerIndex || "validated",
     limit: options.limit,
   });
@@ -58,5 +56,5 @@ export async function getAccountLines(account: string, options: GetAccountLinesO
     };
   }
 
-  return response?.result;
+  return response?.result.offers;
 }

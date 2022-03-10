@@ -3,15 +3,15 @@ import { expect } from "chai";
 import { Client } from "../../src/index";
 
 describe("Client", () => {
-  describe("getTrustlines", () => {
+  describe("getAccountLines", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:testnet"));
       await Client.connect();
     });
 
     it("works", async function () {
-      const result: any = await Client.getTrustlines("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
-      expect(result).to.eql([
+      const result: any = await Client.getAccountLines("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+      expect(result.lines).to.eql([
         {
           account: "rNTvdxPWujQn2sUXYBGxmWrGe4ethkLyhb",
           balance: "123.45",
