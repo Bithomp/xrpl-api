@@ -14,6 +14,20 @@ export interface GetBalanceSheetOptions {
  *   ledger_hash: 'D99FE8D8E104DD899B73F451DF41FA9A44FBB8B609ED1103DBC9641AC07D40F7',
  *   ledger_index: 70169206,
  *   obligations: { BTH: '9999.999' },
+ *   assets: {
+ *     rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW: [
+ *       {
+ *         currency: "BTH",
+ *         value: "7999.891134554484",
+ *       },
+ *     ],
+ *     rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B: [
+ *       {
+ *         currency: "USD",
+ *         value: "67.16734409565646",
+ *       },
+ *     ],
+ *   },
  *   validated: true,
  *   _nodepref: 'nonfh'
  * }
