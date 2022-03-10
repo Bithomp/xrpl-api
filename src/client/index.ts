@@ -88,10 +88,10 @@ export function findConnection(type: string = "regular"): Connection | null {
     }
 
     // no types have been setup
-    if (con.types.length === 0) {
+    if (con.connectionTypes.length === 0) {
       return false;
     } else {
-      return con.types.includes(type);
+      return con.connectionTypes.includes(type);
     }
   });
 

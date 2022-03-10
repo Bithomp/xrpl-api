@@ -16,7 +16,7 @@ class Connection {
   public readonly client: Client;
   public readonly url: string;
   public readonly type?: string;
-  public readonly types: string[];
+  public readonly connectionTypes: string[];
   public latency: LatencyInfo[];
   public readonly logger?: any;
   private shotdown: boolean = false;
@@ -26,9 +26,9 @@ class Connection {
     this.url = url;
     this.type = type;
     if (typeof this.type === "string") {
-      this.types = this.type.split(",").map((v) => v.trim());
+      this.connectionTypes = this.type.split(",").map((v) => v.trim());
     } else {
-      this.types = [];
+      this.connectionTypes = [];
     }
 
     this.latency = [];
