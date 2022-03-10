@@ -11,7 +11,7 @@ describe("Client", () => {
 
     it("works", async function () {
       const result: any = await Client.getAccountOffers("rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z");
-      const offer = result[0];
+      const offer = result.offers[0];
 
       expect(Object.keys(offer)).to.eql(["flags", "quality", "seq", "taker_gets", "taker_pays"]);
       expect(Object.keys(offer.taker_gets)).to.eql(["currency", "issuer", "value"]);

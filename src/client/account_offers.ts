@@ -56,5 +56,5 @@ export async function getAccountOffers(account: string, options: GetAccountOffer
     };
   }
 
-  return response?.result.offers;
+  return response?.result;
 }
