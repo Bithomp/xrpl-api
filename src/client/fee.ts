@@ -1,6 +1,6 @@
 import { BigNumber } from "bignumber.js";
 
-import * as Client from ".";
+import * as Client from "../client";
 import { dropsInXRP } from "../common";
 
 /**

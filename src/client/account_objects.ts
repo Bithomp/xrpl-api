@@ -1,5 +1,5 @@
 import { LedgerEntry } from "xrpl";
-import * as Client from ".";
+import * as Client from "../client";
 
 import { Trustline } from "../models/trustline";
 import { AccountObject, AccountObjectType } from "../models/account_object";

@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import { getBalanceChanges } from "xrpl";
 
-import * as Client from ".";
+import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger_index";
 import { compareTransactions } from "../common/utils";
 import { getAccountTxDetails } from "../models/transaction";

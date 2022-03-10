@@ -1,4 +1,4 @@
-import * as Client from ".";
+import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger_index";
 import { sortHelperAccountNFToken } from "../models/account_nfts";
 
