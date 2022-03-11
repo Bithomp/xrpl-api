@@ -10,19 +10,25 @@ export interface GetAccountLinesOptions {
 
 /**
  * @returns {Promise<object | null>} like
- * [
- *   {
- *     account: "rNTvdxPWujQn2sUXYBGxmWrGe4ethkLyhb",
- *     balance: "123.45",
- *     currency: "FOO",
- *     limit: "1000000000",
- *     limit_peer: "0",
- *     no_ripple: false,
- *     no_ripple_peer: false,
- *     quality_in: 0,
- *     quality_out: 0,
- *   },
- * ]
+ * {
+ *   account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+ *   ledger_hash: "BD24686C403D2FB1B1C38C56BF0A672C4073B0376F842EDD59BA0937FD68BABC",
+ *   ledger_index: 70215272,
+ *   lines: [
+ *     {
+ *       account: "rNTvdxPWujQn2sUXYBGxmWrGe4ethkLyhb",
+ *       balance: "123.45",
+ *       currency: "FOO",
+ *       limit: "1000000000",
+ *       limit_peer: "0",
+ *       no_ripple: false,
+ *       no_ripple_peer: false,
+ *       quality_in: 0,
+ *       quality_out: 0,
+ *     },
+ *   ]
+ *   validated: true,
+ * }
  * @exception {Error}
  */
 export async function getAccountLines(account: string, options: GetAccountLinesOptions = {}): Promise<object | null> {
