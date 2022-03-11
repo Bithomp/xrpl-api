@@ -8,16 +8,22 @@ export interface GetAccountNftsOptions {
 
 /**
  * @returns {object[] | object | null}
- * [
- *   {
- *     Flags: 8,
- *     Issuer: 'rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA',
- *     TokenID: '00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD0000099B00000000',
- *     TokenTaxon: 0,
- *     URI: '697066733A2F2F516D61364C3477474E786B5367475A66415A6F546A457339346A514B4C7A31324338486966523541536D43554135',
- *     nft_serial: 0
- *   }
- * ]
+ * {
+ *   account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+ *   ledger_hash: "BD24686C403D2FB1B1C38C56BF0A672C4073B0376F842EDD59BA0937FD68BABC",
+ *   ledger_index: 70215272,
+ *   account_nfts: [
+ *     {
+ *       Flags: 8,
+ *       Issuer: 'rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA',
+ *       TokenID: '00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD0000099B00000000',
+ *       TokenTaxon: 0,
+ *       URI: '697066733A2F2F516D61364C3477474E786B5367475A66415A6F546A457339346A514B4C7A31324338486966523541536D43554135',
+ *       nft_serial: 0
+ *     }
+ *   ]
+ *   validated: true,
+ * }
  * @exception {Error}
  */
 export async function getAccountNfts(
@@ -53,12 +59,16 @@ export async function getAccountNfts(
     };
   }
 
-  let account_nfts = response?.result?.account_nfts;
-  if (Array.isArray(account_nfts)) {
-    account_nfts = account_nfts.sort(sortHelperAccountNFToken);
+  const result = response?.result;
+  if (!result) {
+    return null;
   }
 
-  return account_nfts;
+  if (Array.isArray(result.account_nfts)) {
+    result.account_nfts = result.account_nfts.sort(sortHelperAccountNFToken);
+  }
+
+  return result;
 }
 
 export interface GetAccountNftSellOffersOptions {
@@ -67,14 +77,20 @@ export interface GetAccountNftSellOffersOptions {
 
 /**
  * @returns {object[] | object | null}
- * [
- *   {
- *     amount: '1000000',
- *     flags: 1,
- *     index: '98491D03DD3CC3658D99754C05DF26E6FCC0F69719697B85A6587CBD1455F387',
- *     owner: 'rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA'
- *   }
- * ]
+ * {
+ *   account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+ *   ledger_hash: "BD24686C403D2FB1B1C38C56BF0A672C4073B0376F842EDD59BA0937FD68BABC",
+ *   ledger_index: 70215272,
+ *   offers: [
+ *     {
+ *       amount: '1000000',
+ *       flags: 1,
+ *       index: '98491D03DD3CC3658D99754C05DF26E6FCC0F69719697B85A6587CBD1455F387',
+ *       owner: 'rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA'
+ *     }
+ *   ]
+ *   validated: true,
+ * }
  * @exception {Error}
  */
 export async function getAccountNftSellOffers(
@@ -110,7 +126,7 @@ export async function getAccountNftSellOffers(
     };
   }
 
-  return response?.result?.offers;
+  return response?.result;
 }
 
 export interface GetAccountNftBuyOffersOptions {
@@ -119,14 +135,20 @@ export interface GetAccountNftBuyOffersOptions {
 
 /**
  * @returns {object[] | object | null}
- * [
- *   {
- *     amount: '1000000',
- *     flags: 1,
- *     index: '98491D03DD3CC3658D99754C05DF26E6FCC0F69719697B85A6587CBD1455F387',
- *     owner: 'rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA'
- *   }
- * ]
+ * {
+ *   account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+ *   ledger_hash: "BD24686C403D2FB1B1C38C56BF0A672C4073B0376F842EDD59BA0937FD68BABC",
+ *   ledger_index: 70215272,
+ *   offers: [
+ *     {
+ *       amount: '1000000',
+ *       flags: 1,
+ *       index: '98491D03DD3CC3658D99754C05DF26E6FCC0F69719697B85A6587CBD1455F387',
+ *       owner: 'rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA'
+ *     }
+ *   ]
+ *   validated: true,
+ * }
  * @exception {Error}
  */
 export async function getAccountNftBuyOffers(
@@ -162,5 +184,5 @@ export async function getAccountNftBuyOffers(
     };
   }
 
-  return response?.result?.offers;
+  return response?.result;
 }
