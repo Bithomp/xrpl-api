@@ -81,5 +81,13 @@ export async function getOrderbook(
     ),
   ]);
 
+  if ((directOfferResults as any).error) {
+    return directOfferResults;
+  }
+
+  if ((reverseOfferResults as any).error) {
+    return reverseOfferResults;
+  }
+
   return formatBidsAndAsks(orderbook, [...(directOfferResults as any).offers, ...(reverseOfferResults as any).offers]);
 }
