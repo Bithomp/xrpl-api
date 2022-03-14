@@ -1,17 +1,7 @@
 import * as _ from "lodash";
 import BigNumber from "bignumber.js";
 import { parseOrderbookOrder } from "../v1/ledger/parse/orderbook-order";
-
-export interface TakerAmount {
-  currency: string;
-  issuer?: string;
-}
-
-export interface Issue {
-  currency: string;
-  issuer?: string;
-  counterparty?: string;
-}
+import { Issue } from "../v1/common/types/objects/amounts";
 
 export type OrderbookInfo = {
   base: Issue;

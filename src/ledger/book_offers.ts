@@ -1,6 +1,7 @@
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger_index";
-import { TakerAmount, OrderbookInfo, formatBidsAndAsks } from "../models/book_offers";
+import { OrderbookInfo, formatBidsAndAsks } from "../models/book_offers";
+import { TakerRequestAmount } from "../v1/common/types/objects/amounts";
 
 export interface GetGetBookOffers {
   ledgerIndex?: LedgerIndex;
@@ -13,8 +14,8 @@ export interface GetGetBookOffers {
  */
 export async function getBookOffers(
   taker: string,
-  takerGets: TakerAmount,
-  takerPays: TakerAmount,
+  takerGets: TakerRequestAmount,
+  takerPays: TakerRequestAmount,
   options: GetGetBookOffers = {}
 ): Promise<object | null> {
   const connection: any = Client.findConnection();
