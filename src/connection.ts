@@ -1,5 +1,5 @@
 import { Client, Request, Response } from "xrpl";
-import { ledgerTimeToTimestamp } from "./client/ledger";
+import { ledgerTimeToTimestamp } from "./ledger/ledger";
 
 const LEDGER_CLOSED_TIMEOUT = 1000 * 10; // 10 sec
 

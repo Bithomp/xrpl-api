@@ -1,20 +1,10 @@
-export * from "./client/account_info";
-export * from "./client/account_lines";
-export * from "./client/account_nfts";
-export * from "./client/account_objects";
-export * from "./client/account_offers";
-export * from "./client/account_tx";
-export * from "./client/fee";
-export * from "./client/gateway_balances";
-export * from "./client/ledger";
-export * from "./client/transaction";
-
 import { Connection, ConnectionOptions } from "./connection";
 
+export * from "./ledger";
 export let feeCushion: number = 1.3;
 export let logger: any;
 
-let Connections: Connection[] = [];
+let clientConnections: Connection[] = [];
 
 export interface ClientOptions extends ConnectionOptions {
   feeCushion?: number;
@@ -39,9 +29,9 @@ export function setup(servers: ClientConnection[], options: ClientOptions = {}) 
   if (servers) {
     // reset list of connections
     disconnect();
-    Connections = [];
+    clientConnections = [];
     for (const server of servers) {
-      Connections.push(new Connection(server.url, server.type, { logger: options.logger }));
+      clientConnections.push(new Connection(server.url, server.type, { logger: options.logger }));
     }
   }
 
@@ -56,7 +46,7 @@ export async function connect() {
     function: "connect",
   });
 
-  for (const connection of Connections) {
+  for (const connection of clientConnections) {
     await connection.connect();
   }
 }
@@ -67,22 +57,22 @@ export function disconnect() {
     function: "disconnect",
   });
 
-  for (const connection of Connections) {
+  for (const connection of clientConnections) {
     connection.disconnect();
   }
 }
 
 export function findConnection(type: string = "regular"): Connection | null {
   // no connection
-  if (Connections.length === 0) {
+  if (clientConnections.length === 0) {
     return null;
     // single connection mode
-  } else if (Connections.length === 1) {
-    return Connections[0];
+  } else if (clientConnections.length === 1) {
+    return clientConnections[0];
   }
 
   // get connections by type
-  let connections = Connections.filter((con) => {
+  let connections = clientConnections.filter((con) => {
     // invalid type, skipping filtering
     if (typeof type !== "string") {
       return true;
@@ -98,7 +88,7 @@ export function findConnection(type: string = "regular"): Connection | null {
 
   // no any, use all what we have
   if (connections.length === 0) {
-    connections = [...Connections];
+    connections = [...clientConnections];
   }
 
   // get the fastest one
