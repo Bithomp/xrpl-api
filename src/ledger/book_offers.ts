@@ -65,8 +65,6 @@ export async function getOrderbook(
   orderbook: OrderbookInfo,
   options: GetGetBookOffers = {}
 ): Promise<object | null> {
-  getBookOffers;
-
   const [directOfferResults, reverseOfferResults] = await Promise.all([
     getBookOffers(
       taker,
