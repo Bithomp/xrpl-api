@@ -1,6 +1,6 @@
 import nconf from "nconf";
 import { expect } from "chai";
-import { Client } from "../../src/index";
+import { Client, Wallet } from "../../src/index";
 
 describe("Client", () => {
   before(async function () {
@@ -112,6 +112,29 @@ describe("Client", () => {
         "owner_funds",
         "quality",
       ]);
+    });
+
+    it("returns error", async function () {
+      const taker = Wallet.generateAddress().address;
+      const orderbook = {
+        base: {
+          currency: "",
+          counterparty: "",
+        },
+        counter: {
+          currency: "",
+          counterparty: "",
+        },
+      };
+      const result: any = await Client.getOrderbook(taker, orderbook);
+      expect(result).to.eql({
+        error: "srcIsrMalformed",
+        error_code: 70,
+        error_message: "Invalid field 'taker_pays.issuer', bad issuer.",
+        status: "error",
+        taker,
+        validated: undefined,
+      });
     });
   });
 });
