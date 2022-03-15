@@ -211,7 +211,7 @@ describe("Client", () => {
     });
   });
 
-  describe.only("legacyPayment", () => {
+  describe("legacyPayment", () => {
     it("is OK", async function () {
       this.timeout(15000);
       const payment = {

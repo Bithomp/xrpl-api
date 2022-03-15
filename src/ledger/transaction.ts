@@ -151,31 +151,52 @@ export async function legacyPayment(data: LegacyPaymentInterface): Promise<objec
   };
 
   const transaction = createPaymentTransaction(data.sourceAddress, txPayment);
-
-  // set fee
-  const baseFee = await Client.getFee({ connection: connection });
-  let fee = parseFloat(baseFee as string);
-  if (fee > FEE_LIMIT) {
-    fee = FEE_LIMIT;
-  }
-  transaction.Fee = xrpToDrops(fee);
-
-  // set sequence
-  const accountInfo = await Client.getAccountInfo(data.sourceAddress, { connection: connection });
-  transaction.Sequence = (accountInfo as any)?.account_data?.Sequence;
-
-  // set last ledger sequence
-  transaction.LastLedgerSequence = parseInt(((await Client.getLedger()) as any).ledger_index, 10) + LEDGERS_AWAIT;
+  const paymentParams = await getLedgerPaymentParams(data.sourceAddress, connection);
+  transaction.Fee = paymentParams.fee;
+  transaction.Sequence = paymentParams.sequence;
+  transaction.LastLedgerSequence = paymentParams.lastLedgerSequence;
 
   console.log(transaction);
 
   // sign transaction
   const wallet = xrpl.Wallet.fromSeed(data.secret);
   const signedTransaction = wallet.sign(transaction as Transaction).tx_blob;
-  console.log(signedTransaction);
 
   // submit transaction
   return await submit(signedTransaction, { connection: connection });
+}
+
+interface LedgerPaymentParamsInterface {
+  fee: string;
+  sequence: number;
+  lastLedgerSequence: number;
+}
+
+async function getLedgerPaymentParams(account: string, connection: Connection): Promise<LedgerPaymentParamsInterface> {
+  const fee = new Promise(async (resolve) => {
+    const baseFee = await Client.getFee({ connection: connection });
+    let fee = parseFloat(baseFee as string);
+    if (fee > FEE_LIMIT) {
+      fee = FEE_LIMIT;
+    }
+    resolve(xrpToDrops(fee));
+  });
+
+  const sequence = new Promise(async (resolve) => {
+    const accountInfo = await Client.getAccountInfo(account, { connection: connection });
+    resolve((accountInfo as any)?.account_data?.Sequence);
+  });
+
+  const lastLedgerSequence = new Promise(async (resolve) => {
+    resolve(parseInt(((await Client.getLedger()) as any).ledger_index, 10) + LEDGERS_AWAIT);
+  });
+
+  const result = await Promise.all([fee, sequence, lastLedgerSequence]);
+  return {
+    fee: result[0] as string,
+    sequence: result[1] as number,
+    lastLedgerSequence: result[2] as number,
+  };
 }
 
 export interface submitoOptions {
@@ -215,13 +236,14 @@ async function waitForFinalTransactionOutcome(txHash: string, lastLedger: number
   await sleep(LEDGER_CLOSE_TIME);
 
   const tx = await getTransaction(txHash);
-  if (tx) {
-    console.log(tx);
-    if ((tx as any).error === "txnNotFound" || (tx as any).validated !== true) {
-      const ledgerIndex = parseInt(((await Client.getLedger()) as any).ledger_index, 10);
-      if (lastLedger > ledgerIndex) {
-        return waitForFinalTransactionOutcome(txHash, lastLedger);
-      }
+  if (!tx) {
+    return waitForFinalTransactionOutcome(txHash, lastLedger);
+  }
+
+  if ((tx as any).error === "txnNotFound" || (tx as any).validated !== true) {
+    const ledgerIndex = parseInt(((await Client.getLedger()) as any).ledger_index, 10);
+    if (lastLedger > ledgerIndex) {
+      return waitForFinalTransactionOutcome(txHash, lastLedger);
     }
   }
 
