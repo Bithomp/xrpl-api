@@ -192,4 +192,43 @@ describe("Client", () => {
       });
     });
   });
+
+  describe("submit", () => {
+    it("is not OK for passed sequence number", async function () {
+      const tefPAST_SEQ =
+        "120000228000000024000000012E0000007B61400000E8D4A5100068400000000000000C732103A71B44FD71C956C3CC0A540F2FBB577C4A300BC71244D86E4EB57220E58BFA267447304502210087A81EE99913E4C2252EB46CAF7E5A189C24ED09BF00C94359CFDA1805E75CC4022046F6B54F0A3CF7955BD9F774A11B4B0CCF7353BCB3986FE68D9B53CE934C8704811485C536EFA7EAACCC51916E32FF720810A22260088314772044746F04AE1E611266AE3AB402833E2E29ACF9EA7C044D656D6F7D04746573747E0A706C61696E2F74657874E1EA7C06636C69656E747D15426974686F6D7020746F6F6C20762E20302E332E307E0A706C61696E2F74657874E1F1";
+
+      const result: any = await Client.submit(tefPAST_SEQ);
+      expect(result.engine_result).to.eq("tefPAST_SEQ");
+    });
+
+    it("is not OK for feature sequence number", async function () {
+      const terPRE_SEQ =
+        "120000228000000024000007D061400000E8D4A5100068400000000000000C732103A71B44FD71C956C3CC0A540F2FBB577C4A300BC71244D86E4EB57220E58BFA267446304402201A58F62ECDD5EEDA7AE72F04B19BE5BCBF9B72B9ADED5C6D426D9B430FC0A2D90220697E755C8CC18CC460986FEEB77C5286C699D6C5C85F1B600733981723EF70D9811485C536EFA7EAACCC51916E32FF720810A22260088314772044746F04AE1E611266AE3AB402833E2E29ACF9EA7C06636C69656E747D15426974686F6D7020746F6F6C20762E20302E332E307E0A706C61696E2F74657874E1F1";
+
+      const result: any = await Client.submit(terPRE_SEQ);
+      expect(result.engine_result).to.eq("terPRE_SEQ");
+    });
+  });
+
+  describe.only("legacyPayment", () => {
+    it("is OK", async function () {
+      this.timeout(15000);
+      const payment = {
+        sourceAddress: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+        sourceValue: "0.0001",
+        sourceCurrency: "XRP",
+        destinationAddress: "rBbfoBCNMpAaj35K5A9UV9LDkRSh6ZU9Ef",
+        destinationValue: "0.0001",
+        destinationCurrency: "XRP",
+        memo: [{ type: "memo", format: "plain/text", data: "Bithomp test" }],
+        secret: nconf.get("xrpl:accounts:activation:secret"),
+      };
+
+      const result: any = await Client.legacyPayment(payment);
+      console.log(result)
+
+      expect(result.validated).to.eq(true);
+    });
+  });
 });

@@ -83,6 +83,28 @@ class Connection {
     }
   }
 
+  public async submit(transaction: string): Promise<Response | any> {
+    try {
+      const startDate: Date = new Date();
+      const response = await this.client.submit(transaction);
+      const endDate: Date = new Date();
+
+      this.updateLatence(endDate.getTime() - startDate.getTime());
+
+      return response;
+    } catch (e: any) {
+      this.updateLatence(1000);
+      this.logger?.debug({
+        service: "Bithomp::XRPL::Connection",
+        function: "submitAndWait",
+        url: this.url,
+        error: e.message || e.name || e,
+      });
+
+      return e;
+    }
+  }
+
   public isConnected(): boolean {
     return this.client.isConnected();
   }

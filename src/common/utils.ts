@@ -38,3 +38,9 @@ export function parseFlags(value: number, keys: any, options: { excludeFalse?: b
   }
   return flags;
 }
+
+export async function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
