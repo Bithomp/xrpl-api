@@ -45,11 +45,11 @@ export async function getLedger(options: GetLedgerOptions = {}): Promise<object 
     expand: !!options.expand,
   });
 
-  return response?.result?.ledger;
+  return response?.result;
 }
 
 export async function getLedgerIndex(options: GetLedgerOptions = {}): Promise<number> {
-  return parseInt(((await Client.getLedger(options)) as any).ledger_index, 10);
+  return parseInt(((await Client.getLedger(options)) as any).ledger.ledger_index, 10);
 }
 
 export function ledgerTimeToUnixTime(ledgerTime: number): number {

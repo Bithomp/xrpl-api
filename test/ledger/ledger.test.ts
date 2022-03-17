@@ -12,7 +12,27 @@ describe("Client", () => {
     it("current", async function () {
       const result: any = await Client.getLedger();
 
-      expect(parseInt(result.ledger_index)).to.gt(0);
+      delete result.warnings;
+      delete result._nodepref;
+      expect(Object.keys(result)).to.eql(["ledger", "ledger_hash", "ledger_index", "validated"]);
+      expect(Object.keys(result.ledger)).to.eql([
+        "accepted",
+        "account_hash",
+        "close_flags",
+        "close_time",
+        "close_time_human",
+        "close_time_resolution",
+        "closed",
+        "hash",
+        "ledger_hash",
+        "ledger_index",
+        "parent_close_time",
+        "parent_hash",
+        "seqNum",
+        "totalCoins",
+        "total_coins",
+        "transaction_hash",
+      ]);
     });
 
     it("by ledger_index", async function () {
@@ -20,8 +40,8 @@ describe("Client", () => {
         ledgerIndex: 66816622,
       });
 
-      expect(result.ledger_hash).to.eql("E5C1E68EED45C6A72B9BA777AC9BA08F3D34C23D42B52B19276C3E2F5E9E1EFC");
-      expect(result.transactions).to.eql(undefined);
+      expect(result.ledger.ledger_hash).to.eql("E5C1E68EED45C6A72B9BA777AC9BA08F3D34C23D42B52B19276C3E2F5E9E1EFC");
+      expect(result.ledger.transactions).to.eql(undefined);
     });
 
     it("with transactions", async function () {
@@ -30,7 +50,7 @@ describe("Client", () => {
         transactions: true,
       });
 
-      expect(result.transactions.sort()).to.eql([
+      expect(result.ledger.transactions.sort()).to.eql([
         "05403FE48CCFCB45888FB3FDA0A791B0B3AA29360050412B95FCA436E1A41DCF",
         "06407D0F22834E0F3E0BF4F4C2FEDC4E5AD86EE61B2AA55DC77BB2C62AFE5DEA",
         "06B0E4C65F19EAF06D54CE89C5664D166B01FAA1D5697CF324B730432F3EA179",
@@ -97,7 +117,7 @@ describe("Client", () => {
         expand: true,
       });
 
-      const transactions: any = result.transactions.sort((a: any, b: any) => a.hash.localeCompare(b.hash));
+      const transactions: any = result.ledger.transactions.sort((a: any, b: any) => a.hash.localeCompare(b.hash));
       expect(transactions[0].hash).to.eql("05403FE48CCFCB45888FB3FDA0A791B0B3AA29360050412B95FCA436E1A41DCF");
     });
   });
