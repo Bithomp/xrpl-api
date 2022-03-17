@@ -3,11 +3,18 @@ import { Wallet } from "xrpl";
 import * as Base58 from "./base58";
 import * as Crypto from "crypto";
 
-export function generateAddress() {
+interface GenerateAddressInterface {
+  publicKey: string;
+  privateKey: string;
+  address: string;
+  seed: string;
+}
+
+export function generateAddress(): GenerateAddressInterface {
   const wallet = Wallet.generate();
   const { publicKey, privateKey, classicAddress, seed } = wallet;
 
-  return { publicKey, privateKey, address: classicAddress, seed };
+  return { publicKey, privateKey, address: classicAddress, seed: seed as string };
 }
 
 export function isValidClassicAddress(address: string): boolean {

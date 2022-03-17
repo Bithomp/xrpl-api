@@ -1,6 +1,6 @@
 import nconf from "nconf";
 import { expect } from "chai";
-import { Client } from "../../src/index";
+import { Client, Wallet } from "../../src/index";
 
 describe("Client", () => {
   describe("getTransaction", () => {
@@ -212,6 +212,11 @@ describe("Client", () => {
   });
 
   describe("legacyPayment", () => {
+    before(async function () {
+      Client.setup(nconf.get("xrpl:connections:testnet"));
+      await Client.connect();
+    });
+
     it("is OK", async function () {
       this.timeout(15000);
       const payment = {
@@ -227,6 +232,23 @@ describe("Client", () => {
 
       const result: any = await Client.legacyPayment(payment);
       expect(result.validated).to.eq(true);
+    });
+
+    it("is failed for not activated", async function () {
+      const address = Wallet.generateAddress();
+      const payment = {
+        sourceAddress: address.address,
+        sourceValue: "0.0001",
+        sourceCurrency: "XRP",
+        destinationAddress: "rBbfoBCNMpAaj35K5A9UV9LDkRSh6ZU9Ef",
+        destinationValue: "0.0001",
+        destinationCurrency: "XRP",
+        memo: [{ type: "memo", format: "plain/text", data: "Bithomp test" }],
+        secret: address.seed,
+      };
+
+      const result: any = await Client.legacyPayment(payment);
+      expect(result.error).to.eq("actNotFound");
     });
   });
 });

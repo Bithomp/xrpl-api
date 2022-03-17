@@ -152,6 +152,9 @@ export async function legacyPayment(data: LegacyPaymentInterface): Promise<objec
 
   const transaction = createPaymentTransaction(data.sourceAddress, txPayment);
   const paymentParams = await getLedgerPaymentParams(data.sourceAddress, connection);
+  if (paymentParams.error) {
+    return paymentParams;
+  }
   transaction.Fee = paymentParams.fee;
   transaction.Sequence = paymentParams.sequence;
   transaction.LastLedgerSequence = paymentParams.lastLedgerSequence;
@@ -165,36 +168,46 @@ export async function legacyPayment(data: LegacyPaymentInterface): Promise<objec
 }
 
 interface LedgerPaymentParamsInterface {
-  fee: string;
-  sequence: number;
-  lastLedgerSequence: number;
+  fee?: string;
+  sequence?: number;
+  lastLedgerSequence?: number;
+  error?: string;
 }
 
 async function getLedgerPaymentParams(account: string, connection: Connection): Promise<LedgerPaymentParamsInterface> {
-  const fee = new Promise(async (resolve) => {
-    const baseFee = await Client.getFee({ connection: connection });
-    let fee = parseFloat(baseFee as string);
-    if (fee > FEE_LIMIT) {
-      fee = FEE_LIMIT;
-    }
-    resolve(xrpToDrops(fee));
-  });
+  try {
+    const fee = new Promise(async (resolve) => {
+      const baseFee = await Client.getFee({ connection: connection });
+      let fee = parseFloat(baseFee as string);
+      if (fee > FEE_LIMIT) {
+        fee = FEE_LIMIT;
+      }
+      resolve(xrpToDrops(fee));
+    });
 
-  const sequence = new Promise(async (resolve) => {
-    const accountInfo = await Client.getAccountInfo(account, { connection: connection });
-    resolve((accountInfo as any)?.account_data?.Sequence);
-  });
+    const sequence = new Promise(async (resolve, rejects) => {
+      const accountInfo: any = await Client.getAccountInfo(account, { connection: connection });
+      if (accountInfo.error) {
+        rejects(new Error(accountInfo.error));
+      }
+      resolve((accountInfo as any)?.account_data?.Sequence);
+    });
 
-  const lastLedgerSequence = new Promise(async (resolve) => {
-    resolve(parseInt(((await Client.getLedger()) as any).ledger_index, 10) + MAX_LEDGERS_AWAIT);
-  });
+    const lastLedgerSequence = new Promise(async (resolve) => {
+      resolve(parseInt(((await Client.getLedger()) as any).ledger_index, 10) + MAX_LEDGERS_AWAIT);
+    });
 
-  const result = await Promise.all([fee, sequence, lastLedgerSequence]);
-  return {
-    fee: result[0] as string,
-    sequence: result[1] as number,
-    lastLedgerSequence: result[2] as number,
-  };
+    const result = await Promise.all([fee, sequence, lastLedgerSequence]);
+    return {
+      fee: result[0] as string,
+      sequence: result[1] as number,
+      lastLedgerSequence: result[2] as number,
+    };
+  } catch (e: any) {
+    return {
+      error: e.message,
+    };
+  }
 }
 
 export interface submitoOptions {
