@@ -1,4 +1,4 @@
-import parseTransaction from "../v1/ledger/parse/transaction";
+import { parseTransaction } from "../v1/ledger/parse/transaction";
 
 export { parseNonFungibleTokenChanges } from "./transaction/nfoken_changes";
 export { parseNonFungibleTokenOfferChanges } from "./transaction/nfoken_offer_changes";

@@ -49,6 +49,18 @@ export async function getLedger(options: GetLedgerOptions = {}): Promise<object 
     expand: !!options.expand,
   });
 
+  if (response.error) {
+    const { error, error_code, error_message, status, validated } = response;
+
+    return {
+      error,
+      error_code,
+      error_message,
+      status,
+      validated,
+    };
+  }
+
   return response?.result;
 }
 

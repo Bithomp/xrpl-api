@@ -1,5 +1,6 @@
 import * as Client from "../client";
 import { hexToString } from "../v1/ledger/parse/utils";
+import { parseTransactionType } from "../v1/ledger/parse/transaction";
 
 const maxLength = 12;
 
@@ -56,8 +57,8 @@ interface DecodedNFTCurrencyInterface {
   currencyCode: string;
   currency: string;
   cti: number;
-  ctiLedger: BigInt;
-  ctiTxIndex: BigInt;
+  ctiLedger: number;
+  ctiTxIndex: number;
   ctiValid: boolean;
   timestamp?: number;
   ctiTx: DecodedNFTCurrencyTransactionInterface;
@@ -80,7 +81,7 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
   const ctiTxIndex = ctiTransactionIndex(cti);
   const currencyHex = hex.substring(16, hex.length);
   const currency = hexToString(currencyHex)?.trim()?.replace(/\0/g, "") as string;
-  const ledgerInfo = await getLedger(ctiLedger as unknown as number);
+  const ledgerInfo = await getLedger(Number(ctiLedger));
   let ctiValid = false;
   let timestamp: number | undefined;
   let ctiTx: DecodedNFTCurrencyTransactionInterface = {};
@@ -89,10 +90,16 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
     timestamp = Math.round(new Date(ledgerInfo.close_time_human).getTime() / 1000);
 
     for (let transaction of ledgerInfo.transactions) {
-      const rawTransaction = JSON.parse(transaction.rawTransaction);
-      if (rawTransaction.meta.TransactionIndex == ctiTxIndex) {
-        const { Account: account, Destination: destination, LimitAmount: limit, Memos: memos } = rawTransaction;
-        const { type, id: hash } = transaction;
+      if (transaction.metaData.TransactionIndex == ctiTxIndex) {
+        const {
+          Account: account,
+          Destination: destination,
+          LimitAmount: limit,
+          Memos: memos,
+          hash: hash,
+        } = transaction;
+        const type = parseTransactionType(transaction.TransactionType);
+
         ctiTx = {
           type,
           account,
@@ -117,9 +124,9 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
     type: "nft",
     currencyCode,
     currency,
-    cti: cti as unknown as number,
-    ctiLedger,
-    ctiTxIndex,
+    cti: Number(cti),
+    ctiLedger: Number(ctiLedger),
+    ctiTxIndex: Number(ctiTxIndex),
     ctiValid,
     timestamp,
     ctiTx,
@@ -148,8 +155,9 @@ function decodeHex(currencyHex: string): DecodeHexCurrencyInterface | null {
 async function getLedger(ledgerIndex: number): Promise<any> {
   let ledger = null;
   try {
-    ledger = (Client.getLedger({ ledgerIndex, transactions: true, expand: true }) as any).ledger;
-  } catch (e) {
+    const ledgerInfo = await Client.getLedger({ ledgerIndex, transactions: true, expand: true });
+    ledger = (ledgerInfo as any).ledger;
+  } catch (e: any) {
     // Ignore
   }
 
@@ -183,7 +191,7 @@ function ctiTransactionCheckGen(txHash: string): bigint {
 function isXlf15d(currencyHex: string): boolean {
   const hex = currencyHex.toString().replace(/(00)+$/g, "");
 
-  const xlf15d = hexToString(hex)?.slice(0, maxLength)?.trim() as string;
+  const xlf15d = Buffer.from(hex, "hex").slice(8).toString("utf-8").slice(0, maxLength).trim();
   if (xlf15d.match(/[a-zA-Z0-9]{3,}/) && xlf15d.toLowerCase() !== "xrp") {
     return true;
   }

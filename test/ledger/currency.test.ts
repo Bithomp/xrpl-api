@@ -47,9 +47,7 @@ describe("Client", () => {
 
     describe("when HEX", () => {
       it("is OK for HADALITE", async function () {
-        expect(
-          await Client.parseCurrencyInformation("484144414C495445000000000000000000000000")
-        ).to.eql({
+        expect(await Client.parseCurrencyInformation("484144414C495445000000000000000000000000")).to.eql({
           currencyCode: "484144414C495445000000000000000000000000",
           currency: "HADALITE",
           type: "hex",
@@ -57,12 +55,10 @@ describe("Client", () => {
       });
     });
 
-    describe.only("when NFT", () => {
-      it.only("is OK for Plasticats", async function () {
+    describe("when NFT", () => {
+      it("is OK for Plasticats", async function () {
         this.timeout(15000);
-        expect(
-          await Client.parseCurrencyInformation("02C7002303B3C3D2506C61737469636174730000")
-        ).to.eql({
+        expect(await Client.parseCurrencyInformation("02C7002303B3C3D2506C61737469636174730000")).to.eql({
           type: "nft",
           currencyCode: "02C7002303B3C3D2506C61737469636174730000",
           currency: "Plasticats",
@@ -93,9 +89,7 @@ describe("Client", () => {
 
       it("is OK for xLogo01", async function () {
         this.timeout(15000);
-        expect(
-          await Client.parseCurrencyInformation("023A001F040251790000000000784C6F676F3031")
-        ).to.eql({
+        expect(await Client.parseCurrencyInformation("023A001F040251790000000000784C6F676F3031")).to.eql({
           type: "nft",
           currencyCode: "023A001F040251790000000000784C6F676F3031",
           currency: "xLogo01",
@@ -141,9 +135,7 @@ describe("Client", () => {
 
       it("is OK for An XRPL NFT?", async function () {
         this.timeout(15000);
-        expect(
-          await Client.parseCurrencyInformation("021D001703B37004416E205852504C204E46543F")
-        ).to.eql({
+        expect(await Client.parseCurrencyInformation("021D001703B37004416E205852504C204E46543F")).to.eql({
           type: "nft",
           currencyCode: "021D001703B37004416E205852504C204E46543F",
           currency: "An XRPL NFT?",
