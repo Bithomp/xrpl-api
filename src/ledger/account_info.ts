@@ -1,9 +1,11 @@
 import * as Client from "../client";
+import { Connection } from "../connection";
 import { LedgerIndex } from "../models/ledger_index";
 
 export interface GetAccountInfoOptions {
   ledgerIndex?: LedgerIndex;
   signerLists?: boolean;
+  connection?: Connection;
 }
 
 /**
