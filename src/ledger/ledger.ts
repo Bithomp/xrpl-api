@@ -11,7 +11,7 @@ export interface GetLedgerOptions {
 
 /**
  * @returns {object | null}
- * {
+ * "ledger": {
  *   accepted: true,
  *   account_hash: 'D240A9A26FB9780A195B7B77E78262078CE916F7E5C16582BD617E6C96CA7B51',
  *   close_flags: 0,
@@ -28,6 +28,10 @@ export interface GetLedgerOptions {
  *   totalCoins: '99990201296815002',
  *   total_coins: '99990201296815002',
  *   transaction_hash: '14317D710ABE357DE559D8519C864103D25361BA7EAF9DE3699556AEF5975463'
+ * },
+ * "ledger_hash": "9D4A9E1030B525398651F2AD0510479443FBFB561ACD58FB958FEE0232F5E3DF",
+ * "ledger_index": 25098377,
+ * "validated": true
  * }
  * @exception {Error}
  */
