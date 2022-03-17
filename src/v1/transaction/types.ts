@@ -19,7 +19,7 @@ export type TransactionJSON = {
   Memos?: {Memo: ApiMemo}[]
   Flags?: number
   Fulfillment?: string
-  [Field: string]: string | number | Array<any> | RippledAmount | undefined
+  [Field: string]: string | number | any[] | RippledAmount | undefined
 }
 
 export type Instructions = {
@@ -108,7 +108,7 @@ export type FormattedPayment = {
   source: Adjustment
   destination: Adjustment
   paths?: string
-  memos?: Array<Memo>
+  memos?: Memo[]
   invoiceID?: string
   allowPartialPayment?: boolean
   noDirectRipple?: boolean

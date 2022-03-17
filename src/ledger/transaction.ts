@@ -106,14 +106,6 @@ export async function getTransaction(transaction: string, options: GetTransactio
   return result;
 }
 
-// sourceAddress: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
-// sourceValue: "0.0001",
-// sourceCurrency: "XRP",
-// destinationAddress: "rBbfoBCNMpAaj35K5A9UV9LDkRSh6ZU9Ef",
-// destinationValue: "0.0001",
-// destinationCurrency: "XRP",
-// memo
-
 interface LegacyPaymentInterface {
   sourceAddress: string;
   sourceValue: string;
@@ -164,7 +156,7 @@ export async function legacyPayment(data: LegacyPaymentInterface): Promise<objec
   const signedTransaction = wallet.sign(transaction as Transaction).tx_blob;
 
   // submit transaction
-  return await submit(signedTransaction, { connection: connection });
+  return await submit(signedTransaction, { connection });
 }
 
 interface LedgerPaymentParamsInterface {
@@ -176,8 +168,8 @@ interface LedgerPaymentParamsInterface {
 
 async function getLedgerPaymentParams(account: string, connection: Connection): Promise<LedgerPaymentParamsInterface> {
   try {
-    const fee = new Promise(async (resolve) => {
-      const baseFee = await Client.getFee({ connection: connection });
+    const feePromise = new Promise(async (resolve) => {
+      const baseFee = await Client.getFee({ connection });
       let fee = parseFloat(baseFee as string);
       if (fee > FEE_LIMIT) {
         fee = FEE_LIMIT;
@@ -185,19 +177,19 @@ async function getLedgerPaymentParams(account: string, connection: Connection): 
       resolve(xrpToDrops(fee));
     });
 
-    const sequence = new Promise(async (resolve, rejects) => {
-      const accountInfo: any = await Client.getAccountInfo(account, { connection: connection });
+    const sequencePromise = new Promise(async (resolve, rejects) => {
+      const accountInfo: any = await Client.getAccountInfo(account, { connection });
       if (accountInfo.error) {
         rejects(new Error(accountInfo.error));
       }
       resolve((accountInfo as any)?.account_data?.Sequence);
     });
 
-    const lastLedgerSequence = new Promise(async (resolve) => {
+    const lastLedgerSequencePromise = new Promise(async (resolve) => {
       resolve(parseInt(((await Client.getLedger()) as any).ledger_index, 10) + MAX_LEDGERS_AWAIT);
     });
 
-    const result = await Promise.all([fee, sequence, lastLedgerSequence]);
+    const result = await Promise.all([feePromise, sequencePromise, lastLedgerSequencePromise]);
     return {
       fee: result[0] as string,
       sequence: result[1] as number,
@@ -210,11 +202,11 @@ async function getLedgerPaymentParams(account: string, connection: Connection): 
   }
 }
 
-export interface submitoOptions {
+export interface SubmitOptionsInterface {
   connection?: Connection;
 }
 
-export async function submit(signedTransaction: string, options: submitoOptions = {}): Promise<object | null> {
+export async function submit(signedTransaction: string, options: SubmitOptionsInterface = {}): Promise<object | null> {
   const connection: any = options.connection || Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
@@ -223,7 +215,7 @@ export async function submit(signedTransaction: string, options: submitoOptions 
   const response = await connection.submit(signedTransaction);
   const result = response?.result;
   const resultGroup = result.engine_result.slice(0, 3);
-  if (submitErrorsGroup.includes(resultGroup) && result.engine_result != "terQUEUED") {
+  if (submitErrorsGroup.includes(resultGroup) && result.engine_result !== "terQUEUED") {
     return result;
   }
 

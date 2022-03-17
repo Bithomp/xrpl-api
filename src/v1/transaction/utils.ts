@@ -46,8 +46,8 @@ export function getClassicAccountAndTag(Account: string, expectedTag?: number): 
   }
 }
 
-export function convertStringToHex(string: string): string {
-  return Buffer.from(string, "utf8").toString("hex").toUpperCase();
+export function convertStringToHex(value: string): string {
+  return Buffer.from(value, "utf8").toString("hex").toUpperCase();
 }
 
 export function convertMemo(memo: Memo): { Memo: ApiMemo } {

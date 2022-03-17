@@ -11,7 +11,7 @@ export interface Payment {
   source: Adjustment | MaxAdjustment;
   destination: Adjustment | MinAdjustment;
   paths?: string;
-  memos?: Array<Memo>;
+  memos?: Memo[];
   // A 256-bit hash that can be used to identify a particular payment
   invoiceID?: string;
   // A boolean that, if set to true, indicates that this payment should go
@@ -175,9 +175,11 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
     txJSON.Memos = payment.memos.map(convertMemo);
   }
   if (payment.noDirectRipple === true) {
+    // tslint:disable-next-line:no-bitwise
     txJSON.Flags |= paymentFlags.NoRippleDirect;
   }
   if (payment.limitQuality === true) {
+    // tslint:disable-next-line:no-bitwise
     txJSON.Flags |= paymentFlags.LimitQuality;
   }
   if (!isXRPToXRPPayment(payment)) {
@@ -186,6 +188,7 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
     // https://github.com/ripple/rippled/commit/
     //  c522ffa6db2648f1d8a987843e7feabf1a0b7de8/
     if (payment.allowPartialPayment || isMinAdjustment(payment.destination)) {
+      // tslint:disable-next-line:no-bitwise
       txJSON.Flags |= paymentFlags.PartialPayment;
     }
 
