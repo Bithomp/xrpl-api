@@ -48,6 +48,10 @@ export async function getLedger(options: GetLedgerOptions = {}): Promise<object 
   return response?.result?.ledger;
 }
 
+export async function getLedgerIndex(options: GetLedgerOptions = {}): Promise<number> {
+  return parseInt(((await Client.getLedger(options)) as any).ledger_index, 10);
+}
+
 export function ledgerTimeToUnixTime(ledgerTime: number): number {
   return ledgerTime + RIPPLE_UNIX_DIFF;
 }
