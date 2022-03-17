@@ -239,11 +239,7 @@ async function waitForFinalTransactionOutcome(txHash: string, lastLedger: number
   await sleep(LEDGER_CLOSE_TIME_AWAIT);
 
   const tx = await getTransaction(txHash);
-  if (!tx) {
-    return waitForFinalTransactionOutcome(txHash, lastLedger);
-  }
-
-  if ((tx as any).error === "txnNotFound" || (tx as any).validated !== true) {
+  if (!tx || (tx as any).error === "txnNotFound" || (tx as any).validated !== true) {
     const ledgerIndex = parseInt(((await Client.getLedger()) as any).ledger_index, 10);
     if (lastLedger > ledgerIndex) {
       return waitForFinalTransactionOutcome(txHash, lastLedger);
