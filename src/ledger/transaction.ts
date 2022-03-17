@@ -12,8 +12,8 @@ import { xrpToDrops } from "../v1/common";
 
 const submitErrorsGroup = ["tem", "tef", "tel", "ter"];
 const FEE_LIMIT = 0.5; // XRP
-const LEDGER_CLOSE_TIME = 4000; // ms
-const LEDGERS_AWAIT = 5;
+const LEDGER_CLOSE_TIME_AWAIT = 2000; // ms
+const MAX_LEDGERS_AWAIT = 5;
 
 export interface GetTransactionOptions {
   binary?: boolean;
@@ -156,8 +156,6 @@ export async function legacyPayment(data: LegacyPaymentInterface): Promise<objec
   transaction.Sequence = paymentParams.sequence;
   transaction.LastLedgerSequence = paymentParams.lastLedgerSequence;
 
-  console.log(transaction);
-
   // sign transaction
   const wallet = xrpl.Wallet.fromSeed(data.secret);
   const signedTransaction = wallet.sign(transaction as Transaction).tx_blob;
@@ -188,7 +186,7 @@ async function getLedgerPaymentParams(account: string, connection: Connection): 
   });
 
   const lastLedgerSequence = new Promise(async (resolve) => {
-    resolve(parseInt(((await Client.getLedger()) as any).ledger_index, 10) + LEDGERS_AWAIT);
+    resolve(parseInt(((await Client.getLedger()) as any).ledger_index, 10) + MAX_LEDGERS_AWAIT);
   });
 
   const result = await Promise.all([fee, sequence, lastLedgerSequence]);
@@ -226,14 +224,14 @@ export async function submit(signedTransaction: string, options: submitoOptions 
   if (transaction.LastLedgerSequence) {
     lastLedger = transaction.LastLedgerSequence as number;
   } else {
-    lastLedger = parseInt(((await Client.getLedger()) as any).ledger_index, 10) + LEDGERS_AWAIT;
+    lastLedger = parseInt(((await Client.getLedger()) as any).ledger_index, 10) + MAX_LEDGERS_AWAIT;
   }
 
   return await waitForFinalTransactionOutcome(txHash, lastLedger);
 }
 
 async function waitForFinalTransactionOutcome(txHash: string, lastLedger: number): Promise<object | null> {
-  await sleep(LEDGER_CLOSE_TIME);
+  await sleep(LEDGER_CLOSE_TIME_AWAIT);
 
   const tx = await getTransaction(txHash);
   if (!tx) {

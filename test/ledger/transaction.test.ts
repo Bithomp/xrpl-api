@@ -226,8 +226,6 @@ describe("Client", () => {
       };
 
       const result: any = await Client.legacyPayment(payment);
-      console.log(result)
-
       expect(result.validated).to.eq(true);
     });
   });
