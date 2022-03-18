@@ -77,11 +77,11 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
   const hex = currencyCode.toString().replace(/(00)+$/g, "");
   const ctiHex = hex.substring(2, 16);
   const cti = BigInt("0x" + ctiHex);
-  const ctiLedger = ctiLedgerIndex(cti);
-  const ctiTxIndex = ctiTransactionIndex(cti);
+  const ctiLedger = Number(ctiLedgerIndex(cti));
+  const ctiTxIndex = Number(ctiTransactionIndex(cti));
   const currencyHex = hex.substring(16, hex.length);
   const currency = hexToString(currencyHex)?.trim()?.replace(/\0/g, "") as string;
-  const ledgerInfo = await getLedger(Number(ctiLedger));
+  const ledgerInfo = await getLedger(ctiLedger);
   let ctiValid = false;
   let timestamp: number | undefined;
   let ctiTx: DecodedNFTCurrencyTransactionInterface = {};
@@ -89,8 +89,8 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
   if (ledgerInfo) {
     timestamp = Math.round(new Date(ledgerInfo.close_time_human).getTime() / 1000);
 
-    for (let transaction of ledgerInfo.transactions) {
-      if (transaction.metaData.TransactionIndex == ctiTxIndex) {
+    for (const transaction of ledgerInfo.transactions) {
+      if (transaction.metaData.TransactionIndex === ctiTxIndex) {
         const {
           Account: account,
           Destination: destination,
@@ -125,8 +125,8 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
     currencyCode,
     currency,
     cti: Number(cti),
-    ctiLedger: Number(ctiLedger),
-    ctiTxIndex: Number(ctiTxIndex),
+    ctiLedger,
+    ctiTxIndex,
     ctiValid,
     timestamp,
     ctiTx,
@@ -165,18 +165,22 @@ async function getLedger(ledgerIndex: number): Promise<any> {
 }
 
 function ctiTransactionIndex(cti: bigint): bigint {
+  // tslint:disable-next-line:no-bitwise
   return (cti >> 32n) & 0xffffn;
 }
 
 function ctiLedgerIndex(cti: bigint): bigint {
+  // tslint:disable-next-line:no-bitwise
   return cti & 0xffffffffn;
 }
 
 function ctiLedgerCheck(cti: bigint): bigint {
+  // tslint:disable-next-line:no-bitwise
   return (cti >> 52n) & 0xfn;
 }
 
 function ctiTransactionCheck(cti: bigint): bigint {
+  // tslint:disable-next-line:no-bitwise
   return (cti >> 48n) & 0xfn;
 }
 
