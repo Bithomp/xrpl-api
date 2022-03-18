@@ -105,7 +105,11 @@ class Connection {
         error: e.message || e.name || e,
       });
 
-      return e;
+      if (e.data) {
+        return e.data;
+      } else {
+        return { error: e.message || e.name || e };
+      }
     }
   }
 

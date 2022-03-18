@@ -213,9 +213,13 @@ export async function submit(signedTransaction: string, options: SubmitOptionsIn
   }
 
   const response = await connection.submit(signedTransaction);
+  if (response.error) {
+    return response;
+  }
+
   const result = response?.result;
-  const resultGroup = result.engine_result.slice(0, 3);
-  if (submitErrorsGroup.includes(resultGroup) && result.engine_result !== "terQUEUED") {
+  const resultGroup = result?.engine_result.slice(0, 3);
+  if (submitErrorsGroup.includes(resultGroup) && result?.engine_result !== "terQUEUED") {
     return result;
   }
 
