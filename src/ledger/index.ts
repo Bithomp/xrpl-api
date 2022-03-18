@@ -5,6 +5,7 @@ export * from "./account_objects";
 export * from "./account_offers";
 export * from "./account_tx";
 export * from "./book_offers";
+export * from "./currency";
 export * from "./fee";
 export * from "./gateway_balances";
 export * from "./ledger";

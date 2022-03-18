@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import {removeUndefined, rippleTimeToISO8601} from '../../common'
-import parseTransaction from './transaction'
+import {parseTransaction} from './transaction'
 import {Ledger} from '../../common/types/objects'
 
 export type FormattedLedger = {
