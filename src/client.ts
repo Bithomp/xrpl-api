@@ -62,23 +62,31 @@ export function disconnect() {
   }
 }
 
-export function findConnection(type: string = "regular"): Connection | null {
-  // no connection
-  if (clientConnections.length === 0) {
-    return null;
-    // single connection mode
-  } else if (clientConnections.length === 1) {
-    return clientConnections[0];
+/**
+ * @returns {Connection | null}
+ */
+export function findConnection(type?: string, url?: string, strongFilter?: boolean): Connection | null {
+  if (!strongFilter) {
+    // no connection
+    if (clientConnections.length === 0) {
+      return null;
+      // single connection mode
+    } else if (clientConnections.length === 1) {
+      return clientConnections[0];
+    }
   }
 
   // get connections by type
   let connections = clientConnections.filter((con) => {
+    if (typeof url === "string" && con.url !== url) {
+      return false;
+    }
+
     // invalid type, skipping filtering
     if (typeof type !== "string") {
       return true;
     }
 
-    // no types have been setup
     if (con.types.length === 0) {
       return false;
     } else {
@@ -86,9 +94,11 @@ export function findConnection(type: string = "regular"): Connection | null {
     }
   });
 
-  // no any, use all what we have
-  if (connections.length === 0) {
-    connections = [...clientConnections];
+  if (!strongFilter) {
+    // no any, use all what we have
+    if (connections.length === 0) {
+      connections = [...clientConnections];
+    }
   }
 
   // get the fastest one
