@@ -9,4 +9,5 @@ export * from "./currency";
 export * from "./fee";
 export * from "./gateway_balances";
 export * from "./ledger";
+export * from "./server_info";
 export * from "./transaction";
