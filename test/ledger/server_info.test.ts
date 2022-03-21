@@ -10,6 +10,7 @@ describe("Client", () => {
   describe("getServerInfo", () => {
     describe("mainnet", () => {
       before(async function () {
+        this.timeout(15000);
         Client.setup(nconf.get("xrpl:connections:mainnet"));
         await Client.connect();
       });
@@ -77,7 +78,7 @@ describe("Client", () => {
 
     describe("testnet", () => {
       before(async function () {
-        Client.setup(nconf.get("xrpl:connections:testmet"));
+        Client.setup(nconf.get("xrpl:connections:testnet"));
         await Client.connect();
       });
 
@@ -111,7 +112,7 @@ describe("Client", () => {
         ]);
       });
 
-      it("works with url", async function () {
+      it("handles with url", async function () {
         await expect(Client.getServerInfo({ url: "wss://s1.ripple.com" })).to.be.rejectedWith(
           Error,
           "There is no connection"
