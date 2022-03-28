@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import { removeUndefined } from "../../v1/common";
 import { NFTokenOfferFlagsKeys } from "../account_nfts";
 
@@ -49,6 +50,8 @@ class NonFungibleTokenChanges {
   private parseAffectedNode(affectedNode: any): void {
     if (this.isNFTokensCreateNode(affectedNode)) {
       this.parseNFTokensCreateNode(affectedNode);
+    } else if (this.isNFTokensModifiedNode(affectedNode)) {
+      this.parseNFTokensModifiedNode(affectedNode);
     } else if (this.isNFTokensDeleteNode(affectedNode)) {
       this.parseNFTokensDeleteNode(affectedNode);
     } else if (this.isNFTokensOfferAccept(affectedNode)) {
@@ -98,6 +101,64 @@ class NonFungibleTokenChanges {
     }
 
     this.addChange(this.tx.Account, { status, tokenID, uri });
+  }
+
+  private isNFTokensModifiedNode(affectedNode: any): boolean {
+    const ledgerEntryType: string = affectedNode.ModifiedNode?.LedgerEntryType;
+    const finalNonFungibleTokens: any[] = affectedNode.ModifiedNode?.FinalFields?.NonFungibleTokens;
+    const previousNonFungibleTokens: any[] = affectedNode.ModifiedNode?.PreviousFields?.NonFungibleTokens;
+
+    return (
+      ledgerEntryType === "NFTokenPage" &&
+      Array.isArray(finalNonFungibleTokens) &&
+      Array.isArray(previousNonFungibleTokens)
+    );
+  }
+
+  private parseNFTokensModifiedNode(tokenNode: any): void {
+    if (!tokenNode?.ModifiedNode?.FinalFields || !tokenNode?.ModifiedNode?.PreviousFields) {
+      return;
+    }
+
+    const finalNonFungibleTokens: any[] = tokenNode.ModifiedNode?.FinalFields?.NonFungibleTokens;
+    const previousNonFungibleTokens: any[] = tokenNode.ModifiedNode?.PreviousFields?.NonFungibleTokens;
+
+    let finalTokens: string[] = [];
+    if (Array.isArray(finalNonFungibleTokens)) {
+      finalTokens = finalNonFungibleTokens.map((nonFungibleToken: any) => nonFungibleToken.NonFungibleToken.TokenID);
+    }
+
+    let previousTokens: string[] = [];
+    if (Array.isArray(previousNonFungibleTokens)) {
+      previousTokens = previousNonFungibleTokens.map(
+        (nonFungibleToken: any) => nonFungibleToken.NonFungibleToken.TokenID
+      );
+    }
+
+    const added: string[] = _.difference(finalTokens, previousTokens);
+    const removed: string[] = _.difference(previousTokens, finalTokens);
+
+    if (added.length > 0) {
+      for (const nonFungibleToken of finalNonFungibleTokens) {
+        if (added.includes(nonFungibleToken.NonFungibleToken.TokenID)) {
+          const tokenID = nonFungibleToken.NonFungibleToken.TokenID;
+          const uri = nonFungibleToken.NonFungibleToken.URI;
+
+          this.addChange(this.tx.Account, { status: "added", tokenID, uri });
+        }
+      }
+    }
+
+    if (removed.length > 0) {
+      for (const nonFungibleToken of previousNonFungibleTokens) {
+        if (added.includes(nonFungibleToken.NonFungibleToken.TokenID)) {
+          const tokenID = nonFungibleToken.NonFungibleToken.TokenID;
+          const uri = nonFungibleToken.NonFungibleToken.URI;
+
+          this.addChange(this.tx.Account, { status: "removed", tokenID, uri });
+        }
+      }
+    }
   }
 
   private isNFTokensDeleteNode(affectedNode: any): boolean {

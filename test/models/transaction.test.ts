@@ -422,4 +422,47 @@ describe("Models", () => {
       });
     });
   });
+
+  describe("getLedgerTxDetails", () => {
+    it("NFTokenMint from ledger history", function () {
+      const tx = require("../examples/responses/LedgerNFTokenMint.json");
+      const result: any = Models.getLedgerTxDetails(tx, 593274, false);
+
+      expect(result).to.eql({
+        address: "rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy",
+        id: "1618B0147FC0F56A33ACE7F06503D9A41A52E1E6BB024404C04354E40B633855",
+        outcome: {
+          balanceChanges: { rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy: [{ currency: "XRP", value: "-0.0001" }] },
+          fee: "0.0001",
+          indexInLedger: 0,
+          ledgerVersion: 593274,
+          nonFungibleTokenChanges: {
+            rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy: [
+              {
+                status: "added",
+                tokenID: "000A0000C54635B0A3EF854BD72AD1A192DBC9EBC5DF262F2DCBAB9D00000002",
+                uri: "6E6F736A2E3261356264383636326633332D646639622D333931342D326234302D65306530343133332F73617461646174656D74666E2F6C6169636F732E72656469762E76656474666E2E6E64632F2F3A7370747468",
+              },
+            ],
+          },
+          nonFungibleTokenOfferChanges: {},
+          orderbookChanges: {},
+          result: "tesSUCCESS",
+        },
+        sequence: 1238,
+        specification: {
+          flags: {
+            burnable: false,
+            onlyXRP: true,
+            transferable: true,
+            trustLine: false,
+          },
+          tokenTaxon: 0,
+          transferFee: 0,
+          uri: "6E6F736A2E3261356264383636326633332D646639622D333931342D326234302D65306530343133332F73617461646174656D74666E2F6C6169636F732E72656469762E76656474666E2E6E64632F2F3A7370747468",
+        },
+        type: "nftokenMint",
+      });
+    });
+  });
 });

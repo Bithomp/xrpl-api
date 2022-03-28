@@ -79,7 +79,7 @@ describe("Client", () => {
 
         const result: any = await Client.getOrderbook(taker, orderbook);
         expect(Object.keys(result)).to.eql(["bids", "asks"]);
-        expect(Object.keys(result.bids[0])).to.eql(["specification", "properties", "data"]);
+        expect(Object.keys(result.bids[0])).to.eql(["specification", "properties", "state", "data"]);
         expect(Object.keys(result.bids[0].data)).to.eql([
           "Account",
           "BookDirectory",
