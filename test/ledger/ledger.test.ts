@@ -46,6 +46,20 @@ describe("Client", () => {
         expect(result.ledger.transactions).to.eql(undefined);
       });
 
+      it("by non existent ledger_index", async function () {
+        const result: any = await Client.getLedger({
+          ledgerIndex: 1,
+        });
+
+        expect(result).to.eql({
+          error: "lgrNotFound",
+          error_code: 21,
+          error_message: "ledgerNotFound",
+          status: "error",
+          validated: undefined,
+        });
+      });
+
       it("with transactions", async function () {
         const result: any = await Client.getLedger({
           ledgerIndex: 66816622,
