@@ -85,17 +85,13 @@ class NonFungibleTokenChanges {
       status = "added";
     } else if (this.tx.TransactionType === "NFTokenAcceptOffer") {
       // set status debends by offer
-      for (const affectedNode of this.tx.meta.AffectedNodes) {
-        const offerLedgerEntryType = affectedNode.DeletedNode?.LedgerEntryType;
-        const offerTokenID = affectedNode.DeletedNode?.FinalFields?.TokenID;
-        const offerLedgerIndex = affectedNode.DeletedNode?.LedgerIndex;
-
-        if (offerLedgerEntryType === "NFTokenOffer" && offerTokenID === tokenID) {
-          if (this.tx.BuyOffer === offerLedgerIndex) {
-            status = "removed";
-          } else if (this.tx.SellOffer === offerLedgerIndex) {
-            status = "added";
-          }
+      const offerNode = this.findNFTokenAcceptOfferNode(tokenID);
+      if (offerNode) {
+        const offerLedgerIndex = offerNode.LedgerIndex;
+        if (this.tx.BuyOffer === offerLedgerIndex) {
+          status = "removed";
+        } else if (this.tx.SellOffer === offerLedgerIndex) {
+          status = "added";
         }
       }
     }
@@ -144,18 +140,45 @@ class NonFungibleTokenChanges {
           const tokenID = nonFungibleToken.NonFungibleToken.TokenID;
           const uri = nonFungibleToken.NonFungibleToken.URI;
 
-          this.addChange(this.tx.Account, { status: "added", tokenID, uri });
+          let account = this.tx.Account;
+          let status = "added";
+          if (this.tx.TransactionType === "NFTokenAcceptOffer") {
+            const offerNode = this.findNFTokenAcceptOfferNode(tokenID);
+            if (offerNode) {
+              const offerLedgerIndex = offerNode.LedgerIndex;
+              if (this.tx.BuyOffer === offerLedgerIndex) {
+                status = "removed";
+              } else if (this.tx.SellOffer === offerLedgerIndex) {
+                account = offerNode.FinalFields.Owner;
+                status = "added";
+              }
+            }
+          }
+          this.addChange(account, { status, tokenID, uri });
         }
       }
     }
 
     if (removed.length > 0) {
       for (const nonFungibleToken of previousNonFungibleTokens) {
-        if (added.includes(nonFungibleToken.NonFungibleToken.TokenID)) {
+        if (removed.includes(nonFungibleToken.NonFungibleToken.TokenID)) {
           const tokenID = nonFungibleToken.NonFungibleToken.TokenID;
           const uri = nonFungibleToken.NonFungibleToken.URI;
-
-          this.addChange(this.tx.Account, { status: "removed", tokenID, uri });
+          let account = this.tx.Account;
+          let status = "removed";
+          if (this.tx.TransactionType === "NFTokenAcceptOffer") {
+            const offerNode = this.findNFTokenAcceptOfferNode(tokenID);
+            if (offerNode) {
+              const offerLedgerIndex = offerNode.LedgerIndex;
+              if (this.tx.BuyOffer === offerLedgerIndex) {
+                account = offerNode.FinalFields.Owner;
+                status = "added";
+              } else if (this.tx.SellOffer === offerLedgerIndex) {
+                status = "removed";
+              }
+            }
+          }
+          this.addChange(account, { status, tokenID, uri });
         }
       }
     }
@@ -193,6 +216,7 @@ class NonFungibleTokenChanges {
   }
 
   private parseNFTokensOfferAccept(offerNode: any): void {
+    return;
     if (!offerNode.DeletedNode?.FinalFields) {
       return;
     }
@@ -207,5 +231,18 @@ class NonFungibleTokenChanges {
     const tokenID = offerNode.DeletedNode.FinalFields.TokenID;
 
     this.addChange(owner, { status, tokenID });
+  }
+
+  private findNFTokenAcceptOfferNode(tokenID: string): any {
+    for (const affectedNode of this.tx.meta.AffectedNodes) {
+      const offerLedgerEntryType = affectedNode.DeletedNode?.LedgerEntryType;
+      const offerTokenID = affectedNode.DeletedNode?.FinalFields?.TokenID;
+
+      if (offerLedgerEntryType === "NFTokenOffer" && offerTokenID === tokenID) {
+        return affectedNode.DeletedNode;
+      }
+    }
+
+    return null;
   }
 }
