@@ -156,7 +156,7 @@ class NonFungibleTokenChanges {
           const uri = nonFungibleToken.NonFungibleToken.URI;
 
           let account = this.tx.Account;
-          let status = "added";
+          const status = "added";
           if (this.tx.TransactionType === "NFTokenAcceptOffer") {
             const offerNode = this.findNFTokenAcceptOfferNode(tokenID);
             if (offerNode) {
@@ -177,7 +177,7 @@ class NonFungibleTokenChanges {
           const tokenID = nonFungibleToken.NonFungibleToken.TokenID;
           const uri = nonFungibleToken.NonFungibleToken.URI;
           let account = this.tx.Account;
-          let status = "removed";
+          const status = "removed";
           if (this.tx.TransactionType === "NFTokenAcceptOffer") {
             const offerNode = this.findNFTokenAcceptOfferNode(tokenID);
             if (offerNode) {
