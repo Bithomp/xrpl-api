@@ -211,11 +211,28 @@ class NonFungibleTokenChanges {
       return;
     }
 
-    const status = "removed";
+    let status: string | undefined;
     const tokenID = tokenNode.NonFungibleToken.TokenID;
     const uri = tokenNode.NonFungibleToken.URI;
 
-    this.addChange(this.tx.Account, { status, tokenID, uri });
+    if (this.tx.TransactionType === "NFTokenBurn") {
+      status = "removed";
+    } else if (this.tx.TransactionType === "NFTokenAcceptOffer") {
+      // set status debends by offer
+      const offerNode = this.findNFTokenAcceptOfferNode(tokenID);
+      if (offerNode) {
+        const offerLedgerIndex = offerNode.LedgerIndex;
+        if (this.tx.BuyOffer === offerLedgerIndex) {
+          status = "removed";
+        } else if (this.tx.SellOffer === offerLedgerIndex) {
+          status = "added";
+        }
+      }
+    }
+
+    if (status !== undefined) {
+      this.addChange(this.tx.Account, { status, tokenID, uri });
+    }
   }
 
   private isNFTokensOfferAccept(affectedNode: any): boolean {

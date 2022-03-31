@@ -262,6 +262,28 @@ describe("Models", () => {
       });
     });
 
+    it("NFTokenAcceptOfferSell2", function () {
+      const tx = require("../examples/responses/NFTokenAcceptOfferSell2.json");
+      const result: any = Models.parseNonFungibleTokenChanges(tx);
+
+      expect(result).to.eql({
+        rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg: [
+          {
+            status: "removed",
+            tokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
+            uri: "E090D96F2BBC2741ED41EE5C8A55D3EC2D6FF92A60524C9856A2FEAA14A07B9D",
+          },
+        ],
+        rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw: [
+          {
+            status: "added",
+            tokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
+            uri: "E090D96F2BBC2741ED41EE5C8A55D3EC2D6FF92A60524C9856A2FEAA14A07B9D",
+          },
+        ],
+      });
+    });
+
     it("NFTokenAcceptOfferBuy", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy.json");
       const result: any = Models.parseNonFungibleTokenChanges(tx);
