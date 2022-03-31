@@ -256,6 +256,7 @@ describe("Models", () => {
           {
             status: "removed",
             tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+            uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
           },
         ],
       });
@@ -264,8 +265,6 @@ describe("Models", () => {
     it("NFTokenAcceptOfferBuy", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy.json");
       const result: any = Models.parseNonFungibleTokenChanges(tx);
-
-      // rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz;
 
       expect(result).to.eql({
         rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz: [
@@ -279,6 +278,29 @@ describe("Models", () => {
           {
             status: "added",
             tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+            uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+          },
+        ],
+      });
+    });
+
+    it("NFTokenAcceptOfferBuy2", function () {
+      const tx = require("../examples/responses/NFTokenAcceptOfferBuy2.json");
+      const result: any = Models.parseNonFungibleTokenChanges(tx);
+
+      expect(result).to.eql({
+        rJbTejsLuGzyrQ9Hq2s8RX47gPQuCoZQCw: [
+          {
+            status: "removed",
+            tokenID: "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000",
+            uri: "4E4654207374726573732074657374",
+          },
+        ],
+        rhuWFE9dkvj5NT7TWSdjwcYmnKvdTjBKyh: [
+          {
+            status: "added",
+            tokenID: "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000",
+            uri: "4E4654207374726573732074657374",
           },
         ],
       });
