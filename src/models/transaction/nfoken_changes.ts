@@ -147,10 +147,7 @@ class NonFungibleTokenChanges {
             if (offerNode) {
               const offerLedgerIndex = offerNode.LedgerIndex;
               if (this.tx.BuyOffer === offerLedgerIndex) {
-                status = "removed";
-              } else if (this.tx.SellOffer === offerLedgerIndex) {
                 account = offerNode.FinalFields.Owner;
-                status = "added";
               }
             }
           }
@@ -170,11 +167,8 @@ class NonFungibleTokenChanges {
             const offerNode = this.findNFTokenAcceptOfferNode(tokenID);
             if (offerNode) {
               const offerLedgerIndex = offerNode.LedgerIndex;
-              if (this.tx.BuyOffer === offerLedgerIndex) {
+              if (this.tx.SellOffer === offerLedgerIndex) {
                 account = offerNode.FinalFields.Owner;
-                status = "added";
-              } else if (this.tx.SellOffer === offerLedgerIndex) {
-                status = "removed";
               }
             }
           }
