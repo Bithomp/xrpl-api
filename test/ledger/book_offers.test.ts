@@ -79,7 +79,8 @@ describe("Client", () => {
 
         const result: any = await Client.getOrderbook(taker, orderbook);
         expect(Object.keys(result)).to.eql(["bids", "asks"]);
-        expect(Object.keys(result.bids[0])).to.eql(["specification", "properties", "state", "data"]);
+        delete result.bids[0].state;
+        expect(Object.keys(result.bids[0])).to.eql(["specification", "properties", "data"]);
         delete result.bids[0].data.taker_gets_funded;
         delete result.bids[0].data.taker_pays_funded;
         expect(Object.keys(result.bids[0].data)).to.eql([
@@ -99,6 +100,7 @@ describe("Client", () => {
           "quality",
         ]);
 
+        delete result.asks[0].state;
         expect(Object.keys(result.asks[0])).to.eql(["specification", "properties", "data"]);
         delete result.asks[0].data.taker_gets_funded;
         delete result.asks[0].data.taker_pays_funded;
