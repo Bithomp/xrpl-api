@@ -38,8 +38,6 @@ class NonFungibleTokenChanges {
       this.changes[account] = [];
     }
 
-    console.log(account, change);
-
     // check for dubliation and multyple add remove
     for (const index in this.changes[account]) {
       const info = this.changes[account][index];
@@ -167,36 +165,8 @@ class NonFungibleTokenChanges {
       previousTokens = previousNFTokens.map((nonFungibleToken: any) => nonFungibleToken.NonFungibleToken.TokenID);
     }
 
-    // if there is a deleted page - combine tokens
-    // const deletedPage = this.findNFTokenPageDeletedNode(ledgerIndex);
-    // if (deletedPage) {
-    //   const deletedFinalNFTokens: any[] = deletedPage.FinalFields?.NonFungibleTokens;
-    //   const deletedPreviousNFTokens: any[] = deletedPage.PreviousFields?.NonFungibleTokens;
-
-    //   let deletedFinalTokens: string[] = [];
-    //   if (Array.isArray(deletedFinalNFTokens)) {
-    //     deletedFinalTokens = deletedFinalNFTokens.map(
-    //       (nonFungibleToken: any) => nonFungibleToken.NonFungibleToken.TokenID
-    //     );
-    //   }
-
-    //   let deletedPreviousTokens: string[] = [];
-    //   if (Array.isArray(deletedPreviousNFTokens)) {
-    //     deletedPreviousTokens = deletedPreviousNFTokens.map(
-    //       (nonFungibleToken: any) => nonFungibleToken.NonFungibleToken.TokenID
-    //     );
-    //   }
-
-    //   finalTokens = _.concat(finalTokens, deletedFinalTokens);
-    //   previousTokens = _.concat(previousTokens, deletedPreviousTokens);
-    // }
-
     const added: string[] = _.difference(finalTokens, previousTokens);
     const removed: string[] = _.difference(previousTokens, finalTokens);
-
-    // console.log(previousTxnID);
-    // console.log(finalTokens, previousTokens);
-    console.log(added, removed);
 
     if (added.length > 0) {
       for (const nonFungibleToken of finalNFTokens) {
@@ -252,14 +222,12 @@ class NonFungibleTokenChanges {
             } else {
               const accountRoot = this.findAccountRootModifiedNode(previousTxnID);
               account = accountRoot?.FinalFields?.Account;
-              console.log(account);
               if (!account) {
                 const deletedPage = this.findNFTokenPageDeletedNode(ledgerIndex);
                 const deletedPreviousTxnID = deletedPage?.FinalFields?.PreviousTxnID;
                 if (deletedPreviousTxnID) {
                   const accountRoot = this.findAccountRootModifiedNode(deletedPreviousTxnID);
                   account = accountRoot?.FinalFields?.Account;
-                  console.log(account);
                 }
               }
             }

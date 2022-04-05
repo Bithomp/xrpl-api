@@ -343,7 +343,7 @@ describe("Models", () => {
       });
     });
 
-    it.only("NFTokenAcceptOfferBuy multipages", function () {
+    it("NFTokenAcceptOfferBuy multipages", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy3.json");
       const result: any = Models.parseNonFungibleTokenChanges(tx);
 
