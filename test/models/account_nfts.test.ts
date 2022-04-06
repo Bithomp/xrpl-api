@@ -365,6 +365,28 @@ describe("Models", () => {
       });
     });
 
+    it("NFTokenAcceptOfferBuy multipages", function () {
+      const tx = require("../examples/responses/NFTokenAcceptOfferBuy4.json");
+      const result: any = Models.parseNonFungibleTokenChanges(tx);
+
+      expect(result).to.eql({
+        rQrTtbNKcNW8occaRaVB3vreqJSKZDynnq: [
+          {
+            status: "removed",
+            tokenID: "00090001FC6156D85FCBBBEF1E2AEE70E41EEDE24DE6D1E1577748AA0000000F",
+            uri: "4E4654206D696E742074657374",
+          },
+        ],
+        rGKaqNwqtRjy1MWpS4aZWQymebCHdiNX8b: [
+          {
+            status: "added",
+            tokenID: "00090001FC6156D85FCBBBEF1E2AEE70E41EEDE24DE6D1E1577748AA0000000F",
+            uri: "4E4654206D696E742074657374",
+          },
+        ],
+      });
+    });
+
     it("NFTokenCreateOfferSell", function () {
       const tx = require("../examples/responses/NFTokenCreateOfferSell.json");
       const result: any = Models.parseNonFungibleTokenChanges(tx);

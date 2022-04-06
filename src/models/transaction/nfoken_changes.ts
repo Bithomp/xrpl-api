@@ -82,9 +82,10 @@ class NonFungibleTokenChanges {
 
   private isNFTokensCreateNode(affectedNode: any): boolean {
     const ledgerEntryType: string = affectedNode.CreatedNode?.LedgerEntryType;
+    const previousPageMin: any[] = affectedNode.CreatedNode?.NewFields?.PreviousPageMin; // if several NFTokenPages
     const nonFungibleTokens: any[] = affectedNode.CreatedNode?.NewFields?.NonFungibleTokens;
 
-    return ledgerEntryType === "NFTokenPage" && Array.isArray(nonFungibleTokens);
+    return ledgerEntryType === "NFTokenPage" && previousPageMin === undefined && Array.isArray(nonFungibleTokens);
   }
 
   private parseNFTokensCreateNode(createdNode: any): void {
@@ -242,7 +243,7 @@ class NonFungibleTokenChanges {
 
   private isNFTokensDeleteNode(affectedNode: any): boolean {
     const ledgerEntryType: string = affectedNode.DeletedNode?.LedgerEntryType;
-    const nextPageMin: string = affectedNode.DeletedNode?.FinalFields?.NextPageMin;
+    const nextPageMin: string = affectedNode.DeletedNode?.FinalFields?.NextPageMin; // if several NFTokenPages
     const nonFungibleTokens: any[] = affectedNode.DeletedNode?.FinalFields?.NonFungibleTokens;
 
     return ledgerEntryType === "NFTokenPage" && nextPageMin === undefined && Array.isArray(nonFungibleTokens);
@@ -362,7 +363,7 @@ class NonFungibleTokenChanges {
           }
         }
       } else if (affectedNode.ModifiedNode?.LedgerEntryType === "NFTokenPage") {
-        if (affectedNode?.ModifiedNode?.FinalFields) {
+        if (Array.isArray(affectedNode?.ModifiedNode?.FinalFields?.NonFungibleTokens)) {
           for (const tokenNode of affectedNode?.ModifiedNode?.FinalFields.NonFungibleTokens) {
             if (tokenNode.NonFungibleToken.TokenID === tokenID) {
               return tokenNode.NonFungibleToken.URI;
@@ -370,7 +371,7 @@ class NonFungibleTokenChanges {
           }
         }
 
-        if (affectedNode?.ModifiedNode?.PreviousFields) {
+        if (Array.isArray(affectedNode?.ModifiedNode?.PreviousFields?.NonFungibleTokens)) {
           for (const tokenNode of affectedNode?.ModifiedNode?.PreviousFields.NonFungibleTokens) {
             if (tokenNode.NonFungibleToken.TokenID === tokenID) {
               return tokenNode.NonFungibleToken.URI;
@@ -381,6 +382,14 @@ class NonFungibleTokenChanges {
         for (const tokenNode of affectedNode.DeletedNode.FinalFields?.NonFungibleTokens) {
           if (tokenNode.NonFungibleToken.TokenID === tokenID) {
             return tokenNode.NonFungibleToken.URI;
+          }
+        }
+
+        if (Array.isArray(affectedNode?.DeletedNode?.PreviousFields?.NonFungibleTokens)) {
+          for (const tokenNode of affectedNode?.DeletedNode?.PreviousFields.NonFungibleTokens) {
+            if (tokenNode.NonFungibleToken.TokenID === tokenID) {
+              return tokenNode.NonFungibleToken.URI;
+            }
           }
         }
       }
