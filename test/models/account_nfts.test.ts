@@ -225,6 +225,21 @@ describe("Models", () => {
       });
     });
 
+    it("NFTokenMint2", function () {
+      const tx = require("../examples/responses/NFTokenMint2.json");
+      const result: any = Models.parseNonFungibleTokenChanges(tx);
+
+      expect(result).to.eql({
+        rESS19Edm58UGdnJq1ZYmVRbQJ2MYtYrR6: [
+          {
+            status: "added",
+            tokenID: "000900019E61C02982121EF82C5C610BADAF3DDEE35693A8DCBA29BB00000020",
+            uri: "4E4654206D696E742074657374",
+          },
+        ],
+      });
+    });
+
     it("NFTokenBurn", function () {
       const tx = require("../examples/responses/NFTokenBurn.json");
       const result: any = Models.parseNonFungibleTokenChanges(tx);
@@ -284,7 +299,7 @@ describe("Models", () => {
       });
     });
 
-    it("NFTokenAcceptOfferBuy", function () {
+    it("NFTokenAcceptOfferBuy with creation", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy.json");
       const result: any = Models.parseNonFungibleTokenChanges(tx);
 
@@ -306,7 +321,7 @@ describe("Models", () => {
       });
     });
 
-    it("NFTokenAcceptOfferBuy2", function () {
+    it("NFTokenAcceptOfferBuy with modification", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy2.json");
       const result: any = Models.parseNonFungibleTokenChanges(tx);
 
@@ -323,6 +338,50 @@ describe("Models", () => {
             status: "added",
             tokenID: "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000",
             uri: "4E4654207374726573732074657374",
+          },
+        ],
+      });
+    });
+
+    it("NFTokenAcceptOfferBuy multipages", function () {
+      const tx = require("../examples/responses/NFTokenAcceptOfferBuy3.json");
+      const result: any = Models.parseNonFungibleTokenChanges(tx);
+
+      expect(result).to.eql({
+        r4K2ggLxfX8vp5vEi3sDEeAQg3PGEH84WV: [
+          {
+            status: "removed",
+            tokenID: "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F",
+            uri: "4E4654206D696E742074657374",
+          },
+        ],
+        rNDZcpmnXG3zCLKtWqYE9LNNQRZrtLtjx2: [
+          {
+            status: "added",
+            tokenID: "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F",
+            uri: "4E4654206D696E742074657374",
+          },
+        ],
+      });
+    });
+
+    it("NFTokenAcceptOfferBuy multipages", function () {
+      const tx = require("../examples/responses/NFTokenAcceptOfferBuy4.json");
+      const result: any = Models.parseNonFungibleTokenChanges(tx);
+
+      expect(result).to.eql({
+        rQrTtbNKcNW8occaRaVB3vreqJSKZDynnq: [
+          {
+            status: "removed",
+            tokenID: "00090001FC6156D85FCBBBEF1E2AEE70E41EEDE24DE6D1E1577748AA0000000F",
+            uri: "4E4654206D696E742074657374",
+          },
+        ],
+        rGKaqNwqtRjy1MWpS4aZWQymebCHdiNX8b: [
+          {
+            status: "added",
+            tokenID: "00090001FC6156D85FCBBBEF1E2AEE70E41EEDE24DE6D1E1577748AA0000000F",
+            uri: "4E4654206D696E742074657374",
           },
         ],
       });
