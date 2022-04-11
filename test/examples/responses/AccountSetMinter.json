@@ -3,7 +3,7 @@
   "Fee": "15",
   "Flags": 2147483648,
   "LastLedgerSequence": 44102,
-  "Minter": "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+  "NFTokenMinter": "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
   "Sequence": 42030,
   "SetFlag": 10,
   "SigningPubKey": "03EB895F8F99B2F6F46A1CD22E870861F76F51FAF61A93F051E54C691257B7064C",
@@ -21,7 +21,7 @@
                       "Account": "rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz",
                       "Balance": "999999970",
                       "Flags": 0,
-                      "Minter": "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+                      "NFTokenMinter": "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
                       "OwnerCount": 0,
                       "Sequence": 42031
                   },
@@ -29,7 +29,7 @@
                   "LedgerIndex": "0999B6A418D4F62355EC49623BA3DB1FDC658DC20C8C2210467F684F2855CE58",
                   "PreviousFields": {
                       "Balance": "999999985",
-                      "Minter": "raMjuzZYRZ4yza9DAd5Szt9tz9ZDzD4QzP",
+                      "NFTokenMinter": "raMjuzZYRZ4yza9DAd5Szt9tz9ZDzD4QzP",
                       "Sequence": 42030
                   },
                   "PreviousTxnID": "62AFD6A669912C2F450CCE46ABDB8F61620570DEB6CB40ECAFA0961A15AA59CB",

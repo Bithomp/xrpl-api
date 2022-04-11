@@ -36,35 +36,35 @@ describe("Models", () => {
         {
           Flags: 0,
           Issuer: "issuer3",
-          TokenID: "string",
+          NFTokenID: "string",
           TokenTaxons: 0,
           nft_serial: 56,
         },
         {
           Flags: 0,
           Issuer: "issuer1",
-          TokenID: "string",
+          NFTokenID: "string",
           TokenTaxons: 0,
           nft_serial: 2,
         },
         {
           Flags: 0,
           Issuer: "issuer1",
-          TokenID: "string",
+          NFTokenID: "string",
           TokenTaxons: 0,
           nft_serial: 1,
         },
         {
           Flags: 0,
           Issuer: "issuer2",
-          TokenID: "string",
+          NFTokenID: "string",
           TokenTaxons: 0,
           nft_serial: 56,
         },
         {
           Flags: 0,
           Issuer: "issuer3",
-          TokenID: "string",
+          NFTokenID: "string",
           TokenTaxons: 0,
           nft_serial: 1,
         },
@@ -90,30 +90,30 @@ describe("Models", () => {
   });
 
   describe("parseNFTokenID", () => {
-    it("parses tokenID", function () {
-      const tokenID = "000861A8A7C507A12088BF6A6BB62BAFEE9CDAABA2961DB216E5DA9C00000001";
-      const result: any = Models.parseNFTokenID(tokenID);
+    it("parses nftokenID", function () {
+      const nftokenID = "000861A8A7C507A12088BF6A6BB62BAFEE9CDAABA2961DB216E5DA9C00000001";
+      const result: any = Models.parseNFTokenID(nftokenID);
 
       expect(result).to.eql({
-        TokenID: tokenID,
+        NFTokenID: nftokenID,
         Flags: 8,
         TransferFee: 25000,
         Issuer: "rGJn1uZxDX4ksxRPYuj2smP7ZshdwjeSTG",
-        TokenTaxon: 0,
+        NFTokenTaxon: 0,
         Sequence: 1,
       });
     });
 
-    it("parses tokenID with big taxon", function () {
-      const tokenID = "000B0C4495F14B0E44F78A264E41713C64B5F89242540EE2BC8B858E00000D65";
-      const result: any = Models.parseNFTokenID(tokenID);
+    it("parses nftokenID with big taxon", function () {
+      const nftokenID = "000B0C4495F14B0E44F78A264E41713C64B5F89242540EE2BC8B858E00000D65";
+      const result: any = Models.parseNFTokenID(nftokenID);
 
       expect(result).to.eql({
-        TokenID: tokenID,
+        NFTokenID: nftokenID,
         Flags: 11,
         TransferFee: 3140,
         Issuer: "rNCFjv8Ek5oDrNiMJ3pw6eLLFtMjZLJnf2",
-        TokenTaxon: 146999694,
+        NFTokenTaxon: 146999694,
         Sequence: 3429,
       });
     });
@@ -126,7 +126,7 @@ describe("Models", () => {
 
       expect(result).to.eql({
         account: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
-        tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
+        nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
       });
     });
   });
@@ -143,7 +143,7 @@ describe("Models", () => {
           transferable: true,
           trustLine: false,
         },
-        tokenTaxon: 0,
+        nftokenTaxon: 0,
         uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
       });
     });
@@ -155,7 +155,7 @@ describe("Models", () => {
       const result: any = Models.parseNFTokenCancelOffer(tx);
 
       expect(result).to.eql({
-        tokenOffers: ["D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8"],
+        nftokenOffers: ["D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8"],
       });
     });
   });
@@ -170,7 +170,7 @@ describe("Models", () => {
         flags: {
           sellToken: true,
         },
-        tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+        nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
       });
     });
 
@@ -184,7 +184,7 @@ describe("Models", () => {
           sellToken: false,
         },
         owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
-        tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+        nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
       });
     });
   });
@@ -195,7 +195,7 @@ describe("Models", () => {
       const result: any = Models.parseNFTokenAcceptOffer(tx);
 
       expect(result).to.eql({
-        sellOffer: "D3C21058E60B6597BCB33A7A77B5FC90959082C96057EDBB388CE365E8D3245D",
+        nftokenSellOffer: "D3C21058E60B6597BCB33A7A77B5FC90959082C96057EDBB388CE365E8D3245D",
       });
     });
 
@@ -204,7 +204,7 @@ describe("Models", () => {
       const result: any = Models.parseNFTokenAcceptOffer(tx);
 
       expect(result).to.eql({
-        buyOffer: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
+        nftokenBuyOffer: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
       });
     });
   });
@@ -218,7 +218,7 @@ describe("Models", () => {
         r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
           {
             status: "added",
-            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+            nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
             uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
           },
         ],
@@ -233,7 +233,7 @@ describe("Models", () => {
         rESS19Edm58UGdnJq1ZYmVRbQJ2MYtYrR6: [
           {
             status: "added",
-            tokenID: "000900019E61C02982121EF82C5C610BADAF3DDEE35693A8DCBA29BB00000020",
+            nftokenID: "000900019E61C02982121EF82C5C610BADAF3DDEE35693A8DCBA29BB00000020",
             uri: "4E4654206D696E742074657374",
           },
         ],
@@ -248,7 +248,7 @@ describe("Models", () => {
         r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
           {
             status: "removed",
-            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
+            nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
             uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
           },
         ],
@@ -263,14 +263,14 @@ describe("Models", () => {
         rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
           {
             status: "added",
-            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+            nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
             uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
           },
         ],
         r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
           {
             status: "removed",
-            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+            nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
             uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
           },
         ],
@@ -285,14 +285,14 @@ describe("Models", () => {
         rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg: [
           {
             status: "removed",
-            tokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
+            nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
             uri: "E090D96F2BBC2741ED41EE5C8A55D3EC2D6FF92A60524C9856A2FEAA14A07B9D",
           },
         ],
         rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw: [
           {
             status: "added",
-            tokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
+            nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
             uri: "E090D96F2BBC2741ED41EE5C8A55D3EC2D6FF92A60524C9856A2FEAA14A07B9D",
           },
         ],
@@ -307,14 +307,14 @@ describe("Models", () => {
         rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz: [
           {
             status: "removed",
-            tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+            nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
             uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
           },
         ],
         rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
           {
             status: "added",
-            tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+            nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
             uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
           },
         ],
@@ -329,14 +329,14 @@ describe("Models", () => {
         rJbTejsLuGzyrQ9Hq2s8RX47gPQuCoZQCw: [
           {
             status: "removed",
-            tokenID: "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000",
+            nftokenID: "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000",
             uri: "4E4654207374726573732074657374",
           },
         ],
         rhuWFE9dkvj5NT7TWSdjwcYmnKvdTjBKyh: [
           {
             status: "added",
-            tokenID: "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000",
+            nftokenID: "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000",
             uri: "4E4654207374726573732074657374",
           },
         ],
@@ -351,14 +351,14 @@ describe("Models", () => {
         r4K2ggLxfX8vp5vEi3sDEeAQg3PGEH84WV: [
           {
             status: "removed",
-            tokenID: "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F",
+            nftokenID: "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F",
             uri: "4E4654206D696E742074657374",
           },
         ],
         rNDZcpmnXG3zCLKtWqYE9LNNQRZrtLtjx2: [
           {
             status: "added",
-            tokenID: "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F",
+            nftokenID: "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F",
             uri: "4E4654206D696E742074657374",
           },
         ],
@@ -373,14 +373,14 @@ describe("Models", () => {
         rQrTtbNKcNW8occaRaVB3vreqJSKZDynnq: [
           {
             status: "removed",
-            tokenID: "00090001FC6156D85FCBBBEF1E2AEE70E41EEDE24DE6D1E1577748AA0000000F",
+            nftokenID: "00090001FC6156D85FCBBBEF1E2AEE70E41EEDE24DE6D1E1577748AA0000000F",
             uri: "4E4654206D696E742074657374",
           },
         ],
         rGKaqNwqtRjy1MWpS4aZWQymebCHdiNX8b: [
           {
             status: "added",
-            tokenID: "00090001FC6156D85FCBBBEF1E2AEE70E41EEDE24DE6D1E1577748AA0000000F",
+            nftokenID: "00090001FC6156D85FCBBBEF1E2AEE70E41EEDE24DE6D1E1577748AA0000000F",
             uri: "4E4654206D696E742074657374",
           },
         ],
@@ -435,7 +435,7 @@ describe("Models", () => {
             owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
             amount: "1000000000000000",
             flags: 1,
-            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+            nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
             index: "D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8",
           },
         ],
@@ -453,7 +453,7 @@ describe("Models", () => {
             owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
             amount: "1000000000000000",
             flags: 1,
-            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+            nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
             index: "D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8",
           },
         ],
@@ -470,7 +470,7 @@ describe("Models", () => {
             status: "created",
             owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
             amount: "1",
-            tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+            nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
             index: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
           },
         ],
@@ -488,7 +488,7 @@ describe("Models", () => {
             owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
             amount: "0",
             flags: 1,
-            tokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+            nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
             index: "D3C21058E60B6597BCB33A7A77B5FC90959082C96057EDBB388CE365E8D3245D",
           },
         ],
@@ -506,7 +506,7 @@ describe("Models", () => {
             owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
             amount: "1",
             flags: 0,
-            tokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+            nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
             index: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
           },
         ],

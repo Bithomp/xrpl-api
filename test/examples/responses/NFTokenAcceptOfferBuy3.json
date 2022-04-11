@@ -1,6 +1,6 @@
 {
   "Account": "r4K2ggLxfX8vp5vEi3sDEeAQg3PGEH84WV",
-  "BuyOffer": "A5BE06459D1A2FA5C68A40A8245CD2B801648064D8C531A1B35FAF2C9BF79DBE",
+  "NFTokenBuyOffer": "A5BE06459D1A2FA5C68A40A8245CD2B801648064D8C531A1B35FAF2C9BF79DBE",
   "Fee": "12",
   "Flags": 0,
   "Sequence": 50875,
@@ -19,7 +19,7 @@
                       "Account": "r4K2ggLxfX8vp5vEi3sDEeAQg3PGEH84WV",
                       "Balance": "10059997672",
                       "Flags": 0,
-                      "MintedTokens": 56,
+                      "MintedNFTokens": 56,
                       "OwnerCount": 2,
                       "Sequence": 50876
                   },
@@ -39,172 +39,172 @@
                   "FinalFields": {
                       "Flags": 0,
                       "NextPageMin": "90F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946FFFFFFFFFFFFFFFFFFFFFFFF",
-                      "NonFungibleTokens": [
+                      "NFTokens": [
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160000099B00000000",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160000099B00000000",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160665C6C80000002D",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160665C6C80000002D",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160A85CBBD00000022",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160A85CBBD00000022",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160EA5D0B200000017",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160EA5D0B200000017",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1612C5D5A70000000C",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1612C5D5A70000000C",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1616E5DA9C00000001",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1616E5DA9C00000001",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C161D4B97C90000002E",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C161D4B97C90000002E",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16216B9CBE00000023",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16216B9CBE00000023",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16258BA1B300000018",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16258BA1B300000018",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1629ABA6A80000000D",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1629ABA6A80000000D",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C162DCBAB9D00000002",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C162DCBAB9D00000002",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946258BA1B300000018",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946258BA1B300000018",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C094629ABA6A80000000D",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C094629ABA6A80000000D",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09462DCBAB9D00000002",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09462DCBAB9D00000002",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C094638516DBF00000024",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C094638516DBF00000024",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09463C7172B400000019",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09463C7172B400000019",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946409177A90000000E",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946409177A90000000E",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C094644B17C9E00000003",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C094644B17C9E00000003",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09464F373EC000000025",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09464F373EC000000025",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946535743B50000001A",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946535743B50000001A",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946577748AA0000000F",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946577748AA0000000F",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09465B974D9F00000004",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09465B974D9F00000004",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946661D0FC100000026",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946661D0FC100000026",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09466A3D14B60000001B",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09466A3D14B60000001B",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09466E5D19AB00000010",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09466E5D19AB00000010",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946727D1EA000000005",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946727D1EA000000005",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09467D02E0C200000027",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09467D02E0C200000027",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           }
@@ -213,166 +213,166 @@
                   "LedgerEntryType": "NFTokenPage",
                   "LedgerIndex": "90F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946831C09468122E5B70000001C",
                   "PreviousFields": {
-                      "NonFungibleTokens": [
+                      "NFTokens": [
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160000099B00000000",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160000099B00000000",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160665C6C80000002D",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160665C6C80000002D",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160A85CBBD00000022",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160A85CBBD00000022",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160EA5D0B200000017",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C160EA5D0B200000017",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1612C5D5A70000000C",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1612C5D5A70000000C",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1616E5DA9C00000001",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1616E5DA9C00000001",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C161D4B97C90000002E",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C161D4B97C90000002E",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16216B9CBE00000023",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16216B9CBE00000023",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16258BA1B300000018",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16258BA1B300000018",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1629ABA6A80000000D",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1629ABA6A80000000D",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C162DCBAB9D00000002",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C162DCBAB9D00000002",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946258BA1B300000018",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946258BA1B300000018",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C094629ABA6A80000000D",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C094629ABA6A80000000D",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09462DCBAB9D00000002",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09462DCBAB9D00000002",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C094638516DBF00000024",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C094638516DBF00000024",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09463C7172B400000019",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09463C7172B400000019",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946409177A90000000E",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946409177A90000000E",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C094644B17C9E00000003",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C094644B17C9E00000003",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09464F373EC000000025",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09464F373EC000000025",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946535743B50000001A",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946535743B50000001A",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946577748AA0000000F",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946577748AA0000000F",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09465B974D9F00000004",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09465B974D9F00000004",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946661D0FC100000026",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946661D0FC100000026",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09466A3D14B60000001B",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09466A3D14B60000001B",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09466E5D19AB00000010",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09466E5D19AB00000010",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946727D1EA000000005",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C0946727D1EA000000005",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09467D02E0C200000027",
+                              "NFToken": {
+                                  "NFTokenID": "0009000190F9D7D9073E3DB0D9EBE11A8ED36FA4831C09467D02E0C200000027",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           }
@@ -387,12 +387,12 @@
                   "FinalFields": {
                       "Amount": "10000000",
                       "Flags": 0,
-                      "OfferNode": "0",
+                      "NFTokenOfferNode": "0",
                       "Owner": "rNDZcpmnXG3zCLKtWqYE9LNNQRZrtLtjx2",
                       "OwnerNode": "0",
                       "PreviousTxnID": "312688DDE7443477AE132B61A9D3AC0CA933733E8905980528E7D0F08ECD58B5",
                       "PreviousTxnLgrSeq": 51341,
-                      "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F"
+                      "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F"
                   },
                   "LedgerEntryType": "NFTokenOffer",
                   "LedgerIndex": "A5BE06459D1A2FA5C68A40A8245CD2B801648064D8C531A1B35FAF2C9BF79DBE"
@@ -403,7 +403,7 @@
                   "FinalFields": {
                       "Flags": 1,
                       "RootIndex": "C899CDF79FEC0570717EC920FF6EC16C31986A5D7FB865814643DEC6B033C668",
-                      "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F"
+                      "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F"
                   },
                   "LedgerEntryType": "DirectoryNode",
                   "LedgerIndex": "C899CDF79FEC0570717EC920FF6EC16C31986A5D7FB865814643DEC6B033C668"
@@ -415,7 +415,7 @@
                       "Account": "rNDZcpmnXG3zCLKtWqYE9LNNQRZrtLtjx2",
                       "Balance": "9939997864",
                       "Flags": 0,
-                      "MintedTokens": 40,
+                      "MintedNFTokens": 40,
                       "OwnerCount": 2,
                       "Sequence": 51150
                   },
@@ -434,100 +434,100 @@
                   "FinalFields": {
                       "Flags": 0,
                       "NextPageMin": "E9DE3F31905919768FAB16D17D15DFA911D48C1611D48C16C9F45DAF00000014",
-                      "NonFungibleTokens": [
+                      "NFTokens": [
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1638516DBF00000024",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1638516DBF00000024",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C163C7172B400000019",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C163C7172B400000019",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16409177A90000000E",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16409177A90000000E",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1644B17C9E00000003",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1644B17C9E00000003",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C164B1739CB00000030",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C164B1739CB00000030",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C164F373EC000000025",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C164F373EC000000025",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16535743B50000001A",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16535743B50000001A",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16577748AA0000000F",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16577748AA0000000F",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C165B974D9F00000004",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C165B974D9F00000004",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1661FD0ACC00000031",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1661FD0ACC00000031",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16661D0FC100000026",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16661D0FC100000026",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C166A3D14B60000001B",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C166A3D14B60000001B",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C166E5D19AB00000010",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C166E5D19AB00000010",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16727D1EA000000005",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16727D1EA000000005",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1678E2DBCD00000032",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1678E2DBCD00000032",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C167D02E0C200000027",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C167D02E0C200000027",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           }
@@ -538,106 +538,106 @@
                   "LedgerEntryType": "NFTokenPage",
                   "LedgerIndex": "E9DE3F31905919768FAB16D17D15DFA911D48C1611D48C168122E5B70000001C",
                   "PreviousFields": {
-                      "NonFungibleTokens": [
+                      "NFTokens": [
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1638516DBF00000024",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1638516DBF00000024",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C163C7172B400000019",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C163C7172B400000019",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16409177A90000000E",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16409177A90000000E",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1644B17C9E00000003",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1644B17C9E00000003",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C164B1739CB00000030",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C164B1739CB00000030",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C164F373EC000000025",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C164F373EC000000025",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16535743B50000001A",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16535743B50000001A",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16577748AA0000000F",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16577748AA0000000F",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C165B974D9F00000004",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C165B974D9F00000004",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1661FD0ACC00000031",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1661FD0ACC00000031",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16661D0FC100000026",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16661D0FC100000026",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C166A3D14B60000001B",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C166A3D14B60000001B",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C166E5D19AB00000010",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C166E5D19AB00000010",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16727D1EA000000005",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16727D1EA000000005",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1678E2DBCD00000032",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1678E2DBCD00000032",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C167D02E0C200000027",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C167D02E0C200000027",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           }
@@ -650,196 +650,196 @@
                   "FinalFields": {
                       "Flags": 0,
                       "NextPageMin": "E9DE3F31905919768FAB16D17D15DFA911D48C16FFFFFFFFFFFFFFFFFFFFFFFF",
-                      "NonFungibleTokens": [
+                      "NFTokens": [
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1638516DBF00000024",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1638516DBF00000024",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C163C7172B400000019",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C163C7172B400000019",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16409177A90000000E",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16409177A90000000E",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1644B17C9E00000003",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1644B17C9E00000003",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C164B1739CB00000030",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C164B1739CB00000030",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C164F373EC000000025",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C164F373EC000000025",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16535743B50000001A",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16535743B50000001A",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16577748AA0000000F",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16577748AA0000000F",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C165B974D9F00000004",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C165B974D9F00000004",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1661FD0ACC00000031",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1661FD0ACC00000031",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16661D0FC100000026",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16661D0FC100000026",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C166A3D14B60000001B",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C166A3D14B60000001B",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C166E5D19AB00000010",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C166E5D19AB00000010",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16727D1EA000000005",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16727D1EA000000005",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1678E2DBCD00000032",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1678E2DBCD00000032",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C167D02E0C200000027",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C167D02E0C200000027",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168122E5B70000001C",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168122E5B70000001C",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168542EAAC00000011",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168542EAAC00000011",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168962EFA100000006",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168962EFA100000006",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168FC8ACCE00000033",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168FC8ACCE00000033",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1693E8B1C300000028",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1693E8B1C300000028",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C169808B6B80000001D",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C169808B6B80000001D",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C169C28BBAD00000012",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C169C28BBAD00000012",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16A048C0A200000007",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16A048C0A200000007",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16A6AE7DCF00000034",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16A6AE7DCF00000034",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16AACE82C400000029",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16AACE82C400000029",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16AEEE87B90000001E",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16AEEE87B90000001E",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16B30E8CAE00000013",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16B30E8CAE00000013",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16B72E91A300000008",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16B72E91A300000008",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16BD944ED000000035",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16BD944ED000000035",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16C1B453C50000002A",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16C1B453C50000002A",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16C5D458BA0000001F",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16C5D458BA0000001F",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           }
@@ -848,100 +848,100 @@
                   "LedgerEntryType": "NFTokenPage",
                   "LedgerIndex": "E9DE3F31905919768FAB16D17D15DFA911D48C1611D48C16C9F45DAF00000014",
                   "PreviousFields": {
-                      "NonFungibleTokens": [
+                      "NFTokens": [
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168122E5B70000001C",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168122E5B70000001C",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168542EAAC00000011",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168542EAAC00000011",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168962EFA100000006",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168962EFA100000006",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168FC8ACCE00000033",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C168FC8ACCE00000033",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1693E8B1C300000028",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C1693E8B1C300000028",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C169808B6B80000001D",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C169808B6B80000001D",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C169C28BBAD00000012",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C169C28BBAD00000012",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16A048C0A200000007",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16A048C0A200000007",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16A6AE7DCF00000034",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16A6AE7DCF00000034",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16AACE82C400000029",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16AACE82C400000029",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16AEEE87B90000001E",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16AEEE87B90000001E",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16B30E8CAE00000013",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16B30E8CAE00000013",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16B72E91A300000008",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16B72E91A300000008",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16BD944ED000000035",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16BD944ED000000035",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16C1B453C50000002A",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16C1B453C50000002A",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           },
                           {
-                              "NonFungibleToken": {
-                                  "TokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16C5D458BA0000001F",
+                              "NFToken": {
+                                  "NFTokenID": "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16C5D458BA0000001F",
                                   "URI": "4E4654206D696E742074657374"
                               }
                           }

@@ -5,7 +5,7 @@
   "LastLedgerSequence": 1310382,
   "Sequence": 1309362,
   "SigningPubKey": "0328E8357D60924D2970854CFD37B5F43AEAF8EB10FA0CAFD0AD87C6CAE0786FA7",
-  "TokenID": "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
+  "NFTokenID": "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
   "TransactionType": "NFTokenBurn",
   "TxnSignature": "304402206DB94567CCAC69523A5C189B52B99570654CC672B35A35946F9229F891DB97B002203108480F4E37DC2BE74CED9F4CED298A92EC176C38096587E2368186EE2B7695",
   "date": 699443071,
@@ -19,9 +19,9 @@
           "FinalFields": {
             "Account": "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
             "Balance": "999999820",
-            "BurnedTokens": 1,
+            "BurnedNFTokens": 1,
             "Flags": 0,
-            "MintedTokens": 2,
+            "MintedNFTokens": 2,
             "OwnerCount": 0,
             "Sequence": 1309363
           },
@@ -40,10 +40,10 @@
         "DeletedNode": {
           "FinalFields": {
             "Flags": 0,
-            "NonFungibleTokens": [
+            "NFTokens": [
               {
-                "NonFungibleToken": {
-                  "TokenID": "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
+                "NFToken": {
+                  "NFTokenID": "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
                   "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
                 }
               }
