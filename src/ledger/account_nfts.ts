@@ -16,8 +16,8 @@ export interface GetAccountNftsOptions {
  *     {
  *       Flags: 8,
  *       Issuer: 'rhmfc7GZAJ9j2HuPwBwqCoAJZPai8noFhA',
- *       TokenID: '00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD0000099B00000000',
- *       TokenTaxon: 0,
+ *       NFTokenID: '00080000294032DF27EE9718B0E16D5E2EC89550730CCDDD0000099B00000000',
+ *       NFTokenTaxon: 0,
  *       URI: '697066733A2F2F516D61364C3477474E786B5367475A66415A6F546A457339346A514B4C7A31324338486966523541536D43554135',
  *       nft_serial: 0
  *     }
@@ -94,7 +94,7 @@ export interface GetAccountNftSellOffersOptions {
  * @exception {Error}
  */
 export async function getAccountNftSellOffers(
-  tokenid: string,
+  nftID: string,
   options: GetAccountNftSellOffersOptions = {}
 ): Promise<object[] | object | null> {
   const connection: any = Client.findConnection();
@@ -105,7 +105,7 @@ export async function getAccountNftSellOffers(
   await connection.connect();
   const response = await connection.request({
     command: "nft_sell_offers",
-    tokenid,
+    nft_id: nftID,
     ledger_index: options.ledgerIndex || "validated",
   });
 
@@ -117,7 +117,7 @@ export async function getAccountNftSellOffers(
     const { error, error_code, error_message, status, validated } = response;
 
     return {
-      tokenid,
+      nft_id: nftID,
       error,
       error_code,
       error_message,
@@ -152,7 +152,7 @@ export interface GetAccountNftBuyOffersOptions {
  * @exception {Error}
  */
 export async function getAccountNftBuyOffers(
-  tokenid: string,
+  nftID: string,
   options: GetAccountNftBuyOffersOptions = {}
 ): Promise<object[] | object | null> {
   const connection: any = Client.findConnection();
@@ -163,7 +163,7 @@ export async function getAccountNftBuyOffers(
   await connection.connect();
   const response = await connection.request({
     command: "nft_buy_offers",
-    tokenid,
+    nft_id: nftID,
     ledger_index: options.ledgerIndex || "validated",
   });
 
@@ -175,7 +175,7 @@ export async function getAccountNftBuyOffers(
     const { error, error_code, error_message, status, validated } = response;
 
     return {
-      tokenid,
+      nft_id: nftID,
       error,
       error_code,
       error_message,

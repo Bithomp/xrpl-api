@@ -377,7 +377,7 @@ function counterpartyFilter(options: FindProcessTransactionsOptions, transaction
   }
 
   // AccountSet for NFT
-  if (transaction.tx.Minter === options.counterparty) {
+  if (transaction.tx.NFTokenMinter === options.counterparty) {
     return true;
   }
 

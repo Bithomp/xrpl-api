@@ -8,7 +8,7 @@ export function parseNonFungibleTokenChanges(tx: object): object {
 
 interface AccountNFTockenChangesInterface {
   status: string;
-  tokenID: string;
+  nftokenID: string;
   uri?: string;
 }
 
@@ -69,19 +69,19 @@ class NonFungibleTokenChanges {
         }
 
         if (affectedNode.CreatedNode) {
-          this.parseFinalNonFungibleTokens(account, node.NewFields?.NonFungibleTokens);
+          this.parseFinalNonFungibleTokens(account, node.NewFields?.NFTokens);
         }
 
         if (
           (affectedNode.ModifiedNode || affectedNode.DeletedNode) &&
-          Array.isArray(node.PreviousFields?.NonFungibleTokens)
+          Array.isArray(node.PreviousFields?.NFTokens)
         ) {
-          this.parseFinalNonFungibleTokens(account, node.FinalFields?.NonFungibleTokens);
-          this.parsePreviousNonFungibleTokens(account, node.PreviousFields?.NonFungibleTokens);
+          this.parseFinalNonFungibleTokens(account, node.FinalFields?.NFTokens);
+          this.parsePreviousNonFungibleTokens(account, node.PreviousFields?.NFTokens);
         }
 
         if (affectedNode.DeletedNode && node.PreviousFields === undefined) {
-          this.parsePreviousNonFungibleTokens(account, node.FinalFields?.NonFungibleTokens);
+          this.parsePreviousNonFungibleTokens(account, node.FinalFields?.NFTokens);
         }
       }
     }
@@ -112,7 +112,7 @@ class NonFungibleTokenChanges {
       let finalTokens: string[] = [];
       if (Array.isArray(this.finalNonFungibleTokens[account])) {
         finalTokens = this.finalNonFungibleTokens[account].map(
-          (nonFungibleToken: any) => nonFungibleToken.NonFungibleToken.TokenID
+          (nonFungibleToken: any) => nonFungibleToken.NFToken.NFTokenID
         );
         finalTokens = [...new Set(finalTokens)];
       }
@@ -120,7 +120,7 @@ class NonFungibleTokenChanges {
       let previousTokens: string[] = [];
       if (Array.isArray(this.previousNonFungibleTokens[account])) {
         previousTokens = this.previousNonFungibleTokens[account].map(
-          (nonFungibleToken: any) => nonFungibleToken.NonFungibleToken.TokenID
+          (nonFungibleToken: any) => nonFungibleToken.NFToken.NFTokenID
         );
         previousTokens = [...new Set(previousTokens)];
       }
@@ -128,50 +128,50 @@ class NonFungibleTokenChanges {
       const added: string[] = _.difference(finalTokens, previousTokens);
       const removed: string[] = _.difference(previousTokens, finalTokens);
 
-      for (const tokenID of added) {
-        const uri = this.findNFTokenUri(tokenID);
+      for (const nftokenID of added) {
+        const uri = this.findNFTokenUri(nftokenID);
         this.addChange(account, {
           status: "added",
-          tokenID,
+          nftokenID,
           uri,
         });
       }
 
-      for (const tokenID of removed) {
-        const uri = this.findNFTokenUri(tokenID);
+      for (const nftokenID of removed) {
+        const uri = this.findNFTokenUri(nftokenID);
         this.addChange(account, {
           status: "removed",
-          tokenID,
+          nftokenID,
           uri,
         });
       }
     }
   }
 
-  private findNFTokenUri(tokenID: string): string | undefined {
+  private findNFTokenUri(nftokenID: string): string | undefined {
     for (const affectedNode of this.tx.meta.AffectedNodes) {
       const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
       if (node?.LedgerEntryType === "NFTokenPage") {
-        if (Array.isArray(node.NewFields?.NonFungibleTokens)) {
-          for (const tokenNode of node.NewFields?.NonFungibleTokens) {
-            if (tokenNode.NonFungibleToken.TokenID === tokenID) {
-              return tokenNode.NonFungibleToken.URI;
+        if (Array.isArray(node.NewFields?.NFTokens)) {
+          for (const tokenNode of node.NewFields?.NFTokens) {
+            if (tokenNode.NFToken.NFTokenID === nftokenID) {
+              return tokenNode.NFToken.URI;
             }
           }
         }
 
-        if (Array.isArray(node.FinalFields?.NonFungibleTokens)) {
-          for (const tokenNode of node.FinalFields?.NonFungibleTokens) {
-            if (tokenNode.NonFungibleToken.TokenID === tokenID) {
-              return tokenNode.NonFungibleToken.URI;
+        if (Array.isArray(node.FinalFields?.NFTokens)) {
+          for (const tokenNode of node.FinalFields?.NFTokens) {
+            if (tokenNode.NFToken.NFTokenID === nftokenID) {
+              return tokenNode.NFToken.URI;
             }
           }
         }
 
-        if (Array.isArray(node.PreviousFields?.NonFungibleTokens)) {
-          for (const tokenNode of node.PreviousFields?.NonFungibleTokens) {
-            if (tokenNode.NonFungibleToken.TokenID === tokenID) {
-              return tokenNode.NonFungibleToken.URI;
+        if (Array.isArray(node.PreviousFields?.NFTokens)) {
+          for (const tokenNode of node.PreviousFields?.NFTokens) {
+            if (tokenNode.NFToken.NFTokenID === nftokenID) {
+              return tokenNode.NFToken.URI;
             }
           }
         }

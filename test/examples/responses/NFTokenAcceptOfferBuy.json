@@ -1,6 +1,6 @@
 {
   "Account": "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
-  "BuyOffer": "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
+  "NFTokenBuyOffer": "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
   "Fee": "12",
   "Flags": 0,
   "LastLedgerSequence": 75463,
@@ -19,7 +19,7 @@
           "FinalFields": {
             "Flags": 1,
             "RootIndex": "4B160B26AEAB8874307386F11A2160A2DF2C7F9B90C6D83DEC5BA1AD97A7EF09",
-            "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001"
+            "NFTokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001"
           },
           "LedgerEntryType": "DirectoryNode",
           "LedgerIndex": "4B160B26AEAB8874307386F11A2160A2DF2C7F9B90C6D83DEC5BA1AD97A7EF09"
@@ -31,8 +31,8 @@
             "Account": "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
             "Balance": "999999951",
             "Flags": 0,
-            "MintedTokens": 1,
-            "Minter": "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+            "MintedNFTokens": 1,
+            "NFTokenMinter": "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
             "OwnerCount": 2,
             "Sequence": 75152
           },
@@ -61,12 +61,12 @@
           "FinalFields": {
             "Amount": "1",
             "Flags": 0,
-            "OfferNode": "0",
+            "NFTokenOfferNode": "0",
             "Owner": "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
             "OwnerNode": "0",
             "PreviousTxnID": "9009887ACAEA08E7DE821CF15C410670E8469A98695FC33DCB8A86096930A4AF",
             "PreviousTxnLgrSeq": 75358,
-            "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001"
+            "NFTokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001"
           },
           "LedgerEntryType": "NFTokenOffer",
           "LedgerIndex": "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021"
@@ -76,22 +76,22 @@
         "ModifiedNode": {
           "FinalFields": {
             "Flags": 0,
-            "NonFungibleTokens": [
+            "NFTokens": [
               {
-                "NonFungibleToken": {
-                  "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000",
+                "NFToken": {
+                  "NFTokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000",
                   "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF2DCBAB9D00000002",
+                "NFToken": {
+                  "NFTokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF2DCBAB9D00000002",
                   "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "00000000DCBED2CF425AFDA5095FDD3633E5E89DE0D485D80000099B00000000",
+                "NFToken": {
+                  "NFTokenID": "00000000DCBED2CF425AFDA5095FDD3633E5E89DE0D485D80000099B00000000",
                   "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
                 }
               }
@@ -100,28 +100,28 @@
           "LedgerEntryType": "NFTokenPage",
           "LedgerIndex": "C124E14881533A9AFE4A5F481795C17003A9FACFFFFFFFFFFFFFFFFFFFFFFFFF",
           "PreviousFields": {
-            "NonFungibleTokens": [
+            "NFTokens": [
               {
-                "NonFungibleToken": {
-                  "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000",
+                "NFToken": {
+                  "NFTokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000",
                   "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+                "NFToken": {
+                  "NFTokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
                   "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF2DCBAB9D00000002",
+                "NFToken": {
+                  "NFTokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF2DCBAB9D00000002",
                   "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "00000000DCBED2CF425AFDA5095FDD3633E5E89DE0D485D80000099B00000000",
+                "NFToken": {
+                  "NFTokenID": "00000000DCBED2CF425AFDA5095FDD3633E5E89DE0D485D80000099B00000000",
                   "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
                 }
               }
@@ -136,10 +136,10 @@
           "LedgerEntryType": "NFTokenPage",
           "LedgerIndex": "DCBED2CF425AFDA5095FDD3633E5E89DE0D485D8FFFFFFFFFFFFFFFFFFFFFFFF",
           "NewFields": {
-            "NonFungibleTokens": [
+            "NFTokens": [
               {
-                "NonFungibleToken": {
-                  "TokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+                "NFToken": {
+                  "NFTokenID": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
                   "URI": "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274"
                 }
               }
@@ -153,7 +153,7 @@
             "Account": "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
             "Balance": "999999917",
             "Flags": 0,
-            "MintedTokens": 3,
+            "MintedNFTokens": 3,
             "OwnerCount": 3,
             "Sequence": 75148
           },

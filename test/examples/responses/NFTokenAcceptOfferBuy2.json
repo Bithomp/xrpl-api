@@ -1,6 +1,6 @@
 {
   "Account": "rJbTejsLuGzyrQ9Hq2s8RX47gPQuCoZQCw",
-  "BuyOffer": "06BCE59EC1743A3E5744238785E0D00B359DD2B5AADB83897718A76E72B06B47",
+  "NFTokenBuyOffer": "06BCE59EC1743A3E5744238785E0D00B359DD2B5AADB83897718A76E72B06B47",
   "Fee": "12",
   "Flags": 0,
   "Sequence": 4968,
@@ -18,12 +18,12 @@
           "FinalFields": {
             "Amount": "10000000",
             "Flags": 0,
-            "OfferNode": "0",
+            "NFTokenOfferNode": "0",
             "Owner": "rhuWFE9dkvj5NT7TWSdjwcYmnKvdTjBKyh",
             "OwnerNode": "0",
             "PreviousTxnID": "C97C4E4DAA1169EBA05ACF91F22EDA54B8915C90AD7A0C8F12944A2234319AC5",
             "PreviousTxnLgrSeq": 5091,
-            "TokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000"
+            "NFTokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000"
           },
           "LedgerEntryType": "NFTokenOffer",
           "LedgerIndex": "06BCE59EC1743A3E5744238785E0D00B359DD2B5AADB83897718A76E72B06B47"
@@ -35,7 +35,7 @@
             "Account": "rJbTejsLuGzyrQ9Hq2s8RX47gPQuCoZQCw",
             "Balance": "10009999916",
             "Flags": 0,
-            "MintedTokens": 5,
+            "MintedNFTokens": 5,
             "OwnerCount": 2,
             "Sequence": 4969
           },
@@ -55,7 +55,7 @@
             "Account": "rhuWFE9dkvj5NT7TWSdjwcYmnKvdTjBKyh",
             "Balance": "9989999928",
             "Flags": 0,
-            "MintedTokens": 5,
+            "MintedNFTokens": 5,
             "OwnerCount": 1,
             "Sequence": 4957
           },
@@ -73,40 +73,40 @@
         "ModifiedNode": {
           "FinalFields": {
             "Flags": 0,
-            "NonFungibleTokens": [
+            "NFTokens": [
               {
-                "NonFungibleToken": {
-                  "TokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA205650000099B00000000",
+                "NFToken": {
+                  "NFTokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA205650000099B00000000",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA2056516E5DA9C00000001",
+                "NFToken": {
+                  "NFTokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA2056516E5DA9C00000001",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA205652DCBAB9D00000002",
+                "NFToken": {
+                  "NFTokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA205652DCBAB9D00000002",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA2056544B17C9E00000003",
+                "NFToken": {
+                  "NFTokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA2056544B17C9E00000003",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA205655B974D9F00000004",
+                "NFToken": {
+                  "NFTokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA205655B974D9F00000004",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000",
+                "NFToken": {
+                  "NFTokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000",
                   "URI": "4E4654207374726573732074657374"
                 }
               }
@@ -115,34 +115,34 @@
           "LedgerEntryType": "NFTokenPage",
           "LedgerIndex": "2AD6E532406178687A1A914434CE6FBC0EA20565FFFFFFFFFFFFFFFFFFFFFFFF",
           "PreviousFields": {
-            "NonFungibleTokens": [
+            "NFTokens": [
               {
-                "NonFungibleToken": {
-                  "TokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA205650000099B00000000",
+                "NFToken": {
+                  "NFTokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA205650000099B00000000",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA2056516E5DA9C00000001",
+                "NFToken": {
+                  "NFTokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA2056516E5DA9C00000001",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA205652DCBAB9D00000002",
+                "NFToken": {
+                  "NFTokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA205652DCBAB9D00000002",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA2056544B17C9E00000003",
+                "NFToken": {
+                  "NFTokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA2056544B17C9E00000003",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA205655B974D9F00000004",
+                "NFToken": {
+                  "NFTokenID": "000900012AD6E532406178687A1A914434CE6FBC0EA205655B974D9F00000004",
                   "URI": "4E4654207374726573732074657374"
                 }
               }
@@ -156,28 +156,28 @@
         "ModifiedNode": {
           "FinalFields": {
             "Flags": 0,
-            "NonFungibleTokens": [
+            "NFTokens": [
               {
-                "NonFungibleToken": {
-                  "TokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA16E5DA9C00000001",
+                "NFToken": {
+                  "NFTokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA16E5DA9C00000001",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA2DCBAB9D00000002",
+                "NFToken": {
+                  "NFTokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA2DCBAB9D00000002",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA44B17C9E00000003",
+                "NFToken": {
+                  "NFTokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA44B17C9E00000003",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA5B974D9F00000004",
+                "NFToken": {
+                  "NFTokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA5B974D9F00000004",
                   "URI": "4E4654207374726573732074657374"
                 }
               }
@@ -186,34 +186,34 @@
           "LedgerEntryType": "NFTokenPage",
           "LedgerIndex": "C0FE87162DAD000D42613DD2C14AFC7FB4DA10CAFFFFFFFFFFFFFFFFFFFFFFFF",
           "PreviousFields": {
-            "NonFungibleTokens": [
+            "NFTokens": [
               {
-                "NonFungibleToken": {
-                  "TokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000",
+                "NFToken": {
+                  "NFTokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA16E5DA9C00000001",
+                "NFToken": {
+                  "NFTokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA16E5DA9C00000001",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA2DCBAB9D00000002",
+                "NFToken": {
+                  "NFTokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA2DCBAB9D00000002",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA44B17C9E00000003",
+                "NFToken": {
+                  "NFTokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA44B17C9E00000003",
                   "URI": "4E4654207374726573732074657374"
                 }
               },
               {
-                "NonFungibleToken": {
-                  "TokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA5B974D9F00000004",
+                "NFToken": {
+                  "NFTokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA5B974D9F00000004",
                   "URI": "4E4654207374726573732074657374"
                 }
               }
@@ -228,7 +228,7 @@
           "FinalFields": {
             "Flags": 1,
             "RootIndex": "EE0E9BB361864479727A95A6CB902C9FF048DB8B0360258A357479CA1F0E16BC",
-            "TokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000"
+            "NFTokenID": "00090001C0FE87162DAD000D42613DD2C14AFC7FB4DA10CA0000099B00000000"
           },
           "LedgerEntryType": "DirectoryNode",
           "LedgerIndex": "EE0E9BB361864479727A95A6CB902C9FF048DB8B0360258A357479CA1F0E16BC"

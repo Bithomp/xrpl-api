@@ -9,8 +9,8 @@ import { parseFlags, SortDirection } from "../common/utils";
 export interface NFTokenInterface {
   Flags: number;
   Issuer: string;
-  TokenID: string;
-  TokenTaxon: number;
+  NFTokenID: string;
+  NFTokenTaxon: number;
   TransferFee: number;
   Sequence: number;
 }
@@ -18,7 +18,7 @@ export interface NFTokenInterface {
 export interface AccountNFTokenInterface {
   Flags: number;
   Issuer: string;
-  TokenID: string;
+  NFTokenID: string;
   TokenTaxons: number;
   nft_serial: number;
 }
@@ -119,30 +119,30 @@ export function cipheredTaxon(tokenSeq: number, taxon: number) {
  * |
  * `---> Flags: 11 -> lsfBurnable, lsfOnlyXRP and lsfTransferable
  */
-export function parseNFTokenID(tokenID: string): NFTokenInterface | null {
-  if (typeof tokenID !== "string" || tokenID.length !== 64) {
+export function parseNFTokenID(nftokenID: string): NFTokenInterface | null {
+  if (typeof nftokenID !== "string" || nftokenID.length !== 64) {
     return null;
   }
 
-  const flags = new BigNumber(tokenID.slice(0, 4), 16).toNumber();
-  const transferFee = new BigNumber(tokenID.slice(4, 8), 16).toNumber();
-  const issuer = AddressCodec.encodeAccountID(Buffer.from(tokenID.slice(8, 48), "hex"));
-  const scrambledTaxon = new BigNumber(tokenID.slice(48, 56), 16).toNumber();
-  const sequence = new BigNumber(tokenID.slice(56, 64), 16).toNumber();
+  const flags = new BigNumber(nftokenID.slice(0, 4), 16).toNumber();
+  const transferFee = new BigNumber(nftokenID.slice(4, 8), 16).toNumber();
+  const issuer = AddressCodec.encodeAccountID(Buffer.from(nftokenID.slice(8, 48), "hex"));
+  const scrambledTaxon = new BigNumber(nftokenID.slice(48, 56), 16).toNumber();
+  const sequence = new BigNumber(nftokenID.slice(56, 64), 16).toNumber();
 
   return {
-    TokenID: tokenID,
+    NFTokenID: nftokenID,
     Flags: flags,
     TransferFee: transferFee,
     Issuer: issuer,
-    TokenTaxon: cipheredTaxon(sequence, scrambledTaxon),
+    NFTokenTaxon: cipheredTaxon(sequence, scrambledTaxon),
     Sequence: sequence,
   };
 }
 
 interface FormattedNFTokenBurn {
   account: string;
-  tokenID: string;
+  nftokenID: string;
 }
 
 export function parseNFTokenBurn(tx: any): FormattedNFTokenBurn {
@@ -150,12 +150,12 @@ export function parseNFTokenBurn(tx: any): FormattedNFTokenBurn {
 
   return removeUndefined({
     account: tx.Account,
-    tokenID: tx.TokenID,
+    nftokenID: tx.NFTokenID,
   });
 }
 
 interface FormattedNFTokenMint {
-  tokenTaxon: number;
+  nftokenTaxon: number;
   issuer?: string;
   transferFee?: number;
   uri?: string;
@@ -166,7 +166,7 @@ export function parseNFTokenMint(tx: any): FormattedNFTokenMint {
   assert.ok(tx.TransactionType === "NFTokenMint");
 
   return removeUndefined({
-    tokenTaxon: tx.TokenTaxon,
+    nftokenTaxon: tx.NFTokenTaxon,
     issuer: tx.Issuer,
     transferFee: tx.TransferFee,
     uri: tx.URI,
@@ -175,19 +175,19 @@ export function parseNFTokenMint(tx: any): FormattedNFTokenMint {
 }
 
 interface FormattedNFTokenCancelOffer {
-  tokenOffers: string[];
+  nftokenOffers: string[];
 }
 
 export function parseNFTokenCancelOffer(tx: any): FormattedNFTokenCancelOffer {
   assert.ok(tx.TransactionType === "NFTokenCancelOffer");
 
   return removeUndefined({
-    tokenOffers: tx.TokenOffers,
+    nftokenOffers: tx.NFTokenOffers,
   });
 }
 
 interface FormattedNFTokenCreateOffer {
-  tokenID: string;
+  nftokenID: string;
   amount: string;
   owner?: string;
   destination?: string;
@@ -199,7 +199,7 @@ export function parseNFTokenCreateOffer(tx: any): FormattedNFTokenCreateOffer {
   assert.ok(tx.TransactionType === "NFTokenCreateOffer");
 
   return removeUndefined({
-    tokenID: tx.TokenID,
+    nftokenID: tx.NFTokenID,
     amount: tx.Amount,
     owner: tx.Owner,
     destination: tx.Destination,
@@ -209,17 +209,17 @@ export function parseNFTokenCreateOffer(tx: any): FormattedNFTokenCreateOffer {
 }
 
 interface FormattedNFTokenAcceptOffer {
-  sellOffer?: string;
-  buyOffer?: string;
-  brokerFee?: string;
+  nftokenSellOffer?: string;
+  nftokenBuyOffer?: string;
+  nftokenBrokerFee?: string;
 }
 
 export function parseNFTokenAcceptOffer(tx: any): FormattedNFTokenAcceptOffer {
   assert.ok(tx.TransactionType === "NFTokenAcceptOffer");
 
   return removeUndefined({
-    sellOffer: tx.SellOffer,
-    buyOffer: tx.BuyOffer,
-    brokerFee: tx.BrokerFee,
+    nftokenSellOffer: tx.NFTokenSellOffer,
+    nftokenBuyOffer: tx.NFTokenBuyOffer,
+    nftokenBrokerFee: tx.NFTokenBrokerFee,
   });
 }

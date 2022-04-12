@@ -29,8 +29,8 @@ function parseFields(data: any): object {
     settings.regularKey = data.RegularKey
   }
 
-  if (data.Minter) {
-    settings.minter = data.Minter;
+  if (data.NFTokenMinter) {
+    settings.nftokenMinter = data.NFTokenMinter;
   }
 
   // Since an account can own at most one SignerList,
