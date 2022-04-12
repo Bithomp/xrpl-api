@@ -94,7 +94,7 @@ export interface GetAccountNftSellOffersOptions {
  * @exception {Error}
  */
 export async function getAccountNftSellOffers(
-  nft_id: string,
+  nftID: string,
   options: GetAccountNftSellOffersOptions = {}
 ): Promise<object[] | object | null> {
   const connection: any = Client.findConnection();
@@ -105,7 +105,7 @@ export async function getAccountNftSellOffers(
   await connection.connect();
   const response = await connection.request({
     command: "nft_sell_offers",
-    nft_id,
+    nft_id: nftID,
     ledger_index: options.ledgerIndex || "validated",
   });
 
@@ -117,7 +117,7 @@ export async function getAccountNftSellOffers(
     const { error, error_code, error_message, status, validated } = response;
 
     return {
-      nft_id,
+      nft_id: nftID,
       error,
       error_code,
       error_message,
@@ -152,7 +152,7 @@ export interface GetAccountNftBuyOffersOptions {
  * @exception {Error}
  */
 export async function getAccountNftBuyOffers(
-  nft_id: string,
+  nftID: string,
   options: GetAccountNftBuyOffersOptions = {}
 ): Promise<object[] | object | null> {
   const connection: any = Client.findConnection();
@@ -163,7 +163,7 @@ export async function getAccountNftBuyOffers(
   await connection.connect();
   const response = await connection.request({
     command: "nft_buy_offers",
-    nft_id,
+    nft_id: nftID,
     ledger_index: options.ledgerIndex || "validated",
   });
 
@@ -175,7 +175,7 @@ export async function getAccountNftBuyOffers(
     const { error, error_code, error_message, status, validated } = response;
 
     return {
-      nft_id,
+      nft_id: nftID,
       error,
       error_code,
       error_message,
