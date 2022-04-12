@@ -1,10 +1,10 @@
 import { removeUndefined } from "../../v1/common";
 
-export function parseNonFungibleTokenOfferChanges(tx: object): object {
-  return new NonFungibleTokenOfferChanges(tx).call();
+export function parseNFTokenOfferChanges(tx: object): object {
+  return new NFTokenOfferChanges(tx).call();
 }
 
-class NonFungibleTokenOfferChanges {
+class NFTokenOfferChanges {
   public readonly tx: any;
   public readonly changes: any;
 

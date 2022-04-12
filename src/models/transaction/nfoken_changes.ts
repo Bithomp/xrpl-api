@@ -2,8 +2,8 @@ import * as _ from "lodash";
 import AddressCodec = require("ripple-address-codec");
 import { removeUndefined } from "../../v1/common";
 
-export function parseNonFungibleTokenChanges(tx: object): object {
-  return new NonFungibleTokenChanges(tx).call();
+export function parseNFTokenChanges(tx: object): object {
+  return new NFTokenChanges(tx).call();
 }
 
 interface AccountNFTockenChangesInterface {
@@ -12,19 +12,19 @@ interface AccountNFTockenChangesInterface {
   uri?: string;
 }
 
-class NonFungibleTokenChanges {
+class NFTokenChanges {
   public readonly tx: any;
   public readonly changes: any;
   private readonly affectedAccounts: string[];
-  private readonly finalNonFungibleTokens: any;
-  private readonly previousNonFungibleTokens: any;
+  private readonly finalNFTokens: any;
+  private readonly previousNFTokens: any;
 
   public constructor(tx: any) {
     this.tx = tx;
     this.changes = {};
     this.affectedAccounts = [];
-    this.finalNonFungibleTokens = {};
-    this.previousNonFungibleTokens = {};
+    this.finalNFTokens = {};
+    this.previousNFTokens = {};
   }
 
   public call(): any {
@@ -33,7 +33,7 @@ class NonFungibleTokenChanges {
     }
 
     this.parseAffectedNodes();
-    this.parseNonFungibleTokensChanges();
+    this.parseNFTokensChanges();
 
     return this.changes;
   }
@@ -69,58 +69,58 @@ class NonFungibleTokenChanges {
         }
 
         if (affectedNode.CreatedNode) {
-          this.parseFinalNonFungibleTokens(account, node.NewFields?.NFTokens);
+          this.parseFinalNFTokens(account, node.NewFields?.NFTokens);
         }
 
         if (
           (affectedNode.ModifiedNode || affectedNode.DeletedNode) &&
           Array.isArray(node.PreviousFields?.NFTokens)
         ) {
-          this.parseFinalNonFungibleTokens(account, node.FinalFields?.NFTokens);
-          this.parsePreviousNonFungibleTokens(account, node.PreviousFields?.NFTokens);
+          this.parseFinalNFTokens(account, node.FinalFields?.NFTokens);
+          this.parsePreviousNFTokens(account, node.PreviousFields?.NFTokens);
         }
 
         if (affectedNode.DeletedNode && node.PreviousFields === undefined) {
-          this.parsePreviousNonFungibleTokens(account, node.FinalFields?.NFTokens);
+          this.parsePreviousNFTokens(account, node.FinalFields?.NFTokens);
         }
       }
     }
   }
 
-  private parseFinalNonFungibleTokens(account: string, nonFungibleTokens: any): void {
-    if (this.finalNonFungibleTokens[account] === undefined) {
-      this.finalNonFungibleTokens[account] = [];
+  private parseFinalNFTokens(account: string, NFTokens: any): void {
+    if (this.finalNFTokens[account] === undefined) {
+      this.finalNFTokens[account] = [];
     }
 
-    if (Array.isArray(nonFungibleTokens)) {
-      this.finalNonFungibleTokens[account] = _.concat(this.finalNonFungibleTokens[account], nonFungibleTokens);
-    }
-  }
-
-  private parsePreviousNonFungibleTokens(account: string, nonFungibleTokens: any): void {
-    if (this.previousNonFungibleTokens[account] === undefined) {
-      this.previousNonFungibleTokens[account] = [];
-    }
-
-    if (Array.isArray(nonFungibleTokens)) {
-      this.previousNonFungibleTokens[account] = _.concat(this.previousNonFungibleTokens[account], nonFungibleTokens);
+    if (Array.isArray(NFTokens)) {
+      this.finalNFTokens[account] = _.concat(this.finalNFTokens[account], NFTokens);
     }
   }
 
-  private parseNonFungibleTokensChanges(): void {
+  private parsePreviousNFTokens(account: string, NFTokens: any): void {
+    if (this.previousNFTokens[account] === undefined) {
+      this.previousNFTokens[account] = [];
+    }
+
+    if (Array.isArray(NFTokens)) {
+      this.previousNFTokens[account] = _.concat(this.previousNFTokens[account], NFTokens);
+    }
+  }
+
+  private parseNFTokensChanges(): void {
     for (const account of this.affectedAccounts) {
       let finalTokens: string[] = [];
-      if (Array.isArray(this.finalNonFungibleTokens[account])) {
-        finalTokens = this.finalNonFungibleTokens[account].map(
-          (nonFungibleToken: any) => nonFungibleToken.NFToken.NFTokenID
+      if (Array.isArray(this.finalNFTokens[account])) {
+        finalTokens = this.finalNFTokens[account].map(
+          (NFToken: any) => NFToken.NFToken.NFTokenID
         );
         finalTokens = [...new Set(finalTokens)];
       }
 
       let previousTokens: string[] = [];
-      if (Array.isArray(this.previousNonFungibleTokens[account])) {
-        previousTokens = this.previousNonFungibleTokens[account].map(
-          (nonFungibleToken: any) => nonFungibleToken.NFToken.NFTokenID
+      if (Array.isArray(this.previousNFTokens[account])) {
+        previousTokens = this.previousNFTokens[account].map(
+          (NFToken: any) => NFToken.NFToken.NFTokenID
         );
         previousTokens = [...new Set(previousTokens)];
       }

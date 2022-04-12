@@ -209,10 +209,10 @@ describe("Models", () => {
     });
   });
 
-  describe("parseNonFungibleTokenChanges", () => {
+  describe("parseNFTokenChanges", () => {
     it("NFTokenMint", function () {
       const tx = require("../examples/responses/NFTokenMint.json");
-      const result: any = Models.parseNonFungibleTokenChanges(tx);
+      const result: any = Models.parseNFTokenChanges(tx);
 
       expect(result).to.eql({
         r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
@@ -227,7 +227,7 @@ describe("Models", () => {
 
     it("NFTokenMint2", function () {
       const tx = require("../examples/responses/NFTokenMint2.json");
-      const result: any = Models.parseNonFungibleTokenChanges(tx);
+      const result: any = Models.parseNFTokenChanges(tx);
 
       expect(result).to.eql({
         rESS19Edm58UGdnJq1ZYmVRbQJ2MYtYrR6: [
@@ -242,7 +242,7 @@ describe("Models", () => {
 
     it("NFTokenBurn", function () {
       const tx = require("../examples/responses/NFTokenBurn.json");
-      const result: any = Models.parseNonFungibleTokenChanges(tx);
+      const result: any = Models.parseNFTokenChanges(tx);
 
       expect(result).to.eql({
         r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
@@ -257,7 +257,7 @@ describe("Models", () => {
 
     it("NFTokenAcceptOfferSell", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferSell.json");
-      const result: any = Models.parseNonFungibleTokenChanges(tx);
+      const result: any = Models.parseNFTokenChanges(tx);
 
       expect(result).to.eql({
         rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
@@ -279,7 +279,7 @@ describe("Models", () => {
 
     it("NFTokenAcceptOfferSell2", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferSell2.json");
-      const result: any = Models.parseNonFungibleTokenChanges(tx);
+      const result: any = Models.parseNFTokenChanges(tx);
 
       expect(result).to.eql({
         rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg: [
@@ -301,7 +301,7 @@ describe("Models", () => {
 
     it("NFTokenAcceptOfferBuy with creation", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy.json");
-      const result: any = Models.parseNonFungibleTokenChanges(tx);
+      const result: any = Models.parseNFTokenChanges(tx);
 
       expect(result).to.eql({
         rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz: [
@@ -323,7 +323,7 @@ describe("Models", () => {
 
     it("NFTokenAcceptOfferBuy with modification", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy2.json");
-      const result: any = Models.parseNonFungibleTokenChanges(tx);
+      const result: any = Models.parseNFTokenChanges(tx);
 
       expect(result).to.eql({
         rJbTejsLuGzyrQ9Hq2s8RX47gPQuCoZQCw: [
@@ -345,7 +345,7 @@ describe("Models", () => {
 
     it("NFTokenAcceptOfferBuy multipages", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy3.json");
-      const result: any = Models.parseNonFungibleTokenChanges(tx);
+      const result: any = Models.parseNFTokenChanges(tx);
 
       expect(result).to.eql({
         r4K2ggLxfX8vp5vEi3sDEeAQg3PGEH84WV: [
@@ -367,7 +367,7 @@ describe("Models", () => {
 
     it("NFTokenAcceptOfferBuy multipages", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy4.json");
-      const result: any = Models.parseNonFungibleTokenChanges(tx);
+      const result: any = Models.parseNFTokenChanges(tx);
 
       expect(result).to.eql({
         rQrTtbNKcNW8occaRaVB3vreqJSKZDynnq: [
@@ -389,44 +389,44 @@ describe("Models", () => {
 
     it("NFTokenCreateOfferSell", function () {
       const tx = require("../examples/responses/NFTokenCreateOfferSell.json");
-      const result: any = Models.parseNonFungibleTokenChanges(tx);
+      const result: any = Models.parseNFTokenChanges(tx);
 
       expect(result).to.eql({});
     });
 
     it("NFTokenCreateOfferBuy", function () {
       const tx = require("../examples/responses/NFTokenCreateOfferBuy.json");
-      const result: any = Models.parseNonFungibleTokenChanges(tx);
+      const result: any = Models.parseNFTokenChanges(tx);
 
       expect(result).to.eql({});
     });
 
     it("NFTokenCancelOffer", function () {
       const tx = require("../examples/responses/NFTokenCancelOffer.json");
-      const result: any = Models.parseNonFungibleTokenChanges(tx);
+      const result: any = Models.parseNFTokenChanges(tx);
 
       expect(result).to.eql({});
     });
   });
 
-  describe("parseNonFungibleTokenOfferChanges", () => {
+  describe("parseNFTokenOfferChanges", () => {
     it("NFTokenMint", function () {
       const tx = require("../examples/responses/NFTokenMint.json");
-      const result: any = Models.parseNonFungibleTokenOfferChanges(tx);
+      const result: any = Models.parseNFTokenOfferChanges(tx);
 
       expect(result).to.eql({});
     });
 
     it("NFTokenBurn", function () {
       const tx = require("../examples/responses/NFTokenBurn.json");
-      const result: any = Models.parseNonFungibleTokenOfferChanges(tx);
+      const result: any = Models.parseNFTokenOfferChanges(tx);
 
       expect(result).to.eql({});
     });
 
     it("NFTokenCancelOffer", function () {
       const tx = require("../examples/responses/NFTokenCancelOffer.json");
-      const result: any = Models.parseNonFungibleTokenOfferChanges(tx);
+      const result: any = Models.parseNFTokenOfferChanges(tx);
 
       expect(result).to.eql({
         r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
@@ -444,7 +444,7 @@ describe("Models", () => {
 
     it("NFTokenCreateOfferSell", function () {
       const tx = require("../examples/responses/NFTokenCreateOfferSell.json");
-      const result: any = Models.parseNonFungibleTokenOfferChanges(tx);
+      const result: any = Models.parseNFTokenOfferChanges(tx);
 
       expect(result).to.eql({
         r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
@@ -462,7 +462,7 @@ describe("Models", () => {
 
     it("NFTokenCreateOfferBuy", function () {
       const tx = require("../examples/responses/NFTokenCreateOfferBuy.json");
-      const result: any = Models.parseNonFungibleTokenOfferChanges(tx);
+      const result: any = Models.parseNFTokenOfferChanges(tx);
 
       expect(result).to.eql({
         rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
@@ -479,7 +479,7 @@ describe("Models", () => {
 
     it("NFTokenAcceptOfferSell", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferSell.json");
-      const result: any = Models.parseNonFungibleTokenOfferChanges(tx);
+      const result: any = Models.parseNFTokenOfferChanges(tx);
 
       expect(result).to.eql({
         r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
@@ -497,7 +497,7 @@ describe("Models", () => {
 
     it("NFTokenAcceptOfferBuy", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy.json");
-      const result: any = Models.parseNonFungibleTokenOfferChanges(tx);
+      const result: any = Models.parseNFTokenOfferChanges(tx);
 
       expect(result).to.eql({
         rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [

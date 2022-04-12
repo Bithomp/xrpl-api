@@ -15,7 +15,7 @@ describe("Models", () => {
           fee: "0.000012",
           indexInLedger: 0,
           ledgerVersion: 1309371,
-          nonFungibleTokenChanges: {
+          nftokenChanges: {
             r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
               {
                 status: "added",
@@ -24,7 +24,7 @@ describe("Models", () => {
               },
             ],
           },
-          nonFungibleTokenOfferChanges: {},
+          nftokenOfferChanges: {},
           orderbookChanges: {},
           result: "tesSUCCESS",
           timestamp: "2022-03-01T08:54:42.000Z",
@@ -59,7 +59,7 @@ describe("Models", () => {
           fee: "0.000012",
           indexInLedger: 0,
           ledgerVersion: 75445,
-          nonFungibleTokenChanges: {
+          nftokenChanges: {
             rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz: [
               {
                 status: "removed",
@@ -75,7 +75,7 @@ describe("Models", () => {
               },
             ],
           },
-          nonFungibleTokenOfferChanges: {
+          nftokenOfferChanges: {
             rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
               {
                 owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
@@ -111,7 +111,7 @@ describe("Models", () => {
           fee: "0.000012",
           indexInLedger: 0,
           ledgerVersion: 1310248,
-          nonFungibleTokenChanges: {
+          nftokenChanges: {
             r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
               {
                 status: "removed",
@@ -127,7 +127,7 @@ describe("Models", () => {
               },
             ],
           },
-          nonFungibleTokenOfferChanges: {
+          nftokenOfferChanges: {
             r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
               {
                 owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
@@ -170,7 +170,7 @@ describe("Models", () => {
           fee: "0.000012",
           balanceChanges: { r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [{ currency: "XRP", value: "-0.000012" }] },
           orderbookChanges: {},
-          nonFungibleTokenChanges: {
+          nftokenChanges: {
             r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
               {
                 status: "removed",
@@ -179,7 +179,7 @@ describe("Models", () => {
               },
             ],
           },
-          nonFungibleTokenOfferChanges: {},
+          nftokenOfferChanges: {},
           ledgerVersion: 1310364,
           indexInLedger: 0,
         },
@@ -207,8 +207,8 @@ describe("Models", () => {
           fee: "0.000012",
           balanceChanges: { rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [{ currency: "XRP", value: "-0.000012" }] },
           orderbookChanges: {},
-          nonFungibleTokenChanges: {},
-          nonFungibleTokenOfferChanges: {
+          nftokenChanges: {},
+          nftokenOfferChanges: {
             rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
               {
                 status: "created",
@@ -241,8 +241,8 @@ describe("Models", () => {
           fee: "0.000012",
           balanceChanges: { r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [{ currency: "XRP", value: "-0.000012" }] },
           orderbookChanges: {},
-          nonFungibleTokenChanges: {},
-          nonFungibleTokenOfferChanges: {
+          nftokenChanges: {},
+          nftokenOfferChanges: {
             r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
               {
                 status: "deleted",
@@ -279,8 +279,8 @@ describe("Models", () => {
           fee: "0.000015",
           indexInLedger: 0,
           ledgerVersion: 44093,
-          nonFungibleTokenChanges: {},
-          nonFungibleTokenOfferChanges: {},
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
           orderbookChanges: {},
           result: "tesSUCCESS",
           timestamp: "2022-03-03T12:47:41.000Z",
@@ -340,8 +340,8 @@ describe("Models", () => {
           fee: "0.01",
           indexInLedger: 7,
           ledgerVersion: 62799452,
-          nonFungibleTokenChanges: {},
-          nonFungibleTokenOfferChanges: {},
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
           orderbookChanges: {
             rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z: [
               {
@@ -416,8 +416,8 @@ describe("Models", () => {
             channelAmountDrops: "1000",
             channelBalanceDrops: "0",
           },
-          nonFungibleTokenChanges: {},
-          nonFungibleTokenOfferChanges: {},
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
           ledgerVersion: 61965340,
           indexInLedger: 0,
         },
@@ -438,7 +438,7 @@ describe("Models", () => {
           fee: "0.0001",
           indexInLedger: 0,
           ledgerVersion: 593274,
-          nonFungibleTokenChanges: {
+          nftokenChanges: {
             rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy: [
               {
                 status: "added",
@@ -447,7 +447,7 @@ describe("Models", () => {
               },
             ],
           },
-          nonFungibleTokenOfferChanges: {},
+          nftokenOfferChanges: {},
           orderbookChanges: {},
           result: "tesSUCCESS",
         },

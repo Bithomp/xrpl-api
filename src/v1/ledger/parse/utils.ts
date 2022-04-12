@@ -8,8 +8,8 @@ import {
   parseBalanceChanges,
   parseChannelChanges,
   parseOrderbookChanges,
-  parseNonFungibleTokenChanges,
-  parseNonFungibleTokenOfferChanges,
+  parseNFTokenChanges,
+  parseNFTokenOfferChanges,
 } from "../../../models/transaction";
 
 type OfferDescription = {
@@ -137,8 +137,8 @@ function parseOutcome(tx: any): any | undefined {
   const balanceChanges = parseBalanceChanges(metadata)
   const orderbookChanges = parseOrderbookChanges(metadata)
   const channelChanges = parseChannelChanges(metadata)
-  const nonFungibleTokenChanges = parseNonFungibleTokenChanges(tx);
-  const nonFungibleTokenOfferChanges = parseNonFungibleTokenOfferChanges(tx);
+  const nftokenChanges = parseNFTokenChanges(tx);
+  const nftokenOfferChanges = parseNFTokenOfferChanges(tx);
 
   removeEmptyCounterpartyInBalanceChanges(balanceChanges)
   removeEmptyCounterpartyInOrderbookChanges(orderbookChanges)
@@ -150,8 +150,8 @@ function parseOutcome(tx: any): any | undefined {
     balanceChanges,
     orderbookChanges,
     channelChanges,
-    nonFungibleTokenChanges,
-    nonFungibleTokenOfferChanges,
+    nftokenChanges,
+    nftokenOfferChanges,
     ledgerVersion: tx.ledger_index,
     indexInLedger: tx.meta.TransactionIndex,
     deliveredAmount: parseDeliveredAmount(tx)
