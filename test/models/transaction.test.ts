@@ -287,7 +287,7 @@ describe("Models", () => {
         },
         sequence: 42030,
         specification: {
-          minter: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+          nftokenMinter: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
         },
         type: "settings",
       });
