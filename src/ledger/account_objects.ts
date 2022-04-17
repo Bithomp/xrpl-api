@@ -1,11 +1,7 @@
-import { LedgerEntry } from "xrpl";
 import * as Client from "../client";
 
-import { Trustline } from "../models/trustline";
-import { AccountObject, AccountObjectType } from "../models/account_object";
+import { AccountObjectType, accountObjectsToAccountLines } from "../models/account_object";
 import { LedgerIndex } from "../models/ledger_index";
-
-const { RippleStateFlags } = LedgerEntry;
 
 export interface GetAccountObjectsOptions {
   type?: AccountObjectType;
@@ -134,63 +130,5 @@ export async function getAccountLinesObjects(
     return accountObjects;
   }
 
-  return accountObjectsToAccountLines(account, accountObjects, false);
-}
-
-/**
- * https://gist.github.com/WietseWind/5df413334385367c548a148de3d8a713
- *
- * This function returns account_lines line results
- * based on account_objects (type = state) results,
- * » Returns only the account_lines to show based on:
- *   - Counts towards your reserve
- */
-export function accountObjectsToAccountLines(
-  account: string,
-  accountObjects: AccountObject[],
-  suppressIncoming: boolean
-) {
-  const notInDefaultState = accountObjects.filter((obj: any) => {
-    return (
-      obj.HighLimit &&
-      obj.LowLimit &&
-      // tslint:disable-next-line:no-bitwise
-      obj.Flags & RippleStateFlags[obj.HighLimit.issuer === account ? "lsfHighReserve" : "lsfLowReserve"]
-    );
-  });
-
-  const accountLinesFormatted: Trustline[] = notInDefaultState.map((obj: any) => {
-    const parties = [obj.HighLimit, obj.LowLimit];
-    const [self, counterparty] = obj.HighLimit.issuer === account ? parties : parties.reverse();
-
-    const ripplingFlags = [
-      // tslint:disable-next-line:no-bitwise
-      (RippleStateFlags.lsfHighNoRipple & obj.Flags) === RippleStateFlags.lsfHighNoRipple,
-      // tslint:disable-next-line:no-bitwise
-      (RippleStateFlags.lsfLowNoRipple & obj.Flags) === RippleStateFlags.lsfLowNoRipple,
-    ];
-    // tslint:disable-next-line:variable-name
-    const [no_ripple, no_ripple_peer] = obj.HighLimit.issuer === account ? ripplingFlags : ripplingFlags.reverse();
-
-    const balance = obj.Balance.value === "0" ? obj.Balance.value : obj.Balance.value.slice(1);
-
-    return {
-      account: counterparty.issuer,
-      balance,
-      currency: self.currency,
-      limit: self.value,
-      limit_peer: counterparty.value,
-      no_ripple,
-      no_ripple_peer,
-    } as Trustline;
-  });
-
-  return accountLinesFormatted.filter((line: Trustline) => {
-    if (suppressIncoming) {
-      if (line.limit === "0" && (line.balance === "0" || line.balance.slice(0, 1) === "-")) {
-        return false;
-      }
-    }
-    return true;
-  });
+  return accountObjectsToAccountLines(account, accountObjects);
 }
