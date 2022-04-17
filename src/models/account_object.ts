@@ -30,7 +30,6 @@ export type AccountObjectType = "check" | "escrow" | "offer" | "payment_channel"
  *   - Counts towards your reserve
  */
 export function accountObjectsToAccountLines(account: string, accountObjects: AccountObject[]) {
-  // console.log(JSON.stringify(accountObjects));
   const notInDefaultState = accountObjects.filter((obj: any) => {
     return (
       obj.HighLimit &&

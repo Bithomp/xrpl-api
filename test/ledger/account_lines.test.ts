@@ -11,6 +11,7 @@ describe("Client", () => {
 
     it("works", async function () {
       const result: any = await Client.getAccountLines("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+      expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "lines", "validated"]);
       expect(result.lines).to.eql([
         {
           account: "rNTvdxPWujQn2sUXYBGxmWrGe4ethkLyhb",
