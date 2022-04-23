@@ -304,7 +304,7 @@ class Connection extends EventEmitter {
   }
 
   private async subscribeStreams(addStreams?: StreamType[]): Promise<Response | any> {
-    const streams: StreamType[] = addStreams || (Object.keys(this.streams) as StreamType[]);
+    let streams: StreamType[] = addStreams || (Object.keys(this.streams) as StreamType[]);
 
     // subscribed and no need to subscribe to new streams
     if (this.streamsSubscribed === true && addStreams === undefined) {
@@ -313,6 +313,8 @@ class Connection extends EventEmitter {
 
     if (addStreams === undefined) {
       this.streamsSubscribed = true;
+    } else if (this.streamsSubscribed === false) {
+      streams = Object.keys(this.streams) as StreamType[];
     }
 
     const result = await this.request({ command: "subscribe", streams }, { skip_streams_update: true });

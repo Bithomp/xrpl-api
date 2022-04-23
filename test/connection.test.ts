@@ -21,7 +21,7 @@ describe("Connection", () => {
 
   describe("request", () => {
     it("can receive ledger", function (done) {
-      this.timeout(15000);
+      this.timeout(10000);
       expect(connection.streams).to.eql({ ledger: 1 });
 
       connection.once("ledgerClosed", (ledgerStream) => {
@@ -63,7 +63,7 @@ describe("Connection", () => {
     });
 
     it("can subscribe and receive transaction", function (done) {
-      this.timeout(15000);
+      this.timeout(10000);
       expect(connection.streams).to.eql({ ledger: 1 });
 
       connection.request({
