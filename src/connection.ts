@@ -350,6 +350,9 @@ class Connection extends EventEmitter {
     }
 
     if (!this.shotdown) {
+      if (this.streamsSubscribed === false) {
+        this.subscribeStreams();
+      }
       this.connectionTimer = setTimeout(() => {
         this.connectionValidationTimeout();
       }, LEDGER_CLOSED_TIMEOUT);

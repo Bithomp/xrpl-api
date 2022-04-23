@@ -78,5 +78,30 @@ describe("Connection", () => {
         done();
       });
     });
+
+    it("can subscribe and unsubscribe not receive any transaction after", function (done) {
+      this.timeout(15000);
+      expect(connection.streams).to.eql({ ledger: 1 });
+
+      connection.request({
+        command: "subscribe",
+        streams: ["transactions"],
+      });
+
+      expect(connection.streams).to.eql({ ledger: 1, transactions: 1 });
+
+      connection.request({
+        command: "unsubscribe",
+        streams: ["transactions"],
+      });
+
+      expect(connection.streams).to.eql({ ledger: 1 });
+
+      connection.once("transaction", (transactionStream) => {
+        expect(transactionStream.type).not.to.eq("transaction");
+      });
+
+      setTimeout(done, 10000);
+    });
   });
 });
