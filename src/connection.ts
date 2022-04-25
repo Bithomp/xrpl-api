@@ -193,7 +193,7 @@ class Connection extends EventEmitter {
     this.client.on("connected", () => {
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
-        function: "connected",
+        emit: "connected",
         url: this.url,
       });
 
@@ -203,19 +203,11 @@ class Connection extends EventEmitter {
     this.client.on("disconnected", () => {
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
-        function: "disconnected",
+        emit: "disconnected",
         url: this.url,
       });
 
-      try {
-        this.reconnect();
-      } catch (e: any) {
-        this.logger?.warn({
-          service: "Bithomp::XRPL::Connection",
-          emit: "disconnected",
-          error: e.message,
-        });
-      }
+      this.streamsSubscribed = false;
 
       this.emit("disconnected");
     });
@@ -223,7 +215,7 @@ class Connection extends EventEmitter {
     this.client.on("error", (e) => {
       this.logger?.error({
         service: "Bithomp::XRPL::Connection",
-        function: "error",
+        emit: "error",
         error: e.message || e.name || e,
       });
 
