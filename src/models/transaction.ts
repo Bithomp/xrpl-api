@@ -16,29 +16,38 @@ export function getAccountTxDetails(transaction: any, includeRawTransaction: boo
   return getTxDetails(AccountTxToTx(transaction), includeRawTransaction);
 }
 
-export function getLedgerTxDetails(transaction: any, ledgerIndex: number, includeRawTransaction: boolean): any {
-  return getTxDetails(LedgerTxToTx(transaction, ledgerIndex), includeRawTransaction);
+export function getLedgerTxDetails(
+  transaction: any,
+  ledgerIndex: number,
+  closeTime: number,
+  includeRawTransaction: boolean
+): any {
+  return getTxDetails(LedgerTxToTx(transaction, ledgerIndex, closeTime), includeRawTransaction);
 }
 
-export function getStreamTxDetails(transaction: any, ledgerIndex: number, includeRawTransaction: boolean): any {
-  return getTxDetails(StreamTxToTx(transaction, ledgerIndex), includeRawTransaction);
+export function getStreamTxDetails(transaction: any, includeRawTransaction: boolean): any {
+  return getTxDetails(StreamTxToTx(transaction), includeRawTransaction);
 }
 
 export function AccountTxToTx(transaction: any): any {
   return Object.assign({}, transaction.tx, { meta: transaction.meta, validated: transaction.validated });
 }
 
-export function LedgerTxToTx(transaction: any, ledgerIndex: number): any {
-  return Object.assign({}, _.omit(transaction, "metaData"), {
+export function LedgerTxToTx(transaction: any, ledgerIndex: number, closeTime: number): any {
+  const tx = Object.assign({}, _.omit(transaction, "metaData"), {
+    date: closeTime,
+  });
+
+  return Object.assign({}, tx, {
     meta: transaction.metaData,
     ledger_index: ledgerIndex,
   });
 }
 
-export function StreamTxToTx(transaction: any, ledgerIndex: number): any {
+export function StreamTxToTx(transaction: any): any {
   return Object.assign({}, transaction.transaction, {
     meta: transaction.meta,
-    ledger_index: ledgerIndex,
+    ledger_index: transaction.ledger_index,
     validated: transaction.validated,
   });
 }

@@ -26,6 +26,7 @@ describe("Client", () => {
         delete result.info.published_ledger;
         delete result.info.reporting;
         delete result.info.fetch_pack;
+        delete result.info.load_factor_server;
         expect(Object.keys(result.info)).to.eql([
           "build_version",
           "complete_ledgers",
@@ -56,6 +57,7 @@ describe("Client", () => {
         delete result.info.published_ledger;
         delete result.info.reporting;
         delete result.info.fetch_pack;
+        delete result.info.load_factor_server;
         expect(Object.keys(result.info)).to.eql([
           "build_version",
           "complete_ledgers",

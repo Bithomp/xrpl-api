@@ -428,12 +428,14 @@ describe("Models", () => {
   describe("getLedgerTxDetails", () => {
     it("NFTokenMint from ledger history", function () {
       const tx = require("../examples/responses/LedgerNFTokenMint.json");
-      const result: any = Models.getLedgerTxDetails(tx, 593274, false);
+      const result: any = Models.getLedgerTxDetails(tx, 593274, 701280821, false);
 
       expect(result).to.eql({
         address: "rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy",
         id: "1618B0147FC0F56A33ACE7F06503D9A41A52E1E6BB024404C04354E40B633855",
         outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2022-03-22T16:13:41.000Z",
           balanceChanges: { rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy: [{ currency: "XRP", value: "-0.0001" }] },
           fee: "0.0001",
           indexInLedger: 0,
@@ -449,7 +451,6 @@ describe("Models", () => {
           },
           nftokenOfferChanges: {},
           orderbookChanges: {},
-          result: "tesSUCCESS",
         },
         sequence: 1238,
         specification: {
@@ -464,6 +465,79 @@ describe("Models", () => {
           uri: "6E6F736A2E3261356264383636326633332D646639622D333931342D326234302D65306530343133332F73617461646174656D74666E2F6C6169636F732E72656469762E76656474666E2E6E64632F2F3A7370747468",
         },
         type: "nftokenMint",
+      });
+    });
+  });
+
+  describe("getStreamTxDetails", () => {
+    it("works", function () {
+      const tx = require("../examples/responses/streamTransaction/E506D86886818A6F52DACE3753EB6824F1DADD5B3B1D39C7D98DA072D9B48AB3.json");
+      const result: any = Models.getStreamTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "payment",
+        address: "rULQj9eStEKAhF5qugaAwadh5enRwDyf1i",
+        sequence: 68840787,
+        id: "9BAFE443078D105AB49C2BF92D0DD04BF73DCC0ADF6CA67CE728CE762059E6B7",
+        specification: {
+          source: {
+            address: "rULQj9eStEKAhF5qugaAwadh5enRwDyf1i",
+            maxAmount: {
+              currency: "4C53474400000000000000000000000000000000",
+              value: "37907",
+              counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
+            },
+          },
+          destination: {
+            address: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V",
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2022-04-25T11:53:22.000Z",
+          fee: "0.00001",
+          balanceChanges: {
+            rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA: [
+              {
+                counterparty: "rULQj9eStEKAhF5qugaAwadh5enRwDyf1i",
+                currency: "4C53474400000000000000000000000000000000",
+                value: "37907",
+              },
+              {
+                counterparty: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V",
+                currency: "4C53474400000000000000000000000000000000",
+                value: "-37907",
+              },
+            ],
+            rULQj9eStEKAhF5qugaAwadh5enRwDyf1i: [
+              {
+                counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
+                currency: "4C53474400000000000000000000000000000000",
+                value: "-37907",
+              },
+              {
+                currency: "XRP",
+                value: "-0.00001",
+              },
+            ],
+            r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V: [
+              {
+                counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
+                currency: "4C53474400000000000000000000000000000000",
+                value: "37907",
+              },
+            ],
+          },
+          orderbookChanges: {},
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
+          ledgerVersion: 71226014,
+          indexInLedger: 92,
+          deliveredAmount: {
+            currency: "4C53474400000000000000000000000000000000",
+            value: "37907",
+            counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
+          },
+        },
       });
     });
   });

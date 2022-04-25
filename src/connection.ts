@@ -207,7 +207,15 @@ class Connection extends EventEmitter {
         url: this.url,
       });
 
-      this.reconnect();
+      try {
+        this.reconnect();
+      } catch (e: any) {
+        this.logger?.warn({
+          service: "Bithomp::XRPL::Connection",
+          emit: "disconnected",
+          error: e.message,
+        });
+      }
 
       this.emit("disconnected");
     });
