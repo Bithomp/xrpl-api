@@ -200,26 +200,28 @@ class Connection extends EventEmitter {
       this.emit("connected");
     });
 
-    this.client.on("disconnected", () => {
+    this.client.on("disconnected", (code) => {
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         emit: "disconnected",
+        code,
         url: this.url,
       });
 
       this.streamsSubscribed = false;
 
-      this.emit("disconnected");
+      this.emit("disconnected", code);
     });
 
-    this.client.on("error", (e) => {
+    this.client.on("error", (source, message, error) => {
       this.logger?.error({
         service: "Bithomp::XRPL::Connection",
         emit: "error",
-        error: e.message || e.name || e,
+        source,
+        error: message || error || error.name || error,
       });
 
-      this.emit("error", e);
+      this.emit("error", source, message, error);
     });
 
     this.client.on("ledgerClosed", (ledgerStream) => {
