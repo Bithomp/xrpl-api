@@ -1,5 +1,8 @@
+import * as _ from "lodash";
+import { EventEmitter } from "events";
 import { Client, Request, Response } from "xrpl";
 import { ledgerTimeToTimestamp } from "./ledger/ledger";
+import { StreamType } from "./models/ledger_index";
 
 const LEDGER_CLOSED_TIMEOUT = 1000 * 10; // 10 sec
 
@@ -12,7 +15,18 @@ export interface LatencyInfo {
   delta: number;
 }
 
-class Connection {
+export interface ConnectionStreamsInfo {
+  ledger: number;
+  consensus?: number;
+  manifests?: number;
+  peer_status?: number;
+  transactions?: number;
+  transactions_proposed?: number;
+  server?: number;
+  validations?: number;
+}
+
+class Connection extends EventEmitter {
   public readonly client: Client;
   public readonly url: string;
   public readonly type?: string;
@@ -21,8 +35,13 @@ class Connection {
   public readonly logger?: any;
   private shotdown: boolean = false;
   private connectionTimer: any = null;
+  public streams: ConnectionStreamsInfo;
+  private streamsSubscribed: boolean;
 
   public constructor(url: string, type?: string, options: ConnectionOptions = {}) {
+    super();
+
+    this.shotdown = false;
     this.url = url;
     this.type = type;
     if (typeof this.type === "string") {
@@ -34,6 +53,10 @@ class Connection {
     this.latency = [];
     this.client = new Client(url);
     this.logger = options.logger;
+    this.streams = {
+      ledger: 1,
+    };
+    this.streamsSubscribed = false;
 
     this.setupEmitter();
   }
@@ -41,7 +64,7 @@ class Connection {
   public async connect(): Promise<void> {
     try {
       await this.client.connect();
-      await this.subscribeClosedLedger();
+      await this.subscribeStreams();
     } catch (e: any) {
       this.logger?.warn({
         service: "Bithomp::XRPL::Connection",
@@ -57,12 +80,20 @@ class Connection {
   public async disconnect(): Promise<void> {
     this.shotdown = true;
 
-    await this.unsubscribeClosedLedger();
+    await this.unsubscribeStreams();
     await this.client.disconnect();
   }
 
-  public async request(request: Request): Promise<Response | any> {
+  public async request(request: Request, options?: any): Promise<Response | any> {
     try {
+      if (
+        options?.skip_streams_update !== true &&
+        (request.command === "subscribe" || request.command === "unsubscribe")
+      ) {
+        // we will send request from subscribeStreams and unsubscribeStreams
+        return this.updateSubscribedStreams(request);
+      }
+
       const startDate: Date = new Date();
       const response = await this.client.request(request);
       const endDate: Date = new Date();
@@ -139,6 +170,7 @@ class Connection {
     });
 
     if (!this.shotdown) {
+      this.emit("reconnect");
       try {
         if (this.isConnected()) {
           await this.client.disconnect();
@@ -164,6 +196,8 @@ class Connection {
         function: "connected",
         url: this.url,
       });
+
+      this.emit("connected");
     });
 
     this.client.on("disconnected", () => {
@@ -174,6 +208,18 @@ class Connection {
       });
 
       this.reconnect();
+
+      this.emit("disconnected");
+    });
+
+    this.client.on("error", (e) => {
+      this.logger?.error({
+        service: "Bithomp::XRPL::Connection",
+        function: "error",
+        error: e.message || e.name || e,
+      });
+
+      this.emit("error", e);
     });
 
     this.client.on("ledgerClosed", (ledgerStream) => {
@@ -186,29 +232,110 @@ class Connection {
       }
 
       this.connectionValidation();
+
+      this.emit("ledgerClosed", ledgerStream);
     });
 
-    this.client.on("error", (e) => {
-      this.logger?.error({
-        service: "Bithomp::XRPL::Connection",
-        function: "error",
-        error: e.message || e.name || e,
-      });
+    this.client.on("transaction", (transactionStream) => {
+      this.emit("transaction", transactionStream);
+    });
+
+    this.client.on("validationReceived", (validation) => {
+      this.emit("validationReceived", validation);
+    });
+
+    // this.client.on("manifestReceived", (manifest) => {
+    //   this.emit("manifestReceived", manifest);
+    // });
+
+    this.client.on("peerStatusChange", (status) => {
+      this.emit("peerStatusChange", status);
+    });
+
+    this.client.on("consensusPhase", (consensus) => {
+      this.emit("consensusPhase", consensus);
+    });
+
+    this.client.on("path_find", (path) => {
+      this.emit("path_find", path);
     });
   }
 
-  private async subscribeClosedLedger(): Promise<Response | any> {
-    return await this.request({
-      command: "subscribe",
-      streams: ["ledger"],
-    });
+  private async updateSubscribedStreams(request: any): Promise<Response | any> {
+    if (request.command === "subscribe") {
+      const addStreams: StreamType[] = [];
+
+      for (const stream of request.streams) {
+        if (this.streams[stream] === undefined) {
+          this.streams[stream] = 1;
+          addStreams.push(stream);
+        } else if (stream !== "ledger") {
+          this.streams[stream]++;
+        }
+      }
+
+      if (addStreams.length > 0) {
+        return await this.subscribeStreams(addStreams);
+      }
+    } else if (request.command === "unsubscribe") {
+      const removeStreams: StreamType[] = [];
+
+      for (const stream of request.streams) {
+        if (this.streams[stream] === undefined) {
+          continue;
+        }
+
+        if (stream !== "ledger") {
+          this.streams[stream]--;
+        }
+
+        if (this.streams[stream] === 0) {
+          removeStreams.push(stream);
+          delete this.streams[stream];
+        }
+      }
+
+      if (removeStreams.length > 0) {
+        return await this.unsubscribeStreams(removeStreams);
+      }
+    }
+
+    return null;
   }
 
-  private async unsubscribeClosedLedger(): Promise<Response | any> {
-    return await this.request({
-      command: "unsubscribe",
-      streams: ["ledger"],
-    });
+  private async subscribeStreams(addStreams?: StreamType[]): Promise<Response | any> {
+    let streams: StreamType[] = addStreams || (Object.keys(this.streams) as StreamType[]);
+
+    // subscribed and no need to subscribe to new streams
+    if (this.streamsSubscribed === true && addStreams === undefined) {
+      return null;
+    }
+
+    if (addStreams === undefined) {
+      this.streamsSubscribed = true;
+    } else if (this.streamsSubscribed === false) {
+      streams = Object.keys(this.streams) as StreamType[];
+    }
+
+    const result = await this.request({ command: "subscribe", streams }, { skip_streams_update: true });
+
+    // subscribtion failed
+    if (addStreams === undefined && !result.result) {
+      this.streamsSubscribed = false;
+    }
+
+    return result;
+  }
+
+  private async unsubscribeStreams(removeStreams?: StreamType[]): Promise<Response | any> {
+    const streams: StreamType[] = removeStreams || (Object.keys(this.streams) as StreamType[]);
+
+    // unsubsribed and no need to unsubscribe from new streams
+    if (removeStreams === undefined) {
+      this.streamsSubscribed = false;
+    }
+
+    return await this.request({ command: "unsubscribe", streams }, { skip_streams_update: true });
   }
 
   private connectionValidation(): void {
@@ -225,6 +352,9 @@ class Connection {
     }
 
     if (!this.shotdown) {
+      if (this.streamsSubscribed === false) {
+        this.subscribeStreams();
+      }
       this.connectionTimer = setTimeout(() => {
         this.connectionValidationTimeout();
       }, LEDGER_CLOSED_TIMEOUT);
