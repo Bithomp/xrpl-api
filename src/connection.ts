@@ -375,7 +375,17 @@ class Connection extends EventEmitter {
     this.connectionTimer = null;
 
     this.updateLatence(LEDGER_CLOSED_TIMEOUT);
-    await this.reconnect();
+    try {
+      await this.reconnect();
+    } catch (e: any) {
+      this.logger?.warn({
+        service: "Bithomp::XRPL::Connection",
+        function: "connectionValidationTimeout",
+        error: e.message,
+      });
+
+      this.connectionValidation();
+    }
   }
 }
 
