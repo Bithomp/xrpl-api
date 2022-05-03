@@ -31,7 +31,7 @@ export interface AccountNFTokenInterface {
  * issuer3 serial 1
  * issuer3 serial 56
  */
- export function sortHelperAccountNFToken(a: AccountNFTokenInterface, b: AccountNFTokenInterface): SortDirection {
+export function sortHelperAccountNFToken(a: AccountNFTokenInterface, b: AccountNFTokenInterface): SortDirection {
   const cmpIssuer = a.Issuer.localeCompare(b.Issuer);
   if (cmpIssuer !== 0) {
     return cmpIssuer as SortDirection;
@@ -72,7 +72,7 @@ export interface NFTokenOfferFlagsKeysInterface {
 }
 
 export const NFTokenOfferFlagsKeys = {
-  sellToken: NFTokenCreateOfferFlags.tfSellToken,
+  sellToken: NFTokenCreateOfferFlags.tfSellNFToken,
 };
 
 export function parseNFTOfferFlags(
