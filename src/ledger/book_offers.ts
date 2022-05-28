@@ -1,5 +1,5 @@
 import * as Client from "../client";
-import { LedgerIndex } from "../models/ledger_index";
+import { LedgerIndex } from "../models/ledger";
 import { OrderbookInfo, formatBidsAndAsks } from "../models/book_offers";
 import { TakerRequestAmount } from "../v1/common/types/objects/amounts";
 

@@ -1,8 +1,7 @@
 import * as _ from "lodash";
 import { EventEmitter } from "events";
 import { Client, Request, Response } from "xrpl";
-import { ledgerTimeToTimestamp } from "./ledger/ledger";
-import { StreamType } from "./models/ledger_index";
+import { StreamType, ledgerTimeToTimestamp } from "./models/ledger";
 
 const LEDGER_CLOSED_TIMEOUT = 1000 * 10; // 10 sec
 

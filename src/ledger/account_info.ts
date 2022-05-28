@@ -1,6 +1,6 @@
 import * as Client from "../client";
 import { Connection } from "../connection";
-import { LedgerIndex } from "../models/ledger_index";
+import { LedgerIndex } from "../models/ledger";
 
 export interface GetAccountInfoOptions {
   ledgerIndex?: LedgerIndex;

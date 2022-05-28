@@ -1,5 +1,5 @@
 import * as Client from "../client";
-import { LedgerIndex } from "../models/ledger_index";
+import { LedgerIndex } from "../models/ledger";
 
 export interface GetAccountLinesOptions {
   counterparty?: string;

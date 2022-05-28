@@ -1,7 +1,5 @@
 import * as Client from "../client";
-import { LedgerIndex } from "../models/ledger_index";
-
-const RIPPLE_UNIX_DIFF = 946684800;
+import { LedgerIndex } from "../models/ledger";
 
 export interface GetLedgerOptions {
   ledgerIndex?: LedgerIndex;
@@ -66,12 +64,4 @@ export async function getLedger(options: GetLedgerOptions = {}): Promise<object 
 
 export async function getLedgerIndex(options: GetLedgerOptions = {}): Promise<number> {
   return parseInt(((await Client.getLedger(options)) as any).ledger.ledger_index, 10);
-}
-
-export function ledgerTimeToUnixTime(ledgerTime: number): number {
-  return ledgerTime + RIPPLE_UNIX_DIFF;
-}
-
-export function ledgerTimeToTimestamp(ledgerTime: number): number {
-  return ledgerTimeToUnixTime(ledgerTime) * 1000;
 }

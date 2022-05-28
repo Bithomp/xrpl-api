@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import nconf from "nconf";
 import { expect } from "chai";
 import { Client, Wallet } from "../../src/index";
@@ -25,7 +26,7 @@ describe("Client", () => {
         const result: any = await Client.getBookOffers(taker, takerGets, takerPays);
         const offer = result.offers[0];
 
-        expect(Object.keys(offer)).to.eql([
+        expect(_.without(Object.keys(offer), "taker_gets_funded", "taker_pays_funded")).to.eql([
           "Account",
           "BookDirectory",
           "BookNode",

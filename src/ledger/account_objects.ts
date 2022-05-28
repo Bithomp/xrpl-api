@@ -1,7 +1,7 @@
 import * as Client from "../client";
 
 import { AccountObjectType, accountObjectsToAccountLines } from "../models/account_object";
-import { LedgerIndex } from "../models/ledger_index";
+import { LedgerIndex } from "../models/ledger";
 
 export interface GetAccountObjectsOptions {
   type?: AccountObjectType;
