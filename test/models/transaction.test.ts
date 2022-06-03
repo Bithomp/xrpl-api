@@ -191,7 +191,7 @@ describe("Models", () => {
       const result: any = Models.getTxDetails(tx, false);
 
       expect(result).to.eql({
-        type: "nftokenCreate",
+        type: "nftokenCreateOffer",
         address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
         sequence: 75150,
         id: "9009887ACAEA08E7DE821CF15C410670E8469A98695FC33DCB8A86096930A4AF",
@@ -230,7 +230,7 @@ describe("Models", () => {
       const result: any = Models.getTxDetails(tx, false);
 
       expect(result).to.eql({
-        type: "nftokenOffer",
+        type: "nftokenCancelOffer",
         address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
         sequence: 1309351,
         id: "B88123B63CF0FAD1549E17A50C2F51A6B6EB4ADFC85EEAEF1EDCFBA62E1A1882",

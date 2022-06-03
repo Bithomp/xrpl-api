@@ -52,8 +52,8 @@ const transactionTypeToType = {
 
   NFTokenBurn: 'nftokenBurn',
   NFTokenMint: 'nftokenMint',
-  NFTokenCancelOffer: 'nftokenOffer',
-  NFTokenCreateOffer: 'nftokenCreate',
+  NFTokenCancelOffer: 'nftokenCancelOffer',
+  NFTokenCreateOffer: 'nftokenCreateOffer',
   NFTokenAcceptOffer: 'nftokenAcceptOffer',
 
   EnableAmendment: 'amendment', // pseudo-transaction
@@ -85,8 +85,8 @@ const parserTypeFunc = {
 
   nftokenBurn: parseNFTokenBurn,
   nftokenMint: parseNFTokenMint,
-  nftokenOffer: parseNFTokenCancelOffer,
-  nftokenCreate: parseNFTokenCreateOffer,
+  nftokenCancelOffer: parseNFTokenCancelOffer,
+  nftokenCreateOffer: parseNFTokenCreateOffer,
   nftokenAcceptOffer: parseNFTokenAcceptOffer,
 
   amendment: parseAmendment, // pseudo-transaction
