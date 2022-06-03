@@ -29,6 +29,14 @@ describe("Client", () => {
           nft_serial: 2,
         },
         {
+          Flags: 11,
+          Issuer: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          NFTokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF44B17C9E00000003",
+          NFTokenTaxon: 0,
+          URI: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+          nft_serial: 3,
+        },
+        {
           Flags: 0,
           Issuer: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
           NFTokenID: "00000000DCBED2CF425AFDA5095FDD3633E5E89DE0D485D80000099B00000000",
