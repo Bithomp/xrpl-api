@@ -89,7 +89,7 @@ class Connection extends EventEmitter {
 
   public async request(request: Request, options?: any): Promise<Response | any> {
     try {
-      if (!this.client) {
+      if (!this.client || !this.isConnected()) {
         return { error: "Not connected" };
       }
 
@@ -127,7 +127,7 @@ class Connection extends EventEmitter {
 
   public async submit(transaction: string): Promise<Response | any> {
     try {
-      if (!this.client) {
+      if (!this.client || !this.isConnected()) {
         return { error: "No connection" };
       }
 
