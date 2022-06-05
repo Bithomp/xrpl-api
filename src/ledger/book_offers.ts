@@ -23,7 +23,6 @@ export async function getBookOffers(
     throw new Error("There is no connection");
   }
 
-  await connection.connect();
   const response = await connection.request({
     command: "book_offers",
     taker,

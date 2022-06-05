@@ -3,7 +3,7 @@ import { EventEmitter } from "events";
 import { Client, Request, Response } from "xrpl";
 import { StreamType, ledgerTimeToTimestamp } from "./models/ledger";
 
-const LEDGER_CLOSED_TIMEOUT = 1000 * 10; // 10 sec
+const LEDGER_CLOSED_TIMEOUT = 1000 * 15; // 15 sec
 
 export interface ConnectionOptions {
   logger?: any;
@@ -26,7 +26,7 @@ export interface ConnectionStreamsInfo {
 }
 
 class Connection extends EventEmitter {
-  public readonly client: Client;
+  private client?: Client | null;
   public readonly url: string;
   public readonly type?: string;
   public readonly types: string[];
@@ -50,18 +50,22 @@ class Connection extends EventEmitter {
     }
 
     this.latency = [];
-    this.client = new Client(url);
+    this.client = null;
     this.logger = options.logger;
     this.streams = {
       ledger: 1,
     };
     this.streamsSubscribed = false;
-
-    this.setupEmitter();
   }
 
   public async connect(): Promise<void> {
     try {
+      if (this.client) {
+        this.client.disconnect();
+      }
+      this.client = new Client(this.url);
+      this.setupEmitter();
+
       await this.client.connect();
       await this.subscribeStreams();
     } catch (e: any) {
@@ -80,11 +84,15 @@ class Connection extends EventEmitter {
     this.shotdown = true;
 
     await this.unsubscribeStreams();
-    await this.client.disconnect();
+    await this.client?.disconnect();
   }
 
   public async request(request: Request, options?: any): Promise<Response | any> {
     try {
+      if (!this.client || !this.isConnected()) {
+        return { error: "Not connected" };
+      }
+
       if (
         options?.skip_streams_update !== true &&
         (request.command === "subscribe" || request.command === "unsubscribe")
@@ -119,6 +127,10 @@ class Connection extends EventEmitter {
 
   public async submit(transaction: string): Promise<Response | any> {
     try {
+      if (!this.client || !this.isConnected()) {
+        return { error: "No connection" };
+      }
+
       const startDate: Date = new Date();
       const response = await this.client.submit(transaction);
       const endDate: Date = new Date();
@@ -144,6 +156,10 @@ class Connection extends EventEmitter {
   }
 
   public isConnected(): boolean {
+    if (!this.client) {
+      return false;
+    }
+
     return this.client.isConnected();
   }
 
@@ -171,11 +187,11 @@ class Connection extends EventEmitter {
     if (!this.shotdown) {
       this.emit("reconnect");
       try {
-        if (this.isConnected()) {
+        if (this.client) {
           await this.client.disconnect();
         }
 
-        await this.client.connect();
+        await this.connect();
       } catch (e: any) {
         this.logger?.warn({
           service: "Bithomp::XRPL::Connection",
@@ -189,6 +205,10 @@ class Connection extends EventEmitter {
   }
 
   private setupEmitter(): void {
+    if (!this.client) {
+      return;
+    }
+
     this.client.on("connected", () => {
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
@@ -360,7 +380,7 @@ class Connection extends EventEmitter {
         this.connectionValidationTimeout();
       }, LEDGER_CLOSED_TIMEOUT);
     } else {
-      this.client.disconnect();
+      this.client?.disconnect();
     }
   }
 

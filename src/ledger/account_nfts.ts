@@ -35,7 +35,6 @@ export async function getAccountNfts(
     throw new Error("There is no connection");
   }
 
-  await connection.connect();
   const response = await connection.request({
     command: "account_nfts",
     account,
@@ -102,7 +101,6 @@ export async function getAccountNftSellOffers(
     throw new Error("There is no connection");
   }
 
-  await connection.connect();
   const response = await connection.request({
     command: "nft_sell_offers",
     nft_id: nftID,
@@ -160,7 +158,6 @@ export async function getAccountNftBuyOffers(
     throw new Error("There is no connection");
   }
 
-  await connection.connect();
   const response = await connection.request({
     command: "nft_buy_offers",
     nft_id: nftID,

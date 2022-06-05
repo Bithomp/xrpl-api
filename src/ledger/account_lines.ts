@@ -37,7 +37,6 @@ export async function getAccountLines(account: string, options: GetAccountLinesO
     throw new Error("There is no connection");
   }
 
-  await connection.connect();
   const response = await connection.request({
     command: "account_lines",
     account,

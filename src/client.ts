@@ -78,6 +78,10 @@ export function findConnection(type?: string, url?: string, strongFilter?: boole
 
   // get connections by type
   let connections = clientConnections.filter((con) => {
+    if (!con.isConnected()) {
+      return false;
+    }
+
     if (typeof url === "string" && con.url !== url) {
       return false;
     }

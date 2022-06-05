@@ -18,8 +18,6 @@ export async function getFee(options: GetFeeOptions = {}): Promise<string | null
     throw new Error("There is no connection");
   }
 
-  await connection.connect();
-
   const response: any = await connection.request({
     command: "fee",
   });
