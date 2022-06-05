@@ -222,12 +222,12 @@ describe("Client", () => {
 
     describe("legacyPayment", () => {
       before(async function () {
+        this.timeout(15000);
         Client.setup(nconf.get("xrpl:connections:testnet"));
         await Client.connect();
       });
 
       it("is OK", async function () {
-        this.timeout(15000);
         const payment = {
           sourceAddress: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
           sourceValue: "0.0001",
@@ -240,6 +240,7 @@ describe("Client", () => {
         };
 
         const result: any = await Client.legacyPayment(payment);
+        expect(result.error).to.eq(undefined);
         expect(result.validated).to.eq(true);
       });
 

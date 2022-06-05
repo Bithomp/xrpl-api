@@ -31,7 +31,6 @@ export async function getAccountOffers(account: string, options: GetAccountOffer
     throw new Error("There is no connection");
   }
 
-  await connection.connect();
   const response = await connection.request({
     command: "account_offers",
     account,

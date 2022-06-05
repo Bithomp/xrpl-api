@@ -56,7 +56,6 @@ export async function getAccountObjects(
     throw new Error("There is no connection");
   }
 
-  await connection.connect();
   const response = await connection.request({
     command: "account_objects",
     account,
@@ -122,7 +121,6 @@ export async function getAccountLinesObjects(
     throw new Error("There is no connection");
   }
 
-  await connection.connect();
   const response = await connection.request({
     command: "account_objects",
     account,

@@ -58,7 +58,6 @@ export async function getTransaction(transaction: string, options: GetTransactio
     throw new Error("There is no connection");
   }
 
-  await connection.connect();
   const response = await connection.request({
     command: "tx",
     transaction,

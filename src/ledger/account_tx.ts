@@ -106,7 +106,6 @@ export async function getTransactions(
     throw new Error("There is no connection");
   }
 
-  await connection.connect();
   const response = await connection.request({
     command: "account_tx",
     account,

@@ -17,8 +17,6 @@ export async function getServerInfo(options: GetServerInfoOptions = {}): Promise
     throw new Error("There is no connection");
   }
 
-  await connection.connect();
-
   const response: any = await connection.request({
     command: "server_info",
   });

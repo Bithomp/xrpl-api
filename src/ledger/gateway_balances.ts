@@ -39,7 +39,6 @@ export async function getBalanceSheet(account: string, options: GetBalanceSheetO
     throw new Error("There is no connection");
   }
 
-  await connection.connect();
   const response = await connection.request({
     command: "gateway_balances",
     account,

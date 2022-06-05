@@ -39,7 +39,6 @@ export async function getLedger(options: GetLedgerOptions = {}): Promise<object 
     throw new Error("There is no connection");
   }
 
-  await connection.connect();
   const response: any = await connection.request({
     command: "ledger",
     ledger_index: options.ledgerIndex || "validated",
