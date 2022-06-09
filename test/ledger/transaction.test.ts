@@ -228,6 +228,8 @@ describe("Client", () => {
       });
 
       it("is OK", async function () {
+        this.timeout(15000);
+
         const payment = {
           sourceAddress: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
           sourceValue: "0.0001",
@@ -245,6 +247,8 @@ describe("Client", () => {
       });
 
       it("is failed for not activated", async function () {
+        this.timeout(15000);
+
         const address = Wallet.generateAddress();
         const payment = {
           sourceAddress: address.address,

@@ -15,6 +15,8 @@ export interface ClientOptions extends ConnectionOptions {
 export interface ClientConnection {
   url: string;
   type?: string;
+  timeout?: number; // request timeout
+  connectionTimeout?: number;
 }
 
 export function setup(servers: ClientConnection[], options: ClientOptions = {}) {
@@ -31,7 +33,13 @@ export function setup(servers: ClientConnection[], options: ClientOptions = {}) 
     disconnect();
     clientConnections = [];
     for (const server of servers) {
-      clientConnections.push(new Connection(server.url, server.type, { logger: options.logger }));
+      clientConnections.push(
+        new Connection(server.url, server.type, {
+          logger: options.logger,
+          timeout: server.timeout,
+          connectionTimeout: server.connectionTimeout,
+        })
+      );
     }
   }
 

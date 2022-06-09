@@ -2,11 +2,14 @@ import * as _ from "lodash";
 import { EventEmitter } from "events";
 import { Client, Request, Response } from "xrpl";
 import { StreamType, ledgerTimeToTimestamp } from "./models/ledger";
+import { removeUndefined } from "./v1/common";
 
 const LEDGER_CLOSED_TIMEOUT = 1000 * 15; // 15 sec
 
 export interface ConnectionOptions {
   logger?: any;
+  timeout?: number; // request timeout
+  connectionTimeout?: number;
 }
 
 export interface LatencyInfo {
@@ -32,6 +35,8 @@ class Connection extends EventEmitter {
   public readonly types: string[];
   public latency: LatencyInfo[];
   public readonly logger?: any;
+  public readonly timeout?: number; // request timeout
+  public readonly connectionTimeout?: number;
   private shotdown: boolean = false;
   private connectionTimer: any = null;
   public streams: ConnectionStreamsInfo;
@@ -52,6 +57,9 @@ class Connection extends EventEmitter {
     this.latency = [];
     this.client = null;
     this.logger = options.logger;
+    this.timeout = options.timeout; // request timeout
+    this.connectionTimeout = options.connectionTimeout;
+
     this.streams = {
       ledger: 1,
     };
@@ -63,7 +71,11 @@ class Connection extends EventEmitter {
       if (this.client) {
         this.client.disconnect();
       }
-      this.client = new Client(this.url);
+
+      this.client = new Client(
+        this.url,
+        removeUndefined({ timeout: this.timeout, connectionTimeout: this.connectionTimeout })
+      );
       this.setupEmitter();
 
       await this.client.connect();
@@ -89,16 +101,17 @@ class Connection extends EventEmitter {
 
   public async request(request: Request, options?: any): Promise<Response | any> {
     try {
-      if (!this.client || !this.isConnected()) {
-        return { error: "Not connected" };
-      }
-
       if (
         options?.skip_streams_update !== true &&
         (request.command === "subscribe" || request.command === "unsubscribe")
       ) {
         // we will send request from subscribeStreams and unsubscribeStreams
         return this.updateSubscribedStreams(request);
+      }
+
+      // check connection after updateSubscribedStreams to make sure we will not miss any streams update
+      if (!this.client || !this.isConnected()) {
+        return { error: "Not connected" };
       }
 
       const startDate: Date = new Date();
