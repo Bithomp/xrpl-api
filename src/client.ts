@@ -102,7 +102,11 @@ export function findConnection(type?: string, url?: string, strongFilter?: boole
     if (con.types.length === 0) {
       return false;
     } else {
-      return con.types.includes(type);
+      if (type[0] === "!") {
+        return !con.types.includes(type.slice(1));
+      } else {
+        return con.types.includes(type);
+      }
     }
   });
 

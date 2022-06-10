@@ -96,7 +96,8 @@ export async function getAccountNftSellOffers(
   nftID: string,
   options: GetAccountNftSellOffersOptions = {}
 ): Promise<object[] | object | null> {
-  const connection: any = Client.findConnection();
+  // doesnt work with clio
+  const connection: any = Client.findConnection("!clio");
   if (!connection) {
     throw new Error("There is no connection");
   }
@@ -153,7 +154,8 @@ export async function getAccountNftBuyOffers(
   nftID: string,
   options: GetAccountNftBuyOffersOptions = {}
 ): Promise<object[] | object | null> {
-  const connection: any = Client.findConnection();
+  // doesnt work with clio
+  const connection: any = Client.findConnection("!clio");
   if (!connection) {
     throw new Error("There is no connection");
   }
