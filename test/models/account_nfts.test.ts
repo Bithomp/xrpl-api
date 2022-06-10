@@ -470,6 +470,7 @@ describe("Models", () => {
             status: "created",
             owner: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
             destination: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw",
+            expiration: 4294967295,
             flags: 1,
             nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
             index: "5770CF1626D6C26E965C05AE9B4686DB835565AE323C116A1771E80E8F2EFE25",
@@ -504,6 +505,7 @@ describe("Models", () => {
           {
             status: "created",
             owner: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
+            expiration: 4294967295,
             amount: {
               currency: "EVR",
               issuer: "rHdSF3FWTFR11zZ4dPy17Rch1Ygch3gy8p",
