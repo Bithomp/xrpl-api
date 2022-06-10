@@ -460,6 +460,24 @@ describe("Models", () => {
       });
     });
 
+    it("NFTokenCreateOfferSellDestination", function () {
+      const tx = require("../examples/responses/NFTokenCreateOfferSellDestination.json");
+      const result: any = Models.parseNFTokenOfferChanges(tx);
+
+      expect(result).to.eql({
+        rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg: [
+          {
+            status: "created",
+            owner: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
+            destination: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw",
+            flags: 1,
+            nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
+            index: "5770CF1626D6C26E965C05AE9B4686DB835565AE323C116A1771E80E8F2EFE25",
+          },
+        ],
+      });
+    });
+
     it("NFTokenCreateOfferBuy", function () {
       const tx = require("../examples/responses/NFTokenCreateOfferBuy.json");
       const result: any = Models.parseNFTokenOfferChanges(tx);
@@ -472,6 +490,27 @@ describe("Models", () => {
             amount: "1",
             nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
             index: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
+          },
+        ],
+      });
+    });
+
+    it("NFTokenCreateOfferBuyIOU", function () {
+      const tx = require("../examples/responses/NFTokenCreateOfferBuyIOU.json");
+      const result: any = Models.parseNFTokenOfferChanges(tx);
+
+      expect(result).to.eql({
+        rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg: [
+          {
+            status: "created",
+            owner: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
+            amount: {
+              currency: "EVR",
+              issuer: "rHdSF3FWTFR11zZ4dPy17Rch1Ygch3gy8p",
+              value: "-2560",
+            },
+            nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
+            index: "81B2D5752716704EA92506003F3F58E51B795BE9DADB2698471700FF8FD4B5F6",
           },
         ],
       });

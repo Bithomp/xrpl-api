@@ -71,7 +71,7 @@ export async function getAccountNfts(
 }
 
 export interface GetAccountNftSellOffersOptions {
-  ledgerIndex?: number | ("validated" | "closed" | "current");
+  ledgerIndex?: LedgerIndex;
 }
 
 /**
@@ -128,7 +128,7 @@ export async function getAccountNftSellOffers(
 }
 
 export interface GetAccountNftBuyOffersOptions {
-  ledgerIndex?: number | ("validated" | "closed" | "current");
+  ledgerIndex?: LedgerIndex;
 }
 
 /**

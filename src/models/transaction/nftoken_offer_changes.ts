@@ -64,8 +64,9 @@ class NFTokenOfferChanges {
     const nftokenID: string = affectedNode.CreatedNode.NewFields.NFTokenID;
     const owner: string = affectedNode.CreatedNode.NewFields.Owner;
     const index: string = affectedNode.CreatedNode.LedgerIndex;
+    const destination: string = affectedNode.CreatedNode.NewFields.Destination;
 
-    this.addChange(this.tx.Account, { status, amount, flags, nftokenID, owner, index });
+    this.addChange(this.tx.Account, { status, amount, flags, nftokenID, owner, destination, index });
   }
 
   private isNFTokensDeleteOfferNode(affectedNode: any): boolean {
@@ -79,7 +80,8 @@ class NFTokenOfferChanges {
     const nftokenID: string = affectedNode.DeletedNode.FinalFields.NFTokenID;
     const owner: string = affectedNode.DeletedNode.FinalFields.Owner;
     const index: string = affectedNode.DeletedNode.LedgerIndex;
+    const destination: string = affectedNode.DeletedNode.FinalFields.Destination;
 
-    this.addChange(owner, { status, amount, flags, nftokenID, owner, index });
+    this.addChange(owner, { status, amount, flags, nftokenID, owner, destination, index });
   }
 }
