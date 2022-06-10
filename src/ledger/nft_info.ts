@@ -1,11 +1,13 @@
 import * as Client from "../client";
 
+// tslint:disable-next-line:no-empty-interface
 export interface GetNftInfoOptions {}
 
 /**
  * @returns {string | null}
  * @exception {Error}
  */
+// tslint:disable-next-line:variable-name
 export async function getNftInfo(nft_id: string, options: GetNftInfoOptions = {}): Promise<object | null> {
   // strong search only Clio servers support the command
   const connection: any = Client.findConnection("clio", undefined, true);
