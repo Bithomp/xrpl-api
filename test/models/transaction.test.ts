@@ -225,6 +225,97 @@ describe("Models", () => {
       });
     });
 
+    it("NFTokenCreateOfferSellDestination", function () {
+      const tx = require("../examples/responses/NFTokenCreateOfferSellDestination.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "nftokenCreateOffer",
+        address: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
+        sequence: 908,
+        id: "37DD2EC688DA77902D1472373C66226594CC5AC0347DB337A122FF3E6F2865F0",
+        specification: {
+          nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
+          amount: "0",
+          destination: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw",
+          expiration: 5241652095,
+          flags: { sellToken: true },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2022-03-02T00:52:00.000Z",
+          fee: "0.000012",
+          balanceChanges: { rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg: [{ currency: "XRP", value: "-0.000012" }] },
+          orderbookChanges: {},
+          nftokenChanges: {},
+          nftokenOfferChanges: {
+            rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg: [
+              {
+                status: "created",
+                flags: 1,
+                nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
+                owner: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
+                index: "5770CF1626D6C26E965C05AE9B4686DB835565AE323C116A1771E80E8F2EFE25",
+                destination: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw",
+                expiration: 5241652095,
+              },
+            ],
+          },
+          ledgerVersion: 1104,
+          indexInLedger: 0,
+        },
+      });
+    });
+
+    it("NFTokenCreateOfferBuyIOU", function () {
+      const tx = require("../examples/responses/NFTokenCreateOfferBuyIOU.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "nftokenCreateOffer",
+        address: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
+        sequence: 909,
+        id: "AF749F0704733FCD442128D7792EC1F5CF8FDFF4ACC9C0BE5B4C6AF68DE811FF",
+        specification: {
+          nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
+          amount: {
+            currency: "EVR",
+            issuer: "rHdSF3FWTFR11zZ4dPy17Rch1Ygch3gy8p",
+            value: "-2560",
+          },
+          owner: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw",
+          expiration: 5241652095,
+          flags: { sellToken: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2022-03-02T00:57:30.000Z",
+          fee: "0.000012",
+          balanceChanges: { rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg: [{ currency: "XRP", value: "-0.000012" }] },
+          orderbookChanges: {},
+          nftokenChanges: {},
+          nftokenOfferChanges: {
+            rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg: [
+              {
+                status: "created",
+                amount: {
+                  currency: "EVR",
+                  issuer: "rHdSF3FWTFR11zZ4dPy17Rch1Ygch3gy8p",
+                  value: "-2560",
+                },
+                nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
+                owner: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
+                index: "81B2D5752716704EA92506003F3F58E51B795BE9DADB2698471700FF8FD4B5F6",
+                expiration: 5241652095,
+              },
+            ],
+          },
+          ledgerVersion: 1214,
+          indexInLedger: 0,
+        },
+      });
+    });
+
     it("NFTokenCancelOffer", function () {
       const tx = require("../examples/responses/NFTokenCancelOffer.json");
       const result: any = Models.getTxDetails(tx, false);

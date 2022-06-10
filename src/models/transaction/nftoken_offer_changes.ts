@@ -1,3 +1,4 @@
+import { ledgerTimeToUnixTime } from "../../models/ledger";
 import { removeUndefined } from "../../v1/common";
 
 export function parseNFTokenOfferChanges(tx: object): object {
@@ -65,7 +66,10 @@ class NFTokenOfferChanges {
     const owner: string = affectedNode.CreatedNode.NewFields.Owner;
     const index: string = affectedNode.CreatedNode.LedgerIndex;
     const destination: string = affectedNode.CreatedNode.NewFields.Destination;
-    const expiration: string = affectedNode.CreatedNode.NewFields.Expiration;
+    let expiration: number = affectedNode.CreatedNode.NewFields.Expiration;
+    if (typeof expiration === "number") {
+      expiration = ledgerTimeToUnixTime(expiration);
+    }
 
     this.addChange(this.tx.Account, { status, amount, flags, nftokenID, owner, destination, expiration, index });
   }
@@ -82,7 +86,10 @@ class NFTokenOfferChanges {
     const owner: string = affectedNode.DeletedNode.FinalFields.Owner;
     const index: string = affectedNode.DeletedNode.LedgerIndex;
     const destination: string = affectedNode.DeletedNode.FinalFields.Destination;
-    const expiration: string = affectedNode.DeletedNode.FinalFields.Expiration;
+    let expiration: number = affectedNode.DeletedNode.FinalFields.Expiration;
+    if (typeof expiration === "number") {
+      expiration = ledgerTimeToUnixTime(expiration);
+    }
 
     this.addChange(owner, { status, amount, flags, nftokenID, owner, destination, expiration, index });
   }

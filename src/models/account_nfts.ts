@@ -3,6 +3,7 @@ import BigNumber from "bignumber.js";
 import AddressCodec = require("ripple-address-codec");
 
 import { NFTokenMintFlags, NFTokenCreateOfferFlags } from "xrpl";
+import { ledgerTimeToUnixTime } from "./ledger";
 import { removeUndefined } from "../v1/common";
 import { parseFlags, SortDirection } from "../common/utils";
 
@@ -198,12 +199,17 @@ interface FormattedNFTokenCreateOffer {
 export function parseNFTokenCreateOffer(tx: any): FormattedNFTokenCreateOffer {
   assert.ok(tx.TransactionType === "NFTokenCreateOffer");
 
+  let expiration: any;
+  if (typeof tx.Expiration === "number") {
+    expiration = ledgerTimeToUnixTime(tx.Expiration);
+  }
+
   return removeUndefined({
     nftokenID: tx.NFTokenID,
     amount: tx.Amount,
     owner: tx.Owner,
     destination: tx.Destination,
-    expiration: tx.Expiration,
+    expiration,
     flags: parseNFTOfferFlags(tx.Flags),
   });
 }
