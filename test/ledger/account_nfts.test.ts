@@ -50,8 +50,8 @@ describe("Client", () => {
 
   describe("getAccountNftSellOffers", () => {
     it("works", async function () {
-      const offer = "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000";
-      const result: any = await Client.getAccountNftSellOffers(offer);
+      const nftokenID = "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000";
+      const result: any = await Client.getAccountNftSellOffers(nftokenID);
       expect(result.offers[0]).to.eql({
         amount: "1000000000000000",
         flags: 1,
@@ -63,8 +63,8 @@ describe("Client", () => {
 
   describe("getAccountNftBuyOffers", () => {
     it("works", async function () {
-      const offer = "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001";
-      const result: any = await Client.getAccountNftBuyOffers(offer);
+      const nftokenID = "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001";
+      const result: any = await Client.getAccountNftBuyOffers(nftokenID);
       expect(result.offers[0]).to.eql({
         amount: "1",
         flags: 0,
