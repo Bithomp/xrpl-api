@@ -83,15 +83,17 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
   const currencyHex = hex.substring(16, hex.length);
   const currency = hexToString(currencyHex)?.trim()?.replace(/\0/g, "") as string;
   const ledgerInfo = await getLedger(ctiLedger);
+  const ledger = ledgerInfo.ledger;
+
   let ctiVerified = false;
   let ctiValid = false;
   let timestamp: number | undefined;
   let ctiTx: DecodedNFTCurrencyTransactionInterface = {};
 
-  if (ledgerInfo) {
-    timestamp = Math.round(new Date(ledgerInfo.close_time_human).getTime() / 1000);
+  if (ledger) {
+    timestamp = Math.round(new Date(ledger.close_time_human).getTime() / 1000);
 
-    for (const transaction of ledgerInfo.transactions) {
+    for (const transaction of ledger.transactions) {
       if (transaction.metaData.TransactionIndex === ctiTxIndex) {
         const {
           Account: account,
@@ -116,11 +118,13 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
     }
   }
 
-  if (ledgerInfo && ctiTx.hash) {
+  if (ledger && ctiTx.hash) {
     ctiVerified = true;
     ctiValid =
-      ctiLedgerCheck(cti) === ctiLedgerCheckGen(ledgerInfo.hash) &&
+      ctiLedgerCheck(cti) === ctiLedgerCheckGen(ledger.hash) &&
       ctiTransactionCheck(cti) === ctiTransactionCheckGen(ctiTx.hash);
+  } else if (ledgerInfo.error === "lgrNotFound") {
+    ctiVerified = true;
   }
 
   return {
@@ -157,15 +161,14 @@ function decodeHex(currencyHex: string): DecodeHexCurrencyInterface | null {
 }
 
 async function getLedger(ledgerIndex: number): Promise<any> {
-  let ledger = null;
+  let ledgerInfo: any = null;
   try {
-    const ledgerInfo = await Client.getLedger({ ledgerIndex, transactions: true, expand: true });
-    ledger = (ledgerInfo as any).ledger;
+    ledgerInfo = await Client.getLedger({ ledgerIndex, transactions: true, expand: true });
   } catch (e: any) {
     // Ignore
   }
 
-  return ledger;
+  return ledgerInfo;
 }
 
 function ctiTransactionIndex(cti: bigint): bigint {

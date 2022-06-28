@@ -191,6 +191,22 @@ describe("Client", () => {
             },
           });
         });
+
+        it("is OK for not valid but verified on not existed ledger", async function () {
+          this.timeout(15000);
+          expect(await Client.parseCurrencyInformation("023031516D6258454E4654000000000000000000")).to.eql({
+            type: "nft",
+            currencyCode: "023031516D6258454E4654000000000000000000",
+            currency: "NFT",
+            cti: 13565024679385156,
+            ctiLedger: 1835161669,
+            ctiTxIndex: 12625,
+            ctiValid: false,
+            ctiVerified: true,
+            timestamp: undefined,
+            ctiTx: {},
+          });
+        });
       });
     });
   });
