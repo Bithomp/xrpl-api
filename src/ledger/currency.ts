@@ -118,12 +118,15 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
     }
   }
 
-  if (ledger && ctiTx.hash) {
+  if (ledger) {
     ctiVerified = true;
-    ctiValid =
-      ctiLedgerCheck(cti) === ctiLedgerCheckGen(ledger.hash) &&
-      ctiTransactionCheck(cti) === ctiTransactionCheckGen(ctiTx.hash);
-  } else if (ledgerInfo.error === "lgrNotFound" || ctiTx.hash === undefined) {
+
+    if (ctiTx.hash) {
+      ctiValid =
+        ctiLedgerCheck(cti) === ctiLedgerCheckGen(ledger.hash) &&
+        ctiTransactionCheck(cti) === ctiTransactionCheckGen(ctiTx.hash);
+    }
+  } else if (ledgerInfo.error === "lgrNotFound") {
     ctiVerified = true;
   }
 

@@ -1,6 +1,7 @@
 import nconf from "nconf";
 import { expect } from "chai";
 import { Client } from "../../src/index";
+import { sleep } from "../../src/common/utils";
 
 describe("Client", () => {
   describe("mainnet", () => {
@@ -207,6 +208,29 @@ describe("Client", () => {
             ctiTx: {},
           });
         });
+      });
+    });
+  });
+
+  describe("disconnected", () => {
+    before(async function () {
+      Client.disconnect();
+      await sleep(1000);
+    });
+
+    it("is OK for not valid but verified on not existed ledger", async function () {
+      this.timeout(15000);
+      expect(await Client.parseCurrencyInformation("02C7002303B3C2D2506C61737469636174730000")).to.eql({
+        type: "nft",
+        currencyCode: "02C7002303B3C2D2506C61737469636174730000",
+        currency: "Plasticats",
+        cti: 56013670751388370,
+        ctiLedger: 62112466,
+        ctiTxIndex: 35,
+        ctiValid: false,
+        ctiVerified: false,
+        timestamp: undefined,
+        ctiTx: {},
       });
     });
   });
