@@ -60,6 +60,7 @@ interface DecodedNFTCurrencyInterface {
   ctiLedger: number;
   ctiTxIndex: number;
   ctiValid: boolean;
+  ctiVerified: boolean;
   timestamp?: number;
   ctiTx: DecodedNFTCurrencyTransactionInterface;
 }
@@ -82,6 +83,7 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
   const currencyHex = hex.substring(16, hex.length);
   const currency = hexToString(currencyHex)?.trim()?.replace(/\0/g, "") as string;
   const ledgerInfo = await getLedger(ctiLedger);
+  let ctiVerified = false;
   let ctiValid = false;
   let timestamp: number | undefined;
   let ctiTx: DecodedNFTCurrencyTransactionInterface = {};
@@ -115,6 +117,7 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
   }
 
   if (ledgerInfo && ctiTx.hash) {
+    ctiVerified = true;
     ctiValid =
       ctiLedgerCheck(cti) === ctiLedgerCheckGen(ledgerInfo.hash) &&
       ctiTransactionCheck(cti) === ctiTransactionCheckGen(ctiTx.hash);
@@ -128,6 +131,7 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
     ctiLedger,
     ctiTxIndex,
     ctiValid,
+    ctiVerified,
     timestamp,
     ctiTx,
   };
