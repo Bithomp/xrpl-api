@@ -19,9 +19,74 @@ describe("Client", () => {
           ledgerIndexMax: 61770679,
         });
 
-        expect(JSON.stringify(result.transactions)).to.eq(
-          '[{"meta":{"AffectedNodes":[{"ModifiedNode":{"FinalFields":{"Account":"rMM9c3vc2j8x7wZ7mfBtcKPe1eDmjV464","Balance":"33031616","Flags":0,"OwnerCount":1,"Sequence":13},"LedgerEntryType":"AccountRoot","LedgerIndex":"410C5509459F6A9E7840D246C4557B81E66BC9531E5E6BBB1A830018C820C0CC","PreviousFields":{"Balance":"33032631","Sequence":12},"PreviousTxnID":"D0495ACF6BCED0CDC4C645F616BD6ED43B49A51C6D0B19E555D6BC409B43C5F7","PreviousTxnLgrSeq":44276890}},{"ModifiedNode":{"FinalFields":{"Account":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","Balance":"108371418","Domain":"626974686F6D702E636F6D","EmailHash":"576EDA7E0D04BC218DAA8A501FCA50B6","Flags":8388608,"OwnerCount":7,"Sequence":329,"TransferRate":1002000000},"LedgerEntryType":"AccountRoot","LedgerIndex":"EE994230153E2207737ACE5CDA73F8275E81D05A45C6937B62B0FF24C81140BA","PreviousFields":{"Balance":"108370418"},"PreviousTxnID":"BD66350A0A823F99CADAADEB77D6C74E5363F9A733273079EA15B0A5A28DE9B8","PreviousTxnLgrSeq":61040599}}],"TransactionIndex":106,"TransactionResult":"tesSUCCESS","delivered_amount":"1000"},"tx":{"Account":"rMM9c3vc2j8x7wZ7mfBtcKPe1eDmjV464","Amount":"1000","Destination":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","DestinationTag":232060612,"Fee":"15","Flags":2147483648,"LastLedgerSequence":61770685,"Memos":[{"Memo":{"MemoData":"67617465687562","MemoFormat":"746578742F706C61696E","MemoType":"636C69656E74"}}],"Sequence":12,"SigningPubKey":"03A29FCE479813DFF92AA3A01451C291DCAA9BB1CFFB771BC832A4BBE288712E0A","TransactionType":"Payment","TxnSignature":"30450221008A19C1229EE6D41D6C3A6CF6ED554D6F22589A1705FBF114496CD9D416966CA802206EFBA93CF4B53F3BF75F8A846646AA363DF89F6C4CE97A3BC48F7AAE492E5CE1","date":667375232,"hash":"40FAF3E1AF547F51E866856D292647392FD493A1B16B06D7891027AD107CCA10","inLedger":61770679,"ledger_index":61770679},"validated":true}]'
-        );
+        delete result.transactions[0].tx.inLedger;
+        expect(result.transactions).to.eql([
+          {
+            meta: {
+              AffectedNodes: [
+                {
+                  ModifiedNode: {
+                    FinalFields: {
+                      Account: "rMM9c3vc2j8x7wZ7mfBtcKPe1eDmjV464",
+                      Balance: "33031616",
+                      Flags: 0,
+                      OwnerCount: 1,
+                      Sequence: 13,
+                    },
+                    LedgerEntryType: "AccountRoot",
+                    LedgerIndex: "410C5509459F6A9E7840D246C4557B81E66BC9531E5E6BBB1A830018C820C0CC",
+                    PreviousFields: { Balance: "33032631", Sequence: 12 },
+                    PreviousTxnID: "D0495ACF6BCED0CDC4C645F616BD6ED43B49A51C6D0B19E555D6BC409B43C5F7",
+                    PreviousTxnLgrSeq: 44276890,
+                  },
+                },
+                {
+                  ModifiedNode: {
+                    FinalFields: {
+                      Account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+                      Balance: "108371418",
+                      Domain: "626974686F6D702E636F6D",
+                      EmailHash: "576EDA7E0D04BC218DAA8A501FCA50B6",
+                      Flags: 8388608,
+                      OwnerCount: 7,
+                      Sequence: 329,
+                      TransferRate: 1002000000,
+                    },
+                    LedgerEntryType: "AccountRoot",
+                    LedgerIndex: "EE994230153E2207737ACE5CDA73F8275E81D05A45C6937B62B0FF24C81140BA",
+                    PreviousFields: { Balance: "108370418" },
+                    PreviousTxnID: "BD66350A0A823F99CADAADEB77D6C74E5363F9A733273079EA15B0A5A28DE9B8",
+                    PreviousTxnLgrSeq: 61040599,
+                  },
+                },
+              ],
+              TransactionIndex: 106,
+              TransactionResult: "tesSUCCESS",
+              delivered_amount: "1000",
+            },
+            tx: {
+              Account: "rMM9c3vc2j8x7wZ7mfBtcKPe1eDmjV464",
+              Amount: "1000",
+              Destination: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+              DestinationTag: 232060612,
+              Fee: "15",
+              Flags: 2147483648,
+              LastLedgerSequence: 61770685,
+              Memos: [
+                { Memo: { MemoData: "67617465687562", MemoFormat: "746578742F706C61696E", MemoType: "636C69656E74" } },
+              ],
+              Sequence: 12,
+              SigningPubKey: "03A29FCE479813DFF92AA3A01451C291DCAA9BB1CFFB771BC832A4BBE288712E0A",
+              TransactionType: "Payment",
+              TxnSignature:
+                "30450221008A19C1229EE6D41D6C3A6CF6ED554D6F22589A1705FBF114496CD9D416966CA802206EFBA93CF4B53F3BF75F8A846646AA363DF89F6C4CE97A3BC48F7AAE492E5CE1",
+              date: 667375232,
+              hash: "40FAF3E1AF547F51E866856D292647392FD493A1B16B06D7891027AD107CCA10",
+              ledger_index: 61770679,
+            },
+            validated: true,
+          },
+        ]);
       });
 
       it("finds the fist tranaction", async function () {
