@@ -123,7 +123,7 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
     ctiValid =
       ctiLedgerCheck(cti) === ctiLedgerCheckGen(ledger.hash) &&
       ctiTransactionCheck(cti) === ctiTransactionCheckGen(ctiTx.hash);
-  } else if (ledgerInfo.error === "lgrNotFound") {
+  } else if (ledgerInfo.error === "lgrNotFound" || ctiTx.hash === undefined) {
     ctiVerified = true;
   }
 
