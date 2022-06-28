@@ -68,6 +68,7 @@ describe("Client", () => {
             ctiLedger: 62112722,
             ctiTxIndex: 35,
             ctiValid: true,
+            ctiVerified: true,
             timestamp: 1615386870,
             ctiTx: {
               hash: "7DFCD417FCEE35F7BB3ABECD05C27BA71F1E845BFD29C19AF3CF5E55B44EA55C",
@@ -99,6 +100,7 @@ describe("Client", () => {
             ctiLedger: 67260793,
             ctiTxIndex: 31,
             ctiValid: true,
+            ctiVerified: true,
             timestamp: 1635160501,
             ctiTx: {
               hash: "A089A7959F9A41880F4EA593397F9596411F5440262F6CAD3AD185CD5CFD4145",
@@ -145,6 +147,7 @@ describe("Client", () => {
             ctiLedger: 62091268,
             ctiTxIndex: 23,
             ctiValid: true,
+            ctiVerified: true,
             timestamp: 1615303952,
             ctiTx: {
               hash: "D55976EF95C9B93C99E08F6F1F17252B4C65359143125CA7E791C5C3352FF04D",
@@ -162,6 +165,29 @@ describe("Client", () => {
                   },
                 },
               ],
+            },
+          });
+        });
+
+        it("is OK for not valid but verified", async function () {
+          this.timeout(15000);
+          expect(await Client.parseCurrencyInformation("02C7002303B3C2D2506C61737469636174730000")).to.eql({
+            type: "nft",
+            currencyCode: "02C7002303B3C2D2506C61737469636174730000",
+            currency: "Plasticats",
+            cti: 56013670751388370,
+            ctiLedger: 62112466,
+            ctiTxIndex: 35,
+            ctiValid: false,
+            ctiVerified: true,
+            timestamp: 1615385880,
+            ctiTx: {
+              hash: "92F6908D293BC3EBDFFA384286AC6A5DC7CB8740DAFFFD8C18C27E054EC6C0D0",
+              type: "order",
+              account: "rQ3fNyLjbvcDaPNS4EAJY8aT9zR3uGk17c",
+              counterparty: undefined,
+              destination: undefined,
+              memos: undefined,
             },
           });
         });
