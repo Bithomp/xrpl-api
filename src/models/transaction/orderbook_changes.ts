@@ -2,8 +2,9 @@
 import * as _ from 'lodash';
 import { BigNumber as GlobalBigNumber } from 'bignumber.js';
 const BigNumber = GlobalBigNumber.clone({DECIMAL_PLACES: 40})
-import { parseCurrencyAmount, normalizeNodes } from'../../v1/common/utils';
+import { normalizeNodes } from'../../v1/common/utils';
 import { parseQuality } from'./quality';
+import parseCurrencyAmount from "../../v1/ledger/parse/currency-amount";
 
 /* tslint:disable:prefer-const only-arrow-functions object-literal-shorthand no-var-keyword */
 

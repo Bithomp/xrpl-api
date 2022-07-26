@@ -1,5 +1,5 @@
 import * as assert from 'assert'
-import parseAmount from './amount'
+import parseRippledAmount from './ripple-amount'
 import {parseTimestamp, parseMemos} from './utils'
 import {removeUndefined} from '../../common'
 
@@ -7,7 +7,7 @@ function parseEscrowCreation(tx: any): object {
   assert.ok(tx.TransactionType === 'EscrowCreate')
 
   return removeUndefined({
-    amount: parseAmount(tx.Amount).value,
+    amount: parseRippledAmount(tx.Amount), // Legace support
     destination: tx.Destination,
     memos: parseMemos(tx),
     condition: tx.Condition,

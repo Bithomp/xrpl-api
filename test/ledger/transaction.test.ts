@@ -138,14 +138,8 @@ describe("Client", () => {
           depositAuth: false,
         });
         expect(result.outcome).to.eql({
-          balanceChanges: {
-            rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [
-              {
-                currency: "XRP",
-                value: "-0.00001",
-              },
-            ],
-          },
+          balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
+          lockedBalanceChanges: {},
           fee: "0.00001",
           indexInLedger: 42,
           ledgerVersion: 69773479,
@@ -164,14 +158,8 @@ describe("Client", () => {
         );
         expect(result.specification).to.eql({});
         expect(result.outcome).to.eql({
-          balanceChanges: {
-            rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [
-              {
-                currency: "XRP",
-                value: "-0.01",
-              },
-            ],
-          },
+          balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.01" }] },
+          lockedBalanceChanges: {},
           fee: "0.01",
           indexInLedger: 4,
           ledgerVersion: 69754983,
@@ -201,14 +189,8 @@ describe("Client", () => {
             result: "tesSUCCESS",
             timestamp: "2022-02-18T13:13:21.000Z",
             fee: "0.00001",
-            balanceChanges: {
-              rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [
-                {
-                  currency: "XRP",
-                  value: "-0.00001",
-                },
-              ],
-            },
+            balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
+            lockedBalanceChanges: {},
             orderbookChanges: {},
             nftokenChanges: {},
             nftokenOfferChanges: {},
@@ -234,14 +216,8 @@ describe("Client", () => {
             result: "tesSUCCESS",
             timestamp: "2022-02-18T13:13:21.000Z",
             fee: "0.00001",
-            balanceChanges: {
-              rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [
-                {
-                  currency: "XRP",
-                  value: "-0.00001",
-                },
-              ],
-            },
+            balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
+            lockedBalanceChanges: {},
             orderbookChanges: {},
             nftokenChanges: {},
             nftokenOfferChanges: {},
