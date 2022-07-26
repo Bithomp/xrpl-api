@@ -55,15 +55,6 @@ class NFTokenChanges {
       this.changes[account] = [];
     }
 
-    // const nftokenIDInfo = parseNFTokenID(change.nftokenID);
-    // if (nftokenIDInfo) {
-    //   change.flags = parseNFTokenFlags(nftokenIDInfo.Flags);
-    //   change.transferFee = nftokenIDInfo.TransferFee;
-    //   change.issuer = nftokenIDInfo.Issuer;
-    //   change.nftokenTaxon = nftokenIDInfo.NFTokenTaxon;
-    //   change.sequence = nftokenIDInfo.Sequence;
-    // }
-
     this.changes[account].push(removeUndefined(change));
   }
 
