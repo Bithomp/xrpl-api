@@ -28,6 +28,8 @@ import {
 import parseAmendment from './amendment' // pseudo-transaction
 import parseFeeUpdate from './fee-update' // pseudo-transaction
 
+import { parseAffectedObjects } from "../../../models/transaction";
+
 // Ordering matches https://developers.ripple.com/transaction-types.html
 const transactionTypeToType = {
   AccountSet: 'settings',
@@ -112,6 +114,7 @@ function parseTransaction(tx: any, includeRawTransaction: boolean): any {
   }
 
   const outcome = parseOutcome(tx)
+  const affectedObjects = parseAffectedObjects(tx)
   return removeUndefined({
     // tslint:disable-next-line:object-literal-shorthand
     type: type,
@@ -120,6 +123,7 @@ function parseTransaction(tx: any, includeRawTransaction: boolean): any {
     id: tx.hash,
     specification: removeUndefined(specification),
     outcome: outcome ? removeUndefined(outcome) : undefined,
+    affectedObjects: affectedObjects ? removeUndefined(affectedObjects) : undefined,
     rawTransaction: includeRawTransaction ? JSON.stringify(tx) : undefined
   })
 }

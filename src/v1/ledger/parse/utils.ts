@@ -143,6 +143,7 @@ function parseOutcome(tx: any): any | undefined {
   const nftokenOfferChanges = parseNFTokenOfferChanges(tx);
 
   removeEmptyCounterpartyInBalanceChanges(balanceChanges)
+  removeEmptyCounterpartyInBalanceChanges(lockedBalanceChanges);
   removeEmptyCounterpartyInOrderbookChanges(orderbookChanges)
 
   return common.removeUndefined({
