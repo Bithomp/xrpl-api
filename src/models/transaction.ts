@@ -2,6 +2,7 @@ import * as _ from "lodash";
 
 import { parseTransaction } from "../v1/ledger/parse/transaction";
 
+export { parseAffectedObjects } from "./transaction/affected_objects";
 export { parseNFTokenChanges } from "./transaction/nftoken_changes";
 export { parseNFTokenOfferChanges } from "./transaction/nftoken_offer_changes";
 export { parseBalanceChanges } from "./transaction/balance_changes";

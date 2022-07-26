@@ -72,10 +72,7 @@ class NFTokenChanges {
           this.parseFinalNFTokens(account, node.NewFields?.NFTokens);
         }
 
-        if (
-          (affectedNode.ModifiedNode || affectedNode.DeletedNode) &&
-          Array.isArray(node.PreviousFields?.NFTokens)
-        ) {
+        if ((affectedNode.ModifiedNode || affectedNode.DeletedNode) && Array.isArray(node.PreviousFields?.NFTokens)) {
           this.parseFinalNFTokens(account, node.FinalFields?.NFTokens);
           this.parsePreviousNFTokens(account, node.PreviousFields?.NFTokens);
         }
@@ -111,17 +108,13 @@ class NFTokenChanges {
     for (const account of this.affectedAccounts) {
       let finalTokens: string[] = [];
       if (Array.isArray(this.finalNFTokens[account])) {
-        finalTokens = this.finalNFTokens[account].map(
-          (NFToken: any) => NFToken.NFToken.NFTokenID
-        );
+        finalTokens = this.finalNFTokens[account].map((NFToken: any) => NFToken.NFToken.NFTokenID);
         finalTokens = [...new Set(finalTokens)];
       }
 
       let previousTokens: string[] = [];
       if (Array.isArray(this.previousNFTokens[account])) {
-        previousTokens = this.previousNFTokens[account].map(
-          (NFToken: any) => NFToken.NFToken.NFTokenID
-        );
+        previousTokens = this.previousNFTokens[account].map((NFToken: any) => NFToken.NFToken.NFTokenID);
         previousTokens = [...new Set(previousTokens)];
       }
 
