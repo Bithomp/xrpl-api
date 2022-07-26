@@ -4,13 +4,13 @@ import { dropsToXrp, normalizeNodes } from'../../v1/common/utils';
 
 /* tslint:disable:prefer-const only-arrow-functions no-var-keyword */
 
-function groupByAddress(balanceChanges) {
-  var grouped = _.groupBy(balanceChanges, function(node) {
+function groupByAddress(lockedBalanceChanges) {
+  const grouped = _.groupBy(lockedBalanceChanges, function(node) {
     return node.address
   })
   return _.mapValues(grouped, function(group) {
     return _.map(group, function(node) {
-      return node.balance
+      return node.lockedBalance
     })
   })
 }
@@ -21,20 +21,20 @@ function parseValue(value) {
 
 function computeBalanceChange(node) {
   var value: null | BigNumber = null;
-  if (node.newFields.Balance) {
-    value = parseValue(node.newFields.Balance)
-  } else if (node.previousFields.Balance && node.finalFields.Balance) {
-    value = parseValue(node.finalFields.Balance).minus(
-      parseValue(node.previousFields.Balance))
+  if (node.newFields.LockedBalance) {
+    value = parseValue(node.newFields.LockedBalance)
+  } else if (node.previousFields.LockedBalance && node.finalFields.LockedBalance) {
+    value = parseValue(node.finalFields.LockedBalance).minus(
+      parseValue(node.previousFields.LockedBalance))
   }
   return value === null ? null : value.isZero() ? null : value
 }
 
 function parseFinalBalance(node) {
-  if (node.newFields.Balance) {
-    return parseValue(node.newFields.Balance)
-  } else if (node.finalFields.Balance) {
-    return parseValue(node.finalFields.Balance)
+  if (node.newFields.LockedBalance) {
+    return parseValue(node.newFields.LockedBalance)
+  } else if (node.finalFields.LockedBalance) {
+    return parseValue(node.finalFields.LockedBalance)
   }
   return null
 }
@@ -48,22 +48,10 @@ function parseXRPQuantity(node, valueParser) {
 
   return {
     address: node.finalFields.Account || node.newFields.Account,
-    balance: {
+    lockedBalance: {
       counterparty: '',
       currency: 'XRP',
       value: dropsToXrp(value).toString()
-    }
-  }
-}
-
-function flipTrustlinePerspective(quantity) {
-  var negatedBalance = (new BigNumber(quantity.balance.value)).negated()
-  return {
-    address: quantity.balance.counterparty,
-    balance: {
-      counterparty: quantity.address,
-      currency: quantity.balance.currency,
-      value: negatedBalance.toString()
     }
   }
 }
@@ -76,22 +64,22 @@ function parseTrustlineQuantity(node, valueParser) {
   }
 
   /*
-   * A trustline can be created with a non-zero starting balance
+   * A trustline can be created with a non-zero starting lockedBalance
    * If an offer is placed to acquire an asset with no existing trustline,
    * the trustline can be created when the offer is taken.
    */
   var fields = _.isEmpty(node.newFields) ? node.finalFields : node.newFields
 
-  // the balance is always from low node's perspective
+  // the lockedBalance is always from low node's perspective
   var result = {
     address: fields.LowLimit.issuer,
-    balance: {
+    lockedBalance: {
       counterparty: fields.HighLimit.issuer,
-      currency: fields.Balance.currency,
+      currency: fields.LockedBalance.currency,
       value: value.toString()
     }
   }
-  return [result, flipTrustlinePerspective(result)]
+  return [result]
 }
 
 function parseQuantities(metadata, valueParser) {
@@ -107,25 +95,25 @@ function parseQuantities(metadata, valueParser) {
 }
 
 /**
- *  Computes the complete list of every balance that changed in the ledger
+ *  Computes the complete list of every locked lockedBalance that changed in the ledger
  *  as a result of the given transaction.
  *
  *  @param {Object} metadata Transaction metada
- *  @returns {Object} parsed balance changes
+ *  @returns {Object} parsed lockedBalance changes
  */
-function parseBalanceChanges(metadata) {
+function parseLockedBalanceChanges(metadata) {
   return parseQuantities(metadata, computeBalanceChange)
 }
 
 /**
- *  Computes the complete list of every final balance in the ledger
+ *  Computes the complete list of every final locked lockedBalance in the ledger
  *  as a result of the given transaction.
  *
  *  @param {Object} metadata Transaction metada
  *  @returns {Object} parsed balances
  */
-function parseFinalBalances(metadata) {
+function parseFinalLockedBalances(metadata) {
   return parseQuantities(metadata, parseFinalBalance)
 }
 
-export { parseBalanceChanges, parseFinalBalances };
+export { parseLockedBalanceChanges, parseFinalLockedBalances };

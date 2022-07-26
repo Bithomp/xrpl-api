@@ -12,6 +12,7 @@ describe("Models", () => {
         id: "E9AC3902CF5C65EFBE203C7669EF1C4412ECE02AA26BD03F40FF987526079F01",
         outcome: {
           balanceChanges: { r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [{ currency: "XRP", value: "-0.000012" }] },
+          lockedBalanceChanges: {},
           fee: "0.000012",
           indexInLedger: 0,
           ledgerVersion: 1309371,
@@ -56,6 +57,7 @@ describe("Models", () => {
             rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz: [{ currency: "XRP", value: "-0.000011" }],
             rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [{ currency: "XRP", value: "-0.000001" }],
           },
+          lockedBalanceChanges: {},
           fee: "0.000012",
           indexInLedger: 0,
           ledgerVersion: 75445,
@@ -108,6 +110,7 @@ describe("Models", () => {
         id: "F3B39252F4F13BAE93AB82E55DF8EB701AF4980FB6F38EB81889285B10DDEB5E",
         outcome: {
           balanceChanges: { rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [{ currency: "XRP", value: "-0.000012" }] },
+          lockedBalanceChanges: {},
           fee: "0.000012",
           indexInLedger: 0,
           ledgerVersion: 1310248,
@@ -169,6 +172,7 @@ describe("Models", () => {
           timestamp: "2022-03-01T09:44:31.000Z",
           fee: "0.000012",
           balanceChanges: { r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [{ currency: "XRP", value: "-0.000012" }] },
+          lockedBalanceChanges: {},
           orderbookChanges: {},
           nftokenChanges: {
             r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
@@ -206,6 +210,7 @@ describe("Models", () => {
           timestamp: "2022-03-04T14:57:00.000Z",
           fee: "0.000012",
           balanceChanges: { rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [{ currency: "XRP", value: "-0.000012" }] },
+          lockedBalanceChanges: {},
           orderbookChanges: {},
           nftokenChanges: {},
           nftokenOfferChanges: {
@@ -246,6 +251,7 @@ describe("Models", () => {
           timestamp: "2022-03-02T00:52:00.000Z",
           fee: "0.000012",
           balanceChanges: { rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg: [{ currency: "XRP", value: "-0.000012" }] },
+          lockedBalanceChanges: {},
           orderbookChanges: {},
           nftokenChanges: {},
           nftokenOfferChanges: {
@@ -292,6 +298,7 @@ describe("Models", () => {
           timestamp: "2022-03-02T00:57:30.000Z",
           fee: "0.000012",
           balanceChanges: { rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg: [{ currency: "XRP", value: "-0.000012" }] },
+          lockedBalanceChanges: {},
           orderbookChanges: {},
           nftokenChanges: {},
           nftokenOfferChanges: {
@@ -331,6 +338,7 @@ describe("Models", () => {
           timestamp: "2022-03-01T09:00:10.000Z",
           fee: "0.000012",
           balanceChanges: { r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [{ currency: "XRP", value: "-0.000012" }] },
+          lockedBalanceChanges: {},
           orderbookChanges: {},
           nftokenChanges: {},
           nftokenOfferChanges: {
@@ -359,14 +367,8 @@ describe("Models", () => {
         address: "rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz",
         id: "18B19F840ED19A27F539006412A5D61986F27B2C2A71A73AA4ED6869009D6BB0",
         outcome: {
-          balanceChanges: {
-            rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz: [
-              {
-                currency: "XRP",
-                value: "-0.000015",
-              },
-            ],
-          },
+          balanceChanges: { rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz: [{ currency: "XRP", value: "-0.000015" }] },
+          lockedBalanceChanges: {},
           fee: "0.000015",
           indexInLedger: 0,
           ledgerVersion: 44093,
@@ -394,40 +396,19 @@ describe("Models", () => {
         outcome: {
           balanceChanges: {
             rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW: [
-              {
-                counterparty: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
-                currency: "BTH",
-                value: "-0.059286072222",
-              },
-              {
-                counterparty: "rogue5HnPRSszD9CWGSUz8UGHMVwSSKF6",
-                currency: "BTH",
-                value: "0.05928607222222222",
-              },
+              { counterparty: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z", currency: "BTH", value: "-0.059286072222" },
+              { counterparty: "rogue5HnPRSszD9CWGSUz8UGHMVwSSKF6", currency: "BTH", value: "0.05928607222222222" },
             ],
             rogue5HnPRSszD9CWGSUz8UGHMVwSSKF6: [
-              {
-                counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
-                currency: "BTH",
-                value: "-0.05928607222222222",
-              },
-              {
-                currency: "XRP",
-                value: "53.347465",
-              },
+              { counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW", currency: "BTH", value: "-0.05928607222222222" },
+              { currency: "XRP", value: "53.347465" },
             ],
             rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z: [
-              {
-                counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
-                currency: "BTH",
-                value: "0.059286072222",
-              },
-              {
-                currency: "XRP",
-                value: "-53.357465",
-              },
+              { counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW", currency: "BTH", value: "0.059286072222" },
+              { currency: "XRP", value: "-53.357465" },
             ],
           },
+          lockedBalanceChanges: {},
           fee: "0.01",
           indexInLedger: 7,
           ledgerVersion: 62799452,
@@ -498,6 +479,7 @@ describe("Models", () => {
           timestamp: "2021-03-04T00:27:51.000Z",
           fee: "0.00001",
           balanceChanges: { rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn: [{ currency: "XRP", value: "-0.00101" }] },
+          lockedBalanceChanges: {},
           orderbookChanges: {},
           channelChanges: {
             status: "created",
@@ -511,6 +493,83 @@ describe("Models", () => {
           nftokenOfferChanges: {},
           ledgerVersion: 61965340,
           indexInLedger: 0,
+        },
+      });
+    });
+
+    it("EscrowCreate IOU", function () {
+      const tx = require("../examples/responses/transaction/885CDCF781073DB9306A4B5FF61F358AE1B2452B57B7FACC090DF91125CC86D6.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "escrowCreation",
+        address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+        sequence: 3334565,
+        id: "885CDCF781073DB9306A4B5FF61F358AE1B2452B57B7FACC090DF91125CC86D6",
+        specification: {
+          amount: {
+            counterparty: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
+            currency: "546F6B656E466F72457363726F77000000000000",
+            value: "10",
+          },
+          destination: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+          allowExecuteAfter: "2022-06-22T10:16:00.000Z",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2022-06-22T10:09:50.000Z",
+          fee: "0.000015",
+          balanceChanges: { r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk: [{ currency: "XRP", value: "-0.000015" }] },
+          lockedBalanceChanges: {
+            r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk: [
+              {
+                counterparty: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
+                currency: "546F6B656E466F72457363726F77000000000000",
+                value: "10",
+              },
+            ],
+          },
+          orderbookChanges: {},
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
+          ledgerVersion: 3530986,
+          indexInLedger: 0,
+        },
+      });
+    });
+
+    it("EscrowFinish IOU", function () {
+      const tx = require("../examples/responses/transaction/CB192FC862D00F6A49E819EF99053BE534A6EC703418306E415C6230F5786FDB.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "escrowExecution",
+        address: "rELeasERs3m4inA1UinRLTpXemqyStqzwh",
+        sequence: 3334670,
+        id: "CB192FC862D00F6A49E819EF99053BE534A6EC703418306E415C6230F5786FDB",
+        specification: {
+          owner: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+          escrowSequence: 3334565,
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2022-06-22T11:05:02.000Z",
+          fee: "0.000012",
+          balanceChanges: { rELeasERs3m4inA1UinRLTpXemqyStqzwh: [{ currency: "XRP", value: "-0.000012" }] },
+          lockedBalanceChanges: {
+            r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk: [
+              {
+                counterparty: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
+                currency: "546F6B656E466F72457363726F77000000000000",
+                value: "-10",
+              },
+            ],
+          },
+          orderbookChanges: {},
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
+          ledgerVersion: 3532083,
+          indexInLedger: 1,
         },
       });
     });
@@ -528,6 +587,7 @@ describe("Models", () => {
           result: "tesSUCCESS",
           timestamp: "2022-03-22T16:13:41.000Z",
           balanceChanges: { rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy: [{ currency: "XRP", value: "-0.0001" }] },
+          lockedBalanceChanges: {},
           fee: "0.0001",
           indexInLedger: 0,
           ledgerVersion: 593274,
@@ -605,10 +665,7 @@ describe("Models", () => {
                 currency: "4C53474400000000000000000000000000000000",
                 value: "-37907",
               },
-              {
-                currency: "XRP",
-                value: "-0.00001",
-              },
+              { currency: "XRP", value: "-0.00001" },
             ],
             r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V: [
               {
@@ -618,6 +675,7 @@ describe("Models", () => {
               },
             ],
           },
+          lockedBalanceChanges: {},
           orderbookChanges: {},
           nftokenChanges: {},
           nftokenOfferChanges: {},

@@ -1,0 +1,127 @@
+{
+  "Account": "rELeasERs3m4inA1UinRLTpXemqyStqzwh",
+  "Fee": "12",
+  "Flags": 2147483648,
+  "LastLedgerSequence": 3532084,
+  "OfferSequence": 3334565,
+  "Owner": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+  "Sequence": 3334670,
+  "SigningPubKey": "02ABF364503BE5AC760244D6EA8E3A2EFE0AA3BF9CE7E2A8B3D5C0F7CF2EB9921A",
+  "TransactionType": "EscrowFinish",
+  "TxnSignature": "304502210086C58258B2D73693235F01A354909B85DFA7F239230A4038796EF11CCCCF01F8022064FEB7C23FEB0DF985EAFD6A5AB6F1CB125604770767BB5FCB5239BC242C1100",
+  "date": 709211102,
+  "hash": "CB192FC862D00F6A49E819EF99053BE534A6EC703418306E415C6230F5786FDB",
+  "inLedger": 3532083,
+  "ledger_index": 3532083,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Balance": {
+              "currency": "546F6B656E466F72457363726F77000000000000",
+              "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji",
+              "value": "100"
+            },
+            "Flags": 1114112,
+            "HighLimit": {
+              "currency": "546F6B656E466F72457363726F77000000000000",
+              "issuer": "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
+              "value": "0"
+            },
+            "HighNode": "0",
+            "LockCount": 1,
+            "LockedBalance": {
+              "currency": "546F6B656E466F72457363726F77000000000000",
+              "issuer": "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
+              "value": "1"
+            },
+            "LowLimit": {
+              "currency": "546F6B656E466F72457363726F77000000000000",
+              "issuer": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+              "value": "1337"
+            },
+            "LowNode": "0"
+          },
+          "LedgerEntryType": "RippleState",
+          "LedgerIndex": "2BCB80EF4B3F3D2982CBEAA1D419189B9038DB538D6EC6339BB2D9B68815F8D7",
+          "PreviousFields": {
+            "LockCount": 2,
+            "LockedBalance": {
+              "currency": "546F6B656E466F72457363726F77000000000000",
+              "issuer": "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
+              "value": "11"
+            }
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rELeasERs3m4inA1UinRLTpXemqyStqzwh",
+            "Balance": "49999976",
+            "Flags": 0,
+            "OwnerCount": 0,
+            "Sequence": 3334671
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "3AE85C0C1ED24FFE94ECF4A9F7EF522CFA478F77C35525299416EF7A03B63DC1",
+          "PreviousFields": {
+            "Balance": "49999988",
+            "Sequence": 3334670
+          }
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "Account": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            "Amount": {
+              "currency": "546F6B656E466F72457363726F77000000000000",
+              "issuer": "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
+              "value": "10"
+            },
+            "Destination": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            "FinishAfter": 709208160,
+            "Flags": 0,
+            "OwnerNode": "0",
+            "PreviousTxnID": "885CDCF781073DB9306A4B5FF61F358AE1B2452B57B7FACC090DF91125CC86D6",
+            "PreviousTxnLgrSeq": 3530986
+          },
+          "LedgerEntryType": "Escrow",
+          "LedgerIndex": "3FF417C3A332939F6E04F252862A6CBFE30D1EAD6E0C9884DDFD99AE9BDB89C8"
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            "RootIndex": "5D70B77D6ACA976F7C7DA48DCC5C38953D808064863FE6131548ACB59DDB5623"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "5D70B77D6ACA976F7C7DA48DCC5C38953D808064863FE6131548ACB59DDB5623"
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            "Balance": "4736999820",
+            "Flags": 0,
+            "OwnerCount": 3,
+            "Sequence": 3334569
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "95D62098A420099A9E77910749453FE82A3595AB34B880BACC0B5526B8661E7A",
+          "PreviousFields": {
+            "OwnerCount": 4
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 1,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

@@ -187,25 +187,6 @@ function normalizeNodes(metadata) {
   return metadata.AffectedNodes.map(normalizeNode)
 }
 
-function parseCurrencyAmount(currencyAmount) {
-  if (currencyAmount === undefined) {
-    return undefined
-  }
-  if (typeof currencyAmount === 'string') {
-    return {
-      currency: 'XRP',
-      value: dropsToXrp(new BigNumber(currencyAmount)).toString()
-    }
-  }
-
-  return {
-    currency: currencyAmount.currency,
-    counterparty: currencyAmount.issuer,
-    value: currencyAmount.value
-  }
-}
-
-
 export {
   dropsToXrp,
   xrpToDrops,
@@ -215,5 +196,4 @@ export {
   iso8601ToRippleTime,
   isValidSecret,
   normalizeNodes,
-  parseCurrencyAmount
 }

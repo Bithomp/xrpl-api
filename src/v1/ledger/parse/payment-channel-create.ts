@@ -1,14 +1,14 @@
 import * as assert from 'assert'
 import {parseTimestamp,parseMemos} from './utils'
 import {removeUndefined} from '../../common'
-import parseAmount from './amount'
+import parseRippledAmount from './ripple-amount'
 
 function parsePaymentChannelCreate(tx: any): object {
   assert.ok(tx.TransactionType === 'PaymentChannelCreate')
 
   return removeUndefined({
     memos: parseMemos(tx),
-    amount: parseAmount(tx.Amount).value,
+    amount: parseRippledAmount(tx.Amount), // Legace support
     destination: tx.Destination,
     settleDelay: tx.SettleDelay,
     publicKey: tx.PublicKey,

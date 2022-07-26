@@ -5,6 +5,7 @@ import { parseTransaction } from "../v1/ledger/parse/transaction";
 export { parseNFTokenChanges } from "./transaction/nftoken_changes";
 export { parseNFTokenOfferChanges } from "./transaction/nftoken_offer_changes";
 export { parseBalanceChanges } from "./transaction/balance_changes";
+export { parseLockedBalanceChanges } from "./transaction/locked_balance_changes";
 export { parseChannelChanges } from "./transaction/channel_changes";
 export { parseOrderbookChanges } from "./transaction/orderbook_changes";
 

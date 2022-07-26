@@ -6,6 +6,7 @@ import {Amount, Memo} from '../../common/types/objects'
 
 import {
   parseBalanceChanges,
+  parseLockedBalanceChanges,
   parseChannelChanges,
   parseOrderbookChanges,
   parseNFTokenChanges,
@@ -135,6 +136,7 @@ function parseOutcome(tx: any): any | undefined {
     return undefined
   }
   const balanceChanges = parseBalanceChanges(metadata)
+  const lockedBalanceChanges = parseLockedBalanceChanges(metadata)
   const orderbookChanges = parseOrderbookChanges(metadata)
   const channelChanges = parseChannelChanges(metadata)
   const nftokenChanges = parseNFTokenChanges(tx);
@@ -148,6 +150,7 @@ function parseOutcome(tx: any): any | undefined {
     timestamp: parseTimestamp(tx.date),
     fee: common.dropsToXrp(tx.Fee),
     balanceChanges,
+    lockedBalanceChanges,
     orderbookChanges,
     channelChanges,
     nftokenChanges,
