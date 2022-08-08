@@ -1,5 +1,3 @@
-"use strict";
-
 const R_B58_DICT = "rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz";
 import base from "base-x";
 const base58 = base(R_B58_DICT);
@@ -10,7 +8,7 @@ export function decode(value: string, minLength: number): null | Buffer {
   }
 
   try {
-    return base58.decode(value);
+    return Buffer.from(base58.decode(value));
   } catch (e) {
     // avoid exception
   }

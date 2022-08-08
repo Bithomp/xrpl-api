@@ -769,6 +769,39 @@ describe("Models", () => {
         },
       });
     });
+
+    it("Settings with Memo", function () {
+      const tx = require("../examples/responses/transaction/E5535D1C02FAAB40F0B7652DC7EB86D1366B13D4517A7305F53BC664C686351A.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "settings",
+        address: "r4eecBHFbkHpLQEvSnB93bc3C2SVMjVKie",
+        sequence: 70867870,
+        id: "E5535D1C02FAAB40F0B7652DC7EB86D1366B13D4517A7305F53BC664C686351A",
+        specification: {
+          memos: [
+            {
+              data: "LEDGER2",
+              type: "[https://xrpl.services]-Memo",
+            },
+          ],
+          regularKey: "rJ6kUAyW5uzxM1yjHtjXVYRscM9pogCt1C",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2022-04-09T06:46:40.000Z",
+          fee: "0.000015",
+          balanceChanges: { r4eecBHFbkHpLQEvSnB93bc3C2SVMjVKie: [{ currency: "XRP", value: "-0.000015" }] },
+          lockedBalanceChanges: {},
+          orderbookChanges: {},
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
+          ledgerVersion: 70868873,
+          indexInLedger: 21,
+        },
+      });
+    });
   });
 
   describe("getLedgerTxDetails", () => {

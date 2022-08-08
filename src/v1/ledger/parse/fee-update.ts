@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import {dropsToXrp} from '../../common'
-import {parseMemos} from './utils'
+import parseMemos from "./memos";
 
 function parseFeeUpdate(tx: any) {
   const baseFeeDrops = new BigNumber(tx.BaseFee, 16).toString()

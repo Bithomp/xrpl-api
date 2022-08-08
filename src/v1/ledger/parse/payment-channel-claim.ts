@@ -1,7 +1,7 @@
 import * as assert from 'assert'
 import {removeUndefined, txFlags} from '../../common'
 import parseRippledAmount from './ripple-amount'
-import {parseMemos} from './utils'
+import parseMemos from "./memos";
 const claimFlags = txFlags.PaymentChannelClaim
 
 function parsePaymentChannelClaim(tx: any): object {
