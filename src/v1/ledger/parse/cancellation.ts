@@ -1,5 +1,5 @@
 import * as assert from 'assert'
-import {parseMemos} from './utils'
+import parseMemos from "./memos";
 
 function parseOrderCancellation(tx: any): object {
   assert.ok(tx.TransactionType === 'OfferCancel')

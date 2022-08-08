@@ -2,7 +2,7 @@ import * as assert from 'assert'
 import {removeUndefined} from '../../common'
 import parseAmount from './amount'
 import {Amount} from '../../common/types/objects'
-import {parseMemos} from './utils'
+import parseMemos from "./memos";
 
 export type FormattedCheckCash = {
   // ID of the Check ledger object to cash.

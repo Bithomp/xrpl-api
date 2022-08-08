@@ -1,7 +1,8 @@
 import * as assert from 'assert'
 import parseRippledAmount from './ripple-amount'
-import {parseTimestamp, parseMemos} from './utils'
+import {parseTimestamp} from './utils'
 import {removeUndefined} from '../../common'
+import parseMemos from "./memos";
 
 function parseEscrowCreation(tx: any): object {
   assert.ok(tx.TransactionType === 'EscrowCreate')

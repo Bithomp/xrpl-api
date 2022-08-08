@@ -1,6 +1,6 @@
 import * as assert from 'assert'
 import {removeUndefined} from '../../common'
-import {parseMemos} from './utils'
+import parseMemos from "./memos";
 
 function parseTicketCreate(tx: any): object {
   assert.ok(tx.TransactionType === 'TicketCreate')

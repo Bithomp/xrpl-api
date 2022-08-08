@@ -1,8 +1,9 @@
 import * as _ from 'lodash'
 import * as assert from 'assert'
-import {constants} from '../../common'
+import {constants, removeUndefined} from '../../common'
 const AccountFlags = constants.AccountFlags
 import parseFields from './fields'
+import parseMemos from "./memos";
 
 function getAccountRootModifiedNode(tx: any) {
   const modifiedNodes = tx.meta.AffectedNodes.filter(node => node.ModifiedNode?.LedgerEntryType === 'AccountRoot');
@@ -62,7 +63,11 @@ function parseSettings(tx: any) {
       txType === 'SignerListSet'
   )
 
-  return Object.assign({}, parseFlags(tx), parseFields(tx))
+  const baseSettings = removeUndefined({
+    memos: parseMemos(tx),
+  });
+
+  return Object.assign(baseSettings, parseFlags(tx), parseFields(tx));
 }
 
 export default parseSettings

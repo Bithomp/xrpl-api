@@ -1,7 +1,7 @@
 import * as assert from 'assert'
 import {parseTimestamp} from './utils'
-import {parseMemos} from './utils'
 import parseAmount from './amount'
+import parseMemos from "./memos";
 import {removeUndefined, txFlags} from '../../common'
 import {
   FormattedOrderSpecification,

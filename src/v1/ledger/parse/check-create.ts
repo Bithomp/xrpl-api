@@ -2,8 +2,8 @@ import * as assert from 'assert'
 import {parseTimestamp} from './utils'
 import {removeUndefined} from '../../common'
 import parseAmount from './amount'
+import parseMemos from "./memos";
 import {Amount} from '../../common/types/objects'
-import {parseMemos} from './utils'
 
 export type FormattedCheckCreate = {
   // account that can cash the check.

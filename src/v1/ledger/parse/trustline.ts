@@ -1,7 +1,8 @@
 import * as assert from 'assert'
-import {parseQuality, parseMemos} from './utils'
+import {parseQuality} from './utils'
 import {txFlags, removeUndefined} from '../../common'
 const flags = txFlags.TrustSet
+import parseMemos from "./memos";
 
 function parseFlag(flagsValue, trueValue, falseValue) {
   // tslint:disable-next-line:no-bitwise

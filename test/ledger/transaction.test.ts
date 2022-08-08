@@ -136,6 +136,11 @@ describe("Client", () => {
         );
         expect(result.specification).to.eql({
           depositAuth: false,
+          memos: [
+            {
+              data: "28ae197d-76a0-42bd-a703-e6f793c25c14",
+            },
+          ],
         });
         expect(result.outcome).to.eql({
           balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
@@ -156,7 +161,16 @@ describe("Client", () => {
           "52D37283A4AF8D4DAEF745442B534E13E69861A8F4719BEC1211379ED8C42116",
           { specification: true }
         );
-        expect(result.specification).to.eql({});
+        expect(result.specification).to.eql({
+          memos: [
+            {
+              data: '"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW5jZWxsZWRfc2FsZV9zZXF1ZW5jZSI6ODQwLCJjdXJyZW5jeSI6IjAyMzAzMTUxNkQ1MjcyMzE0RTQ2NTQwMDAwMDAwMDAwMDAwMDAwMDAiLCJpc3N1ZXIiOiJyVVk1ZHo4VFVWVmdxcktQbWRraHpZNVgyaGJrQjNwYUY1IiwiaWF0IjoxNjQ1MTE3MTA2LCJpc3MiOiJTb2xvZ2VuaWMgRm91bmRhdGlvbiJ9.z46Ccefl9djKats0FkXKJfhb4Krf-98Jqr75nwdMi9NH9z7UcgLSGVLAEpRIEySSu1NylNBgbbSUuJgllWsPJQ"',
+            },
+            {
+              data: "a4e8c13a-1b26-4904-a9fc-faaa64287f2a",
+            },
+          ],
+        });
         expect(result.outcome).to.eql({
           balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.01" }] },
           lockedBalanceChanges: {},
@@ -184,6 +198,11 @@ describe("Client", () => {
           id: "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
           specification: {
             depositAuth: false,
+            memos: [
+              {
+                data: "28ae197d-76a0-42bd-a703-e6f793c25c14",
+              },
+            ],
           },
           outcome: {
             result: "tesSUCCESS",
@@ -228,6 +247,11 @@ describe("Client", () => {
           sequence: 865,
           specification: {
             depositAuth: false,
+            memos: [
+              {
+                data: "28ae197d-76a0-42bd-a703-e6f793c25c14",
+              },
+            ],
           },
         });
       });

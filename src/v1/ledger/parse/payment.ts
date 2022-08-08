@@ -1,8 +1,9 @@
 import * as _ from 'lodash'
 import * as assert from 'assert'
-import * as utils from './utils'
+import {isPartialPayment} from './utils'
 import {txFlags, removeUndefined} from '../../common'
 import parseAmount from './amount'
+import parseMemos from "./memos";
 
 function isNoDirectRipple(tx) {
   // tslint:disable-next-line:no-bitwise
@@ -45,10 +46,10 @@ function parsePayment(tx: any): object {
   return removeUndefined({
     source: removeUndefined(source),
     destination: removeUndefined(destination),
-    memos: utils.parseMemos(tx),
+    memos: parseMemos(tx),
     invoiceID: tx.InvoiceID,
     paths: tx.Paths ? JSON.stringify(tx.Paths) : undefined,
-    allowPartialPayment: utils.isPartialPayment(tx) || undefined,
+    allowPartialPayment: isPartialPayment(tx) || undefined,
     noDirectRipple: isNoDirectRipple(tx) || undefined,
     limitQuality: isQualityLimited(tx) || undefined
   })

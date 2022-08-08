@@ -1,11 +1,12 @@
 import * as assert from "assert";
 import BigNumber from "bignumber.js";
 import AddressCodec = require("ripple-address-codec");
-
 import { NFTokenMintFlags, NFTokenCreateOfferFlags } from "xrpl";
+
 import { ledgerTimeToUnixTime } from "./ledger";
-import { removeUndefined } from "../v1/common";
 import { parseFlags, SortDirection } from "../common/utils";
+import { removeUndefined } from "../v1/common";
+import parseMemos from "../v1/ledger/parse/memos";
 
 export interface NFTokenInterface {
   Flags: number;
@@ -152,6 +153,7 @@ export function parseNFTokenBurn(tx: any): FormattedNFTokenBurn {
   return removeUndefined({
     account: tx.Account,
     nftokenID: tx.NFTokenID,
+    memos: parseMemos(tx),
   });
 }
 
@@ -172,6 +174,7 @@ export function parseNFTokenMint(tx: any): FormattedNFTokenMint {
     transferFee: tx.TransferFee,
     uri: tx.URI,
     flags: parseNFTokenFlags(tx.Flags),
+    memos: parseMemos(tx),
   });
 }
 
@@ -184,6 +187,7 @@ export function parseNFTokenCancelOffer(tx: any): FormattedNFTokenCancelOffer {
 
   return removeUndefined({
     nftokenOffers: tx.NFTokenOffers,
+    memos: parseMemos(tx),
   });
 }
 
@@ -211,6 +215,7 @@ export function parseNFTokenCreateOffer(tx: any): FormattedNFTokenCreateOffer {
     destination: tx.Destination,
     expiration,
     flags: parseNFTOfferFlags(tx.Flags),
+    memos: parseMemos(tx),
   });
 }
 
@@ -227,5 +232,6 @@ export function parseNFTokenAcceptOffer(tx: any): FormattedNFTokenAcceptOffer {
     nftokenSellOffer: tx.NFTokenSellOffer,
     nftokenBuyOffer: tx.NFTokenBuyOffer,
     nftokenBrokerFee: tx.NFTokenBrokerFee,
+    memos: parseMemos(tx),
   });
 }
