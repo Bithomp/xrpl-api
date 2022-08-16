@@ -2,6 +2,26 @@ import { expect } from "chai";
 import { Faucet } from "../src/index";
 
 describe("Faucet", () => {
+  describe("getFaucetNetwork", () => {
+    it("returns undefined for invalid network", () => {
+      expect(Faucet.getFaucetNetwork("invalid")).to.be.undefined;
+    });
+
+    it("returns data for test", () => {
+      expect(Faucet.getFaucetNetwork("test")).to.eql({
+        url: "https://faucet.altnet.rippletest.net/accounts",
+        format: "xrpl",
+      });
+    });
+
+    it("returns data for beta", () => {
+      expect(Faucet.getFaucetNetwork("beta")).to.eql({
+        url: "https://hooks-testnet-v2.xrpl-labs.com/newcreds",
+        format: "xrpl-labs",
+      });
+    });
+  });
+
   describe("xrplLabsToXrplResponse", () => {
     it("works with new address", function () {
       const data = {

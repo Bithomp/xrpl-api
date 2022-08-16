@@ -40,22 +40,27 @@ interface XrplSuccessResponseInterface {
 // List of facuet networks
 export const FaucetNetworks = {
   test: {
+    // test, testnet, or testnet.altnet are all the same
     url: "https://faucet.altnet.rippletest.net/accounts",
     format: "xrpl",
   },
   dev: {
+    // dev, devnet, or devnet.altnet are all the same
     url: "https://faucet.devnet.rippletest.net/accounts",
     format: "xrpl",
   },
   xls20: {
+    // xls20, nft-sandbox, and nft-testnet are all the same
     url: "https://faucet-nft.ripple.com/accounts",
     format: "xrpl",
   },
   hooks: {
+    // hooks
     url: "https://hooks-testnet.xrpl-labs.com/newcreds",
     format: "xrpl-labs",
   },
   beta: {
+    // hooks-v2, beta are all the same
     url: "https://hooks-testnet-v2.xrpl-labs.com/newcreds",
     format: "xrpl-labs",
   },
