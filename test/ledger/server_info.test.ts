@@ -27,6 +27,7 @@ describe("Client", () => {
         delete result.info.reporting;
         delete result.info.fetch_pack;
         delete result.info.load_factor_server;
+        delete result.info.network_id;
         expect(Object.keys(result.info)).to.eql([
           "build_version",
           "complete_ledgers",
@@ -58,6 +59,7 @@ describe("Client", () => {
         delete result.info.reporting;
         delete result.info.fetch_pack;
         delete result.info.load_factor_server;
+        delete result.info.network_id;
         expect(Object.keys(result.info)).to.eql([
           "build_version",
           "complete_ledgers",
@@ -97,6 +99,7 @@ describe("Client", () => {
         delete result.info.fetch_pack;
         delete result.info.initial_sync_duration_us;
         delete result.info.load_factor_server;
+        delete result.info.network_id;
         expect(Object.keys(result.info)).to.eql([
           "build_version",
           "complete_ledgers",
