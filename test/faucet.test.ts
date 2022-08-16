@@ -22,6 +22,39 @@ describe("Faucet", () => {
     });
   });
 
+  describe("getAxiosFaucetOptions", () => {
+    it("returns options for xrpl new account", () => {
+      expect(Faucet.getAxiosFaucetOptions({ url: "https://test", format: "xrpl" })).to.eql({
+        method: "post",
+        url: "https://test",
+      });
+    });
+
+    it("returns options for xrpl", () => {
+      expect(Faucet.getAxiosFaucetOptions({ url: "https://test", format: "xrpl" }, "tTest")).to.eql({
+        method: "post",
+        url: "https://test",
+        data: {
+          destination: "tTest",
+        },
+      });
+    });
+
+    it("returns options for xrpl-lab new account", () => {
+      expect(Faucet.getAxiosFaucetOptions({ url: "https://test", format: "xrpl-labs" })).to.eql({
+        method: "post",
+        url: "https://test",
+      });
+    });
+
+    it("returns options for xrpl-lab", () => {
+      expect(Faucet.getAxiosFaucetOptions({ url: "https://test", format: "xrpl-labs" }, "tTest")).to.eql({
+        method: "post",
+        url: "https://test?account=tTest",
+      });
+    });
+  });
+
   describe("xrplLabsToXrplResponse", () => {
     it("works with new address", function () {
       const data = {

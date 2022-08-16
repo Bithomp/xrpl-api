@@ -3,7 +3,7 @@ import AddressCodec = require("ripple-address-codec");
 
 interface FaucetNetworkInterface {
   url: string;
-  format: string;
+  format?: string;
 }
 
 interface AxiosFaucetOptionsDataInterface {
@@ -88,19 +88,7 @@ export async function foundWallet(network: string | FaucetNetworkInterface, acco
     throw new Error("Invalid network");
   }
 
-  const options: AxiosFaucetOptionsInterface = {
-    method: "post",
-    url: network.url,
-  };
-
-  if (account) {
-    if (network.format === "xrpl") {
-      options.data = { destination: account };
-    } else if (network.format === "xrpl-labs") {
-      options.url += `?account=${account}`;
-    }
-  }
-
+  const options = getAxiosFaucetOptions(network, account);
   const data = (await axios(options)).data;
 
   // return xrpl-labs SUCCESS response in xrpl format
@@ -127,6 +115,23 @@ export async function foundWallet(network: string | FaucetNetworkInterface, acco
   //   balance: 1000
   // }
   return data;
+}
+
+export function getAxiosFaucetOptions(network: FaucetNetworkInterface, account?: string): AxiosFaucetOptionsInterface {
+  const options: AxiosFaucetOptionsInterface = {
+    method: "post",
+    url: network.url,
+  };
+
+  if (account) {
+    if (network.format === "xrpl-labs") {
+      options.url += `?account=${account}`;
+    } else {
+      options.data = { destination: account };
+    }
+  }
+
+  return options;
 }
 
 export function xrplLabsToXrplResponse(data: XrplLabsSuccessResponseInterface): XrplSuccessResponseInterface {
