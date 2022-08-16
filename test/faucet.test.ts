@@ -97,8 +97,8 @@ describe("Faucet", () => {
     });
   });
 
-  describe.skip("foundWallet", () => {
-    it("works with new address on test xrpl network", async function () {
+  describe("foundWallet", () => {
+    it.skip("works with new address on test xrpl network", async function () {
       const res = await Faucet.foundWallet("test");
 
       expect(res).to.eql({
@@ -114,19 +114,19 @@ describe("Faucet", () => {
     });
 
     it("works with existing address on test xrpl network", async function () {
-      const res = await Faucet.foundWallet("test", "rh19DztENXTjC2xPpjFXULmDzWdkS479Zx");
+      const res = await Faucet.foundWallet("test", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
 
       expect(res).to.eql({
         account: {
-          xAddress: "T7bCcMZiKHsCxCiadSDXJzjUyPYReudkFwJ6BftG4uEXPhj",
-          classicAddress: "rh19DztENXTjC2xPpjFXULmDzWdkS479Zx",
-          address: "rh19DztENXTjC2xPpjFXULmDzWdkS479Zx",
+          xAddress: "TVPHVUZfDDJo631W4CZg5oa8fNwwGhn4j9CMTkc35mXminK",
+          classicAddress: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
+          address: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
         },
         amount: 1000,
       });
     });
 
-    it("works with new address on test beta network", async function () {
+    it.skip("works with new address on test beta network", async function () {
       const res = await Faucet.foundWallet("beta");
 
       expect(res).to.eql({
@@ -142,13 +142,13 @@ describe("Faucet", () => {
     });
 
     it("works with existing address on test beta network", async function () {
-      const res = await Faucet.foundWallet("beta", "rDgvtnmeAY3o1pjcBwN2RZhqwLg6tV7r4w");
+      const res = await Faucet.foundWallet("beta", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
 
       expect(res).to.eql({
         account: {
-          xAddress: "TVaRHtuHAZAPhfy7gBqnP1uEWvgqnrae4h7MZzpuxs9mapV",
-          classicAddress: "rDgvtnmeAY3o1pjcBwN2RZhqwLg6tV7r4w",
-          address: "rDgvtnmeAY3o1pjcBwN2RZhqwLg6tV7r4w",
+          xAddress: "TVPHVUZfDDJo631W4CZg5oa8fNwwGhn4j9CMTkc35mXminK",
+          classicAddress: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
+          address: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
         },
         amount: 10000,
       });
