@@ -138,9 +138,9 @@ describe("Client", () => {
         };
         const result: any = await Client.getOrderbook(taker, orderbook);
         expect(result).to.eql({
-          error: "srcIsrMalformed",
-          error_code: 70,
-          error_message: "Invalid field 'taker_pays.issuer', bad issuer.",
+          error: "invalidParams",
+          error_code: 31,
+          error_message: "badTakerPaysIssuer",
           status: "error",
           taker,
           validated: undefined,
