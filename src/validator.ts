@@ -15,7 +15,7 @@ export function classicAddressFromValidatorPK(pk: string | Buffer): string | nul
     pubkey = publicKeyBufferFromValidatorPK(pk);
   }
 
-  assert.ok(pubkey.length == 33);
+  assert.ok(pubkey.length === 33);
   assert.ok(Crypto.getHashes().includes("sha256"));
   assert.ok(Crypto.getHashes().includes("ripemd160"));
 
