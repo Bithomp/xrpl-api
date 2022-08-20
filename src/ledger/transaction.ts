@@ -107,12 +107,14 @@ export async function getTransaction(transaction: string, options: GetTransactio
 
 interface LegacyPaymentInterface {
   sourceAddress: string;
+  sourceTag?: number;
   sourceValue: string;
   sourceCurrency: string;
   destinationAddress: string;
+  destinationTag?: number;
   destinationValue: string;
   destinationCurrency: string;
-  memo: Memo[];
+  memos: Memo[];
   secret: string;
 }
 
@@ -126,6 +128,7 @@ export async function legacyPayment(data: LegacyPaymentInterface): Promise<objec
   const txPayment: Payment = {
     source: {
       address: data.sourceAddress,
+      tag: data.sourceTag,
       maxAmount: {
         value: data.sourceValue.toString(),
         currency: data.sourceCurrency,
@@ -133,12 +136,13 @@ export async function legacyPayment(data: LegacyPaymentInterface): Promise<objec
     },
     destination: {
       address: data.destinationAddress,
+      tag: data.destinationTag,
       amount: {
         value: data.destinationValue.toString(),
         currency: data.destinationCurrency,
       },
     },
-    memos: data.memo,
+    memos: data.memos,
   };
 
   const transaction = createPaymentTransaction(data.sourceAddress, txPayment);
