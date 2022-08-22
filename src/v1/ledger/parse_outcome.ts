@@ -5,11 +5,13 @@ import {
   parseOrderbookChanges,
   parseNFTokenChanges,
   parseNFTokenOfferChanges,
+  parseAffectedObjects,
 } from "../../models/transaction";
+
 import parseAmount from './parse/amount'
 import {isPartialPayment, parseTimestamp} from './parse/utils';
 import {Amount} from '../common/types/objects'
-import * as common from '../common'
+import {removeUndefined, dropsToXrp} from '../common'
 
 type OfferDescription = {
   direction: string,
@@ -105,21 +107,23 @@ function parseOutcome(tx: any): any | undefined {
   const channelChanges = parseChannelChanges(metadata)
   const nftokenChanges = parseNFTokenChanges(tx);
   const nftokenOfferChanges = parseNFTokenOfferChanges(tx);
+  const affectedObjects = parseAffectedObjects(tx);
 
   removeEmptyCounterpartyInBalanceChanges(balanceChanges)
   removeEmptyCounterpartyInBalanceChanges(lockedBalanceChanges);
   removeEmptyCounterpartyInOrderbookChanges(orderbookChanges)
 
-  return common.removeUndefined({
+  return removeUndefined({
     result: tx.meta.TransactionResult,
     timestamp: parseTimestamp(tx.date),
-    fee: common.dropsToXrp(tx.Fee),
+    fee: dropsToXrp(tx.Fee),
     balanceChanges,
     lockedBalanceChanges,
     orderbookChanges,
     channelChanges,
     nftokenChanges,
     nftokenOfferChanges,
+    affectedObjects: affectedObjects ? removeUndefined(affectedObjects) : undefined,
     ledgerVersion: tx.ledger_index,
     indexInLedger: tx.meta.TransactionIndex,
     deliveredAmount: parseDeliveredAmount(tx)
