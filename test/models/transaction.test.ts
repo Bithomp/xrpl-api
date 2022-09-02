@@ -244,24 +244,9 @@ describe("Models", () => {
           timestamp: "2022-09-02T15:28:00.000Z",
           fee: "0.000012",
           balanceChanges: {
-            r9skPKe94BNdQqZkLYjSEkmuV7qHQyYgtp: [
-              {
-                currency: "XRP",
-                value: "1",
-              },
-            ],
-            rnqBvzZPCNra4NuhqSvmXV5imjnSYRVefv: [
-              {
-                currency: "XRP",
-                value: "0.999988",
-              },
-            ],
-            rUtBeehmtukxDkBNDZMGeoeDwwXtPxVeXH: [
-              {
-                currency: "XRP",
-                value: "-2",
-              },
-            ],
+            r9skPKe94BNdQqZkLYjSEkmuV7qHQyYgtp: [{ currency: "XRP", value: "1" }],
+            rnqBvzZPCNra4NuhqSvmXV5imjnSYRVefv: [{ currency: "XRP", value: "0.999988" }],
+            rUtBeehmtukxDkBNDZMGeoeDwwXtPxVeXH: [{ currency: "XRP", value: "-2" }],
           },
           lockedBalanceChanges: {},
           orderbookChanges: {},
@@ -308,12 +293,7 @@ describe("Models", () => {
             nftokens: {
               "000B000058460DD5D3FBA79460A3EDB465367A05F40097800000099B00000000": {
                 nftokenID: "000B000058460DD5D3FBA79460A3EDB465367A05F40097800000099B00000000",
-                flags: {
-                  burnable: true,
-                  onlyXRP: true,
-                  trustLine: false,
-                  transferable: true,
-                },
+                flags: { burnable: true, onlyXRP: true, trustLine: false, transferable: true },
                 transferFee: 0,
                 issuer: "r9skPKe94BNdQqZkLYjSEkmuV7qHQyYgtp",
                 nftokenTaxon: 0,
@@ -324,17 +304,13 @@ describe("Models", () => {
               "7CA48473A15C908EF0616976EF11D54DD730D2168D44C89BA0C61CAE26AEE534": {
                 index: "7CA48473A15C908EF0616976EF11D54DD730D2168D44C89BA0C61CAE26AEE534",
                 nftokenID: "000B000058460DD5D3FBA79460A3EDB465367A05F40097800000099B00000000",
-                flags: {
-                  sellToken: false,
-                },
+                flags: { sellToken: false },
                 owner: "rUtBeehmtukxDkBNDZMGeoeDwwXtPxVeXH",
               },
               "863FF280CD94CBC759A403C0050D46BE1AE679E7D648F00DC07A69C2CB5DF9A2": {
                 index: "863FF280CD94CBC759A403C0050D46BE1AE679E7D648F00DC07A69C2CB5DF9A2",
                 nftokenID: "000B000058460DD5D3FBA79460A3EDB465367A05F40097800000099B00000000",
-                flags: {
-                  sellToken: true,
-                },
+                flags: { sellToken: true },
                 owner: "r9skPKe94BNdQqZkLYjSEkmuV7qHQyYgtp",
               },
             },
