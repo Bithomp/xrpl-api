@@ -225,6 +225,126 @@ describe("Models", () => {
       });
     });
 
+    it("NFTokenAcceptOffer broker", function () {
+      const tx = require("../examples/responses/transaction/3A794368D4D7F6CEAF7BF967EFCB2A249498D9E1BF16FE4A642CD7A85400ED42.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "nftokenAcceptOffer",
+        address: "rnqBvzZPCNra4NuhqSvmXV5imjnSYRVefv",
+        sequence: 5281376,
+        id: "3A794368D4D7F6CEAF7BF967EFCB2A249498D9E1BF16FE4A642CD7A85400ED42",
+        specification: {
+          nftokenSellOffer: "863FF280CD94CBC759A403C0050D46BE1AE679E7D648F00DC07A69C2CB5DF9A2",
+          nftokenBuyOffer: "7CA48473A15C908EF0616976EF11D54DD730D2168D44C89BA0C61CAE26AEE534",
+          nftokenBrokerFee: "1000000",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2022-09-02T15:28:00.000Z",
+          fee: "0.000012",
+          balanceChanges: {
+            r9skPKe94BNdQqZkLYjSEkmuV7qHQyYgtp: [
+              {
+                currency: "XRP",
+                value: "1",
+              },
+            ],
+            rnqBvzZPCNra4NuhqSvmXV5imjnSYRVefv: [
+              {
+                currency: "XRP",
+                value: "0.999988",
+              },
+            ],
+            rUtBeehmtukxDkBNDZMGeoeDwwXtPxVeXH: [
+              {
+                currency: "XRP",
+                value: "-2",
+              },
+            ],
+          },
+          lockedBalanceChanges: {},
+          orderbookChanges: {},
+          nftokenChanges: {
+            r9skPKe94BNdQqZkLYjSEkmuV7qHQyYgtp: [
+              {
+                status: "removed",
+                nftokenID: "000B000058460DD5D3FBA79460A3EDB465367A05F40097800000099B00000000",
+                uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+              },
+            ],
+            rUtBeehmtukxDkBNDZMGeoeDwwXtPxVeXH: [
+              {
+                status: "added",
+                nftokenID: "000B000058460DD5D3FBA79460A3EDB465367A05F40097800000099B00000000",
+                uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+              },
+            ],
+          },
+          nftokenOfferChanges: {
+            rUtBeehmtukxDkBNDZMGeoeDwwXtPxVeXH: [
+              {
+                status: "deleted",
+                amount: "2000000",
+                flags: 0,
+                nftokenID: "000B000058460DD5D3FBA79460A3EDB465367A05F40097800000099B00000000",
+                owner: "rUtBeehmtukxDkBNDZMGeoeDwwXtPxVeXH",
+                index: "7CA48473A15C908EF0616976EF11D54DD730D2168D44C89BA0C61CAE26AEE534",
+              },
+            ],
+            r9skPKe94BNdQqZkLYjSEkmuV7qHQyYgtp: [
+              {
+                status: "deleted",
+                amount: "1000000",
+                flags: 1,
+                nftokenID: "000B000058460DD5D3FBA79460A3EDB465367A05F40097800000099B00000000",
+                owner: "r9skPKe94BNdQqZkLYjSEkmuV7qHQyYgtp",
+                destination: "rnqBvzZPCNra4NuhqSvmXV5imjnSYRVefv",
+                index: "863FF280CD94CBC759A403C0050D46BE1AE679E7D648F00DC07A69C2CB5DF9A2",
+              },
+            ],
+          },
+          affectedObjects: {
+            nftokens: {
+              "000B000058460DD5D3FBA79460A3EDB465367A05F40097800000099B00000000": {
+                nftokenID: "000B000058460DD5D3FBA79460A3EDB465367A05F40097800000099B00000000",
+                flags: {
+                  burnable: true,
+                  onlyXRP: true,
+                  trustLine: false,
+                  transferable: true,
+                },
+                transferFee: 0,
+                issuer: "r9skPKe94BNdQqZkLYjSEkmuV7qHQyYgtp",
+                nftokenTaxon: 0,
+                sequence: 0,
+              },
+            },
+            nftokenOffers: {
+              "7CA48473A15C908EF0616976EF11D54DD730D2168D44C89BA0C61CAE26AEE534": {
+                index: "7CA48473A15C908EF0616976EF11D54DD730D2168D44C89BA0C61CAE26AEE534",
+                nftokenID: "000B000058460DD5D3FBA79460A3EDB465367A05F40097800000099B00000000",
+                flags: {
+                  sellToken: false,
+                },
+                owner: "rUtBeehmtukxDkBNDZMGeoeDwwXtPxVeXH",
+              },
+              "863FF280CD94CBC759A403C0050D46BE1AE679E7D648F00DC07A69C2CB5DF9A2": {
+                index: "863FF280CD94CBC759A403C0050D46BE1AE679E7D648F00DC07A69C2CB5DF9A2",
+                nftokenID: "000B000058460DD5D3FBA79460A3EDB465367A05F40097800000099B00000000",
+                flags: {
+                  sellToken: true,
+                },
+                owner: "r9skPKe94BNdQqZkLYjSEkmuV7qHQyYgtp",
+              },
+            },
+          },
+          ledgerVersion: 5283673,
+          indexInLedger: 0,
+        },
+      });
+    });
+
     it("NFTokenBurn", function () {
       const tx = require("../examples/responses/NFTokenBurn.json");
       const result: any = Models.getTxDetails(tx, false);
