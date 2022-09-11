@@ -80,12 +80,12 @@ class Connection extends EventEmitter {
 
       await this.client.connect();
       await this.subscribeStreams();
-    } catch (e: any) {
+    } catch (err: any) {
       this.logger?.warn({
         service: "Bithomp::XRPL::Connection",
         function: "connect",
         url: this.url,
-        error: e.message || e.name || e,
+        error: err?.message || err?.name || err,
       });
     }
 
@@ -121,19 +121,19 @@ class Connection extends EventEmitter {
       this.updateLatence(endDate.getTime() - startDate.getTime());
 
       return response;
-    } catch (e: any) {
+    } catch (err: any) {
       this.updateLatence(1000);
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         function: "request",
         url: this.url,
-        error: e.message || e.name || e,
+        error: err?.message || err?.name || err,
       });
 
-      if (e.data) {
-        return e.data;
+      if (err.data) {
+        return err.data;
       } else {
-        return { error: e.message || e.name || e };
+        return { error: err?.message || err?.name || err };
       }
     }
   }
@@ -151,19 +151,19 @@ class Connection extends EventEmitter {
       this.updateLatence(endDate.getTime() - startDate.getTime());
 
       return response;
-    } catch (e: any) {
+    } catch (err: any) {
       this.updateLatence(1000);
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         function: "submitAndWait",
         url: this.url,
-        error: e.message || e.name || e,
+        error: err?.message || err?.name || err,
       });
 
-      if (e.data) {
-        return e.data;
+      if (err.data) {
+        return err.data;
       } else {
-        return { error: e.message || e.name || e };
+        return { error: err?.message || err?.name || err };
       }
     }
   }
@@ -250,7 +250,7 @@ class Connection extends EventEmitter {
         service: "Bithomp::XRPL::Connection",
         emit: "error",
         source,
-        error: message || error || error.name || error,
+        error: message || error?.name || error,
       });
 
       this.emit("error", source, message, error);
