@@ -189,7 +189,11 @@ async function getLedgerPaymentParams(account: string, connection: Connection): 
     });
 
     const lastLedgerSequencePromise = new Promise(async (resolve) => {
-      resolve((await Client.getLedgerIndex()) + MAX_LEDGERS_AWAIT);
+      const ledgerIndex = await Client.getLedgerIndex();
+      if (ledgerIndex !== undefined) {
+        resolve(ledgerIndex + MAX_LEDGERS_AWAIT);
+      }
+      resolve(undefined);
     });
 
     const result = await Promise.all([feePromise, sequencePromise, lastLedgerSequencePromise]);
@@ -236,7 +240,10 @@ export async function submit(signedTransaction: string, options: SubmitOptionsIn
   if (transaction.LastLedgerSequence) {
     lastLedger = transaction.LastLedgerSequence as number;
   } else {
-    lastLedger = (await Client.getLedgerIndex()) + MAX_LEDGERS_AWAIT;
+    const ledgerIndex = await Client.getLedgerIndex();
+    if (ledgerIndex !== undefined) {
+      lastLedger = ledgerIndex + MAX_LEDGERS_AWAIT;
+    }
   }
 
   return await waitForFinalTransactionOutcome(txHash, lastLedger);
@@ -248,7 +255,7 @@ async function waitForFinalTransactionOutcome(txHash: string, lastLedger: number
   const tx = await getTransaction(txHash);
   if (!tx || (tx as any).error === "txnNotFound" || (tx as any).validated !== true) {
     const ledgerIndex = await Client.getLedgerIndex();
-    if (lastLedger > ledgerIndex) {
+    if (ledgerIndex === undefined || lastLedger > ledgerIndex) {
       return waitForFinalTransactionOutcome(txHash, lastLedger);
     }
   }
