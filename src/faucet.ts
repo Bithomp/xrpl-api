@@ -58,9 +58,9 @@ export const FaucetNetworks = {
     format: "xrpl",
   },
   hooks: {
-    // hooks
-    // https://hooks.bithomp.com
-    url: "https://hooks-testnet.xrpl-labs.com/newcreds",
+    // the same as hooks-v2, hooks-v1 was discontinued
+    // https://beta.bithomp.com
+    url: "https://hooks-testnet-v2.xrpl-labs.com/newcreds",
     format: "xrpl-labs",
   },
   beta: {
@@ -68,6 +68,12 @@ export const FaucetNetworks = {
     // https://beta.bithomp.com
     url: "https://hooks-testnet-v2.xrpl-labs.com/newcreds",
     format: "xrpl-labs",
+  },
+  amm: {
+    // AMM
+    // https://amm.bithomp.com
+    url: "https://ammfaucet.devnet.rippletest.net/account",
+    format: "xrpl",
   },
 };
 

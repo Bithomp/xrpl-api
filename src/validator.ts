@@ -1,11 +1,11 @@
 import * as assert from "assert";
-import AddressCodec = require("ripple-address-codec");
+import { decodeNodePublic } from "ripple-address-codec";
 import * as Crypto from "crypto";
 import * as Base58 from "./base58";
 
 // public_key_from_validator_pk
 export function publicKeyBufferFromValidatorPK(pk: string): Buffer {
-  return AddressCodec.decodeNodePublic(pk);
+  return decodeNodePublic(pk);
 }
 
 // xrpl_address_from_validator_pk
