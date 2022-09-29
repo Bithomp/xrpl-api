@@ -9,6 +9,7 @@ export * from "./currency";
 export * from "./fee";
 export * from "./gateway_balances";
 export * from "./ledger";
+export * from "./manifest";
 export * from "./nft_info";
 export * from "./server_info";
 export * from "./transaction";
