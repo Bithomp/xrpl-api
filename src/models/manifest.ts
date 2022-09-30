@@ -20,9 +20,7 @@ export function decodeManifest(manifest: string): object {
 
   if (typeof SigningPubKey === "string") {
     const signingKeyBuffer = Buffer.from(SigningPubKey, "hex");
-
     manifestDecoded.signingPubKey = encodeNodePublic(signingKeyBuffer);
-    manifestDecoded.signingAddress = classicAddressFromValidatorPK(signingKeyBuffer);
   }
 
   if (typeof Domain === "string") {
