@@ -26,7 +26,7 @@ export interface ValidatorInterface {
   manifest?: string;
 }
 
-export interface parsedValidatorInterface {
+export interface ParsedValidatorInterface {
   publicKey?: string;
   manifest?: string;
   decodedManifest?: ManifestInterface;
@@ -41,7 +41,7 @@ export interface VLBlobInterface {
 export interface ParsedVLBlobInterface {
   sequence?: number;
   expiration?: string;
-  validators?: parsedValidatorInterface[];
+  validators?: ParsedValidatorInterface[];
 }
 
 export interface VLDataInterface {
