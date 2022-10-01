@@ -1,4 +1,4 @@
-import { parseManifest } from "./manifest";
+import { parseManifest, ManifestInterface } from "./manifest";
 import { parseUint32, parseUint64 } from "./utils";
 import crypto from "crypto";
 import elliptic from "elliptic";
@@ -12,15 +12,36 @@ export interface VLInterface {
   blob?: string;
 }
 
+export interface ParsedVLInterface {
+  version?: number;
+  publicKey?: string;
+  manifest?: string;
+  decodedManifest?: ManifestInterface;
+  error?: string;
+  blob?: ParsedVLBlobInterface;
+}
+
 export interface ValidatorInterface {
   validation_public_key?: string;
   manifest?: string;
+}
+
+export interface parsedValidatorInterface {
+  publicKey?: string;
+  manifest?: string;
+  decodedManifest?: ManifestInterface;
 }
 
 export interface VLBlobInterface {
   sequence?: number;
   expiration?: string;
   validators?: ValidatorInterface[];
+}
+
+export interface ParsedVLBlobInterface {
+  sequence?: number;
+  expiration?: string;
+  validators?: parsedValidatorInterface[];
 }
 
 export interface VLDataInterface {
@@ -45,8 +66,8 @@ export interface VLDataInterface {
 }
 
 // https://github.com/RichardAH/xrpl-fetch-unl/blob/main/fetch.js
-export function parseVL(vl: VLInterface): any {
-  const decoded: any = {};
+export function parseVL(vl: VLInterface): ParsedVLInterface {
+  const decoded: ParsedVLInterface = {};
 
   decoded.version = vl.version;
   decoded.publicKey = vl.public_key;
@@ -66,6 +87,7 @@ export function parseVL(vl: VLInterface): any {
   if (!decoded.error && error) {
     decoded.error = error;
   }
+
   decoded.blob = {
     sequence: blob?.sequence,
     expiration: blob?.expiration,
@@ -84,11 +106,13 @@ export function parseVL(vl: VLInterface): any {
       decoded.error = validatorManifest.error;
     }
 
-    decoded.blob.validators.push({
-      publicKey: validator.validation_public_key,
-      manifest: validator.manifest,
-      decodedManifest: validatorManifest,
-    });
+    if (decoded.blob.validators) {
+      decoded.blob.validators.push({
+        publicKey: validator.validation_public_key,
+        manifest: validator.manifest,
+        decodedManifest: validatorManifest,
+      });
+    }
   }
 
   return decoded;
