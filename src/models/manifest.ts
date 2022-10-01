@@ -62,6 +62,7 @@ export function parseManifest(manifest: string, publicKey?: string): ManifestInt
     return decoded;
   }
 
+  // tslint:disable-next-line:no-bitwise
   decoded.Sequence = (buf[cur] << 24) + (buf[cur + 1] << 16) + (buf[cur + 2] << 8) + buf[cur + 3];
   cur += 4;
 
@@ -123,7 +124,7 @@ export function parseManifest(manifest: string, publicKey?: string): ManifestInt
   lastSigning = cur;
 
   // domain field | optional
-  if (buf[cur] == 0x77) {
+  if (buf[cur] === 0x77) {
     cur++;
     const domainSize = buf[cur++];
     decoded.Domain = buf

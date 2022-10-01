@@ -1,10 +1,13 @@
 export function parseUint32(buf: Buffer, cur: number): string {
+  // tslint:disable:no-bitwise
   return (
     (BigInt(buf[cur]) << 24n) + (BigInt(buf[cur + 1]) << 16n) + (BigInt(buf[cur + 2]) << 8n) + BigInt(buf[cur + 3]) + ""
   );
+  // tslint:enable
 }
 
 export function parseUint64(buf: Buffer, cur: number): string {
+  // tslint:disable:no-bitwise
   return (
     (BigInt(buf[cur]) << 56n) +
     (BigInt(buf[cur + 1]) << 48n) +
@@ -16,4 +19,5 @@ export function parseUint64(buf: Buffer, cur: number): string {
     BigInt(buf[cur + 7]) +
     ""
   );
+  // tslint:enable
 }

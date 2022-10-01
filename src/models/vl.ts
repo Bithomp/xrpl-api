@@ -159,7 +159,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   let cur = 0;
 
   // Flags
-  if (buf[cur++] != 0x22 || buf.length - cur < 5) {
+  if (buf[cur++] !== 0x22 || buf.length - cur < 5) {
     decoded.error = "sfFlags missing or incomplete";
     return decoded;
   }
@@ -167,7 +167,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   cur += 4;
 
   // LedgerSequence
-  if (buf[cur++] != 0x26 || buf.length - cur < 5) {
+  if (buf[cur++] !== 0x26 || buf.length - cur < 5) {
     decoded.error = "sfLedgerSequnece missing or incomplete";
     return decoded;
   }
@@ -175,7 +175,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   cur += 4;
 
   // CloseTime (optional)
-  if (buf[cur] == 0x27) {
+  if (buf[cur] === 0x27) {
     cur++;
     if (buf.length - cur < 4) {
       decoded.error = "sfCloseTime missing or incomplete";
@@ -186,7 +186,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   }
 
   // SigningTime
-  if (buf[cur++] != 0x29 || buf.length - cur < 5) {
+  if (buf[cur++] !== 0x29 || buf.length - cur < 5) {
     decoded.error = "sfSigningTime missing or incomplete";
     return decoded;
   }
@@ -194,7 +194,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   cur += 4;
 
   // LoadFee (optional)
-  if (buf[cur] == 0x20 && buf.length - cur >= 1 && buf[cur + 1] == 0x18) {
+  if (buf[cur] === 0x20 && buf.length - cur >= 1 && buf[cur + 1] === 0x18) {
     cur += 2;
     if (buf.length - cur < 4) {
       decoded.error = "sfLoadFee payload missing";
@@ -205,7 +205,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   }
 
   // ReserveBase (optional)
-  if (buf[cur] == 0x20 && buf.length - cur >= 1 && buf[cur + 1] == 0x1f) {
+  if (buf[cur] === 0x20 && buf.length - cur >= 1 && buf[cur + 1] === 0x1f) {
     cur += 2;
     if (buf.length - cur < 4) {
       decoded.error = "sfReserveBase payload missing";
@@ -216,7 +216,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   }
 
   // ReserveIncrement (optional)
-  if (buf[cur] == 0x20 && buf.length - cur >= 1 && buf[cur + 1] == 0x20) {
+  if (buf[cur] === 0x20 && buf.length - cur >= 1 && buf[cur + 1] === 0x20) {
     cur += 2;
     if (buf.length - cur < 4) {
       decoded.error = "sfReserveIncrement payload missing";
@@ -227,7 +227,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   }
 
   // BaseFee (optional)
-  if (buf[cur] == 0x35) {
+  if (buf[cur] === 0x35) {
     cur++;
     if (buf.length - cur < 8) {
       decoded.error = "sfBaseFee missing or incomplete";
@@ -238,7 +238,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   }
 
   // Cookie (optional)
-  if (buf[cur] == 0x3a) {
+  if (buf[cur] === 0x3a) {
     cur++;
     if (buf.length - cur < 8) {
       decoded.error = "sfCookie missing or incomplete";
@@ -249,7 +249,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   }
 
   // ServerVersion (optional)
-  if (buf[cur] == 0x3b) {
+  if (buf[cur] === 0x3b) {
     cur++;
     if (buf.length - cur < 8) {
       decoded.error = "sfServerVersion missing or incomplete";
@@ -260,7 +260,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   }
 
   // LedgerHash
-  if (buf[cur++] != 0x51 || buf.length - cur < 5) {
+  if (buf[cur++] !== 0x51 || buf.length - cur < 5) {
     decoded.error = "sfLedgerHash missing or incomplete";
     return decoded;
   }
@@ -271,7 +271,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   cur += 32;
 
   // ConsensusHash
-  if (buf[cur] == 0x50 && buf.length - cur >= 1 && buf[cur + 1] == 0x17) {
+  if (buf[cur] === 0x50 && buf.length - cur >= 1 && buf[cur + 1] === 0x17) {
     cur += 2;
     if (buf.length - cur < 32) {
       decoded.error = "sfConsensusHash payload missing";
@@ -285,7 +285,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   }
 
   // ValidatedHash
-  if (buf[cur] == 0x50 && buf.length - cur >= 1 && buf[cur + 1] == 0x19) {
+  if (buf[cur] === 0x50 && buf.length - cur >= 1 && buf[cur + 1] === 0x19) {
     cur += 2;
     if (buf.length - cur < 32) {
       decoded.error = "sfValidatedHash payload missing";
@@ -299,7 +299,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   }
 
   // SigningPubKey
-  if (buf[cur++] != 0x73 || buf.length - cur < 2) {
+  if (buf[cur++] !== 0x73 || buf.length - cur < 2) {
     decoded.error = "sfSigningPubKey missing or incomplete";
     return decoded;
   }
@@ -315,25 +315,25 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   cur += keySize;
 
   // Signature
-  let sig_start = cur;
-  if (buf[cur++] != 0x76 || buf.length - cur < 2) {
+  const sigStart = cur;
+  if (buf[cur++] !== 0x76 || buf.length - cur < 2) {
     decoded.error = "sfSignature missing or incomplete";
     return decoded;
   }
-  let sig_size = buf[cur++];
-  if (buf.length - cur < sig_size) {
+  const sigSize = buf[cur++];
+  if (buf.length - cur < sigSize) {
     decoded.error = "sfSignature payload missing";
     return decoded;
   }
   decoded.Signature = buf
-    .slice(cur, cur + sig_size)
+    .slice(cur, cur + sigSize)
     .toString("hex")
     .toUpperCase();
-  cur += sig_size;
-  let sig_end = cur;
+  cur += sigSize;
+  const sigEnd = cur;
 
   // Amendments (optional)
-  if (buf.length - cur >= 1 && buf[cur] == 0x03 && buf[cur + 1] == 0x13) {
+  if (buf.length - cur >= 1 && buf[cur] === 0x03 && buf[cur + 1] === 0x13) {
     cur += 2;
     // parse variable length
     if (buf.length - cur < 1) {
@@ -373,7 +373,7 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   }
 
   // Check public key
-  if (publicKey.toUpperCase() != decoded.SigningPubKey) {
+  if (publicKey.toUpperCase() !== decoded.SigningPubKey) {
     decoded._verified = false;
     decoded.error = "SigningPubKey did not match or was not present";
     return decoded;
@@ -382,17 +382,17 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   // Check signature
   const computedHash = crypto
     .createHash("sha512")
-    .update(Buffer.concat([Buffer.from("VAL\x00", "utf-8"), buf.slice(0, sig_start), buf.slice(sig_end, buf.length)]))
+    .update(Buffer.concat([Buffer.from("VAL\x00", "utf-8"), buf.slice(0, sigStart), buf.slice(sigEnd, buf.length)]))
     .digest()
     .toString("hex")
     .slice(0, 64);
 
   const verifyKey =
-    publicKey.slice(2) == "ED"
+    publicKey.slice(2) === "ED"
       ? ed25519.keyFromPublic(publicKey.slice(2), "hex")
       : secp256k1.keyFromPublic(publicKey, "hex");
 
-  if (!verifyKey.verify(computedHash, decoded["Signature"])) {
+  if (!verifyKey.verify(computedHash, decoded.Signature)) {
     decoded._verified = false;
     decoded.error = "Signature (ed25519) did not match or was not present";
     return decoded;
