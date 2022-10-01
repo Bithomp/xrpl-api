@@ -5,3 +5,4 @@ export * from "./ledger";
 export * from "./manifest";
 export * from "./transaction";
 export * from "./trustline";
+export * from "./vl";
