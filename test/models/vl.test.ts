@@ -2,6 +2,24 @@ import { expect } from "chai";
 import { Models } from "../../src/index";
 
 describe("Models", () => {
+  describe("parseVL", () => {
+    it("parses not valid", function () {
+      const notValid = require("../examples/vl/not_valid.json");
+      const expected = require("../examples/vl/decoded_not_valid.json");
+
+      const result = Models.parseVL(notValid);
+      expect(JSON.stringify(result)).to.be.eql(JSON.stringify(expected));
+    });
+
+    it("parses valid valid", function () {
+      const valid = require("../examples/vl/valid.json");
+      const expected = require("../examples/vl/decoded_valid.json");
+
+      const result = Models.parseVL(valid);
+      expect(JSON.stringify(result)).to.be.eql(JSON.stringify(expected));
+    });
+  });
+
   describe("isValidVL", () => {
     it("validates valid", function () {
       const valid = require("../examples/vl/valid.json");
@@ -9,7 +27,7 @@ describe("Models", () => {
       expect(result).to.be.null;
     });
 
-    it("validates in valid", function () {
+    it("validates not valid", function () {
       const notValid = require("../examples/vl/not_valid.json");
       const result = Models.isValidVL(notValid);
 

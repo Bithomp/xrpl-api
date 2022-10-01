@@ -45,6 +45,55 @@ export interface VLDataInterface {
 }
 
 // https://github.com/RichardAH/xrpl-fetch-unl/blob/main/fetch.js
+export function parseVL(vl: VLInterface): any {
+  const decoded: any = {};
+
+  decoded.version = vl.version;
+  decoded.publicKey = vl.public_key;
+  decoded.manifest = vl.manifest;
+  let error = isValidVLFormat(vl);
+  if (error) {
+    decoded.error = error;
+  }
+
+  decoded.decodedManifest = parseManifest(vl.manifest as string, vl.public_key as string);
+  if (!decoded.error && decoded.decodedManifest.error) {
+    decoded.error = decoded.decodedManifest.error;
+  }
+
+  const blob = decodeVLBlob(vl.blob as string);
+  error = isValidVLBlob(blob);
+  if (!decoded.error && error) {
+    decoded.error = error;
+  }
+  decoded.blob = {
+    sequence: blob?.sequence,
+    expiration: blob?.expiration,
+    validators: [],
+  };
+
+  // validators
+  for (const validator of blob?.validators as ValidatorInterface[]) {
+    error = isValidVLBlobValidator(validator);
+    if (!decoded.error && error) {
+      decoded.error = error;
+    }
+
+    const validatorManifest = parseManifest(validator.manifest as string, validator.validation_public_key as string);
+    if (!decoded.error && validatorManifest.error) {
+      decoded.error = validatorManifest.error;
+    }
+
+    decoded.blob.validators.push({
+      publicKey: validator.validation_public_key,
+      manifest: validator.manifest,
+      decodedManifest: validatorManifest,
+    });
+  }
+
+  return decoded;
+}
+
 export function isValidVL(vl: VLInterface): string | null {
   let error = isValidVLFormat(vl);
   if (error) {
