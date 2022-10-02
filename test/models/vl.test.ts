@@ -11,7 +11,7 @@ describe("Models", () => {
       expect(JSON.stringify(result)).to.be.eql(JSON.stringify(expected));
     });
 
-    it("parses valid valid", function () {
+    it("parses valid", function () {
       const valid = require("../examples/vl/valid.json");
       const expected = require("../examples/vl/decoded_valid.json");
 
