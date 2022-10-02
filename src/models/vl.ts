@@ -14,7 +14,7 @@ export interface VLInterface {
 
 export interface ParsedVLInterface {
   version?: number;
-  publicKey?: string;
+  PublicKey?: string;
   manifest?: string;
   decodedManifest?: ManifestInterface;
   error?: string;
@@ -27,7 +27,7 @@ export interface ValidatorInterface {
 }
 
 export interface ParsedValidatorInterface {
-  publicKey?: string;
+  PublicKey?: string;
   manifest?: string;
   decodedManifest?: ManifestInterface;
 }
@@ -70,7 +70,7 @@ export function parseVL(vl: VLInterface): ParsedVLInterface {
   const decoded: ParsedVLInterface = {};
 
   decoded.version = vl.version;
-  decoded.publicKey = vl.public_key;
+  decoded.PublicKey = vl.public_key;
   decoded.manifest = vl.manifest;
   let error = isValidVLFormat(vl);
   if (error) {
@@ -108,7 +108,7 @@ export function parseVL(vl: VLInterface): ParsedVLInterface {
 
     if (decoded.blob.validators) {
       decoded.blob.validators.push({
-        publicKey: validator.validation_public_key,
+        PublicKey: validator.validation_public_key,
         manifest: validator.manifest,
         decodedManifest: validatorManifest,
       });
