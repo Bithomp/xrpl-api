@@ -101,13 +101,26 @@ export function findConnection(type?: string, url?: string, strongFilter?: boole
 
     if (con.types.length === 0) {
       return false;
-    } else {
-      if (type[0] === "!") {
-        return !con.types.includes(type.slice(1));
+    }
+
+    // check which types are supported
+    const foundTypes = type.split(",").map((t) => {
+      t = t.trim();
+      if (t[0] === "!") {
+        return !con.types.includes(t.slice(1));
       } else {
-        return con.types.includes(type);
+        return con.types.includes(t);
+      }
+    });
+
+    // check if all types are supported
+    for (const found of foundTypes) {
+      if (!found) {
+        return false;
       }
     }
+
+    return true;
   });
 
   if (!strongFilter) {

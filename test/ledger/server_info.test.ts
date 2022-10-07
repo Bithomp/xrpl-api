@@ -16,7 +16,7 @@ describe("Client", () => {
       });
 
       it("works with history", async function () {
-        const result: any = await Client.getServerInfo({ type: "history" });
+        const result: any = await Client.getServerInfo({ type: "history,last_close,!clio" });
 
         expect(result.info.server_state).to.eql("full");
         delete result.info.jq_trans_overflow;
@@ -48,7 +48,7 @@ describe("Client", () => {
       });
 
       it("works with url", async function () {
-        const result: any = await Client.getServerInfo({ url: "wss://s1.ripple.com" });
+        const result: any = await Client.getServerInfo({ url: "wss://xrplcluster.com" });
 
         expect(result.info.server_state).to.eql("full");
         delete result.info.jq_trans_overflow;

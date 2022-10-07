@@ -22,7 +22,7 @@ export function isValidClassicAddress(address: string): boolean {
     return false;
   }
 
-  const buffer = Base58.decode(address, 25);
+  const buffer = Base58.decode(address);
   if (buffer === null) {
     return false;
   }

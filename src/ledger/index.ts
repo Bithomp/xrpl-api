@@ -13,3 +13,4 @@ export * from "./manifest";
 export * from "./nft_info";
 export * from "./server_info";
 export * from "./transaction";
+export * from "./vl";

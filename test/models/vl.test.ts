@@ -31,7 +31,6 @@ describe("Models", () => {
       const notValid = require("../examples/vl/not_valid.json");
       const result = Models.isValidVL(notValid);
 
-      console.log(result);
       expect(result).to.be.eq("Master signature does not match");
     });
   });

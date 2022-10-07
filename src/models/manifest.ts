@@ -1,10 +1,7 @@
-import { decode } from "ripple-binary-codec";
+import { encode, decode } from "ripple-binary-codec";
 import { encodeNodePublic } from "ripple-address-codec";
 
-import elliptic from "elliptic";
-const ed25519 = new elliptic.eddsa("ed25519");
-
-import { classicAddressFromValidatorPK } from "../validator";
+import * as Validator from "../validator";
 
 export interface ManifestInterface {
   Sequence?: number;
@@ -34,7 +31,7 @@ export function decodeManifest(manifest: string): ManifestInterface {
     const publicKeyBuffer = Buffer.from(PublicKey, "hex");
 
     manifestDecoded.publicKey = encodeNodePublic(publicKeyBuffer);
-    manifestDecoded.address = classicAddressFromValidatorPK(publicKeyBuffer);
+    manifestDecoded.address = Validator.classicAddressFromValidatorPK(publicKeyBuffer);
   }
 
   if (typeof SigningPubKey === "string") {
@@ -66,6 +63,10 @@ export function parseManifest(manifest: string, publicKey?: string): ManifestInt
   decoded.Sequence = (buf[cur] << 24) + (buf[cur + 1] << 16) + (buf[cur + 2] << 8) + buf[cur + 3];
   cur += 4;
 
+  // Sequence
+  verifyFields.push(buf.slice(lastSigning, cur));
+  lastSigning = cur;
+
   // public key
   // type 7 = VL, 1 = PublicKey
   if (buf[cur++] !== 0x71) {
@@ -83,47 +84,46 @@ export function parseManifest(manifest: string, publicKey?: string): ManifestInt
     .toString("hex")
     .toUpperCase();
   decoded.publicKey = encodeNodePublic(buf.slice(cur, cur + 33));
-  decoded.address = classicAddressFromValidatorPK(buf.slice(cur, cur + 33)) as string;
+  decoded.address = Validator.classicAddressFromValidatorPK(buf.slice(cur, cur + 33)) as string;
   cur += 33;
 
-  // signing public key
-  // type 7 = VL, 3 = SigningPubKey
-  if (buf[cur++] !== 0x73) {
-    decoded.error = "Missing Signing Public Key";
-    return decoded;
-  }
-
-  // one byte size
-  if (buf[cur++] !== 33) {
-    decoded.error = "Missing Signing Public Key size";
-    return decoded;
-  }
-
-  decoded.SigningPubKey = buf
-    .slice(cur, cur + 33)
-    .toString("hex")
-    .toUpperCase();
-  decoded.signingPubKey = encodeNodePublic(buf.slice(cur, cur + 33));
-  cur += 33;
-
-  // signature
+  // PublicKey
   verifyFields.push(buf.slice(lastSigning, cur));
-
-  // // type 7 = VL, 6 = Signature
-  if (buf[cur++] !== 0x76) {
-    decoded.error = "Missing Signature";
-    return decoded;
-  }
-
-  const signatureSize = buf[cur++];
-  decoded.Signature = buf
-    .slice(cur, cur + signatureSize)
-    .toString("hex")
-    .toUpperCase();
-  cur += signatureSize;
   lastSigning = cur;
 
-  // domain field | optional
+  // signing public key
+  // type 7 = VL, 3 = SigningPubKey | optional
+  if (buf[cur++] === 0x73) {
+    // one byte size
+    if (buf[cur++] !== 33) {
+      decoded.error = "Missing Signing Public Key size";
+      return decoded;
+    }
+
+    decoded.SigningPubKey = buf
+      .slice(cur, cur + 33)
+      .toString("hex")
+      .toUpperCase();
+    decoded.signingPubKey = encodeNodePublic(buf.slice(cur, cur + 33));
+    cur += 33;
+
+    // SigningPubKey
+    verifyFields.push(buf.slice(lastSigning, cur));
+    lastSigning = cur;
+  }
+
+  // type 7 = VL, 6 = Signature | optional
+  if (buf[cur++] === 0x76) {
+    const signatureSize = buf[cur++];
+    decoded.Signature = buf
+      .slice(cur, cur + signatureSize)
+      .toString("hex")
+      .toUpperCase();
+    cur += signatureSize;
+    lastSigning = cur;
+  }
+
+  // Domain field | optional
   if (buf[cur] === 0x77) {
     cur++;
     const domainSize = buf[cur++];
@@ -133,17 +133,20 @@ export function parseManifest(manifest: string, publicKey?: string): ManifestInt
       .toUpperCase();
     decoded.domain = buf.slice(cur, cur + domainSize).toString("utf-8");
     cur += domainSize;
+
+    // Domain
+    verifyFields.push(buf.slice(lastSigning, cur));
+    lastSigning = cur;
   }
 
-  // master signature
-  verifyFields.push(buf.slice(lastSigning, cur));
+  // Master signature
   // type 7 = VL, 0 = uncommon field
   if (buf[cur++] !== 0x70) {
     decoded.error = "Missing Master Signature";
     return decoded;
   }
 
-  // // un field = 0x12 master signature
+  // un field = 0x12 master signature
   if (buf[cur++] !== 0x12) {
     decoded.error = "Missing Master Signature follow byte";
     return decoded;
@@ -164,14 +167,82 @@ export function parseManifest(manifest: string, publicKey?: string): ManifestInt
 
   // for signature verification
   decoded.verifyFields = Buffer.concat(verifyFields);
+  if (decoded.SigningPubKey && decoded.Signature) {
+    if (!Validator.verify(decoded.verifyFields, decoded.SigningPubKey, decoded.Signature)) {
+      decoded.error = "Ephemeral signature does not match";
+      return decoded;
+    }
+  }
 
   if (publicKey) {
-    const masterKey = ed25519.keyFromPublic(publicKey.slice(2), "hex");
-    if (!masterKey.verify(decoded.verifyFields, decoded.MasterSignature)) {
+    if (!Validator.verify(decoded.verifyFields, publicKey, decoded.MasterSignature)) {
       decoded.error = "Master signature does not match";
       return decoded;
     }
   }
 
   return decoded;
+}
+
+export interface GenerateanifestInterface {
+  Sequence: number;
+  PublicKey: string;
+  SigningPubKey: string;
+  Domain?: string;
+  SigningPrivateKey: string;
+  MasterPrivateKey: string;
+}
+
+export function generateManifest(manifest: GenerateanifestInterface): string {
+  const verifyFields = [Buffer.from("MAN\x00", "utf-8")];
+
+  // Sequence
+  const secuenceBuffer = Buffer.alloc(5);
+  secuenceBuffer.writeUInt8(0x24);
+  secuenceBuffer.writeUInt32BE(manifest.Sequence, 1);
+  verifyFields.push(secuenceBuffer);
+
+  // PublicKey
+  const publicKeyBuffer = Buffer.alloc(35);
+  publicKeyBuffer.writeUInt8(0x71);
+  publicKeyBuffer.writeUInt8(manifest.PublicKey.length / 2, 1);
+  publicKeyBuffer.write(manifest.PublicKey, 2, "hex");
+  verifyFields.push(publicKeyBuffer);
+
+  // SigningPubKey
+  const signingPubKeyBuffer = Buffer.alloc(35);
+  signingPubKeyBuffer.writeUInt8(0x73);
+  signingPubKeyBuffer.writeUInt8(manifest.SigningPubKey.length / 2, 1);
+  signingPubKeyBuffer.write(manifest.SigningPubKey, 2, "hex");
+  verifyFields.push(signingPubKeyBuffer);
+
+  // Domain
+  if (manifest.Domain) {
+    const domainBuffer = Buffer.alloc(2 + manifest.Domain.length / 2);
+    domainBuffer.writeUInt8(0x77);
+    domainBuffer.writeUInt8(manifest.Domain.length / 2, 1);
+    domainBuffer.write(manifest.Domain, 2, "hex");
+    verifyFields.push(domainBuffer);
+  }
+
+  const verifyData = Buffer.concat(verifyFields);
+
+  // Signature
+  const ephemeralSignature = Validator.sign(verifyData, manifest.SigningPrivateKey);
+
+  // MasterSignature
+  const masterSignature = Validator.sign(verifyData, manifest.MasterPrivateKey);
+
+  const manifestBuffer = Buffer.from(
+    encode({
+      Sequence: manifest.Sequence,
+      PublicKey: manifest.PublicKey,
+      SigningPubKey: manifest.SigningPubKey,
+      Signature: ephemeralSignature,
+      Domain: manifest.Domain,
+      MasterSignature: masterSignature,
+    }),
+    "hex"
+  );
+  return manifestBuffer.toString("base64");
 }
