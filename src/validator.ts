@@ -94,5 +94,11 @@ export function verify(message: Buffer | string, publicKey: string, signature: s
     publicKey = publicKeyBuffer.toString("hex").toUpperCase();
   }
 
-  return rippleKeypairs.verify(message.toString("hex"), signature, publicKey);
+  try {
+    return rippleKeypairs.verify(message.toString("hex"), signature, publicKey);
+  } catch (err) {
+    // ignore
+  }
+
+  return false;
 }
