@@ -169,7 +169,7 @@ export function parseManifest(manifest: string, publicKey?: string): ManifestInt
   decoded.verifyFields = Buffer.concat(verifyFields);
   if (decoded.SigningPubKey && decoded.Signature) {
     if (!Validator.verify(decoded.verifyFields, decoded.SigningPubKey, decoded.Signature)) {
-      decoded.error = "Ephimeral signature does not match";
+      decoded.error = "Ephemeral signature does not match";
       return decoded;
     }
   }
@@ -228,7 +228,7 @@ export function generateManifest(manifest: GenerateanifestInterface): string {
   const verifyData = Buffer.concat(verifyFields);
 
   // Signature
-  const ephimeralSignature = Validator.sign(verifyData, manifest.SigningPrivateKey);
+  const ephemeralSignature = Validator.sign(verifyData, manifest.SigningPrivateKey);
 
   // MasterSignature
   const masterSignature = Validator.sign(verifyData, manifest.MasterPrivateKey);
@@ -238,7 +238,7 @@ export function generateManifest(manifest: GenerateanifestInterface): string {
       Sequence: manifest.Sequence,
       PublicKey: manifest.PublicKey,
       SigningPubKey: manifest.SigningPubKey,
-      Signature: ephimeralSignature,
+      Signature: ephemeralSignature,
       Domain: manifest.Domain,
       MasterSignature: masterSignature,
     }),

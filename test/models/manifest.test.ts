@@ -133,8 +133,8 @@ describe("Models", () => {
 
   describe("generateManifest", function () {
     it("returns a manifest", function () {
-      // const ephimeralSecrets = Validator.generateSecrets();
-      const ephimeralSecrets = {
+      // const ephemeralSecrets = Validator.generateSecrets();
+      const ephemeralSecrets = {
         key_type: "ed25519",
         secret_key: "pncRK5E6tyFQwTXaUpXKZkSkBwuJ1EEBDcbwMBJyAVTeDZUmR7u",
         public_key: "nHUa1qqv3ih232B26LCEnS9kQ89Ab8A6jwWy5ARGztUfnej3fcBg",
@@ -152,8 +152,8 @@ describe("Models", () => {
       const manifest = Models.generateManifest({
         Sequence: 6525995,
         PublicKey: masterSecrets.PublicKey,
-        SigningPubKey: ephimeralSecrets.PublicKey,
-        SigningPrivateKey: ephimeralSecrets.secret_key,
+        SigningPubKey: ephemeralSecrets.PublicKey,
+        SigningPrivateKey: ephemeralSecrets.secret_key,
         MasterPrivateKey: masterSecrets.secret_key,
       });
 
@@ -166,7 +166,7 @@ describe("Models", () => {
 
     it("returns a manifest", function () {
       const seed = rippleKeypairs.generateSeed();
-      const ephimeralSecrets = rippleKeypairs.deriveKeypair(seed);
+      const ephemeralSecrets = rippleKeypairs.deriveKeypair(seed);
 
       // const masterSecrets = Validator.generateSecrets();
       const masterSecrets = {
@@ -179,8 +179,8 @@ describe("Models", () => {
       const manifest = Models.generateManifest({
         Sequence: 6525995,
         PublicKey: masterSecrets.PublicKey,
-        SigningPubKey: ephimeralSecrets.publicKey,
-        SigningPrivateKey: ephimeralSecrets.privateKey,
+        SigningPubKey: ephemeralSecrets.publicKey,
+        SigningPrivateKey: ephemeralSecrets.privateKey,
         MasterPrivateKey: masterSecrets.secret_key,
       });
 
@@ -192,8 +192,8 @@ describe("Models", () => {
     });
 
     it("returns a manifest with Domain", function () {
-      // const ephimeralSecrets = Validator.generateSecrets();
-      const ephimeralSecrets = {
+      // const ephemeralSecrets = Validator.generateSecrets();
+      const ephemeralSecrets = {
         key_type: "ed25519",
         secret_key: "pncRK5E6tyFQwTXaUpXKZkSkBwuJ1EEBDcbwMBJyAVTeDZUmR7u",
         public_key: "nHUa1qqv3ih232B26LCEnS9kQ89Ab8A6jwWy5ARGztUfnej3fcBg",
@@ -211,9 +211,9 @@ describe("Models", () => {
       const manifest = Models.generateManifest({
         Sequence: 6525995,
         PublicKey: masterSecrets.PublicKey,
-        SigningPubKey: ephimeralSecrets.PublicKey,
+        SigningPubKey: ephemeralSecrets.PublicKey,
         Domain: Buffer.from("bithomp.com", "utf8").toString("hex"),
-        SigningPrivateKey: ephimeralSecrets.secret_key,
+        SigningPrivateKey: ephemeralSecrets.secret_key,
         MasterPrivateKey: masterSecrets.secret_key,
       });
 
