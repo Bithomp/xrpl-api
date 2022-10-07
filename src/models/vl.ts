@@ -34,13 +34,13 @@ export interface ParsedValidatorInterface {
 
 export interface VLBlobInterface {
   sequence?: number;
-  expiration?: string;
+  expiration?: number;
   validators?: ValidatorInterface[];
 }
 
 export interface ParsedVLBlobInterface {
   sequence?: number;
-  expiration?: string;
+  expiration?: number;
   validators?: ParsedValidatorInterface[];
 }
 
@@ -177,6 +177,10 @@ function decodeVLBlob(blob: string): VLBlobInterface | null {
   const decoded = Buffer.from(blob, "base64").toString("ascii");
 
   return JSON.parse(decoded);
+}
+
+export function encodeVLBlob(vlBlob: VLBlobInterface): string {
+  return Buffer.from(JSON.stringify(vlBlob)).toString("base64");
 }
 
 function isValidVLBlob(blob: VLBlobInterface | null): string | null {

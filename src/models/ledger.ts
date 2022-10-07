@@ -12,6 +12,10 @@ export type StreamType =
   | "server"
   | "validations";
 
+export function unixTimeToLedgerTime(time: number): number {
+  return time - RIPPLE_UNIX_DIFF;
+}
+
 export function ledgerTimeToUnixTime(ledgerTime: number): number {
   return ledgerTime + RIPPLE_UNIX_DIFF;
 }
