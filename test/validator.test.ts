@@ -1,4 +1,5 @@
 import { expect } from "chai";
+import * as rippleKeypairs from "ripple-keypairs";
 import { Validator } from "../src/index";
 
 describe("Wallet", () => {
@@ -56,6 +57,19 @@ describe("Wallet", () => {
       expect(signature).to.be.a("string");
 
       const verify = Validator.verify(message, secrets.public_key, signature);
+      expect(verify).to.eql(true);
+    });
+
+    it("works with secp256k1 and hex encoded", function () {
+      const seed = rippleKeypairs.generateSeed({ algorithm: "ecdsa-secp256k1" });
+      const keypair = rippleKeypairs.deriveKeypair(seed);
+
+      const message = "hello world";
+      const signature = Validator.sign(Buffer.from(message, "ascii"), keypair.privateKey);
+
+      expect(signature).to.be.a("string");
+
+      const verify = Validator.verify(Buffer.from(message, "ascii"), keypair.publicKey, signature);
       expect(verify).to.eql(true);
     });
   });

@@ -1,3 +1,5 @@
+import * as rippleKeypairs from "ripple-keypairs";
+
 import { expect } from "chai";
 import { Models } from "../../src/index";
 
@@ -152,6 +154,33 @@ describe("Models", () => {
         PublicKey: masterSecrets.PublicKey,
         SigningPubKey: ephimeralSecrets.PublicKey,
         SigningPrivateKey: ephimeralSecrets.secret_key,
+        MasterPrivateKey: masterSecrets.secret_key,
+      });
+
+      const result: any = Models.parseManifest(manifest, masterSecrets.PublicKey);
+
+      expect(result.Sequence).to.eql(6525995);
+      expect(result.publicKey).to.eql(masterSecrets.public_key);
+      expect(result.error).to.eql(undefined);
+    });
+
+    it("returns a manifest", function () {
+      const seed = rippleKeypairs.generateSeed();
+      const ephimeralSecrets = rippleKeypairs.deriveKeypair(seed);
+
+      // const masterSecrets = Validator.generateSecrets();
+      const masterSecrets = {
+        key_type: "ed25519",
+        secret_key: "pncRK5E6tyFQwTXaUpXKZkSkBwuJ1EEBDcbwMBJyAVTeDZUmR7u",
+        public_key: "nHUa1qqv3ih232B26LCEnS9kQ89Ab8A6jwWy5ARGztUfnej3fcBg",
+        PublicKey: "ED62A2B6119230C074AD9E3F942316A1B4B0AAF00ADCDB1714609CB964BEA1EED2",
+      };
+
+      const manifest = Models.generateManifest({
+        Sequence: 6525995,
+        PublicKey: masterSecrets.PublicKey,
+        SigningPubKey: ephimeralSecrets.publicKey,
+        SigningPrivateKey: ephimeralSecrets.privateKey,
         MasterPrivateKey: masterSecrets.secret_key,
       });
 

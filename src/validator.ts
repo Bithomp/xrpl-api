@@ -73,8 +73,12 @@ export function sign(message: Buffer | string, secret: string): string {
     message = Buffer.from(message, "utf8");
   }
 
-  const decoded = codec.decode(secret, { versions: [0x20] });
-  secret = VALIDATOR_HEX_PUBLIC_KEY_PREFIX + decoded.bytes.toString("hex");
+  try {
+    const decoded = codec.decode(secret, { versions: [0x20] });
+    secret = VALIDATOR_HEX_PUBLIC_KEY_PREFIX + decoded.bytes.toString("hex");
+  } catch (err) {
+    // ignore
+  }
 
   return rippleKeypairs.sign(message.toString("hex"), secret).toUpperCase();
 }
