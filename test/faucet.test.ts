@@ -114,6 +114,7 @@ describe("Faucet", () => {
     });
 
     it("works with existing address on test xrpl network", async function () {
+      this.timeout(10000);
       const res = await Faucet.foundWallet("test", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
 
       expect(res).to.eql({
