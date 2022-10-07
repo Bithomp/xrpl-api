@@ -1,9 +1,6 @@
 import { encode, decode } from "ripple-binary-codec";
 import { encodeNodePublic } from "ripple-address-codec";
 
-import elliptic from "elliptic";
-const ed25519 = new elliptic.eddsa("ed25519");
-
 import * as Validator from "../validator";
 
 export interface ManifestInterface {
@@ -170,9 +167,15 @@ export function parseManifest(manifest: string, publicKey?: string): ManifestInt
 
   // for signature verification
   decoded.verifyFields = Buffer.concat(verifyFields);
+  if (decoded.SigningPubKey && decoded.Signature) {
+    if (!Validator.verify(decoded.verifyFields, decoded.SigningPubKey, decoded.Signature)) {
+      decoded.error = "Ephimeral signature does not match";
+      return decoded;
+    }
+  }
+
   if (publicKey) {
-    const masterKey = ed25519.keyFromPublic(publicKey.slice(2), "hex");
-    if (!masterKey.verify(decoded.verifyFields, decoded.MasterSignature)) {
+    if (!Validator.verify(decoded.verifyFields, publicKey, decoded.MasterSignature)) {
       decoded.error = "Master signature does not match";
       return decoded;
     }

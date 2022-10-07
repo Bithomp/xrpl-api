@@ -21,34 +21,6 @@ describe("Wallet", () => {
     });
   });
 
-  describe("createCryptoPrivateKey", () => {
-    it("works", async function () {
-      const secrets = Validator.generateSecrets();
-      const key = Validator.createCryptoPrivateKey(secrets.secret_key);
-
-      expect(key.type).to.eql("private");
-      expect(key.asymmetricKeyType).to.eql("ed25519");
-    });
-  });
-
-  describe("createCryptoPublicKey", () => {
-    it("works with node public key", async function () {
-      const secrets = Validator.generateSecrets();
-      const key = Validator.createCryptoPublicKey(secrets.public_key);
-
-      expect(key.type).to.eql("public");
-      expect(key.asymmetricKeyType).to.eql("ed25519");
-    });
-
-    it("works with hex public key", async function () {
-      const secrets = Validator.generateSecrets();
-      const key = Validator.createCryptoPublicKey(secrets.PublicKey);
-
-      expect(key.type).to.eql("public");
-      expect(key.asymmetricKeyType).to.eql("ed25519");
-    });
-  });
-
   describe("sign", () => {
     it("works", function () {
       const secrets = Validator.generateSecrets();
@@ -58,6 +30,32 @@ describe("Wallet", () => {
       expect(signature).to.be.a("string");
 
       const verify = Validator.verify(Buffer.from(message, "ascii"), secrets.public_key, signature);
+      expect(verify).to.eql(true);
+    });
+
+    it("works with text", function () {
+      const secrets = Validator.generateSecrets();
+      const message = "hello world";
+      const signature = Validator.sign(message, secrets.secret_key);
+
+      expect(signature).to.be.a("string");
+
+      const verify = Validator.verify(message, secrets.public_key, signature);
+      expect(verify).to.eql(true);
+    });
+
+    it("works with text", function () {
+      const secrets = {
+        key_type: "ed25519",
+        public_key: "nHUz2S2qRS7VRAyyMV7pxS6Pdgq1sdpwXyuTdTqF2orYwPn6Ju3A",
+        secret_key: "paBfSwcno3HSGYU3KU1LrUHx4mEnC8QbUdT9d9TSNb8jKNo8WDi",
+      };
+      const message = "hello world";
+      const signature = Validator.sign(message, secrets.secret_key);
+
+      expect(signature).to.be.a("string");
+
+      const verify = Validator.verify(message, secrets.public_key, signature);
       expect(verify).to.eql(true);
     });
   });
