@@ -168,14 +168,14 @@ export function parseManifest(manifest: string, publicKey?: string): ManifestInt
   // for signature verification
   decoded.verifyFields = Buffer.concat(verifyFields);
   if (decoded.SigningPubKey && decoded.Signature) {
-    if (!Validator.verify(decoded.verifyFields, decoded.SigningPubKey, decoded.Signature)) {
+    if (!Validator.verify(decoded.verifyFields, decoded.Signature, decoded.SigningPubKey)) {
       decoded.error = "Ephemeral signature does not match";
       return decoded;
     }
   }
 
   if (publicKey) {
-    if (!Validator.verify(decoded.verifyFields, publicKey, decoded.MasterSignature)) {
+    if (!Validator.verify(decoded.verifyFields, decoded.MasterSignature, publicKey)) {
       decoded.error = "Master signature does not match";
       return decoded;
     }

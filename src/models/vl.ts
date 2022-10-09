@@ -1,15 +1,13 @@
 import { parseManifest, ManifestInterface } from "./manifest";
 import { parseUint32, parseUint64 } from "./utils";
-import crypto from "crypto";
-import elliptic from "elliptic";
-const secp256k1 = new elliptic.ec("secp256k1");
-const ed25519 = new elliptic.eddsa("ed25519");
+import * as Validator from "../validator";
 
 export interface VLInterface {
   version?: number;
   public_key?: string;
   manifest?: string;
   blob?: string;
+  signature?: string;
 }
 
 export interface ParsedVLInterface {
@@ -17,8 +15,9 @@ export interface ParsedVLInterface {
   PublicKey?: string;
   manifest?: string;
   decodedManifest?: ManifestInterface;
-  error?: string;
   blob?: ParsedVLBlobInterface;
+  signature?: string;
+  error?: string;
 }
 
 export interface ValidatorInterface {
@@ -71,6 +70,7 @@ export function parseVL(vl: VLInterface): ParsedVLInterface {
 
   decoded.version = vl.version;
   decoded.PublicKey = vl.public_key;
+
   decoded.manifest = vl.manifest;
   let error = isValidVLFormat(vl);
   if (error) {
@@ -80,6 +80,20 @@ export function parseVL(vl: VLInterface): ParsedVLInterface {
   decoded.decodedManifest = parseManifest(vl.manifest as string, vl.public_key as string);
   if (!decoded.error && decoded.decodedManifest.error) {
     decoded.error = decoded.decodedManifest.error;
+  }
+
+  decoded.signature = vl.signature;
+  if (!decoded.error && !decoded.signature) {
+    decoded.error = "Signature (blob) is missing";
+  }
+
+  if (decoded.signature && decoded.decodedManifest.SigningPubKey && vl.blob) {
+    if (
+      !decoded.error &&
+      !Validator.verify(Buffer.from(vl.blob, "base64"), decoded.signature, decoded.decodedManifest.SigningPubKey)
+    ) {
+      decoded.error = "Signature is not valid";
+    }
   }
 
   const blob = decodeVLBlob(vl.blob as string);
@@ -457,22 +471,18 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   }
 
   // Check signature
-  const computedHash = crypto
-    .createHash("sha512")
-    .update(Buffer.concat([Buffer.from("VAL\x00", "utf-8"), buf.slice(0, sigStart), buf.slice(sigEnd, buf.length)]))
-    .digest()
-    .toString("hex")
-    .slice(0, 64);
+  const verifyFields = Buffer.concat([
+    Buffer.from("VAL\x00", "utf-8"),
+    buf.slice(0, sigStart),
+    buf.slice(sigEnd, buf.length),
+  ]);
 
-  const verifyKey =
-    publicKey.slice(2) === "ED"
-      ? ed25519.keyFromPublic(publicKey.slice(2), "hex")
-      : secp256k1.keyFromPublic(publicKey, "hex");
-
-  if (!verifyKey.verify(computedHash, decoded.Signature)) {
-    decoded._verified = false;
-    decoded.error = "Signature (ed25519) did not match or was not present";
-    return decoded;
+  if (decoded.SigningPubKey && decoded.Signature) {
+    if (!Validator.verify(verifyFields, decoded.Signature, decoded.SigningPubKey)) {
+      decoded._verified = false;
+      decoded.error = "Signature did not match or was not present";
+      return decoded;
+    }
   }
 
   decoded._verified = true;

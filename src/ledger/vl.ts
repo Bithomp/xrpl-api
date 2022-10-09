@@ -2,6 +2,7 @@ import * as Client from "../client";
 import { VLInterface, ValidatorInterface, VLBlobInterface, encodeVLBlob } from "../models/vl";
 import { generateManifest } from "../models/manifest";
 import { unixTimeToLedgerTime } from "../models/ledger";
+import * as Validator from "../validator";
 
 export async function createVL(
   masterSecret: { privateKey: string; publicKey: string },
@@ -27,12 +28,14 @@ export async function createVL(
     SigningPrivateKey: ephemeralSecret.privateKey,
     MasterPrivateKey: masterSecret.privateKey,
   });
+  const signature = Validator.sign(Buffer.from(blob, "base64"), ephemeralSecret.privateKey);
 
   return {
-    version: 1,
-    public_key: masterSecret.publicKey,
-    manifest,
     blob,
+    manifest,
+    signature,
+    public_key: masterSecret.publicKey,
+    version: 1,
   };
 }
 

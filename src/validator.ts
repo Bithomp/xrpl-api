@@ -3,11 +3,14 @@ import { decodeNodePublic, encodeNodePublic, codec } from "ripple-address-codec"
 import * as Crypto from "crypto";
 import * as Base58 from "./base58";
 import crypto from "crypto";
+import elliptic from "elliptic";
+const secp256k1 = new elliptic.ec("secp256k1");
+const ed25519 = new elliptic.eddsa("ed25519");
 import * as rippleKeypairs from "ripple-keypairs";
 
 const DER_PRIVATE_KEY_PREFIX = Buffer.from("302E020100300506032B657004220420", "hex");
 const DER_PUBLIC_KEY_PREFIX = Buffer.from("302A300506032B6570032100", "hex");
-const VALIDATOR_HEX_PUBLIC_KEY_PREFIX = "ED";
+const VALIDATOR_HEX_PREFIX_ED25519 = "ED";
 const VALIDATOR_NODE_PUBLIC_KEY_PREFIX = "n";
 
 // xrpl_address_from_validator_pk
@@ -52,7 +55,7 @@ export function generateSecrets(): GenerateSecretsInterface {
   const { privateKey, publicKey } = keypair;
 
   const PublicKey =
-    VALIDATOR_HEX_PUBLIC_KEY_PREFIX +
+    VALIDATOR_HEX_PREFIX_ED25519 +
     publicKey.slice(DER_PUBLIC_KEY_PREFIX.length, publicKey.length).toString("hex").toUpperCase();
 
   const secretKey = codec.encode(privateKey.slice(DER_PRIVATE_KEY_PREFIX.length, privateKey.length), {
@@ -75,7 +78,7 @@ export function sign(message: Buffer | string, secret: string): string {
 
   try {
     const decoded = codec.decode(secret, { versions: [0x20] });
-    secret = VALIDATOR_HEX_PUBLIC_KEY_PREFIX + decoded.bytes.toString("hex");
+    secret = VALIDATOR_HEX_PREFIX_ED25519 + decoded.bytes.toString("hex");
   } catch (err) {
     // ignore
   }
@@ -83,7 +86,7 @@ export function sign(message: Buffer | string, secret: string): string {
   return rippleKeypairs.sign(message.toString("hex"), secret).toUpperCase();
 }
 
-export function verify(message: Buffer | string, publicKey: string, signature: string): boolean {
+export function verify(message: Buffer | string, signature: string, publicKey: string): boolean {
   if (typeof message === "string") {
     message = Buffer.from(message, "utf8");
   }
@@ -98,6 +101,30 @@ export function verify(message: Buffer | string, publicKey: string, signature: s
     return rippleKeypairs.verify(message.toString("hex"), signature, publicKey);
   } catch (err) {
     // ignore
+  }
+
+  return false;
+}
+
+export function verify2(message: Buffer, signature: string, publicKey: string): boolean {
+  // assume node public address as ed25519 key
+  if (publicKey.slice(0, 1) === VALIDATOR_NODE_PUBLIC_KEY_PREFIX) {
+    const publicKeyBuffer = decodeNodePublic(publicKey);
+    publicKey = publicKeyBuffer.toString("hex").toUpperCase();
+  }
+
+  if (publicKey.slice(0, 2) === "ED") {
+    const verifyKey = ed25519.keyFromPublic(publicKey.slice(2), "hex");
+    if (verifyKey.verify(message.toString("hex"), signature)) {
+      return true;
+    }
+  } else {
+    const computedHash = crypto.createHash("sha512").update(message).digest().toString("hex").slice(0, 64);
+    const verifyKey = secp256k1.keyFromPublic(publicKey, "hex");
+
+    if (verifyKey.verify(computedHash, signature)) {
+      return true;
+    }
   }
 
   return false;
