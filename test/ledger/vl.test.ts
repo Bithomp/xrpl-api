@@ -28,7 +28,7 @@ describe("Client", () => {
         const validators = ["nHBidG3pZK11zQD6kpNDoAhDxH6WLGui6ZxSbUx7LSqLHsgzMPec"];
         const result = await Client.createVL(master, ephimeral, 2, 1696508603, validators);
 
-        expect(Object.keys(result)).to.have.members(["version", "public_key", "manifest", "blob"]);
+        expect(Object.keys(result)).to.have.members(["blob", "manifest", "signature", "version", "public_key"]);
 
         expect(result.version).to.eql(1);
         expect(result.public_key).to.eql(master.publicKey);

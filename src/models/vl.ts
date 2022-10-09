@@ -7,6 +7,7 @@ export interface VLInterface {
   public_key?: string;
   manifest?: string;
   blob?: string;
+  signature?: string;
 }
 
 export interface ParsedVLInterface {
@@ -14,8 +15,9 @@ export interface ParsedVLInterface {
   PublicKey?: string;
   manifest?: string;
   decodedManifest?: ManifestInterface;
-  error?: string;
   blob?: ParsedVLBlobInterface;
+  signature?: string;
+  error?: string;
 }
 
 export interface ValidatorInterface {
@@ -68,6 +70,7 @@ export function parseVL(vl: VLInterface): ParsedVLInterface {
 
   decoded.version = vl.version;
   decoded.PublicKey = vl.public_key;
+
   decoded.manifest = vl.manifest;
   let error = isValidVLFormat(vl);
   if (error) {
@@ -77,6 +80,20 @@ export function parseVL(vl: VLInterface): ParsedVLInterface {
   decoded.decodedManifest = parseManifest(vl.manifest as string, vl.public_key as string);
   if (!decoded.error && decoded.decodedManifest.error) {
     decoded.error = decoded.decodedManifest.error;
+  }
+
+  decoded.signature = vl.signature;
+  if (!decoded.error && !decoded.signature) {
+    decoded.error = "Signature (blob) is missing";
+  }
+
+  if (decoded.signature && decoded.decodedManifest.SigningPubKey && vl.blob) {
+    if (
+      !decoded.error &&
+      !Validator.verify(Buffer.from(vl.blob, "base64"), decoded.signature, decoded.decodedManifest.SigningPubKey)
+    ) {
+      decoded.error = "Signature is not valid";
+    }
   }
 
   const blob = decodeVLBlob(vl.blob as string);

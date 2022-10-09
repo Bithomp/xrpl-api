@@ -84,6 +84,31 @@ describe("Wallet", () => {
 
       const verify = Validator.verify(Buffer.from(message, "ascii"), signature, secrets.public_key);
       expect(verify).to.eql(true);
+
+      const verify2 = Validator.verify2(Buffer.from(message, "ascii"), signature, secrets.public_key);
+      expect(verify2).to.eql(true);
+    });
+
+    it("validates ed25519 from mainet", function () {
+      const vl = require("./examples/vl/valid.json");
+
+      const result = Validator.verify(
+        Buffer.from(vl.blob, "base64"),
+        vl.signature,
+        "ED18825E25019852216546D97C71C609FB42B5CB0F792534D5CC00B7486486CD14" // SigningPubKey
+      );
+
+      expect(result).to.be.true;
+    });
+
+    it("validates secp256k1", function () {
+      const vl = require("./examples/vl/not_valid.json");
+      const result = Validator.verify(
+        Buffer.from(vl.blob, "base64"),
+        vl.signature,
+        "03553F67DC5A6FE0EBFE1B3B4742833D14AF7C65E79E5760EC76EC56EAFD254CE9" // SigningPubKey
+      );
+      expect(result).to.be.true;
     });
   });
 });
