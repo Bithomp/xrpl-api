@@ -83,7 +83,7 @@ export function sign(message: Buffer | string, secret: string): string {
   return rippleKeypairs.sign(message.toString("hex"), secret).toUpperCase();
 }
 
-export function verify(message: Buffer | string, publicKey: string, signature: string): boolean {
+export function verify(message: Buffer | string, signature: string, publicKey: string): boolean {
   if (typeof message === "string") {
     message = Buffer.from(message, "utf8");
   }
@@ -97,6 +97,7 @@ export function verify(message: Buffer | string, publicKey: string, signature: s
   try {
     return rippleKeypairs.verify(message.toString("hex"), signature, publicKey);
   } catch (err) {
+    console.log(err);
     // ignore
   }
 

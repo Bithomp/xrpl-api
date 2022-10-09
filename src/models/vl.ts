@@ -1,9 +1,6 @@
 import { parseManifest, ManifestInterface } from "./manifest";
 import { parseUint32, parseUint64 } from "./utils";
-import crypto from "crypto";
-import elliptic from "elliptic";
-const secp256k1 = new elliptic.ec("secp256k1");
-const ed25519 = new elliptic.eddsa("ed25519");
+import * as Validator from "../validator";
 
 export interface VLInterface {
   version?: number;
@@ -457,22 +454,18 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
   }
 
   // Check signature
-  const computedHash = crypto
-    .createHash("sha512")
-    .update(Buffer.concat([Buffer.from("VAL\x00", "utf-8"), buf.slice(0, sigStart), buf.slice(sigEnd, buf.length)]))
-    .digest()
-    .toString("hex")
-    .slice(0, 64);
+  const verifyFields = Buffer.concat([
+    Buffer.from("VAL\x00", "utf-8"),
+    buf.slice(0, sigStart),
+    buf.slice(sigEnd, buf.length),
+  ]);
 
-  const verifyKey =
-    publicKey.slice(2) === "ED"
-      ? ed25519.keyFromPublic(publicKey.slice(2), "hex")
-      : secp256k1.keyFromPublic(publicKey, "hex");
-
-  if (!verifyKey.verify(computedHash, decoded.Signature)) {
-    decoded._verified = false;
-    decoded.error = "Signature (ed25519) did not match or was not present";
-    return decoded;
+  if (decoded.SigningPubKey && decoded.Signature) {
+    if (!Validator.verify(verifyFields, decoded.Signature, decoded.SigningPubKey)) {
+      decoded._verified = false;
+      decoded.error = "Signature did not match or was not present";
+      return decoded;
+    }
   }
 
   decoded._verified = true;

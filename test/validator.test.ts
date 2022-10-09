@@ -30,7 +30,7 @@ describe("Wallet", () => {
 
       expect(signature).to.be.a("string");
 
-      const verify = Validator.verify(Buffer.from(message, "ascii"), secrets.public_key, signature);
+      const verify = Validator.verify(Buffer.from(message, "ascii"), signature, secrets.public_key);
       expect(verify).to.eql(true);
     });
 
@@ -41,7 +41,7 @@ describe("Wallet", () => {
 
       expect(signature).to.be.a("string");
 
-      const verify = Validator.verify(message, secrets.public_key, signature);
+      const verify = Validator.verify(message, signature, secrets.public_key);
       expect(verify).to.eql(true);
     });
 
@@ -56,7 +56,7 @@ describe("Wallet", () => {
 
       expect(signature).to.be.a("string");
 
-      const verify = Validator.verify(message, secrets.public_key, signature);
+      const verify = Validator.verify(message, signature, secrets.public_key);
       expect(verify).to.eql(true);
     });
 
@@ -69,7 +69,7 @@ describe("Wallet", () => {
 
       expect(signature).to.be.a("string");
 
-      const verify = Validator.verify(Buffer.from(message, "ascii"), keypair.publicKey, signature);
+      const verify = Validator.verify(Buffer.from(message, "ascii"), signature, keypair.publicKey);
       expect(verify).to.eql(true);
     });
   });
@@ -82,7 +82,7 @@ describe("Wallet", () => {
 
       expect(signature).to.be.a("string");
 
-      const verify = Validator.verify(Buffer.from(message, "ascii"), secrets.public_key, signature);
+      const verify = Validator.verify(Buffer.from(message, "ascii"), signature, secrets.public_key);
       expect(verify).to.eql(true);
     });
   });

@@ -29,10 +29,10 @@ export async function createVL(
   });
 
   return {
-    version: 1,
+    blob,
     public_key: masterSecret.publicKey,
     manifest,
-    blob,
+    version: 1,
   };
 }
 
