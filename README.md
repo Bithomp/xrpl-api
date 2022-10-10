@@ -14,6 +14,8 @@ $ npm install --save @bithomp/xrpl-api
 
 ```
 const BithompXRPL = require("@bithomp/xrpl-api");
+
+// setup connection
 const config = [
   {
     "url": "wss://xrplcluster.com",
@@ -31,15 +33,15 @@ const config = [
     "connectionTimeout": 10000
   }
 ];
-
-// setup and connect
 BithompXRPL.Client.setup(config);
+
+// connect
 await BithompXRPL.Client.connect();
 
 // send request
 const accountInfo = await BithompXRPL.Client.getAccountInfo("rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z");
 
-// when complete
+// when complete, disconnect
 BithompXRPL.Client.disconnect();
 ```
 
@@ -48,6 +50,18 @@ BithompXRPL.Client.disconnect();
 _Setup connection_
 
 ```
+// setup connection
+const config = [
+  {
+    "url": "wss://xrplcluster.com",
+    "connectionTimeout": 10000
+  }
+];
+BithompXRPL.Client.setup(config);
+
+// connect
+await BithompXRPL.Client.connect();
+
 // validator secrets
 const vk = {
   privateKey: "p__________________________",
@@ -75,4 +89,6 @@ const vl = await BithompXRPL.Client.createVL(vk, sk, sequence, expiration, valid
 //   "public_key": "..." // vk.publicKey
 // }
 
+//  disconnect
+BithompXRPL.Client.disconnect();
 ```

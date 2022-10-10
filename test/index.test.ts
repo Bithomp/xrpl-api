@@ -1,6 +1,5 @@
 import nconf from "nconf";
 import { Client } from "../src/index";
-import { exit } from "process";
 
 const config = `config/test.json`;
 nconf.argv().env("_").file(config);
@@ -12,6 +11,4 @@ before(async function () {
 
 after(async function () {
   Client.disconnect();
-
-  setTimeout(exit, 5000);
 });
