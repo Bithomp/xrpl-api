@@ -72,7 +72,7 @@ export const FaucetNetworks = {
   amm: {
     // AMM
     // https://amm.bithomp.com
-    url: "https://ammfaucet.devnet.rippletest.net/account",
+    url: "https://ammfaucet.devnet.rippletest.net/accounts",
     format: "xrpl",
   },
 };
