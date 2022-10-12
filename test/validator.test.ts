@@ -102,7 +102,7 @@ describe("Wallet", () => {
     });
 
     it("validates secp256k1", function () {
-      const vl = require("./examples/vl/not_valid.json");
+      const vl = require("./examples/vl/valid_with_signpub_key.json");
       const result = Validator.verify(
         Buffer.from(vl.blob, "base64"),
         vl.signature,
