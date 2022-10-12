@@ -113,7 +113,7 @@ export function verify2(message: Buffer, signature: string, publicKey: string): 
     publicKey = publicKeyBuffer.toString("hex").toUpperCase();
   }
 
-  if (publicKey.slice(0, 2) === "ED") {
+  if (publicKey.slice(0, 2) === VALIDATOR_HEX_PREFIX_ED25519) {
     const verifyKey = ed25519.keyFromPublic(publicKey.slice(2), "hex");
     if (verifyKey.verify(message.toString("hex"), signature)) {
       return true;

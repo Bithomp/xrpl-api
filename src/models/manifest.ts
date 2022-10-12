@@ -46,7 +46,7 @@ export function decodeManifest(manifest: string): ManifestInterface {
   return manifestDecoded;
 }
 
-export function parseManifest(manifest: string, publicKey?: string): ManifestInterface {
+export function parseManifest(manifest: string): ManifestInterface {
   const buf = Buffer.from(manifest, "base64");
   const decoded: ManifestInterface = {};
   let cur = 0;
@@ -174,11 +174,9 @@ export function parseManifest(manifest: string, publicKey?: string): ManifestInt
     }
   }
 
-  if (publicKey) {
-    if (!Validator.verify(decoded.verifyFields, decoded.MasterSignature, publicKey)) {
-      decoded.error = "Master signature does not match";
-      return decoded;
-    }
+  if (!Validator.verify(decoded.verifyFields, decoded.MasterSignature, decoded.PublicKey)) {
+    decoded.error = "Master signature does not match";
+    return decoded;
   }
 
   return decoded;

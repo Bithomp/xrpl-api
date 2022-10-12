@@ -3,11 +3,11 @@ import { Models } from "../../src/index";
 
 describe("Models", () => {
   describe("parseVL", () => {
-    it("parses not valid", function () {
-      const notValid = require("../examples/vl/not_valid.json");
-      const expected = require("../examples/vl/decoded_not_valid.json");
+    it("parses valid with signpub key in root", function () {
+      const valid = require("../examples/vl/valid_with_signpub_key.json");
+      const expected = require("../examples/vl/decoded_valid_with_signpub_key.json");
 
-      const result = Models.parseVL(notValid);
+      const result = Models.parseVL(valid);
       expect(JSON.stringify(result)).to.be.eql(JSON.stringify(expected));
     });
 
@@ -27,11 +27,11 @@ describe("Models", () => {
       expect(result).to.be.null;
     });
 
-    it("validates not valid", function () {
-      const notValid = require("../examples/vl/not_valid.json");
-      const result = Models.isValidVL(notValid);
+    it("validates valid with signpub key in root", function () {
+      const valid = require("../examples/vl/valid_with_signpub_key.json");
+      const result = Models.isValidVL(valid);
 
-      expect(result).to.be.eq("Master signature does not match");
+      expect(result).to.be.null;
     });
   });
 
