@@ -19,10 +19,8 @@
         90, 111, 224, 235, 254, 27, 59, 71, 66, 131, 61, 20, 175, 124, 101, 231, 158, 87, 96, 236, 118, 236, 86, 234,
         253, 37, 76, 233
       ]
-    },
-    "error": "Master signature does not match"
+    }
   },
-  "error": "Master signature does not match",
   "signature": "304402205BF488144B8583D728E724554DC26942FC368B9A142F2D9194EB9E03B0F38A35022058BF5C1CA5FAD21D357145AA481E14F8C57DC2D2BBE57D3CC962E0AC5E637FC0",
   "blob": {
     "sequence": 5,

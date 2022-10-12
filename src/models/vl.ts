@@ -77,7 +77,7 @@ export function parseVL(vl: VLInterface): ParsedVLInterface {
     decoded.error = error;
   }
 
-  decoded.decodedManifest = parseManifest(vl.manifest as string, vl.public_key as string);
+  decoded.decodedManifest = parseManifest(vl.manifest as string);
   if (!decoded.error && decoded.decodedManifest.error) {
     decoded.error = decoded.decodedManifest.error;
   }
@@ -115,7 +115,7 @@ export function parseVL(vl: VLInterface): ParsedVLInterface {
       decoded.error = error;
     }
 
-    const validatorManifest = parseManifest(validator.manifest as string, validator.validation_public_key as string);
+    const validatorManifest = parseManifest(validator.manifest as string);
     if (!decoded.error && validatorManifest.error) {
       decoded.error = validatorManifest.error;
     }
@@ -138,7 +138,7 @@ export function isValidVL(vl: VLInterface): string | null {
     return error;
   }
 
-  const vlManifest = parseManifest(vl.manifest as string, vl.public_key as string);
+  const vlManifest = parseManifest(vl.manifest as string);
   if (vlManifest.error) {
     return vlManifest.error;
   }
@@ -236,7 +236,7 @@ function isValidVLBlobValidator(validator: ValidatorInterface): string | null {
     error = "Manifest missing from validator";
   }
 
-  const parsedManifest = parseManifest(manifest as string, validation_public_key as string);
+  const parsedManifest = parseManifest(manifest as string);
   if (parsedManifest.error) {
     return parsedManifest.error;
   }
