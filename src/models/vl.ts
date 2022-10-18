@@ -82,6 +82,14 @@ export function parseVL(vl: VLInterface): ParsedVLInterface {
     decoded.error = decoded.decodedManifest.error;
   }
 
+  if (
+    !decoded.error &&
+    decoded.PublicKey !== decoded.decodedManifest.PublicKey &&
+    decoded.PublicKey !== decoded.decodedManifest.SigningPubKey
+  ) {
+    decoded.error = "PublicKey does not match manifest";
+  }
+
   decoded.signature = vl.signature;
   if (!decoded.error && !decoded.signature) {
     decoded.error = "Signature (blob) is missing";

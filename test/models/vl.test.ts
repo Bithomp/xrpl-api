@@ -18,6 +18,25 @@ describe("Models", () => {
       const result = Models.parseVL(valid);
       expect(JSON.stringify(result)).to.be.eql(JSON.stringify(expected));
     });
+
+    it("parses valid with incorrect public key", function () {
+      const valid = require("../examples/vl/valid.json");
+      const expected = require("../examples/vl/decoded_valid.json");
+
+      valid.public_key = "033CE387D979DAEAF4A7D67F0A76C84B2A09C3859558A1DAE886663D3F0121A9D7";
+      expected.PublicKey = "033CE387D979DAEAF4A7D67F0A76C84B2A09C3859558A1DAE886663D3F0121A9D7";
+      expected.error = "PublicKey does not match manifest";
+
+      const result = Models.parseVL(valid);
+      expect(result.error).to.be.eql(expected.error);
+
+      // put error as last field
+      const error = result.error;
+      delete result.error;
+      result.error = error;
+
+      expect(JSON.stringify(result)).to.be.eql(JSON.stringify(expected));
+    });
   });
 
   describe("isValidVL", () => {
