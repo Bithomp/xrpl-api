@@ -30,7 +30,7 @@ describe("Models", () => {
       const result = Models.parseVL(valid);
       expect(result.error).to.be.eql(expected.error);
 
-      // put error as last field
+      // put error as last property
       const error = result.error;
       delete result.error;
       result.error = error;
