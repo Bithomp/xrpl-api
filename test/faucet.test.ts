@@ -127,7 +127,7 @@ describe("Faucet", () => {
       });
     });
 
-    it.skip("works with new address on test beta network", async function () {
+    it.skip("works with new address on beta xrpl network", async function () {
       const res = await Faucet.foundWallet("beta");
 
       expect(res).to.eql({
@@ -142,7 +142,7 @@ describe("Faucet", () => {
       });
     });
 
-    it("works with existing address on test beta network", async function () {
+    it("works with existing address on beta xrpl network", async function () {
       const res = await Faucet.foundWallet("beta", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
 
       expect(res).to.eql({
