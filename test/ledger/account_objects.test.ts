@@ -18,6 +18,19 @@ describe("Client", () => {
     });
   });
 
+  describe("getAccountAllObjects", () => {
+    before(async function () {
+      Client.setup(nconf.get("xrpl:connections:testnet"));
+      await Client.connect();
+    });
+
+    it("works", async function () {
+      const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B");
+      expect(Object.keys(result)).to.eql(["account", "account_objects", "ledger_hash", "ledger_index", "validated"]);
+      expect(result.account_objects.length).to.gt(500);
+    });
+  });
+
   describe("getAccountLinesObjects", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:testnet"));
@@ -36,6 +49,51 @@ describe("Client", () => {
           limit_peer: "0",
           no_ripple: false,
           no_ripple_peer: false,
+        },
+      ]);
+    });
+  });
+
+  describe("getAccountNFTOffersObjects", () => {
+    before(async function () {
+      Client.setup(nconf.get("xrpl:connections:xls20net"));
+      await Client.connect();
+    });
+
+    it("works for buy", async function () {
+      const result: any = await Client.getAccountNFTOffersObjects("rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz");
+
+      expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "nft_offers"]);
+      expect(result.nft_offers).to.eql([
+        {
+          nft_id: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000",
+          amount: "1000000000000000",
+          flags: 1,
+          index: "0FEDCDB1A329C80B5BF75F3EC3D7634A03B9CCC41B34E67E36C951BA08065D31",
+          owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+        },
+        {
+          nft_id: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000",
+          amount: "0",
+          flags: 1,
+          index: "8EAAE4372FDD51789CE5899CF6B854D62F6D37AFFD737EDA746FD6D16D7D4438",
+          owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          destination: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+        },
+      ]);
+    });
+
+    it("works for sell", async function () {
+      const result: any = await Client.getAccountNFTOffersObjects("rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw");
+
+      expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "nft_offers"]);
+      expect(result.nft_offers).to.eql([
+        {
+          nft_id: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+          amount: "1",
+          flags: 0,
+          index: "F5BC0A6FD7DFA22A92CD44DE7F548760D855C35755857D1AAFD41CA3CA57CA3A",
+          owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
         },
       ]);
     });

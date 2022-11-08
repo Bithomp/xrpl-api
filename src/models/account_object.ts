@@ -1,6 +1,7 @@
 import { LedgerEntry } from "xrpl";
 import { Trustline } from "../models/trustline";
 const { RippleStateFlags } = LedgerEntry;
+import { removeUndefined } from "../v1/common";
 
 // https://github.com/XRPLF/xrpl.js/blob/2b424276344b2aa8b8b76d621500f4d9e1436663/packages/xrpl/src/models/methods/accountObjects.ts#L61
 /**
@@ -18,7 +19,15 @@ export type AccountObject =
   | LedgerEntry.RippleState;
 
 // https://github.com/XRPLF/xrpl.js/blob/2b424276344b2aa8b8b76d621500f4d9e1436663/packages/xrpl/src/models/common/index.ts#L3
-export type AccountObjectType = "check" | "escrow" | "offer" | "payment_channel" | "signer_list" | "state";
+export type AccountObjectType =
+  | "check"
+  | "escrow"
+  | "offer"
+  | "payment_channel"
+  | "signer_list"
+  | "state"
+  | "ticket"
+  | "nft_offer";
 
 /**
  * https://gist.github.com/WietseWind/5df413334385367c548a148de3d8a713
@@ -32,6 +41,7 @@ export type AccountObjectType = "check" | "escrow" | "offer" | "payment_channel"
 export function accountObjectsToAccountLines(account: string, accountObjects: AccountObject[]) {
   const notInDefaultState = accountObjects.filter((obj: any) => {
     return (
+      obj.LedgerEntryType === "RippleState" &&
       obj.HighLimit &&
       obj.LowLimit &&
       // tslint:disable-next-line:no-bitwise
@@ -69,4 +79,23 @@ export function accountObjectsToAccountLines(account: string, accountObjects: Ac
   });
 
   return accountLinesFormatted;
+}
+
+export function accountObjectsToNFTOffers(accountObjects: AccountObject[]) {
+  const nftOfferObjects = accountObjects.filter((obj: any) => {
+    return obj.LedgerEntryType === "NFTokenOffer";
+  });
+
+  const nftOffers = nftOfferObjects.map((obj: any) => {
+    return removeUndefined({
+      nft_id: obj.NFTokenID,
+      amount: obj.Amount,
+      flags: obj.Flags,
+      index: obj.index,
+      owner: obj.Owner,
+      destination: obj.Destination,
+    });
+  });
+
+  return nftOffers;
 }

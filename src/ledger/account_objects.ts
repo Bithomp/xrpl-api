@@ -1,13 +1,13 @@
 import * as Client from "../client";
 
-import { AccountObjectType, accountObjectsToAccountLines } from "../models/account_object";
+import { AccountObjectType, accountObjectsToAccountLines, accountObjectsToNFTOffers } from "../models/account_object";
 import { LedgerIndex } from "../models/ledger";
 
 export interface GetAccountObjectsOptions {
   type?: AccountObjectType;
   ledgerHash?: string;
   ledgerIndex?: LedgerIndex;
-  limit?: number;
+  limit?: number; // The maximum number of objects to include in the results. Must be within the inclusive range 10 to 400 on non-admin connections. The default is 200.P
   marker?: string;
 }
 
@@ -86,6 +86,67 @@ export async function getAccountObjects(
   return response?.result;
 }
 
+export interface GetAccountAllObjectsOptions extends GetAccountObjectsOptions {
+  timeout?: number;
+}
+
+export async function getAccountAllObjects(
+  account: string,
+  options: GetAccountAllObjectsOptions = {}
+): Promise<object | null> {
+  const connection: any = Client.findConnection();
+  if (!connection) {
+    throw new Error("There is no connection");
+  }
+
+  const timeStart = new Date();
+  let response: any;
+  const account_objects: any[] = [];
+
+  // donwload all objects with marker
+  while (true) {
+    const currentTime = new Date();
+    // timeout validation
+    if (options.timeout && currentTime.getTime() - timeStart.getTime() > options.timeout) {
+      break;
+    }
+
+    response = await getAccountObjects(account, options);
+    if (!response || response.error) {
+      return response;
+    }
+
+    account_objects.push(...response.account_objects);
+
+    if (response.marker) {
+      options.marker = response.marker;
+    } else {
+      break;
+    }
+  }
+
+  if (!response) {
+    return null;
+  }
+
+  if (response.error) {
+    const { error, error_code, error_message, status, validated } = response;
+
+    return {
+      account,
+      error,
+      error_code,
+      error_message,
+      status,
+      validated,
+    };
+  }
+
+  response.account_objects = account_objects;
+
+  return response;
+}
+
 export interface GetAccountLinesObjectsOptions {
   ledgerHash?: string;
   ledgerIndex?: LedgerIndex;
@@ -121,12 +182,10 @@ export async function getAccountLinesObjects(
     throw new Error("There is no connection");
   }
 
-  const response = await connection.request({
-    command: "account_objects",
-    account,
+  const response: any = await getAccountAllObjects(account, {
     type: "state",
-    ledger_hash: options.ledgerHash,
-    ledger_index: options.ledgerIndex || "validated",
+    ledgerHash: options.ledgerHash,
+    ledgerIndex: options.ledgerIndex,
   });
 
   if (!response) {
@@ -134,24 +193,69 @@ export async function getAccountLinesObjects(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
-
-    return {
-      account,
-      error,
-      error_code,
-      error_message,
-      status,
-      validated,
-    };
+    return response;
   }
 
-  const result = response?.result;
-  const accountObjects = result?.account_objects;
+  const accountObjects = response.account_objects;
 
   const accountLines = accountObjectsToAccountLines(account, accountObjects);
-  delete result.account_objects;
-  result.lines = accountLines;
+  delete response.account_objects;
+  response.lines = accountLines;
 
-  return result;
+  return response;
+}
+
+export interface GetAccountNFTOffersObjectsOptions {
+  ledgerHash?: string;
+  ledgerIndex?: LedgerIndex;
+}
+
+/**
+ * @param account
+ * @param options
+ * @returns {Promise<object | null>}
+ * {
+ *   "account": "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+ *   "ledger_hash": "3E1198BF849E2A2ABB8667DA275F180FB48CA02408FE3ABE0F94CBC5145FA773",
+ *   "ledger_index": 7197353,
+ *   "validated": true,
+ *   "nft_offers": [
+ *     {
+ *       "nft_id": "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+ *       "amount": "1",
+ *       "flags": 0,
+ *       "index": "F5BC0A6FD7DFA22A92CD44DE7F548760D855C35755857D1AAFD41CA3CA57CA3A",
+ *       "owner": "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw"
+ *     }
+ *   ]
+ * }
+ */
+export async function getAccountNFTOffersObjects(
+  account: string,
+  options: GetAccountNFTOffersObjectsOptions = {}
+): Promise<object | null> {
+  const connection: any = Client.findConnection();
+  if (!connection) {
+    throw new Error("There is no connection");
+  }
+
+  const response: any = await getAccountAllObjects(account, {
+    type: "nft_offer",
+    ledgerHash: options.ledgerHash,
+    ledgerIndex: options.ledgerIndex,
+  });
+
+  if (!response) {
+    return null;
+  }
+
+  if (response.error) {
+    return response;
+  }
+
+  const accountObjects = response.account_objects;
+  response.nft_offers = accountObjectsToNFTOffers(accountObjects);
+  delete response.account_objects;
+
+  return response;
 }
