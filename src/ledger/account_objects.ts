@@ -227,6 +227,8 @@ export async function getAccountLinesObjects(
 export interface GetAccountNFTOffersObjectsOptions {
   ledgerHash?: string;
   ledgerIndex?: LedgerIndex;
+  limit?: number; // The maximum number of objects to include in the results. Must be within the inclusive range 10 to 400 on non-admin connections. The default is 200.P
+  marker?: string;
 }
 
 /**
@@ -262,6 +264,8 @@ export async function getAccountNFTOffersObjects(
     type: "nft_offer",
     ledgerHash: options.ledgerHash,
     ledgerIndex: options.ledgerIndex,
+    limit: options.limit,
+    marker: options.marker,
   });
 
   if (!response) {
