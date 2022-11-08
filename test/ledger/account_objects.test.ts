@@ -136,6 +136,8 @@ describe("Client", () => {
           flags: 1,
           index: "0FEDCDB1A329C80B5BF75F3EC3D7634A03B9CCC41B34E67E36C951BA08065D31",
           owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          ledger_index: 75327,
+          transaction_hash: "666CB15BC53FC3681E4EC42390CF27C78BB425F0BFFBD7B181BFD265078FFC62",
         },
         {
           nft_id: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000",
@@ -144,6 +146,9 @@ describe("Client", () => {
           index: "8EAAE4372FDD51789CE5899CF6B854D62F6D37AFFD737EDA746FD6D16D7D4438",
           owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
           destination: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+          expiration: 2529122432,
+          ledger_index: 75329,
+          transaction_hash: "ECE064CC23B00D2D9957344A68EE1155F7A5EC4F4BF0BCF00FB69F564EF6AF2D",
         },
       ]);
     });
@@ -159,6 +164,8 @@ describe("Client", () => {
           flags: 0,
           index: "F5BC0A6FD7DFA22A92CD44DE7F548760D855C35755857D1AAFD41CA3CA57CA3A",
           owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+          ledger_index: 75332,
+          transaction_hash: "D6FCDD7C5B8137263DA26D8762DBD5E6426515D2675A29F58B12B71FDD059118",
         },
       ]);
     });

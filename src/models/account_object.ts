@@ -2,6 +2,7 @@ import { LedgerEntry } from "xrpl";
 import { Trustline } from "../models/trustline";
 const { RippleStateFlags } = LedgerEntry;
 import { removeUndefined } from "../v1/common";
+import { ledgerTimeToUnixTime } from "../models/ledger";
 
 // https://github.com/XRPLF/xrpl.js/blob/2b424276344b2aa8b8b76d621500f4d9e1436663/packages/xrpl/src/models/methods/accountObjects.ts#L61
 /**
@@ -87,6 +88,11 @@ export function accountObjectsToNFTOffers(accountObjects: AccountObject[]) {
   });
 
   const nftOffers = nftOfferObjects.map((obj: any) => {
+    let expiration: number = obj.Expiration;
+    if (typeof expiration === "number") {
+      expiration = ledgerTimeToUnixTime(expiration);
+    }
+
     return removeUndefined({
       nft_id: obj.NFTokenID,
       amount: obj.Amount,
@@ -94,6 +100,9 @@ export function accountObjectsToNFTOffers(accountObjects: AccountObject[]) {
       index: obj.index,
       owner: obj.Owner,
       destination: obj.Destination,
+      expiration,
+      ledger_index: obj.PreviousTxnLgrSeq,
+      transaction_hash: obj.PreviousTxnID,
     });
   });
 
