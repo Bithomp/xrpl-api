@@ -1,6 +1,6 @@
 {
   "name": "@bithomp/xrpl-api",
-  "version": "2.1.12",
+  "version": "2.1.13",
   "description": "A Bithomp JavaScript/TypeScript library for interacting with the XRP Ledger",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -39,11 +39,11 @@
     "xrpl": "^2.5.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.3",
+    "@types/chai": "^4.3.4",
     "@types/chai-as-promised": "^7.1.5",
     "@types/mocha": "^10.0.0",
-    "@types/node": "^18.11.0",
-    "chai": "^4.3.6",
+    "@types/node": "^18.11.9",
+    "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
     "mocha": "^10.1.0",
     "nconf": "^0.12.0",
