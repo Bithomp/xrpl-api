@@ -4,6 +4,7 @@ import { AccountObjectType, accountObjectsToAccountLines, accountObjectsToNFTOff
 import { LedgerIndex } from "../models/ledger";
 
 const OBJECTS_LIMIT_MAX = 400;
+const OBJECTS_LIMIT_MIN = 10;
 
 export interface GetAccountObjectsOptions {
   type?: AccountObjectType;
@@ -121,7 +122,7 @@ export async function getAccountAllObjects(
       if (parts === 0) {
         options.limit = left;
       } else {
-        options.limit = left - 10; // we should leave 10 objects for the next request
+        options.limit = left - OBJECTS_LIMIT_MIN; // we should leave 10 objects for the next request
       }
     }
 
