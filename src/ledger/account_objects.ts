@@ -104,7 +104,7 @@ export async function getAccountAllObjects(
   const timeStart = new Date();
   const limit = options.limit;
   let response: any;
-  let accountObjects: any[] = [];
+  const accountObjects: any[] = [];
 
   // donwload all objects with marker
   while (true) {
