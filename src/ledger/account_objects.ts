@@ -101,7 +101,7 @@ export async function getAccountAllObjects(
 
   const timeStart = new Date();
   let response: any;
-  const account_objects: any[] = [];
+  const accountObjects: any[] = [];
 
   // donwload all objects with marker
   while (true) {
@@ -116,7 +116,7 @@ export async function getAccountAllObjects(
       return response;
     }
 
-    account_objects.push(...response.account_objects);
+    accountObjects.push(...response.account_objects);
 
     if (response.marker) {
       options.marker = response.marker;
@@ -142,7 +142,7 @@ export async function getAccountAllObjects(
     };
   }
 
-  response.account_objects = account_objects;
+  response.account_objects = accountObjects;
 
   return response;
 }
