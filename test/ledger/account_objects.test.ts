@@ -29,6 +29,71 @@ describe("Client", () => {
       expect(Object.keys(result)).to.eql(["account", "account_objects", "ledger_hash", "ledger_index", "validated"]);
       expect(result.account_objects.length).to.gt(500);
     });
+
+    it("works with limit 50", async function () {
+      const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", { limit: 50 });
+      expect(Object.keys(result)).to.eql([
+        "account",
+        "account_objects",
+        "ledger_hash",
+        "ledger_index",
+        "limit",
+        "marker",
+        "validated",
+      ]);
+      expect(result.limit).to.eq(50);
+      expect(result.marker).to.not.eq(undefined);
+      expect(result.marker).to.be.a("string");
+      expect(result.account_objects.length).to.eq(50);
+    });
+
+    it("works with limit 500", async function () {
+      const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", { limit: 500 });
+      expect(Object.keys(result)).to.eql([
+        "account",
+        "account_objects",
+        "ledger_hash",
+        "ledger_index",
+        "limit",
+        "marker",
+        "validated",
+      ]);
+      expect(result.marker).to.not.eq(undefined);
+      expect(result.marker).to.be.a("string");
+      expect(result.account_objects.length).to.eq(500);
+    });
+
+    it("works with limit 401", async function () {
+      const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", { limit: 401 });
+      expect(Object.keys(result)).to.eql([
+        "account",
+        "account_objects",
+        "ledger_hash",
+        "ledger_index",
+        "limit",
+        "marker",
+        "validated",
+      ]);
+      expect(result.marker).to.not.eq(undefined);
+      expect(result.marker).to.be.a("string");
+      expect(result.account_objects.length).to.eq(401);
+    });
+
+    it("works with timeout", async function () {
+      const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", { timeout: 1 });
+      expect(Object.keys(result)).to.eql([
+        "account",
+        "account_objects",
+        "ledger_hash",
+        "ledger_index",
+        "limit",
+        "marker",
+        "validated",
+      ]);
+      expect(result.marker).to.not.eq(undefined);
+      expect(result.marker).to.be.a("string");
+      expect(result.account_objects.length).to.eq(200);
+    });
   });
 
   describe("getAccountLinesObjects", () => {

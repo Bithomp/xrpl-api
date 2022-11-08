@@ -3,6 +3,8 @@ import * as Client from "../client";
 import { AccountObjectType, accountObjectsToAccountLines, accountObjectsToNFTOffers } from "../models/account_object";
 import { LedgerIndex } from "../models/ledger";
 
+const OBJECTS_LIMIT_MAX = 400;
+
 export interface GetAccountObjectsOptions {
   type?: AccountObjectType;
   ledgerHash?: string;
@@ -100,15 +102,27 @@ export async function getAccountAllObjects(
   }
 
   const timeStart = new Date();
+  const limit = options.limit;
   let response: any;
-  const accountObjects: any[] = [];
+  let accountObjects: any[] = [];
 
   // donwload all objects with marker
   while (true) {
     const currentTime = new Date();
     // timeout validation
     if (options.timeout && currentTime.getTime() - timeStart.getTime() > options.timeout) {
+      options.timeout = currentTime.getTime() - timeStart.getTime();
       break;
+    }
+
+    if (options.limit && limit) {
+      const left = limit - accountObjects.length;
+      const parts = Math.floor(left / OBJECTS_LIMIT_MAX);
+      if (parts === 0) {
+        options.limit = left;
+      } else {
+        options.limit = left - 10; // we should leave 10 objects for the next request
+      }
     }
 
     response = await getAccountObjects(account, options);
@@ -117,6 +131,10 @@ export async function getAccountAllObjects(
     }
 
     accountObjects.push(...response.account_objects);
+    if (limit && accountObjects.length >= limit) {
+      response.limit = accountObjects.length; // override last limit with total one
+      break;
+    }
 
     if (response.marker) {
       options.marker = response.marker;
