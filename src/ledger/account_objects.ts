@@ -2,6 +2,7 @@ import * as Client from "../client";
 
 import { AccountObjectType, accountObjectsToAccountLines, accountObjectsToNFTOffers } from "../models/account_object";
 import { LedgerIndex } from "../models/ledger";
+import { parseMarker, createMarker } from "../common/utils";
 
 const OBJECTS_LIMIT_MAX = 400;
 const OBJECTS_LIMIT_MIN = 10;
@@ -54,7 +55,9 @@ export async function getAccountObjects(
   account: string,
   options: GetAccountObjectsOptions = {}
 ): Promise<object | null> {
-  const connection: any = Client.findConnection();
+  const { hash, marker } = parseMarker(options.marker);
+  options.marker = marker;
+  const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
   if (!connection) {
     throw new Error("There is no connection");
   }
@@ -86,7 +89,10 @@ export async function getAccountObjects(
     };
   }
 
-  return response?.result;
+  const result = response.result;
+  result.marker = createMarker(connection.hash, result.marker);
+
+  return result;
 }
 
 export interface GetAccountAllObjectsOptions extends GetAccountObjectsOptions {
@@ -97,7 +103,9 @@ export async function getAccountAllObjects(
   account: string,
   options: GetAccountAllObjectsOptions = {}
 ): Promise<object | null> {
-  const connection: any = Client.findConnection();
+  const { hash, marker } = parseMarker(options.marker);
+  options.marker = marker;
+  const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
   if (!connection) {
     throw new Error("There is no connection");
   }
@@ -162,6 +170,7 @@ export async function getAccountAllObjects(
   }
 
   response.account_objects = accountObjects;
+  response.marker = createMarker(connection.hash, response.marker);
 
   return response;
 }

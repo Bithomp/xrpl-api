@@ -44,3 +44,47 @@ export async function sleep(ms: number): Promise<void> {
     setTimeout(resolve, ms);
   });
 }
+
+/**
+ * Convert marker to hash and marker
+ * "abc,dex,def" => { hash: "abc", marker: "dex,def" }
+ *
+ * { ledger: 16658790, seq: 1 } => { hash: undefined, marker: { ledger: 16658790, seq: 1 } }
+ */
+export function parseMarker(marker?: any): any {
+  let hash: undefined | string;
+
+  if (typeof marker !== "string") {
+    return { hash, marker };
+  }
+
+  if (marker) {
+    const markerParams = marker.split(",");
+    if (markerParams.length > 1) {
+      hash = markerParams[0];
+      markerParams.shift();
+      marker = markerParams.join(",");
+    }
+  }
+
+  return {
+    hash,
+    marker,
+  };
+}
+
+export function createMarker(hash: string, marker?: any): any {
+  if (marker === undefined) {
+    return undefined;
+  }
+
+  if (marker === null) {
+    return undefined;
+  }
+
+  if (typeof marker === "string") {
+    return `${hash},${marker}`;
+  }
+
+  return marker;
+}

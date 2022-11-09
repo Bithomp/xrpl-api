@@ -47,6 +47,23 @@ describe("Client", () => {
       expect(result.account_objects.length).to.eq(50);
     });
 
+    it("works with limit and marker", async function () {
+      const result1: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", { limit: 200 });
+      expect(result1.marker).to.be.a("string");
+
+      const result2: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", {
+        limit: 200,
+        marker: result1.marker,
+      });
+
+      expect(result2.marker).to.be.a("string");
+      expect(result2.marker).to.not.eq(result1.marker);
+
+      const result1Indexes = result1.account_objects.map((obj: any) => obj.index);
+      const result2Indexes = result2.account_objects.map((obj: any) => obj.index);
+      expect(result1Indexes).to.not.include.members(result2Indexes);
+    });
+
     it("works with limit 500", async function () {
       const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", { limit: 500 });
       expect(Object.keys(result)).to.eql([

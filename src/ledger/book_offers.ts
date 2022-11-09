@@ -2,10 +2,12 @@ import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
 import { OrderbookInfo, formatBidsAndAsks } from "../models/book_offers";
 import { TakerRequestAmount } from "../v1/common/types/objects/amounts";
+import { parseMarker, createMarker } from "../common/utils";
 
 export interface GetGetBookOffers {
   ledgerIndex?: LedgerIndex;
   limit?: number;
+  marker?: any;
 }
 
 /**
@@ -18,7 +20,9 @@ export async function getBookOffers(
   takerPays: TakerRequestAmount,
   options: GetGetBookOffers = {}
 ): Promise<object | null> {
-  const connection: any = Client.findConnection();
+  const { hash, marker } = parseMarker(options.marker);
+  options.marker = marker;
+  const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
   if (!connection) {
     throw new Error("There is no connection");
   }
@@ -49,7 +53,10 @@ export async function getBookOffers(
     };
   }
 
-  return response?.result;
+  const result = response.result;
+  result.marker = createMarker(connection.hash, result.marker);
+
+  return result;
 }
 
 function convertIssueToTakerAmount<T>(obj: T & { counterparty?: string; issuer?: string }): T & { issuer?: string } {
