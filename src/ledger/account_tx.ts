@@ -156,7 +156,10 @@ export async function getTransactions(
     }
   }
 
-  result.marker = createMarker(connection.hash, result.marker);
+  const newMarker = createMarker(connection.hash, result.marker);
+  if (newMarker) {
+    result.marker = newMarker;
+  }
 
   return result;
 }

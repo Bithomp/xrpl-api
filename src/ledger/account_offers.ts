@@ -60,7 +60,10 @@ export async function getAccountOffers(account: string, options: GetAccountOffer
   }
 
   const result = response.result;
-  result.marker = createMarker(connection.hash, result.marker);
+  const newMarker = createMarker(connection.hash, result.marker);
+  if (newMarker) {
+    result.marker = newMarker;
+  }
 
   return result;
 }

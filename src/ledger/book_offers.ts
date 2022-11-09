@@ -54,7 +54,10 @@ export async function getBookOffers(
   }
 
   const result = response.result;
-  result.marker = createMarker(connection.hash, result.marker);
+  const newMarker = createMarker(connection.hash, result.marker);
+  if (newMarker) {
+    result.marker = newMarker;
+  }
 
   return result;
 }

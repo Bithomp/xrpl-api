@@ -72,7 +72,10 @@ export async function getAccountNfts(
     result.account_nfts = result.account_nfts.sort(sortHelperAccountNFToken);
   }
 
-  result.marker = createMarker(connection.hash, result.marker);
+  const newMarker = createMarker(connection.hash, result.marker);
+  if (newMarker) {
+    result.marker = newMarker;
+  }
 
   return result;
 }

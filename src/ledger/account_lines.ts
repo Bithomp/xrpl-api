@@ -68,7 +68,10 @@ export async function getAccountLines(account: string, options: GetAccountLinesO
   }
 
   const result = response.result;
-  result.marker = createMarker(connection.hash, result.marker);
+  const newMarker = createMarker(connection.hash, result.marker);
+  if (newMarker) {
+    result.marker = newMarker;
+  }
 
   return result;
 }

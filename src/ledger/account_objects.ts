@@ -90,7 +90,10 @@ export async function getAccountObjects(
   }
 
   const result = response.result;
-  result.marker = createMarker(connection.hash, result.marker);
+  const newMarker = createMarker(connection.hash, result.marker);
+  if (newMarker) {
+    result.marker = newMarker;
+  }
 
   return result;
 }
@@ -170,7 +173,10 @@ export async function getAccountAllObjects(
   }
 
   response.account_objects = accountObjects;
-  response.marker = createMarker(connection.hash, response.marker);
+  const newMarker = createMarker(connection.hash, response.marker);
+  if (newMarker) {
+    response.marker = newMarker;
+  }
 
   return response;
 }
@@ -205,11 +211,6 @@ export async function getAccountLinesObjects(
   account: string,
   options: GetAccountLinesObjectsOptions = {}
 ): Promise<object | null> {
-  const connection: any = Client.findConnection();
-  if (!connection) {
-    throw new Error("There is no connection");
-  }
-
   const response: any = await getAccountAllObjects(account, {
     type: "state",
     ledgerHash: options.ledgerHash,
@@ -264,11 +265,6 @@ export async function getAccountNFTOffersObjects(
   account: string,
   options: GetAccountNFTOffersObjectsOptions = {}
 ): Promise<object | null> {
-  const connection: any = Client.findConnection();
-  if (!connection) {
-    throw new Error("There is no connection");
-  }
-
   const response: any = await getAccountAllObjects(account, {
     type: "nft_offer",
     ledgerHash: options.ledgerHash,
