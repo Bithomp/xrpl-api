@@ -3,7 +3,7 @@ import { getBalanceChanges } from "xrpl";
 
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
-import { compareTransactions } from "../common/utils";
+import { compareTransactions, parseMarker, createMarker } from "../common/utils";
 import { getAccountTxDetails } from "../models/transaction";
 
 const DEFAULT_LIMIT = 200;
@@ -18,7 +18,7 @@ export interface GetTransactionsOptions {
   binary?: boolean;
   forward?: boolean;
   limit: number;
-  marker?: unknown;
+  marker?: any;
   balanceChanges?: boolean;
   specification?: boolean;
 }
@@ -101,7 +101,9 @@ export async function getTransactions(
   account: string,
   options: GetTransactionsOptions = { limit: DEFAULT_LIMIT }
 ): Promise<object | null> {
-  const connection: any = Client.findConnection("history");
+  const { hash, marker } = parseMarker(options.marker);
+  options.marker = marker;
+  const connection: any = Client.findConnection("history", undefined, undefined, hash);
   if (!connection) {
     throw new Error("There is no connection");
   }
@@ -152,6 +154,11 @@ export async function getTransactions(
         }
       }
     }
+  }
+
+  const newMarker = createMarker(connection.hash, result.marker);
+  if (newMarker) {
+    result.marker = newMarker;
   }
 
   return result;

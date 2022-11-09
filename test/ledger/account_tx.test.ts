@@ -251,6 +251,8 @@ describe("Client", () => {
           timeout: 1, // only 1 request will be send
         });
 
+        expect(result.marker.bithompHash).to.be.a("string");
+        delete result.marker.bithompHash; // could dbe different
         expect(result).to.eql({
           error: "searchTimeout",
           marker: {

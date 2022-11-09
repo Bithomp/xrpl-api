@@ -73,7 +73,7 @@ export function disconnect() {
 /**
  * @returns {Connection | null}
  */
-export function findConnection(type?: string, url?: string, strongFilter?: boolean): Connection | null {
+export function findConnection(type?: string, url?: string, strongFilter?: boolean, hash?: string): Connection | null {
   if (!strongFilter) {
     // no connection
     if (clientConnections.length === 0) {
@@ -91,6 +91,10 @@ export function findConnection(type?: string, url?: string, strongFilter?: boole
     }
 
     if (typeof url === "string" && con.url !== url) {
+      return false;
+    }
+
+    if (typeof hash === "string" && con.hash !== hash) {
       return false;
     }
 

@@ -1,9 +1,12 @@
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
 import { sortHelperAccountNFToken } from "../models/account_nfts";
+import { parseMarker, createMarker } from "../common/utils";
 
 export interface GetAccountNftsOptions {
   ledgerIndex?: LedgerIndex;
+  limit?: number;
+  marker?: any;
 }
 
 /**
@@ -30,7 +33,9 @@ export async function getAccountNfts(
   account: string,
   options: GetAccountNftsOptions = {}
 ): Promise<object[] | object | null> {
-  const connection: any = Client.findConnection();
+  const { hash, marker } = parseMarker(options.marker);
+  options.marker = marker;
+  const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
   if (!connection) {
     throw new Error("There is no connection");
   }
@@ -65,6 +70,11 @@ export async function getAccountNfts(
 
   if (Array.isArray(result.account_nfts)) {
     result.account_nfts = result.account_nfts.sort(sortHelperAccountNFToken);
+  }
+
+  const newMarker = createMarker(connection.hash, result.marker);
+  if (newMarker) {
+    result.marker = newMarker;
   }
 
   return result;

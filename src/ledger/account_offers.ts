@@ -1,9 +1,11 @@
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
+import { parseMarker, createMarker } from "../common/utils";
 
 export interface GetAccountOffers {
   ledgerIndex?: LedgerIndex;
   limit?: number;
+  marker?: any;
 }
 
 /**
@@ -26,7 +28,9 @@ export interface GetAccountOffers {
  * @exception {Error}
  */
 export async function getAccountOffers(account: string, options: GetAccountOffers = {}): Promise<object | null> {
-  const connection: any = Client.findConnection();
+  const { hash, marker } = parseMarker(options.marker);
+  options.marker = marker;
+  const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
   if (!connection) {
     throw new Error("There is no connection");
   }
@@ -55,5 +59,11 @@ export async function getAccountOffers(account: string, options: GetAccountOffer
     };
   }
 
-  return response?.result;
+  const result = response.result;
+  const newMarker = createMarker(connection.hash, result.marker);
+  if (newMarker) {
+    result.marker = newMarker;
+  }
+
+  return result;
 }

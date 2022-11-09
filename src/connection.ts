@@ -1,4 +1,5 @@
 import * as _ from "lodash";
+import crypto from "crypto";
 import { EventEmitter } from "events";
 import { Client, Request, Response } from "xrpl";
 import { StreamType, ledgerTimeToTimestamp } from "./models/ledger";
@@ -37,6 +38,7 @@ class Connection extends EventEmitter {
   public readonly logger?: any;
   public readonly timeout?: number; // request timeout
   public readonly connectionTimeout?: number;
+  public readonly hash?: string;
   private shotdown: boolean = false;
   private connectionTimer: any = null;
   public streams: ConnectionStreamsInfo;
@@ -47,6 +49,7 @@ class Connection extends EventEmitter {
 
     this.shotdown = false;
     this.url = url;
+    this.hash = crypto.createHash("sha256").update(url).digest("hex");
     this.type = type;
     if (typeof this.type === "string") {
       this.types = this.type.split(",").map((v) => v.trim());
