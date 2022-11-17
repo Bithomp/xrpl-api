@@ -146,7 +146,7 @@ export async function legacyPayment(data: LegacyPaymentInterface): Promise<objec
   };
 
   const transaction = createPaymentTransaction(data.sourceAddress, txPayment);
-  const paymentParams = await getLedgerPaymentParams(data.sourceAddress, connection);
+  const paymentParams = await getAccountPaymentParams(data.sourceAddress, connection);
   if (paymentParams.error) {
     return paymentParams;
   }
@@ -162,14 +162,17 @@ export async function legacyPayment(data: LegacyPaymentInterface): Promise<objec
   return await submit(signedTransaction, { connection });
 }
 
-interface LedgerPaymentParamsInterface {
+interface AccountPaymentParamsInterface {
   fee?: string;
   sequence?: number;
   lastLedgerSequence?: number;
   error?: string;
 }
 
-async function getLedgerPaymentParams(account: string, connection: Connection): Promise<LedgerPaymentParamsInterface> {
+export async function getAccountPaymentParams(
+  account: string,
+  connection?: Connection
+): Promise<AccountPaymentParamsInterface> {
   try {
     const feePromise = new Promise(async (resolve) => {
       const baseFee = await Client.getFee({ connection });

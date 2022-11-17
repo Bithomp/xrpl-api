@@ -158,7 +158,7 @@ class Connection extends EventEmitter {
       this.updateLatence(1000);
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
-        function: "submitAndWait",
+        function: "submit",
         url: this.url,
         error: err?.message || err?.name || err,
       });

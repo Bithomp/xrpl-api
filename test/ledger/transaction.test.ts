@@ -1,6 +1,7 @@
 import nconf from "nconf";
+import { Transaction } from "xrpl";
 import { expect } from "chai";
-import { Client, Wallet } from "../../src/index";
+import { Client, Wallet, xrpl } from "../../src/index";
 
 describe("Client", () => {
   describe("mainnet", () => {
@@ -265,6 +266,27 @@ describe("Client", () => {
     });
 
     describe("submit", () => {
+      it("is OK for sign and submit", async function () {
+        const account = "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz";
+        const paymentParams = await Client.getAccountPaymentParams(account);
+
+        const txBlob: Transaction = {
+          TransactionType: "Payment",
+          Account: account,
+          Amount: "100",
+          Destination: "rBbfoBCNMpAaj35K5A9UV9LDkRSh6ZU9Ef",
+          Fee: paymentParams.fee,
+          Sequence: paymentParams.sequence,
+          LastLedgerSequence: paymentParams.lastLedgerSequence,
+        };
+
+        const wallet = xrpl.Wallet.fromSeed(nconf.get("xrpl:accounts:activation:secret"));
+        const signedTransaction = wallet.sign(txBlob).tx_blob;
+
+        const result: any = await Client.submit(signedTransaction);
+        expect(result.meta.TransactionResult).to.eq("tesSUCCESS");
+      });
+
       it("is not OK for passed sequence number", async function () {
         const tefPAST_SEQ =
           "120000228000000024000000012E0000007B61400000E8D4A5100068400000000000000C732103A71B44FD71C956C3CC0A540F2FBB577C4A300BC71244D86E4EB57220E58BFA267447304502210087A81EE99913E4C2252EB46CAF7E5A189C24ED09BF00C94359CFDA1805E75CC4022046F6B54F0A3CF7955BD9F774A11B4B0CCF7353BCB3986FE68D9B53CE934C8704811485C536EFA7EAACCC51916E32FF720810A22260088314772044746F04AE1E611266AE3AB402833E2E29ACF9EA7C044D656D6F7D04746573747E0A706C61696E2F74657874E1EA7C06636C69656E747D15426974686F6D7020746F6F6C20762E20302E332E307E0A706C61696E2F74657874E1F1";
@@ -283,12 +305,6 @@ describe("Client", () => {
     });
 
     describe("legacyPayment", () => {
-      before(async function () {
-        this.timeout(15000);
-        Client.setup(nconf.get("xrpl:connections:testnet"));
-        await Client.connect();
-      });
-
       it("is OK", async function () {
         this.timeout(15000);
 
