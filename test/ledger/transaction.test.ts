@@ -267,6 +267,7 @@ describe("Client", () => {
 
     describe("submit", () => {
       it("is OK for sign and submit", async function () {
+        this.timeout(10000);
         const account = "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz";
         const paymentParams = await Client.getAccountPaymentParams(account);
 

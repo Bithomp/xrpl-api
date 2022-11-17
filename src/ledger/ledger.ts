@@ -67,7 +67,7 @@ export async function getLedger(options: GetLedgerOptions = {}): Promise<object 
   }
 
   if (options.legacy === true) {
-    return parseLedger(result.ledger, options.includeRawTransactions === true);
+    result.ledger = parseLedger(result.ledger, options.includeRawTransactions === true);
   }
 
   return result;

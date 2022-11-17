@@ -40,7 +40,10 @@ describe("Client", () => {
       it("current with legacy", async function () {
         const result: any = await Client.getLedger({ legacy: true });
 
-        expect(Object.keys(result)).to.eql([
+        delete result.warnings;
+        delete result._nodepref;
+        expect(Object.keys(result)).to.eql(["ledger", "ledger_hash", "ledger_index", "validated"]);
+        expect(Object.keys(result.ledger)).to.eql([
           "stateHash",
           "closeTime",
           "closeTimeResolution",
@@ -163,7 +166,7 @@ describe("Client", () => {
           includeRawTransactions: true,
         });
 
-        const transactions: any = result.transactions.sort((a: any, b: any) => a.id.localeCompare(b.id));
+        const transactions: any = result.ledger.transactions.sort((a: any, b: any) => a.id.localeCompare(b.id));
         expect(transactions[0].id).to.eql("05403FE48CCFCB45888FB3FDA0A791B0B3AA29360050412B95FCA436E1A41DCF");
       });
     });
