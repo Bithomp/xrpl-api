@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import {removeUndefined, rippleTimeToISO8601} from '../../common'
+import {removeUndefined, rippleTimeToISO8601, rippleToUnixTime} from '../../common'
 import {parseTransaction} from './transaction'
 import {Ledger} from '../../common/types/objects'
 
@@ -73,6 +73,7 @@ export function parseLedger(ledger: Ledger, includeRawTransactions: boolean): Fo
     Object.assign(
       {
         stateHash: ledger.account_hash,
+        close_time: rippleToUnixTime(ledger.close_time),
         closeTime: rippleTimeToISO8601(ledger.close_time),
         closeTimeResolution: ledger.close_time_resolution,
         closeFlags: ledger.close_flags as number,

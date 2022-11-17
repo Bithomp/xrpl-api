@@ -2,7 +2,7 @@
 import * as _ from 'lodash';
 import { BigNumber as GlobalBigNumber } from 'bignumber.js';
 const BigNumber = GlobalBigNumber.clone({DECIMAL_PLACES: 40})
-import { normalizeNodes } from'../../v1/common/utils';
+import { normalizeNodes, rippleToUnixTimestamp } from'../../v1/common/utils';
 import { parseQuality } from'./quality';
 import parseCurrencyAmount from "../../v1/ledger/parse/currency-amount";
 
@@ -29,10 +29,6 @@ function convertOrderChange(order) {
     makerExchangeRate: order.quality,
     expirationTime: order.expiration
   })
-}
-
-function rippleToUnixTimestamp(rpepoch) {
-  return (rpepoch + 0x386D4380) * 1000
 }
 
 function getExpirationTime(node) {

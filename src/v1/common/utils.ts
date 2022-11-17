@@ -141,10 +141,18 @@ function removeUndefined<T extends object>(obj: T): T {
 
 /**
  * @param {Number} rpepoch (seconds since 1/1/2000 GMT)
+ * @return {Number} s since unix epoch
+ */
+ function rippleToUnixTime(rpepoch: number): number {
+  return (rpepoch + 0x386d4380);
+}
+
+/**
+ * @param {Number} rpepoch (seconds since 1/1/2000 GMT)
  * @return {Number} ms since unix epoch
  */
 function rippleToUnixTimestamp(rpepoch: number): number {
-  return (rpepoch + 0x386d4380) * 1000
+  return rippleToUnixTime(rpepoch) * 1000;
 }
 
 /**
@@ -192,6 +200,8 @@ export {
   xrpToDrops,
   toRippledAmount,
   removeUndefined,
+  rippleToUnixTime,
+  rippleToUnixTimestamp,
   rippleTimeToISO8601,
   iso8601ToRippleTime,
   isValidSecret,

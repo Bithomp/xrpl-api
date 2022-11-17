@@ -45,6 +45,7 @@ describe("Client", () => {
         expect(Object.keys(result)).to.eql(["ledger", "ledger_hash", "ledger_index", "validated"]);
         expect(Object.keys(result.ledger)).to.eql([
           "stateHash",
+          "close_time",
           "closeTime",
           "closeTimeResolution",
           "closeFlags",
