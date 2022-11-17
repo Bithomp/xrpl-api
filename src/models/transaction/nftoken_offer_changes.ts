@@ -66,12 +66,25 @@ class NFTokenOfferChanges {
     const owner: string = affectedNode.CreatedNode.NewFields.Owner;
     const index: string = affectedNode.CreatedNode.LedgerIndex;
     const destination: string = affectedNode.CreatedNode.NewFields.Destination;
+    const prevTxHash: string = affectedNode.CreatedNode.NewFields.PreviousTxnID;
+    const prevLedgerIndex: string = affectedNode.CreatedNode.NewFields.PreviousTxnLgrSeq;
     let expiration: number = affectedNode.CreatedNode.NewFields.Expiration;
     if (typeof expiration === "number") {
       expiration = ledgerTimeToUnixTime(expiration);
     }
 
-    this.addChange(this.tx.Account, { status, amount, flags, nftokenID, owner, destination, expiration, index });
+    this.addChange(this.tx.Account, {
+      status,
+      amount,
+      flags,
+      nftokenID,
+      owner,
+      destination,
+      expiration,
+      index,
+      prevTxHash,
+      prevLedgerIndex,
+    });
   }
 
   private isNFTokensDeleteOfferNode(affectedNode: any): boolean {
@@ -86,11 +99,24 @@ class NFTokenOfferChanges {
     const owner: string = affectedNode.DeletedNode.FinalFields.Owner;
     const index: string = affectedNode.DeletedNode.LedgerIndex;
     const destination: string = affectedNode.DeletedNode.FinalFields.Destination;
+    const prevTxHash: string = affectedNode.DeletedNode.FinalFields.PreviousTxnID;
+    const prevLedgerIndex: string = affectedNode.DeletedNode.FinalFields.PreviousTxnLgrSeq;
     let expiration: number = affectedNode.DeletedNode.FinalFields.Expiration;
     if (typeof expiration === "number") {
       expiration = ledgerTimeToUnixTime(expiration);
     }
 
-    this.addChange(owner, { status, amount, flags, nftokenID, owner, destination, expiration, index });
+    this.addChange(owner, {
+      status,
+      amount,
+      flags,
+      nftokenID,
+      owner,
+      destination,
+      expiration,
+      index,
+      prevTxHash,
+      prevLedgerIndex,
+    });
   }
 }
