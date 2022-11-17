@@ -37,6 +37,23 @@ describe("Client", () => {
         ]);
       });
 
+      it("current with legacy", async function () {
+        const result: any = await Client.getLedger({ legacy: true });
+
+        expect(Object.keys(result)).to.eql([
+          "stateHash",
+          "closeTime",
+          "closeTimeResolution",
+          "closeFlags",
+          "ledgerHash",
+          "ledgerVersion",
+          "parentLedgerHash",
+          "parentCloseTime",
+          "totalDrops",
+          "transactionHash",
+        ]);
+      });
+
       it("by ledger_index", async function () {
         const result: any = await Client.getLedger({
           ledgerIndex: 66816622,
@@ -135,6 +152,19 @@ describe("Client", () => {
 
         const transactions: any = result.ledger.transactions.sort((a: any, b: any) => a.hash.localeCompare(b.hash));
         expect(transactions[0].hash).to.eql("05403FE48CCFCB45888FB3FDA0A791B0B3AA29360050412B95FCA436E1A41DCF");
+      });
+
+      it("with expand and legacy", async function () {
+        const result: any = await Client.getLedger({
+          ledgerIndex: 66816622,
+          transactions: true,
+          expand: true,
+          legacy: true,
+          includeRawTransactions: true,
+        });
+
+        const transactions: any = result.transactions.sort((a: any, b: any) => a.id.localeCompare(b.id));
+        expect(transactions[0].id).to.eql("05403FE48CCFCB45888FB3FDA0A791B0B3AA29360050412B95FCA436E1A41DCF");
       });
     });
   });

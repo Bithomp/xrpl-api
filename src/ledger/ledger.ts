@@ -1,10 +1,13 @@
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
+import { parseLedger } from "../v1/ledger/parse/ledger";
 
 export interface GetLedgerOptions {
   ledgerIndex?: LedgerIndex;
   transactions?: boolean;
   expand?: boolean;
+  legacy?: boolean; // returns response in old old format data
+  includeRawTransactions?: boolean; // for legacy
 }
 
 /**
@@ -58,7 +61,16 @@ export async function getLedger(options: GetLedgerOptions = {}): Promise<object 
     };
   }
 
-  return response?.result;
+  const result = response?.result;
+  if (!result) {
+    return null;
+  }
+
+  if (options.legacy === true) {
+    return parseLedger(result.ledger, options.includeRawTransactions === true);
+  }
+
+  return result;
 }
 
 export async function getLedgerIndex(options: GetLedgerOptions = {}): Promise<number | undefined> {

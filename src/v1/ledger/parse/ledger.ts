@@ -25,20 +25,20 @@ export type FormattedLedger = {
   stateHashes?: Array<string>
 }
 
-function parseTransactionWrapper(ledgerVersion, tx) {
+function parseTransactionWrapper(ledgerVersion: number, includeRawTransaction: boolean, tx: any) {
   // renames metaData to meta and adds ledger_index
   const transaction = Object.assign({}, _.omit(tx, 'metaData'), {
     meta: tx.metaData,
     ledger_index: ledgerVersion
   })
-  const result = parseTransaction(transaction, true)
+  const result = parseTransaction(transaction, includeRawTransaction)
   if (!result.outcome.ledgerVersion) {
     result.outcome.ledgerVersion = ledgerVersion
   }
   return result
 }
 
-function parseTransactions(transactions, ledgerVersion) {
+function parseTransactions(transactions: any, ledgerVersion: number, includeRawTransactions: boolean) {
   if (_.isEmpty(transactions)) {
     return {}
   }
@@ -47,7 +47,7 @@ function parseTransactions(transactions, ledgerVersion) {
   }
   return {
     transactions: transactions.map(
-      _.partial(parseTransactionWrapper, ledgerVersion)
+      _.partial(parseTransactionWrapper, ledgerVersion, includeRawTransactions)
     )
   }
 }
@@ -67,7 +67,7 @@ function parseState(state) {
  * @returns {FormattedLedger} formatted ledger
  * @throws RangeError: Invalid time value (rippleTimeToISO8601)
  */
-export function parseLedger(ledger: Ledger): FormattedLedger {
+export function parseLedger(ledger: Ledger, includeRawTransactions: boolean): FormattedLedger {
   const ledgerVersion = parseInt(ledger.ledger_index, 10)
   return removeUndefined(
     Object.assign(
@@ -84,7 +84,7 @@ export function parseLedger(ledger: Ledger): FormattedLedger {
         totalDrops: ledger.total_coins,
         transactionHash: ledger.transaction_hash
       },
-      parseTransactions(ledger.transactions, ledgerVersion),
+      parseTransactions(ledger.transactions, ledgerVersion, includeRawTransactions),
       parseState(ledger.accountState)
     )
   )
