@@ -111,3 +111,5 @@ dist
 
 lib
 config/test.json
+
+test/ledger/account_nfts.live.test.ts

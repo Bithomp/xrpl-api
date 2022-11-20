@@ -44,6 +44,7 @@ export async function getAccountNfts(
     command: "account_nfts",
     account,
     ledger_index: options.ledgerIndex || "validated",
+    marker: options.marker,
   });
 
   if (!response) {
@@ -78,6 +79,72 @@ export async function getAccountNfts(
   }
 
   return result;
+}
+
+interface FindAccountNftsOptions extends GetAccountNftsOptions {
+  timeout?: number;
+}
+
+export async function findAccountNfts(
+  account: string,
+  options: FindAccountNftsOptions = { timeout: 15000 }
+): Promise<object[] | object | null> {
+  const timeStart = new Date();
+  const limit = options.limit;
+  let response: any;
+  const accountNfts: any[] = [];
+
+  // download all nfts with marker
+  while (true) {
+    const currentTime = new Date();
+    // timeout validation
+    if (options.timeout && currentTime.getTime() - timeStart.getTime() > options.timeout) {
+      options.timeout = currentTime.getTime() - timeStart.getTime();
+      break;
+    }
+
+    if (options.limit && limit) {
+      options.limit = limit - accountNfts.length;
+    }
+
+    response = await getAccountNfts(account, options);
+    if (!response || response.error) {
+      return response;
+    }
+
+    accountNfts.push(...response.account_nfts);
+    if (limit && accountNfts.length >= limit) {
+      response.limit = accountNfts.length; // override last limit with total one
+      break;
+    }
+
+    if (response.marker) {
+      options.marker = response.marker;
+    } else {
+      break;
+    }
+  }
+
+  if (!response) {
+    return null;
+  }
+
+  if (response.error) {
+    const { error, error_code, error_message, status, validated } = response;
+
+    return {
+      account,
+      error,
+      error_code,
+      error_message,
+      status,
+      validated,
+    };
+  }
+
+  response.account_nfts = accountNfts;
+
+  return response;
 }
 
 export interface GetAccountNftSellOffersOptions {
@@ -164,7 +231,7 @@ export async function getAccountNftBuyOffers(
   nftID: string,
   options: GetAccountNftBuyOffersOptions = {}
 ): Promise<object[] | object | null> {
-  // doesnt work with clio
+  // doesn't work with clio
   const connection: any = Client.findConnection("!clio");
   if (!connection) {
     throw new Error("There is no connection");
