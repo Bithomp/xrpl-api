@@ -118,7 +118,7 @@ export async function getAccountAllObjects(
   let response: any;
   const accountObjects: any[] = [];
 
-  // donwload all objects with marker
+  // download all objects with marker
   while (true) {
     const currentTime = new Date();
     // timeout validation
