@@ -117,6 +117,21 @@ describe("Models", () => {
         Sequence: 3429,
       });
     });
+
+    it("parses nftokenID with unsigned taxon", function () {
+      const nftokenID = "000000005EC8BC31F0415E5DD4A8AAAC3718249F8F27323C2EEE87B80000001E";
+      const result: any = Models.parseNFTokenID(nftokenID);
+      console.log(result);
+
+      expect(result).to.eql({
+        NFTokenID: nftokenID,
+        Flags: 0,
+        TransferFee: 0,
+        Issuer: "r9ewzMXVRAD9CjZQ6LTQ4P21vUUucDuqd4",
+        NFTokenTaxon: 2147483649,
+        Sequence: 30,
+      });
+    });
   });
 
   describe("parseNFTokenBurn", () => {

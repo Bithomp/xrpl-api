@@ -104,7 +104,8 @@ export function cipheredTaxon(tokenSeq: number, taxon: number) {
   //               an amendment along with a way to distinguish token IDs that
   //               were generated with the old code.
   // tslint:disable-next-line:no-bitwise
-  return taxon ^ (384160001 * tokenSeq + 2459);
+
+  return (taxon ^ ((384160001 * tokenSeq + 2459) >>> 0)) >>> 0;
 }
 
 /**
