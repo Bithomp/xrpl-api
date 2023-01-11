@@ -47,6 +47,7 @@ describe("Client", () => {
 
   describe("mainnet", () => {
     before(async function () {
+      this.timeout(10000);
       Client.setup(nconf.get("xrpl:connections:mainnet"));
       await Client.connect();
     });

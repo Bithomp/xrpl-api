@@ -130,6 +130,7 @@ describe("Client", () => {
 
     describe("findTransactions", () => {
       it("transactions with ledger version", async function () {
+        this.timeout(20000);
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 10,

@@ -39,7 +39,7 @@ class Connection extends EventEmitter {
   public readonly timeout?: number; // request timeout
   public readonly connectionTimeout?: number;
   public readonly hash?: string;
-  private shotdown: boolean = false;
+  private shutdown: boolean = false;
   private connectionTimer: any = null;
   public streams: ConnectionStreamsInfo;
   private streamsSubscribed: boolean;
@@ -47,7 +47,7 @@ class Connection extends EventEmitter {
   public constructor(url: string, type?: string, options: ConnectionOptions = {}) {
     super();
 
-    this.shotdown = false;
+    this.shutdown = false;
     this.url = url;
     this.hash = crypto.createHash("sha256").update(url).digest("hex");
     this.type = type;
@@ -96,7 +96,7 @@ class Connection extends EventEmitter {
   }
 
   public async disconnect(): Promise<void> {
-    this.shotdown = true;
+    this.shutdown = true;
 
     await this.unsubscribeStreams();
     await this.client?.disconnect();
@@ -121,11 +121,11 @@ class Connection extends EventEmitter {
       const response = await this.client.request(request);
       const endDate: Date = new Date();
 
-      this.updateLatence(endDate.getTime() - startDate.getTime());
+      this.updateLatency(endDate.getTime() - startDate.getTime());
 
       return response;
     } catch (err: any) {
-      this.updateLatence(1000);
+      this.updateLatency(1000);
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         function: "request",
@@ -151,11 +151,11 @@ class Connection extends EventEmitter {
       const response = await this.client.submit(transaction);
       const endDate: Date = new Date();
 
-      this.updateLatence(endDate.getTime() - startDate.getTime());
+      this.updateLatency(endDate.getTime() - startDate.getTime());
 
       return response;
     } catch (err: any) {
-      this.updateLatence(1000);
+      this.updateLatency(1000);
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         function: "submit",
@@ -183,7 +183,7 @@ class Connection extends EventEmitter {
     return this.latency.map((info) => info.delta).reduce((a, b) => a + b, 0) / this.latency.length || 0;
   }
 
-  private updateLatence(delta: number): void {
+  private updateLatency(delta: number): void {
     this.latency.push({
       timestamp: new Date(),
       delta,
@@ -197,10 +197,10 @@ class Connection extends EventEmitter {
       service: "Bithomp::XRPL::Connection",
       function: "reconnect",
       url: this.url,
-      shotdown: this.shotdown,
+      shutdown: this.shutdown,
     });
 
-    if (!this.shotdown) {
+    if (!this.shutdown) {
       this.emit("reconnect");
       try {
         if (this.client) {
@@ -256,7 +256,16 @@ class Connection extends EventEmitter {
         error: message || error?.name || error,
       });
 
-      this.emit("error", source, message, error);
+      try {
+        this.emit("error", source, message, error);
+      } catch (err: any) {
+        this.logger?.warn({
+          service: "Bithomp::XRPL::Connection",
+          emit: "error",
+          url: this.url,
+          error: err?.message || err?.name || err,
+        });
+      }
     });
 
     this.client.on("ledgerClosed", (ledgerStream) => {
@@ -265,7 +274,7 @@ class Connection extends EventEmitter {
 
       // ledgerTime could be more then current time
       if (ledgerTime < time) {
-        this.updateLatence(time - ledgerTime);
+        this.updateLatency(time - ledgerTime);
       }
 
       this.connectionValidation();
@@ -380,7 +389,7 @@ class Connection extends EventEmitter {
       service: "Bithomp::XRPL::Connection",
       function: "connectionValidation",
       url: this.url,
-      shotdown: this.shotdown,
+      shutdown: this.shutdown,
     });
 
     if (this.connectionTimer !== null) {
@@ -388,7 +397,7 @@ class Connection extends EventEmitter {
       this.connectionTimer = null;
     }
 
-    if (!this.shotdown) {
+    if (!this.shutdown) {
       if (this.streamsSubscribed === false) {
         this.subscribeStreams();
       }
@@ -406,12 +415,12 @@ class Connection extends EventEmitter {
       function: "connectionValidationTimeout",
       url: this.url,
       timeout: LEDGER_CLOSED_TIMEOUT,
-      shotdown: this.shotdown,
+      shutdown: this.shutdown,
     });
 
     this.connectionTimer = null;
 
-    this.updateLatence(LEDGER_CLOSED_TIMEOUT);
+    this.updateLatency(LEDGER_CLOSED_TIMEOUT);
     try {
       await this.reconnect();
     } catch (e: any) {
