@@ -57,7 +57,7 @@ export async function getAccountObjects(
 ): Promise<object | null> {
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
-  const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
+  const connection: any = Client.findConnection("account_objects", undefined, undefined, hash);
   if (!connection) {
     throw new Error("There is no connection");
   }
@@ -106,13 +106,6 @@ export async function getAccountAllObjects(
   account: string,
   options: GetAccountAllObjectsOptions = {}
 ): Promise<object | null> {
-  const { hash, marker } = parseMarker(options.marker);
-  options.marker = marker;
-  const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
-  if (!connection) {
-    throw new Error("There is no connection");
-  }
-
   const timeStart = new Date();
   const limit = options.limit;
   let response: any;
@@ -173,10 +166,6 @@ export async function getAccountAllObjects(
   }
 
   response.account_objects = accountObjects;
-  const newMarker = createMarker(connection.hash, response.marker);
-  if (newMarker) {
-    response.marker = newMarker;
-  }
 
   return response;
 }

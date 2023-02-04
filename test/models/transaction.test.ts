@@ -386,8 +386,6 @@ describe("Models", () => {
       const tx = require("../examples/responses/NFTokenBurn2.json");
       const result: any = Models.getTxDetails(tx, false);
 
-      console.log(JSON.stringify(result, null, 2));
-
       expect(result).to.eql({
         type: "nftokenBurn",
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",

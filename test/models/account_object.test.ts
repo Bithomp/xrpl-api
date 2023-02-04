@@ -110,7 +110,7 @@ describe("Models", () => {
     it("returns all account lines", function () {
       const objects = require("../examples/responses/objects/rQHqfA5bbxgPbBQajcRBBJSfuKLMDW17nr.json");
       const result: any = Models.accountObjectsToAccountLines("rQHqfA5bbxgPbBQajcRBBJSfuKLMDW17nr", objects);
-      expect(result.length).to.eq(13)
+      expect(result.length).to.eq(13);
       expect(result).to.eql([
         {
           account: "rEFMsxytphWCgfTdAXBBYvwhnB5GWjBrY5",

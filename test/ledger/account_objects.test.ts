@@ -138,51 +138,41 @@ describe("Client", () => {
 
   describe("getAccountNFTOffersObjects", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:xls20net"));
+      Client.setup(nconf.get("xrpl:connections:testnet"));
       await Client.connect();
     });
 
     it("works for buy", async function () {
-      const result: any = await Client.getAccountNFTOffersObjects("rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz");
+      const result: any = await Client.getAccountNFTOffersObjects("rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM");
 
       expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "nft_offers"]);
       expect(result.nft_offers).to.eql([
         {
-          nft_id: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000",
-          amount: "1000000000000000",
-          flags: 1,
-          index: "0FEDCDB1A329C80B5BF75F3EC3D7634A03B9CCC41B34E67E36C951BA08065D31",
-          owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
-          ledger_index: 75327,
-          transaction_hash: "666CB15BC53FC3681E4EC42390CF27C78BB425F0BFFBD7B181BFD265078FFC62",
-        },
-        {
-          nft_id: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF0000099B00000000",
-          amount: "0",
-          flags: 1,
-          index: "8EAAE4372FDD51789CE5899CF6B854D62F6D37AFFD737EDA746FD6D16D7D4438",
-          owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
-          destination: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
-          expiration: 2529122432,
-          ledger_index: 75329,
-          transaction_hash: "ECE064CC23B00D2D9957344A68EE1155F7A5EC4F4BF0BCF00FB69F564EF6AF2D",
+          amount: "3000000",
+          flags: 0,
+          index: "3A3EEF42653BBA9D0756C5A5CEB10E74A95531903661284404914E414E980EE0",
+          ledger_index: 34625417,
+          nft_id: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF67650000099B00000000",
+          owner: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+          transaction_hash: "086208948599E016B24FAA892995598ED8FECF2017DC78CAF09A82F44680C283",
         },
       ]);
     });
 
     it("works for sell", async function () {
-      const result: any = await Client.getAccountNFTOffersObjects("rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw");
+      const result: any = await Client.getAccountNFTOffersObjects("r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh");
 
       expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "nft_offers"]);
       expect(result.nft_offers).to.eql([
         {
-          nft_id: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
-          amount: "1",
-          flags: 0,
-          index: "F5BC0A6FD7DFA22A92CD44DE7F548760D855C35755857D1AAFD41CA3CA57CA3A",
-          owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
-          ledger_index: 75332,
-          transaction_hash: "D6FCDD7C5B8137263DA26D8762DBD5E6426515D2675A29F58B12B71FDD059118",
+          amount: "4000000",
+          destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+          flags: 1,
+          index: "82962760B13C541370C2B9A2CE0F09AE65117C53CBB9ADB0FB168273253C5A14",
+          ledger_index: 34625415,
+          nft_id: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF67650000099B00000000",
+          owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+          transaction_hash: "C5FDD937F0F5A82A95251A307F154C227FFD54C1E051B0057E56301BD479EBA3",
         },
       ]);
     });

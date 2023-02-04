@@ -42,28 +42,21 @@ describe("Client", () => {
           index: "D88BB94773475A04F50EA227E03A67D0FBC5D70DC17CFDB256BCC9F1FA8C1A6E",
         });
       });
-    });
 
-    describe("xls20", () => {
-      before(async function () {
-        Client.setup(nconf.get("xrpl:connections:xls20net"));
-        await Client.connect();
-      });
-
-      it("is for activated", async function () {
-        const accountInfo: any = await Client.getAccountInfo("rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw");
+      it("is for activated with nft", async function () {
+        const accountInfo: any = await Client.getAccountInfo("rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM");
         expect(accountInfo.account_data).to.eql({
-          Account: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
-          Balance: "999999951",
+          Account: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+          Balance: "971999712",
           Flags: 0,
           LedgerEntryType: "AccountRoot",
           MintedNFTokens: 1,
-          NFTokenMinter: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          NFTokenMinter: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
           OwnerCount: 2,
-          PreviousTxnID: "41D2E1E3EE5554ADE84F15FFFA8A6A9E7C9EB0464CAAFA822CFAE1DD895DE724",
-          PreviousTxnLgrSeq: 75445,
-          Sequence: 75152,
-          index: "54277D360ADA73E32426A83392E9443737A62EAEA4555F885F0EFE2440AC6C4C",
+          PreviousTxnID: "DED688260C4B14B18ED5FA55923F8BDE8282159C1FEC5DCD48E27EE8DAAE0C31",
+          PreviousTxnLgrSeq: 34643391,
+          Sequence: 34625359,
+          index: "F7660AA3686F858FFD9142AD3C2730CDCB1CF8D11664DB34F27F1A421BD1512B",
         });
       });
     });

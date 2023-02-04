@@ -121,7 +121,6 @@ describe("Models", () => {
     it("parses nftokenID with unsigned taxon", function () {
       const nftokenID = "000000005EC8BC31F0415E5DD4A8AAAC3718249F8F27323C2EEE87B80000001E";
       const result: any = Models.parseNFTokenID(nftokenID);
-      console.log(result);
 
       expect(result).to.eql({
         NFTokenID: nftokenID,
