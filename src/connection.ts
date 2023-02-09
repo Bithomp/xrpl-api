@@ -29,6 +29,10 @@ export interface ConnectionStreamsInfo {
   validations?: number;
 }
 
+export interface ConnectionAccountsInfo {
+  [key: string]: number;
+}
+
 class Connection extends EventEmitter {
   private client?: Client | null;
   public readonly url: string;
@@ -42,6 +46,7 @@ class Connection extends EventEmitter {
   private shutdown: boolean = false;
   private connectionTimer: any = null;
   public streams: ConnectionStreamsInfo;
+  public accounts: ConnectionAccountsInfo;
   private streamsSubscribed: boolean;
 
   public constructor(url: string, type?: string, options: ConnectionOptions = {}) {
@@ -66,6 +71,7 @@ class Connection extends EventEmitter {
     this.streams = {
       ledger: 1,
     };
+    this.accounts = {};
     this.streamsSubscribed = false;
   }
 
@@ -82,7 +88,7 @@ class Connection extends EventEmitter {
       this.setupEmitter();
 
       await this.client.connect();
-      await this.subscribeStreams();
+      await this.subscribe();
     } catch (err: any) {
       this.logger?.warn({
         service: "Bithomp::XRPL::Connection",
@@ -98,21 +104,23 @@ class Connection extends EventEmitter {
   public async disconnect(): Promise<void> {
     this.shutdown = true;
 
-    await this.unsubscribeStreams();
+    await this.unsubscribe();
     await this.client?.disconnect();
+    delete this.client;
+    clearTimeout(this.connectionTimer);
   }
 
   public async request(request: Request, options?: any): Promise<Response | any> {
     try {
       if (
-        options?.skip_streams_update !== true &&
+        options?.skip_subscription_update !== true &&
         (request.command === "subscribe" || request.command === "unsubscribe")
       ) {
         // we will send request from subscribeStreams and unsubscribeStreams
-        return this.updateSubscribedStreams(request);
+        return this.updateSubscriptions(request);
       }
 
-      // check connection after updateSubscribedStreams to make sure we will not miss any streams update
+      // check connection after updateSubscriptions to make sure we will not miss any streams update
       if (!this.client || !this.isConnected()) {
         return { error: "Not connected" };
       }
@@ -179,7 +187,7 @@ class Connection extends EventEmitter {
     return this.client.isConnected();
   }
 
-  public getLatenceMs(): number {
+  public getLatencyMs(): number {
     return this.latency.map((info) => info.delta).reduce((a, b) => a + b, 0) / this.latency.length || 0;
   }
 
@@ -307,81 +315,125 @@ class Connection extends EventEmitter {
     });
   }
 
-  private async updateSubscribedStreams(request: any): Promise<Response | any> {
+  private async updateSubscriptions(request: any): Promise<Response | any> {
     if (request.command === "subscribe") {
       const addStreams: StreamType[] = [];
+      const addAccounts: string[] = [];
 
-      for (const stream of request.streams) {
-        if (this.streams[stream] === undefined) {
-          this.streams[stream] = 1;
-          addStreams.push(stream);
-        } else if (stream !== "ledger") {
-          this.streams[stream]++;
+      if (request.streams) {
+        for (const stream of request.streams) {
+          if (this.streams[stream] === undefined) {
+            this.streams[stream] = 1;
+            addStreams.push(stream);
+          } else if (stream !== "ledger") {
+            this.streams[stream]++;
+          }
         }
       }
 
-      if (addStreams.length > 0) {
-        return await this.subscribeStreams(addStreams);
+      if (request.accounts) {
+        for (const account of request.accounts) {
+          if (this.accounts[account] === undefined) {
+            this.accounts[account] = 1;
+            addAccounts.push(account);
+          } else {
+            this.accounts[account]++;
+          }
+        }
+      }
+
+      if (addStreams.length > 0 || addAccounts.length > 0) {
+        return await this.subscribe(addStreams, addAccounts);
       }
     } else if (request.command === "unsubscribe") {
       const removeStreams: StreamType[] = [];
+      const removeAccounts: string[] = [];
 
-      for (const stream of request.streams) {
-        if (this.streams[stream] === undefined) {
-          continue;
-        }
+      if (request.streams) {
+        for (const stream of request.streams) {
+          if (this.streams[stream] === undefined) {
+            continue;
+          }
 
-        if (stream !== "ledger") {
-          this.streams[stream]--;
-        }
+          if (stream !== "ledger") {
+            this.streams[stream]--;
+          }
 
-        if (this.streams[stream] === 0) {
-          removeStreams.push(stream);
-          delete this.streams[stream];
+          if (this.streams[stream] === 0) {
+            delete this.streams[stream];
+            removeStreams.push(stream);
+          }
         }
       }
 
-      if (removeStreams.length > 0) {
-        return await this.unsubscribeStreams(removeStreams);
+      if (request.accounts) {
+        for (const account of request.accounts) {
+          if (this.accounts[account] === undefined) {
+            continue;
+          }
+
+          this.accounts[account]--;
+          if (this.accounts[account] === 0) {
+            delete this.accounts[account];
+            removeAccounts.push(account);
+          }
+        }
+      }
+
+      if (removeStreams.length > 0 || removeAccounts.length > 0) {
+        return await this.unsubscribe(removeStreams, removeAccounts);
       }
     }
 
-    return null;
+    return { status: "success" };
   }
 
-  private async subscribeStreams(addStreams?: StreamType[]): Promise<Response | any> {
-    let streams: StreamType[] = addStreams || (Object.keys(this.streams) as StreamType[]);
-
+  private async subscribe(streams?: StreamType[], accounts?: string[]): Promise<Response | any> {
     // subscribed and no need to subscribe to new streams
-    if (this.streamsSubscribed === true && addStreams === undefined) {
+    if (this.streamsSubscribed === true && streams === undefined && accounts === undefined) {
       return null;
     }
 
-    if (addStreams === undefined) {
-      this.streamsSubscribed = true;
-    } else if (this.streamsSubscribed === false) {
-      streams = Object.keys(this.streams) as StreamType[];
+    streams = streams || (Object.keys(this.streams) as StreamType[]);
+    accounts = accounts || Object.keys(this.accounts);
+
+    const request: any = { command: "subscribe" };
+    if (streams.length > 0) {
+      request.streams = streams;
     }
 
-    const result = await this.request({ command: "subscribe", streams }, { skip_streams_update: true });
+    if (accounts.length > 0) {
+      request.accounts = accounts;
+    }
 
-    // subscribtion failed
-    if (addStreams === undefined && !result.result) {
-      this.streamsSubscribed = false;
+    const result = await this.request(request, { skip_subscription_update: true });
+
+    if (result.result) {
+      this.streamsSubscribed = true;
     }
 
     return result;
   }
 
-  private async unsubscribeStreams(removeStreams?: StreamType[]): Promise<Response | any> {
-    const streams: StreamType[] = removeStreams || (Object.keys(this.streams) as StreamType[]);
-
-    // unsubsribed and no need to unsubscribe from new streams
-    if (removeStreams === undefined) {
+  private async unsubscribe(streams?: StreamType[], accounts?: string[]): Promise<Response | any> {
+    // unsubscribed and no need to unsubscribe from new streams
+    if (streams === undefined && accounts === undefined) {
       this.streamsSubscribed = false;
     }
 
-    return await this.request({ command: "unsubscribe", streams }, { skip_streams_update: true });
+    streams = streams || (Object.keys(this.streams) as StreamType[]);
+    accounts = accounts || Object.keys(this.accounts);
+
+    const request: any = { command: "unsubscribe" };
+    if (streams.length > 0) {
+      request.streams = streams;
+    }
+
+    if (accounts.length > 0) {
+      request.accounts = accounts;
+    }
+
+    return await this.request(request, { skip_subscription_update: true });
   }
 
   private connectionValidation(): void {
@@ -399,7 +451,7 @@ class Connection extends EventEmitter {
 
     if (!this.shutdown) {
       if (this.streamsSubscribed === false) {
-        this.subscribeStreams();
+        this.subscribe();
       }
       this.connectionTimer = setTimeout(() => {
         this.connectionValidationTimeout();

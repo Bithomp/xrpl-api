@@ -141,10 +141,10 @@ export function findConnection(type?: string, url?: string, strongFilter?: boole
 }
 
 function sortHelperConnections(a: Connection, b: Connection): -1 | 0 | 1 {
-  if (a.getLatenceMs() < b.getLatenceMs()) {
+  if (a.getLatencyMs() < b.getLatencyMs()) {
     return -1;
   }
-  if (a.getLatenceMs() > b.getLatenceMs()) {
+  if (a.getLatencyMs() > b.getLatencyMs()) {
     return 1;
   }
 

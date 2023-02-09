@@ -57,7 +57,7 @@ describe("Client", () => {
         const result: any = await Client.getNftInfo("000A1388603AFB3F50BD754869ED1EDC825E41723ED092F570A1C03E00000048");
         expect(result).to.eql({
           nft_id: "000A1388603AFB3F50BD754869ED1EDC825E41723ED092F570A1C03E00000048",
-          ledger_index: 75678544,
+          ledger_index: 77599673,
           owner: "raNf8ibQZECTaiFqkDXKRmM2GfdWK76cSu",
           is_burned: false,
           flags: 10,

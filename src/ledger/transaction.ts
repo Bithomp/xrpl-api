@@ -256,7 +256,13 @@ async function waitForFinalTransactionOutcome(txHash: string, lastLedger: number
   await sleep(LEDGER_CLOSE_TIME_AWAIT);
 
   const tx = await getTransaction(txHash);
-  if (!tx || (tx as any).error === "txnNotFound" || (tx as any).validated !== true) {
+
+  const error = (tx as any)?.error;
+  if (error === "Not connected") {
+    return tx;
+  }
+
+  if (!tx || error === "txnNotFound" || (tx as any).validated !== true) {
     const ledgerIndex = await Client.getLedgerIndex();
     if (ledgerIndex === undefined || lastLedger > ledgerIndex) {
       return waitForFinalTransactionOutcome(txHash, lastLedger);
