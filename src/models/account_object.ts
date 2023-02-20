@@ -40,47 +40,50 @@ export type AccountObjectType =
  *   - Counts towards your reserve
  */
 export function accountObjectsToAccountLines(account: string, accountObjects: AccountObject[]) {
-  const notInDefaultState = accountObjects.filter((obj: any) => {
+  const notInDefaultState = accountObjects.filter((node: any) => {
     return (
-      obj.LedgerEntryType === "RippleState" &&
-      obj.HighLimit &&
-      obj.LowLimit &&
+      node.LedgerEntryType === "RippleState" &&
       // tslint:disable-next-line:no-bitwise
-      obj.Flags & RippleStateFlags[obj.HighLimit.issuer === account ? "lsfHighReserve" : "lsfLowReserve"]
+      node.Flags & RippleStateFlags[node.HighLimit.issuer === account ? "lsfHighReserve" : "lsfLowReserve"]
     );
   });
 
-  const accountLinesFormatted: Trustline[] = notInDefaultState.map((obj: any) => {
-    const parties = [obj.HighLimit, obj.LowLimit];
-    const [self, counterparty] = obj.HighLimit.issuer === account ? parties : parties.reverse();
-
-    const ripplingFlags = [
-      // tslint:disable-next-line:no-bitwise
-      (RippleStateFlags.lsfHighNoRipple & obj.Flags) === RippleStateFlags.lsfHighNoRipple,
-      // tslint:disable-next-line:no-bitwise
-      (RippleStateFlags.lsfLowNoRipple & obj.Flags) === RippleStateFlags.lsfLowNoRipple,
-    ];
-    // tslint:disable-next-line:variable-name
-    const [no_ripple, no_ripple_peer] = obj.HighLimit.issuer === account ? ripplingFlags : ripplingFlags.reverse();
-
-    const balance =
-      obj.HighLimit.issuer === account && obj.Balance.value.startsWith("-")
-        ? obj.Balance.value.slice(1)
-        : obj.Balance.value;
-
-    return {
-      account: counterparty.issuer,
-      balance,
-      currency: self.currency,
-      limit: self.value,
-      limit_peer: counterparty.value,
-      no_ripple,
-      no_ripple_peer,
-    } as Trustline;
-  });
+  const accountLinesFormatted = notInDefaultState.map((node) =>
+    RippleStateToTrustLine(node as LedgerEntry.RippleState, account)
+  );
 
   return accountLinesFormatted;
 }
+
+const RippleStateToTrustLine = (ledgerEntry: LedgerEntry.RippleState, account: string): Trustline => {
+  const parties = [ledgerEntry.HighLimit, ledgerEntry.LowLimit];
+  const [self, counterparty] = ledgerEntry.HighLimit.issuer === account ? parties : parties.reverse();
+
+  const ripplingFlags = [
+    // tslint:disable-next-line:no-bitwise
+    (RippleStateFlags.lsfHighNoRipple & ledgerEntry.Flags) === RippleStateFlags.lsfHighNoRipple,
+    // tslint:disable-next-line:no-bitwise
+    (RippleStateFlags.lsfLowNoRipple & ledgerEntry.Flags) === RippleStateFlags.lsfLowNoRipple,
+  ];
+  // tslint:disable-next-line:variable-name
+  const [no_ripple, no_ripple_peer] =
+    ledgerEntry.HighLimit.issuer === account ? ripplingFlags : ripplingFlags.reverse();
+
+  const balance =
+    ledgerEntry.HighLimit.issuer === account && ledgerEntry.Balance.value.startsWith("-")
+      ? ledgerEntry.Balance.value.slice(1)
+      : ledgerEntry.Balance.value;
+
+  return {
+    account: counterparty.issuer,
+    balance,
+    currency: self.currency,
+    limit: self.value,
+    limit_peer: counterparty.value,
+    no_ripple,
+    no_ripple_peer,
+  } as Trustline;
+};
 
 export function accountObjectsToNFTOffers(accountObjects: AccountObject[]) {
   const nftOfferObjects = accountObjects.filter((obj: any) => {

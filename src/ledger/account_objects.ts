@@ -4,6 +4,7 @@ import { AccountObjectType, accountObjectsToAccountLines, accountObjectsToNFTOff
 import { LedgerIndex } from "../models/ledger";
 import { parseMarker, createMarker } from "../common/utils";
 
+const OBJECTS_LIMIT_DEFAULT = 200;
 const OBJECTS_LIMIT_MAX = 400;
 const OBJECTS_LIMIT_MIN = 10;
 
@@ -62,15 +63,17 @@ export async function getAccountObjects(
     throw new Error("There is no connection");
   }
 
-  const response = await connection.request({
+  const request = {
     command: "account_objects",
     account,
     type: options.type,
     ledger_hash: options.ledgerHash,
     ledger_index: options.ledgerIndex || "validated",
-    limit: options.limit,
+    limit: options.limit || OBJECTS_LIMIT_DEFAULT,
     marker: options.marker,
-  });
+  };
+
+  const response = await connection.request(request);
 
   if (!response) {
     return null;
