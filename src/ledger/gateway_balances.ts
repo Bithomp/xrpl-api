@@ -1,5 +1,9 @@
 import * as Client from "../client";
+
+import * as _ from "lodash";
+import { Trustline } from "../models/trustline";
 import { LedgerIndex } from "../models/ledger";
+import BigNumber from "bignumber.js";
 
 export interface GetBalanceSheetOptions {
   ledgerIndex?: LedgerIndex;
@@ -65,4 +69,56 @@ export async function getBalanceSheet(account: string, options: GetBalanceSheetO
   }
 
   return response?.result;
+}
+
+export interface ObligationTrustline extends Trustline {
+  obligation?: boolean;
+}
+
+/**
+ * @returns {Promise<object | null>} like
+ */
+export async function getAccountObligations(account: string): Promise<object | null> {
+  const response = (await getBalanceSheet(account)) as any;
+  if (!response) {
+    return null;
+  }
+
+  if (response.error) {
+    const { error, error_code, error_message, status, validated } = response;
+
+    return {
+      account,
+      error,
+      error_code,
+      error_message,
+      status,
+      validated,
+    };
+  }
+
+  const obligations: any = response.obligations;
+  const obligationsLines: ObligationTrustline[] = [];
+  _.map(obligations, (value: string, currency: string) => {
+    obligationsLines.push(ObligationToObligationTrustline(account, value, currency));
+  });
+
+  delete response.obligations;
+  delete response.assets;
+  response.lines = obligationsLines;
+
+  return response;
+}
+
+function ObligationToObligationTrustline(account: string, value: string, currency: string): ObligationTrustline {
+  return {
+    account,
+    currency,
+    balance: new BigNumber(-value).toString(),
+    limit: "0",
+    limit_peer: "0",
+    quality_in: 0,
+    quality_out: 0,
+    obligation: true,
+  };
 }
