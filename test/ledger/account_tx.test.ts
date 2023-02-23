@@ -89,7 +89,7 @@ describe("Client", () => {
         ]);
       });
 
-      it("finds the fist tranaction", async function () {
+      it("finds the fist transaction", async function () {
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.getTransactions(address, {
           limit: 1,
@@ -143,7 +143,7 @@ describe("Client", () => {
         );
       });
 
-      it("finds the fist activation tranaction", async function () {
+      it("finds the fist activation transaction", async function () {
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 1,
@@ -159,7 +159,7 @@ describe("Client", () => {
         );
       });
 
-      it("finds the fist send tranaction", async function () {
+      it("finds the fist send transaction", async function () {
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 1,
@@ -175,7 +175,7 @@ describe("Client", () => {
         );
       });
 
-      it("finds the 10 send tranaction after first one", async function () {
+      it("finds the 10 send transaction after first one", async function () {
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 10,
@@ -215,7 +215,7 @@ describe("Client", () => {
         expect(result[0].tx.hash).to.eq("4366EAD2976FDDE7CA02166181FAE65DE36C5B0705E174D6546D61CF5FEF74A1");
       });
 
-      it("finds the fist send tranaction with counterparty", async function () {
+      it("finds the fist send transaction with counterparty", async function () {
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 1,
@@ -230,7 +230,7 @@ describe("Client", () => {
         );
       });
 
-      it("finds the fist send tranaction with destinationTag", async function () {
+      it("finds the fist send transaction with destinationTag", async function () {
         this.timeout(15000);
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
@@ -263,7 +263,7 @@ describe("Client", () => {
         });
       });
 
-      it("returns tranaction with balanceChanges", async function () {
+      it("returns transaction with balanceChanges", async function () {
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 1,
@@ -281,7 +281,7 @@ describe("Client", () => {
         ]);
       });
 
-      it("returns tranaction with specification", async function () {
+      it("returns transaction with specification", async function () {
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 1,
@@ -330,7 +330,7 @@ describe("Client", () => {
         );
       });
 
-      it("returns tranaction with legacy", async function () {
+      it("returns transaction with legacy", async function () {
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 1,
@@ -382,7 +382,7 @@ describe("Client", () => {
         });
       });
 
-      it("returns tranaction with legacy with includeRawTransactions", async function () {
+      it("returns transaction with legacy with includeRawTransactions", async function () {
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 1,
