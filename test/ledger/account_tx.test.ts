@@ -215,6 +215,21 @@ describe("Client", () => {
         expect(result[0].tx.hash).to.eq("4366EAD2976FDDE7CA02166181FAE65DE36C5B0705E174D6546D61CF5FEF74A1");
       });
 
+      it("finds the fist trustline set transaction with counterparty", async function () {
+        const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
+        const result: any = await Client.findTransactions(address, {
+          limit: 1,
+          initiated: true,
+          forward: true,
+          counterparty: "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B",
+          timeout: 4000,
+        });
+
+        expect(JSON.stringify(result)).to.eq(
+          '[{"meta":{"AffectedNodes":[{"CreatedNode":{"LedgerEntryType":"RippleState","LedgerIndex":"67F3EB1AC9089489308E69850D09A8E283B029DB89C6480F809CAEF68EBF6A28","NewFields":{"Balance":{"currency":"USD","issuer":"rrrrrrrrrrrrrrrrrrrrBZbvji","value":"0"},"Flags":2228224,"HighLimit":{"currency":"USD","issuer":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","value":"1000000000"},"LowLimit":{"currency":"USD","issuer":"rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B","value":"0"},"LowNode":"372"}}},{"ModifiedNode":{"FinalFields":{"Flags":0,"Owner":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","RootIndex":"B1A2E369E67CC64DEDB40E27546E6E696398C979A86CF903FFE7CBB3ED0EE971"},"LedgerEntryType":"DirectoryNode","LedgerIndex":"B1A2E369E67CC64DEDB40E27546E6E696398C979A86CF903FFE7CBB3ED0EE971"}},{"ModifiedNode":{"LedgerEntryType":"AccountRoot","LedgerIndex":"B7D526FDDF9E3B3F95C3DC97C353065B0482302500BBB8051A5C090B596C6133","PreviousTxnID":"D0783F35E17597B11C4E06DB952E906F97779864B12068D0EA75394A75FA2670","PreviousTxnLgrSeq":16658259}},{"ModifiedNode":{"FinalFields":{"Flags":0,"IndexPrevious":"371","Owner":"rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B","RootIndex":"7E1247F78EFC74FA9C0AE39F37AF433966615EB9B757D8397C068C2849A8F4A5"},"LedgerEntryType":"DirectoryNode","LedgerIndex":"C6121F9C41DD07BD06D822B46E47C511ED506D6B2F68FB7E7F4BC06B36C77187"}},{"ModifiedNode":{"FinalFields":{"Account":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","Balance":"30976000","Flags":0,"OwnerCount":2,"Sequence":3},"LedgerEntryType":"AccountRoot","LedgerIndex":"EE994230153E2207737ACE5CDA73F8275E81D05A45C6937B62B0FF24C81140BA","PreviousFields":{"Balance":"30988000","OwnerCount":1,"Sequence":2},"PreviousTxnID":"2188D5FD0B33FF670B6F9CC7256569451F5254892FD80FC8AAF1237946AEBC03","PreviousTxnLgrSeq":16658790}}],"TransactionIndex":6,"TransactionResult":"tesSUCCESS"},"tx":{"Account":"rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z","Fee":"12000","Flags":131072,"LastLedgerSequence":16658799,"LimitAmount":{"currency":"USD","issuer":"rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B","value":"1000000000"},"Memos":[{"Memo":{"MemoData":"7274312E352E342D35302D6762616536396263","MemoFormat":"746578742F706C61696E","MemoType":"636C69656E74"}}],"Sequence":2,"SigningPubKey":"036C288D95A4268D268F8CAFC262FC77EB7265535805B760BD8A0E544C1C5740A7","TransactionType":"TrustSet","TxnSignature":"30440220027002AEA4C8ADCEA38E5648CA73F8F8A3D7AF262180AA7350F4FDEAC40F594202202A49C8F1B6EF067808824169B7269EDDC9A3BE83641CAA65E2D6A092CD0DB52B","date":498984910,"hash":"F35F8BD3C0BF97FE20BB4698031D61FA122809498491BEE68C44E8F5464F88B1","inLedger":16658797,"ledger_index":16658797},"validated":true}]'
+        );
+      });
+
       it("finds the fist send transaction with counterparty", async function () {
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
@@ -222,6 +237,7 @@ describe("Client", () => {
           initiated: true,
           forward: true,
           counterparty: "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B",
+          types: ["Payment"],
           timeout: 4000,
         });
 

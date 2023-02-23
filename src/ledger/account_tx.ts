@@ -247,7 +247,7 @@ export async function findTransactions(
     // merge found newly found transactions with old ones
     transactions = transactions.concat(newTransactions);
 
-    // clenup last transactions over limit
+    // cleanup last transactions over limit
     transactions = transactions.slice(0, options.limit);
 
     if (options.marker === undefined) {
@@ -255,12 +255,12 @@ export async function findTransactions(
     }
   }
 
-  // return error infromation
+  // return error information
   if (accountTransactionsError) {
     return accountTransactionsError;
   }
 
-  // return timeout and marker infromation if nothing was found
+  // return timeout and marker information if nothing was found
   if (options.marker && transactions.length === 0) {
     return {
       error: "searchTimeout",
@@ -373,7 +373,16 @@ function counterpartyFilter(options: FindProcessTransactionsOptions, transaction
     return true;
   }
 
+  if (transaction.tx.Amount?.issuer === options.counterparty) {
+    return true;
+  }
+
   if (transaction.tx.SendMax?.issuer === options.counterparty) {
+    return true;
+  }
+
+  // TrustSet
+  if (transaction.tx.LimitAmount?.issuer === options.counterparty) {
     return true;
   }
 
