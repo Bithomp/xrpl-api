@@ -273,8 +273,8 @@ describe("Client", () => {
         expect(result).to.eql({
           error: "searchTimeout",
           marker: {
-            ledger: 77599673,
-            seq: 20,
+            ledger: 78102332,
+            seq: 48,
           },
         });
       });
