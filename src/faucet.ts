@@ -51,12 +51,6 @@ export const FaucetNetworks = {
     url: "https://faucet.devnet.rippletest.net/accounts",
     format: "xrpl",
   },
-  xls20: {
-    // xls20, nft-sandbox, and nft are all the same
-    // https://xls20.bithomp.com
-    url: "https://faucet-nft.ripple.com/accounts",
-    format: "xrpl",
-  },
   hooks: {
     // the same as hooks-v2, hooks-v1 was discontinued
     // https://beta.bithomp.com

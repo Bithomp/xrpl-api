@@ -6,7 +6,7 @@ export function parseNFTokenChanges(tx: object): object {
   return new NFTokenChanges(tx).call();
 }
 
-interface AccountNFTockenChangesInterface {
+interface AccountNFTokenChangesInterface {
   status: string;
   nftokenID: string;
   uri?: string;
@@ -50,7 +50,7 @@ class NFTokenChanges {
     return true;
   }
 
-  private addChange(account: string, change: AccountNFTockenChangesInterface): void {
+  private addChange(account: string, change: AccountNFTokenChangesInterface): void {
     if (!this.changes[account]) {
       this.changes[account] = [];
     }

@@ -157,6 +157,10 @@ describe("Client", () => {
           passwordSpent: false,
           requireAuth: true,
           requireDestTag: false,
+          disallowIncomingCheck: false,
+          disallowIncomingNFTokenOffer: false,
+          disallowIncomingPayChan: false,
+          disallowIncomingTrustline: false,
         });
       });
     });
@@ -202,6 +206,10 @@ describe("Client", () => {
           passwordSpent: true,
           requireAuth: false,
           requireDestTag: false,
+          disallowIncomingCheck: false,
+          disallowIncomingNFTokenOffer: false,
+          disallowIncomingPayChan: false,
+          disallowIncomingTrustline: false,
         });
       });
 
@@ -286,6 +294,10 @@ describe("Client", () => {
           globalFreeze: false,
           defaultRipple: false,
           blackholed: false,
+          disallowIncomingCheck: false,
+          disallowIncomingNFTokenOffer: false,
+          disallowIncomingPayChan: false,
+          disallowIncomingTrustline: false,
         });
       });
     });

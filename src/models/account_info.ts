@@ -14,6 +14,10 @@ export const AccountRootFlagsKeys = {
   noFreeze: LedgerEntry.AccountRootFlags.lsfNoFreeze,
   globalFreeze: LedgerEntry.AccountRootFlags.lsfGlobalFreeze,
   defaultRipple: LedgerEntry.AccountRootFlags.lsfDefaultRipple,
+  disallowIncomingNFTokenOffer: LedgerEntry.AccountRootFlags.lsfDisallowIncomingNFTokenOffer,
+  disallowIncomingCheck: LedgerEntry.AccountRootFlags.lsfDisallowIncomingCheck,
+  disallowIncomingPayChan: LedgerEntry.AccountRootFlags.lsfDisallowIncomingPayChan,
+  disallowIncomingTrustline: LedgerEntry.AccountRootFlags.lsfDisallowIncomingTrustline,
 };
 
 export interface AccountRootFlagsKeysInterface {
@@ -26,6 +30,10 @@ export interface AccountRootFlagsKeysInterface {
   noFreeze?: boolean;
   globalFreeze?: boolean;
   defaultRipple?: boolean;
+  disallowIncomingNFTokenOffer?: boolean;
+  disallowIncomingCheck?: boolean;
+  disallowIncomingPayChan?: boolean;
+  disallowIncomingTrustline?: boolean;
 }
 
 export const SignerListFlagsKeys = {
@@ -53,7 +61,7 @@ export const AccountFields = {
  *   domain: "test.bithomp.com",
  * }
  */
- export function getSettings(accountInfo: any, excludeFalse: boolean = true): object {
+export function getSettings(accountInfo: any, excludeFalse: boolean = true): object {
   const parsedFlags = parseAccountFlags(accountInfo.Flags, { excludeFalse });
   const parsedFields = parseAccountFields(accountInfo, { excludeFalse });
 
