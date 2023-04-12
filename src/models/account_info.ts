@@ -1,4 +1,4 @@
-import { LedgerEntry } from "xrpl";
+import { LedgerEntry, AccountSetAsfFlags } from "xrpl";
 import BigNumber from "bignumber.js";
 
 import { BLACKHOLE_ACCOUNTS } from "../common";
@@ -36,6 +36,23 @@ export interface AccountRootFlagsKeysInterface {
   disallowIncomingTrustline?: boolean;
 }
 
+export const AccountSetFlags = {
+  requireDestinationTag: AccountSetAsfFlags.asfRequireDest,
+  requireAuthorization: AccountSetAsfFlags.asfRequireAuth,
+  depositAuth: AccountSetAsfFlags.asfDepositAuth,
+  disallowIncomingXRP: AccountSetAsfFlags.asfDisallowXRP,
+  disableMasterKey: AccountSetAsfFlags.asfDisableMaster,
+  enableTransactionIDTracking: AccountSetAsfFlags.asfAccountTxnID,
+  noFreeze: AccountSetAsfFlags.asfNoFreeze,
+  globalFreeze: AccountSetAsfFlags.asfGlobalFreeze,
+  defaultRipple: AccountSetAsfFlags.asfDefaultRipple,
+  authorizedMinter: AccountSetAsfFlags.asfAuthorizedNFTokenMinter,
+  disallowIncomingNFTokenOffer: AccountSetAsfFlags.asfDisallowIncomingNFTokenOffer,
+  disallowIncomingCheck: AccountSetAsfFlags.asfDisallowIncomingCheck,
+  disallowIncomingPayChan: AccountSetAsfFlags.asfDisallowIncomingPayChan,
+  disallowIncomingTrustline: AccountSetAsfFlags.asfDisallowIncomingTrustline,
+};
+
 export const SignerListFlagsKeys = {
   oneOwnerCount: LedgerEntry.SignerListFlags.lsfOneOwnerCount,
 };
@@ -51,6 +68,8 @@ export const AccountFields = {
   Domain: { name: "domain", encoding: "hex" },
   TransferRate: { name: "transferRate", defaults: 0, shift: 9 },
   TickSize: { name: "tickSize", defaults: 0 },
+  RegularKey: { name: "regularKey" },
+  NFTokenMinter: { name: "nftokenMinter" },
 };
 
 /**

@@ -1,7 +1,6 @@
 import * as _ from 'lodash'
 import BigNumber from 'bignumber.js'
-import {constants} from '../../common'
-const AccountFields = constants.AccountFields
+import { AccountFields } from "../../../models/account_info";
 
 function parseField(info, value) {
   if (info.encoding === 'hex' && !info.length) {
@@ -23,14 +22,6 @@ function parseFields(data: any): object {
       const info = AccountFields[fieldName]
       settings[info.name] = parseField(info, fieldValue)
     }
-  }
-
-  if (data.RegularKey) {
-    settings.regularKey = data.RegularKey
-  }
-
-  if (data.NFTokenMinter) {
-    settings.nftokenMinter = data.NFTokenMinter;
   }
 
   // Since an account can own at most one SignerList,

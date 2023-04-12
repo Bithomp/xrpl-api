@@ -185,6 +185,7 @@ describe("Client", () => {
           domain: "bithomp.com",
           emailHash: "576EDA7E0D04BC218DAA8A501FCA50B6",
           passwordSpent: true,
+          regularKey: "rrrrrrrrrrrrrrrrrrrrBZbvji",
         });
       });
 
@@ -201,6 +202,7 @@ describe("Client", () => {
           disallowXRP: true,
           domain: "bithomp.com",
           emailHash: "576EDA7E0D04BC218DAA8A501FCA50B6",
+          regularKey: "rrrrrrrrrrrrrrrrrrrrBZbvji",
           globalFreeze: false,
           noFreeze: false,
           passwordSpent: true,

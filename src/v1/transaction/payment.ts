@@ -1,11 +1,11 @@
 import * as _ from "lodash";
+import { PaymentFlags } from "xrpl";
 
 import { TransactionJSON } from "./types";
 import { Amount, Adjustment, MaxAdjustment, MinAdjustment, Memo } from "../common/types/objects";
 
-import { toRippledAmount, xrpToDrops, txFlags } from "../common";
+import { toRippledAmount, xrpToDrops } from "../common";
 import { getClassicAccountAndTag, ClassicAccountAndTag, convertMemo } from "./utils";
-const paymentFlags = txFlags.Payment;
 
 export interface Payment {
   source: Adjustment | MaxAdjustment;
@@ -176,11 +176,11 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
   }
   if (payment.noDirectRipple === true) {
     // tslint:disable-next-line:no-bitwise
-    txJSON.Flags |= paymentFlags.NoRippleDirect;
+    txJSON.Flags |= PaymentFlags.tfNoDirectRipple;
   }
   if (payment.limitQuality === true) {
     // tslint:disable-next-line:no-bitwise
-    txJSON.Flags |= paymentFlags.LimitQuality;
+    txJSON.Flags |= PaymentFlags.tfLimitQuality;
   }
   if (!isXRPToXRPPayment(payment)) {
     // Don't set SendMax for XRP->XRP payment
@@ -189,7 +189,7 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
     //  c522ffa6db2648f1d8a987843e7feabf1a0b7de8/
     if (payment.allowPartialPayment || isMinAdjustment(payment.destination)) {
       // tslint:disable-next-line:no-bitwise
-      txJSON.Flags |= paymentFlags.PartialPayment;
+      txJSON.Flags |= PaymentFlags.tfPartialPayment;
     }
 
     txJSON.SendMax = toRippledAmount(sourceAmount);
