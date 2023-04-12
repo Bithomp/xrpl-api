@@ -15,6 +15,10 @@ export type FormattedSettings = {
   depositAuth?: boolean
   disableMasterKey?: boolean
   disallowIncomingXRP?: boolean
+  disallowIncomingNFTokenOffer?: boolean
+  disallowIncomingCheck?: boolean
+  disallowIncomingPayChan?: boolean
+  disallowIncomingTrustline?: boolean
   domain?: string
   emailHash?: string | null
   walletLocator?: string | null
@@ -30,5 +34,5 @@ export type FormattedSettings = {
   signers?: Signers
   transferRate?: number | null
   tickSize?: number
-  minter?: string
+  nftokenMinter?: string
 }
