@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { PaymentFlags } from "xrpl";
+import {PaymentFlags} from "xrpl";
 import * as common from '../../common'
 
 function adjustQualityForXRP(

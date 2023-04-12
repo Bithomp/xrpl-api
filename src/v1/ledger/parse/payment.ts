@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import * as assert from 'assert'
-import { PaymentFlags } from "xrpl";
+import {PaymentFlags} from "xrpl";
 import {isPartialPayment} from './utils'
 import {removeUndefined} from '../../common'
 import parseAmount from './amount'

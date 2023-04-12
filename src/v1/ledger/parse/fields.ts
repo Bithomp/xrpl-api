@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import BigNumber from 'bignumber.js'
-import { AccountFields } from "../../../models/account_info";
+import {AccountFields} from "../../../models/account_info";
 
 function parseField(info, value) {
   if (info.encoding === 'hex' && !info.length) {

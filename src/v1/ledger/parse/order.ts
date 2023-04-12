@@ -1,5 +1,5 @@
 import * as assert from 'assert'
-import { OfferCreateFlags } from "xrpl";
+import {OfferCreateFlags} from "xrpl";
 import {parseTimestamp} from './utils'
 import parseAmount from './amount'
 import parseMemos from "./memos";

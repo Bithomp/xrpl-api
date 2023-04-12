@@ -1,11 +1,9 @@
 import * as _ from "lodash";
-import { PaymentFlags } from "xrpl";
-
-import { TransactionJSON } from "./types";
-import { Amount, Adjustment, MaxAdjustment, MinAdjustment, Memo } from "../common/types/objects";
-
-import { toRippledAmount, xrpToDrops } from "../common";
-import { getClassicAccountAndTag, ClassicAccountAndTag, convertMemo } from "./utils";
+import {PaymentFlags} from "xrpl";
+import {TransactionJSON} from "./types";
+import {Amount, Adjustment, MaxAdjustment, MinAdjustment, Memo} from "../common/types/objects";
+import {toRippledAmount, xrpToDrops} from "../common";
+import {getClassicAccountAndTag, ClassicAccountAndTag, convertMemo} from "./utils";
 
 export interface Payment {
   source: Adjustment | MaxAdjustment;
