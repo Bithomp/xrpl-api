@@ -1,7 +1,7 @@
 import * as assert from 'assert'
+import {TrustSetFlags} from "xrpl";
 import {parseQuality} from './utils'
-import {txFlags, removeUndefined} from '../../common'
-const flags = txFlags.TrustSet
+import {removeUndefined} from '../../common'
 import parseMemos from "./memos";
 
 function parseFlag(flagsValue, trueValue, falseValue) {
@@ -28,11 +28,11 @@ function parseTrustline(tx: any): object {
     qualityOut: parseQuality(tx.QualityOut),
     ripplingDisabled: parseFlag(
       tx.Flags,
-      flags.SetNoRipple,
-      flags.ClearNoRipple
+      TrustSetFlags.tfSetNoRipple,
+      TrustSetFlags.tfClearNoRipple
     ),
-    frozen: parseFlag(tx.Flags, flags.SetFreeze, flags.ClearFreeze),
-    authorized: parseFlag(tx.Flags, flags.SetAuth, 0)
+    frozen: parseFlag(tx.Flags, TrustSetFlags.tfSetFreeze, TrustSetFlags.tfClearFreeze),
+    authorized: parseFlag(tx.Flags, TrustSetFlags.tfSetfAuth, 0)
   })
 }
 

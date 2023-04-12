@@ -1,4 +1,3 @@
-import * as constants from './constants'
 import * as errors from './errors'
 import {xAddressToClassicAddress, isValidXAddress} from 'ripple-address-codec'
 
@@ -22,7 +21,7 @@ export function ensureClassicAddress(account: string): string {
   }
 }
 
-export {constants, errors}
+export {errors}
 export {
   dropsToXrp,
   xrpToDrops,
@@ -33,4 +32,3 @@ export {
   iso8601ToRippleTime,
   rippleTimeToISO8601
 } from './utils'
-export {txFlags} from './txflags'

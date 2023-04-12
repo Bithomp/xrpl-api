@@ -1,18 +1,19 @@
 import * as _ from 'lodash'
 import * as assert from 'assert'
+import {PaymentFlags} from "xrpl";
 import {isPartialPayment} from './utils'
-import {txFlags, removeUndefined} from '../../common'
+import {removeUndefined} from '../../common'
 import parseAmount from './amount'
 import parseMemos from "./memos";
 
 function isNoDirectRipple(tx) {
   // tslint:disable-next-line:no-bitwise
-  return (tx.Flags & txFlags.Payment.NoRippleDirect) !== 0
+  return (tx.Flags & PaymentFlags.tfNoDirectRipple) !== 0
 }
 
 function isQualityLimited(tx) {
   // tslint:disable-next-line:no-bitwise
-  return (tx.Flags & txFlags.Payment.LimitQuality) !== 0
+  return (tx.Flags & PaymentFlags.tfLimitQuality) !== 0
 }
 
 function removeGenericCounterparty(amount, address) {

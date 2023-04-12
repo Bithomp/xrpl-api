@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
+import {PaymentFlags} from "xrpl";
 import * as common from '../../common'
-
 
 function adjustQualityForXRP(
   quality: string,
@@ -33,7 +33,7 @@ function parseTimestamp(rippleTime?: number | null): string | undefined {
 
 function isPartialPayment(tx: any) {
   // tslint:disable-next-line:no-bitwise
-  return (tx.Flags & common.txFlags.Payment.PartialPayment) !== 0
+  return (tx.Flags & PaymentFlags.tfPartialPayment) !== 0
 }
 
 function hexToString(hex: string): string | undefined {

@@ -1,8 +1,8 @@
 import * as assert from 'assert'
-import {removeUndefined, txFlags} from '../../common'
+import {PaymentChannelClaimFlags} from "xrpl";
+import {removeUndefined} from '../../common'
 import parseRippledAmount from './ripple-amount'
 import parseMemos from "./memos";
-const claimFlags = txFlags.PaymentChannelClaim
 
 function parsePaymentChannelClaim(tx: any): object {
   assert.ok(tx.TransactionType === 'PaymentChannelClaim')
@@ -15,9 +15,9 @@ function parsePaymentChannelClaim(tx: any): object {
     signature: tx.Signature,
     publicKey: tx.PublicKey,
     // tslint:disable-next-line:no-bitwise
-    renew: Boolean(tx.Flags & claimFlags.Renew) || undefined,
+    renew: Boolean(tx.Flags & PaymentChannelClaimFlags.tfRenew) || undefined,
     // tslint:disable-next-line:no-bitwise
-    close: Boolean(tx.Flags & claimFlags.Close) || undefined
+    close: Boolean(tx.Flags & PaymentChannelClaimFlags.tfClose) || undefined
   })
 }
 

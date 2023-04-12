@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import * as assert from 'assert'
-import {constants, removeUndefined} from '../../common'
-const AccountFlags = constants.AccountFlags
+import {AccountRootFlagsKeys} from "../../../models/account_info";
+import {removeUndefined} from '../../common'
 import parseFields from './fields'
 import parseMemos from "./memos";
 
@@ -28,7 +28,7 @@ function parseFlags(tx: any): any {
     const setFlags = newFlags & changedFlags
     // tslint:disable-next-line:no-bitwise
     const clearedFlags = oldFlags & changedFlags
-    Object.entries(AccountFlags).forEach(entry => {
+    Object.entries(AccountRootFlagsKeys).forEach(entry => {
       const [flagName, flagValue] = entry;
       // tslint:disable-next-line:no-bitwise
       if (setFlags & flagValue) {
