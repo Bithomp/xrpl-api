@@ -154,5 +154,18 @@ describe("Faucet", () => {
         amount: 10000,
       });
     });
+
+    it("works with existing address on hooks-testnet-v3 xrpl network", async function () {
+      const res = await Faucet.foundWallet("hooks-testnet-v3", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
+
+      expect(res).to.eql({
+        account: {
+          xAddress: "TVPHVUZfDDJo631W4CZg5oa8fNwwGhn4j9CMTkc35mXminK",
+          classicAddress: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
+          address: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
+        },
+        amount: 10000,
+      });
+    });
   });
 });

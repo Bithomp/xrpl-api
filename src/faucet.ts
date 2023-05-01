@@ -51,16 +51,15 @@ export const FaucetNetworks = {
     url: "https://faucet.devnet.rippletest.net/accounts",
     format: "xrpl",
   },
-  hooks: {
-    // the same as hooks-v2, hooks-v1 was discontinued
-    // https://beta.bithomp.com
-    url: "https://hooks-testnet-v2.xrpl-labs.com/newcreds",
-    format: "xrpl-labs",
-  },
   beta: {
     // hooks-v2, beta are all the same
     // https://beta.bithomp.com
     url: "https://hooks-testnet-v2.xrpl-labs.com/newcreds",
+    format: "xrpl-labs",
+  },
+  "hooks-testnet-v3": {
+    // https://beta.bithomp.com
+    url: "https://hooks-testnet-v3.xrpl-labs.com/newcreds",
     format: "xrpl-labs",
   },
   amm: {

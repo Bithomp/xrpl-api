@@ -173,7 +173,7 @@ export async function getAccountNftSellOffers(
   nftID: string,
   options: GetAccountNftSellOffersOptions = {}
 ): Promise<object[] | object | null> {
-  // doesnt work with clio
+  // doesn't work with clio
   const connection: any = Client.findConnection("!clio");
   if (!connection) {
     throw new Error("There is no connection");
