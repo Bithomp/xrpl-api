@@ -65,7 +65,10 @@ describe("Faucet", () => {
         code: "tesSUCCESS",
       };
 
-      expect(Faucet.xrplLabsToXrplResponse(data)).to.eql({
+      const res = Faucet.xrplLabsToXrplResponse(data);
+      expect(res.hash).to.be.a("string");
+      delete res.hash;
+      expect(res).to.eql({
         account: {
           xAddress: "T7bCcMZiKHsCxCiadSDXJzjUyPYReudkFwJ6BftG4uEXPhj",
           secret: "s____________________________",
@@ -86,7 +89,10 @@ describe("Faucet", () => {
         code: "tesSUCCESS",
       };
 
-      expect(Faucet.xrplLabsToXrplResponse(data)).to.eql({
+      const res = Faucet.xrplLabsToXrplResponse(data);
+      expect(res.hash).to.be.a("string");
+      delete res.hash;
+      expect(res).to.eql({
         account: {
           xAddress: "T7bCcMZiKHsCxCiadSDXJzjUyPYReudkFwJ6BftG4uEXPhj",
           classicAddress: "rh19DztENXTjC2xPpjFXULmDzWdkS479Zx",
@@ -123,13 +129,15 @@ describe("Faucet", () => {
           classicAddress: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
           address: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
         },
-        amount: 1000,
+        amount: 10000,
       });
     });
 
     it.skip("works with new address on beta xrpl network", async function () {
       const res = await Faucet.foundWallet("beta");
 
+      expect(res.hash).to.be.a("string");
+      delete res.hash;
       expect(res).to.eql({
         account: {
           xAddress: "TVaRHtuHAZAPhfy7gBqnP1uEWvgqnrae4h7MZzpuxs9mapV",
@@ -145,6 +153,8 @@ describe("Faucet", () => {
     it("works with existing address on beta xrpl network", async function () {
       const res = await Faucet.foundWallet("beta", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
 
+      expect(res.hash).to.be.a("string");
+      delete res.hash;
       expect(res).to.eql({
         account: {
           xAddress: "TVPHVUZfDDJo631W4CZg5oa8fNwwGhn4j9CMTkc35mXminK",
@@ -158,6 +168,8 @@ describe("Faucet", () => {
     it("works with existing address on hooks-testnet-v3 xrpl network", async function () {
       const res = await Faucet.foundWallet("hooks-testnet-v3", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
 
+      expect(res.hash).to.be.a("string");
+      delete res.hash;
       expect(res).to.eql({
         account: {
           xAddress: "TVPHVUZfDDJo631W4CZg5oa8fNwwGhn4j9CMTkc35mXminK",

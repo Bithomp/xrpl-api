@@ -35,6 +35,7 @@ interface XrplSuccessResponseInterface {
   account: XrplSuccessResponseAccountInterface;
   amount: number;
   balance: number;
+  hash?: string;
 }
 
 // List of facuet networks
@@ -143,6 +144,7 @@ export function xrplLabsToXrplResponse(data: XrplLabsSuccessResponseInterface): 
       address: data.address,
     },
     amount: data.xrp,
+    hash: data.hash,
   };
 
   if (secret) {
