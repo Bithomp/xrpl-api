@@ -1,10 +1,17 @@
 # @Bithomp/xrpl-api
 
 A Bithomp JavaScript/TypeScript library for interacting with the XRP Ledger
+Library designed to be a single point of access to the XRP Ledger. It uses multiple connections to the XRP Ledger and selects the best one for the request. If the connection is lost, the library will automatically reconnect.
+
+The library also supports the creation of a validator list.
 
 In an existing project (with `package.json`), install `@bithomp/xrpl-api`:
 
-```
+```Shell
+# add github registry to .npmrc file for @bithomp packages
+echo @bithomp:registry=https://npm.pkg.github.com >> .npmrc
+
+# install package
 $ npm install --save @bithomp/xrpl-api
 ```
 
@@ -12,7 +19,7 @@ $ npm install --save @bithomp/xrpl-api
 
 ## Account info
 
-```
+```JS
 const BithompXRPL = require("@bithomp/xrpl-api");
 
 // setup connection
@@ -33,9 +40,11 @@ const config = [
     "connectionTimeout": 10000
   }
 ];
+
+// Global setup for all connections, if you have multiple connections, like in example, the library will use them by type and(or) by better response time
 BithompXRPL.Client.setup(config);
 
-// connect
+// connect to all servers
 await BithompXRPL.Client.connect();
 
 // send request
@@ -47,9 +56,11 @@ BithompXRPL.Client.disconnect();
 
 ## Create Validator List
 
-_Setup connection_
+_Setup connection_, it is required to get validators details from the ledger.
 
-```
+
+```JS
+const BithompXRPL = require("@bithomp/xrpl-api");
 // setup connection
 const config = [
   {
