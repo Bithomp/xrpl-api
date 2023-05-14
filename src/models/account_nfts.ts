@@ -6,9 +6,9 @@ import { NFTokenCreateOfferFlags } from "xrpl";
 import { ledgerTimeToUnixTime } from "./ledger";
 import { SortDirection } from "../common/utils";
 import { removeUndefined } from "../v1/common";
-import parseMemos from "../v1/ledger/parse/memos";
-import parseFlags from "../v1/ledger/parse/flags";
-import parseNFTokenFlags from "../v1/ledger/parse/nftoken-flags";
+import parseMemos from "../parse/ledger/memos";
+import { parseFlags } from "../parse/ledger/flags";
+import parseNFTokenFlags from "../parse/ledger/nftoken-flags";
 
 export { parseNFTokenFlags };
 

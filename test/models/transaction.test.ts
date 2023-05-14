@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { Models } from "../../src/index";
 
-describe.only("Models", () => {
+describe("Models", () => {
   describe("getTxDetails", () => {
     it("NFTokenMint", function () {
       const tx = require("../examples/responses/NFTokenMint.json");

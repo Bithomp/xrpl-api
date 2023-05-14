@@ -2,8 +2,7 @@ import { LedgerEntry, AccountSetAsfFlags } from "xrpl";
 import BigNumber from "bignumber.js";
 
 import { BLACKHOLE_ACCOUNTS } from "../common";
-import parseFlags from "../v1/ledger/parse/flags";
-
+import { parseFlags } from "../parse/ledger/flags";
 import { QueueData } from "../v1/common/types/objects/queue_data";
 
 export const AccountRootFlagsKeys = {

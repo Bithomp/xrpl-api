@@ -3,7 +3,7 @@ import { Transaction } from "xrpl";
 import { expect } from "chai";
 import { Client, Models, Wallet, xrpl } from "../../src/index";
 
-describe.only("Client", () => {
+describe("Client", () => {
   describe("mainnet", () => {
     before(async function () {
       this.timeout(15000);

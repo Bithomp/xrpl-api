@@ -1,17 +1,19 @@
 import _ from "lodash";
 import { Transaction, TransactionMetadata } from "xrpl";
 
-import { parseTransaction, FormattedSpecification, TransactionDetailsInterface } from "../v1/ledger/parse/transaction";
-export { TransactionDetailsInterface } from "../v1/ledger/parse/transaction";
+import { parseTransaction, FormattedSpecification, TransactionDetailsInterface } from "../parse/transaction";
+export { TransactionDetailsInterface } from "../parse/transaction";
 import { Outcome } from "../v1/transaction/types";
 
-export { parseAffectedObjects } from "./transaction/affected_objects";
-export { parseNFTokenChanges } from "./transaction/nftoken_changes";
-export { parseNFTokenOfferChanges } from "./transaction/nftoken_offer_changes";
-export { parseBalanceChanges } from "./transaction/balance_changes";
-export { parseLockedBalanceChanges } from "./transaction/locked_balance_changes";
-export { parseChannelChanges } from "./transaction/channel_changes";
-export { parseOrderbookChanges } from "./transaction/orderbook_changes";
+export { parseAffectedObjects } from "../parse/outcome/affected_objects";
+export { parseNFTokenChanges } from "../parse/outcome/nftoken_changes";
+export { parseNFTokenOfferChanges } from "../parse/outcome/nftoken_offer_changes";
+export { parseBalanceChanges } from "../parse/outcome/balance_changes";
+export { parseLockedBalanceChanges } from "../parse/outcome/locked_balance_changes";
+export { parseChannelChanges } from "../parse/outcome/channel_changes";
+export { parseOrderbookChanges } from "../parse/outcome/orderbook_changes";
+export { parseNFTokenBurn } from "../parse/specification/nftoken-burn";
+export { parseNFTokenMint } from "../parse/specification/nftoken-mint";
 
 export interface TransactionBaseResponse {
   /** The SHA-512 hash of the transaction. */
