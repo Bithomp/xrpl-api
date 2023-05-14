@@ -96,4 +96,6 @@ export interface AccountLinesResponse {
    * No additional pages after this one.
    */
   marker?: unknown;
+
+  validated?: boolean;
 }

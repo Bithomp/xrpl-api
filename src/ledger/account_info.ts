@@ -1,6 +1,8 @@
 import * as Client from "../client";
 import { Connection } from "../connection";
 import { LedgerIndex } from "../models/ledger";
+import { AccountInfoResponse, AccountInfoDataResponse } from "../models/account_info";
+import { ErrorResponse } from "../models/base_model";
 
 export interface GetAccountInfoOptions {
   ledgerIndex?: LedgerIndex;
@@ -9,7 +11,7 @@ export interface GetAccountInfoOptions {
 }
 
 /**
- * @returns {Promise<object | null>} like
+ * @returns {Promise<AccountInfoResponse | ErrorResponse | null>} like
  * {
  *   "account_data": {
  *     Account: 'rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz',
@@ -29,8 +31,11 @@ export interface GetAccountInfoOptions {
  * }
  * @exception {Error}
  */
-export async function getAccountInfo(account: string, options: GetAccountInfoOptions = {}): Promise<object | null> {
-  const connection: any = Client.findConnection();
+export async function getAccountInfo(
+  account: string,
+  options: GetAccountInfoOptions = {}
+): Promise<AccountInfoResponse | ErrorResponse | null> {
+  const connection = Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
   }
@@ -63,7 +68,7 @@ export async function getAccountInfo(account: string, options: GetAccountInfoOpt
 }
 
 /**
- * @returns {Promise<object | null>} like
+ * @returns {Promise<AccountInfoDataResponse | null>} like
  * {
  *   Account: 'rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz',
  *   Balance: '958859539',
@@ -78,14 +83,17 @@ export async function getAccountInfo(account: string, options: GetAccountInfoOpt
  * }
  * @exception {Error}
  */
-export async function getAccountInfoData(account: string, options: GetAccountInfoOptions = {}): Promise<object | null> {
-  const response: any = await getAccountInfo(account, options);
+export async function getAccountInfoData(
+  account: string,
+  options: GetAccountInfoOptions = {}
+): Promise<AccountInfoDataResponse | ErrorResponse | null> {
+  const response = await getAccountInfo(account, options);
 
   if (!response) {
     return null;
   }
 
-  if (response.error) {
+  if ("error" in response) {
     return response;
   }
 
@@ -93,9 +101,13 @@ export async function getAccountInfoData(account: string, options: GetAccountInf
 }
 
 export async function isActivated(account: string): Promise<boolean> {
-  const response: any = await getAccountInfo(account);
+  const response = await getAccountInfo(account);
 
-  if (!response || response.error === "actNotFound") {
+  if (!response) {
+    return false;
+  }
+
+  if ("error" in response /* && response.error === "actNotFound"*/) {
     return false;
   }
 

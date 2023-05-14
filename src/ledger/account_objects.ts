@@ -212,7 +212,7 @@ export async function getAccountLinesObjects(
   account: string,
   options: GetAccountLinesObjectsOptions = {}
 ): Promise<AccountLinesResponse | ErrorResponse | null> {
-  const response: any = await getAccountAllObjects(account, {
+  const response = await getAccountAllObjects(account, {
     type: "state",
     ledgerHash: options.ledgerHash,
     ledgerIndex: options.ledgerIndex,
@@ -222,17 +222,20 @@ export async function getAccountLinesObjects(
     return null;
   }
 
-  if (response.error) {
+  if ("error" in response) {
     return response;
   }
 
   const accountObjects = response.account_objects;
-
   const accountLines = accountObjectsToAccountLines(account, accountObjects);
-  delete response.account_objects;
-  response.lines = accountLines;
 
-  return response;
+  return {
+    account: response.account,
+    ledger_hash: response.ledger_hash,
+    ledger_index: response.ledger_index,
+    validated: response.validated,
+    lines: accountLines,
+  };
 }
 
 export interface GetAccountNFTOffersObjectsOptions {
@@ -266,7 +269,7 @@ export async function getAccountNFTOffersObjects(
   account: string,
   options: GetAccountNFTOffersObjectsOptions = {}
 ): Promise<AccountNFTObjectsResponse | ErrorResponse | null> {
-  const response: any = await getAccountAllObjects(account, {
+  const response = await getAccountAllObjects(account, {
     type: "nft_offer",
     ledgerHash: options.ledgerHash,
     ledgerIndex: options.ledgerIndex,
@@ -278,13 +281,18 @@ export async function getAccountNFTOffersObjects(
     return null;
   }
 
-  if (response.error) {
+  if ("error" in response) {
     return response;
   }
 
   const accountObjects = response.account_objects;
-  response.nft_offers = accountObjectsToNFTOffers(accountObjects);
-  delete response.account_objects;
+  const nftOffers = accountObjectsToNFTOffers(accountObjects);
 
-  return response;
+  return {
+    account: response.account,
+    ledger_hash: response.ledger_hash,
+    ledger_index: response.ledger_index,
+    validated: response.validated,
+    nft_offers: nftOffers,
+  };
 }

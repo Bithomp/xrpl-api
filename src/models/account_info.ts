@@ -72,15 +72,116 @@ export const AccountFields = {
   NFTokenMinter: { name: "nftokenMinter" },
 };
 
+export interface QueueTransaction {
+  /**
+   * Whether this transaction changes this address's ways of authorizing
+   * transactions.
+   */
+  auth_change: boolean;
+  /** The Transaction Cost of this transaction, in drops of XRP. */
+  fee: string;
+  /**
+   * The transaction cost of this transaction, relative to the minimum cost for
+   * this type of transaction, in fee levels.
+   */
+  fee_level: string;
+  /** The maximum amount of XRP, in drops, this transaction could send or destroy. */
+  max_spend_drops: string;
+  /** The Sequence Number of this transaction. */
+  seq: number;
+}
+
+export interface QueueData {
+  /** Number of queued transactions from this address. */
+  txn_count: number;
+  /**
+   * Whether a transaction in the queue changes this address's ways of
+   * authorizing transactions. If true, this address can queue no further
+   * transactions until that transaction has been executed or dropped from the
+   * queue.
+   */
+  auth_change_queued?: boolean;
+  /** The lowest Sequence Number among transactions queued by this address. */
+  lowest_sequence?: number;
+  /** The highest Sequence Number among transactions queued by this address. */
+  highest_sequence?: number;
+  /**
+   * Integer amount of drops of XRP that could be debited from this address if
+   * every transaction in the queue consumes the maximum amount of XRP possible.
+   */
+  max_spend_drops_total?: string;
+  /** Information about each queued transaction from this address. */
+  transactions?: QueueTransaction[];
+}
+
+export interface AccountInfoResponse {
+  /**
+   * The AccountRoot ledger object with this account's information, as stored
+   * in the ledger.
+   * If requested, also includes Array of SignerList ledger objects
+   * associated with this account for Multi-Signing. Since an account can own
+   * at most one SignerList, this array must have exactly one member if it is
+   * present.
+   */
+  account_data: AccountInfoDataResponse;
+  /**
+   * The ledger index of the current in-progress ledger, which was used when
+   * retrieving this information.
+   */
+  ledger_current_index?: number;
+  /**
+   * The ledger index of the ledger version used when retrieving this
+   * information. The information does not contain any changes from ledger
+   * versions newer than this one.
+   */
+  ledger_index?: number;
+  /**
+   * Information about queued transactions sent by this account. This
+   * information describes the state of the local rippled server, which may be
+   * different from other servers in the peer-to-peer XRP Ledger network. Some
+   * fields may be omitted because the values are calculated "lazily" by the
+   * queuing mechanism.
+   */
+  queue_data?: QueueData;
+  /**
+   * True if this data is from a validated ledger version; if omitted or set
+   * to false, this data is not final.
+   */
+  validated?: boolean;
+}
+
+export interface AccountSignerListResponse {
+  signer_lists?: LedgerEntry.SignerList[];
+}
+
+export interface AccountInfoDataResponse extends LedgerEntry.AccountRoot, AccountSignerListResponse {}
+
+export interface AccountFieldsInterface {
+  blackholed?: boolean;
+  emailHash?: string;
+  walletLocator?: string;
+  messageKey?: string;
+  domain?: string;
+  transferRate?: number;
+  tickSize?: number;
+  regularKey?: string;
+  nftokenMinter?: string;
+}
+
+export interface AccountSettingsInterface extends AccountFieldsInterface, AccountRootFlagsKeysInterface {}
+
 /**
- * @returns {object} like
+ * @returns {AccountSettingsInterface} like
  * {
  *   requireAuthorization: true,
  *   disallowIncomingXRP: true,
  *   domain: "test.bithomp.com",
  * }
  */
-export function getSettings(accountInfo: any, excludeFalse: boolean = true): object {
+export function getSettings(
+  accountInfo: AccountInfoDataResponse,
+  excludeFalse: boolean = true
+): AccountSettingsInterface {
   const parsedFlags = parseAccountFlags(accountInfo.Flags, { excludeFalse });
   const parsedFields = parseAccountFields(accountInfo, { excludeFalse });
 
@@ -97,15 +198,18 @@ export function parseAccountFlags(
   return parseFlags(value, AccountRootFlagsKeys, options);
 }
 
-export function parseAccountFields(accountInfo: any, options: { excludeFalse?: boolean } = {}): object {
-  const settings: any = {};
+export function parseAccountFields(
+  accountInfo: AccountInfoDataResponse,
+  options: { excludeFalse?: boolean } = {}
+): AccountFieldsInterface {
+  const settings: AccountFieldsInterface = {};
 
   if (accountInfo.hasOwnProperty("signer_lists")) {
     if (
       // tslint:disable-next-line:no-bitwise
       accountInfo.Flags & AccountRootFlagsKeys.disableMaster &&
-      BLACKHOLE_ACCOUNTS.includes(accountInfo.RegularKey) &&
-      accountInfo.signer_lists.length === 0
+      BLACKHOLE_ACCOUNTS.includes(accountInfo.RegularKey as string) &&
+      accountInfo.signer_lists?.length === 0
     ) {
       settings.blackholed = true;
     } else if (!options.excludeFalse) {
