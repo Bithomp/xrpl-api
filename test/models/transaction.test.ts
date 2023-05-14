@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { Models } from "../../src/index";
 
-describe("Models", () => {
+describe.only("Models", () => {
   describe("getTxDetails", () => {
     it("NFTokenMint", function () {
       const tx = require("../examples/responses/NFTokenMint.json");
@@ -1005,6 +1005,77 @@ describe("Models", () => {
     });
   });
 
+  describe("getAccountTxDetails", () => {
+    it("works", function () {
+      const accountTx = require("../examples/responses/accountTransaction/E506D86886818A6F52DACE3753EB6824F1DADD5B3B1D39C7D98DA072D9B48AB3.json");
+      const result: any = Models.getAccountTxDetails(accountTx, false);
+      expect(result).to.eql({
+        type: "payment",
+        address: "rULQj9eStEKAhF5qugaAwadh5enRwDyf1i",
+        sequence: 68840787,
+        id: "9BAFE443078D105AB49C2BF92D0DD04BF73DCC0ADF6CA67CE728CE762059E6B7",
+        specification: {
+          source: {
+            address: "rULQj9eStEKAhF5qugaAwadh5enRwDyf1i",
+            maxAmount: {
+              currency: "4C53474400000000000000000000000000000000",
+              value: "37907",
+              counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
+            },
+          },
+          destination: {
+            address: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V",
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2022-04-25T11:53:22.000Z",
+          fee: "0.00001",
+          balanceChanges: {
+            rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA: [
+              {
+                counterparty: "rULQj9eStEKAhF5qugaAwadh5enRwDyf1i",
+                currency: "4C53474400000000000000000000000000000000",
+                value: "37907",
+              },
+              {
+                counterparty: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V",
+                currency: "4C53474400000000000000000000000000000000",
+                value: "-37907",
+              },
+            ],
+            rULQj9eStEKAhF5qugaAwadh5enRwDyf1i: [
+              {
+                counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
+                currency: "4C53474400000000000000000000000000000000",
+                value: "-37907",
+              },
+              { currency: "XRP", value: "-0.00001" },
+            ],
+            r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V: [
+              {
+                counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
+                currency: "4C53474400000000000000000000000000000000",
+                value: "37907",
+              },
+            ],
+          },
+          lockedBalanceChanges: {},
+          orderbookChanges: {},
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
+          ledgerVersion: 71226014,
+          indexInLedger: 92,
+          deliveredAmount: {
+            currency: "4C53474400000000000000000000000000000000",
+            value: "37907",
+            counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
+          },
+        },
+      });
+    });
+  });
+
   describe("getLedgerTxDetails", () => {
     it("NFTokenMint from ledger history", function () {
       const tx = require("../examples/responses/LedgerNFTokenMint.json");
@@ -1272,7 +1343,7 @@ describe("Models", () => {
       });
     });
 
-    it("NFTokenAcceptOfferBuy multipages", function () {
+    it("NFTokenAcceptOfferBuy multi pages", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy3.json");
       const result: any = Models.parseNFTokenChanges(tx);
 
@@ -1294,7 +1365,7 @@ describe("Models", () => {
       });
     });
 
-    it("NFTokenAcceptOfferBuy multipages", function () {
+    it("NFTokenAcceptOfferBuy multi pages", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy4.json");
       const result: any = Models.parseNFTokenChanges(tx);
 
@@ -1524,7 +1595,7 @@ describe("Models", () => {
   });
 
   describe("parseAffectedObjects", () => {
-    it("NFTokenAcceptOfferBuy multipages", function () {
+    it("NFTokenAcceptOfferBuy multi pages", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy3.json");
       const result: any = Models.parseAffectedObjects(tx);
 

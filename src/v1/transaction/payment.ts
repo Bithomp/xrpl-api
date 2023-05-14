@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import {PaymentFlags} from "xrpl";
 import {TransactionJSON} from "./types";
 import {Amount, Adjustment, MaxAdjustment, MinAdjustment, Memo} from "../common/types/objects";

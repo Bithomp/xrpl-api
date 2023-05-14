@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import crypto from "crypto";
 import { EventEmitter } from "events";
 import { Client, Request, Response } from "xrpl";

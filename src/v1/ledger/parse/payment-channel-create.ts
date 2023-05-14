@@ -4,12 +4,14 @@ import {removeUndefined} from '../../common'
 import parseRippledAmount from './ripple-amount'
 import parseMemos from "./memos";
 
-function parsePaymentChannelCreate(tx: any): object {
+import { FormattedPaymentChannelCreateSpecification } from "../../common/types/objects/payment_channels";
+
+function parsePaymentChannelCreate(tx: any): FormattedPaymentChannelCreateSpecification {
   assert.ok(tx.TransactionType === 'PaymentChannelCreate')
 
   return removeUndefined({
     memos: parseMemos(tx),
-    amount: parseRippledAmount(tx.Amount), // Legace support
+    amount: parseRippledAmount(tx.Amount), // Legacy support
     destination: tx.Destination,
     settleDelay: tx.SettleDelay,
     publicKey: tx.PublicKey,

@@ -2,7 +2,9 @@ import * as assert from 'assert'
 import {removeUndefined} from '../../common'
 import parseMemos from "./memos";
 
-function parseEscrowExecution(tx: any): object {
+import { FormattedEscrowFinishSpecification } from "../../common/types/objects/escrows";
+
+function parseEscrowFinish(tx: any): FormattedEscrowFinishSpecification {
   assert.ok(tx.TransactionType === 'EscrowFinish')
 
   return removeUndefined({
@@ -14,4 +16,4 @@ function parseEscrowExecution(tx: any): object {
   })
 }
 
-export default parseEscrowExecution
+export default parseEscrowFinish

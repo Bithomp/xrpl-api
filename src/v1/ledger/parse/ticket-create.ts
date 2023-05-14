@@ -1,13 +1,16 @@
-import * as assert from 'assert'
-import {removeUndefined} from '../../common'
+import * as assert from "assert";
+import { removeUndefined } from "../../common";
 import parseMemos from "./memos";
 
-function parseTicketCreate(tx: any): object {
-  assert.ok(tx.TransactionType === 'TicketCreate')
+import { FormattedTicketCreateSpecification } from "../../common/types/objects/tickets";
+
+function parseTicketCreate(tx: any): FormattedTicketCreateSpecification {
+  assert.ok(tx.TransactionType === "TicketCreate");
+
   return removeUndefined({
     memos: parseMemos(tx),
-    ticketCount: tx.TicketCount
-  })
+    ticketCount: tx.TicketCount,
+  });
 }
 
-export default parseTicketCreate
+export default parseTicketCreate;

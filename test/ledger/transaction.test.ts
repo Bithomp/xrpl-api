@@ -1,9 +1,9 @@
 import nconf from "nconf";
 import { Transaction } from "xrpl";
 import { expect } from "chai";
-import { Client, Wallet, xrpl } from "../../src/index";
+import { Client, Models, Wallet, xrpl } from "../../src/index";
 
-describe("Client", () => {
+describe.only("Client", () => {
   describe("mainnet", () => {
     before(async function () {
       this.timeout(15000);
@@ -269,7 +269,7 @@ describe("Client", () => {
       it("is OK for sign and submit", async function () {
         this.timeout(10000);
         const account = "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz";
-        const paymentParams = await Client.getAccountPaymentParams(account);
+        const paymentParams = (await Client.getAccountPaymentParams(account)) as Models.AccountPaymentParamsInterface;
 
         const txBlob: Transaction = {
           TransactionType: "Payment",

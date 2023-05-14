@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import AddressCodec = require("ripple-address-codec");
 import { removeUndefined } from "../../v1/common";
 

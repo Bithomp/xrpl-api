@@ -5,10 +5,12 @@ import { Transaction } from "xrpl";
 import * as Client from "../client";
 import { Connection } from "../connection";
 import { sleep } from "../common/utils";
-import { getTxDetails } from "../models/transaction";
+import { getTxDetails, TransactionResponse, TransactionDetailsInterface, AccountPaymentParamsInterface } from "../models/transaction";
 import { createPaymentTransaction, Payment } from "../v1/transaction/payment";
 import { Memo } from "../v1/common/types/objects";
 import { xrpToDrops } from "../v1/common";
+import { ErrorResponse } from "../models/base_model";
+import { AccountInfoResponse } from "../models/account_info";
 
 const submitErrorsGroup = ["tem", "tef", "tel", "ter"];
 const FEE_LIMIT = 0.5; // XRP
@@ -52,7 +54,10 @@ export interface GetTransactionOptions {
  * }
  * @exception {Error}
  */
-export async function getTransaction(transaction: string, options: GetTransactionOptions = {}): Promise<object | null> {
+export async function getTransaction(
+  transaction: string,
+  options: GetTransactionOptions = {}
+): Promise<TransactionResponse | TransactionDetailsInterface | ErrorResponse | null> {
   const connection: any = Client.findConnection("history");
   if (!connection) {
     throw new Error("There is no connection");
@@ -118,7 +123,9 @@ interface LegacyPaymentInterface {
   secret: string;
 }
 
-export async function legacyPayment(data: LegacyPaymentInterface): Promise<object | null> {
+export async function legacyPayment(
+  data: LegacyPaymentInterface
+): Promise<TransactionResponse | TransactionDetailsInterface | ErrorResponse | null> {
   const connection: any = Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
@@ -147,8 +154,9 @@ export async function legacyPayment(data: LegacyPaymentInterface): Promise<objec
 
   const transaction = createPaymentTransaction(data.sourceAddress, txPayment);
   const paymentParams = await getAccountPaymentParams(data.sourceAddress, connection);
-  if (paymentParams.error) {
-    return paymentParams;
+
+  if ("error" in paymentParams) {
+    return paymentParams as ErrorResponse;
   }
   transaction.Fee = paymentParams.fee;
   transaction.Sequence = paymentParams.sequence;
@@ -162,17 +170,19 @@ export async function legacyPayment(data: LegacyPaymentInterface): Promise<objec
   return await submit(signedTransaction, { connection });
 }
 
-interface AccountPaymentParamsInterface {
-  fee?: string;
-  sequence?: number;
-  lastLedgerSequence?: number;
-  error?: string;
-}
-
+/**
+ * Get account payment params, such as fee, sequence and lastLedgerSequence,
+ * will be used for payment transaction, like in legacyPayment function
+ *
+ * @param {string} account
+ * @param {Connection} connection
+ * @returns {Promise<AccountPaymentParamsInterface>}
+ * @exception {Error}
+ */
 export async function getAccountPaymentParams(
   account: string,
   connection?: Connection
-): Promise<AccountPaymentParamsInterface> {
+): Promise<AccountPaymentParamsInterface | ErrorResponse> {
   try {
     const feePromise = new Promise(async (resolve) => {
       const baseFee = await Client.getFee({ connection });
@@ -184,11 +194,16 @@ export async function getAccountPaymentParams(
     });
 
     const sequencePromise = new Promise(async (resolve, rejects) => {
-      const accountInfo: any = await Client.getAccountInfo(account, { connection });
-      if (accountInfo.error) {
-        rejects(new Error(accountInfo.error));
+      const accountInfo = await Client.getAccountInfo(account, { connection });
+
+      if (!accountInfo) {
+        return rejects(new Error("Account not found"));
       }
-      resolve((accountInfo as any)?.account_data?.Sequence);
+
+      if ("error" in accountInfo) {
+        return rejects(new Error(accountInfo.error));
+      }
+      resolve((accountInfo as AccountInfoResponse)?.account_data?.Sequence);
     });
 
     const lastLedgerSequencePromise = new Promise(async (resolve) => {
@@ -207,6 +222,8 @@ export async function getAccountPaymentParams(
     };
   } catch (e: any) {
     return {
+      account,
+      status: "error",
       error: e.message,
     };
   }
@@ -216,7 +233,17 @@ export interface SubmitOptionsInterface {
   connection?: Connection;
 }
 
-export async function submit(signedTransaction: string, options: SubmitOptionsInterface = {}): Promise<object | null> {
+/**
+ * Submit signed transaction to the network
+ * @param {string} signedTransaction
+ * @param {SubmitOptionsInterface} options
+ * @returns {Promise<TransactionResponse | TransactionDetailsInterface | ErrorResponse | null>}
+ * @exception {Error}
+ */
+export async function submit(
+  signedTransaction: string,
+  options: SubmitOptionsInterface = {}
+): Promise<TransactionResponse | TransactionDetailsInterface | ErrorResponse | null | null> {
   const connection: any = options.connection || Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
@@ -252,11 +279,21 @@ export async function submit(signedTransaction: string, options: SubmitOptionsIn
   return await waitForFinalTransactionOutcome(txHash, lastLedger);
 }
 
-async function waitForFinalTransactionOutcome(txHash: string, lastLedger: number): Promise<object | null> {
+/**
+ * Wait for final transaction outcome
+ * @param {string} txHash
+ * @param {number} lastLedger
+ * @returns {Promise<TransactionResponse | TransactionDetailsInterface | ErrorResponse | null>}
+ * @exception {Error}
+ * @private
+ */
+async function waitForFinalTransactionOutcome(
+  txHash: string,
+  lastLedger: number
+): Promise<TransactionResponse | TransactionDetailsInterface | ErrorResponse | null> {
   await sleep(LEDGER_CLOSE_TIME_AWAIT);
 
   const tx = await getTransaction(txHash);
-
   const error = (tx as any)?.error;
   if (error === "Not connected") {
     return tx;
