@@ -1,8 +1,9 @@
 import { LedgerEntry } from "xrpl";
-import { Trustline } from "../models/trustline";
+import { Trustline } from "./account_lines";
 const { RippleStateFlags } = LedgerEntry;
 import { removeUndefined } from "../v1/common";
 import { ledgerTimeToUnixTime } from "../models/ledger";
+import { Amount } from "../v1/common/types/objects";
 
 // https://github.com/XRPLF/xrpl.js/blob/2b424276344b2aa8b8b76d621500f4d9e1436663/packages/xrpl/src/models/methods/accountObjects.ts#L61
 /**
@@ -30,6 +31,40 @@ export type AccountObjectType =
   | "ticket"
   | "nft_offer";
 
+export interface AccountObjectsResponse {
+  account: string;
+  account_objects: AccountObject[];
+  ledger_hash?: string;
+  ledger_index?: number;
+  ledger_current_index?: number;
+  limit?: number;
+  marker?: string;
+  validated?: boolean;
+}
+
+export interface AccountNFTObjectsResponse {
+  account: string;
+  nft_offers: AccountNFTOffersInterface[];
+  ledger_hash?: string;
+  ledger_index?: number;
+  ledger_current_index?: number;
+  limit?: number;
+  marker?: string;
+  validated?: boolean;
+}
+
+export interface AccountNFTOffersInterface {
+  nft_id: string;
+  amount: Amount;
+  flags: number;
+  index: string;
+  owner: string;
+  destination?: string;
+  expiration?: number;
+  ledger_index: number;
+  transaction_hash: string;
+}
+
 /**
  * https://gist.github.com/WietseWind/5df413334385367c548a148de3d8a713
  * https://github.com/XRPL-Labs/XUMM-App/blob/2c39d04e65dd8d48001f4cb452b1fbe2e2c53f00/src/services/AccountService.ts#L198
@@ -39,7 +74,7 @@ export type AccountObjectType =
  * » Returns only the account_lines to show based on:
  *   - Counts towards your reserve
  */
-export function accountObjectsToAccountLines(account: string, accountObjects: AccountObject[]) {
+export function accountObjectsToAccountLines(account: string, accountObjects: AccountObject[]): Trustline[] {
   const notInDefaultState = accountObjects.filter((node: any) => {
     return (
       node.LedgerEntryType === "RippleState" &&
@@ -85,7 +120,7 @@ const RippleStateToTrustLine = (ledgerEntry: LedgerEntry.RippleState, account: s
   } as Trustline;
 };
 
-export function accountObjectsToNFTOffers(accountObjects: AccountObject[]) {
+export function accountObjectsToNFTOffers(accountObjects: AccountObject[]): AccountNFTOffersInterface[] {
   const nftOfferObjects = accountObjects.filter((obj: any) => {
     return obj.LedgerEntryType === "NFTokenOffer";
   });

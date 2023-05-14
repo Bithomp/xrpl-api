@@ -63,3 +63,37 @@ export interface Trustline {
    */
   freeze_peer?: boolean;
 }
+
+export interface AccountLinesResponse {
+  /**
+   * Unique Address of the account this request corresponds to. This is the
+   * "perspective account" for purpose of the trust lines.
+   */
+  account: string;
+  /**
+   * Array of trust line objects. If the number of trust lines is large, only
+   * returns up to the limit at a time.
+   */
+  lines: Trustline[];
+  /**
+   * The ledger index of the current open ledger, which was used when
+   * retrieving this information.
+   */
+  ledger_current_index?: number;
+  /**
+   * The ledger index of the ledger version that was used when retrieving
+   * this data.
+   */
+  ledger_index?: number;
+  /**
+   * The identifying hash the ledger version that was used when retrieving
+   * this data.
+   */
+  ledger_hash?: string;
+  /**
+   * Server-defined value indicating the response is paginated. Pass this to
+   * the next call to resume where this call left off. Omitted when there are
+   * No additional pages after this one.
+   */
+  marker?: unknown;
+}

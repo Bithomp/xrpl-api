@@ -1,6 +1,15 @@
+import { AccountObjectsRequest } from "xrpl";
 import * as Client from "../client";
 
-import { AccountObjectType, accountObjectsToAccountLines, accountObjectsToNFTOffers } from "../models/account_object";
+import {
+  AccountObjectType,
+  accountObjectsToAccountLines,
+  accountObjectsToNFTOffers,
+  AccountObjectsResponse,
+  AccountNFTObjectsResponse,
+} from "../models/account_object";
+import { AccountLinesResponse } from "../models/account_lines";
+import { ErrorResponse } from "../models/base_model";
 import { LedgerIndex } from "../models/ledger";
 import { parseMarker, createMarker } from "../common/utils";
 
@@ -17,7 +26,7 @@ export interface GetAccountObjectsOptions {
 }
 
 /**
- * @returns {Promise<object | null>} like
+ * @returns {Promise<AccountObjectsResponse | ErrorResponse | null>} like
  * {
  *   "account": "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
  *   "account_objects": [
@@ -55,7 +64,7 @@ export interface GetAccountObjectsOptions {
 export async function getAccountObjects(
   account: string,
   options: GetAccountObjectsOptions = {}
-): Promise<object | null> {
+): Promise<AccountObjectsResponse | ErrorResponse | null> {
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
   const connection: any = Client.findConnection("account_objects", undefined, undefined, hash);
@@ -63,7 +72,7 @@ export async function getAccountObjects(
     throw new Error("There is no connection");
   }
 
-  const request = {
+  const request: AccountObjectsRequest = {
     command: "account_objects",
     account,
     type: options.type,
@@ -108,11 +117,11 @@ export interface GetAccountAllObjectsOptions extends GetAccountObjectsOptions {
 export async function getAccountAllObjects(
   account: string,
   options: GetAccountAllObjectsOptions = {}
-): Promise<object | null> {
+): Promise<AccountObjectsResponse | ErrorResponse | null> {
   const timeStart = new Date();
   const limit = options.limit;
   let response: any;
-  const accountObjects: any[] = [];
+  const accountObjects: AccountObjectsResponse[] = [];
 
   // download all objects with marker
   while (true) {
@@ -179,7 +188,7 @@ export interface GetAccountLinesObjectsOptions {
 }
 
 /**
- * @returns {Promise<object | null>}
+ * @returns {Promise<AccountLinesResponse | ErrorResponse | null>}
  * {
  *   "account": "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
  *   "ledger_hash": "E72945940A2DB38FB20F1C385C00C465F68545761BD6D29ECF8671D2FC539B57",
@@ -202,7 +211,7 @@ export interface GetAccountLinesObjectsOptions {
 export async function getAccountLinesObjects(
   account: string,
   options: GetAccountLinesObjectsOptions = {}
-): Promise<object | null> {
+): Promise<AccountLinesResponse | ErrorResponse | null> {
   const response: any = await getAccountAllObjects(account, {
     type: "state",
     ledgerHash: options.ledgerHash,
@@ -236,7 +245,7 @@ export interface GetAccountNFTOffersObjectsOptions {
 /**
  * @param account
  * @param options
- * @returns {Promise<object | null>}
+ * @returns {Promise<AccountNFTObjectsResponse | ErrorResponse | null>}
  * {
  *   "account": "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
  *   "ledger_hash": "3E1198BF849E2A2ABB8667DA275F180FB48CA02408FE3ABE0F94CBC5145FA773",
@@ -256,7 +265,7 @@ export interface GetAccountNFTOffersObjectsOptions {
 export async function getAccountNFTOffersObjects(
   account: string,
   options: GetAccountNFTOffersObjectsOptions = {}
-): Promise<object | null> {
+): Promise<AccountNFTObjectsResponse | ErrorResponse | null> {
   const response: any = await getAccountAllObjects(account, {
     type: "nft_offer",
     ledgerHash: options.ledgerHash,

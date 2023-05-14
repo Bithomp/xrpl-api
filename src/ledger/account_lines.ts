@@ -1,6 +1,8 @@
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
 import { parseMarker, createMarker } from "../common/utils";
+import { AccountLinesResponse } from "../models/account_lines";
+import { ErrorResponse } from "../models/base_model";
 
 export interface GetAccountLinesOptions {
   counterparty?: string;
@@ -11,7 +13,7 @@ export interface GetAccountLinesOptions {
 }
 
 /**
- * @returns {Promise<object | null>} like
+ * @returns {Promise<AccountLinesResponse | ErrorResponse | null>} like
  * {
  *   account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
  *   ledger_hash: "BD24686C403D2FB1B1C38C56BF0A672C4073B0376F842EDD59BA0937FD68BABC",
@@ -33,7 +35,10 @@ export interface GetAccountLinesOptions {
  * }
  * @exception {Error}
  */
-export async function getAccountLines(account: string, options: GetAccountLinesOptions = {}): Promise<object | null> {
+export async function getAccountLines(
+  account: string,
+  options: GetAccountLinesOptions = {}
+): Promise<AccountLinesResponse | ErrorResponse | null> {
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
   const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
