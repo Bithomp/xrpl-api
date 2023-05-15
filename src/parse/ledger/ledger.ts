@@ -1,5 +1,6 @@
-import * as _ from "lodash";
-import { removeUndefined, rippleTimeToISO8601, rippleToUnixTime } from "../../v1/common";
+import _ from "lodash";
+import { removeUndefined } from "../../common";
+import { rippleTimeToISO8601, rippleToUnixTime } from "../../v1/common";
 import { parseTransaction } from "../transaction";
 import { Ledger } from "../../v1/common/types/objects";
 

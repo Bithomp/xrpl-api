@@ -1,34 +1,4 @@
-import { Amount, RippledAmount, Adjustment, MaxAdjustment, MinAdjustment } from "./objects";
-
-// Amount where counterparty and value are optional
-export type LaxLaxAmount = {
-  currency: string;
-  value?: string;
-  issuer?: string;
-  counterparty?: string;
-};
-
-export type Path = {
-  source: Adjustment | MaxAdjustment;
-  destination: Adjustment | MinAdjustment;
-  paths: string;
-};
-
-// tslint:disable-next-line:array-type
-export type GetPaths = Array<Path>;
-
-export type PathFind = {
-  source: {
-    address: string;
-    amount?: Amount;
-    // tslint:disable-next-line:array-type
-    currencies?: Array<{ currency: string; counterparty?: string }>;
-  };
-  destination: {
-    address: string;
-    amount: LaxLaxAmount;
-  };
-};
+import { RippledAmount } from "../objects";
 
 export type PathFindRequest = {
   command: string;

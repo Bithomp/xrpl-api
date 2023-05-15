@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 import parseAmount from "./amount";
 import { parseTimestamp, adjustQualityForXRP } from "../utils";
-import { removeUndefined } from "../../v1/common";
+import { removeUndefined } from "../../common";
 import { orderFlags } from "../../v1/common/types/objects/flags";
 import { FormattedOfferCreateSpecification } from "../../v1/common/types/objects";
 

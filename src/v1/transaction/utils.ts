@@ -1,5 +1,5 @@
 import { xAddressToClassicAddress, isValidXAddress } from "ripple-address-codec";
-import { removeUndefined } from "../common";
+import { removeUndefined } from "../../common";
 import { FormattedMemo, Memo } from "../common/types/objects";
 
 /**

@@ -1,5 +1,5 @@
 import { FormattedMemo, Memo } from "../../v1/common/types/objects";
-import { removeUndefined } from "../../v1/common";
+import { removeUndefined } from "../../common";
 import { hexToString } from "../utils";
 
 // tslint:disable-next-line:array-type

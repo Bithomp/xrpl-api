@@ -2,7 +2,7 @@ import _ from "lodash";
 import * as assert from "assert";
 import { PaymentFlags } from "xrpl";
 import { isPartialPayment } from "../utils";
-import { removeUndefined } from "../../v1/common";
+import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
 import parseMemos from "../ledger/memos";
 

@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import { removeUndefined } from "../../v1/common";
+import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
 import parseMemos from "../ledger/memos";
 

@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { PaymentChannelClaimFlags } from "xrpl";
-import { removeUndefined } from "../../v1/common";
+import { removeUndefined } from "../../common";
 import parseRippledAmount from "../ledger/ripple-amount";
 import parseMemos from "../ledger/memos";
 
