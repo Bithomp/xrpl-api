@@ -1,7 +1,7 @@
 import { parseTimestamp } from "../utils";
 import { removeUndefined, dropsToXrp } from "../../v1/common";
 import { PayChannelLedgerEntry } from "../../v1/common/types/objects";
-import parseMemos from "../ledger/memos";
+import parseMemos from "./memos";
 
 export type FormattedPaymentChannel = {
   account: string;

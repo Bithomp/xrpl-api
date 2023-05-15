@@ -5,6 +5,7 @@ import { FormattedOfferCancelSpecification } from "../../v1/common/types/objects
 
 function parseOfferCancel(tx: any): FormattedOfferCancelSpecification {
   assert.ok(tx.TransactionType === "OfferCancel");
+
   return {
     memos: parseMemos(tx),
     orderSequence: tx.OfferSequence,
