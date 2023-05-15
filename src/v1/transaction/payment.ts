@@ -1,7 +1,7 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import {PaymentFlags} from "xrpl";
 import {TransactionJSON} from "./types";
-import {Amount, Adjustment, MaxAdjustment, MinAdjustment, Memo} from "../common/types/objects";
+import {Amount, Adjustment, MaxAdjustment, MinAdjustment, FormattedMemo} from "../common/types/objects";
 import {toRippledAmount, xrpToDrops} from "../common";
 import {getClassicAccountAndTag, ClassicAccountAndTag, convertMemo} from "./utils";
 
@@ -9,7 +9,7 @@ export interface Payment {
   source: Adjustment | MaxAdjustment;
   destination: Adjustment | MinAdjustment;
   paths?: string;
-  memos?: Memo[];
+  memos?: FormattedMemo[];
   // A 256-bit hash that can be used to identify a particular payment
   invoiceID?: string;
   // A boolean that, if set to true, indicates that this payment should go

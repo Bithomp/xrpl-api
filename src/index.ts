@@ -3,6 +3,7 @@ export * as Models from "./models";
 export * as Wallet from "./wallet";
 export * as Faucet from "./faucet";
 export * as Validator from "./validator";
+export * as Parse from "./parse";
 
 export { BLACKHOLE_ACCOUNTS } from "./common";
 

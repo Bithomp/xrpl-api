@@ -1,6 +1,6 @@
 import * as Client from "../client";
 
-import * as _ from "lodash";
+import _ from "lodash";
 import { Trustline } from "../models/account_lines";
 import { LedgerIndex } from "../models/ledger";
 import BigNumber from "bignumber.js";

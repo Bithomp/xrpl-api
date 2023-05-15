@@ -1,6 +1,6 @@
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
-import { parseLedger } from "../v1/ledger/parse/ledger";
+import { parseLedger } from "../parse/ledger/ledger";
 
 export interface GetLedgerOptions {
   ledgerIndex?: LedgerIndex;

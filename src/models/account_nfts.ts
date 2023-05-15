@@ -1,12 +1,12 @@
-import * as assert from "assert";
 import BigNumber from "bignumber.js";
 import AddressCodec = require("ripple-address-codec");
-import { NFTokenMintFlags, NFTokenCreateOfferFlags } from "xrpl";
 
-import { ledgerTimeToUnixTime } from "./ledger";
-import { parseFlags, SortDirection } from "../common/utils";
-import { removeUndefined } from "../v1/common";
-import parseMemos from "../v1/ledger/parse/memos";
+import { SortDirection } from "../common/utils";
+import parseNFTokenFlags from "../parse/ledger/nftoken-flags";
+import parseNFTOfferFlags from "../parse/ledger/nftoken-offer-flags";
+import parseNFTokenAcceptOffer from "../parse/specification/nftoken-accept-offer";
+import parseNFTokenCancelOffer from "../parse/specification/nftoken-cancel-offer";
+import parseNFTokenCreateOffer from "../parse/specification/nftoken-create-offer";
 
 export interface NFTokenInterface {
   Flags: number;
@@ -47,41 +47,6 @@ export function sortHelperAccountNFToken(a: AccountNFTokenInterface, b: AccountN
   }
 
   return 0;
-}
-
-export const NFTokenFlagsKeys = {
-  burnable: NFTokenMintFlags.tfBurnable,
-  onlyXRP: NFTokenMintFlags.tfOnlyXRP,
-  trustLine: NFTokenMintFlags.tfTrustLine,
-  transferable: NFTokenMintFlags.tfTransferable,
-  // reservedFlag: NFTokenMintFlags.tfReservedFlag,
-};
-
-export interface NFTokenFlagsKeysInterface {
-  burnable?: boolean;
-  onlyXRP?: boolean;
-  trustLine?: boolean;
-  transferable?: boolean;
-  // reservedFlag?: boolean
-}
-
-export function parseNFTokenFlags(value: number, options: { excludeFalse?: boolean } = {}): NFTokenFlagsKeysInterface {
-  return parseFlags(value, NFTokenFlagsKeys, options);
-}
-
-export interface NFTokenOfferFlagsKeysInterface {
-  sellToken?: boolean;
-}
-
-export const NFTokenOfferFlagsKeys = {
-  sellToken: NFTokenCreateOfferFlags.tfSellNFToken,
-};
-
-export function parseNFTOfferFlags(
-  value: number,
-  options: { excludeFalse?: boolean } = {}
-): NFTokenOfferFlagsKeysInterface {
-  return parseFlags(value, NFTokenOfferFlagsKeys, options);
 }
 
 export function cipheredTaxon(tokenSeq: number, taxon: number) {
@@ -142,96 +107,10 @@ export function parseNFTokenID(nftokenID: string): NFTokenInterface | null {
   };
 }
 
-interface FormattedNFTokenBurn {
-  account: string;
-  nftokenID: string;
-}
-
-export function parseNFTokenBurn(tx: any): FormattedNFTokenBurn {
-  assert.ok(tx.TransactionType === "NFTokenBurn");
-
-  return removeUndefined({
-    account: tx.Account,
-    nftokenID: tx.NFTokenID,
-    memos: parseMemos(tx),
-  });
-}
-
-interface FormattedNFTokenMint {
-  nftokenTaxon: number;
-  issuer?: string;
-  transferFee?: number;
-  uri?: string;
-  flags?: NFTokenFlagsKeysInterface;
-}
-
-export function parseNFTokenMint(tx: any): FormattedNFTokenMint {
-  assert.ok(tx.TransactionType === "NFTokenMint");
-
-  return removeUndefined({
-    nftokenTaxon: tx.NFTokenTaxon,
-    issuer: tx.Issuer,
-    transferFee: tx.TransferFee,
-    uri: tx.URI,
-    flags: parseNFTokenFlags(tx.Flags),
-    memos: parseMemos(tx),
-  });
-}
-
-interface FormattedNFTokenCancelOffer {
-  nftokenOffers: string[];
-}
-
-export function parseNFTokenCancelOffer(tx: any): FormattedNFTokenCancelOffer {
-  assert.ok(tx.TransactionType === "NFTokenCancelOffer");
-
-  return removeUndefined({
-    nftokenOffers: tx.NFTokenOffers,
-    memos: parseMemos(tx),
-  });
-}
-
-interface FormattedNFTokenCreateOffer {
-  nftokenID: string;
-  amount: string;
-  owner?: string;
-  destination?: string;
-  expiration?: number;
-  flags?: NFTokenOfferFlagsKeysInterface;
-}
-
-export function parseNFTokenCreateOffer(tx: any): FormattedNFTokenCreateOffer {
-  assert.ok(tx.TransactionType === "NFTokenCreateOffer");
-
-  let expiration: any;
-  if (typeof tx.Expiration === "number") {
-    expiration = ledgerTimeToUnixTime(tx.Expiration);
-  }
-
-  return removeUndefined({
-    nftokenID: tx.NFTokenID,
-    amount: tx.Amount,
-    owner: tx.Owner,
-    destination: tx.Destination,
-    expiration,
-    flags: parseNFTOfferFlags(tx.Flags),
-    memos: parseMemos(tx),
-  });
-}
-
-interface FormattedNFTokenAcceptOffer {
-  nftokenSellOffer?: string;
-  nftokenBuyOffer?: string;
-  nftokenBrokerFee?: string;
-}
-
-export function parseNFTokenAcceptOffer(tx: any): FormattedNFTokenAcceptOffer {
-  assert.ok(tx.TransactionType === "NFTokenAcceptOffer");
-
-  return removeUndefined({
-    nftokenSellOffer: tx.NFTokenSellOffer,
-    nftokenBuyOffer: tx.NFTokenBuyOffer,
-    nftokenBrokerFee: tx.NFTokenBrokerFee,
-    memos: parseMemos(tx),
-  });
-}
+export {
+  parseNFTokenFlags,
+  parseNFTOfferFlags,
+  parseNFTokenAcceptOffer,
+  parseNFTokenCancelOffer,
+  parseNFTokenCreateOffer,
+};

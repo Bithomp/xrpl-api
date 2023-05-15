@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import nconf from "nconf";
 import { expect } from "chai";
 import { Client, Wallet } from "../../src/index";

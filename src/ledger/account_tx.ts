@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import { getBalanceChanges } from "xrpl";
 
 import * as Client from "../client";
@@ -189,7 +189,7 @@ export async function findTransactions(
   let accountTransactionsError = null;
   const timeStart = new Date();
 
-  // TODO: Add support for bynary
+  // TODO: Add support for binary
   options.binary = false;
 
   // limit if sourceTag or destinationTag was used

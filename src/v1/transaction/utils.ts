@@ -1,7 +1,6 @@
 import { xAddressToClassicAddress, isValidXAddress } from "ripple-address-codec";
 import { removeUndefined } from "../common";
-import { Memo } from "../common/types/objects";
-import { ApiMemo } from "./types";
+import { FormattedMemo, Memo } from "../common/types/objects";
 
 /**
  * @typedef {Object} ClassicAccountAndTag
@@ -50,7 +49,7 @@ export function convertStringToHex(value: string): string {
   return Buffer.from(value, "utf8").toString("hex").toUpperCase();
 }
 
-export function convertMemo(memo: Memo): { Memo: ApiMemo } {
+export function convertMemo(memo: FormattedMemo): Memo {
   return {
     Memo: removeUndefined({
       MemoData: memo.data ? convertStringToHex(memo.data) : undefined,

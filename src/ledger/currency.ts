@@ -1,6 +1,6 @@
 import * as Client from "../client";
-import { hexToString } from "../v1/ledger/parse/utils";
-import { parseTransactionType } from "../v1/ledger/parse/transaction";
+import { hexToString } from "../parse/utils";
+import { parseTransactionType } from "../parse/transaction";
 
 const maxLength = 12;
 
