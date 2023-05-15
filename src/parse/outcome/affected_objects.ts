@@ -1,7 +1,8 @@
 import { parseNFTokenChanges } from "./nftoken_changes";
 import { parseNFTokenOfferChanges } from "./nftoken_offer_changes";
-import { parseNFTokenID, parseNFTOfferFlags } from "../../models/account_nfts";
+import { parseNFTokenID } from "../../models/account_nfts";
 import parseNFTokenFlags from "../ledger/nftoken-flags";
+import parseNFTOfferFlags from "../ledger/nftoken-offer-flags";
 
 interface AffectedObjectsInterface {
   nftokens?: any;
