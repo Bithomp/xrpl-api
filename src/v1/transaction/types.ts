@@ -1,15 +1,9 @@
-import { RippledAmount } from "../common/types/objects";
-
-export type ApiMemo = {
-  MemoData?: string;
-  MemoType?: string;
-  MemoFormat?: string;
-};
+import { RippledAmount, Memo } from "../common/types/objects";
 
 export type TransactionJSON = {
   Account: string;
   TransactionType: string;
-  Memos?: { Memo: ApiMemo }[];
+  Memos?: Memo[];
   Flags?: number;
   Fulfillment?: string;
   [Field: string]: string | number | any[] | RippledAmount | undefined;

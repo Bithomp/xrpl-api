@@ -1,5 +1,5 @@
-import { Memo } from "./memos";
+import { FormattedMemo } from "./memos";
 
 export type FormattedBaseSpecification = {
-  memos?: Memo[];
+  memos?: FormattedMemo[];
 };

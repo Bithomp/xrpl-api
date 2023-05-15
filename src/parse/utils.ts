@@ -30,7 +30,7 @@ function isPartialPayment(tx: any) {
   return (tx.Flags & PaymentFlags.tfPartialPayment) !== 0;
 }
 
-function hexToString(hex: string): string | undefined {
+function hexToString(hex: string | undefined): string | undefined {
   return hex ? Buffer.from(hex, "hex").toString("utf-8") : undefined;
 }
 

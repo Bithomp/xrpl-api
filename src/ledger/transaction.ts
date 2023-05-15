@@ -7,7 +7,7 @@ import { Connection } from "../connection";
 import { sleep } from "../common/utils";
 import { getTxDetails, TransactionResponse, TransactionDetailsInterface, AccountPaymentParamsInterface } from "../models/transaction";
 import { createPaymentTransaction, Payment } from "../v1/transaction/payment";
-import { Memo } from "../v1/common/types/objects";
+import { FormattedMemo } from "../v1/common/types/objects";
 import { xrpToDrops } from "../v1/common";
 import { ErrorResponse } from "../models/base_model";
 import { AccountInfoResponse } from "../models/account_info";
@@ -119,7 +119,7 @@ interface LegacyPaymentInterface {
   destinationTag?: number;
   destinationValue: string;
   destinationCurrency: string;
-  memos: Memo[];
+  memos: FormattedMemo[];
   secret: string;
 }
 
