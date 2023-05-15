@@ -3,7 +3,7 @@ import crypto from "crypto";
 import { EventEmitter } from "events";
 import { Client, Request, Response } from "xrpl";
 import { StreamType, ledgerTimeToTimestamp } from "./models/ledger";
-import { removeUndefined } from "./v1/common";
+import { removeUndefined } from "./common";
 
 const LEDGER_CLOSED_TIMEOUT = 1000 * 15; // 15 sec
 

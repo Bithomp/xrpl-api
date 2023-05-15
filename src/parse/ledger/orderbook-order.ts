@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { parseTimestamp, adjustQualityForXRP } from "../utils";
-import { removeUndefined } from "../../v1/common";
+import { removeUndefined } from "../../common";
 
 import { orderFlags } from "../../v1/common/types/objects/flags";
 import parseAmount from "./amount";

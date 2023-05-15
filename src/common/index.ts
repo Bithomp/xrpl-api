@@ -1,4 +1,7 @@
+import * as errors from "./errors";
+
 export * from "./utils";
+export { errors };
 
 export const dropsInXRP = 1000000;
 

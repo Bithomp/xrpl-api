@@ -1,4 +1,4 @@
-import { removeUndefined } from "../v1/common";
+import { removeUndefined } from "../common";
 
 import { parseOutcome } from "./outcome";
 import { Outcome } from "../v1/transaction/types";
@@ -48,7 +48,7 @@ import parseEscrowCancel from "./specification/escrow-cancel";
 import parseEscrowCreation from "./specification/escrow-create";
 import parseEscrowFinish from "./specification/escrow-finish";
 import parseOfferCancel from "./specification/offer-cancel";
-import parseOfferCreation from "./specification/offer-create";
+import parseOfferCreate from "./specification/offer-create";
 import parsePayment from "./specification/payment";
 import parsePaymentChannelClaim from "./specification/payment-channel-claim";
 import parsePaymentChannelCreate from "./specification/payment-channel-create";
@@ -110,7 +110,7 @@ const parserTypeFunc = {
   escrowCreation: parseEscrowCreation,
   escrowExecution: parseEscrowFinish,
   orderCancellation: parseOfferCancel,
-  order: parseOfferCreation,
+  order: parseOfferCreate,
   payment: parsePayment,
   paymentChannelClaim: parsePaymentChannelClaim,
   paymentChannelCreate: parsePaymentChannelCreate,

@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { BigNumber as GlobalBigNumber } from "bignumber.js";
 const BigNumber = GlobalBigNumber.clone({ DECIMAL_PLACES: 40 });
+import { removeUndefined } from "../../common";
 import { normalizeNodes, rippleToUnixTimestamp } from "../../v1/common/utils";
 import { parseOrderbookQuality } from "./orderbook_quality";
 import parseCurrencyAmount from "../ledger/currency-amount";
@@ -8,10 +9,6 @@ import parseCurrencyAmount from "../ledger/currency-amount";
 /* tslint:disable:prefer-const only-arrow-functions object-literal-shorthand no-var-keyword */
 
 const lsfSell = 0x00020000; // see "lsfSell" flag in rippled source code
-
-function removeUndefined(obj) {
-  return _.omitBy(obj, _.isUndefined);
-}
 
 function convertOrderChange(order) {
   var takerGets = order.taker_gets;

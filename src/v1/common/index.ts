@@ -1,11 +1,8 @@
-import * as errors from "./errors";
+import * as errors from "../../common/errors";
 
 export { errors };
 export {
-  dropsToXrp,
-  xrpToDrops,
   toRippledAmount,
-  removeUndefined,
   rippleToUnixTime,
   rippleToUnixTimestamp,
   iso8601ToRippleTime,

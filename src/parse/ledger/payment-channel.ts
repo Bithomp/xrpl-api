@@ -1,5 +1,5 @@
 import { parseTimestamp } from "../utils";
-import { removeUndefined, dropsToXrp } from "../../v1/common";
+import { removeUndefined, dropsToXrp } from "../../common";
 import { PayChannelLedgerEntry } from "../../v1/common/types/objects";
 import parseMemos from "./memos";
 

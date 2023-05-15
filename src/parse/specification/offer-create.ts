@@ -3,10 +3,10 @@ import { OfferCreateFlags } from "xrpl";
 import { parseTimestamp } from "../utils";
 import parseAmount from "../ledger/amount";
 import parseMemos from "../ledger/memos";
-import { removeUndefined } from "../../v1/common";
+import { removeUndefined } from "../../common";
 import { FormattedOfferCreateSpecification, OfferCreateTransaction } from "../../v1/common/types/objects/index";
 
-function parseOfferCreation(tx: OfferCreateTransaction): FormattedOfferCreateSpecification {
+function parseOfferCreate(tx: OfferCreateTransaction): FormattedOfferCreateSpecification {
   assert.ok(tx.TransactionType === "OfferCreate");
 
   // tslint:disable-next-line:no-bitwise
@@ -34,4 +34,4 @@ function parseOfferCreation(tx: OfferCreateTransaction): FormattedOfferCreateSpe
   });
 }
 
-export default parseOfferCreation;
+export default parseOfferCreate;

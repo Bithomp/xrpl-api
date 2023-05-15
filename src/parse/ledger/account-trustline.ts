@@ -1,5 +1,5 @@
 import { parseQuality } from "../utils";
-import { removeUndefined } from "../../v1/common";
+import { removeUndefined } from "../../common";
 import { Trustline, FormattedTrustline } from "../../v1/common/types/objects/trustlines";
 
 // rippled 'account_lines' returns a different format for

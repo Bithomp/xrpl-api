@@ -1,6 +1,7 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import BigNumber from "bignumber.js";
-import { dropsToXrp, normalizeNodes } from "../../v1/common/utils";
+import { dropsToXrp } from "../../common";
+import { normalizeNodes } from "../../v1/common/utils";
 
 /* tslint:disable:prefer-const only-arrow-functions no-var-keyword */
 

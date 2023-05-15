@@ -1,7 +1,7 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import * as assert from "assert";
 import { AccountRootFlagsKeys } from "../../models/account_info";
-import { removeUndefined } from "../../v1/common";
+import { removeUndefined } from "../../common";
 import parseFields from "../ledger/fields";
 import parseMemos from "../ledger/memos";
 

@@ -5,10 +5,15 @@ import { Transaction } from "xrpl";
 import * as Client from "../client";
 import { Connection } from "../connection";
 import { sleep } from "../common/utils";
-import { getTxDetails, TransactionResponse, TransactionDetailsInterface, AccountPaymentParamsInterface } from "../models/transaction";
+import {
+  getTxDetails,
+  TransactionResponse,
+  TransactionDetailsInterface,
+  AccountPaymentParamsInterface,
+} from "../models/transaction";
 import { createPaymentTransaction, Payment } from "../v1/transaction/payment";
 import { FormattedMemo } from "../v1/common/types/objects";
-import { xrpToDrops } from "../v1/common";
+import { xrpToDrops } from "../common";
 import { ErrorResponse } from "../models/base_model";
 import { AccountInfoResponse } from "../models/account_info";
 

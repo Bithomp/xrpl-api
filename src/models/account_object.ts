@@ -1,7 +1,7 @@
 import { LedgerEntry } from "xrpl";
 import { Trustline } from "./account_lines";
 const { RippleStateFlags } = LedgerEntry;
-import { removeUndefined } from "../v1/common";
+import { removeUndefined } from "../common";
 import { ledgerTimeToUnixTime } from "../models/ledger";
 import { Amount } from "../v1/common/types/objects";
 

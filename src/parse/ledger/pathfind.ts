@@ -1,7 +1,8 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import parseAmount from "./amount";
 import { Amount, RippledAmount } from "../../v1/common/types/objects";
-import { Path, GetPaths, RippledPathsResponse } from "../../v1/common/types/pathfind-types";
+import { Path, GetPaths } from "../../v1/common/types/objects/path_find";
+import { RippledPathsResponse } from "../../v1/common/types/commands/path_find";
 
 function parsePaths(paths) {
   return paths.map((steps) => steps.map((step) => _.omit(step, ["type", "type_hex"])));
