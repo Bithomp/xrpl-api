@@ -1,16 +1,17 @@
-import BigNumber from 'bignumber.js'
-import {dropsToXrp} from '../../v1/common'
+import BigNumber from "bignumber.js";
+import { dropsToXrp } from "../../v1/common";
 import parseMemos from "../ledger/memos";
+import { FormattedFeeUpdateSpecification } from "../../v1/common/types/objects/fees";
 
-function parseFeeUpdate(tx: any) {
-  const baseFeeDrops = new BigNumber(tx.BaseFee, 16).toString()
+function parseFeeUpdate(tx: any): FormattedFeeUpdateSpecification {
+  const baseFeeDrops = new BigNumber(tx.BaseFee, 16).toString();
   return {
     memos: parseMemos(tx),
     baseFeeXRP: dropsToXrp(baseFeeDrops),
     referenceFeeUnits: tx.ReferenceFeeUnits,
     reserveBaseXRP: dropsToXrp(tx.ReserveBase),
-    reserveIncrementXRP: dropsToXrp(tx.ReserveIncrement)
-  }
+    reserveIncrementXRP: dropsToXrp(tx.ReserveIncrement),
+  };
 }
 
-export default parseFeeUpdate
+export default parseFeeUpdate;

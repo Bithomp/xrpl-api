@@ -31,7 +31,12 @@ import { FormattedTrustlineSpecification } from "../v1/common/types/objects/trus
 import {
   FormattedNFTokenBurnSpecification,
   FormattedNFTokenMintSpecification,
+  FormattedNFTokenCancelOfferSpecification,
+  FormattedNFTokenCreateOfferSpecification,
+  FormattedNFTokenAcceptOfferSpecification,
 } from "../v1/common/types/objects/nftokens";
+import { FormattedAmendmentSpecification } from "../v1/common/types/objects/amendments";
+import { FormattedFeeUpdateSpecification } from "../v1/common/types/objects/fees";
 
 import parseSettings from "./specification/settings";
 import parseAccountDelete from "./specification/account-delete";
@@ -52,7 +57,9 @@ import parseTicketCreate from "./specification/ticket-create";
 import parseTrustline from "./specification/trustline";
 import parseNFTokenBurn from "./specification/nftoken-burn";
 import parseNFTokenMint from "./specification/nftoken-mint";
-import { parseNFTokenCancelOffer, parseNFTokenCreateOffer, parseNFTokenAcceptOffer } from "../models/account_nfts";
+import parseNFTokenCancelOffer from "./specification/nftoken-cancel-offer";
+import parseNFTokenCreateOffer from "./specification/nftoken-create-offer";
+import parseNFTokenAcceptOffer from "./specification/nftoken-accept-offer";
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
 import parseFeeUpdate from "./specification/fee-update"; // pseudo-transaction
 
@@ -140,7 +147,12 @@ export type FormattedSpecification =
   | FormattedTicketCreateSpecification
   | FormattedTrustlineSpecification
   | FormattedNFTokenBurnSpecification
-  | FormattedNFTokenMintSpecification;
+  | FormattedNFTokenMintSpecification
+  | FormattedNFTokenCancelOfferSpecification
+  | FormattedNFTokenCreateOfferSpecification
+  | FormattedNFTokenAcceptOfferSpecification
+  | FormattedAmendmentSpecification
+  | FormattedFeeUpdateSpecification;
 
 export interface TransactionDetailsInterface {
   type: string;
