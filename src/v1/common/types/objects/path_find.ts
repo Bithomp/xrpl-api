@@ -1,4 +1,4 @@
-import { Amount, Adjustment, MaxAdjustment, MinAdjustment } from ".";
+import { FormattedIssuedCurrencyAmount, Adjustment, MaxAdjustment, MinAdjustment } from ".";
 
 // Amount where counterparty and value are optional
 export type LaxLaxAmount = {
@@ -20,7 +20,7 @@ export type GetPaths = Array<Path>;
 export type PathFind = {
   source: {
     address: string;
-    amount?: Amount;
+    amount?: FormattedIssuedCurrencyAmount;
     // tslint:disable-next-line:array-type
     currencies?: Array<{ currency: string; counterparty?: string }>;
   };

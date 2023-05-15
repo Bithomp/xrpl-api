@@ -1,5 +1,5 @@
 import { FormattedBaseSpecification } from "./specification";
-import { RippledAmount } from "./amounts";
+import { FormattedAmount } from "../../../../types";
 
 export type FormattedEscrowCancelSpecification = {
   owner: string;
@@ -7,7 +7,7 @@ export type FormattedEscrowCancelSpecification = {
 } & FormattedBaseSpecification;
 
 export type FormattedEscrowCreateSpecification = {
-  amount?: RippledAmount;
+  amount?: FormattedAmount;
   destination: string;
   condition: string;
   allowCancelAfter?: string;

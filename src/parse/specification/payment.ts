@@ -11,7 +11,7 @@ import {
   SourcePaymentAddress,
   DestinationPaymentAddress,
 } from "../../v1/common/types/objects/payments";
-import { Amount } from "../../v1/common/types/objects/amounts";
+import { FormattedIssuedCurrencyAmount } from "../../types";
 
 function isNoDirectRipple(tx) {
   // tslint:disable-next-line:no-bitwise
@@ -23,7 +23,7 @@ function isQualityLimited(tx) {
   return (tx.Flags & PaymentFlags.tfLimitQuality) !== 0;
 }
 
-function removeGenericCounterparty(amount: Amount, address: string): Amount {
+function removeGenericCounterparty(amount: FormattedIssuedCurrencyAmount, address: string): FormattedIssuedCurrencyAmount {
   return amount.counterparty === address ? _.omit(amount, "counterparty") : amount;
 }
 

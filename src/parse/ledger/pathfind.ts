@@ -1,6 +1,6 @@
 import _ from "lodash";
 import parseAmount from "./amount";
-import { Amount, RippledAmount } from "../../v1/common/types/objects";
+import { FormattedIssuedCurrencyAmount, Amount } from "../../v1/common/types/objects";
 import { Path, GetPaths } from "../../v1/common/types/objects/path_find";
 import { RippledPathsResponse } from "../../v1/common/types/commands/path_find";
 
@@ -8,7 +8,7 @@ function parsePaths(paths) {
   return paths.map((steps) => steps.map((step) => _.omit(step, ["type", "type_hex"])));
 }
 
-function removeAnyCounterpartyEncoding(address: string, amount: Amount) {
+function removeAnyCounterpartyEncoding(address: string, amount: FormattedIssuedCurrencyAmount) {
   return amount.counterparty === address ? _.omit(amount, "counterparty") : amount;
 }
 
@@ -26,7 +26,7 @@ function createAdjustment(address: string, adjustmentWithoutAddress: object): an
 function parseAlternative(
   sourceAddress: string,
   destinationAddress: string,
-  destinationAmount: RippledAmount,
+  destinationAmount: Amount,
   alternative: any
 ): Path {
   // we use "maxAmount"/"minAmount" here so that the result can be passed

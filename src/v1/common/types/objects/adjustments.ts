@@ -1,19 +1,19 @@
-import { Amount } from "./amounts";
+import { FormattedIssuedCurrencyAmount } from "../../../../types";
 
 export type Adjustment = {
   address: string;
-  amount: Amount;
+  amount: FormattedIssuedCurrencyAmount;
   tag?: number;
 };
 
 export type MaxAdjustment = {
   address: string;
-  maxAmount: Amount;
+  maxAmount: FormattedIssuedCurrencyAmount;
   tag?: number;
 };
 
 export type MinAdjustment = {
   address: string;
-  minAmount: Amount;
+  minAmount: FormattedIssuedCurrencyAmount;
   tag?: number;
 };

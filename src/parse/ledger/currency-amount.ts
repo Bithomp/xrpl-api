@@ -1,7 +1,7 @@
-import { Amount, RippledAmount } from "../../v1/common/types/objects";
+import { FormattedAmount, Amount } from "../../v1/common/types/objects";
 import parseAmount from "./amount";
 
-function parseCurrencyAmount(amount: RippledAmount): Amount | undefined {
+function parseCurrencyAmount(amount: Amount): FormattedAmount | undefined {
   if (amount === undefined) {
     return undefined;
   }

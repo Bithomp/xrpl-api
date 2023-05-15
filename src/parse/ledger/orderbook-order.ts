@@ -5,7 +5,7 @@ import { removeUndefined } from "../../common";
 import { orderFlags } from "../../v1/common/types/objects/flags";
 import parseAmount from "./amount";
 import { BookOffer } from "../../v1/common/types/commands";
-import { Amount, FormattedOfferCreateSpecification } from "../../v1/common/types/objects";
+import { FormattedIssuedCurrencyAmount, FormattedOfferCreateSpecification } from "../../v1/common/types/objects";
 
 export type FormattedOrderbookOrder = {
   specification: FormattedOfferCreateSpecification;
@@ -15,8 +15,8 @@ export type FormattedOrderbookOrder = {
     makerExchangeRate: string;
   };
   state?: {
-    fundedAmount?: Amount;
-    priceOfFundedAmount?: Amount;
+    fundedAmount?: FormattedIssuedCurrencyAmount;
+    priceOfFundedAmount?: FormattedIssuedCurrencyAmount;
   };
   data: BookOffer;
 };

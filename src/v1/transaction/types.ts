@@ -1,4 +1,4 @@
-import { RippledAmount, Memo } from "../common/types/objects";
+import { Amount, Memo } from "../common/types/objects";
 
 export type TransactionJSON = {
   Account: string;
@@ -6,7 +6,7 @@ export type TransactionJSON = {
   Memos?: Memo[];
   Flags?: number;
   Fulfillment?: string;
-  [Field: string]: string | number | any[] | RippledAmount | undefined;
+  [Field: string]: string | number | any[] | Amount | undefined;
 };
 
 export type Outcome = {

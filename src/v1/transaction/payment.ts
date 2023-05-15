@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { PaymentFlags } from "xrpl";
 import { TransactionJSON } from "./types";
-import { Amount, Adjustment, MaxAdjustment, MinAdjustment, FormattedMemo } from "../common/types/objects";
+import { FormattedIssuedCurrencyAmount, Adjustment, MaxAdjustment, MinAdjustment, FormattedMemo } from "../common/types/objects";
 import { toRippledAmount } from "../common";
 import { xrpToDrops } from "../../common";
 import { getClassicAccountAndTag, ClassicAccountAndTag, convertMemo } from "./utils";
@@ -47,7 +47,7 @@ function isXRPToXRPPayment(payment: Payment): boolean {
   );
 }
 
-function isIOUWithoutCounterparty(amount: Amount): boolean {
+function isIOUWithoutCounterparty(amount: FormattedIssuedCurrencyAmount): boolean {
   return amount && amount.currency !== "XRP" && amount.currency !== "drops" && amount.counterparty == null;
 }
 
@@ -64,7 +64,7 @@ function applyAnyCounterpartyEncoding(payment: Payment): void {
   });
 }
 
-function createMaximalAmount(amount: Amount): Amount {
+function createMaximalAmount(amount: FormattedIssuedCurrencyAmount): FormattedIssuedCurrencyAmount {
   const maxXRPValue = "100000000000";
 
   // Equivalent to '9999999999999999e80' but we cannot use that because sign()

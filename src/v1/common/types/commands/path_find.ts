@@ -1,12 +1,12 @@
-import { RippledAmount } from "../objects";
+import { Amount } from "../objects";
 
 export type PathFindRequest = {
   command: string;
   source_account: string;
-  destination_amount: RippledAmount;
+  destination_amount: Amount;
   destination_account: string;
   source_currencies?: { currency: string; issuer?: string }[];
-  send_max?: RippledAmount;
+  send_max?: Amount;
 };
 
 export type RippledPathsResponse = {
@@ -23,11 +23,11 @@ export type RippledPathsResponse = {
         currency?: string;
       }>
     >;
-    source_amount: RippledAmount;
+    source_amount: Amount;
   }>;
   type: string;
   destination_account: string;
-  destination_amount: RippledAmount;
+  destination_amount: Amount;
   // tslint:disable-next-line:array-type
   destination_currencies?: Array<string>;
   source_account: string;

@@ -1,10 +1,10 @@
 import { FormattedBaseSpecification } from "./specification";
-import { RippledAmount } from "./amounts";
+import { FormattedAmount } from "../../../../types";
 
 export type FormattedPaymentChannelClaimSpecification = {
   channel: string;
-  balance?: RippledAmount;
-  amount?: RippledAmount;
+  balance?: FormattedAmount;
+  amount?: FormattedAmount;
   signature: string;
   publicKey: string;
   renew?: boolean;
@@ -12,7 +12,7 @@ export type FormattedPaymentChannelClaimSpecification = {
 } & FormattedBaseSpecification;
 
 export type FormattedPaymentChannelCreateSpecification = {
-  amount?: RippledAmount;
+  amount?: FormattedAmount;
   destination: string;
   settleDelay: number;
   publicKey?: string;
@@ -23,6 +23,6 @@ export type FormattedPaymentChannelCreateSpecification = {
 
 export type FormattedPaymentChannelFundSpecification = {
   channel: string;
-  amount?: RippledAmount;
+  amount?: FormattedAmount;
   expiration?: string;
 } & FormattedBaseSpecification;

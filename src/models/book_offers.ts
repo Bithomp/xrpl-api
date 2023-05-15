@@ -1,14 +1,14 @@
 import _ from "lodash";
 import BigNumber from "bignumber.js";
 import { parseOrderbookOrder } from "../parse/ledger/orderbook-order";
-import { Issue } from "../v1/common/types/objects/amounts";
+import { FormattedIssuedCurrency } from "../types";
 
 export type OrderbookInfo = {
-  base: Issue;
-  counter: Issue;
+  base: FormattedIssuedCurrency;
+  counter: FormattedIssuedCurrency;
 };
 
-function isSameIssue(a: Issue, b: Issue) {
+function isSameIssue(a: FormattedIssuedCurrency, b: FormattedIssuedCurrency) {
   return a.currency === b.currency && a.counterparty === b.counterparty;
 }
 
@@ -27,7 +27,7 @@ function flipOrder(order: any) {
   return _.merge({}, order, { specification: newSpecification });
 }
 
-function alignOrder(base: Issue, order: any) {
+function alignOrder(base: FormattedIssuedCurrency, order: any) {
   const quantity = order.specification.quantity;
   return isSameIssue(quantity, base) ? order : flipOrder(order);
 }

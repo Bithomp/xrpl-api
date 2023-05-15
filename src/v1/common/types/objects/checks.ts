@@ -1,5 +1,5 @@
 import { FormattedBaseSpecification } from "./specification";
-import { Amount } from "./amounts";
+import { FormattedIssuedCurrencyAmount } from "../../../../types";
 
 export type FormattedCheckCancelSpecification = {
   // ID of the Check ledger object to cancel.
@@ -13,13 +13,13 @@ export type FormattedCheckCashSpecification = {
   // (Optional) redeem the Check for exactly this amount, if possible.
   // The currency must match that of the `SendMax` of the corresponding
   // `CheckCreate` transaction.
-  amount: Amount;
+  amount: FormattedIssuedCurrencyAmount;
 
   // (Optional) redeem the Check for at least this amount and
   // for as much as possible.
   // The currency must match that of the `SendMax` of the corresponding
   // `CheckCreate` transaction.
-  deliverMin: Amount;
+  deliverMin: FormattedIssuedCurrencyAmount;
 
   // *must* include either Amount or DeliverMin, but not both.
 } & FormattedBaseSpecification;
@@ -30,7 +30,7 @@ export type FormattedCheckCreateSpecification = {
 
   // amount the check is allowed to debit the sender,
   // including transfer fees on non-XRP currencies.
-  sendMax: Amount;
+  sendMax: FormattedIssuedCurrencyAmount;
 
   // (Optional) identifies the reason for the check, or a hosted recipient.
   destinationTag?: string;

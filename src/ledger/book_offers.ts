@@ -1,7 +1,7 @@
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
 import { OrderbookInfo, formatBidsAndAsks } from "../models/book_offers";
-import { TakerRequestAmount } from "../v1/common/types/objects/amounts";
+import { IssuedCurrency } from "../types";
 import { parseMarker, createMarker } from "../common/utils";
 
 export interface GetGetBookOffers {
@@ -16,8 +16,8 @@ export interface GetGetBookOffers {
  */
 export async function getBookOffers(
   taker: string,
-  takerGets: TakerRequestAmount,
-  takerPays: TakerRequestAmount,
+  takerGets: IssuedCurrency,
+  takerPays: IssuedCurrency,
   options: GetGetBookOffers = {}
 ): Promise<object | null> {
   const { hash, marker } = parseMarker(options.marker);

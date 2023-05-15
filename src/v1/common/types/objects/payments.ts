@@ -1,9 +1,9 @@
 import { FormattedBaseSpecification } from "./specification";
-import { Amount } from "./amounts";
+import { FormattedIssuedCurrencyAmount } from "../../../../types";
 
 export type SourcePaymentAddress = {
   address: string;
-  maxAmount?: Amount;
+  maxAmount?: FormattedIssuedCurrencyAmount;
   tag?: number;
 };
 

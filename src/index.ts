@@ -7,3 +7,4 @@ export * as Faucet from "./faucet";
 export * as Validator from "./validator";
 export * as Parse from "./parse";
 export * as Common from "./common";
+export * as Types from "./types";

@@ -1,9 +1,7 @@
 import _ from "lodash";
 import { deriveKeypair } from "ripple-keypairs";
-import { RippledAmount } from "./types/objects";
-import { ValidationError } from "../../common/errors";
+import { Amount, IssuedCurrencyAmount, FormattedIssuedCurrencyAmount } from "./types/objects";
 import { xrpToDrops } from "../../common";
-import { xAddressToClassicAddress } from "ripple-address-codec";
 
 function isValidSecret(secret: string): boolean {
   try {
@@ -14,7 +12,7 @@ function isValidSecret(secret: string): boolean {
   }
 }
 
-function toRippledAmount(amount: RippledAmount): RippledAmount {
+function toRippledAmount(amount: Amount | FormattedIssuedCurrencyAmount): Amount {
   if (typeof amount === "string") return amount;
 
   if (amount.currency === "XRP") {
@@ -24,18 +22,8 @@ function toRippledAmount(amount: RippledAmount): RippledAmount {
     return amount.value;
   }
 
-  let issuer = amount.counterparty || amount.issuer;
-  let tag: number | false = false;
-
-  try {
-    ({ classicAddress: issuer, tag } = xAddressToClassicAddress(issuer as string));
-  } catch (e) {
-    /* not an X-address */
-  }
-
-  if (tag !== false) {
-    throw new ValidationError("Issuer X-address includes a tag");
-  }
+  // if amount is IssuedCurrencyAmount use issuer, else if FormattedIssuedCurrencyAmount use counterparty
+  const issuer = (amount as FormattedIssuedCurrencyAmount).counterparty || (amount as IssuedCurrencyAmount).issuer;
 
   return {
     currency: amount.currency,

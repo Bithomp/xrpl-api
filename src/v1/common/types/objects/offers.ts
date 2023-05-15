@@ -1,5 +1,5 @@
 import { FormattedBaseSpecification } from "./specification";
-import { Amount } from "./amounts";
+import { FormattedIssuedCurrencyAmount } from "../../../../types";
 
 export type FormattedOfferCancelSpecification = {
   orderSequence: number;
@@ -7,8 +7,8 @@ export type FormattedOfferCancelSpecification = {
 
 export type FormattedOfferCreateSpecification = {
   direction: string;
-  quantity: Amount;
-  totalPrice: Amount;
+  quantity: FormattedIssuedCurrencyAmount;
+  totalPrice: FormattedIssuedCurrencyAmount;
   immediateOrCancel?: boolean;
   fillOrKill?: boolean;
   expirationTime?: string;

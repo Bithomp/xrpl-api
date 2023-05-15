@@ -1,7 +1,7 @@
 import { dropsToXrp } from "../../common";
-import { Amount, RippledAmount } from "../../v1/common/types/objects";
+import { FormattedIssuedCurrencyAmount, Amount } from "../../v1/common/types/objects";
 
-function parseAmount(amount: RippledAmount): Amount {
+function parseAmount(amount: Amount): FormattedIssuedCurrencyAmount {
   if (typeof amount === "string") {
     return {
       currency: "XRP",

@@ -10,7 +10,7 @@ import {
 
 import parseAmount from "./ledger/amount";
 import { isPartialPayment, parseTimestamp } from "./utils";
-import { Amount } from "../v1/common/types/objects";
+import { FormattedIssuedCurrencyAmount } from "../v1/common/types/objects";
 import { removeUndefined, dropsToXrp } from "../common";
 import { Outcome } from "../v1/transaction/types";
 
@@ -57,7 +57,7 @@ function removeEmptyCounterpartyInOrderbookChanges(orderbookChanges: Orderbook) 
   });
 }
 
-function parseDeliveredAmount(tx: any): Amount | undefined {
+function parseDeliveredAmount(tx: any): FormattedIssuedCurrencyAmount | undefined {
   if (tx.TransactionType !== "Payment" || tx.meta.TransactionResult !== "tesSUCCESS") {
     return undefined;
   }
