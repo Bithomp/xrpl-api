@@ -1,12 +1,7 @@
 import BigNumber from "bignumber.js";
 import AddressCodec = require("ripple-address-codec");
 
-import { SortDirection } from "../common/utils";
-import parseNFTokenFlags from "../parse/ledger/nftoken-flags";
-import parseNFTOfferFlags from "../parse/ledger/nftoken-offer-flags";
-import parseNFTokenAcceptOffer from "../parse/specification/nftoken-accept-offer";
-import parseNFTokenCancelOffer from "../parse/specification/nftoken-cancel-offer";
-import parseNFTokenCreateOffer from "../parse/specification/nftoken-create-offer";
+import { SortDirection } from "../common";
 
 export interface NFTokenInterface {
   Flags: number;
@@ -107,10 +102,3 @@ export function parseNFTokenID(nftokenID: string): NFTokenInterface | null {
   };
 }
 
-export {
-  parseNFTokenFlags,
-  parseNFTOfferFlags,
-  parseNFTokenAcceptOffer,
-  parseNFTokenCancelOffer,
-  parseNFTokenCreateOffer,
-};

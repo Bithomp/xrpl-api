@@ -95,8 +95,8 @@ const transactionTypeToType = {
   SetFee: "feeUpdate", // pseudo-transaction
 };
 
-function parseTransactionType(type) {
-  return transactionTypeToType[type] || null;
+function parseTransactionType(type: string): string {
+  return transactionTypeToType[type] || type;
 }
 
 const parserTypeFunc = {
@@ -154,7 +154,7 @@ export type FormattedSpecification =
   | FormattedAmendmentSpecification
   | FormattedFeeUpdateSpecification;
 
-export interface TransactionDetailsInterface {
+export interface FormattedTransaction {
   type: string;
   address: string;
   sequence: number;
@@ -165,7 +165,7 @@ export interface TransactionDetailsInterface {
 }
 
 // includeRawTransaction: undefined by default (getTransaction)
-function parseTransaction(tx: any, includeRawTransaction: boolean): TransactionDetailsInterface {
+function parseTransaction(tx: any, includeRawTransaction: boolean): FormattedTransaction {
   const type = parseTransactionType(tx.TransactionType);
 
   // tslint:disable-next-line:ban-types

@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 import { PaymentFlags } from "xrpl";
-import * as common from "../v1/common";
+import { ledgerTimeToISO8601 } from "../models";
 
 function adjustQualityForXRP(quality: string, takerGetsCurrency: string, takerPaysCurrency: string) {
   // quality = takerPays.value/takerGets.value
@@ -22,7 +22,7 @@ function parseTimestamp(rippleTime?: number | null): string | undefined {
   if (typeof rippleTime !== "number") {
     return undefined;
   }
-  return common.rippleTimeToISO8601(rippleTime);
+  return ledgerTimeToISO8601(rippleTime);
 }
 
 function isPartialPayment(tx: any) {

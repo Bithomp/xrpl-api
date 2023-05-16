@@ -8,7 +8,7 @@ import { sleep } from "../common/utils";
 import {
   getTxDetails,
   TransactionResponse,
-  TransactionDetailsInterface,
+  FormattedTransaction,
   AccountPaymentParamsInterface,
 } from "../models/transaction";
 import { createPaymentTransaction, Payment } from "../v1/transaction/payment";
@@ -62,7 +62,7 @@ export interface GetTransactionOptions {
 export async function getTransaction(
   transaction: string,
   options: GetTransactionOptions = {}
-): Promise<TransactionResponse | TransactionDetailsInterface | ErrorResponse | null> {
+): Promise<TransactionResponse | FormattedTransaction | ErrorResponse | null> {
   const connection: any = Client.findConnection("history");
   if (!connection) {
     throw new Error("There is no connection");
@@ -130,7 +130,7 @@ interface LegacyPaymentInterface {
 
 export async function legacyPayment(
   data: LegacyPaymentInterface
-): Promise<TransactionResponse | TransactionDetailsInterface | ErrorResponse | null> {
+): Promise<TransactionResponse | FormattedTransaction | ErrorResponse | null> {
   const connection: any = Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
@@ -242,13 +242,13 @@ export interface SubmitOptionsInterface {
  * Submit signed transaction to the network
  * @param {string} signedTransaction
  * @param {SubmitOptionsInterface} options
- * @returns {Promise<TransactionResponse | TransactionDetailsInterface | ErrorResponse | null>}
+ * @returns {Promise<TransactionResponse | FormattedTransaction | ErrorResponse | null>}
  * @exception {Error}
  */
 export async function submit(
   signedTransaction: string,
   options: SubmitOptionsInterface = {}
-): Promise<TransactionResponse | TransactionDetailsInterface | ErrorResponse | null | null> {
+): Promise<TransactionResponse | FormattedTransaction | ErrorResponse | null | null> {
   const connection: any = options.connection || Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
@@ -288,14 +288,14 @@ export async function submit(
  * Wait for final transaction outcome
  * @param {string} txHash
  * @param {number} lastLedger
- * @returns {Promise<TransactionResponse | TransactionDetailsInterface | ErrorResponse | null>}
+ * @returns {Promise<TransactionResponse | FormattedTransaction | ErrorResponse | null>}
  * @exception {Error}
  * @private
  */
 async function waitForFinalTransactionOutcome(
   txHash: string,
   lastLedger: number
-): Promise<TransactionResponse | TransactionDetailsInterface | ErrorResponse | null> {
+): Promise<TransactionResponse | FormattedTransaction | ErrorResponse | null> {
   await sleep(LEDGER_CLOSE_TIME_AWAIT);
 
   const tx = await getTransaction(txHash);

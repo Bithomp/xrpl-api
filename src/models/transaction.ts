@@ -1,19 +1,9 @@
 import _ from "lodash";
 import { Transaction, TransactionMetadata } from "xrpl";
 
-import { parseTransaction, FormattedSpecification, TransactionDetailsInterface } from "../parse/transaction";
-export { TransactionDetailsInterface } from "../parse/transaction";
+import { parseTransaction, FormattedSpecification, FormattedTransaction } from "../parse/transaction";
+export { FormattedTransaction } from "../parse/transaction";
 import { Outcome } from "../v1/transaction/types";
-
-export { parseAffectedObjects } from "../parse/outcome/affected_objects";
-export { parseNFTokenChanges } from "../parse/outcome/nftoken_changes";
-export { parseNFTokenOfferChanges } from "../parse/outcome/nftoken_offer_changes";
-export { parseBalanceChanges } from "../parse/outcome/balance_changes";
-export { parseLockedBalanceChanges } from "../parse/outcome/locked_balance_changes";
-export { parseChannelChanges } from "../parse/outcome/channel_changes";
-export { parseOrderbookChanges } from "../parse/outcome/orderbook_changes";
-export { parseNFTokenBurn } from "../parse/specification/nftoken-burn";
-export { parseNFTokenMint } from "../parse/specification/nftoken-mint";
 
 export interface TransactionBaseResponse {
   /** The SHA-512 hash of the transaction. */
@@ -51,14 +41,14 @@ export interface AccountPaymentParamsInterface {
   lastLedgerSequence?: number;
 }
 
-export function getTxDetails(tx: TransactionResponse, includeRawTransaction: boolean): TransactionDetailsInterface {
+export function getTxDetails(tx: TransactionResponse, includeRawTransaction: boolean): FormattedTransaction {
   return parseTransaction(tx, includeRawTransaction);
 }
 
 export function getAccountTxDetails(
   tx: AccountTransaction,
   includeRawTransaction: boolean
-): TransactionDetailsInterface {
+): FormattedTransaction {
   return getTxDetails(AccountTxToTx(tx), includeRawTransaction);
 }
 
@@ -67,11 +57,11 @@ export function getLedgerTxDetails(
   ledgerIndex: number,
   closeTime: number,
   includeRawTransaction: boolean
-): TransactionDetailsInterface {
+): FormattedTransaction {
   return getTxDetails(LedgerTxToTx(tx, ledgerIndex, closeTime), includeRawTransaction);
 }
 
-export function getStreamTxDetails(tx: StreamTransaction, includeRawTransaction: boolean): TransactionDetailsInterface {
+export function getStreamTxDetails(tx: StreamTransaction, includeRawTransaction: boolean): FormattedTransaction {
   return getTxDetails(StreamTxToTx(tx), includeRawTransaction);
 }
 

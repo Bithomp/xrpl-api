@@ -1,30 +1,8 @@
 import _ from "lodash";
 import { removeUndefined } from "../../common";
-import { rippleTimeToISO8601, rippleToUnixTime } from "../../v1/common";
+import { ledgerTimeToUnixTime, ledgerTimeToISO8601 } from "../../models";
 import { parseTransaction } from "../transaction";
-import { Ledger } from "../../v1/common/types/objects";
-
-export type FormattedLedger = {
-  // TODO: properties in type don't match response object. Fix!
-  // closed: boolean,
-  stateHash: string;
-  closeTime: string;
-  closeTimeResolution: number;
-  closeFlags: number;
-  ledgerHash: string;
-  ledgerVersion: number;
-  parentLedgerHash: string;
-  parentCloseTime: string;
-  totalDrops: string;
-  transactionHash: string;
-  // tslint:disable-next-line:array-type
-  transactions?: Array<object>;
-  // tslint:disable-next-line:array-type
-  transactionHashes?: Array<string>;
-  rawState?: string;
-  // tslint:disable-next-line:array-type
-  stateHashes?: Array<string>;
-};
+import { Ledger, FormattedLedger } from "../../v1/common/types/objects";
 
 function parseTransactionWrapper(ledgerVersion: number, includeRawTransaction: boolean, tx: any) {
   // renames metaData to meta and adds ledger_index
@@ -67,7 +45,7 @@ function parseState(state) {
 /**
  * @param {Ledger} ledger must be a *closed* ledger with valid `close_time` and `parent_close_time`
  * @returns {FormattedLedger} formatted ledger
- * @throws RangeError: Invalid time value (rippleTimeToISO8601)
+ * @throws RangeError: Invalid time value (ledgerTimeToISO8601)
  */
 export function parseLedger(ledger: Ledger, includeRawTransactions: boolean): FormattedLedger {
   const ledgerVersion = parseInt(ledger.ledger_index, 10);
@@ -75,15 +53,15 @@ export function parseLedger(ledger: Ledger, includeRawTransactions: boolean): Fo
     Object.assign(
       {
         stateHash: ledger.account_hash,
-        close_time: rippleToUnixTime(ledger.close_time),
-        closeTime: rippleTimeToISO8601(ledger.close_time),
+        close_time: ledgerTimeToUnixTime(ledger.close_time),
+        closeTime: ledgerTimeToISO8601(ledger.close_time),
         closeTimeResolution: ledger.close_time_resolution,
         closeFlags: ledger.close_flags as number,
         ledgerHash: ledger.ledger_hash,
         // tslint:disable-next-line:object-literal-shorthand
         ledgerVersion: ledgerVersion,
         parentLedgerHash: ledger.parent_hash,
-        parentCloseTime: rippleTimeToISO8601(ledger.parent_close_time as number),
+        parentCloseTime: ledgerTimeToISO8601(ledger.parent_close_time as number),
         totalDrops: ledger.total_coins,
         transactionHash: ledger.transaction_hash,
       },

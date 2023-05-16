@@ -5,7 +5,7 @@ import parseNFTokenFlags from "../ledger/nftoken-flags";
 
 import { FormattedNFTokenMintSpecification } from "../../v1/common/types/objects/nftokens";
 
-export function parseNFTokenMint(tx: any): FormattedNFTokenMintSpecification {
+function parseNFTokenMint(tx: any): FormattedNFTokenMintSpecification {
   assert.ok(tx.TransactionType === "NFTokenMint");
 
   return removeUndefined({

@@ -2,7 +2,8 @@ import _ from "lodash";
 import { BigNumber as GlobalBigNumber } from "bignumber.js";
 const BigNumber = GlobalBigNumber.clone({ DECIMAL_PLACES: 40 });
 import { removeUndefined } from "../../common";
-import { normalizeNodes, rippleToUnixTimestamp } from "../../v1/common/utils";
+import { ledgerTimeToTimestamp } from "../../models";
+import { normalizeNodes } from "../../v1/common/utils";
 import { parseOrderbookQuality } from "./orderbook_quality";
 import parseCurrencyAmount from "../ledger/currency-amount";
 
@@ -32,7 +33,7 @@ function getExpirationTime(node) {
   if (expirationTime === undefined) {
     return undefined;
   }
-  return new Date(rippleToUnixTimestamp(expirationTime)).toISOString();
+  return new Date(ledgerTimeToTimestamp(expirationTime)).toISOString();
 }
 
 function getQuality(node) {

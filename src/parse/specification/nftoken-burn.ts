@@ -4,7 +4,7 @@ import parseMemos from "../ledger/memos";
 
 import { FormattedNFTokenBurnSpecification } from "../../v1/common/types/objects/nftokens";
 
-export function parseNFTokenBurn(tx: any): FormattedNFTokenBurnSpecification {
+function parseNFTokenBurn(tx: any): FormattedNFTokenBurnSpecification {
   assert.ok(tx.TransactionType === "NFTokenBurn");
 
   return removeUndefined({
