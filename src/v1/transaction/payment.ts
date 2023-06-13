@@ -10,6 +10,7 @@ export interface Payment {
   source: Adjustment | MaxAdjustment;
   destination: Adjustment | MinAdjustment;
   paths?: string;
+  networkID?: number;
   memos?: FormattedMemo[];
   // A 256-bit hash that can be used to identify a particular payment
   invoiceID?: string;
@@ -169,6 +170,9 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
   }
   if (destinationAddressAndTag.tag != null) {
     txJSON.DestinationTag = destinationAddressAndTag.tag;
+  }
+  if (payment.networkID != null) {
+    txJSON.NetworkID = payment.networkID;
   }
   if (payment.memos != null) {
     txJSON.Memos = payment.memos.map(convertMemo);

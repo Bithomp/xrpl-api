@@ -16,6 +16,7 @@ import { FormattedMemo } from "../v1/common/types/objects";
 import { xrpToDrops } from "../common";
 import { ErrorResponse } from "../models/base_model";
 import { AccountInfoResponse } from "../models/account_info";
+import { singTransaction } from "../wallet";
 
 const submitErrorsGroup = ["tem", "tef", "tel", "ter"];
 const FEE_LIMIT = 0.5; // XRP
@@ -124,6 +125,7 @@ interface LegacyPaymentInterface {
   destinationTag?: number;
   destinationValue: string;
   destinationCurrency: string;
+  networkID?: number;
   memos: FormattedMemo[];
   secret: string;
 }
@@ -154,6 +156,7 @@ export async function legacyPayment(
         currency: data.destinationCurrency,
       },
     },
+    networkID: data.networkID,
     memos: data.memos,
   };
 
@@ -169,7 +172,7 @@ export async function legacyPayment(
 
   // sign transaction
   const wallet = xrpl.Wallet.fromSeed(data.secret);
-  const signedTransaction = wallet.sign(transaction as Transaction).tx_blob;
+  const signedTransaction = singTransaction(wallet, transaction as Transaction).tx_blob;
 
   // submit transaction
   return await submit(signedTransaction, { connection });

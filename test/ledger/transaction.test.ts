@@ -366,4 +366,32 @@ describe("Client", () => {
       });
     });
   });
+
+  describe.only("beta", () => {
+    before(async function () {
+      Client.setup(nconf.get("xrpl:connections:beta"));
+      await Client.connect();
+    });
+
+    describe("legacyPayment", () => {
+      it("is OK", async function () {
+        this.timeout(15000);
+        const payment = {
+          sourceAddress: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          sourceValue: "0.0001",
+          sourceCurrency: "XRP",
+          destinationAddress: "rBbfoBCNMpAaj35K5A9UV9LDkRSh6ZU9Ef",
+          destinationValue: "0.0001",
+          destinationCurrency: "XRP",
+          networkID: 21338,
+          memos: [{ type: "memo", format: "plain/text", data: "Bithomp test" }],
+          secret: nconf.get("xrpl:accounts:activation:secret"),
+        };
+        const result: any = await Client.legacyPayment(payment);
+        console.log(result);
+        expect(result.error).to.eq(undefined);
+        expect(result.validated).to.eq(true);
+      });
+    });
+  });
 });
