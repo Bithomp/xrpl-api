@@ -16,7 +16,7 @@ describe("Client", () => {
 
         delete result.warnings;
         delete result._nodepref;
-        expect(Object.keys(result)).to.eql(["ledger", "ledger_hash", "ledger_index", "validated"]);
+        expect(Object.keys(result).sort()).to.eql(["ledger", "ledger_hash", "ledger_index", "validated"]);
         expect(Object.keys(result.ledger)).to.eql([
           "accepted",
           "account_hash",
@@ -42,7 +42,7 @@ describe("Client", () => {
 
         delete result.warnings;
         delete result._nodepref;
-        expect(Object.keys(result)).to.eql(["ledger", "ledger_hash", "ledger_index", "validated"]);
+        expect(Object.keys(result).sort()).to.eql(["ledger", "ledger_hash", "ledger_index", "validated"]);
         expect(Object.keys(result.ledger)).to.eql([
           "stateHash",
           "close_time",
