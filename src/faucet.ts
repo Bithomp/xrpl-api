@@ -53,9 +53,9 @@ export const FaucetNetworks = {
     format: "xrpl",
   },
   beta: {
-    // hooks-v2, beta are all the same
+    // hooks-v3, beta are all the same
     // https://beta.bithomp.com
-    url: "https://hooks-testnet-v2.xrpl-labs.com/newcreds",
+    url: "https://hooks-testnet-v3.xrpl-labs.com/newcreds",
     format: "xrpl-labs",
   },
   "hooks-testnet-v3": {

@@ -59,7 +59,8 @@ describe("Client", () => {
 
         delete result._nodepref;
         delete result.warnings;
-        expect(Object.keys(result)).to.eql(["ledger_hash", "ledger_index", "offers", "validated"]);
+        delete result.validated; // could be missing
+        expect(Object.keys(result)).to.eql(["ledger_hash", "ledger_index", "offers"]);
         expect(result.offers.length).to.eq(1);
       });
     });
@@ -138,15 +139,29 @@ describe("Client", () => {
         };
         const result: any = await Client.getOrderbook(taker, orderbook);
 
+        expect(Object.keys(result)).to.eql(["taker", "error", "error_code", "error_message", "status", "validated"]);
+        expect(result.taker).to.eql(taker);
+        expect(result.status).to.eql("error");
+        expect(["srcIsrMalformed", "dstIsrMalformed"].includes(result.error)).to.eq(true);
+        expect([70, 53].includes(result.error_code)).to.eq(true);
+
         // error_message: "Invalid field 'taker_pays.issuer', bad issuer.",
-        delete result.error_message; // could be different, depending on server
-        expect(result).to.eql({
-          error: "srcIsrMalformed",
-          error_code: 70,
-          status: "error",
-          taker,
-          validated: undefined,
-        });
+        // delete result.error_message; // could be different, depending on server
+
+        // expect(result).to.eql({
+        //   error: "srcIsrMalformed",
+        //   error_code: 70,
+        //   status: "error",
+        //   taker,
+        //   validated: undefined,
+        // });
+        // expect(result).to.eql({
+        //   error: "dstIsrMalformed",
+        //   error_code: 53,
+        //   status: "error",
+        //   taker,
+        //   validated: undefined,
+        // });
       });
     });
   });

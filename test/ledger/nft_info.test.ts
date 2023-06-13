@@ -22,8 +22,8 @@ describe("Client", () => {
           transfer_fee: 5000,
           issuer: "r9mFXXpQY1wNbpv6SJuuPTQSVgTyrEiBrh",
           nft_taxon: 201181,
-          nft_sequence: 72,
-          uri: "https://ipfs.io/ipfs/bafybeibgzsvxgwtewc5bxqzrbnnyzuez76gcubo67ymgbetnzkh5b7t26u/metadata.json",
+          nft_serial: 72,
+          uri: "68747470733A2F2F697066732E696F2F697066732F6261667962656962677A737678677774657763356278717A72626E6E797A75657A3736676375626F3637796D676265746E7A6B68356237743236752F6D657461646174612E6A736F6E",
           validated: true,
         });
       });
@@ -39,7 +39,8 @@ describe("Client", () => {
           transfer_fee: 5000,
           issuer: "r4MKsZGUM8YvTyX2cLDwDujhh2UzdNnNTC",
           nft_taxon: 0,
-          nft_sequence: 0,
+          nft_serial: 0,
+          uri: "68747470733A2F2F62616679626569656E7662786B756F6C6B3778336333366177686A34346E6F6F687776613370683568376B746A78616D686D6F63333265733632712E697066732E6E667473746F726167652E6C696E6B2F616C6D69676874795F626972642E6A7067",
           validated: true,
         });
       });

@@ -265,14 +265,15 @@ describe("Client", () => {
       });
 
       it("finds the fist send transaction with destinationTag", async function () {
-        this.timeout(15000);
+        this.timeout(30000);
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
-          limit: 10,
+          limit: 1,
           destinationTag: 119954610,
-          timeout: 14000,
+          timeout: 25000,
         });
 
+        expect(result.length).to.eq(1);
         delete result[0].tx.inLedger; // can be missed, depending on the server
         expect(result[0].tx.date).to.eq(690981391);
         delete result[0].tx.date; // can be in different position, depending on the server

@@ -124,6 +124,7 @@ interface LegacyPaymentInterface {
   destinationTag?: number;
   destinationValue: string;
   destinationCurrency: string;
+  networkID?: number;
   memos: FormattedMemo[];
   secret: string;
 }
@@ -154,6 +155,7 @@ export async function legacyPayment(
         currency: data.destinationCurrency,
       },
     },
+    networkID: data.networkID,
     memos: data.memos,
   };
 

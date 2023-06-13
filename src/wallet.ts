@@ -1,7 +1,8 @@
+import * as Crypto from "crypto";
+
 import { Wallet } from "xrpl";
 
 import * as Base58 from "./base58";
-import * as Crypto from "crypto";
 
 interface GenerateAddressInterface {
   publicKey: string;
