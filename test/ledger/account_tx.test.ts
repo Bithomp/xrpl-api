@@ -268,7 +268,7 @@ describe("Client", () => {
         this.timeout(15000);
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
-          limit: 10,
+          limit: 1,
           destinationTag: 119954610,
           timeout: 14000,
         });

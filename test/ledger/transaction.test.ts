@@ -367,7 +367,7 @@ describe("Client", () => {
     });
   });
 
-  describe.only("beta", () => {
+  describe("beta", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:beta"));
       await Client.connect();
@@ -388,7 +388,6 @@ describe("Client", () => {
           secret: nconf.get("xrpl:accounts:activation:secret"),
         };
         const result: any = await Client.legacyPayment(payment);
-        console.log(result);
         expect(result.error).to.eq(undefined);
         expect(result.validated).to.eq(true);
       });

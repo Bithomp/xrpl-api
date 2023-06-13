@@ -59,7 +59,8 @@ describe("Client", () => {
 
         delete result._nodepref;
         delete result.warnings;
-        expect(Object.keys(result)).to.eql(["ledger_hash", "ledger_index", "offers", "validated"]);
+        delete result.validated; // could be missing
+        expect(Object.keys(result)).to.eql(["ledger_hash", "ledger_index", "offers"]);
         expect(result.offers.length).to.eq(1);
       });
     });

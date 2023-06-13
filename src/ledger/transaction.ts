@@ -16,7 +16,6 @@ import { FormattedMemo } from "../v1/common/types/objects";
 import { xrpToDrops } from "../common";
 import { ErrorResponse } from "../models/base_model";
 import { AccountInfoResponse } from "../models/account_info";
-import { singTransaction } from "../wallet";
 
 const submitErrorsGroup = ["tem", "tef", "tel", "ter"];
 const FEE_LIMIT = 0.5; // XRP
@@ -172,7 +171,7 @@ export async function legacyPayment(
 
   // sign transaction
   const wallet = xrpl.Wallet.fromSeed(data.secret);
-  const signedTransaction = singTransaction(wallet, transaction as Transaction).tx_blob;
+  const signedTransaction = wallet.sign(transaction as Transaction).tx_blob;
 
   // submit transaction
   return await submit(signedTransaction, { connection });

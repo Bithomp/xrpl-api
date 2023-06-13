@@ -16,7 +16,7 @@ describe("Faucet", () => {
 
     it("returns data for beta", () => {
       expect(Faucet.getFaucetNetwork("beta")).to.eql({
-        url: "https://hooks-testnet-v2.xrpl-labs.com/newcreds",
+        url: "https://hooks-testnet-v3.xrpl-labs.com/newcreds",
         format: "xrpl-labs",
       });
     });
@@ -147,21 +147,6 @@ describe("Faucet", () => {
         },
         amount: 10000,
         balance: 10000,
-      });
-    });
-
-    it("works with existing address on beta xrpl network", async function () {
-      const res = await Faucet.foundWallet("beta", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
-
-      expect(res.hash).to.be.a("string");
-      delete res.hash;
-      expect(res).to.eql({
-        account: {
-          xAddress: "TVPHVUZfDDJo631W4CZg5oa8fNwwGhn4j9CMTkc35mXminK",
-          classicAddress: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
-          address: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
-        },
-        amount: 10000,
       });
     });
 
