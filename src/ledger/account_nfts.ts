@@ -2,6 +2,7 @@ import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
 import { sortHelperAccountNFToken } from "../models/account_nfts";
 import { parseMarker, createMarker } from "../common/utils";
+import { ErrorResponse } from "../models/base_model";
 
 export interface GetAccountNftsOptions {
   ledgerIndex?: LedgerIndex;
@@ -10,7 +11,7 @@ export interface GetAccountNftsOptions {
 }
 
 /**
- * @returns {object[] | object | null}
+ * @returns {object[] | ErrorResponse}
  * {
  *   account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
  *   ledger_hash: "BD24686C403D2FB1B1C38C56BF0A672C4073B0376F842EDD59BA0937FD68BABC",
@@ -29,10 +30,7 @@ export interface GetAccountNftsOptions {
  * }
  * @exception {Error}
  */
-export async function getAccountNfts(
-  account: string,
-  options: GetAccountNftsOptions = {}
-): Promise<object[] | object | null> {
+export async function getAccountNfts(account: string, options: GetAccountNftsOptions = {}): Promise<object[] | ErrorResponse> {
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
   const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
@@ -48,7 +46,11 @@ export async function getAccountNfts(
   });
 
   if (!response) {
-    return null;
+    return {
+      account,
+      status: "error",
+      error: "invalidResponse",
+    };
   }
 
   if (response.error) {
@@ -66,7 +68,11 @@ export async function getAccountNfts(
 
   const result = response?.result;
   if (!result) {
-    return null;
+    return {
+      account,
+      status: "error",
+      error: "invalidResponse",
+    };
   }
 
   if (Array.isArray(result.account_nfts)) {
@@ -88,7 +94,7 @@ interface FindAccountNftsOptions extends GetAccountNftsOptions {
 export async function findAccountNfts(
   account: string,
   options: FindAccountNftsOptions = { timeout: 15000 }
-): Promise<object[] | object | null> {
+): Promise<object[] | ErrorResponse> {
   const timeStart = new Date();
   const limit = options.limit;
   let response: any;
@@ -125,10 +131,6 @@ export async function findAccountNfts(
     }
   }
 
-  if (!response) {
-    return null;
-  }
-
   if (response.error) {
     const { error, error_code, error_message, status, validated } = response;
 
@@ -152,7 +154,7 @@ export interface GetAccountNftSellOffersOptions {
 }
 
 /**
- * @returns {object[] | object | null}
+ * @returns {object[] | ErrorResponse}
  * {
  *   account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
  *   ledger_hash: "BD24686C403D2FB1B1C38C56BF0A672C4073B0376F842EDD59BA0937FD68BABC",
@@ -172,7 +174,7 @@ export interface GetAccountNftSellOffersOptions {
 export async function getAccountNftSellOffers(
   nftID: string,
   options: GetAccountNftSellOffersOptions = {}
-): Promise<object[] | object | null> {
+): Promise<object[] | ErrorResponse> {
   // doesn't work with clio
   const connection: any = Client.findConnection("!clio");
   if (!connection) {
@@ -186,7 +188,11 @@ export async function getAccountNftSellOffers(
   });
 
   if (!response) {
-    return null;
+    return {
+      nft_id: nftID,
+      status: "error",
+      error: "invalidResponse",
+    };
   }
 
   if (response.error) {
@@ -210,7 +216,7 @@ export interface GetAccountNftBuyOffersOptions {
 }
 
 /**
- * @returns {object[] | object | null}
+ * @returns {object[] | object}
  * {
  *   account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
  *   ledger_hash: "BD24686C403D2FB1B1C38C56BF0A672C4073B0376F842EDD59BA0937FD68BABC",
@@ -230,7 +236,7 @@ export interface GetAccountNftBuyOffersOptions {
 export async function getAccountNftBuyOffers(
   nftID: string,
   options: GetAccountNftBuyOffersOptions = {}
-): Promise<object[] | object | null> {
+): Promise<object[] | object> {
   // doesn't work with clio
   const connection: any = Client.findConnection("!clio");
   if (!connection) {
@@ -244,7 +250,11 @@ export async function getAccountNftBuyOffers(
   });
 
   if (!response) {
-    return null;
+    return {
+      nft_id: nftID,
+      status: "error",
+      error: "invalidResponse",
+    };
   }
 
   if (response.error) {

@@ -265,14 +265,15 @@ describe("Client", () => {
       });
 
       it("finds the fist send transaction with destinationTag", async function () {
-        this.timeout(30000);
+        this.timeout(60000);
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 1,
           destinationTag: 119954610,
-          timeout: 25000,
+          timeout: 55000,
         });
 
+        expect(result.error).to.be.undefined;
         expect(result.length).to.eq(1);
         delete result[0].tx.inLedger; // can be missed, depending on the server
         expect(result[0].tx.date).to.eq(690981391);
@@ -290,7 +291,7 @@ describe("Client", () => {
           timeout: 1, // only 1 request will be send
         });
 
-        expect(Object.keys(result)).to.eql(["error", "marker"]);
+        expect(Object.keys(result)).to.eql(["status", "error", "marker"]);
         expect(Object.keys(result.marker)).to.eql(["ledger", "seq", "bithompHash"]);
         expect(result.error).to.eq("searchTimeout");
         expect(result.marker.ledger).to.be.a("number");
@@ -369,7 +370,7 @@ describe("Client", () => {
         );
       });
 
-      it("returns transaction with legacy", async function () {
+      it("returns transaction with formatted", async function () {
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 1,
@@ -378,7 +379,7 @@ describe("Client", () => {
           excludeFailures: true,
           types: ["Payment"],
           timeout: 4000,
-          legacy: true,
+          formatted: true,
         });
 
         expect(result[0]).to.eql({
@@ -421,7 +422,7 @@ describe("Client", () => {
         });
       });
 
-      it("returns transaction with legacy with includeRawTransactions", async function () {
+      it("returns transaction with formatted with includeRawTransactions", async function () {
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 1,
@@ -430,7 +431,7 @@ describe("Client", () => {
           excludeFailures: true,
           types: ["Payment"],
           timeout: 4000,
-          legacy: true,
+          formatted: true,
           includeRawTransactions: true,
         });
 

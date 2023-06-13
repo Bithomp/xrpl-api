@@ -3,6 +3,7 @@ import { LedgerIndex } from "../models/ledger";
 import { OrderbookInfo, formatBidsAndAsks } from "../models/book_offers";
 import { IssuedCurrency } from "../types";
 import { parseMarker, createMarker } from "../common/utils";
+import { ErrorResponse } from "../models/base_model";
 
 export interface GetGetBookOffers {
   ledgerIndex?: LedgerIndex;
@@ -11,7 +12,7 @@ export interface GetGetBookOffers {
 }
 
 /**
- * @returns {Promise<object | null>} like
+ * @returns {Promise<object | ErrorResponse>} like
  * @exception {Error}
  */
 export async function getBookOffers(
@@ -19,7 +20,7 @@ export async function getBookOffers(
   takerGets: IssuedCurrency,
   takerPays: IssuedCurrency,
   options: GetGetBookOffers = {}
-): Promise<object | null> {
+): Promise<object | ErrorResponse> {
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
   const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
@@ -37,7 +38,11 @@ export async function getBookOffers(
   });
 
   if (!response) {
-    return null;
+    return {
+      taker,
+      status: "error",
+      error: "invalidResponse",
+    };
   }
 
   if (response.error) {
@@ -74,7 +79,7 @@ export async function getOrderbook(
   taker: string,
   orderbook: OrderbookInfo,
   options: GetGetBookOffers = {}
-): Promise<object | null> {
+): Promise<object | ErrorResponse> {
   const [directOfferResults, reverseOfferResults] = await Promise.all([
     getBookOffers(
       taker,

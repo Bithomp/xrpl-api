@@ -11,7 +11,7 @@ export interface GetAccountInfoOptions {
 }
 
 /**
- * @returns {Promise<AccountInfoResponse | ErrorResponse | null>} like
+ * @returns {Promise<AccountInfoResponse | ErrorResponse>} like
  * {
  *   "account_data": {
  *     Account: 'rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz',
@@ -34,7 +34,7 @@ export interface GetAccountInfoOptions {
 export async function getAccountInfo(
   account: string,
   options: GetAccountInfoOptions = {}
-): Promise<AccountInfoResponse | ErrorResponse | null> {
+): Promise<AccountInfoResponse | ErrorResponse> {
   const connection = Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
@@ -48,7 +48,11 @@ export async function getAccountInfo(
   });
 
   if (!response) {
-    return null;
+    return {
+      account,
+      status: "error",
+      error: "invalidResponse",
+    };
   }
 
   if (response.error) {
@@ -68,7 +72,7 @@ export async function getAccountInfo(
 }
 
 /**
- * @returns {Promise<AccountInfoDataResponse | null>} like
+ * @returns {Promise<AccountInfoDataResponse>} like
  * {
  *   Account: 'rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz',
  *   Balance: '958859539',
@@ -86,12 +90,8 @@ export async function getAccountInfo(
 export async function getAccountInfoData(
   account: string,
   options: GetAccountInfoOptions = {}
-): Promise<AccountInfoDataResponse | ErrorResponse | null> {
+): Promise<AccountInfoDataResponse | ErrorResponse> {
   const response = await getAccountInfo(account, options);
-
-  if (!response) {
-    return null;
-  }
 
   if ("error" in response) {
     return response;

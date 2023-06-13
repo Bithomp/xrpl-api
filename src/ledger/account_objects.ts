@@ -1,4 +1,5 @@
 import { AccountObjectsRequest } from "xrpl";
+
 import * as Client from "../client";
 
 import {
@@ -26,7 +27,7 @@ export interface GetAccountObjectsOptions {
 }
 
 /**
- * @returns {Promise<AccountObjectsResponse | ErrorResponse | null>} like
+ * @returns {Promise<AccountObjectsResponse | ErrorResponse>} like
  * {
  *   "account": "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
  *   "account_objects": [
@@ -64,7 +65,7 @@ export interface GetAccountObjectsOptions {
 export async function getAccountObjects(
   account: string,
   options: GetAccountObjectsOptions = {}
-): Promise<AccountObjectsResponse | ErrorResponse | null> {
+): Promise<AccountObjectsResponse | ErrorResponse> {
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
   const connection: any = Client.findConnection("account_objects", undefined, undefined, hash);
@@ -85,7 +86,11 @@ export async function getAccountObjects(
   const response = await connection.request(request);
 
   if (!response) {
-    return null;
+    return {
+      account,
+      status: "error",
+      error: "invalidResponse",
+    };
   }
 
   if (response.error) {
@@ -117,7 +122,7 @@ export interface GetAccountAllObjectsOptions extends GetAccountObjectsOptions {
 export async function getAccountAllObjects(
   account: string,
   options: GetAccountAllObjectsOptions = {}
-): Promise<AccountObjectsResponse | ErrorResponse | null> {
+): Promise<AccountObjectsResponse | ErrorResponse> {
   const timeStart = new Date();
   const limit = options.limit;
   let response: any;
@@ -143,7 +148,7 @@ export async function getAccountAllObjects(
     }
 
     response = await getAccountObjects(account, options);
-    if (!response || response.error) {
+    if (response.error) {
       return response;
     }
 
@@ -158,10 +163,6 @@ export async function getAccountAllObjects(
     } else {
       break;
     }
-  }
-
-  if (!response) {
-    return null;
   }
 
   if (response.error) {
@@ -188,7 +189,7 @@ export interface GetAccountLinesObjectsOptions {
 }
 
 /**
- * @returns {Promise<AccountLinesResponse | ErrorResponse | null>}
+ * @returns {Promise<AccountLinesResponse | ErrorResponse>}
  * {
  *   "account": "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
  *   "ledger_hash": "E72945940A2DB38FB20F1C385C00C465F68545761BD6D29ECF8671D2FC539B57",
@@ -211,16 +212,12 @@ export interface GetAccountLinesObjectsOptions {
 export async function getAccountLinesObjects(
   account: string,
   options: GetAccountLinesObjectsOptions = {}
-): Promise<AccountLinesResponse | ErrorResponse | null> {
+): Promise<AccountLinesResponse | ErrorResponse> {
   const response = await getAccountAllObjects(account, {
     type: "state",
     ledgerHash: options.ledgerHash,
     ledgerIndex: options.ledgerIndex,
   });
-
-  if (!response) {
-    return null;
-  }
 
   if ("error" in response) {
     return response;
@@ -248,7 +245,7 @@ export interface GetAccountNFTOffersObjectsOptions {
 /**
  * @param account
  * @param options
- * @returns {Promise<AccountNFTObjectsResponse | ErrorResponse | null>}
+ * @returns {Promise<AccountNFTObjectsResponse | ErrorResponse>}
  * {
  *   "account": "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
  *   "ledger_hash": "3E1198BF849E2A2ABB8667DA275F180FB48CA02408FE3ABE0F94CBC5145FA773",
@@ -268,7 +265,7 @@ export interface GetAccountNFTOffersObjectsOptions {
 export async function getAccountNFTOffersObjects(
   account: string,
   options: GetAccountNFTOffersObjectsOptions = {}
-): Promise<AccountNFTObjectsResponse | ErrorResponse | null> {
+): Promise<AccountNFTObjectsResponse | ErrorResponse> {
   const response = await getAccountAllObjects(account, {
     type: "nft_offer",
     ledgerHash: options.ledgerHash,
@@ -276,10 +273,6 @@ export async function getAccountNFTOffersObjects(
     limit: options.limit,
     marker: options.marker,
   });
-
-  if (!response) {
-    return null;
-  }
 
   if ("error" in response) {
     return response;

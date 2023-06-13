@@ -186,10 +186,10 @@ describe("Client", () => {
         });
       });
 
-      it("works with legacy", async function () {
+      it("works with formatted", async function () {
         const result: any = await Client.getTransaction(
           "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
-          { legacy: true }
+          { formatted: true }
         );
 
         expect(result).to.eql({
@@ -220,10 +220,10 @@ describe("Client", () => {
         });
       });
 
-      it("works with legacy with includeRawTransaction", async function () {
+      it("works with formatted with includeRawTransaction", async function () {
         const result: any = await Client.getTransaction(
           "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
-          { legacy: true, includeRawTransaction: true }
+          { formatted: true, includeRawTransaction: true }
         );
 
         expect(result.rawTransaction).to.include("B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C");

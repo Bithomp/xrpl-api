@@ -5,10 +5,14 @@ import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
 import { compareTransactions, parseMarker, createMarker } from "../common/utils";
 import { getAccountTxDetails } from "../models/transaction";
+import { ErrorResponse } from "../models/base_model";
 
+const MAX_LIMIT = 1000;
 const DEFAULT_LIMIT = 200;
 const MAX_LIMIT_WITH_FILTER = 20;
-const MAX_WITH_TAG = 3;
+const MAX_LIMIT_WITH_TAG = 3;
+
+const LIMIT_INCREASE_COUNT = 10;
 
 export interface GetTransactionsOptions {
   ledgerIndexMin?: number;
@@ -100,7 +104,7 @@ export interface GetTransactionsOptions {
 export async function getTransactions(
   account: string,
   options: GetTransactionsOptions = { limit: DEFAULT_LIMIT }
-): Promise<object | null> {
+): Promise<object | ErrorResponse> {
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
   const connection: any = Client.findConnection("history", undefined, undefined, hash);
@@ -122,7 +126,11 @@ export async function getTransactions(
   });
 
   if (!response) {
-    return null;
+    return {
+      account,
+      status: "error",
+      error: "invalidResponse",
+    };
   }
 
   if (response.error) {
@@ -173,8 +181,9 @@ export interface FindTransactionsOptions extends GetTransactionsOptions {
   sourceTag?: number;
   destinationTag?: number;
   timeout?: number;
-  legacy?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification
-  includeRawTransactions?: boolean; // for legacy
+  legacy?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification, same as formatted
+  formatted?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification, same as legacy
+  includeRawTransactions?: boolean; // for legacy and formatted
 }
 
 interface FindProcessTransactionsOptions extends FindTransactionsOptions {
@@ -184,9 +193,10 @@ interface FindProcessTransactionsOptions extends FindTransactionsOptions {
 export async function findTransactions(
   account: string,
   options: FindTransactionsOptions = { limit: DEFAULT_LIMIT, timeout: 15000 }
-): Promise<object[] | object> {
+): Promise<object[] | ErrorResponse> {
   let transactions = [];
   let accountTransactionsError = null;
+  const formatted = options.legacy === true || options.formatted === true;
   const timeStart = new Date();
 
   // TODO: Add support for binary
@@ -208,13 +218,23 @@ export async function findTransactions(
     let limit = options.limit;
     // increase limit to make sure we can get all transaction with single request
     if (transactions.length === 0 && options.startTxHash) {
-      limit += 2;
+      limit += LIMIT_INCREASE_COUNT;
     }
+
+    if (options.sourceTag || options.destinationTag) {
+      limit += LIMIT_INCREASE_COUNT;
+    }
+
+    if (limit > MAX_LIMIT) {
+      limit = MAX_LIMIT;
+    }
+
     // request without balanceChanges and specification to reduce unnecessary work
     const accountTransactions: any = await getTransactions(account, {
       ...options,
       ...{ balanceChanges: false, specification: false, limit },
     });
+
     // check for error
     if (!accountTransactions || accountTransactions.error) {
       accountTransactionsError = accountTransactions;
@@ -229,7 +249,7 @@ export async function findTransactions(
       .filter(_.partial(filterHelperTransactions, account, options))
       .filter(_.partial(filterHelperStartTx, options));
 
-    if (options.legacy !== true && (options.balanceChanges === true || options.specification === true)) {
+    if (formatted !== true && (options.balanceChanges === true || options.specification === true)) {
       for (const newTransaction of newTransactions) {
         if (options.balanceChanges === true) {
           newTransaction.balanceChanges = getBalanceChanges(newTransaction.meta);
@@ -263,12 +283,13 @@ export async function findTransactions(
   // return timeout and marker information if nothing was found
   if (options.marker && transactions.length === 0) {
     return {
+      status: "timeout",
       error: "searchTimeout",
       marker: options.marker,
     };
   }
 
-  if (options.legacy === true) {
+  if (formatted === true) {
     transactions = transactions.map((transaction) =>
       getAccountTxDetails(transaction, options.includeRawTransactions === true)
     ) as any;
@@ -279,8 +300,8 @@ export async function findTransactions(
 
 function applyLimitOptions(options: FindProcessTransactionsOptions) {
   if ((options.sourceTag as number) > 0 || (options.destinationTag as number) > 0) {
-    if (options.limit > MAX_WITH_TAG) {
-      options.limit = MAX_WITH_TAG;
+    if (options.limit > MAX_LIMIT_WITH_TAG) {
+      options.limit = MAX_LIMIT_WITH_TAG;
     }
   } else if (options.types || options.initiated || options.counterparty) {
     if (options.limit > MAX_LIMIT_WITH_FILTER) {

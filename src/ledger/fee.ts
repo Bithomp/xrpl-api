@@ -23,7 +23,6 @@ export async function getFee(options: GetFeeOptions = {}): Promise<string | null
   });
 
   const baseFee: any = response?.result?.drops?.base_fee;
-
   if (!baseFee) {
     return null;
   }

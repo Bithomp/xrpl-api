@@ -4,6 +4,17 @@ import { generateManifest } from "../models/manifest";
 import { unixTimeToLedgerTime } from "../models/ledger";
 import * as Validator from "../validator";
 
+/**
+ * @param {string} masterSecret.privateKey
+ * @param {string} masterSecret.publicKey
+ * @param {string} ephemeralSecret.privateKey
+ * @param {string} ephemeralSecret.publicKey
+ * @param {number} sequence
+ * @param {number} expiration
+ * @param {string[]} validatorsPublicKeys
+ * @returns {Promise<VLInterface>}
+ * @exception {Error}
+ */
 export async function createVL(
   masterSecret: { privateKey: string; publicKey: string },
   ephemeralSecret: { privateKey: string; publicKey: string },

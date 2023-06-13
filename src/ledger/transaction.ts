@@ -1,7 +1,7 @@
 import * as xrpl from "xrpl";
 import { decode } from "ripple-binary-codec";
-
 import { Transaction } from "xrpl";
+
 import * as Client from "../client";
 import { Connection } from "../connection";
 import { sleep } from "../common/utils";
@@ -14,8 +14,8 @@ import {
 import { createPaymentTransaction, Payment } from "../v1/transaction/payment";
 import { FormattedMemo } from "../v1/common/types/objects";
 import { xrpToDrops } from "../common";
-import { ErrorResponse } from "../models/base_model";
 import { AccountInfoResponse } from "../models/account_info";
+import { ErrorResponse } from "../models/base_model";
 
 const submitErrorsGroup = ["tem", "tef", "tel", "ter"];
 const FEE_LIMIT = 0.5; // XRP
@@ -28,8 +28,9 @@ export interface GetTransactionOptions {
   maxLedger?: number;
   balanceChanges?: boolean;
   specification?: boolean;
-  legacy?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification
-  includeRawTransaction?: boolean; // for legacy
+  legacy?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification, same as formatted
+  formatted?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification, same as legacy
+  includeRawTransaction?: boolean; // for legacy and formatted,
 }
 
 /**
@@ -62,7 +63,8 @@ export interface GetTransactionOptions {
 export async function getTransaction(
   transaction: string,
   options: GetTransactionOptions = {}
-): Promise<TransactionResponse | FormattedTransaction | ErrorResponse | null> {
+): Promise<TransactionResponse | FormattedTransaction | ErrorResponse> {
+  const formatted = options.legacy === true || options.formatted === true;
   const connection: any = Client.findConnection("history");
   if (!connection) {
     throw new Error("There is no connection");
@@ -77,7 +79,10 @@ export async function getTransaction(
   });
 
   if (!response) {
-    return null;
+    return {
+      status: "error",
+      error: "invalidResponse",
+    };
   }
 
   if (response.error) {
@@ -96,7 +101,7 @@ export async function getTransaction(
   const result = response?.result;
 
   if (typeof result === "object") {
-    if (options.legacy === true) {
+    if (formatted === true) {
       return getTxDetails(result, options.includeRawTransaction === true);
     }
 
@@ -131,7 +136,7 @@ interface LegacyPaymentInterface {
 
 export async function legacyPayment(
   data: LegacyPaymentInterface
-): Promise<TransactionResponse | FormattedTransaction | ErrorResponse | null> {
+): Promise<TransactionResponse | FormattedTransaction | ErrorResponse> {
   const connection: any = Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
@@ -244,13 +249,13 @@ export interface SubmitOptionsInterface {
  * Submit signed transaction to the network
  * @param {string} signedTransaction
  * @param {SubmitOptionsInterface} options
- * @returns {Promise<TransactionResponse | FormattedTransaction | ErrorResponse | null>}
+ * @returns {Promise<TransactionResponse | FormattedTransaction | ErrorResponse>}
  * @exception {Error}
  */
 export async function submit(
   signedTransaction: string,
   options: SubmitOptionsInterface = {}
-): Promise<TransactionResponse | FormattedTransaction | ErrorResponse | null | null> {
+): Promise<TransactionResponse | FormattedTransaction | ErrorResponse> {
   const connection: any = options.connection || Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
@@ -290,14 +295,14 @@ export async function submit(
  * Wait for final transaction outcome
  * @param {string} txHash
  * @param {number} lastLedger
- * @returns {Promise<TransactionResponse | FormattedTransaction | ErrorResponse | null>}
+ * @returns {Promise<TransactionResponse | FormattedTransaction | ErrorResponse>}
  * @exception {Error}
  * @private
  */
 async function waitForFinalTransactionOutcome(
   txHash: string,
   lastLedger: number
-): Promise<TransactionResponse | FormattedTransaction | ErrorResponse | null> {
+): Promise<TransactionResponse | FormattedTransaction | ErrorResponse> {
   await sleep(LEDGER_CLOSE_TIME_AWAIT);
 
   const tx = await getTransaction(txHash);

@@ -1,9 +1,10 @@
-import * as Client from "../client";
-
 import _ from "lodash";
+import BigNumber from "bignumber.js";
+
+import * as Client from "../client";
 import { Trustline } from "../models/account_lines";
 import { LedgerIndex } from "../models/ledger";
-import BigNumber from "bignumber.js";
+import { ErrorResponse } from "../models/base_model";
 
 export interface GetBalanceSheetOptions {
   ledgerIndex?: LedgerIndex;
@@ -12,7 +13,7 @@ export interface GetBalanceSheetOptions {
 }
 
 /**
- * @returns {Promise<object | null>} like
+ * @returns {Promise<object | ErrorResponse>} like
  * {
  *   account: 'rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW',
  *   ledger_hash: 'D99FE8D8E104DD899B73F451DF41FA9A44FBB8B609ED1103DBC9641AC07D40F7',
@@ -37,7 +38,10 @@ export interface GetBalanceSheetOptions {
  * }
  * @exception {Error}
  */
-export async function getBalanceSheet(account: string, options: GetBalanceSheetOptions = {}): Promise<object | null> {
+export async function getBalanceSheet(
+  account: string,
+  options: GetBalanceSheetOptions = {}
+): Promise<object | ErrorResponse> {
   const connection: any = Client.findConnection("gateway_balances");
   if (!connection) {
     throw new Error("There is no connection");
@@ -52,7 +56,11 @@ export async function getBalanceSheet(account: string, options: GetBalanceSheetO
   });
 
   if (!response) {
-    return null;
+    return {
+      account,
+      status: "error",
+      error: "invalidResponse",
+    };
   }
 
   if (response.error) {
@@ -76,14 +84,10 @@ export interface ObligationTrustline extends Trustline {
 }
 
 /**
- * @returns {Promise<object | null>} like
+ * @returns {Promise<object | ErrorResponse>} like
  */
-export async function getAccountObligations(account: string): Promise<object | null> {
+export async function getAccountObligations(account: string): Promise<object | ErrorResponse> {
   const response = (await getBalanceSheet(account)) as any;
-  if (!response) {
-    return null;
-  }
-
   if (response.error) {
     const { error, error_code, error_message, status, validated } = response;
 

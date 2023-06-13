@@ -13,7 +13,7 @@ export interface GetAccountLinesOptions {
 }
 
 /**
- * @returns {Promise<AccountLinesResponse | ErrorResponse | null>} like
+ * @returns {Promise<AccountLinesResponse | ErrorResponse>} like
  * {
  *   account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
  *   ledger_hash: "BD24686C403D2FB1B1C38C56BF0A672C4073B0376F842EDD59BA0937FD68BABC",
@@ -38,7 +38,7 @@ export interface GetAccountLinesOptions {
 export async function getAccountLines(
   account: string,
   options: GetAccountLinesOptions = {}
-): Promise<AccountLinesResponse | ErrorResponse | null> {
+): Promise<AccountLinesResponse | ErrorResponse> {
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
   const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
@@ -56,7 +56,11 @@ export async function getAccountLines(
   });
 
   if (!response) {
-    return null;
+    return {
+      account,
+      status: "error",
+      error: "invalidResponse",
+    };
   }
 
   if (response.error) {

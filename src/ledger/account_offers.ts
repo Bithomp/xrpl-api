@@ -1,6 +1,7 @@
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
 import { parseMarker, createMarker } from "../common/utils";
+import { ErrorResponse } from "../models/base_model";
 
 export interface GetAccountOffers {
   ledgerIndex?: LedgerIndex;
@@ -9,7 +10,7 @@ export interface GetAccountOffers {
 }
 
 /**
- * @returns {Promise<object | null>} like
+ * @returns {Promise<object | ErrorResponse>} like
  * {
  *   account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
  *   ledger_hash: "BD24686C403D2FB1B1C38C56BF0A672C4073B0376F842EDD59BA0937FD68BABC",
@@ -27,7 +28,7 @@ export interface GetAccountOffers {
  * }
  * @exception {Error}
  */
-export async function getAccountOffers(account: string, options: GetAccountOffers = {}): Promise<object | null> {
+export async function getAccountOffers(account: string, options: GetAccountOffers = {}): Promise<object | ErrorResponse> {
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
   const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
@@ -43,7 +44,11 @@ export async function getAccountOffers(account: string, options: GetAccountOffer
   });
 
   if (!response) {
-    return null;
+    return {
+      account,
+      status: "error",
+      error: "invalidResponse",
+    };
   }
 
   if (response.error) {

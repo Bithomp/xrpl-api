@@ -37,8 +37,8 @@ describe("Client", () => {
         ]);
       });
 
-      it("current with legacy", async function () {
-        const result: any = await Client.getLedger({ legacy: true });
+      it("current with formatted", async function () {
+        const result: any = await Client.getLedger({ formatted: true });
 
         delete result.warnings;
         delete result._nodepref;
@@ -158,12 +158,12 @@ describe("Client", () => {
         expect(transactions[0].hash).to.eql("05403FE48CCFCB45888FB3FDA0A791B0B3AA29360050412B95FCA436E1A41DCF");
       });
 
-      it("with expand and legacy", async function () {
+      it("with expand and formatted", async function () {
         const result: any = await Client.getLedger({
           ledgerIndex: 66816622,
           transactions: true,
           expand: true,
-          legacy: true,
+          formatted: true,
           includeRawTransactions: true,
         });
 

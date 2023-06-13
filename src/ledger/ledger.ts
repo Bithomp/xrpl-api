@@ -6,12 +6,13 @@ export interface GetLedgerOptions {
   ledgerIndex?: LedgerIndex;
   transactions?: boolean;
   expand?: boolean;
-  legacy?: boolean; // returns response in old old format data
-  includeRawTransactions?: boolean; // for legacy
+  legacy?: boolean; // returns response in old old format data, same as formatted
+  formatted?: boolean; // returns response in old old format data, same as legacy
+  includeRawTransactions?: boolean; // for legacy and formatted,
 }
 
 /**
- * @returns {object | null}
+ * @returns {object}
  * "ledger": {
  *   accepted: true,
  *   account_hash: 'D240A9A26FB9780A195B7B77E78262078CE916F7E5C16582BD617E6C96CA7B51',
@@ -36,7 +37,8 @@ export interface GetLedgerOptions {
  * }
  * @exception {Error}
  */
-export async function getLedger(options: GetLedgerOptions = {}): Promise<object | null> {
+export async function getLedger(options: GetLedgerOptions = {}): Promise<object> {
+  const formatted = options.legacy === true || options.formatted === true;
   const connection: any = Client.findConnection("history");
   if (!connection) {
     throw new Error("There is no connection");
@@ -63,10 +65,13 @@ export async function getLedger(options: GetLedgerOptions = {}): Promise<object 
 
   const result = response?.result;
   if (!result) {
-    return null;
+    return {
+      status: "error",
+      error: "invalidResponse",
+    };
   }
 
-  if (options.legacy === true) {
+  if (formatted === true) {
     result.ledger = parseLedger(result.ledger, options.includeRawTransactions === true);
   }
 
