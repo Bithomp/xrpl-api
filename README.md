@@ -8,9 +8,6 @@ The library also supports the creation of a validator list.
 In an existing project (with `package.json`), install `@bithomp/xrpl-api`:
 
 ```Shell
-# add github registry to .npmrc file for @bithomp packages
-echo @bithomp:registry=https://npm.pkg.github.com >> .npmrc
-
 # install package
 $ npm install --save @bithomp/xrpl-api
 ```
@@ -35,8 +32,8 @@ const config = [
     "connectionTimeout": 10000
   },
   {
-    "url": "wss://s1.ripple.com",
-    "type": "regular,clio",
+    "url": "wss://s2-clio.ripple.com",
+    "type": "clio,account_objects",
     "connectionTimeout": 10000
   }
 ];
@@ -57,7 +54,6 @@ BithompXRPL.Client.disconnect();
 ## Create Validator List
 
 _Setup connection_, it is required to get validators details from the ledger.
-
 
 ```JS
 const BithompXRPL = require("@bithomp/xrpl-api");

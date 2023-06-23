@@ -6,8 +6,8 @@
   "types": "lib/index.d.ts",
   "author": "Bithomp AB",
   "license": "GPL-3.0",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+  "-publishConfig": {
+    "-registry": "https://npm.pkg.github.com/"
   },
   "repository": {
     "type": "git",
