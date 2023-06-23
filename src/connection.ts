@@ -151,17 +151,7 @@ class Connection extends EventEmitter {
 
   public async submit(transaction: string): Promise<Response | any> {
     try {
-      if (!this.client || !this.isConnected()) {
-        return { error: "No connection" };
-      }
-
-      const startDate: Date = new Date();
-      const response = await this.client.submit(transaction);
-      const endDate: Date = new Date();
-
-      this.updateLatency(endDate.getTime() - startDate.getTime());
-
-      return response;
+      return await this.request({ command: "submit", tx_blob: transaction, fail_hard: true });
     } catch (err: any) {
       this.updateLatency(1000);
       this.logger?.debug({

@@ -1,7 +1,8 @@
 import * as errors from "./errors";
+import sha512Half from "./sha512Half";
 
 export * from "./utils";
-export { errors };
+export { errors, sha512Half };
 
 export const dropsInXRP = 1000000;
 

@@ -1,6 +1,7 @@
 import * as xrpl from "xrpl";
 import { decode } from "ripple-binary-codec";
 import { Transaction } from "xrpl";
+import { XrplDefinitionsBase } from "ripple-binary-codec";
 
 import * as Client from "../client";
 import { Connection } from "../connection";
@@ -16,6 +17,7 @@ import { FormattedMemo } from "../v1/common/types/objects";
 import { xrpToDrops } from "../common";
 import { AccountInfoResponse } from "../models/account_info";
 import { ErrorResponse } from "../models/base_model";
+import { singTransaction } from "../wallet";
 
 const submitErrorsGroup = ["tem", "tef", "tel", "ter"];
 const FEE_LIMIT = 0.5; // XRP
@@ -135,7 +137,8 @@ interface LegacyPaymentInterface {
 }
 
 export async function legacyPayment(
-  data: LegacyPaymentInterface
+  data: LegacyPaymentInterface,
+  definitions?: XrplDefinitionsBase
 ): Promise<TransactionResponse | FormattedTransaction | ErrorResponse> {
   const connection: any = Client.findConnection();
   if (!connection) {
@@ -176,10 +179,10 @@ export async function legacyPayment(
 
   // sign transaction
   const wallet = xrpl.Wallet.fromSeed(data.secret);
-  const signedTransaction = wallet.sign(transaction as Transaction).tx_blob;
+  const signedTransaction = singTransaction(wallet, transaction as Transaction, false, definitions).tx_blob;
 
   // submit transaction
-  return await submit(signedTransaction, { connection });
+  return await submit(signedTransaction, { connection, definitions });
 }
 
 /**
@@ -243,6 +246,7 @@ export async function getAccountPaymentParams(
 
 export interface SubmitOptionsInterface {
   connection?: Connection;
+  definitions?: XrplDefinitionsBase;
 }
 
 /**
@@ -278,7 +282,7 @@ export async function submit(
   }
 
   let lastLedger = 0;
-  const transaction = decode(signedTransaction);
+  const transaction = decode(signedTransaction, options.definitions);
   if (transaction.LastLedgerSequence) {
     lastLedger = transaction.LastLedgerSequence as number;
   } else {
