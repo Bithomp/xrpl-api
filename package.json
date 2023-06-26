@@ -1,13 +1,13 @@
 {
   "name": "@bithomp/xrpl-api",
-  "version": "2.3.9",
+  "version": "2.3.10",
   "description": "A Bithomp JavaScript/TypeScript library for interacting with the XRP Ledger",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "author": "Bithomp AB",
   "license": "GPL-3.0",
   "-publishConfig": {
-    "-registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/"
   },
   "repository": {
     "type": "git",
