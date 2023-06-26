@@ -3,7 +3,15 @@ import omitBy from "lodash/omitBy";
 import * as Crypto from "crypto";
 import { Wallet, Transaction, ValidationError, validate } from "xrpl";
 import { isValidXAddress, xAddressToClassicAddress } from "ripple-address-codec";
-import { encodeForSigning, encodeForMultisigning, encode, decode, XrplDefinitionsBase } from "ripple-binary-codec";
+import {
+  encodeForSigning,
+  encodeForMultisigning,
+  encode,
+  decode,
+  XrplDefinitionsBase,
+  XrplDefinitions,
+  DEFAULT_DEFINITIONS,
+} from "ripple-binary-codec";
 import { sign } from "ripple-keypairs";
 
 import * as Base58 from "./base58";
@@ -132,7 +140,12 @@ export function singTransaction(
  * Can be either a classic address or an XAddress.
  * @returns A signed transaction in the proper format.
  */
-function computeSignature(tx: Transaction, privateKey: string, signAs?: string, definitions?: XrplDefinitionsBase): string {
+function computeSignature(
+  tx: Transaction,
+  privateKey: string,
+  signAs?: string,
+  definitions?: XrplDefinitionsBase
+): string {
   if (signAs) {
     const classicAddress = isValidXAddress(signAs) ? xAddressToClassicAddress(signAs).classicAddress : signAs;
     return sign(encodeForMultisigning(tx, classicAddress, definitions), privateKey);
@@ -188,3 +201,6 @@ function hashSignedTx(tx: Transaction | string, definitions?: XrplDefinitionsBas
   const prefix = HashPrefix.TRANSACTION_ID.toString(16).toUpperCase();
   return sha512Half(prefix.concat(txBlob));
 }
+
+// export XrplDefinitionsBase for custom definitions, in case old binary codec is used
+export { XrplDefinitionsBase, XrplDefinitions, DEFAULT_DEFINITIONS };

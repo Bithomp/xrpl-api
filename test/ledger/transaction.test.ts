@@ -1,7 +1,6 @@
 import nconf from "nconf";
 import { Transaction } from "xrpl";
 import { expect } from "chai";
-import { XrplDefinitions } from "ripple-binary-codec";
 
 // import * as enums from ".node_modules/ripple-binary-codec/dist/enums/src/enums/definitions.json";
 import * as betaEnums from "../../config/beta_definitions.json";
@@ -379,7 +378,7 @@ describe("Client", () => {
 
     describe("legacyPayment", () => {
       it("is OK", async function () {
-        const betaDefinitions = new XrplDefinitions(betaEnums);
+        const betaDefinitions = new Wallet.XrplDefinitions(betaEnums);
 
         this.timeout(15000);
         const payment = {
