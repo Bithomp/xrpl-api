@@ -133,6 +133,14 @@ describe("Models", () => {
     });
   });
 
+  describe("buildNFTokenID", () => {
+    it("build NFTokenID", function () {
+      const result: any = Models.buildNFTokenID(11, 3140, "rNCFjv8Ek5oDrNiMJ3pw6eLLFtMjZLJnf2", 146999694, 3429);
+
+      expect(result).to.eql("000B0C4495F14B0E44F78A264E41713C64B5F89242540EE2BC8B858E00000D65");
+    });
+  });
+
   describe("parseNFTokenBurn", () => {
     it("works", function () {
       const tx = require("../examples/responses/NFTokenBurn.json");

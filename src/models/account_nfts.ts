@@ -102,3 +102,24 @@ export function parseNFTokenID(nftokenID: string): NFTokenInterface | null {
   };
 }
 
+export function buildNFTokenID(
+  flags: number,
+  transferFee: number,
+  issuer: string,
+  taxon: number,
+  sequence: number
+): string {
+  const scrambledTaxon = cipheredTaxon(sequence, taxon);
+
+  return (
+    // @ts-ignore
+    new BigNumber(flags).toString(16).padStart(4, "0").toUpperCase() +
+    // @ts-ignore
+    new BigNumber(transferFee).toString(16).padStart(4, "0").toUpperCase() +
+    AddressCodec.decodeAccountID(issuer).toString("hex").toUpperCase() +
+    // @ts-ignore
+    new BigNumber(scrambledTaxon).toString(16).padStart(8, "0").toUpperCase() +
+    // @ts-ignore
+    new BigNumber(sequence).toString(16).padStart(8, "0").toUpperCase()
+  );
+}
