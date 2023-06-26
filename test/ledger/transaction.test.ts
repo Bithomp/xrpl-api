@@ -367,6 +367,24 @@ describe("Client", () => {
         const result: any = await Client.legacyPayment(payment);
         expect(result.error).to.eq("actNotFound");
       });
+
+      it("is failed for not funded", async function () {
+        this.timeout(25000);
+
+        const payment = {
+          sourceAddress: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          sourceValue: "100000000000.0",
+          sourceCurrency: "XRP",
+          destinationAddress: "rBbfoBCNMpAaj35K5A9UV9LDkRSh6ZU9Ef",
+          destinationValue: "100000000000.0",
+          destinationCurrency: "XRP",
+          memos: [{ type: "memo", format: "plain/text", data: "Bithomp test" }],
+          secret: nconf.get("xrpl:accounts:activation:secret"),
+        };
+
+        const result: any = await Client.legacyPayment(payment);
+        expect(result.meta.TransactionResult).to.eq("tecUNFUNDED_PAYMENT");
+      });
     });
   });
 

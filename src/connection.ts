@@ -151,7 +151,7 @@ class Connection extends EventEmitter {
 
   public async submit(transaction: string): Promise<Response | any> {
     try {
-      return await this.request({ command: "submit", tx_blob: transaction, fail_hard: true });
+      return await this.request({ command: "submit", tx_blob: transaction });
     } catch (err: any) {
       this.updateLatency(1000);
       this.logger?.debug({
