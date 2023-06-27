@@ -13,6 +13,19 @@
     "type": "git",
     "url": "git+https://github.com/Bithomp/xrpl-api.git"
   },
+  "keywords": [
+    "xrpl",
+    "ws",
+    "xrp",
+    "nft",
+    "xls20",
+    "unl",
+    "bithomp"
+  ],
+  "funding": {
+    "type" : "individual",
+    "url" : "https://bithomp.com/donate"
+  },
   "bugs": {
     "url": "https://github.com/Bithomp/xrpl-api/issues"
   },

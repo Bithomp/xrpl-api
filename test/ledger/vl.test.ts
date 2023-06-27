@@ -24,9 +24,9 @@ describe("Client", () => {
 
         const master = { privateKey: secrets.secret_key, publicKey: secrets.PublicKey };
         const seed = rippleKeypairs.generateSeed({ algorithm: "ecdsa-secp256k1" });
-        const ephimeral = rippleKeypairs.deriveKeypair(seed);
+        const ephemeral = rippleKeypairs.deriveKeypair(seed);
         const validators = ["nHBidG3pZK11zQD6kpNDoAhDxH6WLGui6ZxSbUx7LSqLHsgzMPec"];
-        const result = await Client.createVL(master, ephimeral, 2, 1696508603, validators);
+        const result = await Client.createVL(master, ephemeral, 2, 1696508603, validators);
 
         expect(Object.keys(result)).to.have.members(["blob", "manifest", "signature", "version", "public_key"]);
 
