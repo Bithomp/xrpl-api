@@ -60,6 +60,7 @@ const BithompXRPL = require("@bithomp/xrpl-api");
 // setup connection
 const config = [
   {
+    // this connection will be used to get validators details from the ledger, use web socket with connection to network you are building list for (mainnet, testnet, devnet, etc.)
     "url": "wss://xrplcluster.com",
     "connectionTimeout": 10000
   }
@@ -69,19 +70,21 @@ BithompXRPL.Client.setup(config);
 // connect
 await BithompXRPL.Client.connect();
 
-// validator secrets
+// validator secrets, should not belong to any validators keys. can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
+// can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
 const vk = {
   privateKey: "p__________________________",
   publicKey: "ED________________________________",
 };
 
-// signing secrets
+// signing secrets, should not belong to any validators keys. can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used
+// can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
 const sk = {
   privateKey: "p__________________________",
-  publicKey: "03_______________________________",
+  publicKey: "ED_______________________________",
 };
 
-// validator list, public addresses, they have to be avalable on the ledger for accessing to manifest
+// validator list, public addresses, they have to be available on the ledger for accessing to manifest data (it will be stored in a blob), the address should start on letter `n`
 const validators = ["nHBidG3pZK11zQD6kpNDoAhDxH6WLGui6ZxSbUx7LSqLHsgzMPec"];
 const sequence = 1; // sequence number
 const expiration = 1696508603; // in unixtime (seconds)
