@@ -35,7 +35,7 @@ export async function getAccountInfo(
   account: string,
   options: GetAccountInfoOptions = {}
 ): Promise<AccountInfoResponse | ErrorResponse> {
-  const connection = Client.findConnection();
+  const connection = options.connection || Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
   }

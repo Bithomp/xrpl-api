@@ -73,7 +73,13 @@ export function disconnect() {
 /**
  * @returns {Connection | null}
  */
-export function findConnection(type?: string, url?: string, strongFilter?: boolean, hash?: string): Connection | null {
+export function findConnection(
+  type?: string,
+  url?: string,
+  strongFilter?: boolean,
+  hash?: string,
+  networkID?: number
+): Connection | null {
   if (!strongFilter) {
     // no connection
     if (clientConnections.length === 0) {
@@ -88,6 +94,13 @@ export function findConnection(type?: string, url?: string, strongFilter?: boole
   let connections = clientConnections.filter((con) => {
     if (!con.isConnected()) {
       return false;
+    }
+
+    // networkID could be missed on old rippled or clio
+    if (networkID && con.getNetworkID()) {
+      if (con.getNetworkID() !== networkID) {
+        return false;
+      }
     }
 
     if (typeof url === "string" && con.url !== url) {

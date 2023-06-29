@@ -1,16 +1,18 @@
 import _ from "lodash";
 import crypto from "crypto";
 import { EventEmitter } from "events";
-import { Client, Request, Response } from "xrpl";
+import { Client, Request, Response, LedgerStream } from "xrpl";
 import { StreamType, ledgerTimeToTimestamp } from "./models/ledger";
-import { removeUndefined } from "./common";
+import { removeUndefined, dropsToXrp } from "./common";
 
 const LEDGER_CLOSED_TIMEOUT = 1000 * 15; // 15 sec
+const SERVER_INFO_UPDATE_INTERVAL = 1000 * 60 * 5; // 5 min (in ms)
 
 export interface ConnectionOptions {
   logger?: any;
   timeout?: number; // request timeout
   connectionTimeout?: number;
+  networkID?: number;
 }
 
 export interface LatencyInfo {
@@ -43,6 +45,9 @@ class Connection extends EventEmitter {
   public readonly timeout?: number; // request timeout
   public readonly connectionTimeout?: number;
   public readonly hash?: string;
+  private networkID?: number;
+  private serverInfoUpdating: boolean;
+  public serverInfo: any = {};
   private shutdown: boolean = false;
   private connectionTimer: any = null;
   public streams: ConnectionStreamsInfo;
@@ -54,7 +59,6 @@ class Connection extends EventEmitter {
 
     this.shutdown = false;
     this.url = url;
-    this.hash = crypto.createHash("sha256").update(url).digest("hex");
     this.type = type;
     if (typeof this.type === "string") {
       this.types = this.type.split(",").map((v) => v.trim());
@@ -67,6 +71,14 @@ class Connection extends EventEmitter {
     this.logger = options.logger;
     this.timeout = options.timeout; // request timeout
     this.connectionTimeout = options.connectionTimeout;
+    this.hash = crypto.createHash("sha256").update(url).digest("hex");
+
+    if (typeof options.networkID === "number") {
+      this.networkID = options.networkID;
+    }
+
+    this.serverInfoUpdating = false;
+    this.serverInfo = null;
 
     this.streams = {
       ledger: 1,
@@ -88,6 +100,7 @@ class Connection extends EventEmitter {
       this.setupEmitter();
 
       await this.client.connect();
+      await this.updateServerInfo();
       await this.subscribe();
     } catch (err: any) {
       this.logger?.warn({
@@ -181,6 +194,14 @@ class Connection extends EventEmitter {
     return this.latency.map((info) => info.delta).reduce((a, b) => a + b, 0) / this.latency.length || 0;
   }
 
+  public getNetworkID(): number | undefined {
+    if (typeof this.serverInfo?.network_id === "number") {
+      return this.serverInfo.network_id;
+    }
+
+    return this.networkID;
+  }
+
   private updateLatency(delta: number): void {
     this.latency.push({
       timestamp: new Date(),
@@ -241,6 +262,7 @@ class Connection extends EventEmitter {
         url: this.url,
       });
 
+      this.serverInfo = null;
       this.streamsSubscribed = false;
 
       this.emit("disconnected", code);
@@ -267,15 +289,7 @@ class Connection extends EventEmitter {
     });
 
     this.client.on("ledgerClosed", (ledgerStream) => {
-      const time: number = new Date().getTime();
-      const ledgerTime: number = ledgerTimeToTimestamp(ledgerStream.ledger_time);
-
-      // ledgerTime could be more then current time
-      if (ledgerTime < time) {
-        this.updateLatency(time - ledgerTime);
-      }
-
-      this.connectionValidation();
+      this.onLedgerClosed(ledgerStream);
 
       this.emit("ledgerClosed", ledgerStream);
     });
@@ -426,6 +440,73 @@ class Connection extends EventEmitter {
     return await this.request(request, { skip_subscription_update: true });
   }
 
+  private onLedgerClosed(ledgerStream: LedgerStream): void {
+    const time: number = new Date().getTime();
+    const ledgerTime: number = ledgerTimeToTimestamp(ledgerStream.ledger_time);
+
+    // ledgerTime could be more then current time
+    if (ledgerTime < time) {
+      this.updateLatency(time - ledgerTime);
+    }
+
+    // update complete_ledgers
+    if (this.serverInfo) {
+      this.serverInfo.complete_ledgers = ledgerStream.validated_ledgers;
+
+      // update server validated_ledger
+      if (this.serverInfo.validated_ledger) {
+        // The time since the ledger was closed, in seconds.
+        this.serverInfo.validated_ledger.age = Math.round((time - ledgerTime) / 1000);
+
+        this.serverInfo.validated_ledger.seq = ledgerStream.ledger_index;
+        this.serverInfo.validated_ledger.hash = ledgerStream.ledger_hash;
+        this.serverInfo.validated_ledger.base_fee_xrp = dropsToXrp(ledgerStream.fee_base);
+        this.serverInfo.validated_ledger.reserve_base_xrp = dropsToXrp(ledgerStream.reserve_base);
+        this.serverInfo.validated_ledger.reserve_inc_xrp = dropsToXrp(ledgerStream.reserve_inc);
+      }
+
+      const serverInfoTime = new Date(this.serverInfo.time).getTime();
+      if (serverInfoTime + SERVER_INFO_UPDATE_INTERVAL < time) {
+        this.updateServerInfo();
+      }
+    } else {
+      this.updateServerInfo();
+    }
+
+    this.connectionValidation();
+  }
+
+  private async updateServerInfo(): Promise<void> {
+    if (this.serverInfoUpdating) {
+      return;
+    }
+    this.serverInfoUpdating = true;
+
+    try {
+      const serverInfo = await this.request({ command: "server_info" });
+      if (serverInfo?.result?.info) {
+        this.serverInfo = serverInfo.result.info;
+
+        // set type as clio
+        if (typeof this.serverInfo?.clio_version === "string") {
+          if (!this.types.includes("clio")) {
+            this.types.push("clio");
+          }
+        } else {
+          // remove type as clio
+          const index = this.types.indexOf("clio");
+          if (index !== -1) {
+            this.types.splice(index, 1);
+          }
+        }
+      }
+    } catch (error) {
+      // ignore
+    }
+
+    this.serverInfoUpdating = false;
+  }
+
   private connectionValidation(): void {
     this.logger?.debug({
       service: "Bithomp::XRPL::Connection",
@@ -442,6 +523,9 @@ class Connection extends EventEmitter {
     if (!this.shutdown) {
       if (this.streamsSubscribed === false) {
         this.subscribe();
+      }
+      if (this.serverInfo === null) {
+        this.updateServerInfo();
       }
       this.connectionTimer = setTimeout(() => {
         this.connectionValidationTimeout();

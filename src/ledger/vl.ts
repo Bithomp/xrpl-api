@@ -30,6 +30,32 @@ export async function createVL(
     throw new Error("Ephemeral key is required");
   }
 
+  if (typeof sequence !== "number") {
+    throw new Error("sequence must be a number.");
+  }
+
+  if (typeof expiration !== "number") {
+    throw new Error("expiration must be a number.");
+  }
+
+  if (Array.isArray(validatorsPublicKeys) === false) {
+    throw new Error("validatorsPublicKeys must be an array.");
+  }
+
+  if (validatorsPublicKeys.length === 0) {
+    throw new Error("validatorsPublicKeys must not be empty.");
+  }
+
+  for (const publicKey of validatorsPublicKeys) {
+    if (typeof publicKey !== "string") {
+      throw new Error("validatorsPublicKeys must be an array of strings.");
+    }
+
+    if (publicKey[0] !== "n") {
+      throw new Error("validatorsPublicKeys must be an array of strings starting with 'n'.");
+    }
+  }
+
   const vlBlob = await createVLBlob(sequence, expiration, validatorsPublicKeys);
   const blob = encodeVLBlob(vlBlob);
   const manifest = generateManifest({
