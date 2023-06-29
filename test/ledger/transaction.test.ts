@@ -6,7 +6,7 @@ import { expect } from "chai";
 import * as betaEnums from "../../config/beta_definitions.json";
 import { Client, Models, Wallet, xrpl } from "../../src/index";
 
-describe.only("Client", () => {
+describe("Client", () => {
   describe("mainnet", () => {
     before(async function () {
       this.timeout(15000);

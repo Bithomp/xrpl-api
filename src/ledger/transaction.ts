@@ -153,7 +153,7 @@ export async function getTransactionByCTID(
 
   // search tx by ledger index
   const ledgerInfo = await Client.getLedger({
-    ledgerIndex: ledgerIndex,
+    ledgerIndex,
     transactions: true,
     expand: true,
     connection,
