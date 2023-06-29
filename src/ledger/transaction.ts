@@ -72,7 +72,7 @@ export async function getTransaction(
   transaction: string,
   options: GetTransactionOptions = {}
 ): Promise<TransactionResponse | FormattedTransaction | ErrorResponse> {
-  // TODO: remove then server will be updated or implement auto detection
+  // TODO: remove when server will be updated or implement auto detection
   if (isCTID(transaction)) {
     return getTransactionByCTID(transaction, options);
   }
