@@ -97,7 +97,7 @@ export function findConnection(
     }
 
     // networkID could be missed on old rippled or clio
-    if (networkID && con.getNetworkID()) {
+    if (typeof networkID === "string" && typeof con.getNetworkID() === "number") {
       if (con.getNetworkID() !== networkID) {
         return false;
       }
