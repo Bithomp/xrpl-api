@@ -201,21 +201,19 @@ export async function getTransactionByCTID(
   }
 
   const result = ledgerTxToTx(ledgerTx, ledgerIndex, ledger.close_time);
-  if (formatted) {
-    if (formatted === true) {
-      return getTxDetails(result, options.includeRawTransaction === true);
-    }
+  if (formatted === true) {
+    return getTxDetails(result, options.includeRawTransaction === true);
+  }
 
-    if (options.balanceChanges === true && typeof result.meta === "object") {
-      result.balanceChanges = xrpl.getBalanceChanges(result.meta);
-    }
+  if (options.balanceChanges === true && typeof result.meta === "object") {
+    result.balanceChanges = xrpl.getBalanceChanges(result.meta);
+  }
 
-    if (options.specification === true) {
-      const details = getTxDetails(result, true);
-      result.specification = details.specification;
-      result.outcome = details.outcome;
-      result.rawTransaction = details.rawTransaction;
-    }
+  if (options.specification === true) {
+    const details = getTxDetails(result, true);
+    result.specification = details.specification;
+    result.outcome = details.outcome;
+    result.rawTransaction = details.rawTransaction;
   }
 
   return result;
