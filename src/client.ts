@@ -17,6 +17,7 @@ export interface ClientConnection {
   type?: string;
   timeout?: number; // request timeout
   connectionTimeout?: number;
+  networkID?: number;
 }
 
 export function setup(servers: ClientConnection[], options: ClientOptions = {}) {
@@ -38,6 +39,7 @@ export function setup(servers: ClientConnection[], options: ClientOptions = {}) 
           logger: options.logger,
           timeout: server.timeout,
           connectionTimeout: server.connectionTimeout,
+          networkID: server.networkID,
         })
       );
     }
@@ -97,7 +99,7 @@ export function findConnection(
     }
 
     // networkID could be missed on old rippled or clio
-    if (typeof networkID === "string" && typeof con.getNetworkID() === "number") {
+    if (typeof networkID === "number" && typeof con.getNetworkID() === "number") {
       if (con.getNetworkID() !== networkID) {
         return false;
       }
