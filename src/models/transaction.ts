@@ -5,6 +5,8 @@ import { parseTransaction, FormattedSpecification, FormattedTransaction } from "
 export { FormattedTransaction } from "../parse/transaction";
 import { Outcome } from "../v1/transaction/types";
 
+const CTID_REGEX = /^[cC]{1}[a-fA-F0-9]{15}$/;
+
 export interface TransactionBaseResponse {
   /** The SHA-512 hash of the transaction. */
   hash: string;
@@ -89,11 +91,7 @@ export function streamTxToTx(streamTx: StreamTransaction): TransactionResponse {
 export function isCTID(ctid: string | bigint): boolean {
   let ctidValue: bigint;
   if (typeof ctid === "string") {
-    if (!/^[a-fA-F0-9]+$/.test(ctid)) {
-      return false;
-    }
-
-    if (ctid.length !== 16) {
+    if (!CTID_REGEX.test(ctid)) {
       return false;
     }
 
@@ -171,11 +169,7 @@ export interface DecodeCTIDInterface {
 export function decodeCTID(ctid: string | bigint): DecodeCTIDInterface {
   let ctidValue: bigint;
   if (typeof ctid === "string") {
-    if (!/^[a-fA-F0-9]+$/.test(ctid)) {
-      throw new Error("CTID must be a hexadecimal string or BigInt");
-    }
-
-    if (ctid.length !== 16) {
+    if (!CTID_REGEX.test(ctid)) {
       throw new Error("CTID must be exactly 16 nibbles and start with a C");
     }
 

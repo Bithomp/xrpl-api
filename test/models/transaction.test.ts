@@ -1725,7 +1725,9 @@ describe("Models", () => {
 
     it("should throw error if invalid input", function () {
       expect(() => Models.decodeCTID("CFFFFFFFFFFFFFF")).to.throw("CTID must be exactly 16 nibbles and start with a C");
-      expect(() => Models.decodeCTID("CFFFFFFFFFFFFFFG")).to.throw("CTID must be a hexadecimal string or BigInt");
+      expect(() => Models.decodeCTID("CFFFFFFFFFFFFFFG")).to.throw(
+        "CTID must be exactly 16 nibbles and start with a C"
+      );
     });
   });
 });
