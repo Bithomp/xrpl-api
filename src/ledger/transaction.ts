@@ -5,18 +5,24 @@ import { XrplDefinitionsBase } from "ripple-binary-codec";
 
 import * as Client from "../client";
 import { Connection } from "../connection";
+
+import { xrpToDrops } from "../common";
 import { sleep } from "../common/utils";
+import { FormattedMemo } from "../v1/common/types/objects";
+
+import { createPaymentTransaction, Payment } from "../v1/transaction/payment";
+import { ErrorResponse } from "../models/base_model";
+import { AccountInfoResponse } from "../models/account_info";
 import {
   getTxDetails,
   TransactionResponse,
   FormattedTransaction,
   AccountPaymentParamsInterface,
+  ledgerTxToTx,
+  isCTID,
+  decodeCTID,
 } from "../models/transaction";
-import { createPaymentTransaction, Payment } from "../v1/transaction/payment";
-import { FormattedMemo } from "../v1/common/types/objects";
-import { xrpToDrops } from "../common";
-import { AccountInfoResponse } from "../models/account_info";
-import { ErrorResponse } from "../models/base_model";
+
 import { singTransaction } from "../wallet";
 
 const submitErrorsGroup = ["tem", "tef", "tel", "ter"];
@@ -66,6 +72,11 @@ export async function getTransaction(
   transaction: string,
   options: GetTransactionOptions = {}
 ): Promise<TransactionResponse | FormattedTransaction | ErrorResponse> {
+  // TODO: remove when server will be updated or implement auto detection
+  if (isCTID(transaction)) {
+    return getTransactionByCTID(transaction, options);
+  }
+
   const formatted = options.legacy === true || options.formatted === true;
   const connection: any = Client.findConnection("history");
   if (!connection) {
@@ -117,6 +128,92 @@ export async function getTransaction(
       result.outcome = details.outcome;
       result.rawTransaction = details.rawTransaction;
     }
+  }
+
+  return result;
+}
+
+export async function getTransactionByCTID(
+  ctid: string,
+  options: GetTransactionOptions = {}
+): Promise<TransactionResponse | FormattedTransaction | ErrorResponse> {
+  if (!isCTID(ctid)) {
+    return {
+      status: "error",
+      error: "invalidCTID",
+    };
+  }
+
+  const { ledgerIndex, txIndex, networkID } = decodeCTID(ctid);
+  const formatted = options.legacy === true || options.formatted === true;
+  const connection = Client.findConnection("history", undefined, undefined, undefined, networkID);
+  if (!connection) {
+    throw new Error("There is no connection");
+  }
+
+  // search tx by ledger index
+  const ledgerInfo = await Client.getLedger({
+    ledgerIndex,
+    transactions: true,
+    expand: true,
+    connection,
+  });
+
+  if (!ledgerInfo) {
+    return {
+      transaction: ctid,
+      ledger_index: ledgerIndex,
+      status: "error",
+      error: "invalidResponse",
+    };
+  }
+
+  if ("error" in ledgerInfo) {
+    const { error, error_code, error_message, status, validated } = ledgerInfo;
+
+    return {
+      transaction: ctid,
+      error,
+      error_code,
+      error_message,
+      status,
+      validated,
+    };
+  }
+
+  const ledger: any = (ledgerInfo as any).ledger;
+  const { transactions } = ledger;
+  if (!Array.isArray(transactions)) {
+    return {
+      transaction: ctid,
+      status: "error",
+      error: "txnNotFound",
+    };
+  }
+
+  const ledgerTx = transactions.find((tx) => tx.metaData.TransactionIndex === txIndex);
+  if (!ledgerTx) {
+    return {
+      transaction: ctid,
+      status: "error",
+      error: "txnNotFound",
+    };
+  }
+
+  const result = ledgerTxToTx(ledgerTx, ledgerIndex, ledger.close_time);
+  if (formatted === true) {
+    return getTxDetails(result, options.includeRawTransaction === true);
+  }
+
+  if (options.balanceChanges === true && typeof result.meta === "object") {
+    result.balanceChanges = xrpl.getBalanceChanges(result.meta);
+  }
+
+  if (options.specification === true) {
+    const details = getTxDetails(result, true);
+    result.specification = details.specification;
+    result.outcome = details.outcome;
+    result.rawTransaction = details.rawTransaction;
   }
 
   return result;

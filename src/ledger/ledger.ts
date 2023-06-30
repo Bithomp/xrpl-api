@@ -1,6 +1,10 @@
 import * as Client from "../client";
+import { Connection } from "../connection";
+
 import { LedgerIndex } from "../models/ledger";
 import { parseLedger } from "../parse/ledger/ledger";
+import { ErrorResponse } from "../models/base_model";
+import { FormattedLedger } from "../v1/common/types/objects";
 
 export interface GetLedgerOptions {
   ledgerIndex?: LedgerIndex;
@@ -9,6 +13,7 @@ export interface GetLedgerOptions {
   legacy?: boolean; // returns response in old old format data, same as formatted
   formatted?: boolean; // returns response in old old format data, same as legacy
   includeRawTransactions?: boolean; // for legacy and formatted,
+  connection?: Connection;
 }
 
 /**
@@ -37,9 +42,11 @@ export interface GetLedgerOptions {
  * }
  * @exception {Error}
  */
-export async function getLedger(options: GetLedgerOptions = {}): Promise<object> {
+export async function getLedger(
+  options: GetLedgerOptions = {}
+): Promise<object | FormattedLedger | ErrorResponse> {
   const formatted = options.legacy === true || options.formatted === true;
-  const connection: any = Client.findConnection("history");
+  const connection: any = options.connection || Client.findConnection("history");
   if (!connection) {
     throw new Error("There is no connection");
   }

@@ -17,6 +17,7 @@ export interface ClientConnection {
   type?: string;
   timeout?: number; // request timeout
   connectionTimeout?: number;
+  networkID?: number;
 }
 
 export function setup(servers: ClientConnection[], options: ClientOptions = {}) {
@@ -38,6 +39,7 @@ export function setup(servers: ClientConnection[], options: ClientOptions = {}) 
           logger: options.logger,
           timeout: server.timeout,
           connectionTimeout: server.connectionTimeout,
+          networkID: server.networkID,
         })
       );
     }
@@ -73,7 +75,13 @@ export function disconnect() {
 /**
  * @returns {Connection | null}
  */
-export function findConnection(type?: string, url?: string, strongFilter?: boolean, hash?: string): Connection | null {
+export function findConnection(
+  type?: string,
+  url?: string,
+  strongFilter?: boolean,
+  hash?: string,
+  networkID?: number
+): Connection | null {
   if (!strongFilter) {
     // no connection
     if (clientConnections.length === 0) {
@@ -88,6 +96,13 @@ export function findConnection(type?: string, url?: string, strongFilter?: boole
   let connections = clientConnections.filter((con) => {
     if (!con.isConnected()) {
       return false;
+    }
+
+    // networkID could be missed on old rippled or clio
+    if (typeof networkID === "number" && typeof con.getNetworkID() === "number") {
+      if (con.getNetworkID() !== networkID) {
+        return false;
+      }
     }
 
     if (typeof url === "string" && con.url !== url) {

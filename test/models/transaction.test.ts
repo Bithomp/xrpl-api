@@ -1661,4 +1661,73 @@ describe("Models", () => {
       });
     });
   });
+
+  describe("isCTID", () => {
+    it("should return true if valid CTID", function () {
+      expect(Models.isCTID("C000000100020003")).to.eql(true);
+      expect(Models.isCTID("C000000000000000")).to.eql(true);
+      expect(Models.isCTID("CFFFFFFFFFFFFFFF")).to.eql(true);
+    });
+
+    it("should return false if invalid CTID", function () {
+      expect(Models.isCTID("C00000010002000")).to.eql(false);
+      expect(Models.isCTID("C0000001000200030")).to.eql(false);
+      expect(Models.isCTID("C000000100020003 ")).to.eql(false);
+      expect(Models.isCTID("C000000100020003 ")).to.eql(false);
+      expect(Models.isCTID("C000000100020003 ")).to.eql(false);
+      expect(Models.isCTID("C000000100020003 ")).to.eql(false);
+      expect(Models.isCTID("C000000100020003 ")).to.eql(false);
+      expect(Models.isCTID("C000000100020003 ")).to.eql(false);
+      expect(Models.isCTID("C000000100020003 ")).to.eql(false);
+      expect(Models.isCTID("C000000100020003 ")).to.eql(false);
+      expect(Models.isCTID("C000000100020003 ")).to.eql(false);
+    });
+  });
+
+  describe("encodeCTID", () => {
+    it("should encode CTID", function () {
+      expect(Models.encodeCTID(0xfffffff, 0xffff, 0xffff)).to.eql("CFFFFFFFFFFFFFFF");
+      expect(Models.encodeCTID(0x0000000, 0x0000, 0x0000)).to.eql("C000000000000000");
+      expect(Models.encodeCTID(0x0000001, 0x0002, 0x0003)).to.eql("C000000100020003");
+    });
+
+    it("should throw error if invalid input", function () {
+      expect(() => Models.encodeCTID(0x10000000, 0xffff, 0xffff)).to.throw(
+        "ledgerIndex must not be greater than 268435455 or less than 0"
+      );
+      expect(() => Models.encodeCTID(0xfffffff, 0x10000, 0xffff)).to.throw(
+        "txIndex must not be greater than 65535 or less than 0"
+      );
+      expect(() => Models.encodeCTID(0xfffffff, 0xffff, 0x10000)).to.throw(
+        "networkID must not be greater than 65535 or less than 0."
+      );
+    });
+  });
+
+  describe("decodeCTID", () => {
+    it("should decode CTID", function () {
+      expect(Models.decodeCTID("CFFFFFFFFFFFFFFF")).to.eql({
+        ledgerIndex: 0xfffffff,
+        txIndex: 0xffff,
+        networkID: 0xffff,
+      });
+      expect(Models.decodeCTID("C000000000000000")).to.eql({
+        ledgerIndex: 0x0000000,
+        txIndex: 0x0000,
+        networkID: 0x0000,
+      });
+      expect(Models.decodeCTID("C000000100020003")).to.eql({
+        ledgerIndex: 0x0000001,
+        txIndex: 0x0002,
+        networkID: 0x0003,
+      });
+    });
+
+    it("should throw error if invalid input", function () {
+      expect(() => Models.decodeCTID("CFFFFFFFFFFFFFF")).to.throw("CTID must be exactly 16 nibbles and start with a C");
+      expect(() => Models.decodeCTID("CFFFFFFFFFFFFFFG")).to.throw(
+        "CTID must be exactly 16 nibbles and start with a C"
+      );
+    });
+  });
 });
