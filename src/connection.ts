@@ -477,7 +477,7 @@ class Connection extends EventEmitter {
   }
 
   private async updateServerInfo(): Promise<void> {
-    if (this.serverInfoUpdating) {
+    if (this.serverInfoUpdating || this.shutdown) {
       return;
     }
     this.serverInfoUpdating = true;

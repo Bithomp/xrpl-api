@@ -3,7 +3,7 @@ import { Transaction } from "xrpl";
 import { expect } from "chai";
 
 // import * as enums from ".node_modules/ripple-binary-codec/dist/enums/src/enums/definitions.json";
-import * as betaEnums from "../../config/beta_definitions.json";
+import * as hooksEnums from "../../config/hooks_definitions.json";
 import { Client, Models, Wallet, xrpl } from "../../src/index";
 
 describe("Client", () => {
@@ -534,7 +534,7 @@ describe("Client", () => {
 
     describe("legacyPayment", () => {
       it("is OK", async function () {
-        const betaDefinitions = new Wallet.XrplDefinitions(betaEnums);
+        const betaDefinitions = new Wallet.XrplDefinitions(hooksEnums);
 
         this.timeout(15000);
         const payment = {
