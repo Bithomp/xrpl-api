@@ -292,6 +292,7 @@ export async function getAccountNFTOffersObjects(
   };
 }
 
+// NOTE: URI Tokens is not part of mainnet, this code can be changed in the future without notice
 export interface GetAccountURITokensObjectsOptions {
   ledgerHash?: string;
   ledgerIndex?: LedgerIndex;
@@ -299,6 +300,7 @@ export interface GetAccountURITokensObjectsOptions {
   marker?: string;
 }
 
+// NOTE: URI Tokens is not part of mainnet, this code can be changed in the future without notice
 export async function getAccountURITokensObjects(
   account: string,
   options: GetAccountNFTOffersObjectsOptions = {}

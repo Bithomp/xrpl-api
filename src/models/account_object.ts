@@ -65,6 +65,7 @@ export interface AccountNFTOffersInterface {
   transaction_hash: string;
 }
 
+// NOTE: URI Tokens is not part of mainnet, this code can be changed in the future without notice
 export interface AccountURITokensInterface {
   flags: number;
   index: string;
@@ -75,6 +76,7 @@ export interface AccountURITokensInterface {
   transaction_hash: string;
 }
 
+// NOTE: URI Tokens is not part of mainnet, this code can be changed in the future without notice
 export interface AccountURITokensObjectsResponse {
   account: string;
   uri_tokens: AccountURITokensInterface[];
@@ -168,6 +170,7 @@ export function accountObjectsToNFTOffers(accountObjects: AccountObject[]): Acco
   return nftOffers;
 }
 
+// NOTE: URI Tokens is not part of mainnet, this code can be changed in the future without notice
 export function accountObjectsToURITokens(accountObjects: AccountObject[]): AccountURITokensInterface[] {
   const uriTokenObjects = accountObjects.filter((obj: any) => {
     return obj.LedgerEntryType === "URIToken";
