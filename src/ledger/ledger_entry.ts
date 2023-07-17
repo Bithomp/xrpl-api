@@ -66,6 +66,7 @@ export async function getLedgerEntryAmendments(options: GetLedgerEntryOptions = 
   return response?.node;
 }
 
+// NOTE: URI Tokens is not part of mainnet, this code can be changed in the future without notice
 export async function getLedgerEntryURIToken(
   uriTokenID: string,
   options: GetLedgerEntryOptions = {}
