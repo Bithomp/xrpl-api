@@ -177,4 +177,27 @@ describe("Client", () => {
       ]);
     });
   });
+
+  describe("getAccountURITokensObjects", () => {
+    before(async function () {
+      Client.setup(nconf.get("xrpl:connections:beta"));
+      await Client.connect();
+    });
+
+    it("works", async function () {
+      const result: any = await Client.getAccountURITokensObjects("rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T");
+      expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "uri_tokens"]);
+      expect(result.uri_tokens).to.eql([
+        {
+          flags: 0,
+          index: "DB30404B34D1FEDCA500BD84F8A9AC77F18036A1E8966766BDE33595FC41CE57",
+          issuer: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU",
+          ledger_index: 4722790,
+          owner: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+          transaction_hash: "9FFF77CEA7B0A61452E0E6560C6AD1DECFA7DE78DDAB6567E10C54B5547371F8",
+          uri: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
+        },
+      ]);
+    });
+  });
 });

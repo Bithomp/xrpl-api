@@ -65,6 +65,27 @@ export interface AccountNFTOffersInterface {
   transaction_hash: string;
 }
 
+export interface AccountURITokensInterface {
+  flags: number;
+  index: string;
+  owner: string;
+  issuer: string;
+  uri: number;
+  ledger_index: number;
+  transaction_hash: string;
+}
+
+export interface AccountURITokensObjectsResponse {
+  account: string;
+  uri_tokens: AccountURITokensInterface[];
+  ledger_hash?: string;
+  ledger_index?: number;
+  ledger_current_index?: number;
+  limit?: number;
+  marker?: string;
+  validated?: boolean;
+}
+
 /**
  * https://gist.github.com/WietseWind/5df413334385367c548a148de3d8a713
  * https://github.com/XRPL-Labs/XUMM-App/blob/2c39d04e65dd8d48001f4cb452b1fbe2e2c53f00/src/services/AccountService.ts#L198
@@ -145,4 +166,24 @@ export function accountObjectsToNFTOffers(accountObjects: AccountObject[]): Acco
   });
 
   return nftOffers;
+}
+
+export function accountObjectsToURITokens(accountObjects: AccountObject[]): AccountURITokensInterface[] {
+  const uriTokenObjects = accountObjects.filter((obj: any) => {
+    return obj.LedgerEntryType === "URIToken";
+  });
+
+  const uriTokens = uriTokenObjects.map((obj: any) => {
+    return removeUndefined({
+      flags: obj.Flags,
+      index: obj.index,
+      owner: obj.Owner,
+      issuer: obj.Issuer,
+      uri: obj.URI,
+      ledger_index: obj.PreviousTxnLgrSeq,
+      transaction_hash: obj.PreviousTxnID,
+    });
+  });
+
+  return uriTokens;
 }
