@@ -5,6 +5,7 @@ export * from "./ledger";
 export * from "./manifest";
 export * from "./transaction";
 export * from "./account_lines";
+export * from "./account_uri_tokens";
 export * from "./vl";
 
 export { parseAffectedObjects } from "../parse/outcome/affected_objects";
@@ -24,6 +25,8 @@ import parseNFTokenAcceptOffer from "../parse/specification/nftoken-accept-offer
 import parseNFTokenCancelOffer from "../parse/specification/nftoken-cancel-offer";
 import parseNFTokenCreateOffer from "../parse/specification/nftoken-create-offer";
 
+import parseURITokenFlags from "../parse/ledger/uri-token-flags";
+
 export {
   parseNFTokenMint,
   parseNFTokenBurn,
@@ -32,4 +35,5 @@ export {
   parseNFTokenAcceptOffer,
   parseNFTokenCancelOffer,
   parseNFTokenCreateOffer,
+  parseURITokenFlags,
 };

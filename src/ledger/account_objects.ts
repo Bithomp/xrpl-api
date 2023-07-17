@@ -8,6 +8,8 @@ import {
   accountObjectsToNFTOffers,
   AccountObjectsResponse,
   AccountNFTObjectsResponse,
+  accountObjectsToURITokens,
+  AccountURITokensObjectsResponse,
 } from "../models/account_object";
 import { AccountLinesResponse } from "../models/account_lines";
 import { ErrorResponse } from "../models/base_model";
@@ -287,5 +289,41 @@ export async function getAccountNFTOffersObjects(
     ledger_index: response.ledger_index,
     validated: response.validated,
     nft_offers: nftOffers,
+  };
+}
+
+// NOTE: URI Tokens is not part of mainnet, this code can be changed in the future without notice
+export interface GetAccountURITokensObjectsOptions {
+  ledgerHash?: string;
+  ledgerIndex?: LedgerIndex;
+  limit?: number; // The maximum number of objects to include in the results. Must be within the inclusive range 10 to 400 on non-admin connections. The default is 200.P
+  marker?: string;
+}
+
+// NOTE: URI Tokens is not part of mainnet, this code can be changed in the future without notice
+export async function getAccountURITokensObjects(
+  account: string,
+  options: GetAccountNFTOffersObjectsOptions = {}
+): Promise<AccountURITokensObjectsResponse | ErrorResponse> {
+  const response = await getAccountAllObjects(account, {
+    ledgerHash: options.ledgerHash,
+    ledgerIndex: options.ledgerIndex,
+    limit: options.limit,
+    marker: options.marker,
+  });
+
+  if ("error" in response) {
+    return response;
+  }
+
+  const accountObjects = response.account_objects;
+  const uriTokens = accountObjectsToURITokens(accountObjects);
+
+  return {
+    account: response.account,
+    ledger_hash: response.ledger_hash,
+    ledger_index: response.ledger_index,
+    validated: response.validated,
+    uri_tokens: uriTokens,
   };
 }
