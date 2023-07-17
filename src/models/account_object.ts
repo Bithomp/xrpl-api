@@ -72,6 +72,9 @@ export interface AccountURITokensInterface {
   owner: string;
   issuer: string;
   uri: number;
+  digest?: string;
+  amount?: Amount;
+  destination?: string;
   ledger_index: number;
   transaction_hash: string;
 }
@@ -183,6 +186,9 @@ export function accountObjectsToURITokens(accountObjects: AccountObject[]): Acco
       owner: obj.Owner,
       issuer: obj.Issuer,
       uri: obj.URI,
+      digest: obj.Digest,
+      amount: obj.Amount,
+      destination: obj.Destination,
       ledger_index: obj.PreviousTxnLgrSeq,
       transaction_hash: obj.PreviousTxnID,
     });
