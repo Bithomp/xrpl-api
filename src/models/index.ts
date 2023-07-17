@@ -25,6 +25,8 @@ import parseNFTokenAcceptOffer from "../parse/specification/nftoken-accept-offer
 import parseNFTokenCancelOffer from "../parse/specification/nftoken-cancel-offer";
 import parseNFTokenCreateOffer from "../parse/specification/nftoken-create-offer";
 
+import parseURITokenFlags from "../parse/ledger/uri-token-flags";
+
 export {
   parseNFTokenMint,
   parseNFTokenBurn,
@@ -33,4 +35,5 @@ export {
   parseNFTokenAcceptOffer,
   parseNFTokenCancelOffer,
   parseNFTokenCreateOffer,
+  parseURITokenFlags,
 };
