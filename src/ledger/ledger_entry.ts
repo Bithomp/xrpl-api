@@ -1,16 +1,20 @@
 import * as Client from "../client";
 import { Connection } from "../connection";
 import { LedgerIndex } from "../models/ledger";
+import { URITokenInterface } from "../models/account_uri_tokens";
 import { ErrorResponse } from "../models/base_model";
 
-const LEDGER_ENTRY_AMENDMENTS = "7DB0788C020F02780A673DC74757F23823FA3014C1866E72CC4CD8B226CD6EF4"
+const LEDGER_ENTRY_AMENDMENTS = "7DB0788C020F02780A673DC74757F23823FA3014C1866E72CC4CD8B226CD6EF4";
 
 export interface GetLedgerEntryOptions {
   ledgerIndex?: LedgerIndex;
   connection?: Connection;
 }
 
-export async function getLedgerEntry(ledgerEntry: string, options: GetLedgerEntryOptions = {}): Promise<any | ErrorResponse> {
+export async function getLedgerEntry(
+  ledgerEntry: string,
+  options: GetLedgerEntryOptions = {}
+): Promise<any | ErrorResponse> {
   const connection = options.connection || Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
@@ -62,7 +66,10 @@ export async function getLedgerEntryAmendments(options: GetLedgerEntryOptions = 
   return response?.node;
 }
 
-export async function getLedgerEntryURIToken(uriTokenID: string, options: GetLedgerEntryOptions = {}): Promise<any | ErrorResponse> {
+export async function getLedgerEntryURIToken(
+  uriTokenID: string,
+  options: GetLedgerEntryOptions = {}
+): Promise<URITokenInterface | ErrorResponse> {
   const response = await getLedgerEntry(uriTokenID, options);
   if (!response || !response.node) {
     return {
@@ -78,7 +85,7 @@ export async function getLedgerEntryURIToken(uriTokenID: string, options: GetLed
   if (response.node.LedgerEntryType !== "URIToken") {
     return {
       status: "error",
-      error: "invalidResponse",
+      error: "invalidLedgerEntry",
     };
   }
 
@@ -88,5 +95,5 @@ export async function getLedgerEntryURIToken(uriTokenID: string, options: GetLed
     Owner: response.node.Owner,
     URITokenID: response.node.index,
     URI: response.node.URI,
-  }
+  };
 }
