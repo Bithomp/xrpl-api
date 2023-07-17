@@ -12,7 +12,7 @@ In an existing project (with `package.json`), install `@bithomp/xrpl-api`:
 $ npm install --save @bithomp/xrpl-api
 ```
 
-# Example of use
+# Examples of use
 
 ## Account info
 
