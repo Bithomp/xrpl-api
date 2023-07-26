@@ -23,7 +23,7 @@ export async function getBookOffers(
 ): Promise<object | ErrorResponse> {
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
-  const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
+  const connection: any = Client.findConnection("book_offers", undefined, undefined, hash);
   if (!connection) {
     throw new Error("There is no connection");
   }

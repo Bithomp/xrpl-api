@@ -4,7 +4,9 @@ import { EventEmitter } from "events";
 import { Client, Request, Response, LedgerStream } from "xrpl";
 import { StreamType, ledgerTimeToTimestamp } from "./models/ledger";
 import { removeUndefined, dropsToXrp } from "./common";
+import { sleep } from "./common/utils";
 
+const RECONNECT_TIMEOUT = 1000 * 5; // 5 sec
 const LEDGER_CLOSED_TIMEOUT = 1000 * 15; // 15 sec
 const SERVER_INFO_UPDATE_INTERVAL = 1000 * 60 * 5; // 5 min (in ms)
 
@@ -89,9 +91,14 @@ class Connection extends EventEmitter {
 
   public async connect(): Promise<void> {
     try {
-      if (this.client) {
-        this.client.disconnect();
-      }
+      this.logger?.debug({
+        service: "Bithomp::XRPL::Connection",
+        function: "connect",
+        url: this.url,
+        shutdown: this.shutdown,
+      });
+
+      await this.removeClient();
 
       this.client = new Client(
         this.url,
@@ -222,9 +229,8 @@ class Connection extends EventEmitter {
     if (!this.shutdown) {
       this.emit("reconnect");
       try {
-        if (this.client) {
-          await this.client.disconnect();
-        }
+        await this.removeClient();
+        await sleep(RECONNECT_TIMEOUT);
 
         await this.connect();
       } catch (e: any) {
@@ -236,6 +242,18 @@ class Connection extends EventEmitter {
       }
 
       this.connectionValidation();
+    }
+  }
+
+  private async removeClient(): Promise<void> {
+    try {
+      if (this.client) {
+        await this.client.disconnect();
+        this.client.removeAllListeners();
+        this.client = undefined;
+      }
+    } catch (e: any) {
+      // ignore
     }
   }
 
@@ -269,14 +287,14 @@ class Connection extends EventEmitter {
     });
 
     this.client.on("error", (source, message, error) => {
-      this.logger?.error({
-        service: "Bithomp::XRPL::Connection",
-        emit: "error",
-        source,
-        error: message || error?.name || error,
-      });
-
       try {
+        this.logger?.error({
+          service: "Bithomp::XRPL::Connection",
+          emit: "error",
+          source,
+          error: message || error?.name || error,
+        });
+
         this.emit("error", source, message, error);
       } catch (err: any) {
         this.logger?.warn({
@@ -286,6 +304,9 @@ class Connection extends EventEmitter {
           error: err?.message || err?.name || err,
         });
       }
+
+      // trigger connectionValidation to reconnect
+      this.connectionValidation();
     });
 
     this.client.on("ledgerClosed", (ledgerStream) => {

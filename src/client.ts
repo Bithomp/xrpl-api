@@ -5,11 +5,15 @@ export let feeCushion: number = 1.3;
 export let logger: any;
 
 let clientConnections: Connection[] = [];
+let loadBalancing = false;
 
 export interface ClientOptions extends ConnectionOptions {
   feeCushion?: number;
   maxFeeXRP?: string;
   logger?: any;
+
+  // EXPERIMENTAL
+  loadBalancing?: boolean; // false - use only fastest connection, true - use next connection on each request, as each request could have each own possible connections, balancing will pick random connection
 }
 
 export interface ClientConnection {
@@ -48,6 +52,8 @@ export function setup(servers: ClientConnection[], options: ClientOptions = {}) 
   if (options.feeCushion) {
     feeCushion = options.feeCushion;
   }
+
+  loadBalancing = options.loadBalancing === true;
 }
 
 export async function connect() {
@@ -147,6 +153,12 @@ export function findConnection(
     if (connections.length === 0) {
       connections = [...clientConnections];
     }
+  }
+
+  if (loadBalancing) {
+    // pick next connection randomly
+    const index = Math.floor(Math.random() * connections.length);
+    return connections[index];
   }
 
   // get the fastest one
