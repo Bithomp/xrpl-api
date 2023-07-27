@@ -237,7 +237,7 @@ export async function legacyPayment(
   data: LegacyPaymentInterface,
   definitions?: XrplDefinitionsBase
 ): Promise<TransactionResponse | FormattedTransaction | ErrorResponse> {
-  const connection: any = Client.findConnection("payment");
+  const connection: any = Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
   }
