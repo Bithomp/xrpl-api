@@ -1,17 +1,13 @@
 import _ from "lodash";
 import * as assert from "assert";
 import { PaymentFlags } from "xrpl";
-import { isPartialPayment } from "../utils";
+import { isPartialPayment, removeGenericCounterparty } from "../utils";
 import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
 import parseMemos from "../ledger/memos";
 
-import {
-  FormattedPaymentSpecification,
-  SourcePaymentAddress,
-  DestinationPaymentAddress,
-} from "../../v1/common/types/objects/payments";
-import { FormattedIssuedCurrencyAmount } from "../../types";
+import { SourcePaymentAddress, DestinationPaymentAddress } from "../../v1/common/types/objects/account";
+import { FormattedPaymentSpecification } from "../../v1/common/types/objects/payments";
 
 function isNoDirectRipple(tx) {
   // tslint:disable-next-line:no-bitwise
@@ -21,10 +17,6 @@ function isNoDirectRipple(tx) {
 function isQualityLimited(tx) {
   // tslint:disable-next-line:no-bitwise
   return (tx.Flags & PaymentFlags.tfLimitQuality) !== 0;
-}
-
-function removeGenericCounterparty(amount: FormattedIssuedCurrencyAmount, address: string): FormattedIssuedCurrencyAmount {
-  return amount.counterparty === address ? _.omit(amount, "counterparty") : amount;
 }
 
 // Payment specification

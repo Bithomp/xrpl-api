@@ -208,6 +208,9 @@ describe("Client", () => {
         );
         expect(result.specification).to.eql({
           depositAuth: false,
+          source: {
+            address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6",
+          },
           memos: [
             {
               data: "28ae197d-76a0-42bd-a703-e6f793c25c14",
@@ -234,6 +237,9 @@ describe("Client", () => {
           { specification: true }
         );
         expect(result.specification).to.eql({
+          source: {
+            address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6",
+          },
           memos: [
             {
               data: '"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW5jZWxsZWRfc2FsZV9zZXF1ZW5jZSI6ODQwLCJjdXJyZW5jeSI6IjAyMzAzMTUxNkQ1MjcyMzE0RTQ2NTQwMDAwMDAwMDAwMDAwMDAwMDAiLCJpc3N1ZXIiOiJyVVk1ZHo4VFVWVmdxcktQbWRraHpZNVgyaGJrQjNwYUY1IiwiaWF0IjoxNjQ1MTE3MTA2LCJpc3MiOiJTb2xvZ2VuaWMgRm91bmRhdGlvbiJ9.z46Ccefl9djKats0FkXKJfhb4Krf-98Jqr75nwdMi9NH9z7UcgLSGVLAEpRIEySSu1NylNBgbbSUuJgllWsPJQ"',
@@ -270,6 +276,9 @@ describe("Client", () => {
           id: "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
           specification: {
             depositAuth: false,
+            source: {
+              address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6",
+            },
             memos: [
               {
                 data: "28ae197d-76a0-42bd-a703-e6f793c25c14",
@@ -318,6 +327,9 @@ describe("Client", () => {
           type: "settings",
           sequence: 865,
           specification: {
+            source: {
+              address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6",
+            },
             depositAuth: false,
             memos: [
               {

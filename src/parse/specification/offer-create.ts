@@ -5,6 +5,7 @@ import parseAmount from "../ledger/amount";
 import parseMemos from "../ledger/memos";
 import { removeUndefined } from "../../common";
 import { FormattedOfferCreateSpecification, OfferCreateTransaction } from "../../v1/common/types/objects/index";
+import { SourcePaymentAddress } from "../../v1/common/types/objects/account";
 
 function parseOfferCreate(tx: OfferCreateTransaction): FormattedOfferCreateSpecification {
   assert.ok(tx.TransactionType === "OfferCreate");
@@ -16,7 +17,13 @@ function parseOfferCreate(tx: OfferCreateTransaction): FormattedOfferCreateSpeci
   const quantity = direction === "buy" ? takerPaysAmount : takerGetsAmount;
   const totalPrice = direction === "buy" ? takerGetsAmount : takerPaysAmount;
 
+  const source: SourcePaymentAddress = {
+    address: tx.Account,
+    tag: tx.SourceTag,
+  };
+
   return removeUndefined({
+    source: removeUndefined(source),
     memos: parseMemos(tx),
     // tslint:disable-next-line:object-literal-shorthand
     direction: direction,

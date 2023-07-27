@@ -1,5 +1,6 @@
 import { FormattedBaseSpecification } from "./specification";
 import { FormattedIssuedCurrencyAmount } from "../../../../types";
+import { DestinationPaymentAddress } from "./account";
 
 export type FormattedCheckCancelSpecification = {
   // ID of the Check ledger object to cancel.
@@ -26,14 +27,7 @@ export type FormattedCheckCashSpecification = {
 
 export type FormattedCheckCreateSpecification = {
   // account that can cash the check.
-  destination: string;
-
-  // amount the check is allowed to debit the sender,
-  // including transfer fees on non-XRP currencies.
-  sendMax: FormattedIssuedCurrencyAmount;
-
-  // (Optional) identifies the reason for the check, or a hosted recipient.
-  destinationTag?: string;
+  destination: DestinationPaymentAddress;
 
   // (Optional) time in seconds since the Ripple Epoch.
   expiration?: string;

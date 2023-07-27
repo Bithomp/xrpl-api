@@ -1,5 +1,6 @@
 import { NFTokenMintFlags, NFTokenCreateOfferFlags } from "xrpl";
 import { FormattedBaseSpecification } from "./specification";
+import { DestinationPaymentAddress } from "./account";
 
 export const NFTokenFlagsKeys = {
   burnable: NFTokenMintFlags.tfBurnable,
@@ -26,7 +27,6 @@ export interface NFTokenOfferFlagsKeysInterface {
 }
 
 export type FormattedNFTokenBurnSpecification = {
-  account: string;
   nftokenID: string;
 } & FormattedBaseSpecification;
 
@@ -46,7 +46,7 @@ export type FormattedNFTokenCreateOfferSpecification = {
   nftokenID: string;
   amount: string;
   owner?: string;
-  destination?: string;
+  destination?: DestinationPaymentAddress;
   expiration?: number;
   flags?: NFTokenOfferFlagsKeysInterface;
 } & FormattedBaseSpecification;

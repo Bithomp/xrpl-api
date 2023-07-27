@@ -4,6 +4,7 @@ import { AccountRootFlagsKeys } from "../../models/account_info";
 import { removeUndefined } from "../../common";
 import parseFields from "../ledger/fields";
 import parseMemos from "../ledger/memos";
+import { SourcePaymentAddress } from "../../v1/common/types/objects/account";
 
 function getAccountRootModifiedNode(tx: any) {
   const modifiedNodes = tx.meta.AffectedNodes.filter((node) => node.ModifiedNode?.LedgerEntryType === "AccountRoot");
@@ -59,7 +60,13 @@ function parseSettings(tx: any) {
   const txType = tx.TransactionType;
   assert.ok(txType === "AccountSet" || txType === "SetRegularKey" || txType === "SignerListSet");
 
+  const source: SourcePaymentAddress = {
+    address: tx.Account,
+    tag: tx.SourceTag,
+  };
+
   const baseSettings = removeUndefined({
+    source: removeUndefined(source),
     memos: parseMemos(tx),
   });
 

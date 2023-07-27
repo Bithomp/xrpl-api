@@ -49,6 +49,9 @@ describe("Models", () => {
         },
         sequence: 1309348,
         specification: {
+          source: {
+            address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+          },
           flags: {
             burnable: true,
             onlyXRP: true,
@@ -141,6 +144,9 @@ describe("Models", () => {
         },
         sequence: 75147,
         specification: {
+          source: {
+            address: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          },
           nftokenBuyOffer: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
         },
         type: "nftokenAcceptOffer",
@@ -223,6 +229,9 @@ describe("Models", () => {
         },
         sequence: 980203,
         specification: {
+          source: {
+            address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+          },
           nftokenSellOffer: "D3C21058E60B6597BCB33A7A77B5FC90959082C96057EDBB388CE365E8D3245D",
         },
         type: "nftokenAcceptOffer",
@@ -239,6 +248,9 @@ describe("Models", () => {
         sequence: 5281376,
         id: "3A794368D4D7F6CEAF7BF967EFCB2A249498D9E1BF16FE4A642CD7A85400ED42",
         specification: {
+          source: {
+            address: "rnqBvzZPCNra4NuhqSvmXV5imjnSYRVefv",
+          },
           nftokenSellOffer: "863FF280CD94CBC759A403C0050D46BE1AE679E7D648F00DC07A69C2CB5DF9A2",
           nftokenBuyOffer: "7CA48473A15C908EF0616976EF11D54DD730D2168D44C89BA0C61CAE26AEE534",
           nftokenBrokerFee: "1000000",
@@ -339,7 +351,9 @@ describe("Models", () => {
         sequence: 1309362,
         id: "5139E9A51978E786FDB97D73F6245A11438A373133AC33A25D50F8E2C7AA5FEA",
         specification: {
-          account: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+          source: {
+            address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+          },
           nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
         },
         outcome: {
@@ -392,7 +406,9 @@ describe("Models", () => {
         sequence: 34625345,
         id: "8A988C1A8A3B3777420C0C49606F36FEC1D96D07F4C77ECB7BF3B1A8CF183BCB",
         specification: {
-          account: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+          source: {
+            address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+          },
           nftokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765727D1EA000000005",
         },
         outcome: {
@@ -487,6 +503,9 @@ describe("Models", () => {
         sequence: 75150,
         id: "9009887ACAEA08E7DE821CF15C410670E8469A98695FC33DCB8A86096930A4AF",
         specification: {
+          source: {
+            address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+          },
           nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
           amount: "1",
           owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
@@ -554,9 +573,14 @@ describe("Models", () => {
         sequence: 908,
         id: "37DD2EC688DA77902D1472373C66226594CC5AC0347DB337A122FF3E6F2865F0",
         specification: {
+          source: {
+            address: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
+          },
+          destination: {
+            address: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw",
+          },
           nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
           amount: "0",
-          destination: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw",
           expiration: 5241652095,
           flags: { sellToken: true },
         },
@@ -624,6 +648,9 @@ describe("Models", () => {
         sequence: 909,
         id: "AF749F0704733FCD442128D7792EC1F5CF8FDFF4ACC9C0BE5B4C6AF68DE811FF",
         specification: {
+          source: {
+            address: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
+          },
           nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
           amount: {
             currency: "EVR",
@@ -700,7 +727,12 @@ describe("Models", () => {
         address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
         sequence: 1309351,
         id: "B88123B63CF0FAD1549E17A50C2F51A6B6EB4ADFC85EEAEF1EDCFBA62E1A1882",
-        specification: { nftokenOffers: ["D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8"] },
+        specification: {
+          source: {
+            address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
+          },
+          nftokenOffers: ["D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8"],
+        },
         outcome: {
           result: "tesSUCCESS",
           timestamp: "2022-03-01T09:00:10.000Z",
@@ -777,6 +809,9 @@ describe("Models", () => {
         },
         sequence: 42030,
         specification: {
+          source: {
+            address: "rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz",
+          },
           nftokenMinter: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
         },
         type: "settings",
@@ -835,6 +870,9 @@ describe("Models", () => {
         },
         sequence: 1733045,
         specification: {
+          source: {
+            address: "rogue5HnPRSszD9CWGSUz8UGHMVwSSKF6",
+          },
           direction: "sell",
           immediateOrCancel: true,
           memos: [
@@ -866,8 +904,13 @@ describe("Models", () => {
         sequence: 382,
         id: "711C4F606C63076137FAE90ADC36379D7066CF551E96DA6FE2BDAB5ECBFACF2B",
         specification: {
+          source: {
+            address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
+          },
+          destination: {
+            address: "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX",
+          },
           amount: "0.001",
-          destination: "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX",
           settleDelay: 60,
           publicKey: "03CFD18E689434F032A4E84C63E2A3A6472D684EAF4FD52CA67742F3E24BAE81B2",
         },
@@ -904,12 +947,17 @@ describe("Models", () => {
         sequence: 3334565,
         id: "885CDCF781073DB9306A4B5FF61F358AE1B2452B57B7FACC090DF91125CC86D6",
         specification: {
+          source: {
+            address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+          },
           amount: {
             counterparty: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
             currency: "546F6B656E466F72457363726F77000000000000",
             value: "10",
           },
-          destination: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+          destination: {
+            address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+          },
           allowExecuteAfter: "2022-06-22T10:16:00.000Z",
         },
         outcome: {
@@ -945,6 +993,9 @@ describe("Models", () => {
         sequence: 3334670,
         id: "CB192FC862D00F6A49E819EF99053BE534A6EC703418306E415C6230F5786FDB",
         specification: {
+          source: {
+            address: "rELeasERs3m4inA1UinRLTpXemqyStqzwh",
+          },
           owner: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
           escrowSequence: 3334565,
         },
@@ -981,6 +1032,9 @@ describe("Models", () => {
         sequence: 70867870,
         id: "E5535D1C02FAAB40F0B7652DC7EB86D1366B13D4517A7305F53BC664C686351A",
         specification: {
+          source: {
+            address: "r4eecBHFbkHpLQEvSnB93bc3C2SVMjVKie",
+          },
           memos: [
             {
               data: "LEDGER2",
@@ -1123,6 +1177,9 @@ describe("Models", () => {
         },
         sequence: 1238,
         specification: {
+          source: {
+            address: "rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy",
+          },
           flags: {
             burnable: false,
             onlyXRP: true,

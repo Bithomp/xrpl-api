@@ -1,5 +1,6 @@
 import { FormattedBaseSpecification } from "./specification";
 import { FormattedAmount } from "../../../../types";
+import { DestinationPaymentAddress } from "./account";
 
 export type FormattedEscrowCancelSpecification = {
   owner: string;
@@ -7,13 +8,11 @@ export type FormattedEscrowCancelSpecification = {
 } & FormattedBaseSpecification;
 
 export type FormattedEscrowCreateSpecification = {
+  destination: DestinationPaymentAddress;
   amount?: FormattedAmount;
-  destination: string;
   condition: string;
   allowCancelAfter?: string;
   allowExecuteAfter?: string;
-  sourceTag?: number;
-  destinationTag?: number;
 } & FormattedBaseSpecification;
 
 export type FormattedEscrowFinishSpecification = {

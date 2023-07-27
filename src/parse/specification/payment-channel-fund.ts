@@ -3,13 +3,19 @@ import { removeUndefined } from "../../common";
 import { parseTimestamp } from "../utils";
 import parseRippledAmount from "../ledger/ripple-amount";
 import parseMemos from "../ledger/memos";
-
 import { FormattedPaymentChannelFundSpecification } from "../../v1/common/types/objects/payment_channels";
+import { SourcePaymentAddress } from "../../v1/common/types/objects/account";
 
 function parsePaymentChannelFund(tx: any): FormattedPaymentChannelFundSpecification {
   assert.ok(tx.TransactionType === "PaymentChannelFund");
 
+  const source: SourcePaymentAddress = {
+    address: tx.Account,
+    tag: tx.SourceTag,
+  };
+
   return removeUndefined({
+    source: removeUndefined(source),
     memos: parseMemos(tx),
     channel: tx.Channel,
     amount: parseRippledAmount(tx.Amount), // Legacy support
