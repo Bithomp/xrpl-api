@@ -237,7 +237,7 @@ export async function legacyPayment(
   data: LegacyPaymentInterface,
   definitions?: XrplDefinitionsBase
 ): Promise<TransactionResponse | FormattedTransaction | ErrorResponse> {
-  const connection: any = Client.findConnection();
+  const connection = Client.findConnection("payment, submit, !clio");
   if (!connection) {
     throw new Error("There is no connection");
   }
@@ -357,7 +357,7 @@ export async function submit(
   signedTransaction: string,
   options: SubmitOptionsInterface = {}
 ): Promise<TransactionResponse | FormattedTransaction | ErrorResponse> {
-  const connection: any = options.connection || Client.findConnection();
+  const connection: any = options.connection || Client.findConnection("submit");
   if (!connection) {
     throw new Error("There is no connection");
   }

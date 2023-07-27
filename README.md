@@ -23,12 +23,17 @@ const BithompXRPL = require("@bithomp/xrpl-api");
 const config = [
   {
     "url": "wss://xrplcluster.com",
-    "type": "regular,history,gateway_balances,last_close,manifest",
+    "type": "regular,history,gateway_balances,last_close,manifest,payment,submit",
     "connectionTimeout": 10000
   },
   {
+    "url": "wss://s1.ripple.com",
+    "type": "regular,history,payment,submit",
+    "connectionTimeout": 10000
+  },,
+  {
     "url": "wss://s2.ripple.com",
-    "type": "regular,history",
+    "type": "regular,history,payment,submit",
     "connectionTimeout": 10000
   },
   {

@@ -10,7 +10,7 @@ describe("Client", () => {
   describe("mainnet", () => {
     before(async function () {
       this.timeout(15000);
-      Client.setup(nconf.get("xrpl:connections:mainnet"));
+      Client.setup(nconf.get("xrpl:connections:mainnet"), { loadBalancing: true });
       await Client.connect();
     });
 
