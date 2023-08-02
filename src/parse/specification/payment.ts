@@ -6,24 +6,24 @@ import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
 import parseMemos from "../ledger/memos";
 
-import {
-  FormattedPaymentSpecification,
-  SourcePaymentAddress,
-  DestinationPaymentAddress,
-} from "../../v1/common/types/objects/payments";
+import { FormattedPaymentSpecification } from "../../v1/common/types/objects/payments";
+import { FormattedSourceAddress, FormattedDestinationAddress } from "../../v1/common/types/objects/account";
 import { FormattedIssuedCurrencyAmount } from "../../types";
 
-function isNoDirectRipple(tx) {
+function isNoDirectRipple(tx: any) {
   // tslint:disable-next-line:no-bitwise
   return (tx.Flags & PaymentFlags.tfNoDirectRipple) !== 0;
 }
 
-function isQualityLimited(tx) {
+function isQualityLimited(tx: any) {
   // tslint:disable-next-line:no-bitwise
   return (tx.Flags & PaymentFlags.tfLimitQuality) !== 0;
 }
 
-function removeGenericCounterparty(amount: FormattedIssuedCurrencyAmount, address: string): FormattedIssuedCurrencyAmount {
+function removeGenericCounterparty(
+  amount: FormattedIssuedCurrencyAmount,
+  address: string
+): FormattedIssuedCurrencyAmount {
   return amount.counterparty === address ? _.omit(amount, "counterparty") : amount;
 }
 
@@ -31,13 +31,13 @@ function removeGenericCounterparty(amount: FormattedIssuedCurrencyAmount, addres
 function parsePayment(tx: any): FormattedPaymentSpecification {
   assert.ok(tx.TransactionType === "Payment");
 
-  const source: SourcePaymentAddress = {
+  const source: FormattedSourceAddress = {
     address: tx.Account,
     maxAmount: removeGenericCounterparty(parseAmount(tx.SendMax || tx.Amount), tx.Account),
     tag: tx.SourceTag,
   };
 
-  const destination: DestinationPaymentAddress = {
+  const destination: FormattedDestinationAddress = {
     address: tx.Destination,
     tag: tx.DestinationTag,
   };

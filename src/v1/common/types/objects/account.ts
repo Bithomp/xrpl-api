@@ -1,4 +1,5 @@
 import { FormattedBaseSpecification } from "./specification";
+import { FormattedIssuedCurrencyAmount } from "../../../../types";
 
 export type FormattedAccountDeleteSpecification = {
   // account (address) of an account to receive any leftover XRP after deleting the sending account.
@@ -14,3 +15,14 @@ export type FormattedAccountDeleteSpecification = {
   // Must be a funded account in the ledger, and must not be the sending account.
   destinationXAddress: string;
 } & FormattedBaseSpecification;
+
+export type FormattedSourceAddress = {
+  address: string;
+  maxAmount?: FormattedIssuedCurrencyAmount;
+  tag?: number;
+};
+
+export type FormattedDestinationAddress = {
+  address: string;
+  tag?: number;
+};
