@@ -107,3 +107,38 @@ const vl = await BithompXRPL.Client.createVL(vk, sk, sequence, expiration, valid
 //  disconnect
 BithompXRPL.Client.disconnect();
 ```
+
+## Decode NFTokenID
+
+```JS
+const BithompXRPL = require("@bithomp/xrpl-api");
+
+const nftokenID = "000861A8A7C507A12088BF6A6BB62BAFEE9CDAABA2961DB216E5DA9C00000001";
+const decoded = BithompXRPL.Models.parseNFTokenID(nftokenID);
+// decoded will contain
+// {
+//   "NFTokenID: "000861A8A7C507A12088BF6A6BB62BAFEE9CDAABA2961DB216E5DA9C00000001",
+//   "Flags": 8,
+//   "TransferFee": 25000,
+//   "Issuer": "rGJn1uZxDX4ksxRPYuj2smP7ZshdwjeSTG",
+//   "NFTokenTaxon": 0,
+//   "Sequence": 1,
+// }
+```
+
+## Encode NFTokenID
+
+```JS
+const BithompXRPL = require("@bithomp/xrpl-api");
+
+const flags = 11;
+const transferFee = 3140;
+const issuer = "rNCFjv8Ek5oDrNiMJ3pw6eLLFtMjZLJnf2";
+const nftokenTaxon = 146999694;
+const sequence = 3429;
+
+// NOTE: This function is not minting NFTokenID, it is just encoding it from the data provided, can be used if you want to test something, check if the NFTokenID is valid, or predict the NFTokenID before minting
+const result = BithompXRPL.Models.buildNFTokenID(flags, transferFee, issuer, nftokenTaxon, sequence);
+// result will contain NFTokenID
+// "000B0C4495F14B0E44F78A264E41713C64B5F89242540EE2BC8B858E00000D65"
+```
