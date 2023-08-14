@@ -14,7 +14,7 @@ $ npm install --save @bithomp/xrpl-api
 
 # Examples of use
 
-## Account info
+## Get account info
 
 ```JS
 const BithompXRPL = require("@bithomp/xrpl-api");
@@ -56,7 +56,7 @@ const accountInfo = await BithompXRPL.Client.getAccountInfo("rsuUjfWxrACCAwGQDsN
 BithompXRPL.Client.disconnect();
 ```
 
-## Create Validator List
+## Create Validator List version 1
 
 _Setup connection_, it is required to get validators details from the ledger.
 
@@ -75,22 +75,26 @@ BithompXRPL.Client.setup(config);
 // connect
 await BithompXRPL.Client.connect();
 
-// validator secrets, should not belong to any validators keys. can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
+// validator secrets, should not belong to any validators keys.
+// can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
 // can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
 const vk = {
   privateKey: "p__________________________",
   publicKey: "ED________________________________",
 };
 
-// signing secrets, should not belong to any validators keys. can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used
+// signing secrets, should not belong to any validators keys.
+// can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
 // can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
 const sk = {
   privateKey: "p__________________________",
   publicKey: "ED_______________________________",
 };
 
-// validator list, public addresses, they have to be available on the ledger for accessing to manifest data (it will be stored in a blob), the address should start on letter `n`
-const validators = ["nHBidG3pZK11zQD6kpNDoAhDxH6WLGui6ZxSbUx7LSqLHsgzMPec"];
+// validator list, public addresses, they have to be available on the ledger
+// for accessing to manifest data (it will be stored in a blob),
+// the address should start with `n`
+const validators = ["nHB8QMKGt9VB4Vg71VszjBVQnDW3v3QudM4DwFaJfy96bj4Pv9fA"];
 const sequence = 1; // sequence number
 const expiration = 1696508603; // in unixtime (seconds)
 const vl = await BithompXRPL.Client.createVL(vk, sk, sequence, expiration, validators);
@@ -101,6 +105,69 @@ const vl = await BithompXRPL.Client.createVL(vk, sk, sequence, expiration, valid
 //   "manifest": "...", // signed with vk.privateKey and sk.privateKey
 //   "signature": "...", // signed with sk.privateKey
 //   "version": 1,
+//   "public_key": "..." // vk.publicKey
+// }
+
+//  disconnect
+BithompXRPL.Client.disconnect();
+```
+
+## Create Validator List version 2
+
+_Setup connection_, it is required to get validators details from the ledger.
+
+```JS
+const BithompXRPL = require("@bithomp/xrpl-api");
+// setup connection
+const config = [
+  {
+    // this connection will be used to get validators details from the ledger, use web socket with connection to network you are building list for (mainnet, testnet, devnet, etc.)
+    "url": "wss://xrplcluster.com",
+    "connectionTimeout": 10000
+  }
+];
+BithompXRPL.Client.setup(config);
+
+// connect
+await BithompXRPL.Client.connect();
+
+// validator secrets, should not belong to any validators keys.
+// can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
+// can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
+const vk = {
+  privateKey: "p__________________________",
+  publicKey: "ED________________________________",
+};
+
+// signing secrets, should not belong to any validators keys.
+// can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
+// can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
+const sk = {
+  privateKey: "p__________________________",
+  publicKey: "ED_______________________________",
+};
+
+// validator list, public addresses, they have to be available on the ledger
+// for accessing to manifest data (it will be stored in a blob),
+// the address should start with `n`
+const publishBlobCurrent = {
+  sequence: 1, // sequence number
+  expiration: 1696508603,
+  validatorsPublicKeys: ["nHUFE9prPXPrHcG3SkwP1UzAQbSphqyQkQK9ATXLZsfkezhhda3p"],
+};
+const publishBlobFuture = {
+  sequence: 2, // sequence number
+  effective: 1696508603, // optional in unixtime (seconds)
+  expiration: 1723620871, // in unixtime (seconds)
+  validatorsPublicKeys: ["nHB8QMKGt9VB4Vg71VszjBVQnDW3v3QudM4DwFaJfy96bj4Pv9fA"],
+};
+const vl = await BithompXRPL.Client.createVLv2(vk, sk, [publishBlob, publishBlobFuture]);
+
+// vl will contain the signed validator list with
+// {
+//   "blobs-v2": "...",
+//   "manifest": "...", // signed with vk.privateKey and sk.privateKey
+//   "version": 2,
 //   "public_key": "..." // vk.publicKey
 // }
 
@@ -137,7 +204,8 @@ const issuer = "rNCFjv8Ek5oDrNiMJ3pw6eLLFtMjZLJnf2";
 const nftokenTaxon = 146999694;
 const sequence = 3429;
 
-// NOTE: This function is not minting NFTokenID, it is just encoding it from the data provided, can be used if you want to test something, check if the NFTokenID is valid, or predict the NFTokenID before minting
+// NOTE: This function is not minting NFTokenID, it is just encoding it from the data provided,
+// can be used if you want to test something, check if the NFTokenID is valid, or predict the NFTokenID before minting
 const result = BithompXRPL.Models.buildNFTokenID(flags, transferFee, issuer, nftokenTaxon, sequence);
 // result will contain NFTokenID
 // "000B0C4495F14B0E44F78A264E41713C64B5F89242540EE2BC8B858E00000D65"

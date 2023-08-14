@@ -37,6 +37,14 @@ describe("Models", () => {
 
       expect(JSON.stringify(result)).to.be.eql(JSON.stringify(expected));
     });
+
+    it("parses valid version 2", function () {
+      const valid = require("../examples/vl/valid_v2.json");
+      const expected = require("../examples/vl/decoded_valid_v2.json");
+
+      const result = Models.parseVL(valid);
+      expect(JSON.stringify(result)).to.be.eql(JSON.stringify(expected));
+    });
   });
 
   describe("isValidVL", () => {
@@ -50,6 +58,12 @@ describe("Models", () => {
       const valid = require("../examples/vl/valid_with_signpub_key.json");
       const result = Models.isValidVL(valid);
 
+      expect(result).to.be.null;
+    });
+
+    it("validates valid version 2", function () {
+      const valid = require("../examples/vl/valid_v2.json");
+      const result = Models.isValidVL(valid);
       expect(result).to.be.null;
     });
   });
