@@ -75,21 +75,25 @@ BithompXRPL.Client.setup(config);
 // connect
 await BithompXRPL.Client.connect();
 
-// validator secrets, should not belong to any validators keys. can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
+// validator secrets, should not belong to any validators keys.
+// can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
 // can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
 const vk = {
   privateKey: "p__________________________",
   publicKey: "ED________________________________",
 };
 
-// signing secrets, should not belong to any validators keys. can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used
+// signing secrets, should not belong to any validators keys.
+// can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
 // can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
 const sk = {
   privateKey: "p__________________________",
   publicKey: "ED_______________________________",
 };
 
-// validator list, public addresses, they have to be available on the ledger for accessing to manifest data (it will be stored in a blob), the address should start on letter `n`
+// validator list, public addresses, they have to be available on the ledger
+// for accessing to manifest data (it will be stored in a blob),
+// the address should start with `n`
 const validators = ["nHB8QMKGt9VB4Vg71VszjBVQnDW3v3QudM4DwFaJfy96bj4Pv9fA"];
 const sequence = 1; // sequence number
 const expiration = 1696508603; // in unixtime (seconds)
@@ -127,21 +131,25 @@ BithompXRPL.Client.setup(config);
 // connect
 await BithompXRPL.Client.connect();
 
-// validator secrets, should not belong to any validators keys. can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
+// validator secrets, should not belong to any validators keys.
+// can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
 // can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
 const vk = {
   privateKey: "p__________________________",
   publicKey: "ED________________________________",
 };
 
-// signing secrets, should not belong to any validators keys. can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used
+// signing secrets, should not belong to any validators keys.
+// can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
 // can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
 const sk = {
   privateKey: "p__________________________",
   publicKey: "ED_______________________________",
 };
 
-// validator list, public addresses, they have to be available on the ledger for accessing to manifest data (it will be stored in a blob), the address should start on letter `n`
+// validator list, public addresses, they have to be available on the ledger
+// for accessing to manifest data (it will be stored in a blob),
+// the address should start with `n`
 const publishBlobCurrent = {
   sequence: 1, // sequence number
   expiration: 1696508603,
@@ -196,7 +204,8 @@ const issuer = "rNCFjv8Ek5oDrNiMJ3pw6eLLFtMjZLJnf2";
 const nftokenTaxon = 146999694;
 const sequence = 3429;
 
-// NOTE: This function is not minting NFTokenID, it is just encoding it from the data provided, can be used if you want to test something, check if the NFTokenID is valid, or predict the NFTokenID before minting
+// NOTE: This function is not minting NFTokenID, it is just encoding it from the data provided,
+// can be used if you want to test something, check if the NFTokenID is valid, or predict the NFTokenID before minting
 const result = BithompXRPL.Models.buildNFTokenID(flags, transferFee, issuer, nftokenTaxon, sequence);
 // result will contain NFTokenID
 // "000B0C4495F14B0E44F78A264E41713C64B5F89242540EE2BC8B858E00000D65"

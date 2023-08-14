@@ -37,11 +37,11 @@ export interface ParsedVLInterface {
   version?: number;
 
   // string representing the publisher's hex-encoded master
-  // public key,
+  // public key
   PublicKey?: string;
 
   // string representing the base-64 or hex-encoded manifest
-  // containing the publisher's master, signing public keys,
+  // containing the publisher's master, signing public keys
   manifest?: string;
 
   // decoded manifest
@@ -63,13 +63,21 @@ export interface ParsedVLInterface {
 }
 
 export interface ValidatorInterface {
+  // string representing base58-encoded public key, starts with `n`
   validation_public_key?: string;
+
+  // string representing the base-64 or hex-encoded manifest
   manifest?: string;
 }
 
 export interface ParsedValidatorInterface {
+  // string representing hex-encoded public key,
   PublicKey?: string;
+
+  // string representing the base-64 or hex-encoded manifest
   manifest?: string;
+
+  // decoded manifest
   decodedManifest?: ManifestInterface;
 }
 
@@ -125,15 +133,33 @@ export interface ParsedVLBlobInterface {
   decodedManifest?: ManifestInterface;
 }
 
+// can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
+// can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
+// should not belong to any validators keys in the list
 export interface VLSecretKeysInterface {
+  // string representing encoded in base58, starts with `p`
   privateKey: string;
+
+  // string representing hex-encoded public key,
   publicKey: string;
 }
 
 export interface VLV2ValidatorsPublishBlobInterface {
-  sequence: number;
+  // Unsigned integer sequence of this VL. The sequence number
+  // must increase monotonically. More specifically, validator lists with
+  // sequences less than the current are ignored. The special sequence
+  // UInt(-1) indicates that the master key is revoked,
+  sequence?: number;
+
+  // Unsigned integer representing the ripple
+  // time point when the list will become valid,
   effective?: number; // unix time in seconds
-  expiration: number; // unix time in seconds
+
+  // Unsigned integer representing the ripple time point when
+  // this list will no longer be valid,
+  expiration?: number; // unix time in seconds
+
+  // Array of validators base58-encoded public keys starts with `n`
   validatorsPublicKeys: string[];
 }
 
