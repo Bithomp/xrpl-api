@@ -83,11 +83,11 @@ export interface VLBlobInterface {
   // Unsigned integer representing the ripple
   // time point when the list will become valid,
   // supported only by vl list version 2.
-  effective?: number;
+  effective?: number; // ripple time in seconds
 
   // Unsigned integer representing the ripple time point when
   // this list will no longer be valid,
-  expiration?: number;
+  expiration?: number; // ripple time in seconds
 
   // Array of validator objects.
   validators?: ValidatorInterface[];
@@ -103,11 +103,11 @@ export interface ParsedVLBlobInterface {
   // Unsigned integer representing the ripple
   // time point when the list will become valid,
   // supported only by vl list version 2.
-  effective?: number;
+  effective?: number; // unix time in seconds
 
   // Unsigned integer representing the ripple time point when
   // this list will no longer be valid,
-  expiration?: number;
+  expiration?: number; // unix time in seconds
 
   validators?: ParsedValidatorInterface[];
 
@@ -132,8 +132,8 @@ export interface VLSecretKeysInterface {
 
 export interface VLV2ValidatorsPublishBlobInterface {
   sequence: number;
-  effective?: number;
-  expiration: number;
+  effective?: number; // unix time in seconds
+  expiration: number; // unix time in seconds
   validatorsPublicKeys: string[];
 }
 
