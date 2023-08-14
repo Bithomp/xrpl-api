@@ -77,7 +77,7 @@ export async function createVLv2(
 
     if (globalSequence === undefined) {
       globalSequence = sequence;
-    } else {
+    } else if (globalSequence !== sequence) {
       // create local manifest if only it has different sequence
       blobInfo.manifest = generateManifest({
         Sequence: sequence,

@@ -90,7 +90,7 @@ const sk = {
 };
 
 // validator list, public addresses, they have to be available on the ledger for accessing to manifest data (it will be stored in a blob), the address should start on letter `n`
-const validators = ["nHBidG3pZK11zQD6kpNDoAhDxH6WLGui6ZxSbUx7LSqLHsgzMPec"];
+const validators = ["nHB8QMKGt9VB4Vg71VszjBVQnDW3v3QudM4DwFaJfy96bj4Pv9fA"];
 const sequence = 1; // sequence number
 const expiration = 1696508603; // in unixtime (seconds)
 const vl = await BithompXRPL.Client.createVL(vk, sk, sequence, expiration, validators);
@@ -142,18 +142,24 @@ const sk = {
 };
 
 // validator list, public addresses, they have to be available on the ledger for accessing to manifest data (it will be stored in a blob), the address should start on letter `n`
-const validators = ["nHBidG3pZK11zQD6kpNDoAhDxH6WLGui6ZxSbUx7LSqLHsgzMPec"];
-const sequence = 1; // sequence number
-const effective = 1696508603; // optional in unixtime (seconds)
-const expiration = 1696508603; // in unixtime (seconds)
-const vl = await BithompXRPL.Client.createVL(vk, sk, sequence, expiration, validators);
+const publishBlobCurrent = {
+  sequence: 1, // sequence number
+  expiration: 1696508603,
+  validatorsPublicKeys: ["nHUFE9prPXPrHcG3SkwP1UzAQbSphqyQkQK9ATXLZsfkezhhda3p"],
+};
+const publishBlobFuture = {
+  sequence: 2, // sequence number
+  effective: 1696508603, // optional in unixtime (seconds)
+  expiration: 1723620871, // in unixtime (seconds)
+  validatorsPublicKeys: ["nHB8QMKGt9VB4Vg71VszjBVQnDW3v3QudM4DwFaJfy96bj4Pv9fA"],
+};
+const vl = await BithompXRPL.Client.createVLv2(vk, sk, [publishBlob, publishBlobFuture]);
 
 // vl will contain the signed validator list with
 // {
-//   "blob": "...",
+//   "blobs-v2": "...",
 //   "manifest": "...", // signed with vk.privateKey and sk.privateKey
-//   "signature": "...", // signed with sk.privateKey
-//   "version": 1,
+//   "version": 2,
 //   "public_key": "..." // vk.publicKey
 // }
 
