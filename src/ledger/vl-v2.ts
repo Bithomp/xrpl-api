@@ -1,16 +1,16 @@
-import { VLInterface, VLBlobInterface, VLBlobsV2Interface, VLSecretKeysInterface, encodeVLBlob } from "../models/vl";
+import {
+  VLInterface,
+  VLBlobInterface,
+  VLBlobInfoInterface,
+  VLV2ValidatorsPublishBlobInterface,
+  VLSecretKeysInterface,
+  encodeVLBlob,
+} from "../models/vl";
 import { generateManifest } from "../models/manifest";
 import { unixTimeToLedgerTime } from "../models/ledger";
 import * as Validator from "../validator";
 import { getVLBlobValidatorsManifest } from "./vl";
 import { removeUndefined } from "../common";
-
-interface VLV2ValidatorsPublishBlobInterface {
-  sequence: number;
-  effective?: number;
-  expiration: number;
-  validatorsPublicKeys: string[];
-}
 
 /**
  * @param {VLSecretKeysInterface} masterKey
@@ -35,7 +35,7 @@ export async function createVLv2(
   // sequence of the first blob
   let globalSequence: number | undefined;
 
-  const blobs: VLBlobsV2Interface[] = [];
+  const blobs: VLBlobInfoInterface[] = [];
   for (const publishBlob of publishBlobs) {
     const { sequence, effective, expiration, validatorsPublicKeys } = publishBlob;
 
@@ -69,7 +69,7 @@ export async function createVLv2(
       }
     }
 
-    const blobInfo: VLBlobsV2Interface = {};
+    const blobInfo: VLBlobInfoInterface = {};
 
     const vlBlob = await createVLBlobV2(sequence, effective, expiration, validatorsPublicKeys);
     blobInfo.blob = encodeVLBlob(vlBlob);

@@ -22,7 +22,7 @@ export interface VLInterface {
   blob?: string;
 
   // list of blobs for version 2
-  "blobs-v2"?: VLBlobsV2Interface[];
+  "blobs-v2"?: VLBlobInfoInterface[];
 
   // string representing the base-64 or hex-encoded signature
   // of the blob, using the ephemeral(signing) private key,
@@ -130,9 +130,24 @@ export interface VLSecretKeysInterface {
   publicKey: string;
 }
 
-export interface VLBlobsV2Interface {
+export interface VLV2ValidatorsPublishBlobInterface {
+  sequence: number;
+  effective?: number;
+  expiration: number;
+  validatorsPublicKeys: string[];
+}
+
+export interface VLBlobInfoInterface {
+  // string representing base-64 encoded JSON containing the actual list.
   blob?: string;
+
+  // string representing the base-64 or hex-encoded signature
+  // of the blob, using the ephemeral(signing) private key,
   signature?: string;
+
+  // string representing the base-64 or hex-encoded manifest
+  // containing the publisher's master, signing public keys,
+  // optional
   manifest?: string;
 }
 
@@ -235,7 +250,7 @@ export function parseVL(vl: VLInterface): ParsedVLInterface {
       }
     }
   } else if (decoded.version === 2) {
-    const blobs = vl["blobs-v2"] as VLBlobsV2Interface[];
+    const blobs = vl["blobs-v2"] as VLBlobInfoInterface[];
     if (!decoded.blobs) {
       decoded.blobs = [];
     }
@@ -266,6 +281,7 @@ export function parseVL(vl: VLInterface): ParsedVLInterface {
         }
       }
 
+      // use local or global manifest
       const decodedManifest = decodedBlob.decodedManifest || decoded.decodedManifest;
       if (
         !decoded.error &&
@@ -328,7 +344,7 @@ export function isValidVL(vl: VLInterface): string | null {
   }
 
   if (vl.version === 1) {
-    const blob: VLBlobInterface | null = decodeVLBlob(vl.blob as string);
+    const blob: VLBlobInterface = decodeVLBlob(vl.blob as string);
     error = isValidVLBlob(blob);
     if (error) {
       return error;
@@ -342,9 +358,9 @@ export function isValidVL(vl: VLInterface): string | null {
       }
     }
   } else if (vl.version === 2) {
-    const blobs = vl["blobs-v2"] as VLBlobsV2Interface[];
+    const blobs = vl["blobs-v2"] as VLBlobInfoInterface[];
     for (const blobInfo of blobs) {
-      const blob: VLBlobInterface | null = decodeVLBlob(blobInfo.blob as string);
+      const blob: VLBlobInterface = decodeVLBlob(blobInfo.blob as string);
       error = isValidVLBlob(blob);
       if (error) {
         return error;
@@ -395,7 +411,7 @@ function isValidVLFormat(vl: VLInterface): string | null {
   return error;
 }
 
-function decodeVLBlob(blob: string): VLBlobInterface | null {
+function decodeVLBlob(blob: string): VLBlobInterface {
   const decoded = Buffer.from(blob, "base64").toString("ascii");
 
   return JSON.parse(decoded);
@@ -405,7 +421,7 @@ export function encodeVLBlob(vlBlob: VLBlobInterface): string {
   return Buffer.from(JSON.stringify(vlBlob)).toString("base64");
 }
 
-function isValidVLBlob(blob: VLBlobInterface | null): string | null {
+function isValidVLBlob(blob: VLBlobInterface): string | null {
   if (blob === null) {
     return "Blob is not valid";
   }
