@@ -1,14 +1,14 @@
 import * as Client from "../client";
-import { VLInterface, ValidatorInterface, VLBlobInterface, encodeVLBlob } from "../models/vl";
+import { VLInterface, ValidatorInterface, VLBlobInterface, VLSecretKeysInterface, encodeVLBlob } from "../models/vl";
 import { generateManifest } from "../models/manifest";
 import { unixTimeToLedgerTime } from "../models/ledger";
 import * as Validator from "../validator";
 
 /**
- * @param {string} masterSecret.privateKey
- * @param {string} masterSecret.publicKey
- * @param {string} ephemeralSecret.privateKey
- * @param {string} ephemeralSecret.publicKey
+ * @param {string} masterKey.privateKey
+ * @param {string} masterKey.publicKey
+ * @param {string} ephemeralKey.privateKey
+ * @param {string} ephemeralKey.publicKey
  * @param {number} sequence
  * @param {number} expiration
  * @param {string[]} validatorsPublicKeys
@@ -16,17 +16,17 @@ import * as Validator from "../validator";
  * @exception {Error}
  */
 export async function createVL(
-  masterSecret: { privateKey: string; publicKey: string },
-  ephemeralSecret: { privateKey: string; publicKey: string },
+  masterKey: VLSecretKeysInterface,
+  ephemeralKey: VLSecretKeysInterface,
   sequence: number,
   expiration: number, // unixtime
   validatorsPublicKeys: string[] // list of validators public addresses
 ): Promise<VLInterface> {
-  if (!masterSecret) {
+  if (!masterKey) {
     throw new Error("Master key is required");
   }
 
-  if (!ephemeralSecret) {
+  if (!ephemeralKey) {
     throw new Error("Ephemeral key is required");
   }
 
@@ -60,18 +60,18 @@ export async function createVL(
   const blob = encodeVLBlob(vlBlob);
   const manifest = generateManifest({
     Sequence: sequence,
-    PublicKey: masterSecret.publicKey,
-    SigningPubKey: ephemeralSecret.publicKey,
-    SigningPrivateKey: ephemeralSecret.privateKey,
-    MasterPrivateKey: masterSecret.privateKey,
+    PublicKey: masterKey.publicKey,
+    SigningPubKey: ephemeralKey.publicKey,
+    SigningPrivateKey: ephemeralKey.privateKey,
+    MasterPrivateKey: masterKey.privateKey,
   });
-  const signature = Validator.sign(Buffer.from(blob, "base64"), ephemeralSecret.privateKey);
+  const signature = Validator.sign(Buffer.from(blob, "base64"), ephemeralKey.privateKey);
 
   return {
     blob,
     manifest,
     signature,
-    public_key: masterSecret.publicKey,
+    public_key: masterKey.publicKey,
     version: 1,
   };
 }
@@ -81,7 +81,7 @@ export async function createVLBlob(
   expiration: number,
   validatorsPublicKeys: string[]
 ): Promise<VLBlobInterface> {
-  const validators = await getVLBlobValidatorsManifets(validatorsPublicKeys);
+  const validators = await getVLBlobValidatorsManifest(validatorsPublicKeys);
 
   return {
     sequence,
@@ -90,7 +90,7 @@ export async function createVLBlob(
   };
 }
 
-export async function getVLBlobValidatorsManifets(validatorsPublicKeys: string[]): Promise<ValidatorInterface[]> {
+export async function getVLBlobValidatorsManifest(validatorsPublicKeys: string[]): Promise<ValidatorInterface[]> {
   const connection: any = Client.findConnection("manifest");
   if (!connection) {
     throw new Error("There is no connection");

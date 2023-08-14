@@ -54,18 +54,16 @@ export function parseManifest(manifest: string): ManifestInterface {
   let lastSigning = 0;
 
   // sequence number
-  if (buf[cur++] !== 0x24) {
-    decoded.error = "Missing Sequence Number";
-    return decoded;
+  if (buf[cur] === 0x24) {
+    cur++;
+    // tslint:disable-next-line:no-bitwise
+    decoded.Sequence = (buf[cur] << 24) + (buf[cur + 1] << 16) + (buf[cur + 2] << 8) + buf[cur + 3];
+    cur += 4;
+
+    // Sequence
+    verifyFields.push(buf.slice(lastSigning, cur));
+    lastSigning = cur;
   }
-
-  // tslint:disable-next-line:no-bitwise
-  decoded.Sequence = (buf[cur] << 24) + (buf[cur + 1] << 16) + (buf[cur + 2] << 8) + buf[cur + 3];
-  cur += 4;
-
-  // Sequence
-  verifyFields.push(buf.slice(lastSigning, cur));
-  lastSigning = cur;
 
   // public key
   // type 7 = VL, 1 = PublicKey
@@ -166,15 +164,15 @@ export function parseManifest(manifest: string): ManifestInterface {
   }
 
   // for signature verification
-  decoded.verifyFields = Buffer.concat(verifyFields);
+  const verify = Buffer.concat(verifyFields);
   if (decoded.SigningPubKey && decoded.Signature) {
-    if (!Validator.verify(decoded.verifyFields, decoded.Signature, decoded.SigningPubKey)) {
+    if (!Validator.verify(verify, decoded.Signature, decoded.SigningPubKey)) {
       decoded.error = "Ephemeral signature does not match";
       return decoded;
     }
   }
 
-  if (!Validator.verify(decoded.verifyFields, decoded.MasterSignature, decoded.PublicKey)) {
+  if (!Validator.verify(verify, decoded.MasterSignature, decoded.PublicKey)) {
     decoded.error = "Master signature does not match";
     return decoded;
   }
@@ -182,7 +180,7 @@ export function parseManifest(manifest: string): ManifestInterface {
   return decoded;
 }
 
-export interface GenerateanifestInterface {
+export interface GenerateManifestInterface {
   Sequence: number;
   PublicKey: string;
   SigningPubKey: string;
@@ -191,30 +189,30 @@ export interface GenerateanifestInterface {
   MasterPrivateKey: string;
 }
 
-export function generateManifest(manifest: GenerateanifestInterface): string {
+export function generateManifest(manifest: GenerateManifestInterface): string {
   const verifyFields = [Buffer.from("MAN\x00", "utf-8")];
 
-  // Sequence
-  const secuenceBuffer = Buffer.alloc(5);
-  secuenceBuffer.writeUInt8(0x24);
-  secuenceBuffer.writeUInt32BE(manifest.Sequence, 1);
-  verifyFields.push(secuenceBuffer);
+  // Sequence (soeREQUIRED)
+  const sequenceBuffer = Buffer.alloc(5);
+  sequenceBuffer.writeUInt8(0x24);
+  sequenceBuffer.writeUInt32BE(manifest.Sequence, 1);
+  verifyFields.push(sequenceBuffer);
 
-  // PublicKey
+  // PublicKey (soeREQUIRED)
   const publicKeyBuffer = Buffer.alloc(35);
   publicKeyBuffer.writeUInt8(0x71);
   publicKeyBuffer.writeUInt8(manifest.PublicKey.length / 2, 1);
   publicKeyBuffer.write(manifest.PublicKey, 2, "hex");
   verifyFields.push(publicKeyBuffer);
 
-  // SigningPubKey
+  // SigningPubKey (soeOPTIONAL)
   const signingPubKeyBuffer = Buffer.alloc(35);
   signingPubKeyBuffer.writeUInt8(0x73);
   signingPubKeyBuffer.writeUInt8(manifest.SigningPubKey.length / 2, 1);
   signingPubKeyBuffer.write(manifest.SigningPubKey, 2, "hex");
   verifyFields.push(signingPubKeyBuffer);
 
-  // Domain
+  // Domain (soeOPTIONAL)
   if (manifest.Domain) {
     const domainBuffer = Buffer.alloc(2 + manifest.Domain.length / 2);
     domainBuffer.writeUInt8(0x77);
@@ -225,10 +223,10 @@ export function generateManifest(manifest: GenerateanifestInterface): string {
 
   const verifyData = Buffer.concat(verifyFields);
 
-  // Signature
+  // Signature (soeOPTIONAL)
   const ephemeralSignature = Validator.sign(verifyData, manifest.SigningPrivateKey);
 
-  // MasterSignature
+  // MasterSignature (soeREQUIRED)
   const masterSignature = Validator.sign(verifyData, manifest.MasterPrivateKey);
 
   const manifestBuffer = Buffer.from(

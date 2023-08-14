@@ -1,22 +1,64 @@
 import { parseManifest, ManifestInterface } from "./manifest";
 import { parseUint32, parseUint64 } from "./utils";
+import { ledgerTimeToUnixTime } from "./ledger";
 import * as Validator from "../validator";
 
 export interface VLInterface {
+  // unsigned integer representing the VL format version. Both
+  // 1 and 2 will be valid, with 1 the old format, and
+  // 2 the new.
   version?: number;
+
+  // string representing the publisher's hex-encoded master
+  // public key,
   public_key?: string;
+
+  // string representing the base-64 or hex-encoded manifest
+  // containing the publisher's master, signing public keys,
   manifest?: string;
+
+  // string representing base-64 encoded JSON containing the actual list.
+  // for version 1
   blob?: string;
+
+  // list of blobs for version 2
+  "blobs-v2"?: VLBlobsV2Interface[];
+
+  // string representing the base-64 or hex-encoded signature
+  // of the blob, using the ephemeral(signing) private key,
+  // for version 1
   signature?: string;
 }
 
 export interface ParsedVLInterface {
+  // unsigned integer representing the VL format version. Both
+  // 1 and 2 will be valid, with 1 the old format, and
+  // 2 the new.
   version?: number;
+
+  // string representing the publisher's hex-encoded master
+  // public key,
   PublicKey?: string;
+
+  // string representing the base-64 or hex-encoded manifest
+  // containing the publisher's master, signing public keys,
   manifest?: string;
+
+  // decoded manifest
   decodedManifest?: ManifestInterface;
+
+  // decoded blob for version 1
   blob?: ParsedVLBlobInterface;
+
+  // list of blobs for version 2
+  blobs?: ParsedVLBlobInterface[];
+
+  // string representing the base-64 or hex-encoded signature
+  // of the blob, using the ephemeral(signing) private key,
+  // for version 1
   signature?: string;
+
+  // error message if any was encountered during parsing of the VL
   error?: string;
 }
 
@@ -32,15 +74,66 @@ export interface ParsedValidatorInterface {
 }
 
 export interface VLBlobInterface {
+  // Unsigned integer sequence of this VL. The sequence number
+  // must increase monotonically. More specifically, validator lists with
+  // sequences less than the current are ignored. The special sequence
+  // UInt(-1) indicates that the master key is revoked,
   sequence?: number;
+
+  // Unsigned integer representing the ripple
+  // time point when the list will become valid,
+  // supported only by vl list version 2.
+  effective?: number;
+
+  // Unsigned integer representing the ripple time point when
+  // this list will no longer be valid,
   expiration?: number;
+
+  // Array of validator objects.
   validators?: ValidatorInterface[];
 }
 
 export interface ParsedVLBlobInterface {
+  // Unsigned integer sequence of this VL. The sequence number
+  // must increase monotonically. More specifically, validator lists with
+  // sequences less than the current are ignored. The special sequence
+  // UInt(-1) indicates that the master key is revoked,
   sequence?: number;
+
+  // Unsigned integer representing the ripple
+  // time point when the list will become valid,
+  // supported only by vl list version 2.
+  effective?: number;
+
+  // Unsigned integer representing the ripple time point when
+  // this list will no longer be valid,
   expiration?: number;
+
   validators?: ParsedValidatorInterface[];
+
+  // string representing the base-64 or hex-encoded signature
+  // of the blob, using the ephemeral(signing) private key,
+  // for version 2
+  signature?: string;
+
+  // string representing the base-64 or hex-encoded manifest
+  // containing the publisher's master, signing public keys,
+  // optional
+  manifest?: string;
+
+  // decoded manifest, optional
+  decodedManifest?: ManifestInterface;
+}
+
+export interface VLSecretKeysInterface {
+  privateKey: string;
+  publicKey: string;
+}
+
+export interface VLBlobsV2Interface {
+  blob?: string;
+  signature?: string;
+  manifest?: string;
 }
 
 export interface VLDataInterface {
@@ -69,6 +162,10 @@ export function parseVL(vl: VLInterface): ParsedVLInterface {
   const decoded: ParsedVLInterface = {};
 
   decoded.version = vl.version;
+  if (decoded.version !== 1 && decoded.version !== 2) {
+    decoded.error = "Invalid version";
+  }
+
   decoded.PublicKey = vl.public_key;
 
   decoded.manifest = vl.manifest;
@@ -90,50 +187,129 @@ export function parseVL(vl: VLInterface): ParsedVLInterface {
     decoded.error = "PublicKey does not match manifest";
   }
 
-  decoded.signature = vl.signature;
-  if (!decoded.error && !decoded.signature) {
-    decoded.error = "Signature (blob) is missing";
-  }
-
-  if (decoded.signature && decoded.decodedManifest.SigningPubKey && vl.blob) {
-    if (
-      !decoded.error &&
-      !Validator.verify(Buffer.from(vl.blob, "base64"), decoded.signature, decoded.decodedManifest.SigningPubKey)
-    ) {
-      decoded.error = "Signature is not valid";
+  if (decoded.version === 1) {
+    decoded.signature = vl.signature;
+    if (!decoded.error && !decoded.signature) {
+      decoded.error = "Signature (blob) is missing";
     }
-  }
 
-  const blob = decodeVLBlob(vl.blob as string);
-  error = isValidVLBlob(blob);
-  if (!decoded.error && error) {
-    decoded.error = error;
-  }
+    if (decoded.signature && decoded.decodedManifest.SigningPubKey && vl.blob) {
+      if (
+        !decoded.error &&
+        !Validator.verify(Buffer.from(vl.blob, "base64"), decoded.signature, decoded.decodedManifest.SigningPubKey)
+      ) {
+        decoded.error = "Signature is not valid";
+      }
+    }
 
-  decoded.blob = {
-    sequence: blob?.sequence,
-    expiration: blob?.expiration,
-    validators: [],
-  };
-
-  // validators
-  for (const validator of blob?.validators as ValidatorInterface[]) {
-    error = isValidVLBlobValidator(validator);
+    const blob = decodeVLBlob(vl.blob as string);
+    error = isValidVLBlob(blob);
     if (!decoded.error && error) {
       decoded.error = error;
     }
 
-    const validatorManifest = parseManifest(validator.manifest as string);
-    if (!decoded.error && validatorManifest.error) {
-      decoded.error = validatorManifest.error;
+    decoded.blob = {
+      sequence: blob?.sequence,
+      expiration: ledgerTimeToUnixTime(blob?.expiration as number),
+      validators: [],
+    };
+
+    // validators
+    for (const validator of blob?.validators as ValidatorInterface[]) {
+      error = isValidVLBlobValidator(validator);
+      if (!decoded.error && error) {
+        decoded.error = error;
+      }
+
+      const validatorManifest = parseManifest(validator.manifest as string);
+      if (!decoded.error && validatorManifest.error) {
+        decoded.error = validatorManifest.error;
+      }
+
+      if (decoded.blob.validators) {
+        decoded.blob.validators.push({
+          PublicKey: validator.validation_public_key,
+          manifest: validator.manifest,
+          decodedManifest: validatorManifest,
+        });
+      }
+    }
+  } else if (decoded.version === 2) {
+    const blobs = vl["blobs-v2"] as VLBlobsV2Interface[];
+    if (!decoded.blobs) {
+      decoded.blobs = [];
     }
 
-    if (decoded.blob.validators) {
-      decoded.blob.validators.push({
-        PublicKey: validator.validation_public_key,
-        manifest: validator.manifest,
-        decodedManifest: validatorManifest,
-      });
+    for (const blobInfo of blobs) {
+      const blob = decodeVLBlob(blobInfo.blob as string);
+      error = isValidVLBlob(blob);
+      if (!decoded.error && error) {
+        decoded.error = error;
+      }
+
+      const decodedBlob: ParsedVLBlobInterface = {
+        sequence: blob?.sequence,
+        expiration: ledgerTimeToUnixTime(blob?.expiration as number),
+        signature: blobInfo.signature,
+        validators: [],
+      };
+
+      if (blob?.effective) {
+        decodedBlob.effective = ledgerTimeToUnixTime(blob.effective);
+      }
+
+      if (blobInfo?.manifest) {
+        decodedBlob.manifest = blobInfo.manifest;
+        decodedBlob.decodedManifest = parseManifest(blobInfo.manifest as string);
+        if (!decoded.error && decodedBlob.decodedManifest.error) {
+          decoded.error = decodedBlob.decodedManifest.error;
+        }
+      }
+
+      const decodedManifest = decodedBlob.decodedManifest || decoded.decodedManifest;
+      if (
+        !decoded.error &&
+        decoded.PublicKey !== decodedManifest.PublicKey &&
+        decoded.PublicKey !== decodedManifest.SigningPubKey
+      ) {
+        decoded.error = "PublicKey does not match manifest";
+      }
+
+      if (!decoded.error && !decodedBlob.signature) {
+        decoded.error = "Signature (blob) is missing";
+      }
+
+      if (decodedBlob.signature && decodedManifest.SigningPubKey && blobInfo.blob) {
+        if (
+          !decoded.error &&
+          !Validator.verify(Buffer.from(blobInfo.blob, "base64"), decodedBlob.signature, decodedManifest.SigningPubKey)
+        ) {
+          decoded.error = "Signature is not valid";
+        }
+      }
+
+      // validators
+      for (const validator of blob?.validators as ValidatorInterface[]) {
+        error = isValidVLBlobValidator(validator);
+        if (!decoded.error && error) {
+          decoded.error = error;
+        }
+
+        const validatorManifest = parseManifest(validator.manifest as string);
+        if (!decoded.error && validatorManifest.error) {
+          decoded.error = validatorManifest.error;
+        }
+
+        if (decodedBlob.validators) {
+          decodedBlob.validators.push({
+            PublicKey: validator.validation_public_key,
+            manifest: validator.manifest,
+            decodedManifest: validatorManifest,
+          });
+        }
+      }
+
+      decoded.blobs.push(decodedBlob);
     }
   }
 
@@ -151,18 +327,38 @@ export function isValidVL(vl: VLInterface): string | null {
     return vlManifest.error;
   }
 
-  const blob: VLBlobInterface | null = decodeVLBlob(vl.blob as string);
-  error = isValidVLBlob(blob);
-  if (error) {
-    return error;
-  }
-
-  // validators
-  for (const validator of blob?.validators as ValidatorInterface[]) {
-    error = isValidVLBlobValidator(validator);
+  if (vl.version === 1) {
+    const blob: VLBlobInterface | null = decodeVLBlob(vl.blob as string);
+    error = isValidVLBlob(blob);
     if (error) {
       return error;
     }
+
+    // validators
+    for (const validator of blob?.validators as ValidatorInterface[]) {
+      error = isValidVLBlobValidator(validator);
+      if (error) {
+        return error;
+      }
+    }
+  } else if (vl.version === 2) {
+    const blobs = vl["blobs-v2"] as VLBlobsV2Interface[];
+    for (const blobInfo of blobs) {
+      const blob: VLBlobInterface | null = decodeVLBlob(blobInfo.blob as string);
+      error = isValidVLBlob(blob);
+      if (error) {
+        return error;
+      }
+
+      for (const validator of blob?.validators as ValidatorInterface[]) {
+        error = isValidVLBlobValidator(validator);
+        if (error) {
+          return error;
+        }
+      }
+    }
+  } else {
+    return "Invalid version";
   }
 
   return error;
@@ -174,21 +370,25 @@ function isValidVLFormat(vl: VLInterface): string | null {
 
   if (version === undefined) {
     error = "Version missing from vl";
-  }
-
-  if (public_key === undefined) {
+  } else if (public_key === undefined) {
     error = "Public key missing from vl";
-  }
-
-  if (manifest === undefined) {
+  } else if (manifest === undefined) {
     error = "Manifest missing from vl";
-  }
-
-  if (blob === undefined) {
-    error = "Blob missing from vl";
-  }
-
-  if (version !== 1) {
+  } else if (version === 1) {
+    if (blob === undefined) {
+      error = "Blob missing from vl";
+    }
+  } else if (version === 2) {
+    if (blob !== undefined) {
+      error = "Blob should not be present in vl version 2";
+    } else if (vl["blobs-v2"] === undefined) {
+      error = "blobs-v2 missing from vl";
+    } else if (!Array.isArray(vl["blobs-v2"])) {
+      error = "blobs-v2 should be an array";
+    } else if (vl["blobs-v2"].length === 0) {
+      error = "blobs-v2 should not be empty";
+    }
+  } else {
     error = "Version is not supported";
   }
 
