@@ -369,7 +369,8 @@ export async function submit(
 
   const result = response?.result;
   const resultGroup = result?.engine_result.slice(0, 3);
-  if (submitErrorsGroup.includes(resultGroup) && result?.engine_result !== "terQUEUED") {
+  // if tx is failed and not queued or kept
+  if ((submitErrorsGroup.includes(resultGroup) && result?.engine_result !== "terQUEUED") || result?.kept === false) {
     return result;
   }
 

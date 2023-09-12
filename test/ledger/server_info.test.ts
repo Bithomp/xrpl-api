@@ -100,6 +100,7 @@ describe("Client", () => {
         delete result.info.initial_sync_duration_us;
         delete result.info.load_factor_server;
         delete result.info.network_id;
+        delete result.info.ports;
         expect(Object.keys(result.info)).to.eql([
           "build_version",
           "complete_ledgers",
