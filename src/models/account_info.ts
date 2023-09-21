@@ -73,7 +73,7 @@ export const AccountFields = {
   NFTokenMinter: { name: "nftokenMinter" },
 };
 
-export interface AccountInfoResponse {
+export interface AccountInfoResponse extends AccountSignerListResponse {
   /**
    * The AccountRoot ledger object with this account's information, as stored
    * in the ledger.

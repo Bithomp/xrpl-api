@@ -68,7 +68,15 @@ export async function getAccountInfo(
     };
   }
 
-  return response?.result;
+  const result = response.result as AccountInfoResponse;
+
+  // clio could return signer_lists in top level or in account_data
+  if (result.signer_lists) {
+    // duplicate signer_lists to account_data, to prevent breaking changes and backward compatibility
+    result.account_data.signer_lists = result.signer_lists.slice();
+  }
+
+  return result;
 }
 
 /**
