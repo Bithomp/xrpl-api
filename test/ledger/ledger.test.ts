@@ -16,22 +16,26 @@ describe("Client", () => {
 
         delete result.warnings;
         delete result._nodepref;
+
         expect(Object.keys(result).sort()).to.eql(["ledger", "ledger_hash", "ledger_index", "validated"]);
+
+        // not present in clio response
+        delete result.ledger.accepted;
+        delete result.ledger.hash;
+        delete result.ledger.seqNum;
+        delete result.ledger.totalCoins;
+
         expect(Object.keys(result.ledger)).to.eql([
-          "accepted",
           "account_hash",
           "close_flags",
           "close_time",
           "close_time_human",
           "close_time_resolution",
           "closed",
-          "hash",
           "ledger_hash",
           "ledger_index",
           "parent_close_time",
           "parent_hash",
-          "seqNum",
-          "totalCoins",
           "total_coins",
           "transaction_hash",
         ]);
@@ -69,7 +73,7 @@ describe("Client", () => {
 
       it("by non existent ledger_index", async function () {
         const result: any = await Client.getLedger({
-          ledgerIndex: 1,
+          ledgerIndex: 32000,
         });
 
         expect(result).to.eql({
@@ -78,6 +82,19 @@ describe("Client", () => {
           error_message: "ledgerNotFound",
           status: "error",
           validated: undefined,
+        });
+      });
+
+      it("by non existent ledger_index with out of range", async function () {
+        this.timeout(15000);
+        const result: any = await Client.getLedger({
+          ledgerIndex: 8033825711099911,
+        });
+
+        expect(result).to.eql({
+          error: "lgrNotFound",
+          error_message: "ledger number is out of available range",
+          status: "error",
         });
       });
 

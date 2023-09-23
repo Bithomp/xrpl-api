@@ -10,6 +10,8 @@ const RECONNECT_TIMEOUT = 1000 * 5; // 5 sec
 const LEDGER_CLOSED_TIMEOUT = 1000 * 15; // 15 sec
 const SERVER_INFO_UPDATE_INTERVAL = 1000 * 60 * 5; // 5 min (in ms)
 
+const AVAILABLE_LEDGER_INDEX_WINDOW = 1000;
+
 export interface ConnectionOptions {
   logger?: any;
   timeout?: number; // request timeout
@@ -207,6 +209,38 @@ class Connection extends EventEmitter {
     }
 
     return this.networkID;
+  }
+
+  public isLedgerIndexAvailable(ledgerIndex: any): boolean {
+    // only for numbered ledger index
+    if (typeof ledgerIndex !== "number") {
+      return true;
+    }
+
+    // we don't have serverInfo to make sure ledger is available
+    if (!this.serverInfo?.complete_ledgers) {
+      return true;
+    }
+
+    // check if ledger is in complete_ledgers
+    const completeLedgers = this.serverInfo.complete_ledgers.split("-");
+
+    // complete_ledgers is not valid
+    if (completeLedgers.length !== 2) {
+      return true;
+    }
+    completeLedgers[0] = parseInt(completeLedgers[0], 10); // min
+    completeLedgers[1] = parseInt(completeLedgers[1], 10); // max
+
+    // check if ledger is in available windows
+    if (
+      ledgerIndex < completeLedgers[0] - AVAILABLE_LEDGER_INDEX_WINDOW ||
+      ledgerIndex > completeLedgers[1] + AVAILABLE_LEDGER_INDEX_WINDOW
+    ) {
+      return false;
+    }
+
+    return true;
   }
 
   private updateLatency(delta: number): void {

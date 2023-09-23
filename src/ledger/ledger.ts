@@ -42,13 +42,19 @@ export interface GetLedgerOptions {
  * }
  * @exception {Error}
  */
-export async function getLedger(
-  options: GetLedgerOptions = {}
-): Promise<object | FormattedLedger | ErrorResponse> {
+export async function getLedger(options: GetLedgerOptions = {}): Promise<object | FormattedLedger | ErrorResponse> {
   const formatted = options.legacy === true || options.formatted === true;
   const connection: any = options.connection || Client.findConnection("history");
   if (!connection) {
     throw new Error("There is no connection");
+  }
+
+  if (!connection.isLedgerIndexAvailable(options.ledgerIndex)) {
+    return {
+      status: "error",
+      error: "lgrNotFound",
+      error_message: "ledger number is out of available range",
+    };
   }
 
   const response: any = await connection.request({
