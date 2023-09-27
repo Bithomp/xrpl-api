@@ -3,7 +3,7 @@ import { Transaction } from "xrpl";
 import { expect } from "chai";
 
 // import * as enums from ".node_modules/ripple-binary-codec/dist/enums/src/enums/definitions.json";
-import * as hooksEnums from "../../config/hooks_definitions.json";
+import * as hooksEnums from "../../config/xahau_definitions.json";
 import { Client, Models, Wallet, xrpl } from "../../src/index";
 
 describe("Client", () => {
@@ -528,7 +528,7 @@ describe("Client", () => {
     });
   });
 
-  describe("beta", () => {
+  describe("xahau-test", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:beta"));
       await Client.connect();

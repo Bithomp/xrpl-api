@@ -52,13 +52,22 @@ export const FaucetNetworks = {
     url: "https://faucet.devnet.rippletest.net/accounts",
     format: "xrpl",
   },
+  // @deprecated name use xahau-test
   beta: {
-    // hooks-v3, beta are all the same
+    // hooks-testnet-v3, hooks-v3, beta, xahau-test are all the same
     // https://beta.bithomp.com
     url: "https://hooks-testnet-v3.xrpl-labs.com/newcreds",
     format: "xrpl-labs",
   },
+  // @deprecated name use xahau-test
   "hooks-testnet-v3": {
+    // hooks-testnet-v3, hooks-v3, beta, xahau-test are all the same
+    // https://beta.bithomp.com
+    url: "https://hooks-testnet-v3.xrpl-labs.com/newcreds",
+    format: "xrpl-labs",
+  },
+  "xahau-test": {
+    // hooks-testnet-v3, hooks-v3, beta, xahau-test are all the same
     // https://beta.bithomp.com
     url: "https://hooks-testnet-v3.xrpl-labs.com/newcreds",
     format: "xrpl-labs",

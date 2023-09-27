@@ -14,8 +14,8 @@ describe("Faucet", () => {
       });
     });
 
-    it("returns data for beta", () => {
-      expect(Faucet.getFaucetNetwork("beta")).to.eql({
+    it("returns data for xahau-test", () => {
+      expect(Faucet.getFaucetNetwork("xahau-test")).to.eql({
         url: "https://hooks-testnet-v3.xrpl-labs.com/newcreds",
         format: "xrpl-labs",
       });
@@ -133,8 +133,8 @@ describe("Faucet", () => {
       });
     });
 
-    it.skip("works with new address on beta xrpl network", async function () {
-      const res = await Faucet.foundWallet("beta");
+    it.skip("works with new address on xahau-test network", async function () {
+      const res = await Faucet.foundWallet("xahau-test");
 
       expect(res.hash).to.be.a("string");
       delete res.hash;

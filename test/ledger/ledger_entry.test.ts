@@ -4,7 +4,7 @@ import { expect } from "chai";
 import { Client } from "../../src/index";
 
 describe("Client", () => {
-  describe("beta", () => {
+  describe("xahau-test", () => {
     before(async function () {
       Client.setup(nconf.get("xrpl:connections:beta"));
       await Client.connect();
