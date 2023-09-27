@@ -3,6 +3,7 @@ import { Connection } from "../connection";
 import { LedgerIndex } from "../models/ledger";
 import { URITokenInterface } from "../models/account_uri_tokens";
 import { ErrorResponse } from "../models/base_model";
+import { removeUndefined } from "../common";
 
 const LEDGER_ENTRY_AMENDMENTS = "7DB0788C020F02780A673DC74757F23823FA3014C1866E72CC4CD8B226CD6EF4";
 
@@ -90,11 +91,14 @@ export async function getLedgerEntryURIToken(
     };
   }
 
-  return {
+  return removeUndefined({
+    Digest: response.node.Digest,
     Flags: response.node.Flags,
     Issuer: response.node.Issuer,
     Owner: response.node.Owner,
     URITokenID: response.node.index,
     URI: response.node.URI,
-  };
+    Amount: response.node.Amount,
+    Destination: response.node.Destination,
+  });
 }

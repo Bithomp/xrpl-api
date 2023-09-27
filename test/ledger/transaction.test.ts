@@ -183,6 +183,7 @@ describe("Client", () => {
         );
         delete result.warnings;
         delete result.inLedger;
+        delete result.ctid; // TODO: CTID is not not fully supported by all nodes
         expect(result).to.eql({
           date: 588708441,
           hash: "A34F834AA65C01458FC0AFCDDE7F8F433DAD7B871282E8511ECDEE8E28758DCE",
@@ -547,6 +548,7 @@ describe("Client", () => {
           networkID: 21338,
           memos: [{ type: "memo", format: "plain/text", data: "Bithomp test" }],
           secret: nconf.get("xrpl:accounts:activation:secret"),
+          fee: "0.000300",
         };
         const result: any = await Client.legacyPayment(payment, betaDefinitions);
 

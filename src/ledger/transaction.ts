@@ -231,6 +231,7 @@ interface LegacyPaymentInterface {
   networkID?: number;
   memos: FormattedMemo[];
   secret: string;
+  fee?: string;
 }
 
 export async function legacyPayment(
@@ -270,7 +271,12 @@ export async function legacyPayment(
   if ("error" in paymentParams) {
     return paymentParams as ErrorResponse;
   }
-  transaction.Fee = paymentParams.fee;
+
+  if (data.fee) {
+    transaction.Fee = xrpToDrops(data.fee);
+  } else {
+    transaction.Fee = paymentParams.fee;
+  }
   transaction.Sequence = paymentParams.sequence;
   transaction.LastLedgerSequence = paymentParams.lastLedgerSequence;
 
