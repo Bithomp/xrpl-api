@@ -21,6 +21,7 @@ describe("Client", () => {
         );
         delete result.warnings;
         delete result.inLedger;
+        delete result.ctid; // TODO: CTID is not not fully supported by all nodes
         expect(result).to.eql({
           Account: "rhUYLd2aUiUVYkBZYwTc5RYgCAbNHAwkeZ",
           Amount: "20000000",
