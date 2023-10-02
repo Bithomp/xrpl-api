@@ -98,7 +98,7 @@ function parseQuantities(metadata, valueParser) {
  *  Computes the complete list of every locked lockedBalance that changed in the ledger
  *  as a result of the given transaction.
  *
- *  @param {Object} metadata Transaction metada
+ *  @param {Object} metadata Transaction metadata
  *  @returns {Object} parsed lockedBalance changes
  */
 function parseLockedBalanceChanges(metadata) {
@@ -109,7 +109,7 @@ function parseLockedBalanceChanges(metadata) {
  *  Computes the complete list of every final locked lockedBalance in the ledger
  *  as a result of the given transaction.
  *
- *  @param {Object} metadata Transaction metada
+ *  @param {Object} metadata Transaction metadata
  *  @returns {Object} parsed balances
  */
 function parseFinalLockedBalances(metadata) {
