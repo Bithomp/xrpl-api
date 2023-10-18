@@ -24,6 +24,7 @@ export interface GetAccountNamespaceOptions {
  *       index: "0895F253FDCBFAF5A7DAE54AB2BF04A81595D360799036CAF36D2B0542C08DC7",
  *     },
  *   ]
+ *   namespace_id: "0000000000000000000000000000000000000000000000000000000000000000"
  *   validated: true,
  * }
  * @exception {Error}
