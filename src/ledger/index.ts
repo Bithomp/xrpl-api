@@ -1,5 +1,6 @@
 export * from "./account_info";
 export * from "./account_lines";
+export * from "./account_namespace";
 export * from "./account_nfts";
 export * from "./account_objects";
 export * from "./account_offers";

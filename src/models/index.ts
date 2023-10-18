@@ -5,6 +5,7 @@ export * from "./ledger";
 export * from "./manifest";
 export * from "./transaction";
 export * from "./account_lines";
+export * from "./account_namespace";
 export * from "./account_uri_tokens";
 export * from "./vl";
 
