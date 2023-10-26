@@ -80,7 +80,7 @@ class URITokenSellOfferChanges {
                 status: "removed",
                 uritokenID,
                 amount: node.PreviousFields.Amount,
-                destination: node.PreviousFields.Amount,
+                destination: node.PreviousFields.Destination,
               });
             }
 
