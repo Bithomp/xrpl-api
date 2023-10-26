@@ -1020,13 +1020,14 @@ describe("Models", () => {
           nftokenChanges: {},
           nftokenOfferChanges: {},
           uritokenChanges: {
-            DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB: {
-              status: "added",
-              uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
-              uri: "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D",
-              issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
-              owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
-            },
+            r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
+              {
+                status: "added",
+                uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
+                uri: "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D",
+                issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+              },
+            ],
           },
           affectedObjects: {
             uritokens: {
@@ -1072,14 +1073,15 @@ describe("Models", () => {
           nftokenChanges: {},
           nftokenOfferChanges: {},
           uritokenChanges: {
-            "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
-              status: "added",
-              flags: 1,
-              uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
-              uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
-              issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
-              owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
-            },
+            r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
+              {
+                status: "added",
+                flags: 1,
+                uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+                uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
+                issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+              },
+            ],
           },
           affectedObjects: {
             uritokens: {
@@ -1125,16 +1127,25 @@ describe("Models", () => {
           nftokenChanges: {},
           nftokenOfferChanges: {},
           uritokenChanges: {
-            "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
-              status: "added",
-              flags: 1,
-              uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
-              uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
-              issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
-              owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
-              amount: "1000000",
-              destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
-            },
+            r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
+              {
+                status: "added",
+                flags: 1,
+                uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+                uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
+                issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+              },
+            ],
+          },
+          uritokenSellOfferChanges: {
+            r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
+              {
+                status: "added",
+                uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+                amount: "1000000",
+                destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+              },
+            ],
           },
           affectedObjects: {
             uritokens: {

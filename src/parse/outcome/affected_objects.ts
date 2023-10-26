@@ -1,7 +1,6 @@
 import { parseNFTokenChanges } from "./nftoken_changes";
 import { parseNFTokenOfferChanges } from "./nftoken_offer_changes";
 import { parseNFTokenID } from "../../models/account_nfts";
-import { parseURITokenChanges } from "./uritoken_changes";
 import parseNFTokenFlags from "../ledger/nftoken-flags";
 import parseNFTOfferFlags from "../ledger/nftoken-offer-flags";
 import parseURITokenFlags from "../ledger/uri-token-flags";
@@ -10,6 +9,7 @@ import { removeUndefined } from "../../common";
 interface AffectedObjectsInterface {
   nftokens?: any;
   nftokenOffers?: any;
+  uritokens?: any;
 }
 
 function parseAffectedObjects(tx: any): AffectedObjectsInterface | undefined {
@@ -21,14 +21,12 @@ class AffectedObjects {
   public readonly affectedObjects: any;
   private nftChanges?: any;
   private nftOfferChanges?: any;
-  private uritokenChanges?: any;
 
   public constructor(tx: any) {
     this.tx = tx;
     this.affectedObjects = {};
     this.nftChanges = undefined;
     this.nftOfferChanges = undefined;
-    this.uritokenChanges = undefined;
   }
 
   public call(): AffectedObjectsInterface | undefined {
@@ -61,16 +59,6 @@ class AffectedObjects {
     this.nftOfferChanges = parseNFTokenOfferChanges(this.tx);
 
     return this.nftOfferChanges;
-  }
-
-  private getURITokenChanges(): any {
-    if (this.uritokenChanges) {
-      return this.uritokenChanges;
-    }
-
-    this.uritokenChanges = parseURITokenChanges(this.tx);
-
-    return this.uritokenChanges;
   }
 
   private parseNFTokens(): void {
@@ -152,20 +140,38 @@ class AffectedObjects {
 
   private parseURITokenChanges(): void {
     const uritokens = {};
-    const uritokenChanges = this.getURITokenChanges();
 
-    for (const uritokenID in uritokenChanges) {
-      const uritokenChange = uritokenChanges[uritokenID];
-      uritokens[uritokenChange.uritokenID] = removeUndefined({
-        uritokenID: uritokenChange.uritokenID,
-        flags: parseURITokenFlags(uritokenChange.flags),
-        uri: uritokenChange.uri,
-        digest: uritokenChange.digest,
-        issuer: uritokenChange.issuer,
-        owner: uritokenChange.owner,
-        amount: uritokenChange.amount,
-        destination: uritokenChange.destination,
-      });
+    for (const affectedNode of this.tx.meta.AffectedNodes) {
+      const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
+      if (node?.LedgerEntryType === "URIToken" && node?.LedgerIndex) {
+        const uritokenID = node.LedgerIndex;
+
+        if (affectedNode.CreatedNode) {
+          uritokens[uritokenID] = removeUndefined({
+            uritokenID,
+            flags: parseURITokenFlags(node.NewFields.Flags),
+            uri: node.NewFields.URI,
+            digest: node.NewFields.Digest,
+            issuer: node.NewFields.Issuer,
+            owner: node.NewFields.Owner,
+            amount: node.NewFields.Amount,
+            destination: node.NewFields.Destination,
+          });
+        }
+
+        if (affectedNode.ModifiedNode || affectedNode.DeletedNode) {
+          uritokens[uritokenID] = removeUndefined({
+            uritokenID,
+            flags: parseURITokenFlags(node.FinalFields.Flags),
+            uri: node.FinalFields.URI,
+            digest: node.FinalFields.Digest,
+            issuer: node.FinalFields.Issuer,
+            owner: node.FinalFields.Owner,
+            amount: node.FinalFields.Amount,
+            destination: node.FinalFields.Destination,
+          });
+        }
+      }
     }
 
     if (Object.keys(uritokens).length > 0) {
