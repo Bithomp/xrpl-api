@@ -1370,7 +1370,7 @@ describe("Models", () => {
       });
     });
 
-    it("URITokenCreateSellOffer with offer update", function () {
+    it("URITokenCreateSellOffer with offer amount update", function () {
       const tx = require("../examples/responses/URITokenCreateSellOffer2.json");
       const result: any = Models.getTxDetails(tx, false);
 
@@ -1423,6 +1423,65 @@ describe("Models", () => {
         sequence: 7751099,
         specification: {
           uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
+          amount: "1000000",
+          destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+        },
+        type: "uritokenCreateSellOffer",
+      });
+    });
+
+    it("URITokenCreateSellOffer with offer destination update", function () {
+      const tx = require("../examples/responses/URITokenCreateSellOffer3.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+        id: "310BA956BFE82BC1FB330E07FB941EC3507277ED4BE43ABC1CFB3CD86FDDE5CD",
+        outcome: {
+          balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
+          lockedBalanceChanges: {},
+          fee: "0.001",
+          indexInLedger: 1,
+          ledgerVersion: 7761676,
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
+          uritokenSellOfferChanges: {
+            r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
+              // {
+              //   status: "removed",
+              //   uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+              //   amount: "1000000",
+              // },
+              {
+                status: "added",
+                uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+                amount: "1000000",
+                destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+              },
+            ],
+          },
+          affectedObjects: {
+            uritokens: {
+              "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
+                flags: {
+                  burnable: true,
+                },
+                uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+                uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
+                issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+                owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+                amount: "1000000",
+                destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+              },
+            },
+          },
+          orderbookChanges: {},
+          result: "tesSUCCESS",
+          timestamp: "2023-10-26T17:33:21.000Z",
+        },
+        sequence: 7751118,
+        specification: {
+          uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
           amount: "1000000",
           destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
         },

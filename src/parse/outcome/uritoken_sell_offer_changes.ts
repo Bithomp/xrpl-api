@@ -76,6 +76,8 @@ class URITokenSellOfferChanges {
             node.PreviousFields.Amount !== node.FinalFields.Amount ||
             node.PreviousFields.Destination !== node.FinalFields.Destination
           ) {
+            // NOTE: if URIToken went from public sale to private, without amount modification, it will ne be seen as a change,
+            // since the previous fields will be empty the same as it looks like then it was created new sell offer
             if (node.PreviousFields.Amount || node.PreviousFields.Destination) {
               let owner: string;
               if (node.PreviousFields.hasOwnProperty("Owner")) {
