@@ -1003,6 +1003,170 @@ describe("Models", () => {
         },
       });
     });
+
+    it.only("URITokenMint", function () {
+      const tx = require("../examples/responses/URITokenMint.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+        id: "A4781D3D952E995CEEAA11752ACEF206750674A6741569695F0B0EAE86C181A4",
+        outcome: {
+          balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
+          lockedBalanceChanges: {},
+          fee: "0.001",
+          indexInLedger: 1,
+          ledgerVersion: 7751960,
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
+          uritokenChanges: {
+            DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB: {
+              status: "added",
+              uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
+              uri: "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D",
+              issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+              owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            },
+          },
+          affectedObjects: {
+            uritokens: {
+              DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB: {
+                flags: {
+                  burnable: false,
+                },
+                uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
+                uri: "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D",
+                issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+                owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+              },
+            },
+          },
+          orderbookChanges: {},
+          result: "tesSUCCESS",
+          timestamp: "2023-10-26T09:25:21.000Z",
+        },
+        sequence: 7751097,
+        specification: {
+          flags: {
+            burnable: false,
+          },
+          uri: "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D",
+        },
+        type: "uritokenMint",
+      });
+    });
+
+    it.only("URITokenMint with flags", function () {
+      const tx = require("../examples/responses/URITokenMint2.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+        id: "F9A510DA7C94F225CF8CF32C3BD5D9BA0C61ED8B1AF2C9AABD6699F88F476E5F",
+        outcome: {
+          balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
+          lockedBalanceChanges: {},
+          fee: "0.001",
+          indexInLedger: 0,
+          ledgerVersion: 7753203,
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
+          uritokenChanges: {
+            "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
+              status: "added",
+              flags: 1,
+              uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+              uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
+              issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+              owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            },
+          },
+          affectedObjects: {
+            uritokens: {
+              "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
+                flags: {
+                  burnable: true,
+                },
+                uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+                uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
+                issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+                owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+              },
+            },
+          },
+          orderbookChanges: {},
+          result: "tesSUCCESS",
+          timestamp: "2023-10-26T10:28:02.000Z",
+        },
+        sequence: 7751104,
+        specification: {
+          flags: {
+            burnable: true,
+          },
+          uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
+        },
+        type: "uritokenMint",
+      });
+    });
+
+    it.only("URITokenMint with offer", function () {
+      const tx = require("../examples/responses/URITokenMint3.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+        id: "050CD1F08B32B7C83F87794C02ED54280EA9D1C0CB831224647938476EBA47E6",
+        outcome: {
+          balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
+          lockedBalanceChanges: {},
+          fee: "0.001",
+          indexInLedger: 0,
+          ledgerVersion: 7754301,
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
+          uritokenChanges: {
+            "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
+              status: "added",
+              flags: 1,
+              uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+              uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
+              issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+              owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+              amount: "1000000",
+              destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+            },
+          },
+          affectedObjects: {
+            uritokens: {
+              "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
+                flags: {
+                  burnable: true,
+                },
+                uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+                uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
+                issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+                owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+                amount: "1000000",
+                destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+              },
+            },
+          },
+          orderbookChanges: {},
+          result: "tesSUCCESS",
+          timestamp: "2023-10-26T11:23:03.000Z",
+        },
+        sequence: 7751113,
+        specification: {
+          flags: {
+            burnable: true,
+          },
+          amount: "1000000",
+          destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+          uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
+        },
+        type: "uritokenMint",
+      });
+    });
   });
 
   describe("getAccountTxDetails", () => {

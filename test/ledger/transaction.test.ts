@@ -3,7 +3,7 @@ import { Transaction } from "xrpl";
 import { expect } from "chai";
 
 // import * as enums from ".node_modules/ripple-binary-codec/dist/enums/src/enums/definitions.json";
-import * as hooksEnums from "../../config/xahau_definitions.json";
+import * as xahauEnums from "../../config/xahau_definitions.json";
 import { Client, Models, Wallet, xrpl } from "../../src/index";
 
 describe("Client", () => {
@@ -536,7 +536,7 @@ describe("Client", () => {
 
     describe("legacyPayment", () => {
       it("is OK", async function () {
-        const betaDefinitions = new Wallet.XrplDefinitions(hooksEnums);
+        const xahauDefinitions = new Wallet.XrplDefinitions(xahauEnums);
 
         this.timeout(15000);
         const payment = {
@@ -551,7 +551,7 @@ describe("Client", () => {
           secret: nconf.get("xrpl:accounts:activation:secret"),
           fee: "0.000300",
         };
-        const result: any = await Client.legacyPayment(payment, betaDefinitions);
+        const result: any = await Client.legacyPayment(payment, xahauDefinitions);
 
         expect(result.error).to.eq(undefined);
         expect(result.validated).to.eq(true);

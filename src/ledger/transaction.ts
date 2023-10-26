@@ -23,7 +23,7 @@ import {
   decodeCTID,
 } from "../models/transaction";
 
-import { singTransaction } from "../wallet";
+import { signTransaction } from "../wallet";
 
 const submitErrorsGroup = ["tem", "tef", "tel", "ter"];
 const FEE_LIMIT = 0.5; // XRP
@@ -282,7 +282,7 @@ export async function legacyPayment(
 
   // sign transaction
   const wallet = xrpl.Wallet.fromSeed(data.secret);
-  const signedTransaction = singTransaction(wallet, transaction as Transaction, false, definitions).tx_blob;
+  const signedTransaction = signTransaction(wallet, transaction as Transaction, false, definitions).tx_blob;
 
   // submit transaction
   return await submit(signedTransaction, { connection, definitions });
@@ -302,6 +302,11 @@ export async function getAccountPaymentParams(
   connection?: Connection
 ): Promise<AccountPaymentParamsInterface | ErrorResponse> {
   try {
+    connection = connection || Client.findConnection("submit") || undefined;
+    if (!connection) {
+      throw new Error("There is no connection");
+    }
+
     const feePromise = new Promise(async (resolve) => {
       const baseFee = await Client.getFee({ connection });
       let fee = parseFloat(baseFee as string);
@@ -337,6 +342,7 @@ export async function getAccountPaymentParams(
       fee: result[0] as string,
       sequence: result[1] as number,
       lastLedgerSequence: result[2] as number,
+      networkID: connection.getNetworkID(),
     };
   } catch (e: any) {
     return {

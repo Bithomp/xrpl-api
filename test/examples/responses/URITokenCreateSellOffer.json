@@ -1,0 +1,59 @@
+{
+  "Account": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+  "Amount": "4000000",
+  "Destination": "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+  "Fee": "1000",
+  "LastLedgerSequence": 7752096,
+  "NetworkID": 21338,
+  "Sequence": 7751098,
+  "SigningPubKey": "029B6DD981A0B3ABC184CD7492268E0CBCEF43ADA9245E0919A6748E5B320D432C",
+  "TransactionType": "URITokenCreateSellOffer",
+  "TxnSignature": "30450221008A3C9E23B2AF6F9C3C4D6DEBF8CC035292C8CD82B9FDDEC251425C3B6EBBFFCF02203F045591104723379A59BC296DCEA40A6E0B120A964FCC1620C6ECB979302521",
+  "URITokenID": "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
+  "ctid": "C076499D0002535A",
+  "date": 751627930,
+  "hash": "5BC37EB489C35673D3E35F10821ADF56C6C7676D701FCCFA43DBC5E3D748C38E",
+  "inLedger": 7752093,
+  "ledger_index": 7752093,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            "AccountIndex": "1134",
+            "Balance": "1999998000",
+            "Flags": 0,
+            "OwnerCount": 1,
+            "Sequence": 7751099
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "9E2B7B1C87ED018FB6DAC8E76899263CDBE1C8EA91E977D5464A54DC3818F04B",
+          "PreviousFields": {
+            "Balance": "1999999000",
+            "Sequence": 7751098
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Amount": "4000000",
+            "Destination": "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+            "Flags": 0,
+            "Issuer": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            "Owner": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            "OwnerNode": "0",
+            "URI": "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D"
+          },
+          "LedgerEntryType": "URIToken",
+          "LedgerIndex": "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
+          "PreviousFields": {}
+        }
+      }
+    ],
+    "TransactionIndex": 2,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

@@ -5,6 +5,7 @@ import {
   parseOrderbookChanges,
   parseNFTokenChanges,
   parseNFTokenOfferChanges,
+  parseURITokenChanges,
   parseAffectedObjects,
 } from "./outcome/index";
 
@@ -105,6 +106,7 @@ function parseOutcome(tx: any): Outcome | undefined {
   const channelChanges = parseChannelChanges(metadata);
   const nftokenChanges = parseNFTokenChanges(tx);
   const nftokenOfferChanges = parseNFTokenOfferChanges(tx);
+  const uritokenChanges = parseURITokenChanges(tx);
   const affectedObjects = parseAffectedObjects(tx);
 
   removeEmptyCounterpartyInBalanceChanges(balanceChanges);
@@ -121,6 +123,7 @@ function parseOutcome(tx: any): Outcome | undefined {
     channelChanges,
     nftokenChanges,
     nftokenOfferChanges,
+    uritokenChanges,
     affectedObjects: affectedObjects ? removeUndefined(affectedObjects) : undefined,
     ledgerVersion: tx.ledger_index,
     indexInLedger: tx.meta.TransactionIndex,

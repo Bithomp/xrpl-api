@@ -1,0 +1,41 @@
+{
+  "Account": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+  "Fee": "1000",
+  "LastLedgerSequence": 7753877,
+  "NetworkID": 21338,
+  "Sequence": 7751108,
+  "SigningPubKey": "029B6DD981A0B3ABC184CD7492268E0CBCEF43ADA9245E0919A6748E5B320D432C",
+  "TransactionType": "URITokenCancelSellOffer",
+  "TxnSignature": "30450221008E11A37FAEC3552728859F5966E8A46B0DBB8567EEB8D474B9C827340B7E3017022045C7F86D4CAAC45B14354BFF157548B81E05A0E6C77641A45EFC88429720C81C",
+  "URITokenID": "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+  "ctid": "C07650920000535A",
+  "date": 751633301,
+  "hash": "081A25C1148E07CE1474BC7F308D9BB4AFBA412D0FD24B9022DC3049D5AE3A04",
+  "inLedger": 7753874,
+  "ledger_index": 7753874,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            "AccountIndex": "1134",
+            "Balance": "2000988000",
+            "Flags": 0,
+            "OwnerCount": 2,
+            "Sequence": 7751109
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "9E2B7B1C87ED018FB6DAC8E76899263CDBE1C8EA91E977D5464A54DC3818F04B",
+          "PreviousFields": {
+            "Balance": "2000989000",
+            "Sequence": 7751108
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

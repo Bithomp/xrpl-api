@@ -42,6 +42,7 @@ export interface AccountPaymentParamsInterface {
   fee?: string;
   sequence?: number;
   lastLedgerSequence?: number;
+  networkID?: number;
 }
 
 export function getTxDetails(tx: TransactionResponse, includeRawTransaction: boolean): FormattedTransaction {

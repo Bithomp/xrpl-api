@@ -77,11 +77,12 @@ export function checksumClassicAddress(buffer: Buffer): Buffer {
  * @throws ValidationError if the transaction is already signed or does not encode/decode to same result.
  * @throws XrplError if the issued currency being signed is XRP ignoring case.
  */
-export function singTransaction(
+export function signTransaction(
   wallet: Wallet,
   transaction: Transaction,
   multisign?: boolean | string,
-  definitions?: XrplDefinitionsBase
+  definitions?: XrplDefinitionsBase,
+  validateTx?: boolean
 ): {
   tx_blob: string;
   hash: string;
@@ -105,9 +106,12 @@ export function singTransaction(
 
   /*
    * This will throw a more clear error for JS users if the supplied transaction has incorrect formatting
+  NOTE: it does not support Xahau txs yet
    */
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- validate does not accept Transaction type
-  validate(tx as unknown as Record<string, unknown>);
+  if (validateTx !== false) {
+    validate(tx as unknown as Record<string, unknown>);
+  }
 
   const txToSignAndEncode = { ...tx };
 

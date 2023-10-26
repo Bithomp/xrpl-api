@@ -1,0 +1,58 @@
+{
+  "Account": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+  "Fee": "1000",
+  "LastLedgerSequence": 7753891,
+  "NetworkID": 21338,
+  "Sequence": 7751110,
+  "SigningPubKey": "029B6DD981A0B3ABC184CD7492268E0CBCEF43ADA9245E0919A6748E5B320D432C",
+  "TransactionType": "URITokenCancelSellOffer",
+  "TxnSignature": "3044022050099717205604F5AFEDC06BD8D8CE0145C62C9187F918ABFB85F8F6D9019C8302203D820DD24E16621897DDCE8E137C9D83F63198BFA24220CAF73DF6FFF07924A9",
+  "URITokenID": "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+  "ctid": "C076509F0000535A",
+  "date": 751633341,
+  "hash": "7B9F19473383785886C1C6A4CCA3DC8C8FCC5FECA759B288EBE60C806560F555",
+  "inLedger": 7753887,
+  "ledger_index": 7753887,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 1,
+            "Issuer": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            "Owner": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            "OwnerNode": "0",
+            "URI": "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D"
+          },
+          "LedgerEntryType": "URIToken",
+          "LedgerIndex": "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+          "PreviousFields": {
+            "Amount": "1000000",
+            "Destination": "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM"
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            "AccountIndex": "1134",
+            "Balance": "2000986000",
+            "Flags": 0,
+            "OwnerCount": 2,
+            "Sequence": 7751111
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "9E2B7B1C87ED018FB6DAC8E76899263CDBE1C8EA91E977D5464A54DC3818F04B",
+          "PreviousFields": {
+            "Balance": "2000987000",
+            "Sequence": 7751110
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

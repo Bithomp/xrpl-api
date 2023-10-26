@@ -1,8 +1,11 @@
 import { parseNFTokenChanges } from "./nftoken_changes";
 import { parseNFTokenOfferChanges } from "./nftoken_offer_changes";
 import { parseNFTokenID } from "../../models/account_nfts";
+import { parseURITokenChanges } from "./uritoken_changes";
 import parseNFTokenFlags from "../ledger/nftoken-flags";
 import parseNFTOfferFlags from "../ledger/nftoken-offer-flags";
+import parseURITokenFlags from "../ledger/uri-token-flags";
+import { removeUndefined } from "../../common";
 
 interface AffectedObjectsInterface {
   nftokens?: any;
@@ -18,17 +21,20 @@ class AffectedObjects {
   public readonly affectedObjects: any;
   private nftChanges?: any;
   private nftOfferChanges?: any;
+  private uritokenChanges?: any;
 
   public constructor(tx: any) {
     this.tx = tx;
     this.affectedObjects = {};
     this.nftChanges = undefined;
     this.nftOfferChanges = undefined;
+    this.uritokenChanges = undefined;
   }
 
   public call(): AffectedObjectsInterface | undefined {
     this.parseNFTokens();
     this.parseNFTokenOffers();
+    this.parseURITokenChanges();
 
     if (Object.keys(this.affectedObjects).length > 0) {
       return this.affectedObjects;
@@ -55,6 +61,16 @@ class AffectedObjects {
     this.nftOfferChanges = parseNFTokenOfferChanges(this.tx);
 
     return this.nftOfferChanges;
+  }
+
+  private getURITokenChanges(): any {
+    if (this.uritokenChanges) {
+      return this.uritokenChanges;
+    }
+
+    this.uritokenChanges = parseURITokenChanges(this.tx);
+
+    return this.uritokenChanges;
   }
 
   private parseNFTokens(): void {
@@ -131,6 +147,29 @@ class AffectedObjects {
 
     if (Object.keys(nftokenOffers).length > 0) {
       this.affectedObjects.nftokenOffers = nftokenOffers;
+    }
+  }
+
+  private parseURITokenChanges(): void {
+    const uritokens = {};
+    const uritokenChanges = this.getURITokenChanges();
+
+    for (const uritokenID in uritokenChanges) {
+      const uritokenChange = uritokenChanges[uritokenID];
+      uritokens[uritokenChange.uritokenID] = removeUndefined({
+        uritokenID: uritokenChange.uritokenID,
+        flags: parseURITokenFlags(uritokenChange.flags),
+        uri: uritokenChange.uri,
+        digest: uritokenChange.digest,
+        issuer: uritokenChange.issuer,
+        owner: uritokenChange.owner,
+        amount: uritokenChange.amount,
+        destination: uritokenChange.destination,
+      });
+    }
+
+    if (Object.keys(uritokens).length > 0) {
+      this.affectedObjects.uritokens = uritokens;
     }
   }
 }
