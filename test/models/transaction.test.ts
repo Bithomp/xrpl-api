@@ -1004,7 +1004,7 @@ describe("Models", () => {
       });
     });
 
-    it.only("URITokenMint", function () {
+    it("URITokenMint", function () {
       const tx = require("../examples/responses/URITokenMint.json");
       const result: any = Models.getTxDetails(tx, false);
 
@@ -1057,7 +1057,7 @@ describe("Models", () => {
       });
     });
 
-    it.only("URITokenMint with flags", function () {
+    it("URITokenMint with flags", function () {
       const tx = require("../examples/responses/URITokenMint2.json");
       const result: any = Models.getTxDetails(tx, false);
 
@@ -1111,7 +1111,7 @@ describe("Models", () => {
       });
     });
 
-    it.only("URITokenMint with offer", function () {
+    it("URITokenMint with offer", function () {
       const tx = require("../examples/responses/URITokenMint3.json");
       const result: any = Models.getTxDetails(tx, false);
 
@@ -1176,6 +1176,69 @@ describe("Models", () => {
           uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
         },
         type: "uritokenMint",
+      });
+    });
+
+    it.only("URITokenBurn with offer", function () {
+      const tx = require("../examples/responses/URITokenBurn.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+        id: "89AA6076C77C6EFDB890A11B617DD3923EB524FE84AF1190A66E8CB6ACF021C8",
+        outcome: {
+          balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
+          lockedBalanceChanges: {},
+          fee: "0.001",
+          indexInLedger: 0,
+          ledgerVersion: 7753249,
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
+          uritokenChanges: {
+            r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
+              {
+                status: "removed",
+                flags: 1,
+                uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+                uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
+                issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+              },
+            ],
+          },
+          uritokenSellOfferChanges: {
+            r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
+              {
+                status: "removed",
+                uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+                amount: "1000000",
+                destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+              },
+            ],
+          },
+          affectedObjects: {
+            uritokens: {
+              "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
+                flags: {
+                  burnable: true,
+                },
+                uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+                uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
+                issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+                owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+                amount: "1000000",
+                destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+              },
+            },
+          },
+          orderbookChanges: {},
+          result: "tesSUCCESS",
+          timestamp: "2023-10-26T10:30:21.000Z",
+        },
+        sequence: 7751106,
+        specification: {
+          uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+        },
+        type: "uritokenBurn",
       });
     });
   });

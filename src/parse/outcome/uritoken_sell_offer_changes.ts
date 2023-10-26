@@ -67,43 +67,43 @@ class URITokenSellOfferChanges {
               destination: node.NewFields.Destination,
             });
           }
+        }
 
-          // modify an existing URIToken entry, create an offer, cancel an offer, change an owner, or change an offer
-          if (affectedNode.ModifiedNode) {
-            if (
-              node.PreviousFields.Amount !== node.FinalFields.Amount ||
-              node.PreviousFields.Destination !== node.FinalFields.Destination
-            ) {
-              if (node.PreviousFields.Amount || node.PreviousFields.Destination) {
-                this.addChange(node.PreviousFields.Owner, {
-                  status: "removed",
-                  uritokenID,
-                  amount: node.PreviousFields.Amount,
-                  destination: node.PreviousFields.Amount,
-                });
-              }
-
-              if (node.FinalFields.Amount || node.FinalFields.Destination) {
-                this.addChange(node.FinalFields.Owner, {
-                  status: "added",
-                  uritokenID,
-                  amount: node.FinalFields.Amount,
-                  destination: node.FinalFields.Destination,
-                });
-              }
+        // modify an existing URIToken entry, create an offer, cancel an offer, change an owner, or change an offer
+        if (affectedNode.ModifiedNode) {
+          if (
+            node.PreviousFields.Amount !== node.FinalFields.Amount ||
+            node.PreviousFields.Destination !== node.FinalFields.Destination
+          ) {
+            if (node.PreviousFields.Amount || node.PreviousFields.Destination) {
+              this.addChange(node.PreviousFields.Owner, {
+                status: "removed",
+                uritokenID,
+                amount: node.PreviousFields.Amount,
+                destination: node.PreviousFields.Amount,
+              });
             }
-          }
 
-          // delete an existing URIToken entry with or without an offer
-          if (affectedNode.DeletedNode) {
             if (node.FinalFields.Amount || node.FinalFields.Destination) {
               this.addChange(node.FinalFields.Owner, {
-                status: "removed",
+                status: "added",
                 uritokenID,
                 amount: node.FinalFields.Amount,
                 destination: node.FinalFields.Destination,
               });
             }
+          }
+        }
+
+        // delete an existing URIToken entry with or without an offer
+        if (affectedNode.DeletedNode) {
+          if (node.FinalFields.Amount || node.FinalFields.Destination) {
+            this.addChange(node.FinalFields.Owner, {
+              status: "removed",
+              uritokenID,
+              amount: node.FinalFields.Amount,
+              destination: node.FinalFields.Destination,
+            });
           }
         }
       }
