@@ -75,7 +75,7 @@ class URITokenChanges {
 
         // modify an existing URIToken entry, create an offer, cancel an offer, change an owner, or change an offer
         if (affectedNode.ModifiedNode) {
-          if (node.PreviousFields.Owner !== node.FinalFields.Owner) {
+          if (node.PreviousFields.Owner && node.PreviousFields.Owner !== node.FinalFields.Owner) {
             this.addChange(node.PreviousFields.Owner, {
               status: "removed",
               flags: node.FinalFields.Flags,

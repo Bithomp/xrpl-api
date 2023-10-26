@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { removeUndefined } from "../../common";
+import { Amount } from "../../v1/common/types/objects";
 
 export function parseURITokenSellOfferChanges(tx: object): object {
   return new URITokenSellOfferChanges(tx).call();
@@ -8,7 +9,7 @@ export function parseURITokenSellOfferChanges(tx: object): object {
 interface AccountURITokenSellOfferChangesInterface {
   status: string; // "added" | "removed"
   uritokenID: string;
-  amount?: string;
+  amount?: Amount;
   destination?: string;
 }
 
@@ -76,11 +77,25 @@ class URITokenSellOfferChanges {
             node.PreviousFields.Destination !== node.FinalFields.Destination
           ) {
             if (node.PreviousFields.Amount || node.PreviousFields.Destination) {
-              this.addChange(node.PreviousFields.Owner, {
+              let owner: string;
+              if (node.PreviousFields.hasOwnProperty("Owner")) {
+                owner = node.PreviousFields.Owner;
+              } else {
+                owner = node.FinalFields.Owner;
+              }
+
+              let destination: string;
+              if (node.PreviousFields.hasOwnProperty("Destination")) {
+                destination = node.PreviousFields.Destination;
+              } else {
+                destination = node.FinalFields.Destination;
+              }
+
+              this.addChange(owner, {
                 status: "removed",
                 uritokenID,
                 amount: node.PreviousFields.Amount,
-                destination: node.PreviousFields.Destination,
+                destination,
               });
             }
 

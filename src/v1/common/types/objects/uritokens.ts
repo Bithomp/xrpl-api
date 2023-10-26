@@ -1,5 +1,6 @@
 import { URITokenMintFlags } from "../../../../models/transactions/URITokenMint";
 import { FormattedBaseSpecification } from "./specification";
+import { Amount } from "../../../../types";
 
 export const URITokenFlagsKeys = {
   burnable: URITokenMintFlags.tfBurnable
@@ -22,7 +23,7 @@ export type FormattedURITokenMintSpecification = {
   uri?: string;
   flags?: URITokenFlagsKeysInterface;
   digest?: string;
-  amount?: string;
+  amount: Amount;
   destination?: string;
 } & FormattedBaseSpecification;
 

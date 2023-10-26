@@ -1,5 +1,6 @@
 import { ledgerTimeToUnixTime } from "../../models/ledger";
 import { removeUndefined } from "../../common";
+import { Amount } from "../../v1/common/types/objects";
 
 function parseNFTokenOfferChanges(tx: object): object {
   return new NFTokenOfferChanges(tx).call();
@@ -60,7 +61,7 @@ class NFTokenOfferChanges {
 
   private parseNFTokensCreateOfferNode(affectedNode: any): void {
     const status: string = "created";
-    const amount: string = affectedNode.CreatedNode.NewFields.Amount;
+    const amount: Amount = affectedNode.CreatedNode.NewFields.Amount;
     const flags: string = affectedNode.CreatedNode.NewFields.Flags;
     const nftokenID: string = affectedNode.CreatedNode.NewFields.NFTokenID;
     const owner: string = affectedNode.CreatedNode.NewFields.Owner;
@@ -93,7 +94,7 @@ class NFTokenOfferChanges {
 
   private parseNFTokensDeleteOfferNode(affectedNode: any): void {
     const status: string = "deleted";
-    const amount: string = affectedNode.DeletedNode.FinalFields.Amount;
+    const amount: Amount = affectedNode.DeletedNode.FinalFields.Amount;
     const flags: string = affectedNode.DeletedNode.FinalFields.Flags;
     const nftokenID: string = affectedNode.DeletedNode.FinalFields.NFTokenID;
     const owner: string = affectedNode.DeletedNode.FinalFields.Owner;
