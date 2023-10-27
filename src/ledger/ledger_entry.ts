@@ -1,7 +1,7 @@
 import * as Client from "../client";
 import { Connection } from "../connection";
 import { LedgerIndex } from "../models/ledger";
-import { URITokenInterface } from "../models/account_uri_tokens";
+import { URITokenInterface } from "../models/account_uritokens";
 import { ErrorResponse } from "../models/base_model";
 import { removeUndefined } from "../common";
 

@@ -82,7 +82,7 @@ export interface AccountURITokensInterface {
 // NOTE: URI Tokens is not part of mainnet, this code can be changed in the future without notice
 export interface AccountURITokensObjectsResponse {
   account: string;
-  uri_tokens: AccountURITokensInterface[];
+  uritokens: AccountURITokensInterface[];
   ledger_hash?: string;
   ledger_index?: number;
   ledger_current_index?: number;
