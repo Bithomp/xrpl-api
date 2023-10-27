@@ -7,7 +7,7 @@ export function parseNFTokenChanges(tx: object): object {
 }
 
 interface AccountNFTokenChangesInterface {
-  status: string;
+  status: "added" | "removed";
   nftokenID: string;
   uri?: string;
 }

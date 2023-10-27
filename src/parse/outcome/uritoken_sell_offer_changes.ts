@@ -7,7 +7,7 @@ export function parseURITokenSellOfferChanges(tx: object): object {
 }
 
 interface AccountURITokenSellOfferChangesInterface {
-  status: string; // "added" | "removed"
+  status: "created" | "deleted";
   uritokenID: string;
   amount?: Amount;
   destination?: string;

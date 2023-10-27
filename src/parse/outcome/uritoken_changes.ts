@@ -6,7 +6,7 @@ export function parseURITokenChanges(tx: object): object {
 }
 
 interface AccountURITokenChangesInterface {
-  status: string; // "added" | "removed"
+  status: "added" | "removed";
   flags?: number;
   uritokenID: string;
   uri?: string;
