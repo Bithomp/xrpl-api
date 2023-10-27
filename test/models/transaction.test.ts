@@ -1140,7 +1140,7 @@ describe("Models", () => {
           uritokenSellOfferChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
-                status: "added",
+                status: "created",
                 uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
                 amount: "1000000",
                 destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
@@ -1208,7 +1208,7 @@ describe("Models", () => {
           uritokenSellOfferChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
-                status: "removed",
+                status: "deleted",
                 uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
                 amount: "1000000",
                 destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
@@ -1283,7 +1283,7 @@ describe("Models", () => {
           uritokenSellOfferChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
-                status: "removed",
+                status: "deleted",
                 uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
                 amount: "1000000",
                 destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
@@ -1334,7 +1334,7 @@ describe("Models", () => {
           uritokenSellOfferChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
-                status: "added",
+                status: "created",
                 uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
                 amount: "4000000",
                 destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
@@ -1388,13 +1388,13 @@ describe("Models", () => {
           uritokenSellOfferChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
-                status: "removed",
+                status: "deleted",
                 uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
                 amount: "4000000",
                 destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
               },
               {
-                status: "added",
+                status: "created",
                 uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
                 amount: "1000000",
                 destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
@@ -1448,12 +1448,12 @@ describe("Models", () => {
           uritokenSellOfferChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               // {
-              //   status: "removed",
+              //   status: "deleted",
               //   uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
               //   amount: "1000000",
               // },
               {
-                status: "added",
+                status: "created",
                 uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
                 amount: "1000000",
                 destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
@@ -1507,7 +1507,7 @@ describe("Models", () => {
           uritokenSellOfferChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
-                status: "removed",
+                status: "deleted",
                 uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
                 amount: "1000000",
                 destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",

@@ -62,7 +62,7 @@ class URITokenSellOfferChanges {
         if (affectedNode.CreatedNode) {
           if (node.NewFields.Amount || node.NewFields.Destination) {
             this.addChange(node.NewFields.Owner, {
-              status: "added",
+              status: "created",
               uritokenID,
               amount: node.NewFields.Amount,
               destination: node.NewFields.Destination,
@@ -94,7 +94,7 @@ class URITokenSellOfferChanges {
               }
 
               this.addChange(owner, {
-                status: "removed",
+                status: "deleted",
                 uritokenID,
                 amount: node.PreviousFields.Amount,
                 destination,
@@ -103,7 +103,7 @@ class URITokenSellOfferChanges {
 
             if (node.FinalFields.Amount || node.FinalFields.Destination) {
               this.addChange(node.FinalFields.Owner, {
-                status: "added",
+                status: "created",
                 uritokenID,
                 amount: node.FinalFields.Amount,
                 destination: node.FinalFields.Destination,
@@ -116,7 +116,7 @@ class URITokenSellOfferChanges {
         if (affectedNode.DeletedNode) {
           if (node.FinalFields.Amount || node.FinalFields.Destination) {
             this.addChange(node.FinalFields.Owner, {
-              status: "removed",
+              status: "deleted",
               uritokenID,
               amount: node.FinalFields.Amount,
               destination: node.FinalFields.Destination,
