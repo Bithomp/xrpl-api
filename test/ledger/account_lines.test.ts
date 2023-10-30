@@ -5,7 +5,7 @@ import { Client } from "../../src/index";
 describe("Client", () => {
   describe("getAccountLines", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
       await Client.connect();
     });
 

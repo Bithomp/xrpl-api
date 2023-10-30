@@ -6,7 +6,7 @@ describe("Client", () => {
   describe("mainnet", () => {
     before(async function () {
       this.timeout(10000);
-      Client.setup(nconf.get("xrpl:connections:mainnet"), { loadBalancing: true });
+      Client.setup(nconf.get("xrpl:connections:mainnet"), { loadBalancing: true, nativeCurrency: "XRP" });
       await Client.connect();
     });
 

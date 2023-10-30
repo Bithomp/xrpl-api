@@ -5,7 +5,7 @@ import { Client, Models, Wallet } from "../../src/index";
 describe("Client", () => {
   describe("isActivated", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
       await Client.connect();
     });
 
@@ -23,7 +23,7 @@ describe("Client", () => {
   describe("getAccountInfo", () => {
     describe("testnet", () => {
       before(async function () {
-        Client.setup(nconf.get("xrpl:connections:testnet"));
+        Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
         await Client.connect();
       });
 
@@ -65,7 +65,7 @@ describe("Client", () => {
   describe("getAccountInfoData", () => {
     describe("testnet", () => {
       before(async function () {
-        Client.setup(nconf.get("xrpl:connections:testnet"));
+        Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
         await Client.connect();
       });
 
@@ -168,7 +168,7 @@ describe("Client", () => {
     describe("mainnet", () => {
       before(async function () {
         this.timeout(15000);
-        Client.setup(nconf.get("xrpl:connections:mainnet"), { loadBalancing: true });
+        Client.setup(nconf.get("xrpl:connections:mainnet"), { loadBalancing: true, nativeCurrency: "XRP" });
         await Client.connect();
       });
 

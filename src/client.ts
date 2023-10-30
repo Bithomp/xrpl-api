@@ -12,7 +12,7 @@ export interface ClientOptions extends ConnectionOptions {
   feeCushion?: number;
   maxFeeXRP?: string;
   logger?: any;
-  nativeCurrency?: "XRP" | "XAH"; // Only XRP is supported for now
+  nativeCurrency?: "XRP" | "XAH";
 
   // EXPERIMENTAL
   loadBalancing?: boolean; // false - use only fastest connection, true - use next connection on each request, as each request could have each own possible connections, balancing will pick random connection

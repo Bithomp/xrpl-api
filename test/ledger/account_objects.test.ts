@@ -5,7 +5,7 @@ import { Client } from "../../src/index";
 describe("Client", () => {
   describe("getAccountObjects", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
       await Client.connect();
     });
 
@@ -20,7 +20,7 @@ describe("Client", () => {
 
   describe("getAccountAllObjects", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
       await Client.connect();
     });
 
@@ -115,7 +115,7 @@ describe("Client", () => {
 
   describe("getAccountLinesObjects", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
       await Client.connect();
     });
 
@@ -138,7 +138,7 @@ describe("Client", () => {
 
   describe("getAccountNFTOffersObjects", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
       await Client.connect();
     });
 
@@ -180,7 +180,7 @@ describe("Client", () => {
 
   describe("getAccountURITokensObjects", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:beta"));
+      Client.setup(nconf.get("xrpl:connections:beta"), { nativeCurrency: "XAH" });
       await Client.connect();
     });
 
