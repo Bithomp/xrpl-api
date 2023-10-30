@@ -18,4 +18,4 @@ export interface FormattedIssuedCurrencyAmount extends FormattedIssuedCurrency {
 
 export type Amount = IssuedCurrencyAmount | string; // string as drops amount
 
-export type FormattedAmount = FormattedIssuedCurrencyAmount | string; // string as XRP amount
+export type FormattedAmount = FormattedIssuedCurrencyAmount | string; // string as native currency (XRP, XAH) amount

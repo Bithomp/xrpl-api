@@ -3,6 +3,8 @@ import { deriveKeypair } from "ripple-keypairs";
 import { Amount, IssuedCurrencyAmount, FormattedIssuedCurrencyAmount } from "./types/objects";
 import { xrpToDrops } from "../../common";
 
+import { getNativeCurrency } from "../../client";
+
 function isValidSecret(secret: string): boolean {
   try {
     deriveKeypair(secret);
@@ -15,7 +17,7 @@ function isValidSecret(secret: string): boolean {
 function toRippledAmount(amount: Amount | FormattedIssuedCurrencyAmount): Amount {
   if (typeof amount === "string") return amount;
 
-  if (amount.currency === "XRP") {
+  if (amount.currency === getNativeCurrency()) {
     return xrpToDrops(amount.value);
   }
   if (amount.currency === "drops") {

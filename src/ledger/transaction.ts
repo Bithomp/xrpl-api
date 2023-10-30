@@ -26,7 +26,7 @@ import {
 import { signTransaction } from "../wallet";
 
 const submitErrorsGroup = ["tem", "tef", "tel", "ter"];
-const FEE_LIMIT = 0.5; // XRP
+const FEE_LIMIT = 0.5; // native currency (XRP, XAH)
 const LEDGER_CLOSE_TIME_AWAIT = 2000; // ms
 const MAX_LEDGERS_AWAIT = 5;
 

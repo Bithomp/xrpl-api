@@ -7,6 +7,8 @@ import { normalizeNodes } from "../../v1/common/utils";
 import { parseOrderbookQuality } from "./orderbook_quality";
 import parseCurrencyAmount from "../ledger/currency-amount";
 
+import { getNativeCurrency } from "../../client";
+
 /* tslint:disable:prefer-const only-arrow-functions object-literal-shorthand no-var-keyword */
 
 const lsfSell = 0x00020000; // see "lsfSell" flag in rippled source code
@@ -39,8 +41,8 @@ function getExpirationTime(node) {
 function getQuality(node) {
   var takerGets = node.finalFields.TakerGets || node.newFields.TakerGets;
   var takerPays = node.finalFields.TakerPays || node.newFields.TakerPays;
-  var takerGetsCurrency = takerGets.currency || "XRP";
-  var takerPaysCurrency = takerPays.currency || "XRP";
+  var takerGetsCurrency = takerGets.currency || getNativeCurrency();
+  var takerPaysCurrency = takerPays.currency || getNativeCurrency();
   var bookDirectory = node.finalFields.BookDirectory || node.newFields.BookDirectory;
   var qualityHex = bookDirectory.substring(bookDirectory.length - 16);
   return parseOrderbookQuality(qualityHex, takerGetsCurrency, takerPaysCurrency);

@@ -3,6 +3,8 @@ import BigNumber from "bignumber.js";
 import { dropsToXrp } from "../../common";
 import { normalizeNodes } from "../../v1/common/utils";
 
+import { getNativeCurrency } from "../../client";
+
 /* tslint:disable:prefer-const only-arrow-functions no-var-keyword */
 
 function groupByAddress(lockedBalanceChanges) {
@@ -50,7 +52,7 @@ function parseXRPQuantity(node, valueParser) {
     address: node.finalFields.Account || node.newFields.Account,
     lockedBalance: {
       counterparty: "",
-      currency: "XRP",
+      currency: getNativeCurrency(),
       value: dropsToXrp(value).toString(),
     },
   };

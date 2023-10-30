@@ -1,16 +1,18 @@
 import { Connection, ConnectionOptions } from "./connection";
 
 export * from "./ledger";
-export let feeCushion: number = 1.3;
+export let feeCushion: number = 1.3; // 30% fee cushion
 export let logger: any;
 
 let clientConnections: Connection[] = [];
 let loadBalancing = false;
+let nativeCurrency = "XRP";
 
 export interface ClientOptions extends ConnectionOptions {
   feeCushion?: number;
   maxFeeXRP?: string;
   logger?: any;
+  nativeCurrency?: "XRP" | "XAH"; // Only XRP is supported for now
 
   // EXPERIMENTAL
   loadBalancing?: boolean; // false - use only fastest connection, true - use next connection on each request, as each request could have each own possible connections, balancing will pick random connection
@@ -53,6 +55,10 @@ export function setup(servers: ClientConnection[], options: ClientOptions = {}) 
     feeCushion = options.feeCushion;
   }
 
+  if (options.nativeCurrency) {
+    nativeCurrency = options.nativeCurrency;
+  }
+
   loadBalancing = options.loadBalancing === true;
 }
 
@@ -76,6 +82,10 @@ export function disconnect() {
   for (const connection of clientConnections) {
     connection.disconnect();
   }
+}
+
+export function getNativeCurrency() {
+  return nativeCurrency || "XRP";
 }
 
 /**

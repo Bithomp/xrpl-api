@@ -1,10 +1,18 @@
 import _ from "lodash";
 import { PaymentFlags } from "xrpl";
 import { TransactionJSON } from "./types";
-import { FormattedIssuedCurrencyAmount, Adjustment, MaxAdjustment, MinAdjustment, FormattedMemo } from "../common/types/objects";
+import {
+  FormattedIssuedCurrencyAmount,
+  Adjustment,
+  MaxAdjustment,
+  MinAdjustment,
+  FormattedMemo,
+} from "../common/types/objects";
 import { toRippledAmount } from "../common";
 import { xrpToDrops } from "../../common";
 import { getClassicAccountAndTag, ClassicAccountAndTag, convertMemo } from "./utils";
+
+import { getNativeCurrency } from "../../client";
 
 export interface Payment {
   source: Adjustment | MaxAdjustment;
@@ -43,13 +51,13 @@ function isXRPToXRPPayment(payment: Payment): boolean {
     ? destination.minAmount.currency
     : destination.amount.currency;
   return (
-    (sourceCurrency === "XRP" || sourceCurrency === "drops") &&
-    (destinationCurrency === "XRP" || destinationCurrency === "drops")
+    (sourceCurrency === getNativeCurrency() || sourceCurrency === "drops") &&
+    (destinationCurrency === getNativeCurrency() || destinationCurrency === "drops")
   );
 }
 
 function isIOUWithoutCounterparty(amount: FormattedIssuedCurrencyAmount): boolean {
-  return amount && amount.currency !== "XRP" && amount.currency !== "drops" && amount.counterparty == null;
+  return amount && amount.currency !== getNativeCurrency() && amount.currency !== "drops" && amount.counterparty == null;
 }
 
 function applyAnyCounterpartyEncoding(payment: Payment): void {
@@ -75,7 +83,7 @@ function createMaximalAmount(amount: FormattedIssuedCurrencyAmount): FormattedIs
     "999999999999999900000000000000000000000000000000000000000000000000000000000000000000000000000000";
 
   let maxValue;
-  if (amount.currency === "XRP") {
+  if (amount.currency === getNativeCurrency()) {
     maxValue = maxXRPValue;
   } else if (amount.currency === "drops") {
     maxValue = xrpToDrops(maxXRPValue);

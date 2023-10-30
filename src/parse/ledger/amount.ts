@@ -1,10 +1,12 @@
 import { dropsToXrp } from "../../common";
 import { FormattedIssuedCurrencyAmount, Amount } from "../../v1/common/types/objects";
 
+import { getNativeCurrency } from "../../client";
+
 function parseAmount(amount: Amount): FormattedIssuedCurrencyAmount {
   if (typeof amount === "string") {
     return {
-      currency: "XRP",
+      currency: getNativeCurrency(),
       value: dropsToXrp(amount),
     };
   }

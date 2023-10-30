@@ -530,7 +530,7 @@ describe("Client", () => {
 
   describe("xahau-test", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:beta"));
+      Client.setup(nconf.get("xrpl:connections:beta"), { nativeCurrency: "XAH" });
       await Client.connect();
     });
 
@@ -542,10 +542,10 @@ describe("Client", () => {
         const payment = {
           sourceAddress: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
           sourceValue: "0.0001",
-          sourceCurrency: "XRP",
+          sourceCurrency: "XAH",
           destinationAddress: "rBbfoBCNMpAaj35K5A9UV9LDkRSh6ZU9Ef",
           destinationValue: "0.0001",
-          destinationCurrency: "XRP",
+          destinationCurrency: "XAH",
           networkID: 21338,
           memos: [{ type: "memo", format: "plain/text", data: "Bithomp test" }],
           secret: nconf.get("xrpl:accounts:activation:secret"),
