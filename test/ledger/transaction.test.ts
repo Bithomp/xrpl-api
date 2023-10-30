@@ -3,6 +3,7 @@ import { Transaction } from "xrpl";
 import { expect } from "chai";
 
 // import * as enums from ".node_modules/ripple-binary-codec/dist/enums/src/enums/definitions.json";
+// https://github.com/Transia-RnD/xrpl.js/blob/3b234ec8ec1c677e0f3f534fd2985c985871c87e/packages/ripple-binary-codec/src/enums/definitions.json
 import * as xahauEnums from "../../config/xahau_definitions.json";
 import { Client, Models, Wallet, xrpl } from "../../src/index";
 
