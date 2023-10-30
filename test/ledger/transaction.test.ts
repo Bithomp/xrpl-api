@@ -3,14 +3,15 @@ import { Transaction } from "xrpl";
 import { expect } from "chai";
 
 // import * as enums from ".node_modules/ripple-binary-codec/dist/enums/src/enums/definitions.json";
-import * as hooksEnums from "../../config/xahau_definitions.json";
+// https://github.com/Transia-RnD/xrpl.js/blob/3b234ec8ec1c677e0f3f534fd2985c985871c87e/packages/ripple-binary-codec/src/enums/definitions.json
+import * as xahauEnums from "../../config/xahau_definitions.json";
 import { Client, Models, Wallet, xrpl } from "../../src/index";
 
 describe("Client", () => {
   describe("mainnet", () => {
     before(async function () {
       this.timeout(15000);
-      Client.setup(nconf.get("xrpl:connections:mainnet"), { loadBalancing: true });
+      Client.setup(nconf.get("xrpl:connections:mainnet"), { loadBalancing: true, nativeCurrency: "XRP" });
       await Client.connect();
     });
 
@@ -404,7 +405,7 @@ describe("Client", () => {
 
   describe("testnet", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
       await Client.connect();
     });
 
@@ -530,28 +531,28 @@ describe("Client", () => {
 
   describe("xahau-test", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:beta"));
+      Client.setup(nconf.get("xrpl:connections:beta"), { nativeCurrency: "XAH" });
       await Client.connect();
     });
 
     describe("legacyPayment", () => {
       it("is OK", async function () {
-        const betaDefinitions = new Wallet.XrplDefinitions(hooksEnums);
+        const xahauDefinitions = new Wallet.XrplDefinitions(xahauEnums);
 
         this.timeout(15000);
         const payment = {
           sourceAddress: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
           sourceValue: "0.0001",
-          sourceCurrency: "XRP",
+          sourceCurrency: "XAH",
           destinationAddress: "rBbfoBCNMpAaj35K5A9UV9LDkRSh6ZU9Ef",
           destinationValue: "0.0001",
-          destinationCurrency: "XRP",
+          destinationCurrency: "XAH",
           networkID: 21338,
           memos: [{ type: "memo", format: "plain/text", data: "Bithomp test" }],
           secret: nconf.get("xrpl:accounts:activation:secret"),
           fee: "0.000300",
         };
-        const result: any = await Client.legacyPayment(payment, betaDefinitions);
+        const result: any = await Client.legacyPayment(payment, xahauDefinitions);
 
         expect(result.error).to.eq(undefined);
         expect(result.validated).to.eq(true);

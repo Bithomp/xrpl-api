@@ -6,12 +6,14 @@ export * from "./manifest";
 export * from "./transaction";
 export * from "./account_lines";
 export * from "./account_namespace";
-export * from "./account_uri_tokens";
+export * from "./account_uritokens";
 export * from "./vl";
 
 export { parseAffectedObjects } from "../parse/outcome/affected_objects";
 export { parseNFTokenChanges } from "../parse/outcome/nftoken_changes";
 export { parseNFTokenOfferChanges } from "../parse/outcome/nftoken_offer_changes";
+export { parseURITokenChanges } from "../parse/outcome/uritoken_changes";
+export { parseURITokenSellOfferChanges } from "../parse/outcome/uritoken_sell_offer_changes";
 export { parseBalanceChanges } from "../parse/outcome/balance_changes";
 export { parseLockedBalanceChanges } from "../parse/outcome/locked_balance_changes";
 export { parseChannelChanges } from "../parse/outcome/channel_changes";

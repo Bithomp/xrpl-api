@@ -1,6 +1,8 @@
 import * as assert from "assert";
 import BigNumber from "bignumber.js";
 
+import { getNativeCurrency } from "../../client";
+
 /* tslint:disable:prefer-const no-var-keyword */
 
 /*
@@ -9,8 +11,8 @@ the quotient of TakerPays/TakerGets. It uses drops (1e-6 XRP) for XRP values.
 */
 
 function adjustQualityForXRP(quality, takerGetsCurrency, takerPaysCurrency) {
-  var numeratorShift = takerPaysCurrency === "XRP" ? -6 : 0;
-  var denominatorShift = takerGetsCurrency === "XRP" ? -6 : 0;
+  var numeratorShift = takerPaysCurrency === getNativeCurrency() ? -6 : 0;
+  var denominatorShift = takerGetsCurrency === getNativeCurrency() ? -6 : 0;
   var shift = numeratorShift - denominatorShift;
   return shift === 0 ? new BigNumber(quality).toString() : new BigNumber(quality).shiftedBy(shift).toString();
 }

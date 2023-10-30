@@ -2,11 +2,13 @@ import BigNumber from "bignumber.js";
 import { PaymentFlags } from "xrpl";
 import { ledgerTimeToISO8601 } from "../models";
 
+import { getNativeCurrency } from "../client";
+
 function adjustQualityForXRP(quality: string, takerGetsCurrency: string, takerPaysCurrency: string) {
   // quality = takerPays.value/takerGets.value
   // using drops (1e-6 XRP) for XRP values
-  const numeratorShift = takerPaysCurrency === "XRP" ? -6 : 0;
-  const denominatorShift = takerGetsCurrency === "XRP" ? -6 : 0;
+  const numeratorShift = takerPaysCurrency === getNativeCurrency() ? -6 : 0;
+  const denominatorShift = takerGetsCurrency === getNativeCurrency() ? -6 : 0;
   const shift = numeratorShift - denominatorShift;
   return shift === 0 ? quality : new BigNumber(quality).shiftedBy(shift).toString();
 }

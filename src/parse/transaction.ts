@@ -55,11 +55,19 @@ import parsePaymentChannelCreate from "./specification/payment-channel-create";
 import parsePaymentChannelFund from "./specification/payment-channel-fund";
 import parseTicketCreate from "./specification/ticket-create";
 import parseTrustline from "./specification/trustline";
+
 import parseNFTokenBurn from "./specification/nftoken-burn";
 import parseNFTokenMint from "./specification/nftoken-mint";
 import parseNFTokenCancelOffer from "./specification/nftoken-cancel-offer";
 import parseNFTokenCreateOffer from "./specification/nftoken-create-offer";
 import parseNFTokenAcceptOffer from "./specification/nftoken-accept-offer";
+
+import parseURITokenBurn from "./specification/uritoken-burn";
+import parseURITokenBuy from "./specification/uritoken-buy";
+import parseURITokenCancelSellOffer from "./specification/uritoken-cancel-sell-offer";
+import parseURITokenCreateSellOffer from "./specification/uritoken-create-sell-offer";
+import parseURITokenMint from "./specification/uritoken-mint";
+
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
 import parseFeeUpdate from "./specification/fee-update"; // pseudo-transaction
 
@@ -90,6 +98,12 @@ const transactionTypeToType = {
   NFTokenCancelOffer: "nftokenCancelOffer",
   NFTokenCreateOffer: "nftokenCreateOffer",
   NFTokenAcceptOffer: "nftokenAcceptOffer",
+
+  URITokenMint: "uritokenMint",
+  URITokenBurn: "uritokenBurn",
+  URITokenCreateSellOffer: "uritokenCreateSellOffer",
+  URITokenCancelSellOffer: "uritokenCancelSellOffer",
+  URITokenBuy: "uritokenBuy",
 
   EnableAmendment: "amendment", // pseudo-transaction
   SetFee: "feeUpdate", // pseudo-transaction
@@ -124,6 +138,12 @@ const parserTypeFunc = {
   nftokenCreateOffer: parseNFTokenCreateOffer,
   nftokenAcceptOffer: parseNFTokenAcceptOffer,
 
+  uritokenBurn: parseURITokenBurn,
+  uritokenBuy: parseURITokenBuy,
+  uritokenCreateSellOffer: parseURITokenCreateSellOffer,
+  uritokenCancelSellOffer: parseURITokenCancelSellOffer,
+  uritokenMint: parseURITokenMint,
+  
   amendment: parseAmendment, // pseudo-transaction
   feeUpdate: parseFeeUpdate, // pseudo-transaction
 };
@@ -174,9 +194,9 @@ function parseTransaction(tx: any, includeRawTransaction: boolean): FormattedTra
   const specification = parser
     ? parser(tx)
     : {
-        UNAVAILABLE: "Unrecognized transaction type.",
-        SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is included in this response.",
-      };
+      UNAVAILABLE: "Unrecognized transaction type.",
+      SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is included in this response.",
+    };
   if (!parser) {
     includeRawTransaction = true;
   }

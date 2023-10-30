@@ -324,6 +324,6 @@ export async function getAccountURITokensObjects(
     ledger_hash: response.ledger_hash,
     ledger_index: response.ledger_index,
     validated: response.validated,
-    uri_tokens: uriTokens,
+    uritokens: uriTokens,
   };
 }

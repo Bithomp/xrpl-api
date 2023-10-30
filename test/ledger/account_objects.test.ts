@@ -5,7 +5,7 @@ import { Client } from "../../src/index";
 describe("Client", () => {
   describe("getAccountObjects", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
       await Client.connect();
     });
 
@@ -20,7 +20,7 @@ describe("Client", () => {
 
   describe("getAccountAllObjects", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
       await Client.connect();
     });
 
@@ -115,7 +115,7 @@ describe("Client", () => {
 
   describe("getAccountLinesObjects", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
       await Client.connect();
     });
 
@@ -138,7 +138,7 @@ describe("Client", () => {
 
   describe("getAccountNFTOffersObjects", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:testnet"));
+      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
       await Client.connect();
     });
 
@@ -180,14 +180,14 @@ describe("Client", () => {
 
   describe("getAccountURITokensObjects", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:beta"));
+      Client.setup(nconf.get("xrpl:connections:beta"), { nativeCurrency: "XAH" });
       await Client.connect();
     });
 
     it("works", async function () {
       const result: any = await Client.getAccountURITokensObjects("rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T");
-      expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "uri_tokens"]);
-      expect(result.uri_tokens).to.eql([
+      expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "uritokens"]);
+      expect(result.uritokens).to.eql([
         {
           flags: 0,
           index: "DB30404B34D1FEDCA500BD84F8A9AC77F18036A1E8966766BDE33595FC41CE57",

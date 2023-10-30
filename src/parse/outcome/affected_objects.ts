@@ -3,10 +3,13 @@ import { parseNFTokenOfferChanges } from "./nftoken_offer_changes";
 import { parseNFTokenID } from "../../models/account_nfts";
 import parseNFTokenFlags from "../ledger/nftoken-flags";
 import parseNFTOfferFlags from "../ledger/nftoken-offer-flags";
+import parseURITokenFlags from "../ledger/uri-token-flags";
+import { removeUndefined } from "../../common";
 
 interface AffectedObjectsInterface {
   nftokens?: any;
   nftokenOffers?: any;
+  uritokens?: any;
 }
 
 function parseAffectedObjects(tx: any): AffectedObjectsInterface | undefined {
@@ -29,6 +32,7 @@ class AffectedObjects {
   public call(): AffectedObjectsInterface | undefined {
     this.parseNFTokens();
     this.parseNFTokenOffers();
+    this.parseURITokenChanges();
 
     if (Object.keys(this.affectedObjects).length > 0) {
       return this.affectedObjects;
@@ -131,6 +135,47 @@ class AffectedObjects {
 
     if (Object.keys(nftokenOffers).length > 0) {
       this.affectedObjects.nftokenOffers = nftokenOffers;
+    }
+  }
+
+  private parseURITokenChanges(): void {
+    const uritokens = {};
+
+    for (const affectedNode of this.tx.meta.AffectedNodes) {
+      const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
+      if (node?.LedgerEntryType === "URIToken" && node?.LedgerIndex) {
+        const uritokenID = node.LedgerIndex;
+
+        if (affectedNode.CreatedNode) {
+          uritokens[uritokenID] = removeUndefined({
+            uritokenID,
+            flags: parseURITokenFlags(node.NewFields.Flags),
+            uri: node.NewFields.URI,
+            digest: node.NewFields.Digest,
+            issuer: node.NewFields.Issuer,
+            owner: node.NewFields.Owner,
+            amount: node.NewFields.Amount,
+            destination: node.NewFields.Destination,
+          });
+        }
+
+        if (affectedNode.ModifiedNode || affectedNode.DeletedNode) {
+          uritokens[uritokenID] = removeUndefined({
+            uritokenID,
+            flags: parseURITokenFlags(node.FinalFields.Flags),
+            uri: node.FinalFields.URI,
+            digest: node.FinalFields.Digest,
+            issuer: node.FinalFields.Issuer,
+            owner: node.FinalFields.Owner,
+            amount: node.FinalFields.Amount,
+            destination: node.FinalFields.Destination,
+          });
+        }
+      }
+    }
+
+    if (Object.keys(uritokens).length > 0) {
+      this.affectedObjects.uritokens = uritokens;
     }
   }
 }

@@ -6,7 +6,7 @@ import { Client } from "../../src/index";
 describe("Client", () => {
   describe("xahau-test", () => {
     before(async function () {
-      Client.setup(nconf.get("xrpl:connections:beta"));
+      Client.setup(nconf.get("xrpl:connections:beta"), { nativeCurrency: "XAH" });
       await Client.connect();
     });
 

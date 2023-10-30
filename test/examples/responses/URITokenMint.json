@@ -1,0 +1,63 @@
+{
+  "Account": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+  "Fee": "1000",
+  "LastLedgerSequence": 7751963,
+  "NetworkID": 21338,
+  "Sequence": 7751097,
+  "SigningPubKey": "029B6DD981A0B3ABC184CD7492268E0CBCEF43ADA9245E0919A6748E5B320D432C",
+  "TransactionType": "URITokenMint",
+  "TxnSignature": "304402205950CCEE63E54360EF9E6780C3BF8D5B670E274739FF2A33512B47FEC5B937FF022013EA5CD32C446126CD77C47BF4AA5955AA625B4646CDB313B36B2CA5FA092594",
+  "URI": "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D",
+  "ctid": "C07649180001535A",
+  "date": 751627521,
+  "hash": "A4781D3D952E995CEEAA11752ACEF206750674A6741569695F0B0EAE86C181A4",
+  "inLedger": 7751960,
+  "ledger_index": 7751960,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            "AccountIndex": "1134",
+            "Balance": "1999999000",
+            "Flags": 0,
+            "OwnerCount": 1,
+            "Sequence": 7751098
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "9E2B7B1C87ED018FB6DAC8E76899263CDBE1C8EA91E977D5464A54DC3818F04B",
+          "PreviousFields": {
+            "Balance": "2000000000",
+            "OwnerCount": 0,
+            "Sequence": 7751097
+          }
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "AF8DD25C938E498705062A6B463C50A55D2A6A7BF9F397FDB4E8C3234D227FA1",
+          "NewFields": {
+            "Owner": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            "RootIndex": "AF8DD25C938E498705062A6B463C50A55D2A6A7BF9F397FDB4E8C3234D227FA1"
+          }
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "URIToken",
+          "LedgerIndex": "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
+          "NewFields": {
+            "Issuer": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            "Owner": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            "URI": "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D"
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 1,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}
