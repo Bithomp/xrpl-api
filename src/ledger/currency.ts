@@ -1,6 +1,7 @@
 import * as Client from "../client";
 import { hexToString } from "../parse/utils";
 import { parseTransactionType } from "../parse/transaction";
+import { getNativeCurrency } from "../client";
 
 const maxLength = 12;
 
@@ -15,7 +16,7 @@ export async function parseCurrencyInformation(
     return null;
   }
 
-  if (currency.length === 3 && currency.trim().toLowerCase() !== "xrp") {
+  if (currency.length === 3 && currency.trim().toUpperCase() !== getNativeCurrency()) {
     return decodeSimple(currency);
   }
 
@@ -152,7 +153,7 @@ interface DecodeHexCurrencyInterface {
 
 function decodeHex(currencyHex: string): DecodeHexCurrencyInterface | null {
   const decodedHex = hexToString(currencyHex)?.slice(0, maxLength)?.trim() as string;
-  if (decodedHex.match(/[a-zA-Z0-9]{3,}/) && decodedHex.toLowerCase() !== "xrp") {
+  if (decodedHex.match(/[a-zA-Z0-9]{3,}/) && decodedHex.toUpperCase() !== getNativeCurrency()) {
     return {
       type: "hex",
       currencyCode: currencyHex,
@@ -206,7 +207,7 @@ function isXlf15d(currencyHex: string): boolean {
   const hex = currencyHex.toString().replace(/(00)+$/g, "");
 
   const xlf15d = Buffer.from(hex, "hex").slice(8).toString("utf-8").slice(0, maxLength).trim();
-  if (xlf15d.match(/[a-zA-Z0-9]{3,}/) && xlf15d.toLowerCase() !== "xrp") {
+  if (xlf15d.match(/[a-zA-Z0-9]{3,}/) && xlf15d.toUpperCase() !== getNativeCurrency()) {
     return true;
   }
 

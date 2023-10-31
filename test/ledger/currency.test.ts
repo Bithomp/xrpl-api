@@ -44,7 +44,7 @@ describe("Client", () => {
         });
 
         it("is not OK for XRp", async function () {
-          expect(await Client.parseCurrencyInformation("XRP")).to.eql(null);
+          expect(await Client.parseCurrencyInformation("XRp")).to.eql(null);
         });
       });
 
@@ -193,6 +193,80 @@ describe("Client", () => {
           });
         });
 
+        it("is OK for not valid but verified on not existed ledger", async function () {
+          this.timeout(15000);
+          expect(await Client.parseCurrencyInformation("023031516D6258454E4654000000000000000000")).to.eql({
+            type: "nft",
+            currencyCode: "023031516D6258454E4654000000000000000000",
+            currency: "NFT",
+            cti: 13565024679385156,
+            ctiLedger: 1835161669,
+            ctiTxIndex: 12625,
+            ctiValid: false,
+            ctiVerified: true,
+            timestamp: undefined,
+            ctiTx: {},
+          });
+        });
+      });
+    });
+  });
+
+  describe("xahau-test", () => {
+    before(async function () {
+      this.timeout(15000);
+      Client.setup(nconf.get("xrpl:connections:beta"), { loadBalancing: true, nativeCurrency: "XAH" });
+      await Client.connect();
+    });
+
+    describe("parseCurrencyInformation", () => {
+      describe("when invalid", () => {
+        it("is null for empty string", async function () {
+          expect(await Client.parseCurrencyInformation("")).to.eql(null);
+        });
+
+        it("is null for null", async function () {
+          expect(await Client.parseCurrencyInformation(null)).to.eql(null);
+        });
+
+        it("is null for undefined", async function () {
+          expect(await Client.parseCurrencyInformation(undefined)).to.eql(null);
+        });
+
+        it("is null for {}", async function () {
+          expect(await Client.parseCurrencyInformation({})).to.eql(null);
+        });
+      });
+
+      describe("when simple", () => {
+        it("is OK for USD", async function () {
+          expect(await Client.parseCurrencyInformation("USD")).to.eql({
+            currencyCode: "USD",
+            currency: "USD",
+            type: "simple",
+          });
+        });
+
+        it("is not OK for XAH", async function () {
+          expect(await Client.parseCurrencyInformation("XAH")).to.eql(null);
+        });
+
+        it("is not OK for XAh", async function () {
+          expect(await Client.parseCurrencyInformation("XAh")).to.eql(null);
+        });
+      });
+
+      describe("when HEX", () => {
+        it("is OK for HADALITE", async function () {
+          expect(await Client.parseCurrencyInformation("484144414C495445000000000000000000000000")).to.eql({
+            currencyCode: "484144414C495445000000000000000000000000",
+            currency: "HADALITE",
+            type: "hex",
+          });
+        });
+      });
+
+      describe("when NFT", () => {
         it("is OK for not valid but verified on not existed ledger", async function () {
           this.timeout(15000);
           expect(await Client.parseCurrencyInformation("023031516D6258454E4654000000000000000000")).to.eql({
