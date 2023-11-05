@@ -42,6 +42,10 @@ import {
   FormattedURITokenCancelSellOfferSpecification,
   FormattedURITokenMintSpecification,
 } from "../v1/common/types/objects/uritokens";
+
+import { FormattedImportSpecification } from "../v1/common/types/objects/import";
+import { FormattedInvokeSpecification } from "../v1/common/types/objects/invoke";
+
 import { FormattedAmendmentSpecification } from "../v1/common/types/objects/amendments";
 import { FormattedFeeUpdateSpecification } from "../v1/common/types/objects/fees";
 
@@ -76,6 +80,7 @@ import parseURITokenCreateSellOffer from "./specification/uritoken-create-sell-o
 import parseURITokenMint from "./specification/uritoken-mint";
 
 import parseImport from "./specification/import";
+import parseInvoke from "./specification/invoke";
 
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
 import parseFeeUpdate from "./specification/fee-update"; // pseudo-transaction
@@ -115,6 +120,7 @@ const transactionTypeToType = {
   URITokenBuy: "uritokenBuy",
 
   Import: "import",
+  Invoke: "invoke",
 
   EnableAmendment: "amendment", // pseudo-transaction
   SetFee: "feeUpdate", // pseudo-transaction
@@ -156,6 +162,7 @@ const parserTypeFunc = {
   uritokenMint: parseURITokenMint,
 
   import: parseImport,
+  invoke: parseInvoke,
 
   amendment: parseAmendment, // pseudo-transaction
   feeUpdate: parseFeeUpdate, // pseudo-transaction
@@ -189,6 +196,8 @@ export type FormattedSpecification =
   | FormattedURITokenCreateSellOfferSpecification
   | FormattedURITokenCancelSellOfferSpecification
   | FormattedURITokenMintSpecification
+  | FormattedImportSpecification
+  | FormattedInvokeSpecification
   | FormattedAmendmentSpecification
   | FormattedFeeUpdateSpecification;
 

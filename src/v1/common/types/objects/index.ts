@@ -17,4 +17,6 @@ export * from "./uritokens";
 export * from "./amendments";
 export * from "./fees";
 export * from "./import";
+export * from "./invoke";
+export * from "./hook";
 export * from "../../../../types";

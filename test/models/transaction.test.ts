@@ -1591,6 +1591,7 @@ describe("Models", () => {
         },
         sequence: 0,
         specification: {
+          source: { address: "rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1" },
           blob: {
             ledger: {
               index: 83576782,
@@ -2760,6 +2761,47 @@ describe("Models", () => {
           },
         },
         type: "import",
+      });
+    });
+
+    it("Invoke", function () {
+      const tx = require("../examples/responses/Invoke.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH",
+        id: "0F3E271A9BD4F52654F8444AA228C029F69E850D62C101965FF1A9E5D77505D8",
+        outcome: {
+          balanceChanges: { r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH: [{ currency: "XRP", value: "-0.009584" }] },
+          lockedBalanceChanges: {},
+          fee: "0.009584",
+          indexInLedger: 0,
+          ledgerVersion: 2479,
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
+          orderbookChanges: {},
+          hooksExecutions: [
+            {
+              account: "r4FRPZbLnyuVeGiSi1Ap6uaaPvPXYZh1XN",
+              emitCount: 0,
+              executionIndex: 0,
+              hash: "5EDF6439C47C423EAC99C1061EE2A0CE6A24A58C8E8A66E4B3AF91D76772DC77",
+              instructionCount: "28f",
+              result: 3,
+              returnCode: "d7",
+              returnString: "Governance: Setup completed successfully.",
+              stateChangeCount: 14,
+            },
+          ],
+          result: "tesSUCCESS",
+          timestamp: "2023-10-30T14:25:41.000Z",
+        },
+        sequence: 751990994,
+        specification: {
+          source: { address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH" },
+          destination: { address: "r4FRPZbLnyuVeGiSi1Ap6uaaPvPXYZh1XN" },
+        },
+        type: "invoke",
       });
     });
   });

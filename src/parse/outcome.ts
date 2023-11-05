@@ -8,6 +8,7 @@ import {
   parseURITokenChanges,
   parseURITokenSellOfferChanges,
   parseAffectedObjects,
+  parseHooksExecutions,
 } from "./outcome/index";
 
 import { parseImportBlob } from "./ledger/import";
@@ -124,6 +125,7 @@ function parseOutcome(tx: any): Outcome | undefined {
   const uritokenChanges = parseURITokenChanges(tx);
   const uritokenSellOfferChanges = parseURITokenSellOfferChanges(tx);
   const affectedObjects = parseAffectedObjects(tx);
+  const hooksExecutions = parseHooksExecutions(tx);
 
   removeEmptyCounterpartyInBalanceChanges(balanceChanges);
   removeEmptyCounterpartyInBalanceChanges(lockedBalanceChanges);
@@ -142,6 +144,7 @@ function parseOutcome(tx: any): Outcome | undefined {
     uritokenChanges: Object.keys(uritokenChanges).length > 0 ? uritokenChanges : undefined,
     uritokenSellOfferChanges: Object.keys(uritokenSellOfferChanges).length > 0 ? uritokenSellOfferChanges : undefined,
     affectedObjects: affectedObjects ? removeUndefined(affectedObjects) : undefined,
+    hooksExecutions,
     ledgerVersion: tx.ledger_index,
     indexInLedger: tx.meta.TransactionIndex,
     deliveredAmount: parseDeliveredAmount(tx),

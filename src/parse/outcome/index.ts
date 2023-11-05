@@ -7,3 +7,4 @@ export { parseBalanceChanges } from "./balance_changes";
 export { parseLockedBalanceChanges } from "./locked_balance_changes";
 export { parseChannelChanges } from "./channel_changes";
 export { parseOrderbookChanges } from "./orderbook_changes";
+export { parseHooksExecutions } from "./hooks_executions";

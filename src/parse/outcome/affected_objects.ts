@@ -3,7 +3,7 @@ import { parseNFTokenOfferChanges } from "./nftoken_offer_changes";
 import { parseNFTokenID } from "../../models/account_nfts";
 import parseNFTokenFlags from "../ledger/nftoken-flags";
 import parseNFTOfferFlags from "../ledger/nftoken-offer-flags";
-import parseURITokenFlags from "../ledger/uri-token-flags";
+import parseURITokenFlags from "../ledger/uritoken-flags";
 import { removeUndefined } from "../../common";
 
 interface AffectedObjectsInterface {

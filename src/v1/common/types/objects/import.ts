@@ -1,4 +1,5 @@
 import { FormattedBaseSpecification } from "./specification";
+import { FormattedSourceAddress } from "./account";
 
 export type FormattedImportBlobSpecification = {
   ledger: number;
@@ -14,5 +15,6 @@ export type FormattedImportBlobSpecification = {
 };
 
 export type FormattedImportSpecification = {
+  source: FormattedSourceAddress;
   blob: FormattedImportBlobSpecification | string;
 } & FormattedBaseSpecification;
