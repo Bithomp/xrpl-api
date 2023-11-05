@@ -22,7 +22,7 @@ export function parseImportBlob(blob: string): FormattedImportBlobSpecification 
     return {
       ledger: decodedBlob.ledger,
       validation: {
-        data: data,
+        data,
         unl: parseVL(decodedBlob.validation.unl),
       },
       transaction: {
