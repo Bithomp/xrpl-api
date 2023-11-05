@@ -59,8 +59,6 @@ class URITokenChanges {
       if (node?.LedgerEntryType === "URIToken" && node?.LedgerIndex) {
         const uritokenID = node.LedgerIndex;
 
-        // console.log("node", node);
-
         // create a new URIToken entry with or without offer
         if (affectedNode.CreatedNode) {
           this.addChange(node.NewFields.Owner, {

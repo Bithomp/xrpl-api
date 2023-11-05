@@ -35,6 +35,13 @@ import {
   FormattedNFTokenCreateOfferSpecification,
   FormattedNFTokenAcceptOfferSpecification,
 } from "../v1/common/types/objects/nftokens";
+import {
+  FormattedURITokenBurnSpecification,
+  FormattedURITokenBuySpecification,
+  FormattedURITokenCreateSellOfferSpecification,
+  FormattedURITokenCancelSellOfferSpecification,
+  FormattedURITokenMintSpecification,
+} from "../v1/common/types/objects/uritokens";
 import { FormattedAmendmentSpecification } from "../v1/common/types/objects/amendments";
 import { FormattedFeeUpdateSpecification } from "../v1/common/types/objects/fees";
 
@@ -67,6 +74,8 @@ import parseURITokenBuy from "./specification/uritoken-buy";
 import parseURITokenCancelSellOffer from "./specification/uritoken-cancel-sell-offer";
 import parseURITokenCreateSellOffer from "./specification/uritoken-create-sell-offer";
 import parseURITokenMint from "./specification/uritoken-mint";
+
+import parseImport from "./specification/import";
 
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
 import parseFeeUpdate from "./specification/fee-update"; // pseudo-transaction
@@ -104,6 +113,8 @@ const transactionTypeToType = {
   URITokenCreateSellOffer: "uritokenCreateSellOffer",
   URITokenCancelSellOffer: "uritokenCancelSellOffer",
   URITokenBuy: "uritokenBuy",
+
+  Import: "import",
 
   EnableAmendment: "amendment", // pseudo-transaction
   SetFee: "feeUpdate", // pseudo-transaction
@@ -143,7 +154,9 @@ const parserTypeFunc = {
   uritokenCreateSellOffer: parseURITokenCreateSellOffer,
   uritokenCancelSellOffer: parseURITokenCancelSellOffer,
   uritokenMint: parseURITokenMint,
-  
+
+  import: parseImport,
+
   amendment: parseAmendment, // pseudo-transaction
   feeUpdate: parseFeeUpdate, // pseudo-transaction
 };
@@ -171,6 +184,11 @@ export type FormattedSpecification =
   | FormattedNFTokenCancelOfferSpecification
   | FormattedNFTokenCreateOfferSpecification
   | FormattedNFTokenAcceptOfferSpecification
+  | FormattedURITokenBurnSpecification
+  | FormattedURITokenBuySpecification
+  | FormattedURITokenCreateSellOfferSpecification
+  | FormattedURITokenCancelSellOfferSpecification
+  | FormattedURITokenMintSpecification
   | FormattedAmendmentSpecification
   | FormattedFeeUpdateSpecification;
 
@@ -194,9 +212,9 @@ function parseTransaction(tx: any, includeRawTransaction: boolean): FormattedTra
   const specification = parser
     ? parser(tx)
     : {
-      UNAVAILABLE: "Unrecognized transaction type.",
-      SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is included in this response.",
-    };
+        UNAVAILABLE: "Unrecognized transaction type.",
+        SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is included in this response.",
+      };
   if (!parser) {
     includeRawTransaction = true;
   }

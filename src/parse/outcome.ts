@@ -10,6 +10,8 @@ import {
   parseAffectedObjects,
 } from "./outcome/index";
 
+import { parseImportBlob } from "./ledger/import";
+
 import parseAmount from "./ledger/amount";
 import { isPartialPayment, parseTimestamp } from "./utils";
 import { FormattedIssuedCurrencyAmount } from "../v1/common/types/objects";
@@ -60,7 +62,7 @@ function removeEmptyCounterpartyInOrderbookChanges(orderbookChanges: Orderbook) 
 }
 
 function parseDeliveredAmount(tx: any): FormattedIssuedCurrencyAmount | undefined {
-  if (tx.TransactionType !== "Payment" || tx.meta.TransactionResult !== "tesSUCCESS") {
+  if (!["Import", "Payment"].includes(tx.TransactionType) || tx.meta.TransactionResult !== "tesSUCCESS") {
     return undefined;
   }
 
@@ -83,14 +85,26 @@ function parseDeliveredAmount(tx: any): FormattedIssuedCurrencyAmount | undefine
     return parseAmount(tx.Amount);
   }
 
-  // DeliveredAmount field was introduced at
-  // ledger 4594095 - after that point its absence
-  // on a tx flagged as partial payment indicates
-  // the full amount was transferred. The amount
-  // transferred with a partial payment before
-  // that date must be derived from metadata.
-  if (tx.Amount && tx.ledger_index > 4594094) {
-    return parseAmount(tx.Amount);
+  // DeliveredAmount for Import tx
+  if (tx.TransactionType === "Import") {
+    // take balance changes from meta
+    const balanceChanges = parseBalanceChanges(tx.meta);
+    const blob = parseImportBlob(tx.Blob);
+
+    if (typeof blob === "string") {
+      return undefined;
+    }
+    const account = blob.transaction.tx.Account;
+    const balanceChange = balanceChanges[account];
+    if (!balanceChange || balanceChange.length !== 1) {
+      return undefined;
+    }
+
+    // currency is native
+    return {
+      currency: balanceChange[0].currency,
+      value: balanceChange[0].value,
+    };
   }
 
   return undefined;
