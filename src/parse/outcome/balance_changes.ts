@@ -41,7 +41,7 @@ function parseFinalBalance(node) {
   return null;
 }
 
-function parseXRPQuantity(node, valueParser) {
+function parseXRPQuantity(node: any, valueParser: any, nativeCurrency?: string) {
   var value = valueParser(node);
 
   if (value === null) {
@@ -52,7 +52,7 @@ function parseXRPQuantity(node, valueParser) {
     address: node.finalFields.Account || node.newFields.Account,
     balance: {
       counterparty: "",
-      currency: getNativeCurrency(),
+      currency: nativeCurrency || getNativeCurrency(),
       value: dropsToXrp(value).toString(),
     },
   };
@@ -96,10 +96,10 @@ function parseTrustlineQuantity(node, valueParser) {
   return [result, flipTrustlinePerspective(result)];
 }
 
-function parseQuantities(metadata, valueParser) {
+function parseQuantities(metadata: any, valueParser: any, nativeCurrency?: string) {
   var values = normalizeNodes(metadata).map(function (node) {
     if (node.entryType === "AccountRoot") {
-      return [parseXRPQuantity(node, valueParser)];
+      return [parseXRPQuantity(node, valueParser, nativeCurrency)];
     } else if (node.entryType === "RippleState") {
       return parseTrustlineQuantity(node, valueParser);
     }
@@ -115,8 +115,8 @@ function parseQuantities(metadata, valueParser) {
  *  @param {Object} metadata Transaction metada
  *  @returns {Object} parsed balance changes
  */
-function parseBalanceChanges(metadata) {
-  return parseQuantities(metadata, computeBalanceChange);
+function parseBalanceChanges(metadata: any, nativeCurrency?: string) {
+  return parseQuantities(metadata, computeBalanceChange, nativeCurrency);
 }
 
 /**

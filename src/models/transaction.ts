@@ -45,12 +45,12 @@ export interface AccountPaymentParamsInterface {
   networkID?: number;
 }
 
-export function getTxDetails(tx: TransactionResponse, includeRawTransaction: boolean): FormattedTransaction {
-  return parseTransaction(tx, includeRawTransaction);
+export function getTxDetails(tx: TransactionResponse, includeRawTransaction: boolean, nativeCurrency?: string): FormattedTransaction {
+  return parseTransaction(tx, includeRawTransaction, nativeCurrency);
 }
 
-export function getAccountTxDetails(tx: AccountTransaction, includeRawTransaction: boolean): FormattedTransaction {
-  return getTxDetails(accountTxToTx(tx), includeRawTransaction);
+export function getAccountTxDetails(tx: AccountTransaction, includeRawTransaction: boolean, nativeCurrency?: string): FormattedTransaction {
+  return getTxDetails(accountTxToTx(tx), includeRawTransaction, nativeCurrency);
 }
 
 export function getLedgerTxDetails(

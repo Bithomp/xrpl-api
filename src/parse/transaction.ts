@@ -212,7 +212,7 @@ export interface FormattedTransaction {
 }
 
 // includeRawTransaction: undefined by default (getTransaction)
-function parseTransaction(tx: any, includeRawTransaction: boolean): FormattedTransaction {
+function parseTransaction(tx: any, includeRawTransaction: boolean, nativeCurrency?: string): FormattedTransaction {
   const type = parseTransactionType(tx.TransactionType);
 
   // tslint:disable-next-line:ban-types
@@ -228,7 +228,7 @@ function parseTransaction(tx: any, includeRawTransaction: boolean): FormattedTra
     includeRawTransaction = true;
   }
 
-  const outcome = parseOutcome(tx);
+  const outcome = parseOutcome(tx, nativeCurrency);
   return removeUndefined({
     // tslint:disable-next-line:object-literal-shorthand
     type: type,

@@ -1,8 +1,10 @@
-import { decode } from "ripple-binary-codec";;
-import { computeBinaryTransactionHash } from "ripple-hashes"
+import { decode } from "ripple-binary-codec";
+import { computeBinaryTransactionHash } from "ripple-hashes";
 import { parseVL } from "../../models/vl";
 import { getAccountTxDetails } from "../../models/transaction";
 import { FormattedImportBlobSpecification } from "../../v1/common/types/objects";
+
+const MAINNET_NATIVE_CURRENCY = "XRP";
 
 export function parseImportBlob(blob: string): FormattedImportBlobSpecification | string {
   try {
@@ -22,7 +24,11 @@ export function parseImportBlob(blob: string): FormattedImportBlobSpecification 
 
     const tx = decode(decodedBlob.transaction.blob);
     const meta = decode(decodedBlob.transaction.meta);
-    const parsedTX = getAccountTxDetails({ tx: tx as any, meta: meta as any, validated: true }, false);
+    const parsedTX = getAccountTxDetails(
+      { tx: tx as any, meta: meta as any, validated: true },
+      false,
+      MAINNET_NATIVE_CURRENCY
+    );
     return {
       ledger: decodedBlob.ledger,
       validation: {

@@ -111,12 +111,12 @@ function parseDeliveredAmount(tx: any): FormattedIssuedCurrencyAmount | undefine
   return undefined;
 }
 
-function parseOutcome(tx: any): Outcome | undefined {
+function parseOutcome(tx: any, nativeCurrency?: string): Outcome | undefined {
   const metadata = tx.meta || tx.metaData;
   if (!metadata) {
     return undefined;
   }
-  const balanceChanges = parseBalanceChanges(metadata);
+  const balanceChanges = parseBalanceChanges(metadata, nativeCurrency);
   const lockedBalanceChanges = parseLockedBalanceChanges(metadata);
   const orderbookChanges = parseOrderbookChanges(metadata);
   const channelChanges = parseChannelChanges(metadata);
