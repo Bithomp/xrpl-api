@@ -2668,6 +2668,7 @@ describe("Models", () => {
               },
             },
             transaction: {
+              id: "6B729AFCEAEE215F5FD10872627A78978755BA8DDB0112C91D755297081037BF",
               tx: {
                 TransactionType: "AccountSet",
                 Sequence: 63841540,
@@ -2757,6 +2758,24 @@ describe("Models", () => {
                 "809956DD229FAD8682B7A04D05CC5EC2740575D5637E193E226CA1B30654D23B",
                 "0831D4BC39770DE5660C05CA6F75A478EB25A467F214C24FBC046F907E9F063A",
               ],
+              specification: {},
+              outcome: {
+                balanceChanges: {
+                  rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1: [
+                    {
+                      currency: "XRP",
+                      value: "-0.001337",
+                    },
+                  ],
+                },
+                fee: "0.001337",
+                indexInLedger: 32,
+                lockedBalanceChanges: {},
+                nftokenChanges: {},
+                nftokenOfferChanges: {},
+                orderbookChanges: {},
+                result: "tesSUCCESS",
+              },
             },
           },
         },
