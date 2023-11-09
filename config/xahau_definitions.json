@@ -37,7 +37,7 @@
     "LedgerHashes": 104,
     "Amendments": 102,
     "FeeSettings": 115,
-    "ImportVlseq": 73,
+    "ImportVLSequence": 73,
     "Escrow": 117,
     "PayChannel": 120,
     "Check": 67,
