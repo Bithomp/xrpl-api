@@ -39,6 +39,7 @@ export interface GetTransactionOptions {
   legacy?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification, same as formatted
   formatted?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification, same as legacy
   includeRawTransaction?: boolean; // for legacy and formatted,
+  definitions?: XrplDefinitionsBase;
 }
 
 /**
@@ -115,7 +116,7 @@ export async function getTransaction(
 
   if (typeof result === "object") {
     if (formatted === true) {
-      return getTxDetails(result, options.includeRawTransaction === true);
+      return getTxDetails(result, options.includeRawTransaction === true, undefined, options.definitions);
     }
 
     if (options.balanceChanges === true && typeof result.meta === "object") {
@@ -123,7 +124,7 @@ export async function getTransaction(
     }
 
     if (options.specification === true) {
-      const details = getTxDetails(result, true);
+      const details = getTxDetails(result, true, undefined, options.definitions);
       result.specification = details.specification;
       result.outcome = details.outcome;
       result.rawTransaction = details.rawTransaction;
@@ -202,7 +203,7 @@ export async function getTransactionByCTID(
 
   const result = ledgerTxToTx(ledgerTx, ledgerIndex, ledger.close_time);
   if (formatted === true) {
-    return getTxDetails(result, options.includeRawTransaction === true);
+    return getTxDetails(result, options.includeRawTransaction === true, undefined, options.definitions);
   }
 
   if (options.balanceChanges === true && typeof result.meta === "object") {
@@ -210,7 +211,7 @@ export async function getTransactionByCTID(
   }
 
   if (options.specification === true) {
-    const details = getTxDetails(result, true);
+    const details = getTxDetails(result, true, undefined, options.definitions);
     result.specification = details.specification;
     result.outcome = details.outcome;
     result.rawTransaction = details.rawTransaction;
@@ -236,7 +237,8 @@ interface LegacyPaymentInterface {
 
 export async function legacyPayment(
   data: LegacyPaymentInterface,
-  definitions?: XrplDefinitionsBase
+  definitions?: XrplDefinitionsBase,
+  validateTx?: boolean
 ): Promise<TransactionResponse | FormattedTransaction | ErrorResponse> {
   const connection = Client.findConnection("payment, submit, !clio");
   if (!connection) {
@@ -282,7 +284,7 @@ export async function legacyPayment(
 
   // sign transaction
   const wallet = xrpl.Wallet.fromSeed(data.secret);
-  const signedTransaction = signTransaction(wallet, transaction as Transaction, false, definitions).tx_blob;
+  const signedTransaction = signTransaction(wallet, transaction as Transaction, false, definitions, validateTx).tx_blob;
 
   // submit transaction
   return await submit(signedTransaction, { connection, definitions });

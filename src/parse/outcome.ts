@@ -1,3 +1,4 @@
+import { XrplDefinitionsBase } from "ripple-binary-codec";
 import {
   parseBalanceChanges,
   parseLockedBalanceChanges,
@@ -9,6 +10,7 @@ import {
   parseURITokenSellOfferChanges,
   parseAffectedObjects,
   parseHooksExecutions,
+  parseEmittedTxns,
 } from "./outcome/index";
 
 import { parseImportBlob } from "./ledger/import";
@@ -111,7 +113,7 @@ function parseDeliveredAmount(tx: any): FormattedIssuedCurrencyAmount | undefine
   return undefined;
 }
 
-function parseOutcome(tx: any, nativeCurrency?: string): Outcome | undefined {
+function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefinitionsBase): Outcome | undefined {
   const metadata = tx.meta || tx.metaData;
   if (!metadata) {
     return undefined;
@@ -126,6 +128,7 @@ function parseOutcome(tx: any, nativeCurrency?: string): Outcome | undefined {
   const uritokenSellOfferChanges = parseURITokenSellOfferChanges(tx);
   const affectedObjects = parseAffectedObjects(tx);
   const hooksExecutions = parseHooksExecutions(tx);
+  const emittedTxns = parseEmittedTxns(tx, definitions);
 
   removeEmptyCounterpartyInBalanceChanges(balanceChanges);
   removeEmptyCounterpartyInBalanceChanges(lockedBalanceChanges);
@@ -145,6 +148,7 @@ function parseOutcome(tx: any, nativeCurrency?: string): Outcome | undefined {
     uritokenSellOfferChanges: Object.keys(uritokenSellOfferChanges).length > 0 ? uritokenSellOfferChanges : undefined,
     affectedObjects: affectedObjects ? removeUndefined(affectedObjects) : undefined,
     hooksExecutions,
+    emittedTxns,
     ledgerVersion: tx.ledger_index,
     indexInLedger: tx.meta.TransactionIndex,
     deliveredAmount: parseDeliveredAmount(tx),

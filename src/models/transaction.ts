@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { Transaction, TransactionMetadata } from "xrpl";
-
+import { XrplDefinitionsBase } from "ripple-binary-codec";
 import { parseTransaction, FormattedSpecification, FormattedTransaction } from "../parse/transaction";
 export { FormattedTransaction } from "../parse/transaction";
 import { Outcome } from "../v1/transaction/types";
@@ -45,11 +45,20 @@ export interface AccountPaymentParamsInterface {
   networkID?: number;
 }
 
-export function getTxDetails(tx: TransactionResponse, includeRawTransaction: boolean, nativeCurrency?: string): FormattedTransaction {
-  return parseTransaction(tx, includeRawTransaction, nativeCurrency);
+export function getTxDetails(
+  tx: TransactionResponse,
+  includeRawTransaction: boolean,
+  nativeCurrency?: string,
+  definitions?: XrplDefinitionsBase
+): FormattedTransaction {
+  return parseTransaction(tx, includeRawTransaction, nativeCurrency, definitions);
 }
 
-export function getAccountTxDetails(tx: AccountTransaction, includeRawTransaction: boolean, nativeCurrency?: string): FormattedTransaction {
+export function getAccountTxDetails(
+  tx: AccountTransaction,
+  includeRawTransaction: boolean,
+  nativeCurrency?: string
+): FormattedTransaction {
   return getTxDetails(accountTxToTx(tx), includeRawTransaction, nativeCurrency);
 }
 
@@ -57,13 +66,20 @@ export function getLedgerTxDetails(
   tx: LedgerTransaction,
   ledgerIndex: number,
   closeTime: number,
-  includeRawTransaction: boolean
+  includeRawTransaction: boolean,
+  nativeCurrency?: string,
+  definitions?: XrplDefinitionsBase
 ): FormattedTransaction {
-  return getTxDetails(ledgerTxToTx(tx, ledgerIndex, closeTime), includeRawTransaction);
+  return getTxDetails(ledgerTxToTx(tx, ledgerIndex, closeTime), includeRawTransaction, nativeCurrency, definitions);
 }
 
-export function getStreamTxDetails(tx: StreamTransaction, includeRawTransaction: boolean): FormattedTransaction {
-  return getTxDetails(streamTxToTx(tx), includeRawTransaction);
+export function getStreamTxDetails(
+  tx: StreamTransaction,
+  includeRawTransaction: boolean,
+  nativeCurrency?: string,
+  definitions?: XrplDefinitionsBase
+): FormattedTransaction {
+  return getTxDetails(streamTxToTx(tx), includeRawTransaction, nativeCurrency, definitions);
 }
 
 export function accountTxToTx(accountTx: AccountTransaction): TransactionResponse {

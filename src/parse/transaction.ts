@@ -1,3 +1,4 @@
+import { XrplDefinitionsBase } from "ripple-binary-codec";
 import { removeUndefined } from "../common";
 
 import { parseOutcome } from "./outcome";
@@ -212,7 +213,7 @@ export interface FormattedTransaction {
 }
 
 // includeRawTransaction: undefined by default (getTransaction)
-function parseTransaction(tx: any, includeRawTransaction: boolean, nativeCurrency?: string): FormattedTransaction {
+function parseTransaction(tx: any, includeRawTransaction: boolean, nativeCurrency?: string, definitions?: XrplDefinitionsBase): FormattedTransaction {
   const type = parseTransactionType(tx.TransactionType);
 
   // tslint:disable-next-line:ban-types
@@ -228,7 +229,7 @@ function parseTransaction(tx: any, includeRawTransaction: boolean, nativeCurrenc
     includeRawTransaction = true;
   }
 
-  const outcome = parseOutcome(tx, nativeCurrency);
+  const outcome = parseOutcome(tx, nativeCurrency, definitions);
   return removeUndefined({
     // tslint:disable-next-line:object-literal-shorthand
     type: type,

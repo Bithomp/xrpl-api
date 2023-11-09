@@ -186,7 +186,7 @@ function removeTrailingZeros(tx: Transaction): void {
  * @throws ValidationError if the Transaction is unsigned.\
  * @category Utilities
  */
-function hashSignedTx(tx: Transaction | string, definitions?: XrplDefinitionsBase): string {
+function hashSignedTx(tx: Transaction | string, definitions?: XrplDefinitionsBase, validateTx?: boolean): string {
   let txBlob: string;
   let txObject: Transaction;
   if (typeof tx === "string") {
@@ -194,12 +194,14 @@ function hashSignedTx(tx: Transaction | string, definitions?: XrplDefinitionsBas
     /* eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- Required until updated in binary codec. */
     txObject = decode(tx, definitions) as unknown as Transaction;
   } else {
-    txBlob = encode(tx);
+    txBlob = encode(tx, definitions);
     txObject = tx;
   }
 
-  if (txObject.TxnSignature === undefined && txObject.Signers === undefined) {
-    throw new ValidationError("The transaction must be signed to hash it.");
+  if (validateTx !== false) {
+    if (txObject.TxnSignature === undefined && txObject.Signers === undefined) {
+      throw new ValidationError("The transaction must be signed to hash it.");
+    }
   }
 
   const prefix = HashPrefix.TRANSACTION_ID.toString(16).toUpperCase();
@@ -207,4 +209,4 @@ function hashSignedTx(tx: Transaction | string, definitions?: XrplDefinitionsBas
 }
 
 // export XrplDefinitionsBase for custom definitions, in case old binary codec is used
-export { XrplDefinitionsBase, XrplDefinitions, DEFAULT_DEFINITIONS };
+export { XrplDefinitionsBase, XrplDefinitions, DEFAULT_DEFINITIONS, hashSignedTx };

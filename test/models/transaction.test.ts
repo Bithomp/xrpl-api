@@ -1,7 +1,14 @@
+import nconf from "nconf";
 import { expect } from "chai";
-import { Models } from "../../src/index";
+import { Client, Models } from "../../src/index";
 
 describe("Models", () => {
+  before(async function () {
+    this.timeout(15000);
+    Client.setup(nconf.get("xrpl:connections:mainnet"), { loadBalancing: true, nativeCurrency: "XRP" });
+    await Client.connect();
+  });
+
   describe("getTxDetails", () => {
     it("NFTokenMint", function () {
       const tx = require("../examples/responses/NFTokenMint.json");
@@ -1239,6 +1246,63 @@ describe("Models", () => {
           uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
         },
         type: "uritokenBurn",
+      });
+    });
+
+    it("URITokenMint with emit", function () {
+      const tx = require("../examples/responses/URITokenMint4.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "uritokenMint",
+        address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU",
+        sequence: 0,
+        id: "9FFF77CEA7B0A61452E0E6560C6AD1DECFA7DE78DDAB6567E10C54B5547371F8",
+        specification: {
+          uri: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
+          flags: { burnable: false },
+          destination: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+          emittedDetails: {
+            emitBurden: "1",
+            emitGeneration: 1,
+            emitHookHash: "6DAE1BECB44B1B0F7034A642849AECB73B8E3CF31ED7AF9C0BA16DF8363E3DE7",
+            emitNonce: "AE93CC86985824560241B2184DB28EFAE9D36A69A2BE6D07F071BFA3E7380E02",
+            emitParentTxnID: "BD3338E3799624DF13EA1CA46CD7305A643B99941F3563FAC35FB3D456153622",
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2023-07-12T10:09:21.000Z",
+          fee: "0.00001",
+          balanceChanges: { r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU: [{ currency: "XRP", value: "-0.00001" }] },
+          lockedBalanceChanges: {},
+          orderbookChanges: {},
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
+          uritokenChanges: {
+            rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T: [
+              {
+                status: "added",
+                uritokenID: "DB30404B34D1FEDCA500BD84F8A9AC77F18036A1E8966766BDE33595FC41CE57",
+                uri: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
+                issuer: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU",
+              },
+            ],
+          },
+          affectedObjects: {
+            uritokens: {
+              DB30404B34D1FEDCA500BD84F8A9AC77F18036A1E8966766BDE33595FC41CE57: {
+                uritokenID: "DB30404B34D1FEDCA500BD84F8A9AC77F18036A1E8966766BDE33595FC41CE57",
+                flags: { burnable: false },
+                uri: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
+                issuer: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU",
+                owner: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+              },
+            },
+          },
+          ledgerVersion: 4722790,
+          indexInLedger: 0,
+        },
       });
     });
 
@@ -2780,6 +2844,416 @@ describe("Models", () => {
           },
         },
         type: "import",
+      });
+    });
+
+    it("Import with NFT", function () {
+      const tx = require("../examples/responses/Import2.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "import",
+        address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+        sequence: 4722674,
+        id: "BD3338E3799624DF13EA1CA46CD7305A643B99941F3563FAC35FB3D456153622",
+        specification: {
+          blob: {
+            ledger: {
+              acroot: "233540489B36003BB1EF21CAFEB883F69466B74DCD3E5670C3C471FC609A1670",
+              close: 742471371,
+              coins: "98652171857393117",
+              cres: 10,
+              flags: 0,
+              index: 39419653,
+              pclose: 742471370,
+              phash: "880A8C2F3E742C512B0DC5FC6C77538A873F1C978DFFF3AE557B55B01CC3ABCC",
+              txroot: "B060B646BDB6329B9A93E7477BBCAAF717C409A35741317E330855F70A4BA971",
+            },
+            validation: {
+              data: {
+                n944nVL4GHUBpZWUn2XaQXYT92b42BYHpwAisiCqvL159tEmWY46: {
+                  Flags: 2147483649,
+                  LedgerSequence: 39419653,
+                  SigningTime: 742471371,
+                  Cookie: "385F12D6319DDB9A",
+                  LedgerHash: "8EBACD67392226AEEAEB82186CEC5E8D8C004A22AF4C14184339798AD489486B",
+                  ConsensusHash: "60AA35BF7946A29B8C63C071BFA3A1E06A62E79425647EAFEDCB3BF4A8C4E564",
+                  ValidatedHash: "880A8C2F3E742C512B0DC5FC6C77538A873F1C978DFFF3AE557B55B01CC3ABCC",
+                  SigningPubKey: "03F71FA3C31F84FC0FC481E307C0DCF3F450EA5F5857EC8E5EBC21C6C08E3906A4",
+                  Signature:
+                    "3045022100FD4C743A5232F887F3FC8385D7427F40940F04DEF4233D39EC6B046DF20CB596022065DE371ACBBFFCAE0772584B5A66D07D902BB0BFCEB96D5F890921E19ED3F696",
+                },
+                n9K7fyu8uvmCoWvW4ZQVCWgW2zrz7sh33Ao7ceNkL7iQGDYtuwTU: {
+                  Flags: 2147483649,
+                  LedgerSequence: 39419653,
+                  SigningTime: 742471371,
+                  Cookie: "124E519EEDA8BF10",
+                  LedgerHash: "8EBACD67392226AEEAEB82186CEC5E8D8C004A22AF4C14184339798AD489486B",
+                  ConsensusHash: "60AA35BF7946A29B8C63C071BFA3A1E06A62E79425647EAFEDCB3BF4A8C4E564",
+                  ValidatedHash: "880A8C2F3E742C512B0DC5FC6C77538A873F1C978DFFF3AE557B55B01CC3ABCC",
+                  SigningPubKey: "0279C1B242658DD78514A5A60A206FA30C18A3EE370592A058A80FAA3E5C44F097",
+                  Signature:
+                    "3045022100D8ED1F285098713DCEE4BC513D326BF884597AA944AF39DF63B86223155A812402207393AB8CB52E9FFD67752BF38B978E197BC1BAE2C230D7B6F0AEE1A8CFFB928D",
+                },
+                n9KWVA64rMeqkAvcQ4DNCa2eDXTzprCtK1HLC8H5PEyUVwSSyL5X: {
+                  Flags: 2147483649,
+                  LedgerSequence: 39419653,
+                  SigningTime: 742471371,
+                  Cookie: "0AE7729763F67407",
+                  LedgerHash: "8EBACD67392226AEEAEB82186CEC5E8D8C004A22AF4C14184339798AD489486B",
+                  ConsensusHash: "60AA35BF7946A29B8C63C071BFA3A1E06A62E79425647EAFEDCB3BF4A8C4E564",
+                  ValidatedHash: "880A8C2F3E742C512B0DC5FC6C77538A873F1C978DFFF3AE557B55B01CC3ABCC",
+                  SigningPubKey: "027F285B8BB33F0E8B025BF955C29A7CFA8A0995831EE4AD93A9BD572A7C8EEDCD",
+                  Signature:
+                    "30450221009EA70C3D71AE1303A2E72C828E2FF0FA0B765B049310D606CD91AE83BD65FD650220150579BB4BFF058F14D59018E5E1B0744073AE384C29C2D1CEB2CE2D48A41404",
+                },
+                n9KcRZYHLU9rhGVwB9e4wEMYsxXvUfgFxtmX25pc1QPNgweqzQf5: {
+                  Flags: 2147483649,
+                  LedgerSequence: 39419653,
+                  SigningTime: 742471370,
+                  Cookie: "8BC16D1445BD05A1",
+                  LedgerHash: "8EBACD67392226AEEAEB82186CEC5E8D8C004A22AF4C14184339798AD489486B",
+                  ConsensusHash: "60AA35BF7946A29B8C63C071BFA3A1E06A62E79425647EAFEDCB3BF4A8C4E564",
+                  ValidatedHash: "880A8C2F3E742C512B0DC5FC6C77538A873F1C978DFFF3AE557B55B01CC3ABCC",
+                  SigningPubKey: "028C9C1DE3789DA22316D789E31099D10F0FE5977DAFD45459B1311FFB65F46FC9",
+                  Signature:
+                    "304402201610085B7A2F4C6CDDFBC80DB31612BE13C7F02F3C4DFB8A60486B8512D534F202207F1692D1BA47CAAC381895DC8CF876403C756B0FA63CC55BA15BFC9EAF93EA0D",
+                },
+                n9Kv3RbsBNbp1NkV3oP7UjHb3zEAz2KwtK3uQG7UxjQ8Mi3PaXiw: {
+                  Flags: 2147483649,
+                  LedgerSequence: 39419653,
+                  SigningTime: 742471370,
+                  Cookie: "33E3CBEBC7F73D20",
+                  LedgerHash: "8EBACD67392226AEEAEB82186CEC5E8D8C004A22AF4C14184339798AD489486B",
+                  ConsensusHash: "60AA35BF7946A29B8C63C071BFA3A1E06A62E79425647EAFEDCB3BF4A8C4E564",
+                  ValidatedHash: "880A8C2F3E742C512B0DC5FC6C77538A873F1C978DFFF3AE557B55B01CC3ABCC",
+                  SigningPubKey: "02B4CF65358D43B21C6D720FD5211E4F6AD3C2C27BF2DB5960242E49A5E06A36D0",
+                  Signature:
+                    "3045022100EB57DAEFE9D3F6D28152940E31320786FC4D0A1D6A250ED842C792995AEEE42B02203026382B36B9790FCAF115404A2C577817CEFC060079C4C45C86434C432D0746",
+                },
+                n9MGR6mE5oQGbNSf2ZbQUnAQmZeN8uim5pcVdfqgdtQscXJutZHW: {
+                  Flags: 2147483649,
+                  LedgerSequence: 39419653,
+                  SigningTime: 742471370,
+                  Cookie: "ACF393EBA1E5C8D9",
+                  LedgerHash: "8EBACD67392226AEEAEB82186CEC5E8D8C004A22AF4C14184339798AD489486B",
+                  ConsensusHash: "60AA35BF7946A29B8C63C071BFA3A1E06A62E79425647EAFEDCB3BF4A8C4E564",
+                  ValidatedHash: "880A8C2F3E742C512B0DC5FC6C77538A873F1C978DFFF3AE557B55B01CC3ABCC",
+                  SigningPubKey: "0366985A2A58FCDD64004A0A1B0FE5C7550891436775AD50562DA6DFACE13AE62F",
+                  Signature:
+                    "3044022050BA25FCFF3B9B5E120CDE581A8926778F2F1DCF050D2760A8F834E84120B50302202C95FFFD9AF1EA094AC24079E50700F74415174E956F44AA282440A423E1D654",
+                },
+              },
+              unl: {
+                version: 1,
+                PublicKey: "ED264807102805220DA0F312E71FC2C69E1552C9C5790F6C25E3729DEB573D5860",
+                manifest:
+                  "JAAAAAFxIe0mSAcQKAUiDaDzEucfwsaeFVLJxXkPbCXjcp3rVz1YYHMh7Rt08vn4Maojg0vgNNcPuxVrJhyFy5tnQMSHfgCvuHjWdkCg/oL0GUq0QOgrdHw1Tw3BtA4lrLzDVQrSTFu+tMz+Dkdshs5gtbbfHQ2qFgYzGwaA9o3Z5Wwjv0iqXtxwH18PcBJAWCjvE1dMKgjMWu88GKgYDOaYJrOfOmN9CpxwnOObamY5gL2iENqTuo8bllpK4Hor3ewYwRCHWPTMpirBsDe4Aw==",
+                decodedManifest: {
+                  Sequence: 1,
+                  PublicKey: "ED264807102805220DA0F312E71FC2C69E1552C9C5790F6C25E3729DEB573D5860",
+                  publicKey: "nHBeJBfBkbRDAfyon4idcDcUDspz8WnDWoKE7AE2Dta1y7qfSMu8",
+                  address: "rBxZvQBY551DJ21g9AC1Qc9ASQowqcskbF",
+                  SigningPubKey: "ED1B74F2F9F831AA23834BE034D70FBB156B261C85CB9B6740C4877E00AFB878D6",
+                  signingPubKey: "nHBZXgNrAgmhvCUg9viYbVK3oAmW31Q46hEHikVMnnyBkwKcCLEt",
+                  Signature:
+                    "A0FE82F4194AB440E82B747C354F0DC1B40E25ACBCC3550AD24C5BBEB4CCFE0E476C86CE60B5B6DF1D0DAA1606331B0680F68DD9E56C23BF48AA5EDC701F5F0F",
+                  MasterSignature:
+                    "5828EF13574C2A08CC5AEF3C18A8180CE69826B39F3A637D0A9C709CE39B6A663980BDA210DA93BA8F1B965A4AE07A2BDDEC18C1108758F4CCA62AC1B037B803",
+                },
+                signature:
+                  "75DE050E6AD07EA5D8CD031C387CF00987389D8DDC0A1E018ABFE368EE881C4A68CFD7856BDBF7B87B53EEECCCB40CC8144E64E2D55FC833764DECD5EFE41E02",
+                blob: {
+                  sequence: 55,
+                  expiration: 1699401600,
+                  validators: [
+                    {
+                      PublicKey: "ED061ECB51B5BD62665F5D1A5DB1A62AF84464BED77E7728235A7A551D4535E717",
+                      manifest:
+                        "JAAAAAJxIe0GHstRtb1iZl9dGl2xpir4RGS+1353KCNaelUdRTXnF3MhAnnBskJljdeFFKWmCiBvowwYo+43BZKgWKgPqj5cRPCXdkcwRQIhAKRiLXevJ61ukhZtikvCuKgGRnV8H08eM/PEvJNEdl04AiBi/Bk68VVefR1GtgI4YezRQVsxnEiN/LmWSNmQYKQRIHASQAt8hKfxkqPMeBOTh2x2hjrkAa7leTenBtf9DxuhwlgsB9N/xxTfpzMQkjUYoYiyXkXZyh1NVsNLDKUmOdWZLAM=",
+                      decodedManifest: {
+                        Sequence: 2,
+                        PublicKey: "ED061ECB51B5BD62665F5D1A5DB1A62AF84464BED77E7728235A7A551D4535E717",
+                        publicKey: "nHBQ3CT3EWYZ4uzbnL3k6TRf9bBPhWRFVcK1F5NjtwCBksMEt5yy",
+                        address: "rna87bupr933hSSKYvAnDvTNhKLyvGiNr5",
+                        SigningPubKey: "0279C1B242658DD78514A5A60A206FA30C18A3EE370592A058A80FAA3E5C44F097",
+                        signingPubKey: "n9K7fyu8uvmCoWvW4ZQVCWgW2zrz7sh33Ao7ceNkL7iQGDYtuwTU",
+                        Signature:
+                          "3045022100A4622D77AF27AD6E92166D8A4BC2B8A80646757C1F4F1E33F3C4BC9344765D38022062FC193AF1555E7D1D46B6023861ECD1415B319C488DFCB99648D99060A41120",
+                        MasterSignature:
+                          "0B7C84A7F192A3CC781393876C76863AE401AEE57937A706D7FD0F1BA1C2582C07D37FC714DFA73310923518A188B25E45D9CA1D4D56C34B0CA52639D5992C03",
+                      },
+                    },
+                    {
+                      PublicKey: "EDADB6E6F7229F92909E5A6DBAF81AD1EC723D31B676CD8F5F3E926AD043D187C0",
+                      manifest:
+                        "JAAAAAJxIe2ttub3Ip+SkJ5abbr4GtHscj0xtnbNj18+kmrQQ9GHwHMhAn8oW4uzPw6LAlv5VcKafPqKCZWDHuStk6m9Vyp8ju3NdkcwRQIhANQlFbiDNfa/LJIr+eaZ2KKc04GldZMrAG4bDWFMLyURAiAlwAfNIuveI0HmhM0I+Fw4ygAsHFWuwVrcWKabZLHtgHASQBBETTRDxCsQo4wIK+z5Cd9Omku0yDxBOMTA70RSqEopV9DHBgVV9g82j1mn0oJXDz0pNXrrCn3DqMbwA0vC+QA=",
+                      decodedManifest: {
+                        Sequence: 2,
+                        PublicKey: "EDADB6E6F7229F92909E5A6DBAF81AD1EC723D31B676CD8F5F3E926AD043D187C0",
+                        publicKey: "nHUCAdca6VoWWYVdBH1bwCUQggEX2e5acQSqxM3DwyuhsFknxmh3",
+                        address: "rKN1tePqnrWuH6Smequ5inkM76DTCez89P",
+                        SigningPubKey: "027F285B8BB33F0E8B025BF955C29A7CFA8A0995831EE4AD93A9BD572A7C8EEDCD",
+                        signingPubKey: "n9KWVA64rMeqkAvcQ4DNCa2eDXTzprCtK1HLC8H5PEyUVwSSyL5X",
+                        Signature:
+                          "3045022100D42515B88335F6BF2C922BF9E699D8A29CD381A575932B006E1B0D614C2F2511022025C007CD22EBDE2341E684CD08F85C38CA002C1C55AEC15ADC58A69B64B1ED80",
+                        MasterSignature:
+                          "10444D3443C42B10A38C082BECF909DF4E9A4BB4C83C4138C4C0EF4452A84A2957D0C7060555F60F368F59A7D282570F3D29357AEB0A7DC3A8C6F0034BC2F900",
+                      },
+                    },
+                    {
+                      PublicKey: "EDF5B661ECC615C5C77D55F1B572FAC6FE6C7B116EB0A0E3F1DCEB9F48932548D0",
+                      manifest:
+                        "JAAAAAFxIe31tmHsxhXFx31V8bVy+sb+bHsRbrCg4/Hc659IkyVI0HMhA/cfo8MfhPwPxIHjB8Dc8/RQ6l9YV+yOXrwhxsCOOQakdkcwRQIhALUdnluhhq8yfL7ddgz71tUPWA4e2edJ2a69cQkwyNCBAiA6d9FNeKAjLhOjjKR52L4cIfv/AQtgUAlb9H0n2uyo6XASQD7M8LSGLKondz1EOmrAwzD407GvMxFhaEa2bpIPzNlVHE+PmOvJwZnxhLoG+NYVUfmaUreS+7kxv+gyoHtumwY=",
+                      decodedManifest: {
+                        Sequence: 1,
+                        PublicKey: "EDF5B661ECC615C5C77D55F1B572FAC6FE6C7B116EB0A0E3F1DCEB9F48932548D0",
+                        publicKey: "nHDDe5uAdiv6RA59MA1oM4JLDtVSYKNShgjEqq1KsdJXZiR47CQT",
+                        address: "rw7sRdixSWp3PoPkiq3YmAicHcABRGdacL",
+                        SigningPubKey: "03F71FA3C31F84FC0FC481E307C0DCF3F450EA5F5857EC8E5EBC21C6C08E3906A4",
+                        signingPubKey: "n944nVL4GHUBpZWUn2XaQXYT92b42BYHpwAisiCqvL159tEmWY46",
+                        Signature:
+                          "3045022100B51D9E5BA186AF327CBEDD760CFBD6D50F580E1ED9E749D9AEBD710930C8D08102203A77D14D78A0232E13A38CA479D8BE1C21FBFF010B6050095BF47D27DAECA8E9",
+                        MasterSignature:
+                          "3ECCF0B4862CAA27773D443A6AC0C330F8D3B1AF3311616846B66E920FCCD9551C4F8F98EBC9C199F184BA06F8D61551F99A52B792FBB931BFE832A07B6E9B06",
+                      },
+                    },
+                    {
+                      PublicKey: "EDF62907763AAD8ED21F7EAF3F36B5264856A375FBB47CE64383EED74847C8DA6A",
+                      manifest:
+                        "JAAAAAFxIe32KQd2Oq2O0h9+rz82tSZIVqN1+7R85kOD7tdIR8jaanMhA2aYWipY/N1kAEoKGw/lx1UIkUNnda1QVi2m36zhOuYvdkcwRQIhAMvVQqDV3P+pJpM/4CX7xKWddfXje1dkB7qyPYoTkaxxAiBHCDcDUryX4FrMwlKQnPvrczt1pPUs4s/MAWET5OY8unASQPl+9vwiMxONOdGOUgCZo0IEi9qrfTP6CTQ8LyVTKkI5TOUeDMIYO6iFOrmXjdcsmf0ph55T/TpKUuP7uiA2sw0=",
+                      decodedManifest: {
+                        Sequence: 1,
+                        PublicKey: "EDF62907763AAD8ED21F7EAF3F36B5264856A375FBB47CE64383EED74847C8DA6A",
+                        publicKey: "nHDDiwQBqXhEL1CFoRHdMXD33x9K7rpYJfniXxL7kFavpPd21EGe",
+                        address: "rwGBNFzk8JGQt8LW6Cj4f92H4VpxrtMo2m",
+                        SigningPubKey: "0366985A2A58FCDD64004A0A1B0FE5C7550891436775AD50562DA6DFACE13AE62F",
+                        signingPubKey: "n9MGR6mE5oQGbNSf2ZbQUnAQmZeN8uim5pcVdfqgdtQscXJutZHW",
+                        Signature:
+                          "3045022100CBD542A0D5DCFFA926933FE025FBC4A59D75F5E37B576407BAB23D8A1391AC7102204708370352BC97E05ACCC252909CFBEB733B75A4F52CE2CFCC016113E4E63CBA",
+                        MasterSignature:
+                          "F97EF6FC2233138D39D18E520099A342048BDAAB7D33FA09343C2F25532A42394CE51E0CC2183BA8853AB9978DD72C99FD29879E53FD3A4A52E3FBBA2036B30D",
+                      },
+                    },
+                    {
+                      PublicKey: "EDA9BEAB987DCFFEDCF2067B24CC7B8CF0C210B358A891FE0ED78EC324FBB40ADB",
+                      manifest:
+                        "JAAAAAJxIe2pvquYfc/+3PIGeyTMe4zwwhCzWKiR/g7XjsMk+7QK23MhAoycHeN4naIjFteJ4xCZ0Q8P5Zd9r9RUWbExH/tl9G/JdkcwRQIhAODAet56y2oa0KUDNyfEU6uIf8lu0QRtZRA45QscyS/NAiB2w6SpRh3uSQwc5QN8xlXEicwQyC5HPNd+byNVoolDKnASQFJdF9zduUEo7R5Sd7DPuK8GjUw3tkWpfRwLzbm55NftxC2/QTGfG4mqbon+Ra4MAoyPFJWmzmJnYf9ecIdC+gg=",
+                      decodedManifest: {
+                        Sequence: 2,
+                        PublicKey: "EDA9BEAB987DCFFEDCF2067B24CC7B8CF0C210B358A891FE0ED78EC324FBB40ADB",
+                        publicKey: "nHUeUNSn3zce2xQZWNghQvd9WRH6FWEnCBKYVJu2vAizMxnXegfJ",
+                        address: "rfCFANwdNatTPyq3fovKUk3joopCJRZEs7",
+                        SigningPubKey: "028C9C1DE3789DA22316D789E31099D10F0FE5977DAFD45459B1311FFB65F46FC9",
+                        signingPubKey: "n9KcRZYHLU9rhGVwB9e4wEMYsxXvUfgFxtmX25pc1QPNgweqzQf5",
+                        Signature:
+                          "3045022100E0C07ADE7ACB6A1AD0A5033727C453AB887FC96ED1046D651038E50B1CC92FCD022076C3A4A9461DEE490C1CE5037CC655C489CC10C82E473CD77E6F2355A289432A",
+                        MasterSignature:
+                          "525D17DCDDB94128ED1E5277B0CFB8AF068D4C37B645A97D1C0BCDB9B9E4D7EDC42DBF41319F1B89AA6E89FE45AE0C028C8F1495A6CE626761FF5E708742FA08",
+                      },
+                    },
+                    {
+                      PublicKey: "ED20BB134D03B54E3D2E6745775BF41FADF3C276399B1F3623081D7B66D0714E33",
+                      manifest:
+                        "JAAAAAJxIe0guxNNA7VOPS5nRXdb9B+t88J2OZsfNiMIHXtm0HFOM3MhArTPZTWNQ7IcbXIP1SEeT2rTwsJ78ttZYCQuSaXgajbQdkcwRQIhAP82FxVItRg1WPPCvB+yw0pPHl5/bA0xD/KWcSdWGD2SAiAVQ8bXOntcbl8MM2js+mZOYctKkJzFcE9xEf91WRow3nASQGP9x1oxRGd2fIyyJpx6+HCgar2+/Ns/Ord5hUlTXaICzKGfG5/cUlEzcgN2BoRBjxCpi5wMh84hJaL+hIVH5Ac=",
+                      decodedManifest: {
+                        Sequence: 2,
+                        PublicKey: "ED20BB134D03B54E3D2E6745775BF41FADF3C276399B1F3623081D7B66D0714E33",
+                        publicKey: "nHBbiP5ua5dUqCTz5i5vd3ia9jg3KJthohDjgKxnc7LxtmnauW7Z",
+                        address: "rNCTjcTc5NKxAQgDqiZnRrYkeTpQiUdHQ8",
+                        SigningPubKey: "02B4CF65358D43B21C6D720FD5211E4F6AD3C2C27BF2DB5960242E49A5E06A36D0",
+                        signingPubKey: "n9Kv3RbsBNbp1NkV3oP7UjHb3zEAz2KwtK3uQG7UxjQ8Mi3PaXiw",
+                        Signature:
+                          "3045022100FF36171548B5183558F3C2BC1FB2C34A4F1E5E7F6C0D310FF296712756183D9202201543C6D73A7B5C6E5F0C3368ECFA664E61CB4A909CC5704F7111FF75591A30DE",
+                        MasterSignature:
+                          "63FDC75A314467767C8CB2269C7AF870A06ABDBEFCDB3F3AB7798549535DA202CCA19F1B9FDC5251337203760684418F10A98B9C0C87CE2125A2FE848547E407",
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+            transaction: {
+              id: "51875E3B3DD854E6344CDAFB4934673B076405B51F7AE4FEF6301B4D35DDF14C",
+              tx: {
+                TransactionType: "NFTokenBurn",
+                Flags: 0,
+                Sequence: 39419543,
+                LastLedgerSequence: 39419671,
+                OperationLimit: 21338,
+                NFTokenID: "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000",
+                Fee: "12",
+                SigningPubKey: "EDE17BEBA254D19FCDD66EE8E5C21FF88444D082E181E263EF06E3A2E048AE50C9",
+                TxnSignature:
+                  "B10E4A0A78B363052F10080464834FD7166473A68295713D1CA22711277E8A672EB1E6E1E26C581C5B34D87FF5338D25124D55ED4C2A05B686299DFD79017B04",
+                Account: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+                Owner: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+              },
+              meta: {
+                TransactionIndex: 2,
+                AffectedNodes: [
+                  {
+                    ModifiedNode: {
+                      LedgerEntryType: "AccountRoot",
+                      PreviousTxnLgrSeq: 39419641,
+                      PreviousTxnID: "6DC9814FD34FA93751DEFB7705220EF84ECC779A51AF198D2E7209EA97416BEB",
+                      LedgerIndex: "AB28F55952D30905E86AFAFC72064ECEE139FCFA100E747968518DD8A304E5EA",
+                      PreviousFields: { Sequence: 39419543, OwnerCount: 1, Balance: "9999999988" },
+                      FinalFields: {
+                        Flags: 0,
+                        Sequence: 39419544,
+                        OwnerCount: 0,
+                        MintedNFTokens: 1,
+                        BurnedNFTokens: 1,
+                        Balance: "9999999976",
+                        Account: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+                      },
+                    },
+                  },
+                  {
+                    DeletedNode: {
+                      LedgerEntryType: "NFTokenPage",
+                      LedgerIndex: "AC8B8F22E7C42AE160DBD7961899DF6AD5FF8088FFFFFFFFFFFFFFFFFFFFFFFF",
+                      FinalFields: {
+                        Flags: 0,
+                        PreviousTxnLgrSeq: 39419641,
+                        PreviousTxnID: "6DC9814FD34FA93751DEFB7705220EF84ECC779A51AF198D2E7209EA97416BEB",
+                        NFTokens: [
+                          {
+                            NFToken: {
+                              NFTokenID: "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000",
+                              URI: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  },
+                ],
+                TransactionResult: "tesSUCCESS",
+              },
+              proof: {
+                children: {
+                  "4": {
+                    children: {},
+                    hash: "46C9AC5E9792881E00D470E0B479FA7225545F6F3AAD130F2AB1CDB970CC88D4",
+                    key: "49EFBB66B2ACFEBA58C2B0C79A65D36238162A09B9980159AC41BC9686FB9494",
+                  },
+                  "5": {
+                    children: {},
+                    hash: "D0E594E8609A2F1ACBA7E7E6946AAB9D51774A650E0DD76F8511EF4B5082A00B",
+                    key: "51875E3B3DD854E6344CDAFB4934673B076405B51F7AE4FEF6301B4D35DDF14C",
+                  },
+                  "9": {
+                    children: {},
+                    hash: "DBBEF332E0348BFC83EE53FE16F977D8CE5C63D24E8BA288B44D8CA4D4CA3B1D",
+                    key: "9C4D879A96F64E58AD865B3A38C2F5150A5A434F730794ED8894607E074EAF3B",
+                  },
+                },
+                hash: "B060B646BDB6329B9A93E7477BBCAAF717C409A35741317E330855F70A4BA971",
+                key: "0000000000000000000000000000000000000000000000000000000000000000",
+              },
+              specification: {
+                account: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+                nftokenID: "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000",
+              },
+              outcome: {
+                result: "tesSUCCESS",
+                fee: "0.000012",
+                balanceChanges: { rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T: [{ currency: "XRP", value: "-0.000012" }] },
+                lockedBalanceChanges: {},
+                orderbookChanges: {},
+                nftokenChanges: {
+                  rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T: [
+                    {
+                      status: "removed",
+                      nftokenID: "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000",
+                      uri: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
+                    },
+                  ],
+                },
+                nftokenOfferChanges: {},
+                affectedObjects: {
+                  nftokens: {
+                    "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000": {
+                      nftokenID: "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000",
+                      flags: { burnable: false, onlyXRP: false, trustLine: false, transferable: true },
+                      transferFee: 314,
+                      issuer: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+                      nftokenTaxon: 0,
+                      sequence: 0,
+                    },
+                  },
+                },
+                indexInLedger: 2,
+              },
+            },
+          },
+          source: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2023-07-12T10:09:20.000Z",
+          fee: "0.011087",
+          balanceChanges: { rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T: [{ currency: "XRP", value: "-0.011075" }] },
+          lockedBalanceChanges: {},
+          orderbookChanges: {},
+          nftokenChanges: {},
+          nftokenOfferChanges: {},
+          hooksExecutions: [
+            {
+              account: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU",
+              emitCount: 1,
+              executionIndex: 0,
+              hash: "6DAE1BECB44B1B0F7034A642849AECB73B8E3CF31ED7AF9C0BA16DF8363E3DE7",
+              instructionCount: "6a0",
+              result: 3,
+              returnCode: "d3",
+              returnString: "",
+              stateChangeCount: 0,
+            },
+          ],
+          emittedTxns: [
+            {
+              specification: {
+                uri: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
+                flags: {
+                  burnable: false,
+                },
+                destination: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+                emittedDetails: {
+                  emitBurden: "1",
+                  emitGeneration: 1,
+                  emitHookHash: "6DAE1BECB44B1B0F7034A642849AECB73B8E3CF31ED7AF9C0BA16DF8363E3DE7",
+                  emitNonce: "AE93CC86985824560241B2184DB28EFAE9D36A69A2BE6D07F071BFA3E7380E02",
+                  emitParentTxnID: "BD3338E3799624DF13EA1CA46CD7305A643B99941F3563FAC35FB3D456153622",
+                },
+              },
+              tx: {
+                Account: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU",
+                Destination: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+                EmitDetails: {
+                  EmitBurden: "1",
+                  EmitGeneration: 1,
+                  EmitHookHash: "6DAE1BECB44B1B0F7034A642849AECB73B8E3CF31ED7AF9C0BA16DF8363E3DE7",
+                  EmitNonce: "AE93CC86985824560241B2184DB28EFAE9D36A69A2BE6D07F071BFA3E7380E02",
+                  EmitParentTxnID: "BD3338E3799624DF13EA1CA46CD7305A643B99941F3563FAC35FB3D456153622",
+                },
+                Fee: "10",
+                FirstLedgerSequence: 4722790,
+                Flags: 2147483648,
+                LastLedgerSequence: 4722794,
+                Sequence: 0,
+                SigningPubKey: "",
+                TransactionType: "URITokenMint",
+                URI: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
+              },
+            },
+          ],
+          ledgerVersion: 4722789,
+          indexInLedger: 0,
+          deliveredAmount: { currency: "XRP", value: "-0.011075" },
+        },
       });
     });
 

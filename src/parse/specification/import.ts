@@ -14,11 +14,11 @@ function parseImport(tx: any): FormattedImportSpecification {
     tag: tx.SourceTag,
   };
 
-  return {
+  return removeUndefined({
     blob: parseImportBlob(tx.Blob),
     source: removeUndefined(source),
     memos: parseMemos(tx),
-  };
+  });
 }
 
 export default parseImport;
