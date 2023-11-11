@@ -10,7 +10,7 @@ export interface GetLedgerOptions {
   ledgerIndex?: LedgerIndex;
   transactions?: boolean;
   expand?: boolean;
-  legacy?: boolean; // returns response in old old format data, same as formatted
+  legacy?: boolean; // @deprecated returns response in old old format data, same as formatted
   formatted?: boolean; // returns response in old old format data, same as legacy
   includeRawTransactions?: boolean; // for legacy and formatted,
   connection?: Connection;

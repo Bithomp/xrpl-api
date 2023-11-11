@@ -6,7 +6,7 @@ import {
   AccountObjectType,
   accountObjectsToAccountLines,
   accountObjectsToNFTOffers,
-  AccountObjectsResponse,
+  AccountObjects,
   AccountNFTObjectsResponse,
   accountObjectsToURITokens,
   AccountURITokensObjectsResponse,
@@ -29,7 +29,7 @@ export interface GetAccountObjectsOptions {
 }
 
 /**
- * @returns {Promise<AccountObjectsResponse | ErrorResponse>} like
+ * @returns {Promise<AccountObjects | ErrorResponse>} like
  * {
  *   "account": "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
  *   "account_objects": [
@@ -67,7 +67,7 @@ export interface GetAccountObjectsOptions {
 export async function getAccountObjects(
   account: string,
   options: GetAccountObjectsOptions = {}
-): Promise<AccountObjectsResponse | ErrorResponse> {
+): Promise<AccountObjects | ErrorResponse> {
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
   const connection: any = Client.findConnection("account_objects", undefined, undefined, hash);
@@ -124,11 +124,11 @@ export interface GetAccountAllObjectsOptions extends GetAccountObjectsOptions {
 export async function getAccountAllObjects(
   account: string,
   options: GetAccountAllObjectsOptions = {}
-): Promise<AccountObjectsResponse | ErrorResponse> {
+): Promise<AccountObjects | ErrorResponse> {
   const timeStart = new Date();
   const limit = options.limit;
   let response: any;
-  const accountObjects: AccountObjectsResponse[] = [];
+  const accountObjects: AccountObjects[] = [];
 
   // download all objects with marker
   while (true) {

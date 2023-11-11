@@ -31,7 +31,7 @@ export type AccountObjectType =
   | "ticket"
   | "nft_offer";
 
-export interface AccountObjectsResponse {
+export interface AccountObjects {
   account: string;
   account_objects: AccountObject[];
   ledger_hash?: string;

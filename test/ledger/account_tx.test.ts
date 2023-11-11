@@ -347,7 +347,6 @@ describe("Client", () => {
             rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk: [{ currency: "XRP", value: "-31.020002" }],
             rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z: [{ currency: "XRP", value: "31" }],
           },
-          lockedBalanceChanges: {},
           deliveredAmount: {
             currency: "XRP",
             value: "31",
@@ -355,9 +354,6 @@ describe("Client", () => {
           fee: "0.020002",
           indexInLedger: 4,
           ledgerVersion: 16658556,
-          orderbookChanges: {},
-          nftokenChanges: {},
-          nftokenOfferChanges: {},
           result: "tesSUCCESS",
           timestamp: "2015-10-24T06:37:00.000Z",
         });
@@ -408,10 +404,6 @@ describe("Client", () => {
               rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk: [{ currency: "XRP", value: "-31.020002" }],
               rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z: [{ currency: "XRP", value: "31" }],
             },
-            lockedBalanceChanges: {},
-            orderbookChanges: {},
-            nftokenChanges: {},
-            nftokenOfferChanges: {},
             ledgerVersion: 16658556,
             indexInLedger: 4,
             deliveredAmount: {
@@ -466,10 +458,6 @@ describe("Client", () => {
               rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk: [{ currency: "XRP", value: "-31.020002" }],
               rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z: [{ currency: "XRP", value: "31" }],
             },
-            lockedBalanceChanges: {},
-            orderbookChanges: {},
-            nftokenChanges: {},
-            nftokenOfferChanges: {},
             ledgerVersion: 16658556,
             indexInLedger: 4,
             deliveredAmount: {
