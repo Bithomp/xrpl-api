@@ -11,6 +11,7 @@ import {
   parseAffectedObjects,
   parseHooksExecutions,
   parseEmittedTxns,
+  parseEscrowChanges,
 } from "./outcome/index";
 
 import { parseImportBlob } from "./ledger/import";
@@ -122,6 +123,7 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
   const lockedBalanceChanges = parseLockedBalanceChanges(metadata);
   const orderbookChanges = parseOrderbookChanges(metadata);
   const channelChanges = parseChannelChanges(metadata);
+  const escrowChanges = parseEscrowChanges(tx);
   const nftokenChanges = parseNFTokenChanges(tx);
   const nftokenOfferChanges = parseNFTokenOfferChanges(tx);
   const uritokenChanges = parseURITokenChanges(tx);
@@ -139,11 +141,12 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     timestamp: parseTimestamp(tx.date),
     fee: dropsToXrp(tx.Fee),
     balanceChanges,
-    lockedBalanceChanges,
-    orderbookChanges,
+    lockedBalanceChanges: Object.keys(lockedBalanceChanges).length > 0 ? lockedBalanceChanges : undefined,
+    orderbookChanges: Object.keys(orderbookChanges).length > 0 ? orderbookChanges : undefined,
     channelChanges,
-    nftokenChanges,
-    nftokenOfferChanges,
+    escrowChanges,
+    nftokenChanges: Object.keys(nftokenChanges).length > 0 ? nftokenChanges : undefined,
+    nftokenOfferChanges: Object.keys(nftokenOfferChanges).length > 0 ? nftokenOfferChanges : undefined,
     uritokenChanges: Object.keys(uritokenChanges).length > 0 ? uritokenChanges : undefined,
     uritokenSellOfferChanges: Object.keys(uritokenSellOfferChanges).length > 0 ? uritokenSellOfferChanges : undefined,
     affectedObjects: affectedObjects ? removeUndefined(affectedObjects) : undefined,

@@ -7,7 +7,7 @@ describe("Wallet", () => {
       expect(Wallet.isValidClassicAddress("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf")).to.eql(true);
     });
 
-    it("doesnt work for invalid", async function () {
+    it("does not work for invalid", async function () {
       expect(Wallet.isValidClassicAddress("qwert")).to.eql(false);
     });
   });

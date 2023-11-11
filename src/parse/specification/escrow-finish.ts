@@ -8,11 +8,11 @@ function parseEscrowFinish(tx: any): FormattedEscrowFinishSpecification {
   assert.ok(tx.TransactionType === "EscrowFinish");
 
   return removeUndefined({
-    memos: parseMemos(tx),
     owner: tx.Owner,
     escrowSequence: tx.OfferSequence,
     condition: tx.Condition,
     fulfillment: tx.Fulfillment,
+    memos: parseMemos(tx),
   });
 }
 

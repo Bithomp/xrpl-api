@@ -1,0 +1,89 @@
+{
+  "Account": "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
+  "Amount": "10000",
+  "CancelAfter": 545440232,
+  "Condition": "A0258020A82A88B2DF843A54F58772E4A3861866ECDB4157645DD9AE528C1D3AEEDABAB6810120",
+  "Destination": "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX",
+  "DestinationTag": 23480,
+  "Fee": "10",
+  "FinishAfter": 545354132,
+  "Flags": 2147483648,
+  "Sequence": 366,
+  "SigningPubKey": "03AB40A0490F9B7ED8DF29D246BF2D6269820A0EE7742ACDD457BEA7C7D0931EDB",
+  "SourceTag": 11747,
+  "TransactionType": "EscrowCreate",
+  "TxnSignature": "3044022073AE316EC2538F605D13FA13676F34EF6540095A3ECFB16370950F761C0B63060220435F5C7A3B80AE012208062160EFA5D713B53A67B15B7B9A61627388C08047FD",
+  "ctid": "C1BA5E1C00080000",
+  "date": 545353940,
+  "hash": "C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7",
+  "inLedger": 28991004,
+  "ledger_index": 28991004,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
+            "AccountTxnID": "C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7",
+            "Balance": "75129576",
+            "Domain": "6D64756F31332E636F6D",
+            "EmailHash": "98B4375E1D753E5B91627516F6D70977",
+            "Flags": 9043968,
+            "MessageKey": "0000000000000000000000070000000300",
+            "OwnerCount": 10,
+            "Sequence": 367,
+            "TransferRate": 4294967295
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "13F1A95D7AAB7108D5CE7EEAF504B2894B8C674E6D68499076441C4837282BF8",
+          "PreviousFields": {
+            "AccountTxnID": "B9D525ACAD4DAD09C80FC0CBAEDE57A2802E586EE683449AEB57490D6444F10A",
+            "Balance": "75139586",
+            "OwnerCount": 9,
+            "Sequence": 366
+          },
+          "PreviousTxnID": "B9D525ACAD4DAD09C80FC0CBAEDE57A2802E586EE683449AEB57490D6444F10A",
+          "PreviousTxnLgrSeq": 22180067
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
+            "RootIndex": "3B9C0CE77FCE7BCEE1A68F1E26AC467AF326239D0D816CE705E4A0E2DAD03F6D"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "3B9C0CE77FCE7BCEE1A68F1E26AC467AF326239D0D816CE705E4A0E2DAD03F6D"
+        }
+      },
+      {
+        "ModifiedNode": {
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "43EA78783A089B137D5E87610DF3BD4129F989EDD02EFAF6C265924D3A0EF8CE",
+          "PreviousTxnID": "9A80FCC2AFA1E4BDDB1D991737C46A1BD43EDB62DFC169386CAF9E67E456722A",
+          "PreviousTxnLgrSeq": 25428965
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "Escrow",
+          "LedgerIndex": "DC5F3851D8A1AB622F957761E5963BC5BD439D5C24AC6AD7AC4523F0640244AC",
+          "NewFields": {
+            "Account": "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
+            "Amount": "10000",
+            "CancelAfter": 545440232,
+            "Condition": "A0258020A82A88B2DF843A54F58772E4A3861866ECDB4157645DD9AE528C1D3AEEDABAB6810120",
+            "Destination": "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX",
+            "DestinationTag": 23480,
+            "FinishAfter": 545354132,
+            "SourceTag": 11747
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 8,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

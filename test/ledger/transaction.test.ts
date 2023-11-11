@@ -219,13 +219,9 @@ describe("Client", () => {
         });
         expect(result.outcome).to.eql({
           balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
-          lockedBalanceChanges: {},
           fee: "0.00001",
           indexInLedger: 42,
           ledgerVersion: 69773479,
-          orderbookChanges: {},
-          nftokenChanges: {},
-          nftokenOfferChanges: {},
           result: "tesSUCCESS",
           timestamp: "2022-02-18T13:13:21.000Z",
         });
@@ -248,13 +244,9 @@ describe("Client", () => {
         });
         expect(result.outcome).to.eql({
           balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.01" }] },
-          lockedBalanceChanges: {},
           fee: "0.01",
           indexInLedger: 4,
           ledgerVersion: 69754983,
-          orderbookChanges: {},
-          nftokenChanges: {},
-          nftokenOfferChanges: {},
           result: "tesSUCCESS",
           timestamp: "2022-02-17T16:58:50.000Z",
         });
@@ -284,10 +276,6 @@ describe("Client", () => {
             timestamp: "2022-02-18T13:13:21.000Z",
             fee: "0.00001",
             balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
-            lockedBalanceChanges: {},
-            orderbookChanges: {},
-            nftokenChanges: {},
-            nftokenOfferChanges: {},
             ledgerVersion: 69773479,
             indexInLedger: 42,
           },
@@ -311,10 +299,6 @@ describe("Client", () => {
             timestamp: "2022-02-18T13:13:21.000Z",
             fee: "0.00001",
             balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
-            lockedBalanceChanges: {},
-            orderbookChanges: {},
-            nftokenChanges: {},
-            nftokenOfferChanges: {},
             ledgerVersion: 69773479,
             indexInLedger: 42,
           },
@@ -888,8 +872,6 @@ describe("Client", () => {
                       },
                     ],
                   },
-                  lockedBalanceChanges: {},
-                  orderbookChanges: {},
                   nftokenChanges: {
                     rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T: [
                       {
@@ -899,7 +881,6 @@ describe("Client", () => {
                       },
                     ],
                   },
-                  nftokenOfferChanges: {},
                   affectedObjects: {
                     nftokens: {
                       "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000": {
@@ -937,10 +918,6 @@ describe("Client", () => {
                 },
               ],
             },
-            lockedBalanceChanges: {},
-            orderbookChanges: {},
-            nftokenChanges: {},
-            nftokenOfferChanges: {},
             hooksExecutions: [
               {
                 account: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU",
@@ -1013,13 +990,9 @@ describe("Client", () => {
           id: "BF60195960EDE6FB9B017D1BBF404283C388375C3271A42F83A9B8C5420AE297",
           outcome: {
             balanceChanges: { rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1: [{ currency: "XAH", value: "2.001337" }] },
-            lockedBalanceChanges: {},
             fee: "0",
             indexInLedger: 0,
             ledgerVersion: 4142,
-            nftokenChanges: {},
-            nftokenOfferChanges: {},
-            orderbookChanges: {},
             deliveredAmount: {
               currency: "XAH",
               value: "2.001337",
@@ -2208,10 +2181,6 @@ describe("Client", () => {
                   },
                   fee: "0.001337",
                   indexInLedger: 32,
-                  lockedBalanceChanges: {},
-                  nftokenChanges: {},
-                  nftokenOfferChanges: {},
-                  orderbookChanges: {},
                   result: "tesSUCCESS",
                 },
               },
@@ -2547,8 +2516,6 @@ describe("Client", () => {
                       },
                     ],
                   },
-                  lockedBalanceChanges: {},
-                  orderbookChanges: {},
                   nftokenChanges: {
                     rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T: [
                       {
@@ -2558,7 +2525,6 @@ describe("Client", () => {
                       },
                     ],
                   },
-                  nftokenOfferChanges: {},
                   affectedObjects: {
                     nftokens: {
                       "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000": {
@@ -2596,10 +2562,6 @@ describe("Client", () => {
                 },
               ],
             },
-            lockedBalanceChanges: {},
-            orderbookChanges: {},
-            nftokenChanges: {},
-            nftokenOfferChanges: {},
             hooksExecutions: [
               {
                 account: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU",
