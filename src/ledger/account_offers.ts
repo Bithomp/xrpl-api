@@ -1,12 +1,20 @@
+import _ from "lodash";
+import { AccountOffer } from "xrpl";
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
 import { parseMarker, createMarker } from "../common/utils";
 import { ErrorResponse } from "../models/base_model";
+import { FormattedAccountOrders, FormattedAccountOrder, parseAccountOrder } from "../parse/ledger/account-order";
+import { AccountOffers } from "../v1/common/types/commands/account_offers";
+
+const OFFERS_LIMIT_MAX = 400;
 
 export interface GetAccountOffers {
   ledgerIndex?: LedgerIndex;
   limit?: number;
   marker?: any;
+  legacy?: boolean; // @deprecated returns response in old old format data, same as formatted
+  formatted?: boolean; // returns response in old old format data, same as legacy
 }
 
 /**
@@ -28,7 +36,11 @@ export interface GetAccountOffers {
  * }
  * @exception {Error}
  */
-export async function getAccountOffers(account: string, options: GetAccountOffers = {}): Promise<object | ErrorResponse> {
+export async function getAccountOffers(
+  account: string,
+  options: GetAccountOffers = {}
+): Promise<AccountOffers | FormattedAccountOrders | ErrorResponse> {
+  const formatted = options.legacy === true || options.formatted === true;
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
   const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
@@ -70,5 +82,73 @@ export async function getAccountOffers(account: string, options: GetAccountOffer
     result.marker = newMarker;
   }
 
+  if (formatted === true) {
+    result.offers = formatResponse(account, result.offers);
+  }
+
   return result;
+}
+
+export async function getAccountAllOffers(
+  account: string,
+  options: GetAccountOffers = {}
+): Promise<AccountOffers | FormattedAccountOrders | ErrorResponse> {
+  const limit = options.limit;
+  let response: any;
+  const accountOffers: AccountOffers[] = [];
+
+  // download all objects with marker
+  while (true) {
+    if (options.limit && limit) {
+      const left = limit - accountOffers.length;
+      const parts = Math.floor(left / OFFERS_LIMIT_MAX);
+      if (parts === 0) {
+        options.limit = left;
+      } else {
+        options.limit = left;
+      }
+    }
+
+    response = await getAccountOffers(account, options);
+    if (response.error) {
+      return response;
+    }
+
+    accountOffers.push(...response.offers);
+    if (limit && accountOffers.length >= limit) {
+      response.limit = accountOffers.length; // override last limit with total one
+      break;
+    }
+
+    if (response.marker) {
+      options.marker = response.marker;
+    } else {
+      break;
+    }
+  }
+
+  if (response.error) {
+    const { error, error_code, error_message, status, validated } = response;
+
+    return {
+      account,
+      error,
+      error_code,
+      error_message,
+      status,
+      validated,
+    };
+  }
+
+  response.offers = accountOffers;
+
+  return response;
+}
+
+function formatResponse(address: string, offers: AccountOffer[]): FormattedAccountOrder[] {
+  const orders = offers.map((offer) => {
+    return parseAccountOrder(address, offer);
+  });
+
+  return _.sortBy(orders, (order) => order.properties.sequence);
 }

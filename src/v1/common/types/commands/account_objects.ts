@@ -34,7 +34,7 @@ export interface AccountObjectsRequest {
   marker?: string;
 }
 
-export interface AccountObjectsResponse {
+export interface AccountObjects {
   account: string;
 
   // Array of objects owned by this account.
