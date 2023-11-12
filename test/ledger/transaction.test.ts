@@ -534,7 +534,7 @@ describe("Client", () => {
           networkID: 21338,
           memos: [{ type: "memo", format: "plain/text", data: "Bithomp test" }],
           secret: nconf.get("xrpl:accounts:activation:secret"),
-          fee: "0.000300",
+          fee: "0.000046", // 10 - fee, 26 - memos, 10 - ???
         };
         const result: any = await Client.legacyPayment(payment, xahauDefinitions);
 
