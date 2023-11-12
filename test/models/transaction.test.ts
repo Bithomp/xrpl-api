@@ -867,7 +867,6 @@ describe("Models", () => {
     it("EscrowCreate", function () {
       const tx = require("../examples/responses/transaction/C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7.json");
       const result: any = Models.getTxDetails(tx, false);
-      console.log(JSON.stringify(result));
 
       expect(result).to.eql({
         type: "escrowCreation",
@@ -889,9 +888,14 @@ describe("Models", () => {
           balanceChanges: { rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn: [{ currency: "XRP", value: "-0.01001" }] },
           escrowChanges: {
             status: "created",
-            owner: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
             escrowIndex: "DC5F3851D8A1AB622F957761E5963BC5BD439D5C24AC6AD7AC4523F0640244AC",
             escrowSequence: 366,
+            amount: "10000",
+            source: { address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn", tag: 11747 },
+            destination: { address: "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX", tag: 23480 },
+            condition: "A0258020A82A88B2DF843A54F58772E4A3861866ECDB4157645DD9AE528C1D3AEEDABAB6810120",
+            allowCancelAfter: "2017-04-13T23:10:32.000Z",
+            allowExecuteAfter: "2017-04-12T23:15:32.000Z",
           },
           ledgerVersion: 28991004,
           indexInLedger: 8,
@@ -937,10 +941,21 @@ describe("Models", () => {
             ],
           },
           escrowChanges: {
+            status: "created",
             escrowIndex: "3FF417C3A332939F6E04F252862A6CBFE30D1EAD6E0C9884DDFD99AE9BDB89C8",
             escrowSequence: 3334565,
-            owner: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
-            status: "created",
+            amount: {
+              currency: "546F6B656E466F72457363726F77000000000000",
+              issuer: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
+              value: "10",
+            },
+            source: {
+              address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            },
+            destination: {
+              address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            },
+            allowExecuteAfter: "2022-06-22T10:16:00.000Z",
           },
           ledgerVersion: 3530986,
           indexInLedger: 0,
@@ -958,6 +973,9 @@ describe("Models", () => {
         sequence: 3334670,
         id: "CB192FC862D00F6A49E819EF99053BE534A6EC703418306E415C6230F5786FDB",
         specification: {
+          source: {
+            address: "rELeasERs3m4inA1UinRLTpXemqyStqzwh",
+          },
           owner: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
           escrowSequence: 3334565,
         },
@@ -976,13 +994,68 @@ describe("Models", () => {
             ],
           },
           escrowChanges: {
-            escrowIndex: "3FF417C3A332939F6E04F252862A6CBFE30D1EAD6E0C9884DDFD99AE9BDB89C8",
-            escrowSequence: 3334670,
-            owner: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
             status: "executed",
+            escrowIndex: "3FF417C3A332939F6E04F252862A6CBFE30D1EAD6E0C9884DDFD99AE9BDB89C8",
+            escrowSequence: 3334565,
+            amount: {
+              currency: "546F6B656E466F72457363726F77000000000000",
+              issuer: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
+              value: "10",
+            },
+            source: {
+              address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            },
+            destination: {
+              address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            },
+            allowExecuteAfter: "2022-06-22T10:16:00.000Z",
           },
           ledgerVersion: 3532083,
           indexInLedger: 1,
+        },
+      });
+    });
+
+    it("EscrowCancel", function () {
+      const tx = require("../examples/responses/transaction/B24B9D7843F99AED7FB8A3929151D0CCF656459AE40178B77C9D44CED64E839B.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "escrowCancellation",
+        address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
+        sequence: 368,
+        id: "B24B9D7843F99AED7FB8A3929151D0CCF656459AE40178B77C9D44CED64E839B",
+        specification: {
+          source: {
+            address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
+          },
+          owner: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
+          escrowSequence: 366,
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2017-04-21T02:11:30.000Z",
+          fee: "0.000012",
+          balanceChanges: { rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn: [{ currency: "XRP", value: "0.009988" }] },
+          escrowChanges: {
+            status: "cancelled",
+            escrowIndex: "DC5F3851D8A1AB622F957761E5963BC5BD439D5C24AC6AD7AC4523F0640244AC",
+            escrowSequence: 366,
+            amount: "10000",
+            condition: "A0258020A82A88B2DF843A54F58772E4A3861866ECDB4157645DD9AE528C1D3AEEDABAB6810120",
+            source: {
+              address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
+              tag: 11747,
+            },
+            destination: {
+              address: "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX",
+              tag: 23480,
+            },
+            allowCancelAfter: "2017-04-13T23:10:32.000Z",
+            allowExecuteAfter: "2017-04-12T23:15:32.000Z",
+          },
+          ledgerVersion: 29187944,
+          indexInLedger: 0,
         },
       });
     });
