@@ -3,6 +3,20 @@ import { normalizeNodes } from "../../v1/common/utils";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "../../v1/common/types/objects/account";
 import { parseTimestamp } from "../utils";
 
+interface FormattedEscrowInterface {
+  status?: string;
+  escrowIndex?: number;
+  escrowSequence?: number;
+  amount?: string;
+  condition?: string;
+  source?: FormattedSourceAddress;
+  destination?: FormattedDestinationAddress;
+  allowCancelAfter?: string;
+  allowExecuteAfter?: string;
+  previousTxnID?: string;
+  previousTxnLgrSeq?: number;
+}
+
 function parseEscrowStatus(tx: any, node: any) {
   if (node.diffType === "CreatedNode") {
     return "created";
@@ -47,7 +61,7 @@ function summarizeEscrow(tx: any, node: any) {
     tag: final.DestinationTag,
   };
 
-  const summary = removeUndefined({
+  const summary: FormattedEscrowInterface = {
     status: parseEscrowStatus(tx, node),
     escrowIndex: node.ledgerIndex,
     escrowSequence: parseEscrowSequence(tx),
@@ -57,9 +71,21 @@ function summarizeEscrow(tx: any, node: any) {
     destination: removeUndefined(destination),
     allowCancelAfter: parseTimestamp(final.CancelAfter),
     allowExecuteAfter: parseTimestamp(final.FinishAfter),
-  });
+  };
 
-  return summary;
+  if (final.PreviousTxnID) {
+    summary.previousTxnID = final.PreviousTxnID;
+  } else if (node.diffType === "CreatedNode") {
+    summary.previousTxnID = tx.hash;
+  }
+
+  if (final.PreviousTxnLgrSeq) {
+    summary.previousTxnLgrSeq = final.PreviousTxnLgrSeq;
+  } else if (node.diffType === "CreatedNode") {
+    summary.previousTxnLgrSeq = tx.ledger_index;
+  }
+
+  return removeUndefined(summary);
 }
 
 function parseEscrowChanges(tx: any) {

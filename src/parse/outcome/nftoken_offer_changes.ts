@@ -67,8 +67,8 @@ class NFTokenOfferChanges {
     const owner: string = affectedNode.CreatedNode.NewFields.Owner;
     const index: string = affectedNode.CreatedNode.LedgerIndex;
     const destination: string = affectedNode.CreatedNode.NewFields.Destination;
-    const prevTxHash: string = affectedNode.CreatedNode.NewFields.PreviousTxnID;
-    const prevLedgerIndex: string = affectedNode.CreatedNode.NewFields.PreviousTxnLgrSeq;
+    const previousTxnID: string = affectedNode.CreatedNode.NewFields.PreviousTxnID;
+    const previousTxnLgrSeq: string = affectedNode.CreatedNode.NewFields.PreviousTxnLgrSeq;
     let expiration: number = affectedNode.CreatedNode.NewFields.Expiration;
     if (typeof expiration === "number") {
       expiration = ledgerTimeToUnixTime(expiration);
@@ -83,8 +83,8 @@ class NFTokenOfferChanges {
       destination,
       expiration,
       index,
-      prevTxHash,
-      prevLedgerIndex,
+      previousTxnID,
+      previousTxnLgrSeq,
     });
   }
 
@@ -100,8 +100,8 @@ class NFTokenOfferChanges {
     const owner: string = affectedNode.DeletedNode.FinalFields.Owner;
     const index: string = affectedNode.DeletedNode.LedgerIndex;
     const destination: string = affectedNode.DeletedNode.FinalFields.Destination;
-    const prevTxHash: string = affectedNode.DeletedNode.FinalFields.PreviousTxnID;
-    const prevLedgerIndex: string = affectedNode.DeletedNode.FinalFields.PreviousTxnLgrSeq;
+    const previousTxnID: string = affectedNode.DeletedNode.FinalFields.PreviousTxnID;
+    const previousTxnLgrSeq: string = affectedNode.DeletedNode.FinalFields.PreviousTxnLgrSeq;
     let expiration: number = affectedNode.DeletedNode.FinalFields.Expiration;
     if (typeof expiration === "number") {
       expiration = ledgerTimeToUnixTime(expiration);
@@ -116,8 +116,8 @@ class NFTokenOfferChanges {
       destination,
       expiration,
       index,
-      prevTxHash,
-      prevLedgerIndex,
+      previousTxnID,
+      previousTxnLgrSeq,
     });
   }
 }

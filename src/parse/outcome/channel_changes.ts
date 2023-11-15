@@ -71,7 +71,7 @@ function summarizePaymentChannel(node) {
     // The identifying hash of the transaction that
     // most recently modified this payment channel object.
     // You can use this to retrieve the object's history.
-    (summary as any).previousTxnId = node.PreviousTxnID;
+    (summary as any).previousTxnID = node.PreviousTxnID;
   }
 
   return summary;
