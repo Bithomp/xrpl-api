@@ -230,7 +230,7 @@ interface LegacyPaymentInterface {
   destinationValue: string;
   destinationCurrency: string;
   networkID?: number;
-  memos: FormattedMemo[];
+  memos?: FormattedMemo[];
   secret: string;
   fee?: string;
 }
