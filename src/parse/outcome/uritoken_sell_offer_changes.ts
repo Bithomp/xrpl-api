@@ -103,7 +103,7 @@ class URITokenSellOfferChanges {
               this.addChange(owner, {
                 status: "deleted",
                 uritokenID,
-                amount: amount,
+                amount,
                 destination,
               });
             }
