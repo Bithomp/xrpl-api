@@ -1,0 +1,59 @@
+{
+  "Account": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+  "Amount": "1000000",
+  "Fee": "1000",
+  "LastLedgerSequence": 7761625,
+  "NetworkID": 21338,
+  "Sequence": 7751115,
+  "SigningPubKey": "029B6DD981A0B3ABC184CD7492268E0CBCEF43ADA9245E0919A6748E5B320D432C",
+  "TransactionType": "URITokenCreateSellOffer",
+  "TxnSignature": "304502210082E05E9E2F75E30AA68CD48524FAE2E7B922907ACBEB25C053688C76D25F3D0D0220393653C59CFAB65DBC45AF97A3CF1CEAD2FB0279BA6CA8203D52465A82242702",
+  "URITokenID": "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+  "ctid": "C0766ED60000535A",
+  "date": 751656640,
+  "hash": "F5D5D7F9E46B3340060D4299062D3E34C70E92705878C2856FFAC16CED899710",
+  "inLedger": 7761622,
+  "ledger_index": 7761622,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Amount": "1000000",
+            "Flags": 1,
+            "Issuer": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            "Owner": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            "OwnerNode": "0",
+            "URI": "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D"
+          },
+          "LedgerEntryType": "URIToken",
+          "LedgerIndex": "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+          "PreviousFields": {
+            "Destination": "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM"
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+            "AccountIndex": "1134",
+            "Balance": "2000981000",
+            "Flags": 0,
+            "OwnerCount": 2,
+            "Sequence": 7751116
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "9E2B7B1C87ED018FB6DAC8E76899263CDBE1C8EA91E977D5464A54DC3818F04B",
+          "PreviousFields": {
+            "Balance": "2000982000",
+            "Sequence": 7751115
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

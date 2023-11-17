@@ -93,10 +93,17 @@ class URITokenSellOfferChanges {
                 destination = node.FinalFields.Destination;
               }
 
+              let amount: Amount;
+              // check if amount was changed
+              if (node.PreviousFields.hasOwnProperty("Amount")) {
+                amount = node.PreviousFields.Amount;
+              } else {
+                amount = node.FinalFields.Amount;
+              }
               this.addChange(owner, {
                 status: "deleted",
                 uritokenID,
-                amount: node.PreviousFields.Amount,
+                amount: amount,
                 destination,
               });
             }

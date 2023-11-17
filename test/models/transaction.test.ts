@@ -1603,6 +1603,59 @@ describe("Models", () => {
       });
     });
 
+    it("URITokenCreateSellOffer with offer destination removing", function () {
+      const tx = require("../examples/responses/URITokenCreateSellOffer4.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+        id: "F5D5D7F9E46B3340060D4299062D3E34C70E92705878C2856FFAC16CED899710",
+        outcome: {
+          balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
+          fee: "0.001",
+          indexInLedger: 0,
+          ledgerVersion: 7761622,
+          uritokenSellOfferChanges: {
+            r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
+              {
+                status: "deleted",
+                uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+                amount: "1000000",
+                destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+              },
+              {
+                status: "created",
+                uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+                amount: "1000000",
+              },
+            ],
+          },
+          affectedObjects: {
+            uritokens: {
+              "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
+                flags: {
+                  burnable: true,
+                },
+                uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+                uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
+                issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+                owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+                amount: "1000000",
+              },
+            },
+          },
+          result: "tesSUCCESS",
+          timestamp: "2023-10-26T17:30:40.000Z",
+        },
+        sequence: 7751115,
+        specification: {
+          uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+          amount: "1000000",
+        },
+        type: "uritokenCreateSellOffer",
+      });
+    });
+
     it("URITokenCancelSellOffer", function () {
       const tx = require("../examples/responses/URITokenCancelSellOffer.json");
       const result: any = Models.getTxDetails(tx, false);
