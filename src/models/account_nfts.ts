@@ -63,8 +63,18 @@ export function cipheredTaxon(tokenSeq: number, taxon: number) {
   // **IMPORTANT** Changing these numbers would be a breaking change requiring
   //               an amendment along with a way to distinguish token IDs that
   //               were generated with the old code.
+
+  const m = 384160001n;
+  const c = 2459n;
+  const max = 4294967296n;
+
   // tslint:disable-next-line:no-bitwise
-  return (taxon ^ (((384160001 * tokenSeq) >>> 0) + 2459)) >>> 0;
+  const p1 = (m * BigInt(tokenSeq)) % max;
+  // tslint:disable-next-line:no-bitwise
+  const p2 = (p1 + c) % max;
+
+  // tslint:disable-next-line:no-bitwise
+  return (taxon ^ Number(p2)) >>> 0;
 }
 
 /**
