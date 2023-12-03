@@ -1,5 +1,6 @@
 import { XrplDefinitionsBase } from "ripple-binary-codec";
 import { removeUndefined } from "../common";
+import { parseAccount } from "./ledger/account";
 
 import { parseOutcome } from "./outcome";
 import { Outcome } from "../v1/transaction/types";
@@ -46,6 +47,7 @@ import {
 
 import { FormattedImportSpecification } from "../v1/common/types/objects/import";
 import { FormattedInvokeSpecification } from "../v1/common/types/objects/invoke";
+import { FormattedUNLReportSpecification } from "../v1/common/types/objects/unl_report";
 
 import { FormattedAmendmentSpecification } from "../v1/common/types/objects/amendments";
 import { FormattedFeeUpdateSpecification } from "../v1/common/types/objects/fees";
@@ -82,6 +84,7 @@ import parseURITokenMint from "./specification/uritoken-mint";
 
 import parseImport from "./specification/import";
 import parseInvoke from "./specification/invoke";
+import parseUNLReport from "./specification/unl-report";
 
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
 import parseFeeUpdate from "./specification/fee-update"; // pseudo-transaction
@@ -122,6 +125,7 @@ const transactionTypeToType = {
 
   Import: "import",
   Invoke: "invoke",
+  UNLReport: "unlReport",
 
   EnableAmendment: "amendment", // pseudo-transaction
   SetFee: "feeUpdate", // pseudo-transaction
@@ -164,6 +168,7 @@ const parserTypeFunc = {
 
   import: parseImport,
   invoke: parseInvoke,
+  unlReport: parseUNLReport,
 
   amendment: parseAmendment, // pseudo-transaction
   feeUpdate: parseFeeUpdate, // pseudo-transaction
@@ -199,6 +204,7 @@ export type FormattedSpecification =
   | FormattedURITokenMintSpecification
   | FormattedImportSpecification
   | FormattedInvokeSpecification
+  | FormattedUNLReportSpecification
   | FormattedAmendmentSpecification
   | FormattedFeeUpdateSpecification;
 
@@ -213,7 +219,12 @@ export interface FormattedTransaction {
 }
 
 // includeRawTransaction: undefined by default (getTransaction)
-function parseTransaction(tx: any, includeRawTransaction: boolean, nativeCurrency?: string, definitions?: XrplDefinitionsBase): FormattedTransaction {
+function parseTransaction(
+  tx: any,
+  includeRawTransaction: boolean,
+  nativeCurrency?: string,
+  definitions?: XrplDefinitionsBase
+): FormattedTransaction {
   const type = parseTransactionType(tx.TransactionType);
 
   // tslint:disable-next-line:ban-types
@@ -233,7 +244,7 @@ function parseTransaction(tx: any, includeRawTransaction: boolean, nativeCurrenc
   return removeUndefined({
     // tslint:disable-next-line:object-literal-shorthand
     type: type,
-    address: tx.Account,
+    address: parseAccount(tx.Account),
     sequence: tx.Sequence,
     id: tx.hash,
     specification: removeUndefined(specification),

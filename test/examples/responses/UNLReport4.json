@@ -1,0 +1,63 @@
+{
+  "Account": "",
+  "ActiveValidator": {
+    "PublicKey": "ED0EA5543E538BE8C0D6A6E643678B5B3854BF423736E813502BEE6558BC0D5B1A"
+  },
+  "Fee": "0",
+  "LedgerSequence": 214272,
+  "Sequence": 0,
+  "SigningPubKey": "",
+  "TransactionType": "UNLReport",
+  "date": 752628630,
+  "hash": "20C6510D8141FA1920D675E763B53A0ACD53C6E5E5392FCC8E110C4E42C29D0E",
+  "inLedger": 214272,
+  "ledger_index": 214272,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "ActiveValidators": [
+              {
+                "ActiveValidator": {
+                  "Account": "rLHGUX9zeQMmVgZjMMymQEhFYJ2WyDS8E1",
+                  "PublicKey": "ED0EA5543E538BE8C0D6A6E643678B5B3854BF423736E813502BEE6558BC0D5B1A"
+                }
+              },
+              {
+                "ActiveValidator": {
+                  "Account": "rBCuo3EdU4Yx3qBJ7uYjxcWoQiu8PiHNDD",
+                  "PublicKey": "EDA4A1278B9FDCABFAE094956DB1D7A0FCB9E99E40FB02C8ED26E6B2C4B83DB932"
+                }
+              }
+            ],
+            "Flags": 0,
+            "ImportVLKeys": [
+              {
+                "ImportVLKey": {
+                  "Account": "r4BYAeQvWjU9Bh2yod8WgRDmmNH2G1pybo",
+                  "PublicKey": "ED45D1840EE724BE327ABE9146503D5848EFD5F38B6D5FEDE71E80ACCE5E6E738B"
+                }
+              }
+            ]
+          },
+          "LedgerEntryType": "UNLReport",
+          "LedgerIndex": "61E32E7A24A238F1C619D5F9DDCC41A94B33B66C0163F7EFCC8A19C9FD6F28DC",
+          "PreviousFields": {
+            "ActiveValidators": [
+              {
+                "ActiveValidator": {
+                  "Account": "rBCuo3EdU4Yx3qBJ7uYjxcWoQiu8PiHNDD",
+                  "PublicKey": "EDA4A1278B9FDCABFAE094956DB1D7A0FCB9E99E40FB02C8ED26E6B2C4B83DB932"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 2,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

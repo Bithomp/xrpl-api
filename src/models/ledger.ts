@@ -1,4 +1,4 @@
-const RIPPLE_UNIX_DIFF = 946684800;
+export const RIPPLE_UNIX_DIFF = 946684800;
 
 export type LedgerIndex = number | ("validated" | "closed" | "current");
 

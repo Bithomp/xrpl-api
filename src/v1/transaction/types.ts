@@ -32,6 +32,8 @@ export type Outcome = {
   channelChanges?: object;
   nftokenChanges?: object;
   nftokenOfferChanges?: object;
+  uritokenChanges?: object;
+  uritokenSellOfferChanges?: object;
   affectedObjects?: object;
   deliveredAmount?: {
     currency: string;

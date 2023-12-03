@@ -10,3 +10,4 @@ export { parseOrderbookChanges } from "./orderbook_changes";
 export { parseHooksExecutions } from "./hooks_executions";
 export { parseEmittedTxns } from "./emitted_txns";
 export { parseEscrowChanges } from "./escrow_changes";
+export { parseUNLReportChanges } from "./unl_report_changes";

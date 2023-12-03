@@ -3,7 +3,7 @@ import { normalizeNodes } from "../../v1/common/utils";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "../../v1/common/types/objects/account";
 import { parseTimestamp } from "../utils";
 
-interface FormattedEscrowInterface {
+interface FormattedEscrowSummaryInterface {
   status?: string;
   escrowIndex?: number;
   escrowSequence?: number;
@@ -48,7 +48,7 @@ function parseEscrowSequence(tx: any) {
   return undefined;
 }
 
-function summarizeEscrow(tx: any, node: any) {
+function summarizeEscrow(tx: any, node: any): FormattedEscrowSummaryInterface {
   const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields;
 
   const source: FormattedSourceAddress = {
@@ -61,7 +61,7 @@ function summarizeEscrow(tx: any, node: any) {
     tag: final.DestinationTag,
   };
 
-  const summary: FormattedEscrowInterface = {
+  const summary: FormattedEscrowSummaryInterface = {
     status: parseEscrowStatus(tx, node),
     escrowIndex: node.ledgerIndex,
     escrowSequence: parseEscrowSequence(tx),
@@ -88,7 +88,7 @@ function summarizeEscrow(tx: any, node: any) {
   return removeUndefined(summary);
 }
 
-function parseEscrowChanges(tx: any) {
+function parseEscrowChanges(tx: any): FormattedEscrowSummaryInterface | undefined {
   const escrows = normalizeNodes(tx.meta).filter((n: any) => {
     return n.entryType === "Escrow";
   });

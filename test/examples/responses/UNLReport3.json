@@ -1,0 +1,21 @@
+{
+  "Account": "",
+  "Fee": "0",
+  "ImportVLKey": {
+    "PublicKey": "ED45D1840EE724BE327ABE9146503D5848EFD5F38B6D5FEDE71E80ACCE5E6E738B"
+  },
+  "LedgerSequence": 214272,
+  "Sequence": 0,
+  "SigningPubKey": "",
+  "TransactionType": "UNLReport",
+  "date": 752628630,
+  "hash": "201FC9AA3B482C4CE9FD4A2DF3266997B3382915302C8704CB7FE5EE4E9B5C12",
+  "inLedger": 214272,
+  "ledger_index": 214272,
+  "meta": {
+    "AffectedNodes": [],
+    "TransactionIndex": 1,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

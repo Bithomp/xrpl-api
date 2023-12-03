@@ -3373,6 +3373,123 @@ describe("Models", () => {
         type: "invoke",
       });
     });
+
+    it("UNLReport create node", function () {
+      const tx = require("../examples/responses/UNLReport.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "unlReport",
+        address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+        sequence: 0,
+        id: "1D64E196E92DFE2E774CE8F6141378583B6E0190B0E1291772A87BC2A7D6AADC",
+        specification: {
+          source: { address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp" },
+          activeValidator: "EDA4A1278B9FDCABFAE094956DB1D7A0FCB9E99E40FB02C8ED26E6B2C4B83DB932",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2023-10-30T12:46:51.000Z",
+          fee: "0",
+          balanceChanges: {},
+          unlReportChanges: {
+            status: "added",
+            activeValidator: {
+              account: "rBCuo3EdU4Yx3qBJ7uYjxcWoQiu8PiHNDD",
+              publicKey: "EDA4A1278B9FDCABFAE094956DB1D7A0FCB9E99E40FB02C8ED26E6B2C4B83DB932",
+            },
+          },
+          ledgerVersion: 512,
+          indexInLedger: 0,
+        },
+      });
+    });
+
+    it("UNLReport vl key", function () {
+      const tx = require("../examples/responses/UNLReport2.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "unlReport",
+        address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+        sequence: 0,
+        id: "68AA93EA68704FEF9696A7F88C8DA3AB52547CB91A89930AAC49F64A9C82031C",
+        specification: {
+          source: { address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp" },
+          importVLKey: "ED45D1840EE724BE327ABE9146503D5848EFD5F38B6D5FEDE71E80ACCE5E6E738B",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2023-10-30T12:46:51.000Z",
+          fee: "0",
+          balanceChanges: {},
+          unlReportChanges: {
+            status: "added",
+            importVLKey: {
+              account: "r4BYAeQvWjU9Bh2yod8WgRDmmNH2G1pybo",
+              publicKey: "ED45D1840EE724BE327ABE9146503D5848EFD5F38B6D5FEDE71E80ACCE5E6E738B",
+            },
+          },
+          ledgerVersion: 512,
+          indexInLedger: 2,
+        },
+      });
+    });
+
+    it("UNLReport without changes", function () {
+      const tx = require("../examples/responses/UNLReport3.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "unlReport",
+        address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+        sequence: 0,
+        id: "201FC9AA3B482C4CE9FD4A2DF3266997B3382915302C8704CB7FE5EE4E9B5C12",
+        specification: {
+          source: { address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp" },
+          importVLKey: "ED45D1840EE724BE327ABE9146503D5848EFD5F38B6D5FEDE71E80ACCE5E6E738B",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2023-11-06T23:30:30.000Z",
+          fee: "0",
+          balanceChanges: {},
+          ledgerVersion: 214272,
+          indexInLedger: 1,
+        },
+      });
+    });
+
+    it("UNLReport validator", function () {
+      const tx = require("../examples/responses/UNLReport4.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "unlReport",
+        address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+        sequence: 0,
+        id: "20C6510D8141FA1920D675E763B53A0ACD53C6E5E5392FCC8E110C4E42C29D0E",
+        specification: {
+          source: { address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp" },
+          activeValidator: "ED0EA5543E538BE8C0D6A6E643678B5B3854BF423736E813502BEE6558BC0D5B1A",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2023-11-06T23:30:30.000Z",
+          fee: "0",
+          balanceChanges: {},
+          unlReportChanges: {
+            status: "added",
+            activeValidator: {
+              account: "rLHGUX9zeQMmVgZjMMymQEhFYJ2WyDS8E1",
+              publicKey: "ED0EA5543E538BE8C0D6A6E643678B5B3854BF423736E813502BEE6558BC0D5B1A",
+            },
+          },
+          ledgerVersion: 214272,
+          indexInLedger: 2,
+        },
+      });
+    });
   });
 
   describe("getAccountTxDetails", () => {
