@@ -84,6 +84,7 @@ describe("Client", () => {
 
     describe("testnet", () => {
       before(async function () {
+        this.timeout(15000);
         Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
         await Client.connect();
       });

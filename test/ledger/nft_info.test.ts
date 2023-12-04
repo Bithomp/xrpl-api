@@ -5,7 +5,7 @@ import { Client } from "../../src/index";
 describe("Client", () => {
   describe("mainnet", () => {
     before(async function () {
-      this.timeout(10000);
+      this.timeout(15000);
       Client.setup(nconf.get("xrpl:connections:mainnet"), { loadBalancing: true, nativeCurrency: "XRP" });
       await Client.connect();
     });

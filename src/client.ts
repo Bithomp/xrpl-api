@@ -158,10 +158,23 @@ export function findConnection(
     return true;
   });
 
-  if (!strongFilter) {
-    // no any, use all what we have
+  if (strongFilter === undefined || strongFilter === false) {
+    // no any, use all what we have connected to requested network
     if (connections.length === 0) {
-      connections = [...clientConnections];
+      connections = clientConnections.filter((con) => {
+        if (!con.isConnected()) {
+          return false;
+        }
+
+        // networkID could be missed on old rippled or clio
+        if (typeof networkID === "number" && typeof con.getNetworkID() === "number") {
+          if (con.getNetworkID() !== networkID) {
+            return false;
+          }
+        }
+
+        return true;
+      });
     }
   }
 

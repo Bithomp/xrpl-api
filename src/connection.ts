@@ -47,7 +47,7 @@ class Connection extends EventEmitter {
   public latency: LatencyInfo[];
   public readonly logger?: any;
   public readonly timeout?: number; // request timeout
-  public readonly connectionTimeout?: number;
+  public readonly connectionTimeout: number;
   public readonly hash?: string;
   private networkID?: number;
   private serverInfoUpdating: boolean;
@@ -74,7 +74,7 @@ class Connection extends EventEmitter {
     this.client = null;
     this.logger = options.logger;
     this.timeout = options.timeout; // request timeout
-    this.connectionTimeout = options.connectionTimeout;
+    this.connectionTimeout = options.connectionTimeout || RECONNECT_TIMEOUT;
     this.hash = crypto.createHash("sha256").update(url).digest("hex");
 
     if (typeof options.networkID === "number") {
