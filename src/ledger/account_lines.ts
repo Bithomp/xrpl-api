@@ -53,6 +53,7 @@ export async function getAccountLines(
     currency: options.currency,
     ledger_index: options.ledgerIndex || "validated",
     limit: options.limit,
+    marker: options.marker,
   });
 
   if (!response) {

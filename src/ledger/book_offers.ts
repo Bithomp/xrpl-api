@@ -5,7 +5,7 @@ import { IssuedCurrency } from "../types";
 import { parseMarker, createMarker } from "../common/utils";
 import { ErrorResponse } from "../models/base_model";
 
-export interface GetGetBookOffers {
+export interface GetGetBookOffersOptions {
   ledgerIndex?: LedgerIndex;
   limit?: number;
   marker?: any;
@@ -19,7 +19,7 @@ export async function getBookOffers(
   taker: string,
   takerGets: IssuedCurrency,
   takerPays: IssuedCurrency,
-  options: GetGetBookOffers = {}
+  options: GetGetBookOffersOptions = {}
 ): Promise<object | ErrorResponse> {
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
@@ -35,6 +35,7 @@ export async function getBookOffers(
     taker_pays: takerPays,
     ledger_index: options.ledgerIndex || "validated",
     limit: options.limit,
+    marker: options.marker,
   });
 
   if (!response) {
@@ -75,10 +76,15 @@ function convertIssueToTakerAmount<T>(obj: T & { counterparty?: string; issuer?:
   return withIssuer;
 }
 
+export interface GetGetOrderBookOptions {
+  ledgerIndex?: LedgerIndex;
+  limit?: number;
+}
+
 export async function getOrderbook(
   taker: string,
   orderbook: OrderbookInfo,
-  options: GetGetBookOffers = {}
+  options: GetGetOrderBookOptions = {}
 ): Promise<object | ErrorResponse> {
   const [directOfferResults, reverseOfferResults] = await Promise.all([
     getBookOffers(
