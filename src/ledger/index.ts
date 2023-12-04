@@ -14,6 +14,7 @@ export * from "./ledger_entry";
 export * from "./manifest";
 export * from "./nft_info";
 export * from "./server_info";
+export * from "./server_definitions";
 export * from "./transaction";
 export * from "./vl";
 export * from "./vl-v2";
