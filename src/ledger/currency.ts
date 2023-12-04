@@ -84,7 +84,7 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
   const currencyHex = hex.substring(16, hex.length);
   const currency = hexToString(currencyHex)?.trim()?.replace(/\0/g, "") as string;
   const ledgerInfo = await getLedger(ctiLedger);
-  const ledger = ledgerInfo.ledger;
+  const ledger = ledgerInfo?.ledger;
 
   let ctiVerified = false;
   let ctiValid = false;
@@ -127,7 +127,7 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
         ctiLedgerCheck(cti) === ctiLedgerCheckGen(ledger.hash || ledger.ledger_hash) &&
         ctiTransactionCheck(cti) === ctiTransactionCheckGen(ctiTx.hash);
     }
-  } else if (ledgerInfo.error === "lgrNotFound") {
+  } else if (ledgerInfo?.error === "lgrNotFound") {
     ctiVerified = true;
   }
 
