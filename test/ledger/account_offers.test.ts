@@ -28,7 +28,7 @@ describe("Client", () => {
     });
   });
 
-  describe.only("getAccountAllOffers", () => {
+  describe("getAccountAllOffers", () => {
     before(async function () {
       this.timeout(15000);
       Client.setup(nconf.get("xrpl:connections:mainnet"), { loadBalancing: true, nativeCurrency: "XRP" });
