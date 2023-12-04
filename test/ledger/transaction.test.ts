@@ -414,6 +414,7 @@ describe("Client", () => {
         const signedTransaction = wallet.sign(txBlob).tx_blob;
 
         const result: any = await Client.submit(signedTransaction);
+        expect(result.meta).to.be.an("object");
         expect(result.meta.TransactionResult).to.eq("tesSUCCESS");
       });
 
@@ -509,6 +510,7 @@ describe("Client", () => {
         };
 
         const result: any = await Client.legacyPayment(payment);
+        expect(result.meta).to.be.an("object");
         expect(result.meta.TransactionResult).to.eq("tecUNFUNDED_PAYMENT");
       });
     });
