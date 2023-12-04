@@ -28,7 +28,7 @@ describe("Client", () => {
     });
   });
 
-  describe("getAccountAllOffers", () => {
+  describe.only("getAccountAllOffers", () => {
     before(async function () {
       this.timeout(15000);
       Client.setup(nconf.get("xrpl:connections:mainnet"), { loadBalancing: true, nativeCurrency: "XRP" });
@@ -47,6 +47,7 @@ describe("Client", () => {
     it("works", async function () {
       const result: any = await Client.getAccountAllOffers("r4UPddYeGeZgDhSGPkooURsQtmGda4oYQW");
       expect(result.offers.length).to.eql(0);
+      expect(result.marker).to.a("string");
     });
 
     it("works as formatted", async function () {
@@ -60,6 +61,7 @@ describe("Client", () => {
     it("works as formatted", async function () {
       const result: any = await Client.getAccountAllOffers("r4UPddYeGeZgDhSGPkooURsQtmGda4oYQW", { formatted: true });
       expect(result.offers.length).to.eql(0);
+      expect(result.marker).to.a("string");
     });
   });
 });

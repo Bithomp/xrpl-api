@@ -121,14 +121,14 @@ export async function getAccountAllOffers(
       break;
     }
 
-    // can be empty even with marker
-    if (response.offers.length === 0) {
-      break;
-    }
-
     if (response.marker) {
       options.marker = response.marker;
     } else {
+      break;
+    }
+
+    // can be empty even with marker
+    if (response.offers.length === 0) {
       break;
     }
   }
