@@ -53,6 +53,7 @@ export async function getAccountOffers(
     account,
     ledger_index: options.ledgerIndex || "validated",
     limit: options.limit,
+    marker: options.marker,
   });
 
   if (!response) {
@@ -117,6 +118,11 @@ export async function getAccountAllOffers(
     accountOffers.push(...response.offers);
     if (limit && accountOffers.length >= limit) {
       response.limit = accountOffers.length; // override last limit with total one
+      break;
+    }
+
+    // can be empty even with marker
+    if (response.offers.length === 0) {
       break;
     }
 

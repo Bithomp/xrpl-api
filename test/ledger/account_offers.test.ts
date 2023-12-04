@@ -44,12 +44,22 @@ describe("Client", () => {
       expect(Object.keys(offer.taker_pays).sort()).to.eql(["currency", "issuer", "value"]);
     });
 
+    it("works", async function () {
+      const result: any = await Client.getAccountAllOffers("r4UPddYeGeZgDhSGPkooURsQtmGda4oYQW");
+      expect(result.offers.length).to.eql(0);
+    });
+
     it("works as formatted", async function () {
       const result: any = await Client.getAccountAllOffers("rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z", { formatted: true });
       const offer = result.offers[0];
 
       expect(Object.keys(offer).sort()).to.eql(["properties", "specification"]);
       expect(Object.keys(offer.specification).sort()).to.eql(["direction", "quantity", "totalPrice"]);
+    });
+
+    it("works as formatted", async function () {
+      const result: any = await Client.getAccountAllOffers("r4UPddYeGeZgDhSGPkooURsQtmGda4oYQW", { formatted: true });
+      expect(result.offers.length).to.eql(0);
     });
   });
 });
