@@ -18,9 +18,9 @@ class RippleError extends Error {
   }
 
   toString() {
-    let result = "[" + this.name + "(" + this.message;
+    let result = "[" + this.name + "(" + this.message; // eslint-disable-line prefer-template
     if (this.data) {
-      result += ", " + inspect(this.data);
+      result += ", " + inspect(this.data); // eslint-disable-line prefer-template
     }
     result += ")]";
     return result;

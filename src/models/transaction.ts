@@ -112,6 +112,7 @@ export function isCTID(ctid: string | bigint): boolean {
       return false;
     }
 
+    // eslint-disable-next-line prefer-template
     ctidValue = BigInt("0x" + ctid);
   } else if (typeof ctid === "bigint") {
     ctidValue = ctid;
@@ -119,7 +120,7 @@ export function isCTID(ctid: string | bigint): boolean {
     return false;
   }
 
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   if (ctidValue > 0xffffffffffffffffn || (ctidValue & 0xf000000000000000n) !== 0xc000000000000000n) {
     return false;
   }
@@ -164,7 +165,7 @@ export function encodeCTID(ledgerIndex: number, txIndex: number, networkID: numb
     throw new Error("networkID must not be greater than 65535 or less than 0.");
   }
 
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   return (((BigInt(0xc0000000) + BigInt(ledgerIndex)) << 32n) + (BigInt(txIndex) << 16n) + BigInt(networkID))
     .toString(16)
     .toUpperCase();
@@ -189,7 +190,7 @@ export function decodeCTID(ctid: string | bigint): DecodeCTIDInterface {
     if (!CTID_REGEX.test(ctid)) {
       throw new Error("CTID must be exactly 16 nibbles and start with a C");
     }
-
+    // eslint-disable-next-line prefer-template
     ctidValue = BigInt("0x" + ctid);
   } else if (typeof ctid === "bigint") {
     ctidValue = ctid;
@@ -197,16 +198,16 @@ export function decodeCTID(ctid: string | bigint): DecodeCTIDInterface {
     throw new Error("CTID must be a hexadecimal string or BigInt");
   }
 
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   if (ctidValue > 0xffffffffffffffffn || (ctidValue & 0xf000000000000000n) !== 0xc000000000000000n) {
     throw new Error("CTID must be exactly 16 nibbles and start with a C");
   }
 
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   const ledgerIndex = Number((ctidValue >> 32n) & 0xfffffffn);
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   const txIndex = Number((ctidValue >> 16n) & 0xffffn);
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   const networkID = Number(ctidValue & 0xffffn);
 
   return {

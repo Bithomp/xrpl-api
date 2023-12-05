@@ -14,15 +14,13 @@ export type Path = {
   paths: string;
 };
 
-// tslint:disable-next-line:array-type
-export type GetPaths = Array<Path>;
+export type GetPaths = Path[];
 
 export type PathFind = {
   source: {
     address: string;
     amount?: FormattedIssuedCurrencyAmount;
-    // tslint:disable-next-line:array-type
-    currencies?: Array<{ currency: string; counterparty?: string }>;
+    currencies?: { currency: string; counterparty?: string }[];
   };
   destination: {
     address: string;

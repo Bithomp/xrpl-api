@@ -1,7 +1,6 @@
 import * as xrpl from "xrpl";
-import { decode } from "ripple-binary-codec";
+import { decode, XrplDefinitionsBase } from "ripple-binary-codec";
 import { Transaction } from "xrpl";
-import { XrplDefinitionsBase } from "ripple-binary-codec";
 
 import * as Client from "../client";
 import { Connection } from "../connection";
@@ -304,7 +303,7 @@ export async function getAccountPaymentParams(
   connection?: Connection
 ): Promise<AccountPaymentParamsInterface | ErrorResponse> {
   try {
-    connection = connection || Client.findConnection("submit") || undefined;
+    connection = connection || Client.findConnection("submit") || undefined; // eslint-disable-line no-param-reassign
     if (!connection) {
       throw new Error("There is no connection");
     }

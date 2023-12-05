@@ -16,7 +16,6 @@ function createAdjustment(address: string, adjustmentWithoutAddress: object): an
   const amountKey = Object.keys(adjustmentWithoutAddress)[0];
   const amount = adjustmentWithoutAddress[amountKey];
   return _.set(
-    // tslint:disable-next-line:object-literal-shorthand
     { address: address },
     amountKey,
     removeAnyCounterpartyEncoding(address, amount)
@@ -32,15 +31,17 @@ function parseAlternative(
   // we use "maxAmount"/"minAmount" here so that the result can be passed
   // directly to preparePayment
   const amounts =
-    alternative.destination_amount != null
+    /* eslint-disable multiline-ternary */
+    alternative.destination_amount != null // eslint-disable-line eqeqeq
       ? {
-          source: { amount: parseAmount(alternative.source_amount) },
-          destination: { minAmount: parseAmount(alternative.destination_amount) },
-        }
+        source: { amount: parseAmount(alternative.source_amount) },
+        destination: { minAmount: parseAmount(alternative.destination_amount) },
+      }
       : {
-          source: { maxAmount: parseAmount(alternative.source_amount) },
-          destination: { amount: parseAmount(destinationAmount) },
-        };
+        source: { maxAmount: parseAmount(alternative.source_amount) },
+        destination: { amount: parseAmount(destinationAmount) },
+      };
+  /* eslint-enable multiline-ternary */
 
   return {
     source: createAdjustment(sourceAddress, amounts.source),

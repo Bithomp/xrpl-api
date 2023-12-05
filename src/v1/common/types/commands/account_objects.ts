@@ -39,16 +39,15 @@ export interface AccountObjects {
 
   // Array of objects owned by this account.
   // from the getAccountObjects section of the dev center
-  // tslint:disable-next-line:array-type
-  account_objects: Array<
-    | CheckLedgerEntry
+  account_objects:
+  (| CheckLedgerEntry
     | RippleStateLedgerEntry
     | OfferLedgerEntry
     | SignerListLedgerEntry
     | EscrowLedgerEntry
     | PayChannelLedgerEntry
-    | DepositPreauthLedgerEntry
-  >;
+    | DepositPreauthLedgerEntry)[]
+  ;
 
   // (May be omitted) The identifying hash of the ledger
   // that was used to generate this response.

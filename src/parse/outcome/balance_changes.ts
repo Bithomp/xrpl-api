@@ -5,10 +5,8 @@ import { normalizeNodes } from "../../v1/common/utils";
 
 import { getNativeCurrency } from "../../client";
 
-/* tslint:disable:prefer-const only-arrow-functions no-var-keyword */
-
 function groupByAddress(balanceChanges) {
-  var grouped = _.groupBy(balanceChanges, function (node) {
+  const grouped = _.groupBy(balanceChanges, function (node) {
     return node.address;
   });
   return _.mapValues(grouped, function (group) {
@@ -23,7 +21,7 @@ function parseValue(value) {
 }
 
 function computeBalanceChange(node) {
-  var value: null | BigNumber = null;
+  let value: null | BigNumber = null;
   if (node.newFields.Balance) {
     value = parseValue(node.newFields.Balance);
   } else if (node.previousFields.Balance && node.finalFields.Balance) {
@@ -42,7 +40,7 @@ function parseFinalBalance(node) {
 }
 
 function parseXRPQuantity(node: any, valueParser: any, nativeCurrency?: string) {
-  var value = valueParser(node);
+  const value = valueParser(node);
 
   if (value === null) {
     return null;
@@ -59,7 +57,7 @@ function parseXRPQuantity(node: any, valueParser: any, nativeCurrency?: string) 
 }
 
 function flipTrustlinePerspective(quantity) {
-  var negatedBalance = new BigNumber(quantity.balance.value).negated();
+  const negatedBalance = new BigNumber(quantity.balance.value).negated();
   return {
     address: quantity.balance.counterparty,
     balance: {
@@ -71,7 +69,7 @@ function flipTrustlinePerspective(quantity) {
 }
 
 function parseTrustlineQuantity(node, valueParser) {
-  var value = valueParser(node);
+  const value = valueParser(node);
 
   if (value === null) {
     return null;
@@ -82,10 +80,10 @@ function parseTrustlineQuantity(node, valueParser) {
    * If an offer is placed to acquire an asset with no existing trustline,
    * the trustline can be created when the offer is taken.
    */
-  var fields = _.isEmpty(node.newFields) ? node.finalFields : node.newFields;
+  const fields = _.isEmpty(node.newFields) ? node.finalFields : node.newFields;
 
   // the balance is always from low node's perspective
-  var result = {
+  const result = {
     address: fields.LowLimit.issuer,
     balance: {
       counterparty: fields.HighLimit.issuer,
@@ -97,7 +95,7 @@ function parseTrustlineQuantity(node, valueParser) {
 }
 
 function parseQuantities(metadata: any, valueParser: any, nativeCurrency?: string) {
-  var values = normalizeNodes(metadata).map(function (node) {
+  const values = normalizeNodes(metadata).map(function (node) {
     if (node.entryType === "AccountRoot") {
       return [parseXRPQuantity(node, valueParser, nativeCurrency)];
     } else if (node.entryType === "RippleState") {

@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { deriveKeypair } from "ripple-keypairs";
 import { Amount, IssuedCurrencyAmount, FormattedIssuedCurrencyAmount } from "./types/objects";
 import { xrpToDrops } from "../../common";

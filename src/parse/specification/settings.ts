@@ -21,19 +21,20 @@ function parseSettingsFlags(tx: any): any {
   const oldFlags = _.get(node.PreviousFields, "Flags");
   const newFlags = _.get(node.FinalFields, "Flags");
 
-  if (oldFlags != null && newFlags != null) {
-    // tslint:disable-next-line:no-bitwise
+  if (oldFlags != null && newFlags != null) { // eslint-disable-line eqeqeq
+    // eslint-disable-next-line no-bitwise
     const changedFlags = oldFlags ^ newFlags;
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     const setFlags = newFlags & changedFlags;
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     const clearedFlags = oldFlags & changedFlags;
+
     Object.entries(AccountRootFlagsKeys).forEach((entry) => {
       const [flagName, flagValue] = entry;
-      // tslint:disable-next-line:no-bitwise
+      // eslint-disable-next-line no-bitwise
       if (setFlags & flagValue) {
         settings[flagName] = true;
-        // tslint:disable-next-line:no-bitwise
+        // eslint-disable-next-line no-bitwise
       } else if (clearedFlags & flagValue) {
         settings[flagName] = false;
       }

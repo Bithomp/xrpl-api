@@ -104,7 +104,7 @@ export function accountObjectsToAccountLines(account: string, accountObjects: Ac
   const notInDefaultState = accountObjects.filter((node: any) => {
     return (
       node.LedgerEntryType === "RippleState" &&
-      // tslint:disable-next-line:no-bitwise
+      // eslint-disable-next-line no-bitwise
       node.Flags & RippleStateFlags[node.HighLimit.issuer === account ? "lsfHighReserve" : "lsfLowReserve"]
     );
   });
@@ -121,19 +121,21 @@ const RippleStateToTrustLine = (ledgerEntry: LedgerEntry.RippleState, account: s
   const [self, counterparty] = ledgerEntry.HighLimit.issuer === account ? parties : parties.reverse();
 
   const ripplingFlags = [
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     (RippleStateFlags.lsfHighNoRipple & ledgerEntry.Flags) === RippleStateFlags.lsfHighNoRipple,
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     (RippleStateFlags.lsfLowNoRipple & ledgerEntry.Flags) === RippleStateFlags.lsfLowNoRipple,
   ];
-  // tslint:disable-next-line:variable-name
+
   const [no_ripple, no_ripple_peer] =
     ledgerEntry.HighLimit.issuer === account ? ripplingFlags : ripplingFlags.reverse();
 
+  /* eslint-disable multiline-ternary */
   const balance =
     ledgerEntry.HighLimit.issuer === account && ledgerEntry.Balance.value.startsWith("-")
       ? ledgerEntry.Balance.value.slice(1)
       : ledgerEntry.Balance.value;
+  /* eslint-enable multiline-ternary */
 
   return {
     account: counterparty.issuer,

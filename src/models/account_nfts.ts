@@ -68,12 +68,11 @@ export function cipheredTaxon(tokenSeq: number, taxon: number) {
   const c = 2459n;
   const max = 4294967296n;
 
-  // tslint:disable-next-line:no-bitwise
   const p1 = (m * BigInt(tokenSeq)) % max;
-  // tslint:disable-next-line:no-bitwise
+
   const p2 = (p1 + c) % max;
 
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   return (taxon ^ Number(p2)) >>> 0;
 }
 

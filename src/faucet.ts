@@ -90,7 +90,7 @@ export function getFaucetNetwork(network: string): FaucetNetworkInterface | unde
 
 export async function foundWallet(network: string | FaucetNetworkInterface, account?: string): Promise<any> {
   if (typeof network === "string") {
-    network = getFaucetNetwork(network) as FaucetNetworkInterface;
+    network = getFaucetNetwork(network) as FaucetNetworkInterface; // eslint-disable-line no-param-reassign
   }
 
   if (!network) {

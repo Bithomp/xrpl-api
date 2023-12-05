@@ -1,15 +1,14 @@
 import * as Client from "../client";
 import { ErrorResponse } from "../models/base_model";
 
-// tslint:disable-next-line:no-empty-interface
-export interface GetNftInfoOptions {}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface GetNftInfoOptions { }
 
 /**
  * @returns {Promise<object | ErrorResponse>}
  * @exception {Error}
  */
-// tslint:disable-next-line:variable-name
-export async function getNftInfo(nft_id: string, options: GetNftInfoOptions = {}): Promise<object | ErrorResponse> {
+export async function getNftInfo(nft_id: string, _options: GetNftInfoOptions = {}): Promise<object | ErrorResponse> {
   // strong search only Clio servers support the command
   const connection: any = Client.findConnection("clio", undefined, true);
   if (!connection) {

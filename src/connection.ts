@@ -1,4 +1,3 @@
-import _ from "lodash";
 import crypto from "crypto";
 import { EventEmitter } from "events";
 import { Client, Request, Response, LedgerStream } from "xrpl";
@@ -453,8 +452,8 @@ class Connection extends EventEmitter {
       return null;
     }
 
-    streams = streams || (Object.keys(this.streams) as StreamType[]);
-    accounts = accounts || Object.keys(this.accounts);
+    streams = streams || (Object.keys(this.streams) as StreamType[]); // eslint-disable-line no-param-reassign
+    accounts = accounts || Object.keys(this.accounts); // eslint-disable-line no-param-reassign
 
     const request: any = { command: "subscribe" };
     if (streams.length > 0) {
@@ -480,8 +479,8 @@ class Connection extends EventEmitter {
       this.streamsSubscribed = false;
     }
 
-    streams = streams || (Object.keys(this.streams) as StreamType[]);
-    accounts = accounts || Object.keys(this.accounts);
+    streams = streams || (Object.keys(this.streams) as StreamType[]); // eslint-disable-line no-param-reassign
+    accounts = accounts || Object.keys(this.accounts); // eslint-disable-line no-param-reassign
 
     const request: any = { command: "unsubscribe" };
     if (streams.length > 0) {

@@ -7,11 +7,11 @@ import parseMemos from "../ledger/memos";
 import { FormattedTrustlineSpecification } from "../../v1/common/types/objects/trustlines";
 
 function parseFlag(flagsValue, trueValue, falseValue) {
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   if (flagsValue & trueValue) {
     return true;
   }
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   if (flagsValue & falseValue) {
     return false;
   }

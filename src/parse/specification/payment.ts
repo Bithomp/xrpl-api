@@ -11,12 +11,12 @@ import { FormattedSourceAddress, FormattedDestinationAddress } from "../../v1/co
 import { FormattedIssuedCurrencyAmount } from "../../types";
 
 function isNoDirectRipple(tx: any) {
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   return (tx.Flags & PaymentFlags.tfNoDirectRipple) !== 0;
 }
 
 function isQualityLimited(tx: any) {
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   return (tx.Flags & PaymentFlags.tfLimitQuality) !== 0;
 }
 

@@ -16,9 +16,9 @@ function parsePaymentChannelClaim(tx: any): FormattedPaymentChannelClaimSpecific
     amount: parseRippledAmount(tx.Amount), // Legacy support
     signature: tx.Signature,
     publicKey: tx.PublicKey,
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     renew: Boolean(tx.Flags & PaymentChannelClaimFlags.tfRenew) || undefined,
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     close: Boolean(tx.Flags & PaymentChannelClaimFlags.tfClose) || undefined,
   });
 }

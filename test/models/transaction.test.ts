@@ -1097,6 +1097,95 @@ describe("Models", () => {
       });
     });
 
+    it("Remit with uritoken mint", function () {
+      const tx = require("../examples/responses/Remit.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "remit",
+        address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+        sequence: 7751122,
+        id: "C47FA26FD959F1F5981F3647212FDDCFBA11A644B68D4D63BE3559D34413B4A1",
+        specification: {
+          source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
+          destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
+          uritokenMint: {
+            uri: "626974686F6D705F72656D697424746573742E78616861756578706C6F7265722E636F6D",
+            flags: {
+              burnable: true,
+            },
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2023-12-05T10:57:01.000Z",
+          fee: "0.001",
+          balanceChanges: {
+            r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.201" }],
+            rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM: [{ currency: "XRP", value: "0.2" }],
+          },
+          uritokenChanges: {
+            rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM: [
+              {
+                status: "added",
+                flags: 1,
+                uritokenID: "112919B177592AE5DE83024BB5CB3CA3E52934432FCF27265078710DE3427D15",
+                uri: "626974686F6D705F72656D697424746573742E78616861756578706C6F7265722E636F6D",
+                issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+              },
+            ],
+          },
+          affectedObjects: {
+            uritokens: {
+              "112919B177592AE5DE83024BB5CB3CA3E52934432FCF27265078710DE3427D15": {
+                uritokenID: "112919B177592AE5DE83024BB5CB3CA3E52934432FCF27265078710DE3427D15",
+                flags: { burnable: true },
+                uri: "626974686F6D705F72656D697424746573742E78616861756578706C6F7265722E636F6D",
+                issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+                owner: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+              },
+            },
+          },
+          ledgerVersion: 8898769,
+          indexInLedger: 0,
+        },
+      });
+    });
+
+    it("Remit with payment", function () {
+      const tx = require("../examples/responses/Remit2.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "remit",
+        address: "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h",
+        sequence: 755010453,
+        id: "C4BC98D36B27F75AC3ACA59E22E93C4DC69BE39EBC1227C257696BC1C6FCE31E",
+        specification: {
+          source: { address: "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h" },
+          destination: { address: "rMVjmjek75ZADVE7c5LfChRHYvbhNNbsBg" },
+          amounts: [{ currency: "TST", issuer: "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h", value: "1000" }],
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2023-12-04T17:25:53.000Z",
+          fee: "0.00002",
+          balanceChanges: {
+            rMVjmjek75ZADVE7c5LfChRHYvbhNNbsBg: [
+              { counterparty: "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h", currency: "TST", value: "1000" },
+              { currency: "XRP", value: "1.2" },
+            ],
+            r42Dswghppme2z9yMFzc12YsxiL9Xbss6h: [
+              { counterparty: "rMVjmjek75ZADVE7c5LfChRHYvbhNNbsBg", currency: "TST", value: "-1000" },
+              { currency: "XRP", value: "-1.20002" },
+            ],
+          },
+          ledgerVersion: 8877824,
+          indexInLedger: 8,
+        },
+      });
+    });
+
     it("URITokenMint", function () {
       const tx = require("../examples/responses/URITokenMint.json");
       const result: any = Models.getTxDetails(tx, false);

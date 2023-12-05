@@ -2,8 +2,7 @@ import { FormattedMemo, Memo } from "../../v1/common/types/objects";
 import { removeUndefined } from "../../common";
 import { hexToString } from "../utils";
 
-// tslint:disable-next-line:array-type
-function parseMemos(tx: any): Array<FormattedMemo> | undefined {
+function parseMemos(tx: any): FormattedMemo[] | undefined {
   if (!Array.isArray(tx.Memos) || tx.Memos.length === 0) {
     return undefined;
   }

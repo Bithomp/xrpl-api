@@ -140,7 +140,7 @@ export function findConnection(
 
     // check which types are supported
     const foundTypes = type.split(",").map((t) => {
-      t = t.trim();
+      t = t.trim(); // eslint-disable-line no-param-reassign
       if (t[0] === "!") {
         return !con.types.includes(t.slice(1));
       } else {

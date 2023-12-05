@@ -37,19 +37,21 @@ export interface Payment {
 }
 
 function isMaxAdjustment(source: Adjustment | MaxAdjustment): source is MaxAdjustment {
-  return (source as MaxAdjustment).maxAmount != null;
+  return (source as MaxAdjustment).maxAmount != null; // eslint-disable-line eqeqeq
 }
 
 function isMinAdjustment(destination: Adjustment | MinAdjustment): destination is MinAdjustment {
-  return (destination as MinAdjustment).minAmount != null;
+  return (destination as MinAdjustment).minAmount != null; // eslint-disable-line eqeqeq
 }
 
 function isXRPToXRPPayment(payment: Payment): boolean {
   const { source, destination } = payment;
   const sourceCurrency = isMaxAdjustment(source) ? source.maxAmount.currency : source.amount.currency;
+  /* eslint-disable multiline-ternary */
   const destinationCurrency = isMinAdjustment(destination)
     ? destination.minAmount.currency
     : destination.amount.currency;
+  /* eslint-enable multiline-ternary */
   return (
     (sourceCurrency === getNativeCurrency() || sourceCurrency === "drops") &&
     (destinationCurrency === getNativeCurrency() || destinationCurrency === "drops")
@@ -57,6 +59,7 @@ function isXRPToXRPPayment(payment: Payment): boolean {
 }
 
 function isIOUWithoutCounterparty(amount: FormattedIssuedCurrencyAmount): boolean {
+  // eslint-disable-next-line eqeqeq
   return amount && amount.currency !== getNativeCurrency() && amount.currency !== "drops" && amount.counterparty == null;
 }
 
@@ -127,8 +130,8 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
   }
 
   if (
-    addressToVerifyAgainst.tag != null &&
-    sourceAddressAndTag.tag != null &&
+    addressToVerifyAgainst.tag != null && // eslint-disable-line eqeqeq
+    sourceAddressAndTag.tag != null && // eslint-disable-line eqeqeq
     addressToVerifyAgainst.tag !== sourceAddressAndTag.tag
   ) {
     throw new Error("address includes a tag that does not match payment.source.tag");
@@ -142,13 +145,16 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
   ) {
     throw new Error(
       "payment must specify either (source.maxAmount " +
-        "and destination.amount) or (source.amount and destination.minAmount)"
+      "and destination.amount) or (source.amount and destination.minAmount)"
     );
   }
 
+  /* eslint-disable multiline-ternary */
   const destinationAmount = isMinAdjustment(payment.destination)
     ? payment.destination.minAmount
     : payment.destination.amount;
+  /* eslint-enable multiline-ternary */
+
   const sourceAmount = isMaxAdjustment(payment.source) ? payment.source.maxAmount : payment.source.amount;
 
   // when using destination.minAmount, rippled still requires that we set
@@ -157,10 +163,12 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
   // send the whole source amount, so we set the destination amount to the
   // maximum possible amount. otherwise it's possible that the destination
   // cap could be hit before the source cap.
+  /* eslint-disable multiline-ternary */
   const amount =
     isMinAdjustment(payment.destination) && !isXRPToXRPPayment(payment)
       ? createMaximalAmount(destinationAmount)
       : destinationAmount;
+  /* eslint-enable multiline-ternary */
 
   const txJSON: any = {
     TransactionType: "Payment",
@@ -170,27 +178,27 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
     Flags: 0,
   };
 
-  if (payment.invoiceID != null) {
+  if (payment.invoiceID != null) { // eslint-disable-line eqeqeq
     txJSON.InvoiceID = payment.invoiceID;
   }
-  if (sourceAddressAndTag.tag != null) {
+  if (sourceAddressAndTag.tag != null) { // eslint-disable-line eqeqeq
     txJSON.SourceTag = sourceAddressAndTag.tag;
   }
-  if (destinationAddressAndTag.tag != null) {
+  if (destinationAddressAndTag.tag != null) { // eslint-disable-line eqeqeq
     txJSON.DestinationTag = destinationAddressAndTag.tag;
   }
-  if (payment.networkID != null) {
+  if (payment.networkID != null) { // eslint-disable-line eqeqeq
     txJSON.NetworkID = payment.networkID;
   }
-  if (payment.memos != null) {
+  if (payment.memos != null) { // eslint-disable-line eqeqeq
     txJSON.Memos = payment.memos.map(convertMemo);
   }
   if (payment.noDirectRipple === true) {
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     txJSON.Flags |= PaymentFlags.tfNoDirectRipple;
   }
   if (payment.limitQuality === true) {
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     txJSON.Flags |= PaymentFlags.tfLimitQuality;
   }
   if (!isXRPToXRPPayment(payment)) {
@@ -199,7 +207,7 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
     // https://github.com/ripple/rippled/commit/
     //  c522ffa6db2648f1d8a987843e7feabf1a0b7de8/
     if (payment.allowPartialPayment || isMinAdjustment(payment.destination)) {
-      // tslint:disable-next-line:no-bitwise
+      // eslint-disable-next-line no-bitwise
       txJSON.Flags |= PaymentFlags.tfPartialPayment;
     }
 
@@ -209,7 +217,7 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
       txJSON.DeliverMin = toRippledAmount(destinationAmount);
     }
 
-    if (payment.paths != null) {
+    if (payment.paths != null) { // eslint-disable-line eqeqeq
       txJSON.Paths = JSON.parse(payment.paths);
     }
   } else if (payment.allowPartialPayment === true) {

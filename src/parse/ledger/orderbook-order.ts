@@ -22,7 +22,7 @@ export type FormattedOrderbookOrder = {
 };
 
 export function parseOrderbookOrder(data: BookOffer): FormattedOrderbookOrder {
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   const direction = (data.Flags & orderFlags.Sell) === 0 ? "buy" : "sell";
   const takerGetsAmount = parseAmount(data.TakerGets);
   const takerPaysAmount = parseAmount(data.TakerPays);
@@ -32,13 +32,10 @@ export function parseOrderbookOrder(data: BookOffer): FormattedOrderbookOrder {
   // note: immediateOrCancel and fillOrKill orders cannot enter the order book
   // so we can omit those flags here
   const specification: FormattedOfferCreateSpecification = removeUndefined({
-    // tslint:disable-next-line:object-literal-shorthand
     direction: direction,
-    // tslint:disable-next-line:object-literal-shorthand
     quantity: quantity,
-    // tslint:disable-next-line:object-literal-shorthand
     totalPrice: totalPrice,
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     passive: (data.Flags & orderFlags.Passive) !== 0 || undefined,
     expirationTime: parseTimestamp(data.Expiration),
   });

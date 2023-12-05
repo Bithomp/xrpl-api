@@ -56,7 +56,7 @@ export function parseManifest(manifest: string): ManifestInterface {
   // sequence number
   if (buf[cur] === 0x24) {
     cur++;
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     decoded.Sequence = (buf[cur] << 24) + (buf[cur + 1] << 16) + (buf[cur + 2] << 8) + buf[cur + 3];
     cur += 4;
 
@@ -214,7 +214,7 @@ export function generateManifest(manifest: GenerateManifestInterface): string {
 
   // Domain (soeOPTIONAL)
   if (manifest.Domain) {
-    const domainBuffer = Buffer.alloc(2 + manifest.Domain.length / 2);
+    const domainBuffer = Buffer.alloc(2 + manifest.Domain.length / 2); // eslint-disable-line no-mixed-operators
     domainBuffer.writeUInt8(0x77);
     domainBuffer.writeUInt8(manifest.Domain.length / 2, 1);
     domainBuffer.write(manifest.Domain, 2, "hex");

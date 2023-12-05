@@ -332,12 +332,14 @@ async function applyStartTxOptions(options: FindProcessTransactionsOptions) {
 
 // https://github.com/XRPLF/xrpl.js/blob/6e0fff2ad642c2f94ddb83a23f57dff49d1678ec/src/ledger/transactions.ts#L87
 function filterHelperStartTx(options: FindProcessTransactionsOptions, transaction: any): boolean {
+  /* eslint-disable multiline-ternary */
   return (
     !options.startTx ||
     (options.forward === true
       ? compareTransactions(transaction, options.startTx) > 0
       : compareTransactions(transaction, options.startTx) < 0)
   );
+  /* eslint-enable multiline-ternary */
 }
 
 // https://github.com/XRPLF/xrpl.js/blob/6e0fff2ad642c2f94ddb83a23f57dff49d1678ec/src/ledger/transactions.ts#L64

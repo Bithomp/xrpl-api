@@ -10,28 +10,21 @@ export type PathFindRequest = {
 };
 
 export type RippledPathsResponse = {
-  // tslint:disable-next-line:array-type
-  alternatives: Array<{
-    // tslint:disable-next-line:array-type
-    paths_computed: Array<
-      // tslint:disable-next-line:array-type
-      Array<{
-        type: number;
-        type_hex: string;
-        account?: string;
-        issuer?: string;
-        currency?: string;
-      }>
-    >;
+  alternatives: {
+    paths_computed: {
+      type: number;
+      type_hex: string;
+      account?: string;
+      issuer?: string;
+      currency?: string;
+    }[][];
     source_amount: Amount;
-  }>;
+  }[];
   type: string;
   destination_account: string;
   destination_amount: Amount;
-  // tslint:disable-next-line:array-type
-  destination_currencies?: Array<string>;
+  destination_currencies?: string[];
   source_account: string;
-  // tslint:disable-next-line:array-type
-  source_currencies?: Array<{ currency: string }>;
+  source_currencies?: { currency: string }[];
   full_reply?: boolean;
 };

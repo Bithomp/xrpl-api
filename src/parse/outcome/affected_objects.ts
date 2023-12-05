@@ -64,7 +64,6 @@ class AffectedObjects {
   private parseNFTokens(): void {
     const nftokens = {};
     const nftokenChanges = this.getNFTokenChanges();
-    // tslint:disable-next-line:forin
     for (const account in nftokenChanges) {
       for (const nftsChange of nftokenChanges[account]) {
         if (nftokens[nftsChange.nftokenID]) {
@@ -87,7 +86,6 @@ class AffectedObjects {
     }
 
     const nftokenOfferChanges = this.getNFTokenOfferChanges();
-    // tslint:disable-next-line:forin
     for (const account in nftokenOfferChanges) {
       for (const nftokenOfferChange of nftokenOfferChanges[account]) {
         if (nftokens[nftokenOfferChange.nftokenID]) {
@@ -117,7 +115,6 @@ class AffectedObjects {
     const nftokenOffers = {};
 
     const nftokenOfferChanges = this.getNFTokenOfferChanges();
-    // tslint:disable-next-line:forin
     for (const account in nftokenOfferChanges) {
       for (const nftokenOfferChange of nftokenOfferChanges[account]) {
         if (nftokenOffers[nftokenOfferChange.index]) {

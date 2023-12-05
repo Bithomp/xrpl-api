@@ -29,13 +29,10 @@ export type FormattedLedger = {
   parentCloseTime: string;
   totalDrops: string;
   transactionHash: string;
-  // tslint:disable-next-line:array-type
-  transactions?: Array<object>;
-  // tslint:disable-next-line:array-type
-  transactionHashes?: Array<string>;
+  transactions?: object[];
+  transactionHashes?: string[];
   rawState?: string;
-  // tslint:disable-next-line:array-type
-  stateHashes?: Array<string>;
+  stateHashes?: string[];
 };
 
 // https://xrpl.org/subscribe.html#ledger-stream

@@ -9,16 +9,14 @@ import parseCurrencyAmount from "../ledger/currency-amount";
 
 import { getNativeCurrency } from "../../client";
 
-/* tslint:disable:prefer-const only-arrow-functions object-literal-shorthand no-var-keyword */
-
 const lsfSell = 0x00020000; // see "lsfSell" flag in rippled source code
 
 function convertOrderChange(order) {
-  var takerGets = order.taker_gets;
-  var takerPays = order.taker_pays;
-  var direction = order.sell ? "sell" : "buy";
-  var quantity = direction === "buy" ? takerPays : takerGets;
-  var totalPrice = direction === "buy" ? takerGets : takerPays;
+  const takerGets = order.taker_gets;
+  const takerPays = order.taker_pays;
+  const direction = order.sell ? "sell" : "buy";
+  const quantity = direction === "buy" ? takerPays : takerGets;
+  const totalPrice = direction === "buy" ? takerGets : takerPays;
   return removeUndefined({
     direction: direction,
     quantity: quantity,
@@ -31,7 +29,7 @@ function convertOrderChange(order) {
 }
 
 function getExpirationTime(node) {
-  var expirationTime = node.finalFields.Expiration || node.newFields.Expiration;
+  const expirationTime = node.finalFields.Expiration || node.newFields.Expiration;
   if (expirationTime === undefined) {
     return undefined;
   }
@@ -39,12 +37,12 @@ function getExpirationTime(node) {
 }
 
 function getQuality(node) {
-  var takerGets = node.finalFields.TakerGets || node.newFields.TakerGets;
-  var takerPays = node.finalFields.TakerPays || node.newFields.TakerPays;
-  var takerGetsCurrency = takerGets.currency || getNativeCurrency();
-  var takerPaysCurrency = takerPays.currency || getNativeCurrency();
-  var bookDirectory = node.finalFields.BookDirectory || node.newFields.BookDirectory;
-  var qualityHex = bookDirectory.substring(bookDirectory.length - 16);
+  const takerGets = node.finalFields.TakerGets || node.newFields.TakerGets;
+  const takerPays = node.finalFields.TakerPays || node.newFields.TakerPays;
+  const takerGetsCurrency = takerGets.currency || getNativeCurrency();
+  const takerPaysCurrency = takerPays.currency || getNativeCurrency();
+  const bookDirectory = node.finalFields.BookDirectory || node.newFields.BookDirectory;
+  const qualityHex = bookDirectory.substring(bookDirectory.length - 16);
   return parseOrderbookQuality(qualityHex, takerGetsCurrency, takerPaysCurrency);
 }
 
@@ -75,15 +73,15 @@ function parseOrderStatus(node) {
 
 function calculateDelta(finalAmount, previousAmount) {
   if (previousAmount) {
-    var finalValue = new BigNumber(finalAmount.value);
-    var previousValue = new BigNumber(previousAmount.value);
+    const finalValue = new BigNumber(finalAmount.value);
+    const previousValue = new BigNumber(previousAmount.value);
     return finalValue.minus(previousValue).abs().toString();
   }
   return "0";
 }
 
 function parseChangeAmount(node, type) {
-  var status = parseOrderStatus(node);
+  const status = parseOrderStatus(node);
 
   if (status === "cancelled") {
     // Canceled orders do not have PreviousFields; FinalFields
@@ -92,17 +90,17 @@ function parseChangeAmount(node, type) {
   } else if (status === "created") {
     return parseCurrencyAmount(node.newFields[type]);
   }
-  var finalAmount = parseCurrencyAmount(node.finalFields[type]);
-  var previousAmount = parseCurrencyAmount(node.previousFields[type]);
-  var value = calculateDelta(finalAmount, previousAmount);
+  const finalAmount = parseCurrencyAmount(node.finalFields[type]);
+  const previousAmount = parseCurrencyAmount(node.previousFields[type]);
+  const value = calculateDelta(finalAmount, previousAmount);
   return _.assign({}, finalAmount, { value: value });
 }
 
 function parseOrderChange(node) {
-  var orderChange = convertOrderChange({
+  const orderChange = convertOrderChange({
     taker_pays: parseChangeAmount(node, "TakerPays"),
     taker_gets: parseChangeAmount(node, "TakerGets"),
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     sell: (node.finalFields.Flags & lsfSell) !== 0,
     sequence: node.finalFields.Sequence || node.newFields.Sequence,
     status: parseOrderStatus(node),
@@ -133,9 +131,9 @@ function groupByAddress(orderChanges) {
  *
  */
 function parseOrderbookChanges(metadata) {
-  var nodes = normalizeNodes(metadata);
+  const nodes = normalizeNodes(metadata);
 
-  var orderChanges = _.map(
+  const orderChanges = _.map(
     _.filter(nodes, function (node) {
       return node.entryType === "Offer";
     }),

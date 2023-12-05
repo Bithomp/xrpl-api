@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { removeUndefined } from "../../common";
 
 export function parseURITokenChanges(tx: object): object {

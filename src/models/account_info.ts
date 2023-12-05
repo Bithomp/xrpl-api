@@ -113,7 +113,7 @@ export interface AccountSignerListResponse {
   signer_lists?: LedgerEntry.SignerList[];
 }
 
-export interface AccountInfoDataResponse extends LedgerEntry.AccountRoot, AccountSignerListResponse {}
+export interface AccountInfoDataResponse extends LedgerEntry.AccountRoot, AccountSignerListResponse { }
 
 export interface AccountFieldsInterface {
   blackholed?: boolean;
@@ -127,7 +127,7 @@ export interface AccountFieldsInterface {
   nftokenMinter?: string;
 }
 
-export interface AccountSettingsInterface extends AccountFieldsInterface, AccountRootFlagsKeysInterface {}
+export interface AccountSettingsInterface extends AccountFieldsInterface, AccountRootFlagsKeysInterface { }
 
 /**
  * @returns {AccountSettingsInterface} like
@@ -165,7 +165,7 @@ export function parseAccountFields(
 
   if (accountInfo.hasOwnProperty("signer_lists")) {
     if (
-      // tslint:disable-next-line:no-bitwise
+      // eslint-disable-next-line no-bitwise
       accountInfo.Flags & AccountRootFlagsKeys.disableMaster &&
       BLACKHOLE_ACCOUNTS.includes(accountInfo.RegularKey as string) &&
       accountInfo.signer_lists?.length === 0
@@ -176,10 +176,9 @@ export function parseAccountFields(
     }
   }
 
-  // tslint:disable-next-line:forin
   for (const fieldName in AccountFields) {
     const fieldValue = accountInfo[fieldName];
-    if (fieldValue != null) {
+    if (fieldValue != null) { // eslint-disable-line eqeqeq
       const info = AccountFields[fieldName];
       settings[info.name] = parseField(info, fieldValue);
     }

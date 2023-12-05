@@ -78,7 +78,7 @@ interface DecodedNFTCurrencyTransactionInterface {
 async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInterface> {
   const hex = currencyCode.toString().replace(/(00)+$/g, "");
   const ctiHex = hex.substring(2, 16);
-  const cti = BigInt("0x" + ctiHex);
+  const cti = BigInt("0x" + ctiHex); // eslint-disable-line prefer-template
   const ctiLedger = Number(ctiLedgerIndex(cti));
   const ctiTxIndex = Number(ctiTransactionIndex(cti));
   const currencyHex = hex.substring(16, hex.length);
@@ -176,22 +176,22 @@ async function getLedger(ledgerIndex: number): Promise<any> {
 }
 
 function ctiTransactionIndex(cti: bigint): bigint {
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   return (cti >> 32n) & 0xffffn;
 }
 
 function ctiLedgerIndex(cti: bigint): bigint {
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   return cti & 0xffffffffn;
 }
 
 function ctiLedgerCheck(cti: bigint): bigint {
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   return (cti >> 52n) & 0xfn;
 }
 
 function ctiTransactionCheck(cti: bigint): bigint {
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   return (cti >> 48n) & 0xfn;
 }
 

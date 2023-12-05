@@ -689,14 +689,14 @@ export function parseValidationData(data: string, publicKey: string): VLDataInte
         decoded.error = "sfAmendments payload missing or incomplete [2]";
         return decoded;
       }
-      len = 193 + (len - 193) * 256 + buf[cur++];
+      len = 193 + (len - 193) * 256 + buf[cur++]; // eslint-disable-line no-mixed-operators
     } else if (len >= 241 && len <= 254) {
       if (buf.length - cur < 2) {
         decoded.error = "sfAmendments payload missing or incomplete [3]";
         return decoded;
       }
 
-      len = 12481 + (len - 241) * 65536 + buf[cur + 1] * 256 + buf[cur + 2];
+      len = 12481 + (len - 241) * 65536 + buf[cur + 1] * 256 + buf[cur + 2]; // eslint-disable-line no-mixed-operators
       cur += 2;
     }
 

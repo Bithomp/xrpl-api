@@ -28,7 +28,7 @@ function parseTimestamp(rippleTime?: number | null): string | undefined {
 }
 
 function isPartialPayment(tx: any) {
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   return (tx.Flags & PaymentFlags.tfPartialPayment) !== 0;
 }
 

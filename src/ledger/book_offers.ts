@@ -69,7 +69,7 @@ export async function getBookOffers(
 }
 
 function convertIssueToTakerAmount<T>(obj: T & { counterparty?: string; issuer?: string }): T & { issuer?: string } {
-  const issuer = obj.counterparty != null ? obj.counterparty : obj.issuer != null ? obj.issuer : undefined;
+  const issuer = obj.counterparty != null ? obj.counterparty : obj.issuer != null ? obj.issuer : undefined; // eslint-disable-line eqeqeq
   const withIssuer = Object.assign({}, obj, { issuer });
   delete withIssuer.counterparty;
 

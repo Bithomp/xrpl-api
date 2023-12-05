@@ -24,6 +24,7 @@ describe("Client", () => {
         delete result.ledger.hash;
         delete result.ledger.seqNum;
         delete result.ledger.totalCoins;
+        delete result.ledger.close_time_iso;
 
         expect(Object.keys(result.ledger)).to.eql([
           "account_hash",

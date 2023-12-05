@@ -3,8 +3,7 @@ import { FormattedIssuedCurrencyAmount } from "../objects";
 export interface GatewayBalancesRequest {
   account: string;
   strict?: boolean;
-  // tslint:disable-next-line:array-type
-  hotwallet: string | Array<string>;
+  hotwallet: string | string[];
   ledger_hash?: string;
   ledger_index?: number | ("validated" | "closed" | "current");
 }

@@ -95,7 +95,7 @@ export function signTransaction(
   }
 
   // clean null & undefined valued tx properties
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- ensure Transaction flows through
+  // eslint-disable-next-line
   const tx = omitBy({ ...transaction }, (value) => value == null) as unknown as Transaction;
 
   if (tx.TxnSignature || tx.Signers) {
@@ -108,7 +108,7 @@ export function signTransaction(
    * This will throw a more clear error for JS users if the supplied transaction has incorrect formatting
   NOTE: it does not support Xahau txs yet
    */
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- validate does not accept Transaction type
+  // eslint-disable-next-line
   if (validateTx !== false) {
     validate(tx as unknown as Record<string, unknown>);
   }
@@ -191,7 +191,7 @@ function hashSignedTx(tx: Transaction | string, definitions?: XrplDefinitionsBas
   let txObject: Transaction;
   if (typeof tx === "string") {
     txBlob = tx;
-    /* eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- Required until updated in binary codec. */
+    // eslint-disable-next-line
     txObject = decode(tx, definitions) as unknown as Transaction;
   } else {
     txBlob = encode(tx, definitions);

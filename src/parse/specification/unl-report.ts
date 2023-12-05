@@ -4,9 +4,9 @@ import parseMemos from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 
 import { FormattedSourceAddress } from "../../v1/common/types/objects/account";
-import { FormattedUNLReportSpecification } from "../../v1/common/types/objects/unl_report";
+import { FormattedUNLReportSpecification } from "../../v1/common/types/objects/unl_reports";
 
-function parseImport(tx: any): FormattedUNLReportSpecification {
+function parseUNLReport(tx: any): FormattedUNLReportSpecification {
   assert.ok(tx.TransactionType === "UNLReport");
 
   const source: FormattedSourceAddress = {
@@ -24,4 +24,4 @@ function parseImport(tx: any): FormattedUNLReportSpecification {
   });
 }
 
-export default parseImport;
+export default parseUNLReport;

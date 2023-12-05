@@ -84,7 +84,7 @@ export function parseMarker(marker?: any): any {
     if (markerParams.length > 1) {
       hash = markerParams[0];
       markerParams.shift();
-      marker = markerParams.join(",");
+      marker = markerParams.join(","); // eslint-disable-line no-param-reassign
     }
   }
 
@@ -95,11 +95,11 @@ export function dropsToXrp(drops: BigNumber.Value): string {
   if (typeof drops === "string") {
     if (!drops.match(/^-?[0-9]*\.?[0-9]*$/)) {
       throw new ValidationError(
-        `dropsToXrp: invalid value '${drops}',` + ` should be a number matching (^-?[0-9]*\\.?[0-9]*$).`
+        `dropsToXrp: invalid value '${drops}', should be a number matching (^-?[0-9]*\\.?[0-9]*$).`
       );
     } else if (drops === ".") {
       throw new ValidationError(
-        `dropsToXrp: invalid value '${drops}',` + ` should be a BigNumber or string-encoded number.`
+        `dropsToXrp: invalid value '${drops}', should be a BigNumber or string-encoded number.`
       );
     }
   }
@@ -107,11 +107,11 @@ export function dropsToXrp(drops: BigNumber.Value): string {
   // Converting to BigNumber and then back to string should remove any
   // decimal point followed by zeros, e.g. '1.00'.
   // Important: specify base 10 to avoid exponential notation, e.g. '1e-7'.
-  drops = new BigNumber(drops).toString(10);
+  drops = new BigNumber(drops).toString(10); // eslint-disable-line no-param-reassign
 
   // drops are only whole units
   if (drops.includes(".")) {
-    throw new ValidationError(`dropsToXrp: value '${drops}' has` + ` too many decimal places.`);
+    throw new ValidationError(`dropsToXrp: value '${drops}' has too many decimal places.`);
   }
 
   // This should never happen; the value has already been
@@ -119,7 +119,7 @@ export function dropsToXrp(drops: BigNumber.Value): string {
   // something unexpected.
   if (!drops.match(/^-?[0-9]+$/)) {
     throw new ValidationError(
-      `dropsToXrp: failed sanity check -` + ` value '${drops}',` + ` does not match (^-?[0-9]+$).`
+      `dropsToXrp: failed sanity check - value '${drops}', does not match (^-?[0-9]+$).`
     );
   }
 
@@ -130,42 +130,42 @@ export function xrpToDrops(xrp: BigNumber.Value): string {
   if (typeof xrp === "string") {
     if (!xrp.match(/^-?[0-9]*\.?[0-9]*$/)) {
       throw new ValidationError(
-        `xrpToDrops: invalid value '${xrp}',` + ` should be a number matching (^-?[0-9]*\\.?[0-9]*$).`
+        `xrpToDrops: invalid value '${xrp}', should be a number matching (^-?[0-9]*\\.?[0-9]*$).`
       );
     } else if (xrp === ".") {
       throw new ValidationError(
-        `xrpToDrops: invalid value '${xrp}',` + ` should be a BigNumber or string-encoded number.`
+        `xrpToDrops: invalid value '${xrp}', should be a BigNumber or string-encoded number.`
       );
     }
   }
 
   // Important: specify base 10 to avoid exponential notation, e.g. '1e-7'.
-  xrp = new BigNumber(xrp).toString(10);
+  xrp = new BigNumber(xrp).toString(10); // eslint-disable-line no-param-reassign
 
   // This should never happen; the value has already been
   // validated above. This just ensures BigNumber did not do
   // something unexpected.
   if (!xrp.match(/^-?[0-9.]+$/)) {
     throw new ValidationError(
-      `xrpToDrops: failed sanity check -` + ` value '${xrp}',` + ` does not match (^-?[0-9.]+$).`
+      `xrpToDrops: failed sanity check - value '${xrp}', does not match (^-?[0-9.]+$).`
     );
   }
 
   const components = xrp.split(".");
   if (components.length > 2) {
     throw new ValidationError(
-      `xrpToDrops: failed sanity check -` + ` value '${xrp}' has` + ` too many decimal points.`
+      `xrpToDrops: failed sanity check - value '${xrp}' has too many decimal points.`
     );
   }
 
   const fraction = components[1] || "0";
   if (fraction.length > 6) {
-    throw new ValidationError(`xrpToDrops: value '${xrp}' has` + ` too many decimal places.`);
+    throw new ValidationError(`xrpToDrops: value '${xrp}' has too many decimal places.`);
   }
 
   return new BigNumber(xrp).times(1000000.0).integerValue(BigNumber.ROUND_FLOOR).toString(10);
 }
 
 export function removeUndefined<T extends object>(obj: T): T {
-  return _.omitBy(obj, (value) => value == null) as T;
+  return _.omitBy(obj, (value) => value == null) as T; // eslint-disable-line eqeqeq
 }

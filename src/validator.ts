@@ -2,7 +2,6 @@ import * as assert from "assert";
 import { decodeNodePublic, encodeNodePublic, codec } from "ripple-address-codec";
 import * as Crypto from "crypto";
 import * as Base58 from "./base58";
-import crypto from "crypto";
 import elliptic from "elliptic";
 const secp256k1 = new elliptic.ec("secp256k1");
 const ed25519 = new elliptic.eddsa("ed25519");
@@ -47,7 +46,7 @@ export interface GenerateSecretsInterface {
 }
 
 export function generateSecrets(): GenerateSecretsInterface {
-  const keypair = crypto.generateKeyPairSync("ed25519", {
+  const keypair = Crypto.generateKeyPairSync("ed25519", {
     privateKeyEncoding: { format: "der", type: "pkcs8" },
     publicKeyEncoding: { format: "der", type: "spki" },
   });
@@ -73,12 +72,12 @@ export function generateSecrets(): GenerateSecretsInterface {
 
 export function sign(message: Buffer | string, secret: string): string {
   if (typeof message === "string") {
-    message = Buffer.from(message, "utf8");
+    message = Buffer.from(message, "utf8"); // eslint-disable-line no-param-reassign
   }
 
   try {
     const decoded = codec.decode(secret, { versions: [0x20] });
-    secret = VALIDATOR_HEX_PREFIX_ED25519 + decoded.bytes.toString("hex");
+    secret = VALIDATOR_HEX_PREFIX_ED25519 + decoded.bytes.toString("hex"); // eslint-disable-line no-param-reassign
   } catch (err) {
     // ignore
   }
@@ -88,13 +87,13 @@ export function sign(message: Buffer | string, secret: string): string {
 
 export function verify(message: Buffer | string, signature: string, publicKey: string): boolean {
   if (typeof message === "string") {
-    message = Buffer.from(message, "utf8");
+    message = Buffer.from(message, "utf8"); // eslint-disable-line no-param-reassign
   }
 
   // assume node public address as ed25519 key
   if (publicKey.slice(0, 1) === VALIDATOR_NODE_PUBLIC_KEY_PREFIX) {
     const publicKeyBuffer = decodeNodePublic(publicKey);
-    publicKey = publicKeyBuffer.toString("hex").toUpperCase();
+    publicKey = publicKeyBuffer.toString("hex").toUpperCase(); // eslint-disable-line no-param-reassign
   }
 
   try {
@@ -110,7 +109,7 @@ export function verify2(message: Buffer, signature: string, publicKey: string): 
   // assume node public address as ed25519 key
   if (publicKey.slice(0, 1) === VALIDATOR_NODE_PUBLIC_KEY_PREFIX) {
     const publicKeyBuffer = decodeNodePublic(publicKey);
-    publicKey = publicKeyBuffer.toString("hex").toUpperCase();
+    publicKey = publicKeyBuffer.toString("hex").toUpperCase(); // eslint-disable-line no-param-reassign
   }
 
   if (publicKey.slice(0, 2) === VALIDATOR_HEX_PREFIX_ED25519) {
@@ -119,7 +118,7 @@ export function verify2(message: Buffer, signature: string, publicKey: string): 
       return true;
     }
   } else {
-    const computedHash = crypto.createHash("sha512").update(message).digest().toString("hex").slice(0, 64);
+    const computedHash = Crypto.createHash("sha512").update(message).digest().toString("hex").slice(0, 64);
     const verifyKey = secp256k1.keyFromPublic(publicKey, "hex");
 
     if (verifyKey.verify(computedHash, signature)) {

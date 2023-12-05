@@ -30,6 +30,7 @@ export interface ClassicAccountAndTag {
 export function getClassicAccountAndTag(Account: string, expectedTag?: number): ClassicAccountAndTag {
   if (isValidXAddress(Account)) {
     const classic = xAddressToClassicAddress(Account);
+    // eslint-disable-next-line eqeqeq
     if (expectedTag != null && classic.tag !== expectedTag) {
       throw new Error("address includes a tag that does not match the tag specified in the transaction");
     }

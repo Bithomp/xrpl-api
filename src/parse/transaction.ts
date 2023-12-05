@@ -47,7 +47,8 @@ import {
 
 import { FormattedImportSpecification } from "../v1/common/types/objects/import";
 import { FormattedInvokeSpecification } from "../v1/common/types/objects/invoke";
-import { FormattedUNLReportSpecification } from "../v1/common/types/objects/unl_report";
+import { FormattedUNLReportSpecification } from "../v1/common/types/objects/unl_reports";
+import { FormattedRemitsSpecification } from "../v1/common/types/objects/remits";
 
 import { FormattedAmendmentSpecification } from "../v1/common/types/objects/amendments";
 import { FormattedFeeUpdateSpecification } from "../v1/common/types/objects/fees";
@@ -85,6 +86,7 @@ import parseURITokenMint from "./specification/uritoken-mint";
 import parseImport from "./specification/import";
 import parseInvoke from "./specification/invoke";
 import parseUNLReport from "./specification/unl-report";
+import parseRemit from "./specification/remit";
 
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
 import parseFeeUpdate from "./specification/fee-update"; // pseudo-transaction
@@ -126,6 +128,7 @@ const transactionTypeToType = {
   Import: "import",
   Invoke: "invoke",
   UNLReport: "unlReport",
+  Remit: "remit",
 
   EnableAmendment: "amendment", // pseudo-transaction
   SetFee: "feeUpdate", // pseudo-transaction
@@ -169,6 +172,7 @@ const parserTypeFunc = {
   import: parseImport,
   invoke: parseInvoke,
   unlReport: parseUNLReport,
+  remit: parseRemit,
 
   amendment: parseAmendment, // pseudo-transaction
   feeUpdate: parseFeeUpdate, // pseudo-transaction
@@ -205,6 +209,7 @@ export type FormattedSpecification =
   | FormattedImportSpecification
   | FormattedInvokeSpecification
   | FormattedUNLReportSpecification
+  | FormattedRemitsSpecification
   | FormattedAmendmentSpecification
   | FormattedFeeUpdateSpecification;
 
@@ -227,22 +232,23 @@ function parseTransaction(
 ): FormattedTransaction {
   const type = parseTransactionType(tx.TransactionType);
 
-  // tslint:disable-next-line:ban-types
   const parser: Function = parserTypeFunc[type];
 
+  /* eslint-disable multiline-ternary */
   const specification = parser
     ? parser(tx)
     : {
-        UNAVAILABLE: "Unrecognized transaction type.",
-        SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is included in this response.",
-      };
+      UNAVAILABLE: "Unrecognized transaction type.",
+      SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is included in this response.",
+    };
+  /* eslint-enable multiline-ternary */
+
   if (!parser) {
-    includeRawTransaction = true;
+    includeRawTransaction = true; // eslint-disable-line no-param-reassign
   }
 
   const outcome = parseOutcome(tx, nativeCurrency, definitions);
   return removeUndefined({
-    // tslint:disable-next-line:object-literal-shorthand
     type: type,
     address: parseAccount(tx.Account),
     sequence: tx.Sequence,

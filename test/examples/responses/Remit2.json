@@ -1,0 +1,127 @@
+{
+  "Account": "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h",
+  "Amounts": [
+    {
+      "AmountEntry": {
+        "Amount": {
+          "currency": "TST",
+          "issuer": "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h",
+          "value": "1000"
+        }
+      }
+    }
+  ],
+  "Destination": "rMVjmjek75ZADVE7c5LfChRHYvbhNNbsBg",
+  "Fee": "20",
+  "Flags": 0,
+  "LastLedgerSequence": 8877842,
+  "NetworkID": 21338,
+  "Sequence": 755010453,
+  "SigningPubKey": "02F8979BD35478E5C8C5825B8EFC1CA1A99F1F7735384DD7FECAFF392D06CEA39C",
+  "TransactionType": "Remit",
+  "TxnSignature": "304402204854044C191389152E0F065AEA633E1277163B2D5D67AF3064D1E3AAB92B3ACB02206A87286935DDEC5A44911A1F6047E3674599040A7AD3A1E0DE8F682A44C4803E",
+  "ctid": "C08777000008535A",
+  "date": 755025953,
+  "hash": "C4BC98D36B27F75AC3ACA59E22E93C4DC69BE39EBC1227C257696BC1C6FCE31E",
+  "inLedger": 8877824,
+  "ledger_index": 8877824,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "AccountCount": "237b",
+            "BaseFee": "a",
+            "Flags": 0,
+            "ReferenceFeeUnits": 10,
+            "ReserveBase": 1000000,
+            "ReserveIncrement": 200000
+          },
+          "LedgerEntryType": "FeeSettings",
+          "LedgerIndex": "4BC50C9B0D8515D3EAAE1E74B29A95804346C491EE1A95BF25E4AAB854A6A651",
+          "PreviousFields": {
+            "AccountCount": "237a"
+          }
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "RippleState",
+          "LedgerIndex": "6B2394CF39EF81FB5925B8C3543DB809E9F66B1B26B6F9DE42478193819D2BBE",
+          "NewFields": {
+            "Balance": {
+              "currency": "TST",
+              "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji",
+              "value": "1000"
+            },
+            "Flags": 3211264,
+            "HighLimit": {
+              "currency": "TST",
+              "issuer": "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h",
+              "value": "0"
+            },
+            "LowLimit": {
+              "currency": "TST",
+              "issuer": "rMVjmjek75ZADVE7c5LfChRHYvbhNNbsBg",
+              "value": "0"
+            }
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h",
+            "AccountIndex": "235d",
+            "Balance": "9874799940",
+            "Flags": 0,
+            "OwnerCount": 0,
+            "Sequence": 755010454
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "7817FA059489184DCAA3F127BA7B912C3D79BEA4254B636980033CC89460D92C",
+          "PreviousFields": {
+            "Balance": "9875999960",
+            "Sequence": 755010453
+          }
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "7F32D963D1188A7747F6BAE762C88DB0A15C3737567885CAF9F9A47E246C8CC1",
+          "NewFields": {
+            "Account": "rMVjmjek75ZADVE7c5LfChRHYvbhNNbsBg",
+            "AccountIndex": "237a",
+            "Balance": "1200000",
+            "OwnerCount": 1,
+            "Sequence": 755025952
+          }
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "88315C1A1CC7C2AC9EFDB79B49850703F688B5E0C61319981B55AC467C2B95E8",
+          "NewFields": {
+            "Owner": "rMVjmjek75ZADVE7c5LfChRHYvbhNNbsBg",
+            "RootIndex": "88315C1A1CC7C2AC9EFDB79B49850703F688B5E0C61319981B55AC467C2B95E8"
+          }
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "DAD2E91F03858542353EBD4B7F925A37D7CDF3C9335E674FD243867235BF9B9B",
+          "NewFields": {
+            "Owner": "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h",
+            "RootIndex": "DAD2E91F03858542353EBD4B7F925A37D7CDF3C9335E674FD243867235BF9B9B"
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 8,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

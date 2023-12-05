@@ -58,7 +58,6 @@ export function parseLedger(ledger: Ledger, includeRawTransactions: boolean): Fo
         closeTimeResolution: ledger.close_time_resolution,
         closeFlags: ledger.close_flags as number,
         ledgerHash: ledger.ledger_hash,
-        // tslint:disable-next-line:object-literal-shorthand
         ledgerVersion: ledgerVersion,
         parentLedgerHash: ledger.parent_hash,
         parentCloseTime: ledgerTimeToISO8601(ledger.parent_close_time as number),

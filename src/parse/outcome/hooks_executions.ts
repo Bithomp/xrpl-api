@@ -1,4 +1,4 @@
-import { HookExecutionInterface } from "../../v1/common/types/objects/hook";
+import { HookExecutionInterface } from "../../v1/common/types/objects/hooks";
 
 interface FormattedHooksExecutionInterface {
   account: string;
