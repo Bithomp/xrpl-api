@@ -253,6 +253,7 @@ function parseTransaction(
     address: parseAccount(tx.Account),
     sequence: tx.Sequence,
     id: tx.hash,
+    ctid: tx.ctid,
     specification: removeUndefined(specification),
     outcome: outcome ? removeUndefined(outcome) : undefined,
     rawTransaction: includeRawTransaction ? JSON.stringify(tx) : undefined,

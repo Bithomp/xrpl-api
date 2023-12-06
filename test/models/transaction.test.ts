@@ -873,6 +873,7 @@ describe("Models", () => {
         address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
         sequence: 366,
         id: "C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7",
+        ctid: "C1BA5E1C00080000",
         specification: {
           amount: "10000",
           source: { address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn", tag: 11747 },
@@ -1031,6 +1032,7 @@ describe("Models", () => {
         address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
         sequence: 368,
         id: "B24B9D7843F99AED7FB8A3929151D0CCF656459AE40178B77C9D44CED64E839B",
+        ctid: "C1BD5F6800000000",
         specification: {
           source: {
             address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
@@ -1106,6 +1108,7 @@ describe("Models", () => {
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
         sequence: 7751122,
         id: "C47FA26FD959F1F5981F3647212FDDCFBA11A644B68D4D63BE3559D34413B4A1",
+        ctid: "C087C8D10000535A",
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
@@ -1161,6 +1164,7 @@ describe("Models", () => {
         address: "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h",
         sequence: 755010453,
         id: "C4BC98D36B27F75AC3ACA59E22E93C4DC69BE39EBC1227C257696BC1C6FCE31E",
+        ctid: "C08777000008535A",
         specification: {
           source: { address: "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h" },
           destination: { address: "rMVjmjek75ZADVE7c5LfChRHYvbhNNbsBg" },
@@ -1193,6 +1197,7 @@ describe("Models", () => {
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
         id: "A4781D3D952E995CEEAA11752ACEF206750674A6741569695F0B0EAE86C181A4",
+        ctid: "C07649180001535A",
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
@@ -1242,6 +1247,7 @@ describe("Models", () => {
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
         id: "F9A510DA7C94F225CF8CF32C3BD5D9BA0C61ED8B1AF2C9AABD6699F88F476E5F",
+        ctid: "C0764DF30000535A",
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
@@ -1292,6 +1298,7 @@ describe("Models", () => {
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
         id: "050CD1F08B32B7C83F87794C02ED54280EA9D1C0CB831224647938476EBA47E6",
+        ctid: "C076523D0000535A",
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
@@ -1356,6 +1363,7 @@ describe("Models", () => {
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
         id: "89AA6076C77C6EFDB890A11B617DD3923EB524FE84AF1190A66E8CB6ACF021C8",
+        ctid: "C0764E210000535A",
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
@@ -1417,6 +1425,7 @@ describe("Models", () => {
         address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU",
         sequence: 0,
         id: "9FFF77CEA7B0A61452E0E6560C6AD1DECFA7DE78DDAB6567E10C54B5547371F8",
+        ctid: "C04810660000535A",
         specification: {
           uri: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
           flags: { burnable: false },
@@ -1468,6 +1477,7 @@ describe("Models", () => {
       expect(result).to.eql({
         address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
         id: "0E952F78332965C90CA52776977D840E6B8815AB3CA5E0B6F75D1578EC8346FD",
+        ctid: "C07649F90000535A",
         outcome: {
           balanceChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "1" }],
@@ -1538,6 +1548,7 @@ describe("Models", () => {
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
         id: "5BC37EB489C35673D3E35F10821ADF56C6C7676D701FCCFA43DBC5E3D748C38E",
+        ctid: "C076499D0002535A",
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
@@ -1588,6 +1599,7 @@ describe("Models", () => {
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
         id: "5C34F63732D423FE56BE934B43683AE27D2309891E3E538AC1AB3D491AFD6849",
+        ctid: "C07649AA0000535A",
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
@@ -1644,6 +1656,7 @@ describe("Models", () => {
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
         id: "310BA956BFE82BC1FB330E07FB941EC3507277ED4BE43ABC1CFB3CD86FDDE5CD",
+        ctid: "C0766F0C0001535A",
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
@@ -1699,6 +1712,7 @@ describe("Models", () => {
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
         id: "F5D5D7F9E46B3340060D4299062D3E34C70E92705878C2856FFAC16CED899710",
+        ctid: "C0766ED60000535A",
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
@@ -1752,6 +1766,7 @@ describe("Models", () => {
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
         id: "7B9F19473383785886C1C6A4CCA3DC8C8FCC5FECA759B288EBE60C806560F555",
+        ctid: "C076509F0000535A",
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
@@ -1798,6 +1813,7 @@ describe("Models", () => {
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
         id: "081A25C1148E07CE1474BC7F308D9BB4AFBA412D0FD24B9022DC3049D5AE3A04",
+        ctid: "C07650920000535A",
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
@@ -3032,6 +3048,7 @@ describe("Models", () => {
         address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
         sequence: 4722674,
         id: "BD3338E3799624DF13EA1CA46CD7305A643B99941F3563FAC35FB3D456153622",
+        ctid: "C04810650000535A",
         specification: {
           blob: {
             ledger: {
@@ -3472,6 +3489,7 @@ describe("Models", () => {
         address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
         sequence: 0,
         id: "1D64E196E92DFE2E774CE8F6141378583B6E0190B0E1291772A87BC2A7D6AADC",
+        ctid: "C000020000005359",
         specification: {
           source: { address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp" },
           activeValidator: "EDA4A1278B9FDCABFAE094956DB1D7A0FCB9E99E40FB02C8ED26E6B2C4B83DB932",
@@ -3503,6 +3521,7 @@ describe("Models", () => {
         address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
         sequence: 0,
         id: "68AA93EA68704FEF9696A7F88C8DA3AB52547CB91A89930AAC49F64A9C82031C",
+        ctid: "C000020000025359",
         specification: {
           source: { address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp" },
           importVLKey: "ED45D1840EE724BE327ABE9146503D5848EFD5F38B6D5FEDE71E80ACCE5E6E738B",

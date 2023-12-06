@@ -294,6 +294,7 @@ describe("Client", () => {
         expect(result).to.eql({
           address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6",
           id: "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
+          ctid: "C428A8A7002A0000",
           outcome: {
             result: "tesSUCCESS",
             timestamp: "2022-02-18T13:13:21.000Z",
@@ -560,6 +561,7 @@ describe("Client", () => {
           address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
           sequence: 4722674,
           id: "BD3338E3799624DF13EA1CA46CD7305A643B99941F3563FAC35FB3D456153622",
+          ctid: "C04810650000535A",
           specification: {
             blob: {
               ledger: {
@@ -2204,6 +2206,7 @@ describe("Client", () => {
           address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
           sequence: 4722674,
           id: "BD3338E3799624DF13EA1CA46CD7305A643B99941F3563FAC35FB3D456153622",
+          ctid: "C04810650000535A",
           specification: {
             blob: {
               ledger: {
