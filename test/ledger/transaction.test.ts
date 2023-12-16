@@ -401,7 +401,7 @@ describe("Client", () => {
         const account = "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz";
         const paymentParams = (await Client.getAccountPaymentParams(account)) as Models.AccountPaymentParamsInterface;
 
-        const txBlob: Transaction = {
+        const tx: Transaction = {
           TransactionType: "Payment",
           Account: account,
           Amount: "100",
@@ -412,7 +412,31 @@ describe("Client", () => {
         };
 
         const wallet = xrpl.Wallet.fromSeed(nconf.get("xrpl:accounts:activation:secret"));
-        const signedTransaction = wallet.sign(txBlob).tx_blob;
+        const signedTransaction = wallet.sign(tx).tx_blob;
+
+        const result: any = await Client.submit(signedTransaction);
+        expect(result.meta).to.be.an("object");
+        expect(result.meta.TransactionResult).to.eq("tesSUCCESS");
+      });
+
+      it("is OK for sign and submit with auto fee", async function () {
+        this.timeout(10000);
+        const account = "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz";
+
+        const tx: Transaction = {
+          TransactionType: "Payment",
+          Account: account,
+          Amount: "100",
+          Destination: "rBbfoBCNMpAaj35K5A9UV9LDkRSh6ZU9Ef",
+        };
+
+        const submitParams = (await Client.getTxSubmitParams(account, tx)) as Models.AccountPaymentParamsInterface;
+        tx.Fee = submitParams.fee;
+        tx.Sequence = submitParams.sequence;
+        tx.LastLedgerSequence = submitParams.lastLedgerSequence;
+
+        const wallet = xrpl.Wallet.fromSeed(nconf.get("xrpl:accounts:activation:secret"));
+        const signedTransaction = wallet.sign(tx).tx_blob;
 
         const result: any = await Client.submit(signedTransaction);
         expect(result.meta).to.be.an("object");
@@ -525,7 +549,7 @@ describe("Client", () => {
     });
 
     describe("legacyPayment", () => {
-      it("is OK", async function () {
+      it("is OK with manual fee", async function () {
         const xahauDefinitions = new Wallet.XrplDefinitions(xahauEnums);
 
         this.timeout(15000);
@@ -540,6 +564,27 @@ describe("Client", () => {
           memos: [{ type: "memo", format: "plain/text", data: "Bithomp test" }],
           secret: nconf.get("xrpl:accounts:activation:secret"),
           fee: "0.000046", // 10 - fee, 26 - memos, 10 - ???
+        };
+        const result: any = await Client.legacyPayment(payment, xahauDefinitions);
+
+        expect(result.error).to.eq(undefined);
+        expect(result.validated).to.eq(true);
+      });
+
+      it("is OK with auto fee", async function () {
+        const xahauDefinitions = new Wallet.XrplDefinitions(xahauEnums);
+
+        this.timeout(15000);
+        const payment = {
+          sourceAddress: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          sourceValue: "0.0001",
+          sourceCurrency: "XAH",
+          destinationAddress: "rBbfoBCNMpAaj35K5A9UV9LDkRSh6ZU9Ef",
+          destinationValue: "0.0001",
+          destinationCurrency: "XAH",
+          networkID: 21338,
+          memos: [{ type: "memo", format: "plain/text", data: "Bithomp test" }],
+          secret: nconf.get("xrpl:accounts:activation:secret"),
         };
         const result: any = await Client.legacyPayment(payment, xahauDefinitions);
 

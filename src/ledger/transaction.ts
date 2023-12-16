@@ -11,7 +11,6 @@ import { FormattedMemo } from "../v1/common/types/objects";
 
 import { createPaymentTransaction, Payment } from "../v1/transaction/payment";
 import { ErrorResponse } from "../models/base_model";
-import { AccountInfoResponse } from "../models/account_info";
 import {
   getTxDetails,
   TransactionResponse,
@@ -267,19 +266,19 @@ export async function legacyPayment(
   };
 
   const transaction = createPaymentTransaction(data.sourceAddress, txPayment);
-  const paymentParams = await getAccountPaymentParams(data.sourceAddress, connection);
+  const submitParams = await getTxSubmitParams(data.sourceAddress, transaction, definitions, connection);
 
-  if ("error" in paymentParams) {
-    return paymentParams as ErrorResponse;
+  if ("error" in submitParams) {
+    return submitParams as ErrorResponse;
   }
 
   if (data.fee) {
     transaction.Fee = xrpToDrops(data.fee);
   } else {
-    transaction.Fee = paymentParams.fee;
+    transaction.Fee = submitParams.fee;
   }
-  transaction.Sequence = paymentParams.sequence;
-  transaction.LastLedgerSequence = paymentParams.lastLedgerSequence;
+  transaction.Sequence = submitParams.sequence;
+  transaction.LastLedgerSequence = submitParams.lastLedgerSequence;
 
   // sign transaction
   const wallet = xrpl.Wallet.fromSeed(data.secret);
@@ -314,28 +313,125 @@ export async function getAccountPaymentParams(
       if (fee > FEE_LIMIT) {
         fee = FEE_LIMIT;
       }
-      resolve(xrpToDrops(fee));
+
+      resolve(xrpToDrops(fee.toString()));
     });
 
     const sequencePromise = new Promise(async (resolve, rejects) => {
-      const accountInfo = await Client.getAccountInfo(account, { connection });
+      try {
+        const accountData = await Client.getAccountInfoData(account, { connection });
 
-      if (!accountInfo) {
-        return rejects(new Error("Account not found"));
-      }
+        if (!accountData) {
+          return rejects(new Error("Account not found"));
+        }
 
-      if ("error" in accountInfo) {
-        return rejects(new Error(accountInfo.error));
+        if ("error" in accountData) {
+          return rejects(new Error(accountData.error));
+        }
+
+        resolve(accountData.Sequence);
+      } catch (e: any) {
+        rejects(e);
       }
-      resolve((accountInfo as AccountInfoResponse)?.account_data?.Sequence);
     });
 
     const lastLedgerSequencePromise = new Promise(async (resolve) => {
-      const ledgerIndex = await Client.getLedgerIndex();
-      if (ledgerIndex !== undefined) {
-        resolve(ledgerIndex + MAX_LEDGERS_AWAIT);
+      try {
+        const ledgerIndex = await Client.getLedgerIndex();
+        if (ledgerIndex !== undefined) {
+          resolve(ledgerIndex + MAX_LEDGERS_AWAIT);
+        }
+        resolve(undefined);
+      } catch (e: any) {
+        resolve(undefined);
       }
-      resolve(undefined);
+    });
+
+    const result = await Promise.all([feePromise, sequencePromise, lastLedgerSequencePromise]);
+    return {
+      fee: result[0] as string,
+      sequence: result[1] as number,
+      lastLedgerSequence: result[2] as number,
+      networkID: connection.getNetworkID(),
+    };
+  } catch (e: any) {
+    return {
+      account,
+      status: "error",
+      error: e.message,
+    };
+  }
+}
+
+/**
+ * Get account payment params, such as fee, sequence and lastLedgerSequence,
+ * will be used for payment transaction, like in legacyPayment function
+ *
+ * @param {string} account
+ * @param {string} tx string or object
+ * @param {Connection} connection
+ * @returns {Promise<AccountPaymentParamsInterface>}
+ * @exception {Error}
+ */
+export async function getTxSubmitParams(
+  account: string,
+  tx?: string | any,
+  definitions?: XrplDefinitionsBase,
+  connection?: Connection
+): Promise<AccountPaymentParamsInterface | ErrorResponse> {
+  try {
+    connection = connection || Client.findConnection("submit") || undefined; // eslint-disable-line no-param-reassign
+    if (!connection) {
+      throw new Error("There is no connection");
+    }
+
+    const feePromise = new Promise(async (resolve, rejects) => {
+      try {
+        if (tx && typeof tx === "object") {
+          // eslint-disable-next-line no-param-reassign
+          tx = { ...tx, Sequence: 0, Fee: "0", SigningPubKey: "" };
+        }
+
+        const baseFee = await Client.getFee({ connection, tx, definitions });
+        let fee = parseFloat(baseFee as string);
+        if (fee > FEE_LIMIT) {
+          fee = FEE_LIMIT;
+        }
+
+        resolve(xrpToDrops(fee.toString()));
+      } catch (e: any) {
+        rejects(e);
+      }
+    });
+
+    const sequencePromise = new Promise(async (resolve, rejects) => {
+      try {
+        const accountData = await Client.getAccountInfoData(account, { connection });
+
+        if (!accountData) {
+          return rejects(new Error("Account not found"));
+        }
+
+        if ("error" in accountData) {
+          return rejects(new Error(accountData.error));
+        }
+
+        resolve(accountData.Sequence);
+      } catch (e: any) {
+        rejects(e);
+      }
+    });
+
+    const lastLedgerSequencePromise = new Promise(async (resolve) => {
+      try {
+        const ledgerIndex = await Client.getLedgerIndex();
+        if (ledgerIndex !== undefined) {
+          resolve(ledgerIndex + MAX_LEDGERS_AWAIT);
+        }
+        resolve(undefined);
+      } catch (e: any) {
+        resolve(undefined);
+      }
     });
 
     const result = await Promise.all([feePromise, sequencePromise, lastLedgerSequencePromise]);
@@ -381,13 +477,13 @@ export async function submit(
   }
 
   const result = response?.result;
-  const resultGroup = result?.engine_result.slice(0, 3);
+  const resultGroup = result?.engine_result?.slice(0, 3);
   // if tx is failed and not queued or kept
   if ((submitErrorsGroup.includes(resultGroup) && result?.engine_result !== "terQUEUED") || result?.kept === false) {
     return result;
   }
 
-  const txHash = result.tx_json?.hash;
+  const txHash = result?.tx_json?.hash;
   if (!txHash) {
     return result;
   }
@@ -399,11 +495,13 @@ export async function submit(
   } else {
     const ledgerIndex = await Client.getLedgerIndex();
     if (ledgerIndex !== undefined) {
-      lastLedger = ledgerIndex + MAX_LEDGERS_AWAIT;
+      const ledgersToWait = MAX_LEDGERS_AWAIT * 2;
+      lastLedger = ledgerIndex + ledgersToWait;
     }
   }
 
-  return await waitForFinalTransactionOutcome(txHash, lastLedger);
+  const finalResult = await waitForFinalTransactionOutcome(txHash, lastLedger);
+  return finalResult;
 }
 
 /**
@@ -430,6 +528,14 @@ async function waitForFinalTransactionOutcome(
     const ledgerIndex = await Client.getLedgerIndex();
     if (ledgerIndex === undefined || lastLedger > ledgerIndex) {
       return waitForFinalTransactionOutcome(txHash, lastLedger);
+    }
+  }
+
+  if (tx && !tx.hasOwnProperty("error") && (tx as any).validated === false) {
+    if (tx.hasOwnProperty("LastLedgerSequence")) {
+      return { ...tx, status: "timeout", error: "lastLedgerIndexReached" } as any;
+    } else {
+      return { ...tx, status: "timeout", error: "waitingForValidation" } as any;
     }
   }
 
