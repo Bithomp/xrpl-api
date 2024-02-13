@@ -1,5 +1,6 @@
 import _ from "lodash";
 import BigNumber from "bignumber.js";
+import { TransactionMetadata } from "xrpl";
 import { dropsToXrp } from "../../common";
 import { normalizeNodes } from "../../v1/common/utils";
 
@@ -94,7 +95,7 @@ function parseTrustlineQuantity(node, valueParser) {
   return [result, flipTrustlinePerspective(result)];
 }
 
-function parseQuantities(metadata: any, valueParser: any, nativeCurrency?: string) {
+function parseQuantities(metadata: TransactionMetadata, valueParser: any, nativeCurrency?: string) {
   const values = normalizeNodes(metadata).map(function (node) {
     if (node.entryType === "AccountRoot") {
       return [parseXRPQuantity(node, valueParser, nativeCurrency)];
@@ -110,10 +111,10 @@ function parseQuantities(metadata: any, valueParser: any, nativeCurrency?: strin
  *  Computes the complete list of every balance that changed in the ledger
  *  as a result of the given transaction.
  *
- *  @param {Object} metadata Transaction metada
+ *  @param {Object} metadata Transaction metadata
  *  @returns {Object} parsed balance changes
  */
-function parseBalanceChanges(metadata: any, nativeCurrency?: string) {
+function parseBalanceChanges(metadata: TransactionMetadata, nativeCurrency?: string) {
   return parseQuantities(metadata, computeBalanceChange, nativeCurrency);
 }
 
@@ -121,10 +122,10 @@ function parseBalanceChanges(metadata: any, nativeCurrency?: string) {
  *  Computes the complete list of every final balance in the ledger
  *  as a result of the given transaction.
  *
- *  @param {Object} metadata Transaction metada
+ *  @param {Object} metadata Transaction metadata
  *  @returns {Object} parsed balances
  */
-function parseFinalBalances(metadata) {
+function parseFinalBalances(metadata: TransactionMetadata) {
   return parseQuantities(metadata, parseFinalBalance);
 }
 

@@ -1023,6 +1023,62 @@ describe("Models", () => {
       });
     });
 
+    it("EscrowFinish IOU 2", function () {
+      const tx = require("../examples/responses/EscrowFinishIOU.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "escrowExecution",
+        address: "rELeasERs3m4inA1UinRLTpXemqyStqzwh",
+        sequence: 753898627,
+        ctid: "C02D7E8300035359",
+        id: "39F0A0A1F3873B781768C841EE24C00D6F2038FECDE69C723B858F458504C220",
+        specification: {
+          source: {
+            address: "rELeasERs3m4inA1UinRLTpXemqyStqzwh",
+          },
+          owner: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+          escrowSequence: 753804730,
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-02-13T11:30:02.000Z",
+          fee: "0.00001",
+          balanceChanges: { rELeasERs3m4inA1UinRLTpXemqyStqzwh: [{ currency: "XRP", value: "-0.00001" }] },
+          lockedBalanceChanges: {
+            r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk: [
+              {
+                counterparty: "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8",
+                currency: "EVR",
+                value: "-10",
+              },
+            ],
+          },
+          escrowChanges: {
+            status: "executed",
+            escrowIndex: "8DA872D7A3FC26C2F39BC7BC803D2B0D56A46444C27B47260AA3E789F5726512",
+            escrowSequence: 753804730,
+            amount: {
+              currency: "EVR",
+              issuer: "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8",
+              value: "10",
+            },
+            source: {
+              address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            },
+            destination: {
+              address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            },
+            allowExecuteAfter: "2024-02-13T11:25:00.000Z",
+            previousTxnID: "A13EFDD3A6AEEA913B17FD8E7E48D4CC7AA1A5978C5D713CEA5076EADBC600CF",
+            previousTxnLgrSeq: 2981239,
+          },
+          ledgerVersion: 2981507,
+          indexInLedger: 3,
+        },
+      });
+    });
+
     it("EscrowCancel", function () {
       const tx = require("../examples/responses/transaction/B24B9D7843F99AED7FB8A3929151D0CCF656459AE40178B77C9D44CED64E839B.json");
       const result: any = Models.getTxDetails(tx, false);
