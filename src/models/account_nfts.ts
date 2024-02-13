@@ -125,7 +125,7 @@ export function buildNFTokenID(
     new BigNumber(flags).toString(16).padStart(4, "0").toUpperCase() +
     // @ts-ignore
     new BigNumber(transferFee).toString(16).padStart(4, "0").toUpperCase() +
-    AddressCodec.decodeAccountID(issuer).toString("hex").toUpperCase() +
+    Buffer.from(AddressCodec.decodeAccountID(issuer).buffer).toString("hex").toUpperCase() +
     // @ts-ignore
     new BigNumber(scrambledTaxon).toString(16).padStart(8, "0").toUpperCase() +
     // @ts-ignore

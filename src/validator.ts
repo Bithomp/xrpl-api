@@ -16,7 +16,7 @@ const VALIDATOR_NODE_PUBLIC_KEY_PREFIX = "n";
 export function classicAddressFromValidatorPK(pk: string | Buffer): string | null {
   let pubkey = pk;
   if (typeof pk === "string") {
-    pubkey = decodeNodePublic(pk);
+    pubkey = Buffer.from(decodeNodePublic(pk).buffer);
   }
 
   assert.ok(pubkey.length === 33);
@@ -77,7 +77,7 @@ export function sign(message: Buffer | string, secret: string): string {
 
   try {
     const decoded = codec.decode(secret, { versions: [0x20] });
-    secret = VALIDATOR_HEX_PREFIX_ED25519 + decoded.bytes.toString("hex"); // eslint-disable-line no-param-reassign
+    secret = VALIDATOR_HEX_PREFIX_ED25519 + Buffer.from(decoded.bytes.buffer).toString("hex"); // eslint-disable-line no-param-reassign
   } catch (err) {
     // ignore
   }
@@ -93,7 +93,7 @@ export function verify(message: Buffer | string, signature: string, publicKey: s
   // assume node public address as ed25519 key
   if (publicKey.slice(0, 1) === VALIDATOR_NODE_PUBLIC_KEY_PREFIX) {
     const publicKeyBuffer = decodeNodePublic(publicKey);
-    publicKey = publicKeyBuffer.toString("hex").toUpperCase(); // eslint-disable-line no-param-reassign
+    publicKey = Buffer.from(publicKeyBuffer.buffer).toString("hex").toUpperCase(); // eslint-disable-line no-param-reassign
   }
 
   try {
@@ -109,7 +109,7 @@ export function verify2(message: Buffer, signature: string, publicKey: string): 
   // assume node public address as ed25519 key
   if (publicKey.slice(0, 1) === VALIDATOR_NODE_PUBLIC_KEY_PREFIX) {
     const publicKeyBuffer = decodeNodePublic(publicKey);
-    publicKey = publicKeyBuffer.toString("hex").toUpperCase(); // eslint-disable-line no-param-reassign
+    publicKey = Buffer.from(publicKeyBuffer.buffer).toString("hex").toUpperCase(); // eslint-disable-line no-param-reassign
   }
 
   if (publicKey.slice(0, 2) === VALIDATOR_HEX_PREFIX_ED25519) {
