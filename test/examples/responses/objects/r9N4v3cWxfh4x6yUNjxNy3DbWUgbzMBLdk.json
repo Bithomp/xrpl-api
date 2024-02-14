@@ -1,0 +1,43 @@
+[
+  {
+    "Account": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+    "BookDirectory": "8D435A556FDD43C69159CD987BADCDEB6B7EBAA3284592F85B0C021793574000",
+    "BookNode": "0",
+    "Flags": 131072,
+    "LedgerEntryType": "Offer",
+    "OwnerNode": "0",
+    "PreviousTxnID": "2B960F5A72415815F3434E56B2B8C02BDE3DE262DA0A7194FC0AB3A24090AA2F",
+    "PreviousTxnLgrSeq": 2659445,
+    "Sequence": 753804726,
+    "TakerGets": { "currency": "EVR", "issuer": "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8", "value": "400" },
+    "TakerPays": "1352000000",
+    "index": "2339DF912C4212A9EE6344CB6D4513E41AE1A697EF85A400CAF31141117BBC2F"
+  },
+  {
+    "Account": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+    "Amount": { "currency": "EVR", "issuer": "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8", "value": "13.37" },
+    "Destination": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+    "FinishAfter": 762562200,
+    "Flags": 0,
+    "LedgerEntryType": "Escrow",
+    "OwnerNode": "0",
+    "PreviousTxnID": "BF98ED34E7C7BCBE37288D526CB2550A8195C59DB18BC254A9B2E21A2A7A2798",
+    "PreviousTxnLgrSeq": 3009966,
+    "TransferRate": 1000000000,
+    "index": "7244D73D61652BC6F0A56440D4750AA75669B31232EFCF7DAC036D4E24F46422"
+  },
+  {
+    "Balance": { "currency": "EVR", "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji", "value": "400.0000000000309" },
+    "Flags": 1114112,
+    "HighLimit": { "currency": "EVR", "issuer": "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8", "value": "0" },
+    "HighNode": "449",
+    "LedgerEntryType": "RippleState",
+    "LockCount": 1,
+    "LockedBalance": { "currency": "EVR", "issuer": "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8", "value": "13.37" },
+    "LowLimit": { "currency": "EVR", "issuer": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk", "value": "10000000" },
+    "LowNode": "0",
+    "PreviousTxnID": "BF98ED34E7C7BCBE37288D526CB2550A8195C59DB18BC254A9B2E21A2A7A2798",
+    "PreviousTxnLgrSeq": 3009966,
+    "index": "D84BDDAC436B53C945FED98145BFB90ED7F0E001AEB3F5F51EAA5B23A24E9741"
+  }
+]

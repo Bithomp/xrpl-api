@@ -123,6 +123,7 @@ describe("Faucet", () => {
       this.timeout(10000);
       const res = await Faucet.foundWallet("test", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
 
+      delete res.transactionHash; // can be missing
       expect(res).to.eql({
         account: {
           xAddress: "TVPHVUZfDDJo631W4CZg5oa8fNwwGhn4j9CMTkc35mXminK",

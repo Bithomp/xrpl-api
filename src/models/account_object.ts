@@ -137,15 +137,23 @@ const RippleStateToTrustLine = (ledgerEntry: LedgerEntry.RippleState, account: s
       : ledgerEntry.Balance.value;
   /* eslint-enable multiline-ternary */
 
-  return {
+  const lockedBalance = (ledgerEntry as any).LockedBalance?.value;
+  let lockCount = undefined;
+  if (lockedBalance) {
+    lockCount = (ledgerEntry as any).LockCount;
+  }
+
+  return removeUndefined({
     account: counterparty.issuer,
     balance,
     currency: self.currency,
     limit: self.value,
     limit_peer: counterparty.value,
+    lock_count: lockCount,
+    locked_balance: lockedBalance,
     no_ripple,
     no_ripple_peer,
-  } as Trustline;
+  }) as Trustline;
 };
 
 export function accountObjectsToNFTOffers(accountObjects: AccountObject[]): AccountNFTOffersInterface[] {

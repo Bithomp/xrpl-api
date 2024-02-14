@@ -19,7 +19,8 @@ describe("Client", () => {
           ledgerIndexMax: 61770679,
         });
 
-        delete result.transactions[0].tx.inLedger;
+        delete result.transactions[0].tx.inLedger; // can be missed, depending on the server
+        delete result.transactions[0].tx.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
         expect(result.transactions).to.eql([
           {
             meta: {
