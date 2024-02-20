@@ -11,19 +11,19 @@ import {
 function parseAccountDelete(tx: any): FormattedAccountDeleteSpecification {
   assert.ok(tx.TransactionType === "AccountDelete");
 
-  const source: FormattedSourceAddress = {
+  const source: FormattedSourceAddress = removeUndefined({
     address: parseAccount(tx.Account),
     tag: tx.SourceTag,
-  };
+  });
 
-  const destination: FormattedDestinationAddress = {
+  const destination: FormattedDestinationAddress = removeUndefined({
     address: tx.Destination,
     tag: tx.DestinationTag,
-  };
+  });
 
   return removeUndefined({
-    source: removeUndefined(source),
-    destination: removeUndefined(destination),
+    source: Object.keys(source).length > 0 ? source : undefined,
+    destination: Object.keys(destination).length > 0 ? destination : undefined,
     memos: parseMemos(tx),
   });
 }

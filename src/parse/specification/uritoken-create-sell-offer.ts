@@ -8,21 +8,21 @@ import { FormattedURITokenCreateSellOfferSpecification } from "../../v1/common/t
 function parseNFTokenBurn(tx: any): FormattedURITokenCreateSellOfferSpecification {
   assert.ok(tx.TransactionType === "URITokenCreateSellOffer");
 
-  const source: FormattedSourceAddress = {
+  const source: FormattedSourceAddress = removeUndefined({
     address: parseAccount(tx.Account),
     tag: tx.SourceTag,
-  };
+  });
 
-  const destination: FormattedDestinationAddress = {
+  const destination: FormattedDestinationAddress = removeUndefined({
     address: tx.Destination,
     tag: tx.DestinationTag,
-  };
+  });
 
   return removeUndefined({
     uritokenID: tx.URITokenID,
     amount: tx.Amount,
-    source: removeUndefined(source),
-    destination: removeUndefined(destination),
+    source: Object.keys(source).length > 0 ? source : undefined,
+    destination: Object.keys(destination).length > 0 ? destination : undefined,
     memos: parseMemos(tx),
   });
 }

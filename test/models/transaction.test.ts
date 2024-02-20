@@ -482,6 +482,7 @@ describe("Models", () => {
         specification: {
           nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
           amount: "1",
+          source: { address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw" },
           owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
           flags: { sellToken: false },
         },
@@ -546,7 +547,8 @@ describe("Models", () => {
         specification: {
           nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
           amount: "0",
-          destination: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw",
+          source: { address: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg" },
+          destination: { address: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw" },
           expiration: 5241652095,
           flags: { sellToken: true },
         },
@@ -618,6 +620,7 @@ describe("Models", () => {
             value: "-2560",
           },
           owner: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw",
+          source: { address: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg" },
           expiration: 5241652095,
           flags: { sellToken: false },
         },
@@ -841,7 +844,8 @@ describe("Models", () => {
         id: "711C4F606C63076137FAE90ADC36379D7066CF551E96DA6FE2BDAB5ECBFACF2B",
         specification: {
           amount: "0.001",
-          destination: "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX",
+          source: { address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn" },
+          destination: { address: "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX" },
           settleDelay: 60,
           publicKey: "03CFD18E689434F032A4E84C63E2A3A6472D684EAF4FD52CA67742F3E24BAE81B2",
         },
@@ -1287,6 +1291,7 @@ describe("Models", () => {
         },
         sequence: 7751097,
         specification: {
+          source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           flags: {
             burnable: false,
           },
@@ -1338,6 +1343,7 @@ describe("Models", () => {
         },
         sequence: 7751104,
         specification: {
+          source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           flags: {
             burnable: true,
           },
@@ -1405,7 +1411,8 @@ describe("Models", () => {
             burnable: true,
           },
           amount: "1000000",
-          destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+          source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
+          destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
           uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
         },
         type: "uritokenMint",
@@ -1485,7 +1492,8 @@ describe("Models", () => {
         specification: {
           uri: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
           flags: { burnable: false },
-          destination: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+          source: { address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU" },
+          destination: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
           emittedDetails: {
             emitBurden: "1",
             emitGeneration: 1,
@@ -1642,7 +1650,8 @@ describe("Models", () => {
         specification: {
           uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
           amount: "4000000",
-          destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+          source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
+          destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
         },
         type: "uritokenCreateSellOffer",
       });
@@ -1699,7 +1708,8 @@ describe("Models", () => {
         specification: {
           uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
           amount: "1000000",
-          destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+          source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
+          destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
         },
         type: "uritokenCreateSellOffer",
       });
@@ -1755,7 +1765,8 @@ describe("Models", () => {
         specification: {
           uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
           amount: "1000000",
-          destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+          source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
+          destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
         },
         type: "uritokenCreateSellOffer",
       });
@@ -1810,6 +1821,7 @@ describe("Models", () => {
         specification: {
           uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
           amount: "1000000",
+          source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
         },
         type: "uritokenCreateSellOffer",
       });
@@ -3462,7 +3474,8 @@ describe("Models", () => {
                 flags: {
                   burnable: false,
                 },
-                destination: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+                source: { address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU" },
+                destination: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
                 emittedDetails: {
                   emitBurden: "1",
                   emitGeneration: 1,
@@ -3674,9 +3687,7 @@ describe("Models", () => {
               counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
             },
           },
-          destination: {
-            address: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V",
-          },
+          destination: { address: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V" },
         },
         outcome: {
           result: "tesSUCCESS",

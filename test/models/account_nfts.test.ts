@@ -221,6 +221,7 @@ describe("Models", () => {
           sellToken: true,
         },
         nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+        source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
       });
     });
 
@@ -235,6 +236,7 @@ describe("Models", () => {
         },
         owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
         nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+        source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
       });
     });
   });

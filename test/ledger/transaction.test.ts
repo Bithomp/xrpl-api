@@ -5,7 +5,7 @@ import { expect } from "chai";
 // import * as enums from ".node_modules/ripple-binary-codec/dist/enums/src/enums/definitions.json";
 // https://github.com/Transia-RnD/xrpl.js/blob/3b234ec8ec1c677e0f3f534fd2985c985871c87e/packages/ripple-binary-codec/src/enums/definitions.json
 import * as xahauEnums from "../../config/xahau_definitions.json";
-import { Client, Models, Wallet, xrpl } from "../../src/index";
+import { Client, Models, Wallet } from "../../src/index";
 
 describe("Client", () => {
   describe("mainnet", () => {
@@ -416,7 +416,7 @@ describe("Client", () => {
           LastLedgerSequence: paymentParams.lastLedgerSequence,
         };
 
-        const wallet = xrpl.Wallet.fromSeed(nconf.get("xrpl:accounts:activation:secret"));
+        const wallet = Wallet.walletFromSeed(nconf.get("xrpl:accounts:activation:secret"));
         const signedTransaction = wallet.sign(tx).tx_blob;
 
         const result: any = await Client.submit(signedTransaction);
@@ -440,7 +440,7 @@ describe("Client", () => {
         tx.Sequence = submitParams.sequence;
         tx.LastLedgerSequence = submitParams.lastLedgerSequence;
 
-        const wallet = xrpl.Wallet.fromSeed(nconf.get("xrpl:accounts:activation:secret"));
+        const wallet = Wallet.walletFromSeed(nconf.get("xrpl:accounts:activation:secret"));
         const signedTransaction = wallet.sign(tx).tx_blob;
 
         const result: any = await Client.submit(signedTransaction);
@@ -995,7 +995,12 @@ describe("Client", () => {
                   flags: {
                     burnable: false,
                   },
-                  destination: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+                  source: {
+                    address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU",
+                  },
+                  destination: {
+                    address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+                  },
                   emittedDetails: {
                     emitBurden: "1",
                     emitGeneration: 1,
@@ -2640,7 +2645,8 @@ describe("Client", () => {
                   flags: {
                     burnable: false,
                   },
-                  destination: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+                  source: { address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU" },
+                  destination: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
                   emittedDetails: {
                     emitBurden: "1",
                     emitGeneration: 1,

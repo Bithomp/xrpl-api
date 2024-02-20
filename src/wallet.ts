@@ -1,8 +1,8 @@
 import BigNumber from "bignumber.js";
 import omitBy from "lodash/omitBy";
 import * as Crypto from "crypto";
-import { Wallet, Transaction, ValidationError, validate } from "xrpl";
-import { isValidXAddress, xAddressToClassicAddress } from "ripple-address-codec";
+import { Wallet, Transaction, ValidationError, validate, ECDSA } from "xrpl";
+import { isValidXAddress, xAddressToClassicAddress, decodeSeed } from "ripple-address-codec";
 import {
   encodeForSigning,
   encodeForMultisigning,
@@ -12,7 +12,7 @@ import {
   XrplDefinitions,
   DEFAULT_DEFINITIONS,
 } from "ripple-binary-codec";
-import { sign } from "ripple-keypairs";
+import { sign, verify } from "ripple-keypairs";
 
 import * as Base58 from "./base58";
 import { sha512Half } from "./common";
@@ -27,6 +27,17 @@ interface GenerateAddressInterface {
   privateKey: string;
   address: string;
   seed: string;
+}
+
+export function walletFromSeed(seed: string): Wallet {
+  const decodedSeed = decodeSeed(seed);
+
+  // NOTE: Wallet by default does not respect the algorithm of the seed
+  const wallet = Wallet.fromSeed(seed, {
+    algorithm: decodedSeed.type === "ed25519" ? ECDSA.ed25519 : ECDSA.secp256k1,
+  });
+
+  return wallet;
 }
 
 export function generateAddress(): GenerateAddressInterface {
@@ -136,6 +147,19 @@ export function signTransaction(
 }
 
 /**
+ * Verifies a signed transaction offline.
+ *
+ * @param signedTransaction - A signed transaction (hex string of signTransaction result) to be verified offline.
+ * @returns Returns true if a signedTransaction is valid.
+ */
+export function verifyTransaction(wallet: Wallet, signedTransaction: Transaction | string): boolean {
+  const tx = typeof signedTransaction === "string" ? decode(signedTransaction) : signedTransaction;
+  const messageHex: string = encodeForSigning(tx);
+  const signature = tx.TxnSignature as string;
+  return verify(messageHex, signature, wallet.publicKey);
+}
+
+/**
  * Signs a transaction with the proper signing encoding.
  *
  * @param tx - A transaction to sign.
@@ -156,6 +180,7 @@ function computeSignature(
   }
   return sign(encodeForSigning(tx, definitions), privateKey);
 }
+
 /**
  * Remove trailing insignificant zeros for non-XRP Payment amount.
  * This resolves the serialization mismatch bug when encoding/decoding a non-XRP Payment transaction

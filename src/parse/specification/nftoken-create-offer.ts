@@ -16,22 +16,22 @@ function parseNFTokenCreateOffer(tx: any): FormattedNFTokenCreateOfferSpecificat
     expiration = ledgerTimeToUnixTime(tx.Expiration);
   }
 
-  const source: FormattedSourceAddress = {
+  const source: FormattedSourceAddress = removeUndefined({
     address: parseAccount(tx.Account),
     tag: tx.SourceTag,
-  };
+  });
 
-  const destination: FormattedDestinationAddress = {
+  const destination: FormattedDestinationAddress = removeUndefined({
     address: tx.Destination,
     tag: tx.DestinationTag,
-  };
+  });
 
   return removeUndefined({
     nftokenID: tx.NFTokenID,
     amount: tx.Amount,
     owner: tx.Owner,
-    source: removeUndefined(source),
-    destination: removeUndefined(destination),
+    source: Object.keys(source).length > 0 ? source : undefined,
+    destination: Object.keys(destination).length > 0 ? destination : undefined,
     expiration,
     flags: parseNFTOfferFlags(tx.Flags),
     memos: parseMemos(tx),

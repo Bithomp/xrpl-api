@@ -21,7 +21,7 @@ import {
   decodeCTID,
 } from "../models/transaction";
 
-import { signTransaction } from "../wallet";
+import { signTransaction, walletFromSeed } from "../wallet";
 
 const submitErrorsGroup = ["tem", "tef", "tel", "ter"];
 const FEE_LIMIT = 0.5; // native currency (XRP, XAH)
@@ -281,7 +281,7 @@ export async function legacyPayment(
   transaction.LastLedgerSequence = submitParams.lastLedgerSequence;
 
   // sign transaction
-  const wallet = xrpl.Wallet.fromSeed(data.secret);
+  const wallet = walletFromSeed(data.secret)
   const signedTransaction = signTransaction(wallet, transaction as Transaction, false, definitions, validateTx).tx_blob;
 
   // submit transaction

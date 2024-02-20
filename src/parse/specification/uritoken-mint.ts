@@ -12,23 +12,23 @@ function parseNFTokenMint(tx: any): FormattedURITokenMintSpecification {
 
   const emittedDetails = parseEmittedDetails(tx);
 
-  const source: FormattedSourceAddress = {
+  const source: FormattedSourceAddress = removeUndefined({
     address: parseAccount(tx.Account),
     tag: tx.SourceTag,
-  };
+  });
 
-  const destination: FormattedDestinationAddress = {
+  const destination: FormattedDestinationAddress = removeUndefined({
     address: tx.Destination,
     tag: tx.DestinationTag,
-  };
+  });
 
   return removeUndefined({
     uri: tx.URI,
     flags: parseURITokenFlags(tx.Flags),
     digest: tx.Digest,
     amount: tx.Amount,
-    source: removeUndefined(source),
-    destination: removeUndefined(destination),
+    source: Object.keys(source).length > 0 ? source : undefined,
+    destination: Object.keys(destination).length > 0 ? destination : undefined,
     emittedDetails,
     memos: parseMemos(tx),
   });
