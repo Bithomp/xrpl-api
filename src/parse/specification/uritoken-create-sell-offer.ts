@@ -15,7 +15,6 @@ function parseNFTokenBurn(tx: any): FormattedURITokenCreateSellOfferSpecificatio
 
   const destination: FormattedDestinationAddress = removeUndefined({
     address: tx.Destination,
-    tag: tx.DestinationTag,
   });
 
   return removeUndefined({

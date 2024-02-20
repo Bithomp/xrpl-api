@@ -118,9 +118,7 @@ export function dropsToXrp(drops: BigNumber.Value): string {
   // validated above. This just ensures BigNumber did not do
   // something unexpected.
   if (!drops.match(/^-?[0-9]+$/)) {
-    throw new ValidationError(
-      `dropsToXrp: failed sanity check - value '${drops}', does not match (^-?[0-9]+$).`
-    );
+    throw new ValidationError(`dropsToXrp: failed sanity check - value '${drops}', does not match (^-?[0-9]+$).`);
   }
 
   return new BigNumber(drops).dividedBy(1000000.0).toString(10);
@@ -133,9 +131,7 @@ export function xrpToDrops(xrp: BigNumber.Value): string {
         `xrpToDrops: invalid value '${xrp}', should be a number matching (^-?[0-9]*\\.?[0-9]*$).`
       );
     } else if (xrp === ".") {
-      throw new ValidationError(
-        `xrpToDrops: invalid value '${xrp}', should be a BigNumber or string-encoded number.`
-      );
+      throw new ValidationError(`xrpToDrops: invalid value '${xrp}', should be a BigNumber or string-encoded number.`);
     }
   }
 
@@ -146,16 +142,12 @@ export function xrpToDrops(xrp: BigNumber.Value): string {
   // validated above. This just ensures BigNumber did not do
   // something unexpected.
   if (!xrp.match(/^-?[0-9.]+$/)) {
-    throw new ValidationError(
-      `xrpToDrops: failed sanity check - value '${xrp}', does not match (^-?[0-9.]+$).`
-    );
+    throw new ValidationError(`xrpToDrops: failed sanity check - value '${xrp}', does not match (^-?[0-9.]+$).`);
   }
 
   const components = xrp.split(".");
   if (components.length > 2) {
-    throw new ValidationError(
-      `xrpToDrops: failed sanity check - value '${xrp}' has too many decimal points.`
-    );
+    throw new ValidationError(`xrpToDrops: failed sanity check - value '${xrp}' has too many decimal points.`);
   }
 
   const fraction = components[1] || "0";
@@ -168,4 +160,8 @@ export function xrpToDrops(xrp: BigNumber.Value): string {
 
 export function removeUndefined<T extends object>(obj: T): T {
   return _.omitBy(obj, (value) => value == null) as T; // eslint-disable-line eqeqeq
+}
+
+export function uint8ArrayToHex(value: Uint8Array | ArrayBufferLike): string {
+  return Buffer.from(value).toString("hex").toUpperCase();
 }

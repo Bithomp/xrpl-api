@@ -236,7 +236,7 @@ describe("Models", () => {
         },
         owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
         nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
-        source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
+        source: { address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw" },
       });
     });
   });

@@ -7,6 +7,8 @@ const secp256k1 = new elliptic.ec("secp256k1");
 const ed25519 = new elliptic.eddsa("ed25519");
 import * as rippleKeypairs from "ripple-keypairs";
 
+import { uint8ArrayToHex } from "./common";
+
 const DER_PRIVATE_KEY_PREFIX = Buffer.from("302E020100300506032B657004220420", "hex");
 const DER_PUBLIC_KEY_PREFIX = Buffer.from("302A300506032B6570032100", "hex");
 const VALIDATOR_HEX_PREFIX_ED25519 = "ED";
@@ -77,7 +79,7 @@ export function sign(message: Buffer | string, secret: string): string {
 
   try {
     const decoded = codec.decode(secret, { versions: [0x20] });
-    secret = VALIDATOR_HEX_PREFIX_ED25519 + Buffer.from(decoded.bytes.buffer).toString("hex"); // eslint-disable-line no-param-reassign
+    secret = VALIDATOR_HEX_PREFIX_ED25519 + uint8ArrayToHex(decoded.bytes.buffer); // eslint-disable-line no-param-reassign
   } catch (err) {
     // ignore
   }
@@ -93,7 +95,7 @@ export function verify(message: Buffer | string, signature: string, publicKey: s
   // assume node public address as ed25519 key
   if (publicKey.slice(0, 1) === VALIDATOR_NODE_PUBLIC_KEY_PREFIX) {
     const publicKeyBuffer = decodeNodePublic(publicKey);
-    publicKey = Buffer.from(publicKeyBuffer.buffer).toString("hex").toUpperCase(); // eslint-disable-line no-param-reassign
+    publicKey = uint8ArrayToHex(publicKeyBuffer.buffer); // eslint-disable-line no-param-reassign
   }
 
   try {
@@ -109,7 +111,7 @@ export function verify2(message: Buffer, signature: string, publicKey: string): 
   // assume node public address as ed25519 key
   if (publicKey.slice(0, 1) === VALIDATOR_NODE_PUBLIC_KEY_PREFIX) {
     const publicKeyBuffer = decodeNodePublic(publicKey);
-    publicKey = Buffer.from(publicKeyBuffer.buffer).toString("hex").toUpperCase(); // eslint-disable-line no-param-reassign
+    publicKey = uint8ArrayToHex(publicKeyBuffer.buffer); // eslint-disable-line no-param-reassign
   }
 
   if (publicKey.slice(0, 2) === VALIDATOR_HEX_PREFIX_ED25519) {

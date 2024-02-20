@@ -23,7 +23,6 @@ function parseNFTokenCreateOffer(tx: any): FormattedNFTokenCreateOfferSpecificat
 
   const destination: FormattedDestinationAddress = removeUndefined({
     address: tx.Destination,
-    tag: tx.DestinationTag,
   });
 
   return removeUndefined({

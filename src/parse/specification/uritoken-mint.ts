@@ -19,7 +19,6 @@ function parseNFTokenMint(tx: any): FormattedURITokenMintSpecification {
 
   const destination: FormattedDestinationAddress = removeUndefined({
     address: tx.Destination,
-    tag: tx.DestinationTag,
   });
 
   return removeUndefined({
