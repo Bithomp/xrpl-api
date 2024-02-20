@@ -1,7 +1,8 @@
+import _ from "lodash";
 import BigNumber from "bignumber.js";
 import { PaymentFlags } from "xrpl";
 import { ledgerTimeToISO8601 } from "../models";
-
+import { FormattedIssuedCurrencyAmount } from "../types";
 import { getNativeCurrency } from "../client";
 
 function adjustQualityForXRP(quality: string, takerGetsCurrency: string, takerPaysCurrency: string) {
@@ -36,4 +37,11 @@ function hexToString(hex: string | undefined): string | undefined {
   return hex ? Buffer.from(hex, "hex").toString("utf-8") : undefined;
 }
 
-export { parseQuality, hexToString, parseTimestamp, adjustQualityForXRP, isPartialPayment };
+function removeGenericCounterparty(
+  amount: FormattedIssuedCurrencyAmount,
+  address: string
+): FormattedIssuedCurrencyAmount {
+  return amount.counterparty === address ? _.omit(amount, "counterparty") : amount;
+}
+
+export { parseQuality, hexToString, parseTimestamp, adjustQualityForXRP, isPartialPayment, removeGenericCounterparty };

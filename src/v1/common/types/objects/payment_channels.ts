@@ -1,5 +1,6 @@
 import { FormattedBaseSpecification } from "./specification";
 import { FormattedAmount } from "../../../../types";
+import { FormattedSourceAddress, FormattedDestinationAddress } from "./account";
 
 export type FormattedPaymentChannelClaimSpecification = {
   channel: string;
@@ -12,13 +13,12 @@ export type FormattedPaymentChannelClaimSpecification = {
 } & FormattedBaseSpecification;
 
 export type FormattedPaymentChannelCreateSpecification = {
+  source?: FormattedSourceAddress;
+  destination?: FormattedDestinationAddress;
   amount?: FormattedAmount;
-  destination: string;
   settleDelay: number;
   publicKey?: string;
   cancelAfter?: string;
-  sourceTag?: number;
-  destinationTag?: number;
 } & FormattedBaseSpecification;
 
 export type FormattedPaymentChannelFundSpecification = {
