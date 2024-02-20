@@ -21,6 +21,11 @@ export interface Trustline {
    * the perspective account.
    */
   limit_peer: string;
+
+  lock_count?: number;
+
+  locked_balance?: string;
+
   /**
    * Rate at which the account values incoming balances on this trust line, as
    * a ratio of this value per 1 billion units. (For example, a value of 500

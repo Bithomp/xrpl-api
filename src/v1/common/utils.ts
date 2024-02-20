@@ -1,4 +1,5 @@
 import { deriveKeypair } from "ripple-keypairs";
+import { Node, TransactionMetadata } from "xrpl";
 import { Amount, IssuedCurrencyAmount, FormattedIssuedCurrencyAmount } from "./types/objects";
 import { xrpToDrops } from "../../common";
 
@@ -49,7 +50,7 @@ function iso8601ToRippleTime(iso8601: string): number {
   return unixToRippleTimestamp(Date.parse(iso8601));
 }
 
-function normalizeNode(affectedNode) {
+function normalizeNode(affectedNode: Node) {
   const diffType = Object.keys(affectedNode)[0];
   const node = affectedNode[diffType];
   return Object.assign({}, node, {
@@ -62,7 +63,7 @@ function normalizeNode(affectedNode) {
   });
 }
 
-function normalizeNodes(metadata) {
+function normalizeNodes(metadata: TransactionMetadata) {
   if (!metadata.AffectedNodes) {
     return [];
   }

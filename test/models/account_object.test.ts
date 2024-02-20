@@ -19,6 +19,24 @@ describe("Models", () => {
       ]);
     });
 
+    it("returns account lines with locked balance", function () {
+      const objects = require("../examples/responses/objects/r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk.json");
+      const result: any = Models.accountObjectsToAccountLines("r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk", objects);
+      expect(result).to.eql([
+        {
+          account: "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8",
+          balance: "400.0000000000309",
+          currency: "EVR",
+          limit: "10000000",
+          limit_peer: "0",
+          lock_count: 1,
+          locked_balance: "13.37",
+          no_ripple: true,
+          no_ripple_peer: false,
+        },
+      ]);
+    });
+
     it("returns account lines with balances", function () {
       const objects = require("../examples/responses/objects/rhuCDThQpvQ6inFv1KguGymhXBK7K2So9m.json");
       const result: any = Models.accountObjectsToAccountLines("rhuCDThQpvQ6inFv1KguGymhXBK7K2So9m", objects);

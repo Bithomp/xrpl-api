@@ -12,13 +12,29 @@ describe("Client", () => {
 
     it("getServerDefinitions", async function () {
       const result: any = await Client.getServerDefinitions();
-      expect(result).to.eql({
-        error: "unknownCmd",
-        error_code: 32,
-        error_message: "Unknown method.",
-        status: "error",
-        validated: undefined,
-      });
+
+      if (result.error) {
+        expect(result).to.eql({
+          error: "unknownCmd",
+          error_code: 32,
+          error_message: "Unknown method.",
+          status: "error",
+          validated: undefined,
+        });
+      } else {
+        // for version 2.0.0 and above
+        expect(Object.keys(result).sort()).to.eql([
+          "FIELDS",
+          "LEDGER_ENTRY_TYPES",
+          "TRANSACTION_RESULTS",
+          "TRANSACTION_TYPES",
+          "TYPES",
+          "hash",
+          "native_currency_code"
+        ]);
+
+        expect(result.native_currency_code).to.eql("XRP");
+      }
     });
   });
 

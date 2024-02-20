@@ -1,0 +1,136 @@
+{
+  "Account": "rELeasERs3m4inA1UinRLTpXemqyStqzwh",
+  "Fee": "10",
+  "Flags": 0,
+  "LastLedgerSequence": 2981525,
+  "NetworkID": 21337,
+  "OfferSequence": 753804730,
+  "Owner": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+  "Sequence": 753898627,
+  "SigningPubKey": "02ABF364503BE5AC760244D6EA8E3A2EFE0AA3BF9CE7E2A8B3D5C0F7CF2EB9921A",
+  "TransactionType": "EscrowFinish",
+  "TxnSignature": "304402201B869598F80E9CC205099DE5C2047AF7BA06D3981C62D9BB84B7F4C87276F16302204F6014DB5A14B7068957721C8CF431B79CBE465079B6167EA7DB5731D4ABB896",
+  "ctid": "C02D7E8300035359",
+  "date": 761139002,
+  "hash": "39F0A0A1F3873B781768C841EE24C00D6F2038FECDE69C723B858F458504C220",
+  "inLedger": 2981507,
+  "ledger_index": 2981507,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rELeasERs3m4inA1UinRLTpXemqyStqzwh",
+            "AccountIndex": "72",
+            "Balance": "11004007",
+            "Flags": 0,
+            "ImportSequence": 61997484,
+            "OwnerCount": 0,
+            "Sequence": 753898628
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "3AE85C0C1ED24FFE94ECF4A9F7EF522CFA478F77C35525299416EF7A03B63DC1",
+          "PreviousFields": {
+            "Balance": "11004017",
+            "Sequence": 753898627
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            "RootIndex": "5D70B77D6ACA976F7C7DA48DCC5C38953D808064863FE6131548ACB59DDB5623"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "5D70B77D6ACA976F7C7DA48DCC5C38953D808064863FE6131548ACB59DDB5623"
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "Account": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            "Amount": {
+              "currency": "EVR",
+              "issuer": "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8",
+              "value": "10"
+            },
+            "Destination": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            "FinishAfter": 761138700,
+            "Flags": 0,
+            "OwnerNode": "0",
+            "PreviousTxnID": "A13EFDD3A6AEEA913B17FD8E7E48D4CC7AA1A5978C5D713CEA5076EADBC600CF",
+            "PreviousTxnLgrSeq": 2981239,
+            "TransferRate": 1000000000
+          },
+          "LedgerEntryType": "Escrow",
+          "LedgerIndex": "8DA872D7A3FC26C2F39BC7BC803D2B0D56A46444C27B47260AA3E789F5726512"
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            "AccountIndex": "71",
+            "Balance": "2677734240",
+            "Domain": "78616861752E7365727669636573",
+            "EmailHash": "351107F80DE5E43F95C720D96BB5C737",
+            "Flags": 0,
+            "ImportSequence": 883,
+            "OwnerCount": 2,
+            "RewardAccumulator": "189b7bf4",
+            "RewardLgrFirst": 2826827,
+            "RewardLgrLast": 2981507,
+            "RewardTime": 760634990,
+            "Sequence": 753804732
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "95D62098A420099A9E77910749453FE82A3595AB34B880BACC0B5526B8661E7A",
+          "PreviousFields": {
+            "OwnerCount": 3,
+            "RewardAccumulator": "1897af73",
+            "RewardLgrLast": 2981414
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Balance": {
+              "currency": "EVR",
+              "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji",
+              "value": "400.0000000000309"
+            },
+            "Flags": 1114112,
+            "HighLimit": {
+              "currency": "EVR",
+              "issuer": "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8",
+              "value": "0"
+            },
+            "HighNode": "449",
+            "LowLimit": {
+              "currency": "EVR",
+              "issuer": "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+              "value": "10000000"
+            },
+            "LowNode": "0"
+          },
+          "LedgerEntryType": "RippleState",
+          "LedgerIndex": "D84BDDAC436B53C945FED98145BFB90ED7F0E001AEB3F5F51EAA5B23A24E9741",
+          "PreviousFields": {
+            "LockCount": 1,
+            "LockedBalance": {
+              "currency": "EVR",
+              "issuer": "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8",
+              "value": "10"
+            }
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 3,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

@@ -1,5 +1,6 @@
 import _ from "lodash";
 import BigNumber from "bignumber.js";
+import { TransactionMetadata } from "xrpl";
 import { dropsToXrp } from "../../common";
 import { normalizeNodes } from "../../v1/common/utils";
 
@@ -20,12 +21,14 @@ function parseValue(value) {
   return new BigNumber(value.value || value);
 }
 
-function computeBalanceChange(node) {
+function computeBalanceChange(node: any) {
   let value: null | BigNumber = null;
   if (node.newFields.LockedBalance) {
     value = parseValue(node.newFields.LockedBalance);
   } else if (node.previousFields.LockedBalance && node.finalFields.LockedBalance) {
     value = parseValue(node.finalFields.LockedBalance).minus(parseValue(node.previousFields.LockedBalance));
+  } else if (node.previousFields.LockedBalance) {
+    value = parseValue(node.previousFields.LockedBalance).negated();
   }
   return value === null ? null : value.isZero() ? null : value;
 }
@@ -69,20 +72,20 @@ function parseTrustlineQuantity(node, valueParser) {
    * the trustline can be created when the offer is taken.
    */
   const fields = _.isEmpty(node.newFields) ? node.finalFields : node.newFields;
+  const LockedBalanceFields = _.isEmpty(node.newFields?.LockedBalance) ? _.isEmpty(node.finalFields?.LockedBalance) ? node.previousFields : node.finalFields : node.newFields;
 
-  // the lockedBalance is always from low node's perspective
   const result = {
     address: fields.LowLimit.issuer,
     lockedBalance: {
-      counterparty: fields.HighLimit.issuer,
-      currency: fields.LockedBalance.currency,
+      counterparty: LockedBalanceFields.LockedBalance.issuer,
+      currency: LockedBalanceFields.LockedBalance.currency,
       value: value.toString(),
     },
   };
   return [result];
 }
 
-function parseQuantities(metadata, valueParser) {
+function parseQuantities(metadata: TransactionMetadata, valueParser) {
   const values = normalizeNodes(metadata).map(function (node) {
     if (node.entryType === "AccountRoot") {
       return [parseXRPQuantity(node, valueParser)];
@@ -101,7 +104,7 @@ function parseQuantities(metadata, valueParser) {
  *  @param {Object} metadata Transaction metadata
  *  @returns {Object} parsed lockedBalance changes
  */
-function parseLockedBalanceChanges(metadata) {
+function parseLockedBalanceChanges(metadata: TransactionMetadata) {
   return parseQuantities(metadata, computeBalanceChange);
 }
 
@@ -112,7 +115,7 @@ function parseLockedBalanceChanges(metadata) {
  *  @param {Object} metadata Transaction metadata
  *  @returns {Object} parsed balances
  */
-function parseFinalLockedBalances(metadata) {
+function parseFinalLockedBalances(metadata: TransactionMetadata) {
   return parseQuantities(metadata, parseFinalBalance);
 }
 

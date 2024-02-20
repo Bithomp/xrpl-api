@@ -20,8 +20,9 @@ describe("Client", () => {
         const result: any = await Client.getTransaction(
           "A34F834AA65C01458FC0AFCDDE7F8F433DAD7B871282E8511ECDEE8E28758DCE"
         );
-        delete result.warnings;
-        delete result.inLedger;
+        delete result.warnings; // can be missed, depending on the server
+        delete result.inLedger; // can be missed, depending on the server
+        delete result.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
         delete result.ctid; // TODO: CTID is not not fully supported by all nodes
         expect(result).to.eql({
           Account: "rhUYLd2aUiUVYkBZYwTc5RYgCAbNHAwkeZ",
@@ -89,8 +90,9 @@ describe("Client", () => {
         const ctid = Models.encodeCTID(41103238, 0, 0); // C2732F8600000000
         const result: any = await Client.getTransaction(ctid);
 
-        delete result.warnings;
-        delete result.inLedger;
+        delete result.warnings; // can be missed, depending on the server
+        delete result.inLedger; // can be missed, depending on the server
+        delete result.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
         expect(result).to.eql({
           Account: "rhUYLd2aUiUVYkBZYwTc5RYgCAbNHAwkeZ",
           Amount: "20000000",
@@ -183,8 +185,9 @@ describe("Client", () => {
           "A34F834AA65C01458FC0AFCDDE7F8F433DAD7B871282E8511ECDEE8E28758DCE",
           { binary: true }
         );
-        delete result.warnings;
-        delete result.inLedger;
+        delete result.warnings; // can be missed, depending on the server
+        delete result.inLedger; // can be missed, depending on the server
+        delete result.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
         delete result.ctid; // TODO: CTID is not not fully supported by all nodes
         expect(result).to.eql({
           date: 588708441,
@@ -258,6 +261,7 @@ describe("Client", () => {
           { formatted: true }
         );
 
+        delete result.ctid; // TODO: CTID is not not fully supported by all nodes
         expect(result).to.eql({
           type: "settings",
           address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6",
@@ -291,10 +295,10 @@ describe("Client", () => {
         expect(result.rawTransaction).to.include("B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C");
 
         delete result.rawTransaction;
+        delete result.ctid; // TODO: CTID is not not fully supported by all nodes
         expect(result).to.eql({
           address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6",
           id: "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
-          ctid: "C428A8A7002A0000",
           outcome: {
             result: "tesSUCCESS",
             timestamp: "2022-02-18T13:13:21.000Z",
@@ -324,8 +328,9 @@ describe("Client", () => {
         const ctid = Models.encodeCTID(41103238, 0, 0); // C2732F8600000000
         const result: any = await Client.getTransactionByCTID(ctid);
 
-        delete result.warnings;
-        delete result.inLedger;
+        delete result.warnings; // can be missed, depending on the server
+        delete result.inLedger; // can be missed, depending on the server
+        delete result.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
         expect(result).to.eql({
           Account: "rhUYLd2aUiUVYkBZYwTc5RYgCAbNHAwkeZ",
           Amount: "20000000",
