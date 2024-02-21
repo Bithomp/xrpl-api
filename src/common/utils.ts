@@ -162,6 +162,6 @@ export function removeUndefined<T extends object>(obj: T): T {
   return _.omitBy(obj, (value) => value == null) as T; // eslint-disable-line eqeqeq
 }
 
-export function uint8ArrayToHex(value: Uint8Array | ArrayBufferLike): string {
+export function bytesToHex(value: Uint8Array | ArrayBufferLike): string {
   return Buffer.from(value).toString("hex").toUpperCase();
 }
