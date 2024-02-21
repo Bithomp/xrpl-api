@@ -162,6 +162,20 @@ export function removeUndefined<T extends object>(obj: T): T {
   return _.omitBy(obj, (value) => value == null) as T; // eslint-disable-line eqeqeq
 }
 
-export function bytesToHex(value: Uint8Array | ArrayBufferLike): string {
-  return Buffer.from(value).toString("hex").toUpperCase();
+export function getConstructorName(object: object): string | undefined {
+  if (object.constructor.name) {
+    return object.constructor.name;
+  }
+  // try to guess it on legacy browsers (ie)
+  const constructorString = object.constructor.toString();
+  const functionConstructor = constructorString.match(/^function\s+([^(]*)/);
+  const classConstructor = constructorString.match(/^class\s([^\s]*)/);
+
+  if (functionConstructor) {
+    return functionConstructor[1];
+  } else if (classConstructor) {
+    return classConstructor[1];
+  }
+
+  return undefined;
 }

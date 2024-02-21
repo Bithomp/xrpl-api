@@ -1,5 +1,5 @@
 import { parseManifest, ManifestInterface } from "./manifest";
-import { parseUint32, parseUint64 } from "./utils";
+import { parseUint32, parseUint64 } from "../parse/utils";
 import { ledgerTimeToUnixTime } from "./ledger";
 import * as Validator from "../validator";
 

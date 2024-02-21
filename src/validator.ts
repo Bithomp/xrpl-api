@@ -7,7 +7,7 @@ const secp256k1 = new elliptic.ec("secp256k1");
 const ed25519 = new elliptic.eddsa("ed25519");
 import * as rippleKeypairs from "ripple-keypairs";
 
-import { bytesToHex } from "./common";
+import { bytesToHex } from "./parse/utils";
 
 const DER_PRIVATE_KEY_PREFIX = Buffer.from("302E020100300506032B657004220420", "hex");
 const DER_PUBLIC_KEY_PREFIX = Buffer.from("302A300506032B6570032100", "hex");

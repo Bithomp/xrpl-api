@@ -1,7 +1,8 @@
 import BigNumber from "bignumber.js";
 import AddressCodec = require("ripple-address-codec");
 
-import { SortDirection, bytesToHex } from "../common";
+import { SortDirection } from "../common";
+import { bytesToHex } from "../parse/utils";
 
 export interface NFTokenInterface {
   Flags: number;

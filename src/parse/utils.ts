@@ -33,14 +33,6 @@ function isPartialPayment(tx: any) {
   return (tx.Flags & PaymentFlags.tfPartialPayment) !== 0;
 }
 
-function hexToString(hex: string | undefined): string | undefined {
-  return hex ? Buffer.from(hex, "hex").toString("utf-8") : undefined;
-}
-
-function stringToHex(value: string | undefined): string | undefined {
-  return value ? Buffer.from(value, "utf8").toString("hex").toUpperCase() : undefined;
-}
-
 function removeGenericCounterparty(
   amount: FormattedIssuedCurrencyAmount,
   address: string
@@ -68,13 +60,51 @@ function normalizeNodes(metadata: TransactionMetadata) {
   return metadata.AffectedNodes.map(normalizeNode);
 }
 
+function hexToString(hex: string | undefined): string | undefined {
+  return hex ? Buffer.from(hex, "hex").toString("utf-8") : undefined;
+}
+
+function stringToHex(value: string | undefined): string | undefined {
+  return value ? Buffer.from(value, "utf8").toString("hex").toUpperCase() : undefined;
+}
+
+function bytesToHex(value: Uint8Array | ArrayBufferLike): string {
+  return Buffer.from(value).toString("hex").toUpperCase();
+}
+
+function parseUint32(buf: Buffer, cur: number): string {
+  return (
+    // eslint-disable-next-line prefer-template, no-bitwise
+    (BigInt(buf[cur]) << 24n) + (BigInt(buf[cur + 1]) << 16n) + (BigInt(buf[cur + 2]) << 8n) + BigInt(buf[cur + 3]) + ""
+  );
+}
+
+function parseUint64(buf: Buffer, cur: number): string {
+  /* eslint-disable prefer-template, no-bitwise */
+  return (
+    (BigInt(buf[cur]) << 56n) +
+    (BigInt(buf[cur + 1]) << 48n) +
+    (BigInt(buf[cur + 2]) << 40n) +
+    (BigInt(buf[cur + 3]) << 32n) +
+    (BigInt(buf[cur + 4]) << 24n) +
+    (BigInt(buf[cur + 5]) << 16n) +
+    (BigInt(buf[cur + 6]) << 8n) +
+    BigInt(buf[cur + 7]) +
+    ""
+  );
+  /* eslint-enable prefer-template, no-bitwise */
+}
+
 export {
   parseQuality,
-  hexToString,
-  stringToHex,
   parseTimestamp,
   adjustQualityForXRP,
   isPartialPayment,
   removeGenericCounterparty,
   normalizeNodes,
+  hexToString,
+  stringToHex,
+  bytesToHex,
+  parseUint32,
+  parseUint64,
 };

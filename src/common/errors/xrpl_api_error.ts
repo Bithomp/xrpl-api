@@ -1,5 +1,5 @@
 import { inspect } from "util";
-import { getConstructorName } from "./utils";
+import { getConstructorName } from "../utils";
 
 class XrplApiError extends Error {
   name: string;
