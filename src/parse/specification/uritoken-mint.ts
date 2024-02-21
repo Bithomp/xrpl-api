@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
 import parseURITokenFlags from "../ledger/uritoken-flags";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseAccount } from "../ledger/account";

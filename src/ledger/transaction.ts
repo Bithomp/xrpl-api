@@ -218,7 +218,7 @@ export async function getTransactionByCTID(
   return result;
 }
 
-interface LegacyPaymentInterface {
+interface SubmitPaymentTransactionV1Interface {
   sourceAddress: string;
   sourceTag?: number;
   sourceValue: string;
@@ -233,8 +233,8 @@ interface LegacyPaymentInterface {
   fee?: string;
 }
 
-export async function legacyPayment(
-  data: LegacyPaymentInterface,
+export async function submitPaymentTransactionV1(
+  data: SubmitPaymentTransactionV1Interface,
   definitions?: XrplDefinitionsBase,
   validateTx?: boolean
 ): Promise<TransactionResponse | FormattedTransaction | ErrorResponse> {
@@ -290,7 +290,7 @@ export async function legacyPayment(
 
 /**
  * Get account payment params, such as fee, sequence and lastLedgerSequence,
- * will be used for payment transaction, like in legacyPayment function
+ * will be used for payment transaction, like in submitPaymentTransactionV1 function
  *
  * @param {string} account
  * @param {Connection} connection
@@ -365,7 +365,7 @@ export async function getAccountPaymentParams(
 
 /**
  * Get account payment params, such as fee, sequence and lastLedgerSequence,
- * will be used for payment transaction, like in legacyPayment function
+ * will be used for payment transaction, like in submitPaymentTransactionV1 function
  *
  * @param {string} account
  * @param {string} tx string or object

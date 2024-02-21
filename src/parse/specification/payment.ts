@@ -3,7 +3,7 @@ import { PaymentFlags } from "xrpl";
 import { isPartialPayment, removeGenericCounterparty } from "../utils";
 import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
 
 import { FormattedPaymentSpecification } from "../../v1/common/types/objects/payments";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "../../v1/common/types/objects/account";

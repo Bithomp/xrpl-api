@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
 import parseNFTOfferFlags from "../ledger/nftoken-offer-flags";
 import { ledgerTimeToUnixTime } from "../../models/ledger";
 import { parseAccount } from "../ledger/account";

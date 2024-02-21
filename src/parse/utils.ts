@@ -1,6 +1,6 @@
 import _ from "lodash";
 import BigNumber from "bignumber.js";
-import { PaymentFlags } from "xrpl";
+import { Node, PaymentFlags, TransactionMetadata } from "xrpl";
 import { ledgerTimeToISO8601 } from "../models";
 import { FormattedIssuedCurrencyAmount } from "../types";
 import { getNativeCurrency } from "../client";
@@ -37,6 +37,10 @@ function hexToString(hex: string | undefined): string | undefined {
   return hex ? Buffer.from(hex, "hex").toString("utf-8") : undefined;
 }
 
+function stringToHex(value: string | undefined): string | undefined {
+  return value ? Buffer.from(value, "utf8").toString("hex").toUpperCase() : undefined;
+}
+
 function removeGenericCounterparty(
   amount: FormattedIssuedCurrencyAmount,
   address: string
@@ -44,4 +48,33 @@ function removeGenericCounterparty(
   return amount.counterparty === address ? _.omit(amount, "counterparty") : amount;
 }
 
-export { parseQuality, hexToString, parseTimestamp, adjustQualityForXRP, isPartialPayment, removeGenericCounterparty };
+function normalizeNode(affectedNode: Node) {
+  const diffType = Object.keys(affectedNode)[0];
+  const node = affectedNode[diffType];
+  return Object.assign({}, node, {
+    diffType,
+    entryType: node.LedgerEntryType,
+    ledgerIndex: node.LedgerIndex,
+    newFields: node.NewFields || {},
+    finalFields: node.FinalFields || {},
+    previousFields: node.PreviousFields || {},
+  });
+}
+
+function normalizeNodes(metadata: TransactionMetadata) {
+  if (!metadata.AffectedNodes) {
+    return [];
+  }
+  return metadata.AffectedNodes.map(normalizeNode);
+}
+
+export {
+  parseQuality,
+  hexToString,
+  stringToHex,
+  parseTimestamp,
+  adjustQualityForXRP,
+  isPartialPayment,
+  removeGenericCounterparty,
+  normalizeNodes,
+};

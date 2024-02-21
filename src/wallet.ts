@@ -12,7 +12,7 @@ import {
   XrplDefinitions,
   DEFAULT_DEFINITIONS,
 } from "ripple-binary-codec";
-import { sign, verify } from "ripple-keypairs";
+import { sign, verify, deriveKeypair } from "ripple-keypairs";
 
 import * as Base58 from "./base58";
 import { sha512Half } from "./common";
@@ -27,6 +27,17 @@ interface GenerateAddressInterface {
   privateKey: string;
   address: string;
   seed: string;
+}
+
+export function isValidSecret(secret: string): boolean {
+  try {
+    deriveKeypair(secret);
+    return true;
+  } catch (err) {
+    // Ignore error
+  }
+
+  return false;
 }
 
 export function walletFromSeed(seed: string): Wallet {

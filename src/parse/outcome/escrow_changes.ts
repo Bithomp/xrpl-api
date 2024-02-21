@@ -1,7 +1,6 @@
 import { removeUndefined } from "../../common";
-import { normalizeNodes } from "../../v1/common/utils";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "../../v1/common/types/objects/account";
-import { parseTimestamp } from "../utils";
+import { normalizeNodes, parseTimestamp } from "../utils";
 
 interface FormattedEscrowSummaryInterface {
   status?: string;

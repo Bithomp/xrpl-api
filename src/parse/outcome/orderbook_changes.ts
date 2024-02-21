@@ -3,7 +3,7 @@ import { BigNumber as GlobalBigNumber } from "bignumber.js";
 const BigNumber = GlobalBigNumber.clone({ DECIMAL_PLACES: 40 });
 import { removeUndefined } from "../../common";
 import { ledgerTimeToTimestamp } from "../../models";
-import { normalizeNodes } from "../../v1/common/utils";
+import { normalizeNodes } from "../utils";
 import { parseOrderbookQuality } from "./orderbook_quality";
 import parseCurrencyAmount from "../ledger/currency-amount";
 

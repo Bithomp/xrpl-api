@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 import { dropsToXrp } from "../../common";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
 import { FormattedFeeUpdateSpecification } from "../../v1/common/types/objects/fees";
 
 function parseFeeUpdate(tx: any): FormattedFeeUpdateSpecification {

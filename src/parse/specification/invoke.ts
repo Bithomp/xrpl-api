@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
 
 import { FormattedSourceAddress, FormattedDestinationAddress } from "../../v1/common/types/objects/account";
 import { FormattedInvokeSpecification } from "../../v1/common/types/objects/invoke";

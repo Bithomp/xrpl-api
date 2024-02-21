@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import { normalizeNodes } from  "../../v1/common/utils";
+import { normalizeNodes } from "../utils";
 
 function parsePaymentChannelStatus(node) {
   if (node.diffType === "CreatedNode") {

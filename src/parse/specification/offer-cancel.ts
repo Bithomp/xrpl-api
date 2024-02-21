@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
 
 import { FormattedOfferCancelSpecification } from "../../v1/common/types/objects/offers";
 

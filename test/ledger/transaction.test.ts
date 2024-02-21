@@ -465,7 +465,7 @@ describe("Client", () => {
       });
     });
 
-    describe("legacyPayment", () => {
+    describe("submitPaymentTransactionV1", () => {
       it("is OK", async function () {
         this.timeout(15000);
 
@@ -480,7 +480,7 @@ describe("Client", () => {
           secret: nconf.get("xrpl:accounts:activation:secret"),
         };
 
-        const result: any = await Client.legacyPayment(payment);
+        const result: any = await Client.submitPaymentTransactionV1(payment);
         expect(result.error).to.eq(undefined);
         expect(result.validated).to.eq(true);
       });
@@ -501,7 +501,7 @@ describe("Client", () => {
           secret: nconf.get("xrpl:accounts:activation:secret"),
         };
 
-        const result: any = await Client.legacyPayment(payment);
+        const result: any = await Client.submitPaymentTransactionV1(payment);
         expect(result.error).to.eq(undefined);
         expect(result.validated).to.eq(true);
       });
@@ -521,7 +521,7 @@ describe("Client", () => {
           secret: address.seed,
         };
 
-        const result: any = await Client.legacyPayment(payment);
+        const result: any = await Client.submitPaymentTransactionV1(payment);
         expect(result.error).to.eq("actNotFound");
       });
 
@@ -539,7 +539,7 @@ describe("Client", () => {
           secret: nconf.get("xrpl:accounts:activation:secret"),
         };
 
-        const result: any = await Client.legacyPayment(payment);
+        const result: any = await Client.submitPaymentTransactionV1(payment);
         expect(result.meta).to.be.an("object");
         expect(result.meta.TransactionResult).to.eq("tecUNFUNDED_PAYMENT");
       });
@@ -553,7 +553,7 @@ describe("Client", () => {
       await Client.connect();
     });
 
-    describe("legacyPayment", () => {
+    describe("submitPaymentTransactionV1", () => {
       it("is OK with manual fee", async function () {
         const xahauDefinitions = new Wallet.XrplDefinitions(xahauEnums);
 
@@ -570,7 +570,7 @@ describe("Client", () => {
           secret: nconf.get("xrpl:accounts:activation:secret"),
           fee: "0.000046", // 10 - fee, 26 - memos, 10 - ???
         };
-        const result: any = await Client.legacyPayment(payment, xahauDefinitions);
+        const result: any = await Client.submitPaymentTransactionV1(payment, xahauDefinitions);
 
         expect(result.error).to.eq(undefined);
         expect(result.validated).to.eq(true);
@@ -591,7 +591,7 @@ describe("Client", () => {
           memos: [{ type: "memo", format: "plain/text", data: "Bithomp test" }],
           secret: nconf.get("xrpl:accounts:activation:secret"),
         };
-        const result: any = await Client.legacyPayment(payment, xahauDefinitions);
+        const result: any = await Client.submitPaymentTransactionV1(payment, xahauDefinitions);
 
         expect(result.error).to.eq(undefined);
         expect(result.validated).to.eq(true);

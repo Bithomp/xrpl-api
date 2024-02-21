@@ -1,5 +1,5 @@
 import { removeUndefined } from "../../common";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
 import { FormattedAmendmentSpecification } from "../../v1/common/types/objects/amendments";
 
 function parseAmendment(tx: any): FormattedAmendmentSpecification {

@@ -2,7 +2,7 @@ import * as assert from "assert";
 import { PaymentChannelClaimFlags } from "xrpl";
 import { removeUndefined } from "../../common";
 import parseRippledAmount from "../ledger/ripple-amount";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
 
 import { FormattedPaymentChannelClaimSpecification } from "../../v1/common/types/objects/payment_channels";
 

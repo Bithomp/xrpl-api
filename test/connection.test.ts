@@ -153,7 +153,7 @@ describe("Connection", () => {
         secret: nconf.get("xrpl:accounts:activation:secret"),
       };
 
-      Client.legacyPayment(payment);
+      Client.submitPaymentTransactionV1(payment);
 
       connection.once("transaction", (transactionStream) => {
         expect(transactionStream.type).to.eq("transaction");
