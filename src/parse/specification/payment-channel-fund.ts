@@ -4,7 +4,7 @@ import { parseTimestamp } from "../utils";
 import parseRippledAmount from "../ledger/ripple-amount";
 import { parseMemos } from "../ledger/memos";
 
-import { FormattedPaymentChannelFundSpecification } from "../../types/objects/payment_channels";
+import { FormattedPaymentChannelFundSpecification } from "../../types/payment_channels";
 
 function parsePaymentChannelFund(tx: any): FormattedPaymentChannelFundSpecification {
   assert.ok(tx.TransactionType === "PaymentChannelFund");

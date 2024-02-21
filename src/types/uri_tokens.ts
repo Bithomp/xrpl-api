@@ -1,4 +1,4 @@
-import { URITokenMintFlags } from "../../models/transactions/URITokenMint";
+import { URITokenMintFlags } from "../models/transactions/URITokenMint";
 
 export const URITokenFlagsKeys = {
   burnable: URITokenMintFlags.tfBurnable,

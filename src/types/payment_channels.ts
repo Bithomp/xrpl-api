@@ -1,5 +1,5 @@
 import { FormattedBaseSpecification } from "./specification";
-import { FormattedAmount } from "..";
+import { FormattedAmount } from "./amounts";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "./account";
 
 export type FormattedPaymentChannelClaimSpecification = {

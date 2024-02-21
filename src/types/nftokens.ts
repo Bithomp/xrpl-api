@@ -1,6 +1,6 @@
 import { NFTokenMintFlags, NFTokenCreateOfferFlags } from "xrpl";
 import { FormattedBaseSpecification } from "./specification";
-import { Amount } from "..";
+import { Amount } from "./amounts";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "./account";
 
 export const NFTokenFlagsKeys = {

@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import { parseMemos } from "../ledger/memos";
-import { FormattedNFTokenAcceptOfferSpecification } from "../../types/objects/nftokens";
+import { FormattedNFTokenAcceptOfferSpecification } from "../../types/nftokens";
 
 function parseNFTokenAcceptOffer(tx: any): FormattedNFTokenAcceptOfferSpecification {
   assert.ok(tx.TransactionType === "NFTokenAcceptOffer");

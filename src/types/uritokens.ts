@@ -1,6 +1,6 @@
-import { URITokenMintFlags } from "../../models/transactions/URITokenMint";
+import { URITokenMintFlags } from "../models/transactions/URITokenMint";
 import { FormattedBaseSpecification } from "./specification";
-import { Amount } from "..";
+import { Amount } from "./amounts";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "./account";
 
 export const URITokenFlagsKeys = {

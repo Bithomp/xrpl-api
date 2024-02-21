@@ -1,5 +1,5 @@
 import { xAddressToClassicAddress, isValidXAddress } from "ripple-address-codec";
-import { Amount, IssuedCurrencyAmount, FormattedIssuedCurrencyAmount } from "../../types/objects";
+import { Amount, IssuedCurrencyAmount, FormattedIssuedCurrencyAmount } from "../../types";
 import { xrpToDrops } from "../../common";
 
 import { getNativeCurrency } from "../../client";

@@ -2,7 +2,7 @@ import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import { parseMemos } from "../ledger/memos";
 
-import { FormattedCheckCancelSpecification } from "../../types/objects/checks";
+import { FormattedCheckCancelSpecification } from "../../types/checks";
 
 function parseCheckCancel(tx: any): FormattedCheckCancelSpecification {
   assert.ok(tx.TransactionType === "CheckCancel");

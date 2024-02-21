@@ -2,8 +2,8 @@ import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import { parseMemos } from "../ledger/memos";
 
-import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/objects/account";
-import { FormattedInvokeSpecification } from "../../types/objects/invoke";
+import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
+import { FormattedInvokeSpecification } from "../../types/invoke";
 
 function parseInvoke(tx: any): FormattedInvokeSpecification {
   assert.ok(tx.TransactionType === "Invoke");

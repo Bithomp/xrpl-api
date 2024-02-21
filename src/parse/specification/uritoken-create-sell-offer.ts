@@ -2,8 +2,8 @@ import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
-import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/objects/account";
-import { FormattedURITokenCreateSellOfferSpecification } from "../../types/objects/uritokens";
+import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
+import { FormattedURITokenCreateSellOfferSpecification } from "../../types/uritokens";
 
 function parseNFTokenBurn(tx: any): FormattedURITokenCreateSellOfferSpecification {
   assert.ok(tx.TransactionType === "URITokenCreateSellOffer");

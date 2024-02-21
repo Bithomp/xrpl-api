@@ -1,5 +1,5 @@
 import { removeUndefined } from "../../common";
-import { Amount } from "../../types/objects";
+import { Amount } from "../../types";
 
 export function parseURITokenSellOfferChanges(tx: object): object {
   return new URITokenSellOfferChanges(tx).call();

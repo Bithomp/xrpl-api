@@ -1,4 +1,4 @@
-import { URITokenFlagsKeys, URITokenFlagsKeysInterface } from "../../types/objects/uritokens";
+import { URITokenFlagsKeys, URITokenFlagsKeysInterface } from "../../types/uritokens";
 import { parseFlags } from "./flags";
 
 function parseURITokenFlags(value: number, options: { excludeFalse?: boolean } = {}): URITokenFlagsKeysInterface {

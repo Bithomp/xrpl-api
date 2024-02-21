@@ -2,8 +2,8 @@ import BigNumber from "bignumber.js";
 import parseAmount from "./amount";
 import { parseTimestamp, adjustQualityForXRP } from "../utils";
 import { removeUndefined } from "../../common";
-import { orderFlags } from "../../types/objects/flags";
-import { FormattedOfferCreateSpecification } from "../../types/objects";
+import { orderFlags } from "../../types/flags";
+import { FormattedOfferCreateSpecification } from "../../types";
 
 export type FormattedAccountOrders = {
   /** Unique Address identifying the account that made the offers. */

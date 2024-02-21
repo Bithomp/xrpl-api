@@ -1,7 +1,7 @@
 import _ from "lodash";
 import parseAmount from "./amount";
-import { FormattedIssuedCurrencyAmount, Amount } from "../../types/objects";
-import { Path, GetPaths } from "../../types/objects/path_find";
+import { FormattedIssuedCurrencyAmount, Amount } from "../../types";
+import { Path, GetPaths } from "../../types/path_find";
 import { PathFindResponseResult } from "../../models/path_find";
 
 function parsePaths(paths) {

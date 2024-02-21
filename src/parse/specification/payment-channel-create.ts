@@ -4,8 +4,8 @@ import { parseTimestamp } from "../utils";
 import parseRippledAmount from "../ledger/ripple-amount";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
-import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/objects/account";
-import { FormattedPaymentChannelCreateSpecification } from "../../types/objects/payment_channels";
+import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
+import { FormattedPaymentChannelCreateSpecification } from "../../types/payment_channels";
 
 function parsePaymentChannelCreate(tx: any): FormattedPaymentChannelCreateSpecification {
   assert.ok(tx.TransactionType === "PaymentChannelCreate");

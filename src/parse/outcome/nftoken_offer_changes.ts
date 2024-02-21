@@ -1,6 +1,6 @@
 import { ledgerTimeToUnixTime } from "../../models/ledger";
 import { removeUndefined } from "../../common";
-import { Amount } from "../../types/objects";
+import { Amount } from "../../types";
 
 function parseNFTokenOfferChanges(tx: object): object {
   return new NFTokenOfferChanges(tx).call();

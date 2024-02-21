@@ -1,4 +1,4 @@
-import { NFTokenOfferFlagsKeys, NFTokenOfferFlagsKeysInterface } from "../../types/objects/nftokens";
+import { NFTokenOfferFlagsKeys, NFTokenOfferFlagsKeysInterface } from "../../types/nftokens";
 import { parseFlags } from "./flags";
 
 function parseNFTOfferFlags(value: number, options: { excludeFalse?: boolean } = {}): NFTokenOfferFlagsKeysInterface {

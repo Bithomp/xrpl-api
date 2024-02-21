@@ -4,8 +4,8 @@ import { parseTimestamp } from "../utils";
 import parseAmount from "../ledger/amount";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
-import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/objects/account";
-import { FormattedCheckCreateSpecification } from "../../types/objects/checks";
+import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
+import { FormattedCheckCreateSpecification } from "../../types/checks";
 
 function parseCheckCreate(tx: any): FormattedCheckCreateSpecification {
   assert.ok(tx.TransactionType === "CheckCreate");

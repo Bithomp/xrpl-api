@@ -4,8 +4,8 @@ import { parseMemos } from "../ledger/memos";
 import parseURITokenFlags from "../ledger/uritoken-flags";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseAccount } from "../ledger/account";
-import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/objects/account";
-import { FormattedURITokenMintSpecification } from "../../types/objects/uritokens";
+import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
+import { FormattedURITokenMintSpecification } from "../../types/uritokens";
 
 function parseNFTokenMint(tx: any): FormattedURITokenMintSpecification {
   assert.ok(tx.TransactionType === "URITokenMint");

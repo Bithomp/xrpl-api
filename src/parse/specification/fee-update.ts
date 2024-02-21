@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 import { dropsToXrp } from "../../common";
 import { parseMemos } from "../ledger/memos";
-import { FormattedFeeUpdateSpecification } from "../../types/objects/fees";
+import { FormattedFeeUpdateSpecification } from "../../types/fees";
 
 function parseFeeUpdate(tx: any): FormattedFeeUpdateSpecification {
   const baseFeeDrops = new BigNumber(tx.BaseFee, 16).toString();

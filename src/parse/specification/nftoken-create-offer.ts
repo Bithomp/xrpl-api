@@ -4,9 +4,9 @@ import { parseMemos } from "../ledger/memos";
 import parseNFTOfferFlags from "../ledger/nftoken-offer-flags";
 import { ledgerTimeToUnixTime } from "../../models/ledger";
 import { parseAccount } from "../ledger/account";
-import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/objects/account";
+import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
 
-import { FormattedNFTokenCreateOfferSpecification } from "../../types/objects/nftokens";
+import { FormattedNFTokenCreateOfferSpecification } from "../../types/nftokens";
 
 function parseNFTokenCreateOffer(tx: any): FormattedNFTokenCreateOfferSpecification {
   assert.ok(tx.TransactionType === "NFTokenCreateOffer");

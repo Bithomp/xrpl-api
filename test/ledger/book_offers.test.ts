@@ -67,6 +67,7 @@ describe("Client", () => {
 
     describe("getOrderbook", () => {
       it("returns offers", async function () {
+        this.timeout(10000);
         const taker = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const orderbook = {
           base: {

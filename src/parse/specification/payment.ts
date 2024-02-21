@@ -5,8 +5,8 @@ import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
 import { parseMemos } from "../ledger/memos";
 
-import { FormattedPaymentSpecification } from "../../types/objects/payments";
-import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/objects/account";
+import { FormattedPaymentSpecification } from "../../types/payments";
+import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
 
 function isNoDirectRipple(tx: any) {
   // eslint-disable-next-line no-bitwise

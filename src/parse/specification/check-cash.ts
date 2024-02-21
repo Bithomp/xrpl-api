@@ -3,7 +3,7 @@ import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
 import { parseMemos } from "../ledger/memos";
 
-import { FormattedCheckCashSpecification } from "../../types/objects/checks";
+import { FormattedCheckCashSpecification } from "../../types/checks";
 
 function parseCheckCash(tx: any): FormattedCheckCashSpecification {
   assert.ok(tx.TransactionType === "CheckCash");

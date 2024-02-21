@@ -2,14 +2,14 @@ import _ from "lodash";
 import { parseTimestamp, adjustQualityForXRP } from "../utils";
 import { removeUndefined } from "../../common";
 
-import { orderFlags } from "../../types/objects/flags";
+import { orderFlags } from "../../types/flags";
 import parseAmount from "./amount";
 import {
   Amount,
   OfferLedgerEntry,
   FormattedIssuedCurrencyAmount,
   FormattedOfferCreateSpecification,
-} from "../../types/objects";
+} from "../../types";
 
 export interface BookOffer extends OfferLedgerEntry {
   quality?: string;

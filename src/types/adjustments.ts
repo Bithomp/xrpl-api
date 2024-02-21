@@ -1,4 +1,4 @@
-import { FormattedIssuedCurrencyAmount } from "..";
+import { FormattedIssuedCurrencyAmount } from "./amounts";
 
 export type Adjustment = {
   address: string;

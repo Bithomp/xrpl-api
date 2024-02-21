@@ -2,8 +2,8 @@ import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import { parseMemos } from "../ledger/memos";
 
-import { FormattedSourceAddress } from "../../types/objects/account";
-import { FormattedEscrowCancelSpecification } from "../../types/objects/escrows";
+import { FormattedSourceAddress } from "../../types/account";
+import { FormattedEscrowCancelSpecification } from "../../types/escrows";
 
 function parseEscrowCancel(tx: any): FormattedEscrowCancelSpecification {
   assert.ok(tx.TransactionType === "EscrowCancel");

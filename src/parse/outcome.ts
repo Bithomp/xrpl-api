@@ -19,7 +19,7 @@ import { parseImportBlob } from "./ledger/import";
 
 import parseAmount from "./ledger/amount";
 import { isPartialPayment, parseTimestamp } from "./utils";
-import { FormattedIssuedCurrencyAmount } from "../types/objects";
+import { FormattedIssuedCurrencyAmount } from "../types";
 import { removeUndefined, dropsToXrp } from "../common";
 import { Outcome } from "../types/outcome";
 

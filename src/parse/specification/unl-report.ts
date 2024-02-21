@@ -3,8 +3,8 @@ import { removeUndefined } from "../../common";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 
-import { FormattedSourceAddress } from "../../types/objects/account";
-import { FormattedUNLReportSpecification } from "../../types/objects/unl_reports";
+import { FormattedSourceAddress } from "../../types/account";
+import { FormattedUNLReportSpecification } from "../../types/unl_reports";
 
 function parseUNLReport(tx: any): FormattedUNLReportSpecification {
   assert.ok(tx.TransactionType === "UNLReport");

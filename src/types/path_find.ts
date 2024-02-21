@@ -1,4 +1,5 @@
-import { FormattedIssuedCurrencyAmount, Adjustment, MaxAdjustment, MinAdjustment } from ".";
+import { FormattedIssuedCurrencyAmount } from "./amounts";
+import { Adjustment, MaxAdjustment, MinAdjustment } from "./adjustments";
 
 // Amount where counterparty and value are optional
 export type LaxLaxAmount = {

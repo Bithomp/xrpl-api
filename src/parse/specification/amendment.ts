@@ -1,6 +1,6 @@
 import { removeUndefined } from "../../common";
 import { parseMemos } from "../ledger/memos";
-import { FormattedAmendmentSpecification } from "../../types/objects/amendments";
+import { FormattedAmendmentSpecification } from "../../types/amendments";
 
 function parseAmendment(tx: any): FormattedAmendmentSpecification {
   return removeUndefined({

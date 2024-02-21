@@ -1,4 +1,4 @@
-import { Amount, Memo } from "../../types/objects";
+import { Amount, Memo } from "../../types";
 
 export type TransactionJSON = {
   Account: string;
