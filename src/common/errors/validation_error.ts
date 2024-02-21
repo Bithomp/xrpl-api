@@ -1,5 +1,5 @@
-import { RippleError } from "./ripple_error";
+import { XrplApiError } from "./xrpl_api_error";
 
-class ValidationError extends RippleError {}
+class ValidationError extends XrplApiError {}
 
 export { ValidationError };

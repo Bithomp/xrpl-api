@@ -6,7 +6,7 @@ import {
   FormattedSourceAddress,
   FormattedDestinationAddress,
   FormattedAccountDeleteSpecification,
-} from "../../v1/common/types/objects/account";
+} from "../../types/objects/account";
 
 function parseAccountDelete(tx: any): FormattedAccountDeleteSpecification {
   assert.ok(tx.TransactionType === "AccountDelete");

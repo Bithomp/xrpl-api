@@ -1,4 +1,4 @@
-import { FormattedMemo, Memo } from "../../v1/common/types/objects";
+import { FormattedMemo, Memo } from "../../types/objects";
 import { removeUndefined } from "../../common";
 import { hexToString, stringToHex } from "../utils";
 

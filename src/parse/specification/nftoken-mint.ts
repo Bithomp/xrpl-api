@@ -3,7 +3,7 @@ import { removeUndefined } from "../../common";
 import { parseMemos } from "../ledger/memos";
 import parseNFTokenFlags from "../ledger/nftoken-flags";
 
-import { FormattedNFTokenMintSpecification } from "../../v1/common/types/objects/nftokens";
+import { FormattedNFTokenMintSpecification } from "../../types/objects/nftokens";
 
 function parseNFTokenMint(tx: any): FormattedNFTokenMintSpecification {
   assert.ok(tx.TransactionType === "NFTokenMint");

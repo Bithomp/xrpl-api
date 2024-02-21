@@ -1,4 +1,4 @@
-import { Amount } from "../../../../types";
+import { Amount } from "..";
 import { Memo } from "./memos";
 
 export interface OfferCreateTransaction {

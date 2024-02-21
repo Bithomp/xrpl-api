@@ -7,7 +7,7 @@ import { Connection } from "../connection";
 
 import { xrpToDrops } from "../common";
 import { sleep } from "../common/utils";
-import { FormattedMemo } from "../v1/common/types/objects";
+import { FormattedMemo } from "../types/objects";
 
 import { createPaymentTransaction, Payment } from "../v1/transaction/payment";
 import { ErrorResponse } from "../models/base_model";

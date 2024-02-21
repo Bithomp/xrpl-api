@@ -3,8 +3,8 @@ import { removeUndefined } from "../../common";
 import { parseTimestamp } from "../utils";
 import { parseMemos } from "../ledger/memos";
 
-import { FormattedSourceAddress, FormattedDestinationAddress } from "../../v1/common/types/objects/account";
-import { FormattedEscrowCreateSpecification } from "../../v1/common/types/objects/escrows";
+import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/objects/account";
+import { FormattedEscrowCreateSpecification } from "../../types/objects/escrows";
 
 function parseEscrowCreation(tx: any): FormattedEscrowCreateSpecification {
   assert.ok(tx.TransactionType === "EscrowCreate");

@@ -1,5 +1,5 @@
 import { FormattedBaseSpecification } from "./specification";
-import { FormattedIssuedCurrencyAmount } from "../../../../types";
+import { FormattedIssuedCurrencyAmount } from "..";
 
 export type FormattedAccountDeleteSpecification = {
   source?: FormattedSourceAddress;

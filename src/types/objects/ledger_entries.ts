@@ -1,5 +1,5 @@
 import { SignerEntry } from "./index";
-import { Amount } from "../../../../types";
+import { Amount } from "..";
 
 export interface AccountRootLedgerEntry {
   LedgerEntryType: "AccountRoot";

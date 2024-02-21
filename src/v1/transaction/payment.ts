@@ -7,7 +7,7 @@ import {
   MaxAdjustment,
   MinAdjustment,
   FormattedMemo,
-} from "../common/types/objects";
+} from "../../types/objects";
 import { xrpToDrops } from "../../common";
 import { getClassicAccountAndTag, ClassicAccountAndTag, toRippledAmount } from "./utils";
 import { formattedMemoToMemo } from "../../parse/ledger/memos";

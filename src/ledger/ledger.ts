@@ -4,7 +4,7 @@ import { Connection } from "../connection";
 import { LedgerIndex } from "../models/ledger";
 import { parseLedger } from "../parse/ledger/ledger";
 import { ErrorResponse } from "../models/base_model";
-import { FormattedLedger } from "../v1/common/types/objects";
+import { FormattedLedger } from "../types/objects";
 
 export interface GetLedgerOptions {
   ledgerIndex?: LedgerIndex;

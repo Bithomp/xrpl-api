@@ -4,7 +4,7 @@ import { parseQuality } from "../utils";
 import { removeUndefined } from "../../common";
 import { parseMemos } from "../ledger/memos";
 
-import { FormattedTrustlineSpecification } from "../../v1/common/types/objects/trustlines";
+import { FormattedTrustlineSpecification } from "../../types/objects/trustlines";
 
 function parseFlag(flagsValue, trueValue, falseValue) {
   // eslint-disable-next-line no-bitwise

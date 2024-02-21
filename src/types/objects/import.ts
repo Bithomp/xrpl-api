@@ -1,7 +1,7 @@
 import { FormattedBaseSpecification } from "./specification";
 import { FormattedSourceAddress } from "./account";
-import { FormattedSpecification } from "../../../../parse/transaction";
-import { Outcome } from "../../../../v1/transaction/types";
+import { FormattedSpecification } from "../../parse/transaction";
+import { Outcome } from "../outcome";
 
 export type FormattedImportBlobSpecification = {
   ledger: number;

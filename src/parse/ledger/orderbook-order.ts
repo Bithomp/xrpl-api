@@ -2,10 +2,21 @@ import _ from "lodash";
 import { parseTimestamp, adjustQualityForXRP } from "../utils";
 import { removeUndefined } from "../../common";
 
-import { orderFlags } from "../../v1/common/types/objects/flags";
+import { orderFlags } from "../../types/objects/flags";
 import parseAmount from "./amount";
-import { BookOffer } from "../../v1/common/types/commands";
-import { FormattedIssuedCurrencyAmount, FormattedOfferCreateSpecification } from "../../v1/common/types/objects";
+import {
+  Amount,
+  OfferLedgerEntry,
+  FormattedIssuedCurrencyAmount,
+  FormattedOfferCreateSpecification,
+} from "../../types/objects";
+
+export interface BookOffer extends OfferLedgerEntry {
+  quality?: string;
+  owner_funds?: string;
+  taker_gets_funded?: Amount;
+  taker_pays_funded?: Amount;
+}
 
 export type FormattedOrderbookOrder = {
   specification: FormattedOfferCreateSpecification;

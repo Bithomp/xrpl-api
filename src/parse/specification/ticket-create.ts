@@ -2,7 +2,7 @@ import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import { parseMemos } from "../ledger/memos";
 
-import { FormattedTicketCreateSpecification } from "../../v1/common/types/objects/tickets";
+import { FormattedTicketCreateSpecification } from "../../types/objects/tickets";
 
 function parseTicketCreate(tx: any): FormattedTicketCreateSpecification {
   assert.ok(tx.TransactionType === "TicketCreate");

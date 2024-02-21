@@ -3,7 +3,7 @@ import BigNumber from "bignumber.js";
 
 import { BLACKHOLE_ACCOUNTS } from "../common";
 import { parseFlags } from "../parse/ledger/flags";
-import { QueueData } from "../v1/common/types/objects/queue_data";
+import { QueueData } from "../types/objects/queue_data";
 
 export const AccountRootFlagsKeys = {
   passwordSpent: LedgerEntry.AccountRootFlags.lsfPasswordSpent,

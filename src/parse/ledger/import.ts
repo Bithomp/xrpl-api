@@ -2,7 +2,7 @@ import { decode } from "ripple-binary-codec";
 import { hashSignedTx } from "../../wallet";
 import { parseVL } from "../../models/vl";
 import { getAccountTxDetails } from "../../models/transaction";
-import { FormattedImportBlobSpecification } from "../../v1/common/types/objects";
+import { FormattedImportBlobSpecification } from "../../types/objects";
 
 const MAINNET_NATIVE_CURRENCY = "XRP";
 

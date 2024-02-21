@@ -1,7 +1,7 @@
 import { inspect } from "util";
 import { getConstructorName } from "./utils";
 
-class RippleError extends Error {
+class XrplApiError extends Error {
   name: string;
   message: string;
   data?: any;
@@ -18,9 +18,9 @@ class RippleError extends Error {
   }
 
   toString() {
-    let result = "[" + this.name + "(" + this.message; // eslint-disable-line prefer-template
+    let result = `[${this.name}(${this.message}`;
     if (this.data) {
-      result += ", " + inspect(this.data); // eslint-disable-line prefer-template
+      result += `, ${inspect(this.data)}`;
     }
     result += ")]";
     return result;
@@ -34,4 +34,4 @@ class RippleError extends Error {
   }
 }
 
-export { RippleError };
+export { XrplApiError };

@@ -4,10 +4,10 @@ import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 import parseURITokenFlags from "../ledger/uritoken-flags";
 import { Amount } from "../../types";
-import { URITokenFlagsKeysInterface } from "../../v1/common/types/objects/uritokens";
+import { URITokenFlagsKeysInterface } from "../../types/objects/uritokens";
 
-import { FormattedSourceAddress, FormattedDestinationAddress } from "../../v1/common/types/objects/account";
-import { FormattedRemitsSpecification } from "../../v1/common/types/objects/remits";
+import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/objects/account";
+import { FormattedRemitsSpecification } from "../../types/objects/remits";
 
 // [
 //   {

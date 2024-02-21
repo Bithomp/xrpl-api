@@ -1,8 +1,8 @@
 import _ from "lodash";
 import parseAmount from "./amount";
-import { FormattedIssuedCurrencyAmount, Amount } from "../../v1/common/types/objects";
-import { Path, GetPaths } from "../../v1/common/types/objects/path_find";
-import { RippledPathsResponse } from "../../v1/common/types/commands/path_find";
+import { FormattedIssuedCurrencyAmount, Amount } from "../../types/objects";
+import { Path, GetPaths } from "../../types/objects/path_find";
+import { PathFindResponseResult } from "../../models/path_find";
 
 function parsePaths(paths) {
   return paths.map((steps) => steps.map((step) => _.omit(step, ["type", "type_hex"])));
@@ -15,11 +15,7 @@ function removeAnyCounterpartyEncoding(address: string, amount: FormattedIssuedC
 function createAdjustment(address: string, adjustmentWithoutAddress: object): any {
   const amountKey = Object.keys(adjustmentWithoutAddress)[0];
   const amount = adjustmentWithoutAddress[amountKey];
-  return _.set(
-    { address: address },
-    amountKey,
-    removeAnyCounterpartyEncoding(address, amount)
-  );
+  return _.set({ address: address }, amountKey, removeAnyCounterpartyEncoding(address, amount));
 }
 
 function parseAlternative(
@@ -31,8 +27,9 @@ function parseAlternative(
   // we use "maxAmount"/"minAmount" here so that the result can be passed
   // directly to preparePayment
   const amounts =
-    /* eslint-disable multiline-ternary */
-    alternative.destination_amount != null // eslint-disable-line eqeqeq
+    // prettier-ignore
+    /* eslint-disable multiline-ternary, eqeqeq */
+    alternative.destination_amount != null
       ? {
         source: { amount: parseAmount(alternative.source_amount) },
         destination: { minAmount: parseAmount(alternative.destination_amount) },
@@ -50,7 +47,7 @@ function parseAlternative(
   };
 }
 
-function parsePathfind(pathfindResult: RippledPathsResponse): GetPaths {
+function parsePathfind(pathfindResult: PathFindResponseResult): GetPaths {
   const sourceAddress = pathfindResult.source_account;
   const destinationAddress = pathfindResult.destination_account;
   const destinationAmount = pathfindResult.destination_amount;
