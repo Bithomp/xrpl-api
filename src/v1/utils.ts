@@ -1,8 +1,8 @@
 import { xAddressToClassicAddress, isValidXAddress } from "ripple-address-codec";
-import { Amount, IssuedCurrencyAmount, FormattedIssuedCurrencyAmount } from "../../types";
-import { xrpToDrops } from "../../common";
+import { Amount, IssuedCurrencyAmount, FormattedIssuedCurrencyAmount } from "../types";
+import { xrpToDrops } from "../common";
 
-import { getNativeCurrency } from "../../client";
+import { getNativeCurrency } from "../client";
 
 export function toRippledAmount(amount: Amount | FormattedIssuedCurrencyAmount): Amount {
   if (typeof amount === "string") return amount;

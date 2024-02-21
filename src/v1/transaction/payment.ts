@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { PaymentFlags } from "xrpl";
-import { TransactionJSON } from "./types";
+import { TransactionJSON } from "../types";
 import {
   FormattedIssuedCurrencyAmount,
   Adjustment,
@@ -9,7 +9,7 @@ import {
   FormattedMemo,
 } from "../../types";
 import { xrpToDrops } from "../../common";
-import { getClassicAccountAndTag, ClassicAccountAndTag, toRippledAmount } from "./utils";
+import { getClassicAccountAndTag, ClassicAccountAndTag, toRippledAmount } from "../utils";
 import { formattedMemoToMemo } from "../../parse/ledger/memos";
 
 import { getNativeCurrency } from "../../client";
