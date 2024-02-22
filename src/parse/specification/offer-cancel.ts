@@ -1,7 +1,7 @@
 import * as assert from "assert";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
 
-import { FormattedOfferCancelSpecification } from "../../v1/common/types/objects/offers";
+import { FormattedOfferCancelSpecification } from "../../types/offers";
 
 function parseOfferCancel(tx: any): FormattedOfferCancelSpecification {
   assert.ok(tx.TransactionType === "OfferCancel");

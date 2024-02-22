@@ -1,4 +1,4 @@
-import { FormattedAmount, Amount } from "../../v1/common/types/objects";
+import { FormattedAmount, Amount } from "../../types";
 import parseAmount from "./amount";
 
 function parseCurrencyAmount(amount: Amount): FormattedAmount | undefined {

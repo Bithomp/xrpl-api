@@ -19,9 +19,9 @@ import { parseImportBlob } from "./ledger/import";
 
 import parseAmount from "./ledger/amount";
 import { isPartialPayment, parseTimestamp } from "./utils";
-import { FormattedIssuedCurrencyAmount } from "../v1/common/types/objects";
+import { FormattedIssuedCurrencyAmount } from "../types";
 import { removeUndefined, dropsToXrp } from "../common";
-import { Outcome } from "../v1/transaction/types";
+import { Outcome } from "../types/outcome";
 
 type OfferDescription = {
   direction: string;

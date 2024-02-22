@@ -45,6 +45,7 @@ describe("Client", () => {
       });
 
       it("returns offers with limit", async function () {
+        this.timeout(10000);
         const taker = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const takerGets = {
           currency: "USD",
@@ -67,6 +68,7 @@ describe("Client", () => {
 
     describe("getOrderbook", () => {
       it("returns offers", async function () {
+        this.timeout(10000);
         const taker = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const orderbook = {
           base: {

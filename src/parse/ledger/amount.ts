@@ -1,5 +1,5 @@
 import { dropsToXrp } from "../../common";
-import { FormattedIssuedCurrencyAmount, Amount } from "../../v1/common/types/objects";
+import { FormattedIssuedCurrencyAmount, Amount } from "../../types";
 
 import { getNativeCurrency } from "../../client";
 

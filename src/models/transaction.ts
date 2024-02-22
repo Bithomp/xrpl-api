@@ -3,7 +3,7 @@ import { Transaction, TransactionMetadata } from "xrpl";
 import { XrplDefinitionsBase } from "ripple-binary-codec";
 import { parseTransaction, FormattedSpecification, FormattedTransaction } from "../parse/transaction";
 export { FormattedTransaction } from "../parse/transaction";
-import { Outcome } from "../v1/transaction/types";
+import { Outcome } from "../types/outcome";
 
 const CTID_REGEX = /^[cC]{1}[a-fA-F0-9]{15}$/;
 

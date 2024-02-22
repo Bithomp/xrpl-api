@@ -2,7 +2,7 @@ import _ from "lodash";
 import BigNumber from "bignumber.js";
 import { TransactionMetadata } from "xrpl";
 import { dropsToXrp } from "../../common";
-import { normalizeNodes } from "../../v1/common/utils";
+import { normalizeNodes } from "../utils";
 
 import { getNativeCurrency } from "../../client";
 

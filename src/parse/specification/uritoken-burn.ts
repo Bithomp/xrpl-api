@@ -1,8 +1,8 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
 
-import { FormattedURITokenBurnSpecification } from "../../v1/common/types/objects/uritokens";
+import { FormattedURITokenBurnSpecification } from "../../types/uritokens";
 
 function parseNFTokenBurn(tx: any): FormattedURITokenBurnSpecification {
   assert.ok(tx.TransactionType === "URITokenBurn");

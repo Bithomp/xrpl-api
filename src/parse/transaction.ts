@@ -3,55 +3,55 @@ import { removeUndefined } from "../common";
 import { parseAccount } from "./ledger/account";
 
 import { parseOutcome } from "./outcome";
-import { Outcome } from "../v1/transaction/types";
+import { Outcome } from "../types/outcome";
 
-import { FormattedAccountDeleteSpecification } from "../v1/common/types/objects/account";
-import { FormattedSettingsSpecification } from "../v1/common/types/objects/settings";
+import { FormattedAccountDeleteSpecification } from "../types/account";
+import { FormattedSettingsSpecification } from "../types/settings";
 import {
   FormattedCheckCancelSpecification,
   FormattedCheckCashSpecification,
   FormattedCheckCreateSpecification,
-} from "../v1/common/types/objects/checks";
-import { FormattedDepositPreauthSpecification } from "../v1/common/types/objects/deposits";
+} from "../types/checks";
+import { FormattedDepositPreauthSpecification } from "../types/deposits";
 import {
   FormattedEscrowCancelSpecification,
   FormattedEscrowCreateSpecification,
   FormattedEscrowFinishSpecification,
-} from "../v1/common/types/objects/escrows";
+} from "../types/escrows";
 import {
   FormattedOfferCancelSpecification,
   FormattedOfferCreateSpecification,
-} from "../v1/common/types/objects/offers";
-import { FormattedPaymentSpecification } from "../v1/common/types/objects/payments";
+} from "../types/offers";
+import { FormattedPaymentSpecification } from "../types/payments";
 import {
   FormattedPaymentChannelClaimSpecification,
   FormattedPaymentChannelCreateSpecification,
   FormattedPaymentChannelFundSpecification,
-} from "../v1/common/types/objects/payment_channels";
-import { FormattedTicketCreateSpecification } from "../v1/common/types/objects/tickets";
-import { FormattedTrustlineSpecification } from "../v1/common/types/objects/trustlines";
+} from "../types/payment_channels";
+import { FormattedTicketCreateSpecification } from "../types/tickets";
+import { FormattedTrustlineSpecification } from "../types/trustlines";
 import {
   FormattedNFTokenBurnSpecification,
   FormattedNFTokenMintSpecification,
   FormattedNFTokenCancelOfferSpecification,
   FormattedNFTokenCreateOfferSpecification,
   FormattedNFTokenAcceptOfferSpecification,
-} from "../v1/common/types/objects/nftokens";
+} from "../types/nftokens";
 import {
   FormattedURITokenBurnSpecification,
   FormattedURITokenBuySpecification,
   FormattedURITokenCreateSellOfferSpecification,
   FormattedURITokenCancelSellOfferSpecification,
   FormattedURITokenMintSpecification,
-} from "../v1/common/types/objects/uritokens";
+} from "../types/uritokens";
 
-import { FormattedImportSpecification } from "../v1/common/types/objects/import";
-import { FormattedInvokeSpecification } from "../v1/common/types/objects/invoke";
-import { FormattedUNLReportSpecification } from "../v1/common/types/objects/unl_reports";
-import { FormattedRemitsSpecification } from "../v1/common/types/objects/remits";
+import { FormattedImportSpecification } from "../types/import";
+import { FormattedInvokeSpecification } from "../types/invoke";
+import { FormattedUNLReportSpecification } from "../types/unl_reports";
+import { FormattedRemitsSpecification } from "../types/remits";
 
-import { FormattedAmendmentSpecification } from "../v1/common/types/objects/amendments";
-import { FormattedFeeUpdateSpecification } from "../v1/common/types/objects/fees";
+import { FormattedAmendmentSpecification } from "../types/amendments";
+import { FormattedFeeUpdateSpecification } from "../types/fees";
 
 import parseSettings from "./specification/settings";
 import parseAccountDelete from "./specification/account-delete";

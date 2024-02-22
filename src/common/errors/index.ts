@@ -1,4 +1,4 @@
-import { RippleError } from "./ripple_error";
+import { XrplApiError } from "./xrpl_api_error";
 import { ValidationError } from "./validation_error";
 
-export { RippleError, ValidationError };
+export { XrplApiError, ValidationError };

@@ -1,5 +1,5 @@
 import { dropsToXrp } from "../../common";
-import { Amount, FormattedAmount } from "../../v1/common/types/objects";
+import { Amount, FormattedAmount } from "../../types";
 import parseAmount from "./amount";
 
 function parseRippledAmount(amount: Amount): FormattedAmount | undefined {

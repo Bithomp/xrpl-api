@@ -2,7 +2,7 @@ import _ from "lodash";
 import { removeUndefined } from "../../common";
 import { ledgerTimeToUnixTime, ledgerTimeToISO8601 } from "../../models";
 import { parseTransaction } from "../transaction";
-import { Ledger, FormattedLedger } from "../../v1/common/types/objects";
+import { Ledger, FormattedLedger } from "../../types";
 
 function parseTransactionWrapper(ledgerVersion: number, includeRawTransaction: boolean, tx: any) {
   // renames metaData to meta and adds ledger_index

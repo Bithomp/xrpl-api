@@ -1,16 +1,27 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
+import { parseAccount } from "../ledger/account";
+import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
+import { FormattedURITokenCreateSellOfferSpecification } from "../../types/uritokens";
 
-import { FormattedURITokenCancelSellOfferSpecification } from "../../v1/common/types/objects/uritokens";
-
-function parseNFTokenBurn(tx: any): FormattedURITokenCancelSellOfferSpecification {
+function parseNFTokenBurn(tx: any): FormattedURITokenCreateSellOfferSpecification {
   assert.ok(tx.TransactionType === "URITokenCreateSellOffer");
+
+  const source: FormattedSourceAddress = removeUndefined({
+    address: parseAccount(tx.Account),
+    tag: tx.SourceTag,
+  });
+
+  const destination: FormattedDestinationAddress = removeUndefined({
+    address: tx.Destination,
+  });
 
   return removeUndefined({
     uritokenID: tx.URITokenID,
     amount: tx.Amount,
-    destination: tx.Destination,
+    source: Object.keys(source).length > 0 ? source : undefined,
+    destination: Object.keys(destination).length > 0 ? destination : undefined,
     memos: parseMemos(tx),
   });
 }

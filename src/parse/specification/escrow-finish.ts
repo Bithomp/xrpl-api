@@ -1,9 +1,9 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
 
-import { FormattedSourceAddress } from "../../v1/common/types/objects/account";
-import { FormattedEscrowFinishSpecification } from "../../v1/common/types/objects/escrows";
+import { FormattedSourceAddress } from "../../types/account";
+import { FormattedEscrowFinishSpecification } from "../../types/escrows";
 
 function parseEscrowFinish(tx: any): FormattedEscrowFinishSpecification {
   assert.ok(tx.TransactionType === "EscrowFinish");

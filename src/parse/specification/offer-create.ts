@@ -2,9 +2,9 @@ import * as assert from "assert";
 import { OfferCreateFlags } from "xrpl";
 import { parseTimestamp } from "../utils";
 import parseAmount from "../ledger/amount";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
 import { removeUndefined } from "../../common";
-import { FormattedOfferCreateSpecification, OfferCreateTransaction } from "../../v1/common/types/objects/index";
+import { FormattedOfferCreateSpecification, OfferCreateTransaction } from "../../types";
 
 function parseOfferCreate(tx: OfferCreateTransaction): FormattedOfferCreateSpecification {
   assert.ok(tx.TransactionType === "OfferCreate");

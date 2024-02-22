@@ -1,5 +1,5 @@
 import { removeUndefined } from "../../common";
-import { normalizeNodes } from "../../v1/common/utils";
+import { normalizeNodes } from "../utils";
 
 interface FormattedUNLReportSummaryInterface {
   status: "added";

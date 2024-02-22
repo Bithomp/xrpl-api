@@ -1,4 +1,4 @@
-import { FormattedEmitDetails } from "../../v1/common/types/objects/emit_details";
+import { FormattedEmitDetails } from "../../types/emit_details";
 
 // {
 //   "EmitDetails": {

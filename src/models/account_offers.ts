@@ -1,13 +1,5 @@
 import { AccountOffer } from "xrpl";
 
-export interface AccountOffersRequest {
-  account: string;
-  ledger_hash?: string;
-  ledger_index?: number | ("validated" | "closed" | "current");
-  limit?: number;
-  marker?: any;
-}
-
 export interface AccountOffers {
   /** Unique Address identifying the account that made the offers. */
   account: string;

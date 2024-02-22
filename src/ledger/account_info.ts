@@ -69,6 +69,13 @@ export async function getAccountInfo(
   }
 
   const result = response.result as AccountInfoResponse;
+  if (!result) {
+    return {
+      account,
+      status: "error",
+      error: "invalidResponse",
+    };
+  }
 
   // clio could return signer_lists in top level or in account_data
   if (result.signer_lists) {

@@ -1,9 +1,10 @@
-import { URITokenMintFlags } from "../../../../models/transactions/URITokenMint";
+import { URITokenMintFlags } from "../models/transactions/URITokenMint";
 import { FormattedBaseSpecification } from "./specification";
-import { Amount } from "../../../../types";
+import { Amount } from "./amounts";
+import { FormattedSourceAddress, FormattedDestinationAddress } from "./account";
 
 export const URITokenFlagsKeys = {
-  burnable: URITokenMintFlags.tfBurnable
+  burnable: URITokenMintFlags.tfBurnable,
 };
 
 export interface URITokenFlagsKeysInterface {
@@ -24,7 +25,8 @@ export type FormattedURITokenMintSpecification = {
   flags?: URITokenFlagsKeysInterface;
   digest?: string;
   amount: Amount;
-  destination?: string;
+  source?: FormattedSourceAddress;
+  destination?: FormattedDestinationAddress;
 } & FormattedBaseSpecification;
 
 export type FormattedURITokenCancelSellOfferSpecification = {
@@ -34,7 +36,8 @@ export type FormattedURITokenCancelSellOfferSpecification = {
 export type FormattedURITokenCreateSellOfferSpecification = {
   uritokenID: string;
   amount: string;
-  destination?: string;
+  source?: FormattedSourceAddress;
+  destination?: FormattedDestinationAddress;
 } & FormattedBaseSpecification;
 
 export type FormattedURITokenAcceptOfferSpecification = {

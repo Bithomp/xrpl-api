@@ -1,16 +1,16 @@
 import _ from "lodash";
 import { PaymentFlags } from "xrpl";
-import { TransactionJSON } from "./types";
+import { TransactionJSON } from "../types";
 import {
   FormattedIssuedCurrencyAmount,
   Adjustment,
   MaxAdjustment,
   MinAdjustment,
   FormattedMemo,
-} from "../common/types/objects";
-import { toRippledAmount } from "../common";
+} from "../../types";
 import { xrpToDrops } from "../../common";
-import { getClassicAccountAndTag, ClassicAccountAndTag, convertMemo } from "./utils";
+import { getClassicAccountAndTag, ClassicAccountAndTag, toRippledAmount } from "../utils";
+import { formattedMemoToMemo } from "../../parse/ledger/memos";
 
 import { getNativeCurrency } from "../../client";
 
@@ -59,8 +59,10 @@ function isXRPToXRPPayment(payment: Payment): boolean {
 }
 
 function isIOUWithoutCounterparty(amount: FormattedIssuedCurrencyAmount): boolean {
-  // eslint-disable-next-line eqeqeq
-  return amount && amount.currency !== getNativeCurrency() && amount.currency !== "drops" && amount.counterparty == null;
+  return (
+    // eslint-disable-next-line eqeqeq
+    amount && amount.currency !== getNativeCurrency() && amount.currency !== "drops" && amount.counterparty == null
+  );
 }
 
 function applyAnyCounterpartyEncoding(payment: Payment): void {
@@ -145,7 +147,7 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
   ) {
     throw new Error(
       "payment must specify either (source.maxAmount " +
-      "and destination.amount) or (source.amount and destination.minAmount)"
+        "and destination.amount) or (source.amount and destination.minAmount)"
     );
   }
 
@@ -178,20 +180,25 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
     Flags: 0,
   };
 
-  if (payment.invoiceID != null) { // eslint-disable-line eqeqeq
+  // eslint-disable-next-line eqeqeq
+  if (payment.invoiceID != null) {
     txJSON.InvoiceID = payment.invoiceID;
   }
-  if (sourceAddressAndTag.tag != null) { // eslint-disable-line eqeqeq
+  // eslint-disable-next-line eqeqeq
+  if (sourceAddressAndTag.tag != null) {
     txJSON.SourceTag = sourceAddressAndTag.tag;
   }
-  if (destinationAddressAndTag.tag != null) { // eslint-disable-line eqeqeq
+  // eslint-disable-next-line eqeqeq
+  if (destinationAddressAndTag.tag != null) {
     txJSON.DestinationTag = destinationAddressAndTag.tag;
   }
-  if (payment.networkID != null) { // eslint-disable-line eqeqeq
+  // eslint-disable-next-line eqeqeq
+  if (payment.networkID != null) {
     txJSON.NetworkID = payment.networkID;
   }
-  if (payment.memos != null) { // eslint-disable-line eqeqeq
-    txJSON.Memos = payment.memos.map(convertMemo);
+  // eslint-disable-next-line eqeqeq
+  if (payment.memos != null) {
+    txJSON.Memos = payment.memos.map(formattedMemoToMemo);
   }
   if (payment.noDirectRipple === true) {
     // eslint-disable-next-line no-bitwise
@@ -217,7 +224,8 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
       txJSON.DeliverMin = toRippledAmount(destinationAmount);
     }
 
-    if (payment.paths != null) { // eslint-disable-line eqeqeq
+    // eslint-disable-next-line eqeqeq
+    if (payment.paths != null) {
       txJSON.Paths = JSON.parse(payment.paths);
     }
   } else if (payment.allowPartialPayment === true) {

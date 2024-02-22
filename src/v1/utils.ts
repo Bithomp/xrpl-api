@@ -1,6 +1,28 @@
 import { xAddressToClassicAddress, isValidXAddress } from "ripple-address-codec";
-import { removeUndefined } from "../../common";
-import { FormattedMemo, Memo } from "../common/types/objects";
+import { Amount, IssuedCurrencyAmount, FormattedIssuedCurrencyAmount } from "../types";
+import { xrpToDrops } from "../common";
+
+import { getNativeCurrency } from "../client";
+
+export function toRippledAmount(amount: Amount | FormattedIssuedCurrencyAmount): Amount {
+  if (typeof amount === "string") return amount;
+
+  if (amount.currency === getNativeCurrency()) {
+    return xrpToDrops(amount.value);
+  }
+  if (amount.currency === "drops") {
+    return amount.value;
+  }
+
+  // if amount is IssuedCurrencyAmount use issuer, else if FormattedIssuedCurrencyAmount use counterparty
+  const issuer = (amount as FormattedIssuedCurrencyAmount).counterparty || (amount as IssuedCurrencyAmount).issuer;
+
+  return {
+    currency: amount.currency,
+    issuer,
+    value: amount.value,
+  };
+}
 
 /**
  * @typedef {Object} ClassicAccountAndTag
@@ -44,18 +66,4 @@ export function getClassicAccountAndTag(Account: string, expectedTag?: number): 
       tag: expectedTag,
     };
   }
-}
-
-export function convertStringToHex(value: string): string {
-  return Buffer.from(value, "utf8").toString("hex").toUpperCase();
-}
-
-export function convertMemo(memo: FormattedMemo): Memo {
-  return {
-    Memo: removeUndefined({
-      MemoData: memo.data ? convertStringToHex(memo.data) : undefined,
-      MemoType: memo.type ? convertStringToHex(memo.type) : undefined,
-      MemoFormat: memo.format ? convertStringToHex(memo.format) : undefined,
-    }),
-  };
 }

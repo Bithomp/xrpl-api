@@ -3,7 +3,7 @@ import * as assert from "assert";
 import { AccountRootFlagsKeys } from "../../models/account_info";
 import { removeUndefined } from "../../common";
 import parseFields from "../ledger/fields";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
 
 function getAccountRootModifiedNode(tx: any) {
   const modifiedNodes = tx.meta.AffectedNodes.filter((node) => node.ModifiedNode?.LedgerEntryType === "AccountRoot");
@@ -21,7 +21,8 @@ function parseSettingsFlags(tx: any): any {
   const oldFlags = _.get(node.PreviousFields, "Flags");
   const newFlags = _.get(node.FinalFields, "Flags");
 
-  if (oldFlags != null && newFlags != null) { // eslint-disable-line eqeqeq
+  // eslint-disable-next-line eqeqeq
+  if (oldFlags != null && newFlags != null) {
     // eslint-disable-next-line no-bitwise
     const changedFlags = oldFlags ^ newFlags;
     // eslint-disable-next-line no-bitwise

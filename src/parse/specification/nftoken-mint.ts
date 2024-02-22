@@ -1,9 +1,9 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import parseMemos from "../ledger/memos";
+import { parseMemos } from "../ledger/memos";
 import parseNFTokenFlags from "../ledger/nftoken-flags";
 
-import { FormattedNFTokenMintSpecification } from "../../v1/common/types/objects/nftokens";
+import { FormattedNFTokenMintSpecification } from "../../types/nftokens";
 
 function parseNFTokenMint(tx: any): FormattedNFTokenMintSpecification {
   assert.ok(tx.TransactionType === "NFTokenMint");

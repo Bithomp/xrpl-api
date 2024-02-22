@@ -1,6 +1,6 @@
 import { FormattedBaseSpecification } from "./specification";
 import { FormattedDestinationAddress, FormattedSourceAddress } from "./account";
-import { Amount } from "../../../../types";
+import { Amount } from "./amounts";
 import { URITokenFlagsKeysInterface } from "./uritokens";
 
 export type FormattedRemitsSpecification = {

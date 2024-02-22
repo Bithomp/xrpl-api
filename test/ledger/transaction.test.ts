@@ -5,7 +5,7 @@ import { expect } from "chai";
 // import * as enums from ".node_modules/ripple-binary-codec/dist/enums/src/enums/definitions.json";
 // https://github.com/Transia-RnD/xrpl.js/blob/3b234ec8ec1c677e0f3f534fd2985c985871c87e/packages/ripple-binary-codec/src/enums/definitions.json
 import * as xahauEnums from "../../config/xahau_definitions.json";
-import { Client, Models, Wallet, xrpl } from "../../src/index";
+import { Client, Models, Wallet } from "../../src/index";
 
 describe("Client", () => {
   describe("mainnet", () => {
@@ -416,7 +416,7 @@ describe("Client", () => {
           LastLedgerSequence: paymentParams.lastLedgerSequence,
         };
 
-        const wallet = xrpl.Wallet.fromSeed(nconf.get("xrpl:accounts:activation:secret"));
+        const wallet = Wallet.walletFromSeed(nconf.get("xrpl:accounts:activation:secret"));
         const signedTransaction = wallet.sign(tx).tx_blob;
 
         const result: any = await Client.submit(signedTransaction);
@@ -440,7 +440,7 @@ describe("Client", () => {
         tx.Sequence = submitParams.sequence;
         tx.LastLedgerSequence = submitParams.lastLedgerSequence;
 
-        const wallet = xrpl.Wallet.fromSeed(nconf.get("xrpl:accounts:activation:secret"));
+        const wallet = Wallet.walletFromSeed(nconf.get("xrpl:accounts:activation:secret"));
         const signedTransaction = wallet.sign(tx).tx_blob;
 
         const result: any = await Client.submit(signedTransaction);
@@ -465,7 +465,7 @@ describe("Client", () => {
       });
     });
 
-    describe("legacyPayment", () => {
+    describe("submitPaymentTransactionV1", () => {
       it("is OK", async function () {
         this.timeout(15000);
 
@@ -480,7 +480,7 @@ describe("Client", () => {
           secret: nconf.get("xrpl:accounts:activation:secret"),
         };
 
-        const result: any = await Client.legacyPayment(payment);
+        const result: any = await Client.submitPaymentTransactionV1(payment);
         expect(result.error).to.eq(undefined);
         expect(result.validated).to.eq(true);
       });
@@ -501,7 +501,7 @@ describe("Client", () => {
           secret: nconf.get("xrpl:accounts:activation:secret"),
         };
 
-        const result: any = await Client.legacyPayment(payment);
+        const result: any = await Client.submitPaymentTransactionV1(payment);
         expect(result.error).to.eq(undefined);
         expect(result.validated).to.eq(true);
       });
@@ -521,7 +521,7 @@ describe("Client", () => {
           secret: address.seed,
         };
 
-        const result: any = await Client.legacyPayment(payment);
+        const result: any = await Client.submitPaymentTransactionV1(payment);
         expect(result.error).to.eq("actNotFound");
       });
 
@@ -539,7 +539,7 @@ describe("Client", () => {
           secret: nconf.get("xrpl:accounts:activation:secret"),
         };
 
-        const result: any = await Client.legacyPayment(payment);
+        const result: any = await Client.submitPaymentTransactionV1(payment);
         expect(result.meta).to.be.an("object");
         expect(result.meta.TransactionResult).to.eq("tecUNFUNDED_PAYMENT");
       });
@@ -553,7 +553,7 @@ describe("Client", () => {
       await Client.connect();
     });
 
-    describe("legacyPayment", () => {
+    describe("submitPaymentTransactionV1", () => {
       it("is OK with manual fee", async function () {
         const xahauDefinitions = new Wallet.XrplDefinitions(xahauEnums);
 
@@ -570,7 +570,7 @@ describe("Client", () => {
           secret: nconf.get("xrpl:accounts:activation:secret"),
           fee: "0.000046", // 10 - fee, 26 - memos, 10 - ???
         };
-        const result: any = await Client.legacyPayment(payment, xahauDefinitions);
+        const result: any = await Client.submitPaymentTransactionV1(payment, xahauDefinitions);
 
         expect(result.error).to.eq(undefined);
         expect(result.validated).to.eq(true);
@@ -591,7 +591,7 @@ describe("Client", () => {
           memos: [{ type: "memo", format: "plain/text", data: "Bithomp test" }],
           secret: nconf.get("xrpl:accounts:activation:secret"),
         };
-        const result: any = await Client.legacyPayment(payment, xahauDefinitions);
+        const result: any = await Client.submitPaymentTransactionV1(payment, xahauDefinitions);
 
         expect(result.error).to.eq(undefined);
         expect(result.validated).to.eq(true);
@@ -995,7 +995,12 @@ describe("Client", () => {
                   flags: {
                     burnable: false,
                   },
-                  destination: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+                  source: {
+                    address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU",
+                  },
+                  destination: {
+                    address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+                  },
                   emittedDetails: {
                     emitBurden: "1",
                     emitGeneration: 1,
@@ -2640,7 +2645,8 @@ describe("Client", () => {
                   flags: {
                     burnable: false,
                   },
-                  destination: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
+                  source: { address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU" },
+                  destination: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
                   emittedDetails: {
                     emitBurden: "1",
                     emitGeneration: 1,

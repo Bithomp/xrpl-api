@@ -7,7 +7,7 @@ import { Connection } from "../connection";
 
 import { xrpToDrops } from "../common";
 import { sleep } from "../common/utils";
-import { FormattedMemo } from "../v1/common/types/objects";
+import { FormattedMemo } from "../types";
 
 import { createPaymentTransaction, Payment } from "../v1/transaction/payment";
 import { ErrorResponse } from "../models/base_model";
@@ -21,7 +21,7 @@ import {
   decodeCTID,
 } from "../models/transaction";
 
-import { signTransaction } from "../wallet";
+import { signTransaction, walletFromSeed } from "../wallet";
 
 const submitErrorsGroup = ["tem", "tef", "tel", "ter"];
 const FEE_LIMIT = 0.5; // native currency (XRP, XAH)
@@ -218,7 +218,7 @@ export async function getTransactionByCTID(
   return result;
 }
 
-interface LegacyPaymentInterface {
+interface SubmitPaymentTransactionV1Interface {
   sourceAddress: string;
   sourceTag?: number;
   sourceValue: string;
@@ -233,8 +233,8 @@ interface LegacyPaymentInterface {
   fee?: string;
 }
 
-export async function legacyPayment(
-  data: LegacyPaymentInterface,
+export async function submitPaymentTransactionV1(
+  data: SubmitPaymentTransactionV1Interface,
   definitions?: XrplDefinitionsBase,
   validateTx?: boolean
 ): Promise<TransactionResponse | FormattedTransaction | ErrorResponse> {
@@ -281,7 +281,7 @@ export async function legacyPayment(
   transaction.LastLedgerSequence = submitParams.lastLedgerSequence;
 
   // sign transaction
-  const wallet = xrpl.Wallet.fromSeed(data.secret);
+  const wallet = walletFromSeed(data.secret)
   const signedTransaction = signTransaction(wallet, transaction as Transaction, false, definitions, validateTx).tx_blob;
 
   // submit transaction
@@ -290,7 +290,7 @@ export async function legacyPayment(
 
 /**
  * Get account payment params, such as fee, sequence and lastLedgerSequence,
- * will be used for payment transaction, like in legacyPayment function
+ * will be used for payment transaction, like in submitPaymentTransactionV1 function
  *
  * @param {string} account
  * @param {Connection} connection
@@ -365,7 +365,7 @@ export async function getAccountPaymentParams(
 
 /**
  * Get account payment params, such as fee, sequence and lastLedgerSequence,
- * will be used for payment transaction, like in legacyPayment function
+ * will be used for payment transaction, like in submitPaymentTransactionV1 function
  *
  * @param {string} account
  * @param {string} tx string or object

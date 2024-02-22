@@ -2,6 +2,7 @@ import BigNumber from "bignumber.js";
 import AddressCodec = require("ripple-address-codec");
 
 import { SortDirection } from "../common";
+import { bytesToHex } from "../parse/utils";
 
 export interface NFTokenInterface {
   Flags: number;
@@ -125,7 +126,7 @@ export function buildNFTokenID(
     new BigNumber(flags).toString(16).padStart(4, "0").toUpperCase() +
     // @ts-ignore
     new BigNumber(transferFee).toString(16).padStart(4, "0").toUpperCase() +
-    AddressCodec.decodeAccountID(issuer).toString("hex").toUpperCase() +
+    bytesToHex(AddressCodec.decodeAccountID(issuer).buffer) +
     // @ts-ignore
     new BigNumber(scrambledTaxon).toString(16).padStart(8, "0").toUpperCase() +
     // @ts-ignore

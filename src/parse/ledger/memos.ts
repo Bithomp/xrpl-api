@@ -1,6 +1,6 @@
-import { FormattedMemo, Memo } from "../../v1/common/types/objects";
+import { FormattedMemo, Memo } from "../../types";
 import { removeUndefined } from "../../common";
-import { hexToString } from "../utils";
+import { hexToString, stringToHex } from "../utils";
 
 function parseMemos(tx: any): FormattedMemo[] | undefined {
   if (!Array.isArray(tx.Memos) || tx.Memos.length === 0) {
@@ -15,4 +15,14 @@ function parseMemos(tx: any): FormattedMemo[] | undefined {
   });
 }
 
-export default parseMemos;
+function formattedMemoToMemo(memo: FormattedMemo): Memo {
+  return {
+    Memo: removeUndefined({
+      MemoData: stringToHex(memo.data),
+      MemoType: stringToHex(memo.type),
+      MemoFormat: stringToHex(memo.format),
+    }),
+  };
+}
+
+export { parseMemos, formattedMemoToMemo };

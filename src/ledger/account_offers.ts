@@ -2,10 +2,10 @@ import _ from "lodash";
 import { AccountOffer } from "xrpl";
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
+import { AccountOffers } from "../models/account_offers";
 import { parseMarker, createMarker } from "../common/utils";
 import { ErrorResponse } from "../models/base_model";
 import { FormattedAccountOrders, FormattedAccountOrder, parseAccountOrder } from "../parse/ledger/account-order";
-import { AccountOffers } from "../v1/common/types/commands/account_offers";
 
 const OFFERS_LIMIT_MAX = 400;
 
