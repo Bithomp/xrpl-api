@@ -11,6 +11,7 @@ describe("Client", () => {
     });
 
     it("works", async function () {
+      this.timeout(10000);
       const result: any = await Client.getAccountOffers("rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z");
       const offer = result.offers[0];
 
@@ -20,6 +21,7 @@ describe("Client", () => {
     });
 
     it("works as formatted", async function () {
+      this.timeout(10000);
       const result: any = await Client.getAccountOffers("rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z", { formatted: true });
       const offer = result.offers[0];
 
@@ -51,7 +53,7 @@ describe("Client", () => {
     });
 
     it("works as formatted with offers", async function () {
-      this.timeout(15000);
+      this.timeout(10000);
       const result: any = await Client.getAccountAllOffers("rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z", { formatted: true });
       const offer = result.offers[0];
 
