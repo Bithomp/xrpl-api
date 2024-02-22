@@ -281,7 +281,7 @@ export async function submitPaymentTransactionV1(
   transaction.LastLedgerSequence = submitParams.lastLedgerSequence;
 
   // sign transaction
-  const wallet = walletFromSeed(data.secret)
+  const wallet = walletFromSeed(data.secret, { seedAddress: transaction.Account });
   const signedTransaction = signTransaction(wallet, transaction as Transaction, false, definitions, validateTx).tx_blob;
 
   // submit transaction

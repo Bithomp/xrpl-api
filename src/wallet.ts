@@ -12,7 +12,7 @@ import {
   XrplDefinitions,
   DEFAULT_DEFINITIONS,
 } from "ripple-binary-codec";
-import { sign, verify, deriveKeypair } from "ripple-keypairs";
+import { sign, verify, deriveKeypair, deriveAddress } from "ripple-keypairs";
 
 import * as Base58 from "./base58";
 import { sha512Half } from "./common";
@@ -40,13 +40,39 @@ export function isValidSecret(secret: string): boolean {
   return false;
 }
 
-export function walletFromSeed(seed: string): Wallet {
-  const decodedSeed = decodeSeed(seed);
+export interface WalletFromSeedInterface {
+  masterAddress?: string; // master address to use for wallet can be different from seedAddress for multisign
+  algorithm?: ECDSA; // algorithm to use for wallet in case seed is without payload
+  seedAddress?: string; // classic address required to check if seed is secp256k1
+  ignoreSeedPayload?: boolean; // ignore seed payload pre check and consider it as ed25519
+}
 
-  // NOTE: Wallet by default does not respect the algorithm of the seed
-  const wallet = Wallet.fromSeed(seed, {
-    algorithm: decodedSeed.type === "ed25519" ? ECDSA.ed25519 : ECDSA.secp256k1,
-  });
+export function walletFromSeed(seed: string, options?: WalletFromSeedInterface): Wallet {
+  options = { ignoreSeedPayload: false, ...options }; // eslint-disable-line no-param-reassign
+  let algorithm: ECDSA | undefined = options.algorithm;
+
+  if (!options.ignoreSeedPayload && !options.algorithm) {
+    const decodedSeed = decodeSeed(seed);
+    if (decodedSeed.type === "secp256k1") {
+      // NOTE: can be either secp256k1 or ed25519, rippled generates ed25519 seeds without payload
+
+      // if address is provided, check if it's secp256k1
+      if (options.seedAddress) {
+        const { publicKey } = deriveKeypair(seed, { algorithm: ECDSA.secp256k1 });
+        const classicAddress = deriveAddress(publicKey);
+        if (classicAddress === options.seedAddress) {
+          algorithm = ECDSA.secp256k1;
+        } else {
+          algorithm = ECDSA.ed25519;
+        }
+      } else {
+        algorithm = ECDSA.secp256k1;
+      }
+    }
+  }
+
+  // NOTE: Wallet by default consider seed without payload as ed25519
+  const wallet = Wallet.fromSeed(seed, { algorithm, masterAddress: options.masterAddress });
 
   return wallet;
 }

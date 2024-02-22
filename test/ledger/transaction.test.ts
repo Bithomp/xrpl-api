@@ -416,7 +416,7 @@ describe("Client", () => {
           LastLedgerSequence: paymentParams.lastLedgerSequence,
         };
 
-        const wallet = Wallet.walletFromSeed(nconf.get("xrpl:accounts:activation:secret"));
+        const wallet = Wallet.walletFromSeed(nconf.get("xrpl:accounts:activation:secret"), { seedAddress: account });
         const signedTransaction = wallet.sign(tx).tx_blob;
 
         const result: any = await Client.submit(signedTransaction);
@@ -440,7 +440,7 @@ describe("Client", () => {
         tx.Sequence = submitParams.sequence;
         tx.LastLedgerSequence = submitParams.lastLedgerSequence;
 
-        const wallet = Wallet.walletFromSeed(nconf.get("xrpl:accounts:activation:secret"));
+        const wallet = Wallet.walletFromSeed(nconf.get("xrpl:accounts:activation:secret"), { seedAddress: account });
         const signedTransaction = wallet.sign(tx).tx_blob;
 
         const result: any = await Client.submit(signedTransaction);
