@@ -63,7 +63,7 @@
     "@types/lodash": "^4.14.202",
     "@types/mocha": "^10.0.6",
     "@types/nconf": "^0.10.6",
-    "@types/node": "^20.10.19",
+    "@types/node": "^20.11.19",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
     "chai": "^4.4.1",
