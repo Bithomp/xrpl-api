@@ -51,6 +51,7 @@ describe("Client", () => {
     });
 
     it("works as formatted with offers", async function () {
+      this.timeout(15000);
       const result: any = await Client.getAccountAllOffers("rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z", { formatted: true });
       const offer = result.offers[0];
 
