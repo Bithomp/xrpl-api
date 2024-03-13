@@ -141,40 +141,40 @@
     [
       "LedgerEntry",
       {
-        "nth": 1,
+        "nth": 257,
         "isVLEncoded": false,
         "isSerialized": false,
-        "isSigningField": true,
+        "isSigningField": false,
         "type": "LedgerEntry"
       }
     ],
     [
       "Transaction",
       {
-        "nth": 1,
+        "nth": 257,
         "isVLEncoded": false,
         "isSerialized": false,
-        "isSigningField": true,
+        "isSigningField": false,
         "type": "Transaction"
       }
     ],
     [
       "Validation",
       {
-        "nth": 1,
+        "nth": 257,
         "isVLEncoded": false,
         "isSerialized": false,
-        "isSigningField": true,
+        "isSigningField": false,
         "type": "Validation"
       }
     ],
     [
       "Metadata",
       {
-        "nth": 1,
+        "nth": 257,
         "isVLEncoded": false,
-        "isSerialized": true,
-        "isSigningField": true,
+        "isSerialized": false,
+        "isSigningField": false,
         "type": "Metadata"
       }
     ],
@@ -1999,6 +1999,16 @@
       }
     ],
     [
+      "Inform",
+      {
+        "nth": 99,
+        "isVLEncoded": true,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "AccountID"
+      }
+    ],
+    [
       "Indexes",
       {
         "nth": 1,
@@ -2042,6 +2052,16 @@
       "HookNamespaces",
       {
         "nth": 5,
+        "isVLEncoded": true,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "Vector256"
+      }
+    ],
+    [
+      "URITokenIDs",
+      {
+        "nth": 99,
         "isVLEncoded": true,
         "isSerialized": true,
         "isSigningField": true,
@@ -2309,6 +2329,26 @@
       }
     ],
     [
+      "MintURIToken",
+      {
+        "nth": 92,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "STObject"
+      }
+    ],
+    [
+      "AmountEntry",
+      {
+        "nth": 91,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "STObject"
+      }
+    ],
+    [
       "Signers",
       {
         "nth": 3,
@@ -2482,6 +2522,16 @@
       "HookEmissions",
       {
         "nth": 93,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "STArray"
+      }
+    ],
+    [
+      "Amounts",
+      {
+        "nth": 92,
         "isVLEncoded": false,
         "isSerialized": true,
         "isSigningField": true,
@@ -2710,6 +2760,7 @@
     "URITokenBuy": 47,
     "URITokenCreateSellOffer": 48,
     "URITokenCancelSellOffer": 49,
+    "Remit": 95,
     "GenesisMint": 96,
     "Import": 97,
     "ClaimReward": 98,
