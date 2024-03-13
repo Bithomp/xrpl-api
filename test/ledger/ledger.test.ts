@@ -26,7 +26,7 @@ describe("Client", () => {
         delete result.ledger.totalCoins;
         delete result.ledger.close_time_iso;
 
-        expect(Object.keys(result.ledger)).to.eql([
+        expect(Object.keys(result.ledger).sort()).to.eql([
           "account_hash",
           "close_flags",
           "close_time",
@@ -48,16 +48,16 @@ describe("Client", () => {
         delete result.warnings;
         delete result._nodepref;
         expect(Object.keys(result).sort()).to.eql(["ledger", "ledger_hash", "ledger_index", "validated"]);
-        expect(Object.keys(result.ledger)).to.eql([
-          "stateHash",
-          "close_time",
+        expect(Object.keys(result.ledger).sort()).to.eql([
+          "closeFlags",
           "closeTime",
           "closeTimeResolution",
-          "closeFlags",
+          "close_time",
           "ledgerHash",
           "ledgerVersion",
-          "parentLedgerHash",
           "parentCloseTime",
+          "parentLedgerHash",
+          "stateHash",
           "totalDrops",
           "transactionHash",
         ]);
