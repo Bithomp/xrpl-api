@@ -18,10 +18,7 @@ import {
   FormattedEscrowCreateSpecification,
   FormattedEscrowFinishSpecification,
 } from "../types/escrows";
-import {
-  FormattedOfferCancelSpecification,
-  FormattedOfferCreateSpecification,
-} from "../types/offers";
+import { FormattedOfferCancelSpecification, FormattedOfferCreateSpecification } from "../types/offers";
 import { FormattedPaymentSpecification } from "../types/payments";
 import {
   FormattedPaymentChannelClaimSpecification,
@@ -49,6 +46,15 @@ import { FormattedImportSpecification } from "../types/import";
 import { FormattedInvokeSpecification } from "../types/invoke";
 import { FormattedUNLReportSpecification } from "../types/unl_reports";
 import { FormattedRemitsSpecification } from "../types/remits";
+
+import {
+  FormattedAmmBidSpecification,
+  FormattedAmmCreateSpecification,
+  FormattedAmmDeleteSpecification,
+  FormattedAmmDepositSpecification,
+  FormattedAmmWithdrawSpecification,
+  FormattedAmmVoteSpecification,
+} from "../types/amm";
 
 import { FormattedAmendmentSpecification } from "../types/amendments";
 import { FormattedFeeUpdateSpecification } from "../types/fees";
@@ -87,6 +93,13 @@ import parseImport from "./specification/import";
 import parseInvoke from "./specification/invoke";
 import parseUNLReport from "./specification/unl-report";
 import parseRemit from "./specification/remit";
+
+import parseAmmBid from "./specification/amm-bid";
+import parseAmmCreate from "./specification/amm-create";
+import parseAmmDelete from "./specification/amm-delete";
+import parseAmmDeposit from "./specification/amm-deposit";
+import parseAmmWithdraw from "./specification/amm-withdraw";
+import parseAmmVote from "./specification/amm-vote";
 
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
 import parseFeeUpdate from "./specification/fee-update"; // pseudo-transaction
@@ -129,6 +142,13 @@ const transactionTypeToType = {
   Invoke: "invoke",
   UNLReport: "unlReport",
   Remit: "remit",
+
+  AMMBid: "ammBid",
+  AMMCreate: "ammCreate",
+  AMMDelete: "ammDelete",
+  AMMDeposit: "ammDeposit",
+  AMMWithdraw: "ammWithdraw",
+  AMMVote: "ammVote",
 
   EnableAmendment: "amendment", // pseudo-transaction
   SetFee: "feeUpdate", // pseudo-transaction
@@ -174,6 +194,13 @@ const parserTypeFunc = {
   unlReport: parseUNLReport,
   remit: parseRemit,
 
+  ammBid: parseAmmBid,
+  ammCreate: parseAmmCreate,
+  ammDelete: parseAmmDelete,
+  ammDeposit: parseAmmDeposit,
+  ammWithdraw: parseAmmWithdraw,
+  ammVote: parseAmmVote,
+
   amendment: parseAmendment, // pseudo-transaction
   feeUpdate: parseFeeUpdate, // pseudo-transaction
 };
@@ -210,8 +237,26 @@ export type FormattedSpecification =
   | FormattedInvokeSpecification
   | FormattedUNLReportSpecification
   | FormattedRemitsSpecification
+  | FormattedAmmBidSpecification
+  | FormattedAmmCreateSpecification
+  | FormattedAmmDeleteSpecification
+  | FormattedAmmDepositSpecification
+  | FormattedAmmWithdrawSpecification
+  | FormattedAmmVoteSpecification
   | FormattedAmendmentSpecification
   | FormattedFeeUpdateSpecification;
+
+type FormattedUnrecognizedParserSpecification = {
+  UNAVAILABLE: string;
+  SEE_RAW_TRANSACTION: string;
+};
+
+function unrecognizedParser(_tx: any): FormattedUnrecognizedParserSpecification {
+  return {
+    UNAVAILABLE: "Unrecognized transaction type.",
+    SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is included in this response.",
+  };
+}
 
 export interface FormattedTransaction {
   type: string;
@@ -235,12 +280,7 @@ function parseTransaction(
   const parser: Function = parserTypeFunc[type];
 
   /* eslint-disable multiline-ternary */
-  const specification = parser
-    ? parser(tx)
-    : {
-      UNAVAILABLE: "Unrecognized transaction type.",
-      SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is included in this response.",
-    };
+  const specification = parser ? parser(tx) : unrecognizedParser(tx);
   /* eslint-enable multiline-ternary */
 
   if (!parser) {
