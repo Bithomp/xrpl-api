@@ -24,6 +24,7 @@ export type Outcome = {
   uritokenChanges?: object,
   uritokenSellOfferChanges?: object,
   affectedObjects?: object,
+  ammChanges?: object,
   deliveredAmount?: {
     currency: string,
     counterparty?: string,
