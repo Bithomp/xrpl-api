@@ -1,0 +1,199 @@
+{
+  "Account": "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH",
+  "Asset": {
+    "currency": "XRP"
+  },
+  "Asset2": {
+    "currency": "7853504543544152000000000000000000000000",
+    "issuer": "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv"
+  },
+  "BidMax": {
+    "currency": "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+    "issuer": "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+    "value": "192615"
+  },
+  "BidMin": {
+    "currency": "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+    "issuer": "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+    "value": "192615"
+  },
+  "Fee": "12",
+  "LastLedgerSequence": 86816515,
+  "Sequence": 1819,
+  "SigningPubKey": "02C8CBEF435DC5A737A9D84617BC4EB2124D231FCEB30F3FBD41D08104E448CE46",
+  "SourceTag": 80008000,
+  "TransactionType": "AMMBid",
+  "TxnSignature": "30440220751FD8BCB8CE1056484991F3F02AF2C471731F78C6DC6596B1A925D734F4BD26022009FB6BFE76D5F8772C8784DC1601FCA30A85150BFFF7F39A0D242CAE1D9234D2",
+  "ctid": "C52CB6FB00210000",
+  "date": 764535090,
+  "hash": "243140B591F2A2EDEFB4B6D9E91865B42260CF3B26BFF388211A51FE762A77A6",
+  "inLedger": 86816507,
+  "ledger_index": 86816507,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Balance": {
+              "currency": "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+              "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji",
+              "value": "0.998294009"
+            },
+            "Flags": 1114112,
+            "HighLimit": {
+              "currency": "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+              "issuer": "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+              "value": "0"
+            },
+            "HighNode": "1",
+            "LowLimit": {
+              "currency": "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+              "issuer": "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH",
+              "value": "0"
+            },
+            "LowNode": "4"
+          },
+          "LedgerEntryType": "RippleState",
+          "LedgerIndex": "36C8906752C9C5AE3D768D5550BEEE3C55083410C2DC429A57C714604F1677F3",
+          "PreviousFields": {
+            "Balance": {
+              "currency": "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+              "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji",
+              "value": "192615.998294009"
+            }
+          },
+          "PreviousTxnID": "2253ADFCDAF381C87CF436426AFADD8C6E739CE3C46800398364FD60F11AD9E4",
+          "PreviousTxnLgrSeq": 86816475
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH",
+            "Balance": "48877337271",
+            "FirstNFTokenSequence": 1763,
+            "Flags": 0,
+            "MessageKey": "0200000000000000000000000042C1F76D7518349BAD5758B7462BBAC38EA7C2C6",
+            "MintedNFTokens": 3,
+            "NFTokenMinter": "rESvnQrpWVho8kEiHEVKXMBoiUzdkYVtDL",
+            "OwnerCount": 80,
+            "Sequence": 1820
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "62957D954975F235891413BB3DDF9427ECA7B416D9C4EC9216F4305A46503E84",
+          "PreviousFields": {
+            "Balance": "48877337283",
+            "Sequence": 1819
+          },
+          "PreviousTxnID": "2253ADFCDAF381C87CF436426AFADD8C6E739CE3C46800398364FD60F11AD9E4",
+          "PreviousTxnLgrSeq": 86816475
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Balance": {
+              "currency": "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+              "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji",
+              "value": "-34303.940178527"
+            },
+            "Flags": 2228224,
+            "HighLimit": {
+              "currency": "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+              "issuer": "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
+              "value": "0"
+            },
+            "HighNode": "4",
+            "LowLimit": {
+              "currency": "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+              "issuer": "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+              "value": "0"
+            },
+            "LowNode": "1"
+          },
+          "LedgerEntryType": "RippleState",
+          "LedgerIndex": "81B68F91780141CE6D2F05EB2F919D85A64FE0B789D19F31B27DF90197A4E62A",
+          "PreviousFields": {
+            "Balance": {
+              "currency": "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+              "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji",
+              "value": "-12453.940178527"
+            }
+          },
+          "PreviousTxnID": "196195D2D87BD56E33A1472A90B6D2DED78C9832C12DDF010E90F782CC6EE5A7",
+          "PreviousTxnLgrSeq": 86816452
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+            "Asset": {
+              "currency": "XRP"
+            },
+            "Asset2": {
+              "currency": "7853504543544152000000000000000000000000",
+              "issuer": "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv"
+            },
+            "AuctionSlot": {
+              "Account": "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH",
+              "DiscountedFee": 80,
+              "Expiration": 764621482,
+              "Price": {
+                "currency": "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+                "issuer": "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                "value": "192615"
+              }
+            },
+            "Flags": 0,
+            "LPTokenBalance": {
+              "currency": "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+              "issuer": "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+              "value": "2474787.636783337"
+            },
+            "OwnerNode": "0",
+            "TradingFee": 800,
+            "VoteSlots": [
+              {
+                "VoteEntry": {
+                  "Account": "rs8aNjM13G824PA132sDBJM5hqeh92bGPr",
+                  "TradingFee": 800,
+                  "VoteWeight": 100000
+                }
+              }
+            ]
+          },
+          "LedgerEntryType": "AMM",
+          "LedgerIndex": "C55741BDA5F2590DD0F0EF7F620F133C0B73C382A8987068CA2DD886D99FD3B5",
+          "PreviousFields": {
+            "AuctionSlot": {
+              "Account": "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
+              "AuthAccounts": [
+                {
+                  "AuthAccount": {
+                    "Account": "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk"
+                  }
+                }
+              ],
+              "DiscountedFee": 80,
+              "Expiration": 764621271,
+              "Price": {
+                "currency": "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+                "issuer": "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                "value": "23000"
+              }
+            },
+            "LPTokenBalance": {
+              "currency": "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+              "issuer": "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+              "value": "2645552.636783337"
+            }
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 33,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

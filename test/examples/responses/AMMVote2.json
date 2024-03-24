@@ -1,0 +1,212 @@
+{
+  "Account": "rJvmNLNfjnUwoECUmF5qZrgvdNnkzxZsAD",
+  "Asset": {
+    "currency": "XRP"
+  },
+  "Asset2": {
+    "currency": "5553444300000000000000000000000000000000",
+    "issuer": "rcEGREd8NmkKRE8GE424sksyt1tJVFZwu"
+  },
+  "Fee": "12",
+  "LastLedgerSequence": 86796499,
+  "Sequence": 83657283,
+  "SigningPubKey": "02B67DE759934CDB6C93C0EF4A722EDEF0B2CBD755D7197A39842D8D6C03238FFA",
+  "SourceTag": 24546893,
+  "TradingFee": 980,
+  "TransactionType": "AMMVote",
+  "TxnSignature": "304402204BEE28DF8C9CC2B176DF6C040006D06488354426A489047C1B1B3DDB2606F1EB02205321E6852AA8227E74BEF8A28FE6A991697AC6DE83514AF2C1574D4C6B79DF03",
+  "hash": "31D45F3CF72D08EFC366E62BD08E114FBB02B0110C99E860F1455FA4AB9992C9",
+  "ctid": "C52C68CB002C0000",
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rGHt6LT5v9DVaEAmFzj5ciuxuj41ZjLofs",
+            "Asset": {
+              "currency": "XRP"
+            },
+            "Asset2": {
+              "currency": "5553444300000000000000000000000000000000",
+              "issuer": "rcEGREd8NmkKRE8GE424sksyt1tJVFZwu"
+            },
+            "AuctionSlot": {
+              "Account": "r3j3kxPwubYWHsPhxWpnqjQDmFStwxsi1F",
+              "DiscountedFee": 91,
+              "Expiration": 764544622,
+              "Price": {
+                "currency": "03B20F3A7D26D33C6DA3503E5CCE3E67B102D4D2",
+                "issuer": "rGHt6LT5v9DVaEAmFzj5ciuxuj41ZjLofs",
+                "value": "110900"
+              }
+            },
+            "Flags": 0,
+            "LPTokenBalance": {
+              "currency": "03B20F3A7D26D33C6DA3503E5CCE3E67B102D4D2",
+              "issuer": "rGHt6LT5v9DVaEAmFzj5ciuxuj41ZjLofs",
+              "value": "17613632.34138682"
+            },
+            "OwnerNode": "0",
+            "TradingFee": 919,
+            "VoteSlots": [
+              {
+                "VoteEntry": {
+                  "Account": "r3QJXYTQNXzLjSbssksvszKviqcauks1c",
+                  "TradingFee": 800,
+                  "VoteWeight": 358
+                }
+              },
+              {
+                "VoteEntry": {
+                  "Account": "rhffrVwLs8GfHQw5ApipBXx1sg1pABLLVW",
+                  "TradingFee": 955,
+                  "VoteWeight": 7898
+                }
+              },
+              {
+                "VoteEntry": {
+                  "Account": "rJvmNLNfjnUwoECUmF5qZrgvdNnkzxZsAD",
+                  "TradingFee": 980,
+                  "VoteWeight": 2732
+                }
+              },
+              {
+                "VoteEntry": {
+                  "Account": "rDrQkwbjuCdoFbHMarr3jmoLN8zqV7naoT",
+                  "TradingFee": 910,
+                  "VoteWeight": 668
+                }
+              },
+              {
+                "VoteEntry": {
+                  "Account": "rH7X49JP6tV1wvvQYRtZbHexq658LEkcqb",
+                  "TradingFee": 801,
+                  "VoteWeight": 704
+                }
+              },
+              {
+                "VoteEntry": {
+                  "Account": "r3XXvZM8FbcttXscsGbdcANn4qszrn5KnY",
+                  "TradingFee": 794,
+                  "VoteWeight": 118
+                }
+              },
+              {
+                "VoteEntry": {
+                  "Account": "rUB9QLPXk31m6fj7LyVPQqRm2E6WA2QTRq",
+                  "TradingFee": 800,
+                  "VoteWeight": 3009
+                }
+              },
+              {
+                "VoteEntry": {
+                  "Account": "rATFSnZxyKNbaGA4BHdJGeULB1SP1vx4k",
+                  "TradingFee": 945,
+                  "VoteWeight": 1971
+                }
+              }
+            ]
+          },
+          "LedgerEntryType": "AMM",
+          "LedgerIndex": "383669860F36CDD7BF543C0711DD523E35F60ACA22C8AAD8FDDBB2632C4C5821",
+          "PreviousFields": {
+            "AuctionSlot": {
+              "Account": "r3j3kxPwubYWHsPhxWpnqjQDmFStwxsi1F",
+              "DiscountedFee": 90,
+              "Expiration": 764544622,
+              "Price": {
+                "currency": "03B20F3A7D26D33C6DA3503E5CCE3E67B102D4D2",
+                "issuer": "rGHt6LT5v9DVaEAmFzj5ciuxuj41ZjLofs",
+                "value": "110900"
+              }
+            },
+            "TradingFee": 902,
+            "VoteSlots": [
+              {
+                "VoteEntry": {
+                  "Account": "r3QJXYTQNXzLjSbssksvszKviqcauks1c",
+                  "TradingFee": 800,
+                  "VoteWeight": 358
+                }
+              },
+              {
+                "VoteEntry": {
+                  "Account": "rhffrVwLs8GfHQw5ApipBXx1sg1pABLLVW",
+                  "TradingFee": 955,
+                  "VoteWeight": 7898
+                }
+              },
+              {
+                "VoteEntry": {
+                  "Account": "rpXJ9ET5PRdBLpEC31gNBdk5cDcyTNA1kx",
+                  "TradingFee": 30,
+                  "VoteWeight": 96
+                }
+              },
+              {
+                "VoteEntry": {
+                  "Account": "rDrQkwbjuCdoFbHMarr3jmoLN8zqV7naoT",
+                  "TradingFee": 910,
+                  "VoteWeight": 668
+                }
+              },
+              {
+                "VoteEntry": {
+                  "Account": "rH7X49JP6tV1wvvQYRtZbHexq658LEkcqb",
+                  "TradingFee": 801,
+                  "VoteWeight": 704
+                }
+              },
+              {
+                "VoteEntry": {
+                  "Account": "r3XXvZM8FbcttXscsGbdcANn4qszrn5KnY",
+                  "TradingFee": 794,
+                  "VoteWeight": 118
+                }
+              },
+              {
+                "VoteEntry": {
+                  "Account": "rUB9QLPXk31m6fj7LyVPQqRm2E6WA2QTRq",
+                  "TradingFee": 800,
+                  "VoteWeight": 3009
+                }
+              },
+              {
+                "VoteEntry": {
+                  "Account": "rATFSnZxyKNbaGA4BHdJGeULB1SP1vx4k",
+                  "TradingFee": 945,
+                  "VoteWeight": 1971
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rJvmNLNfjnUwoECUmF5qZrgvdNnkzxZsAD",
+            "Balance": "156445860",
+            "Flags": 0,
+            "OwnerCount": 10,
+            "Sequence": 83657284
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "B051A4F830A869F65C172F3361DC37296FA5B99A47DE3A6A361BB183C82A7437",
+          "PreviousFields": {
+            "Balance": "156445872",
+            "Sequence": 83657283
+          },
+          "PreviousTxnID": "B86D2A29703F085EABC26067B084E9E584BDF1B8C519D679D3B1F940FE2F53C8",
+          "PreviousTxnLgrSeq": 86796440
+        }
+      }
+    ],
+    "TransactionIndex": 44,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true,
+  "date": 764458262,
+  "ledger_index": 86796491,
+  "inLedger": 86796491
+}

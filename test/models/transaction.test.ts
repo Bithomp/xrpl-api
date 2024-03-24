@@ -3900,6 +3900,78 @@ describe("Models", () => {
       });
     });
 
+    it("AMMVote2", function () {
+      const tx = require("../examples/responses/AMMVote2.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "ammVote",
+        address: "rJvmNLNfjnUwoECUmF5qZrgvdNnkzxZsAD",
+        sequence: 83657283,
+        id: "31D45F3CF72D08EFC366E62BD08E114FBB02B0110C99E860F1455FA4AB9992C9",
+        ctid: "C52C68CB002C0000",
+        specification: {
+          source: { address: "rJvmNLNfjnUwoECUmF5qZrgvdNnkzxZsAD", tag: 24546893 },
+          asset: { currency: "XRP" },
+          asset2: {
+            currency: "5553444300000000000000000000000000000000",
+            counterparty: "rcEGREd8NmkKRE8GE424sksyt1tJVFZwu",
+          },
+          tradingFee: 980,
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-03-22T21:31:02.000Z",
+          fee: "0.000012",
+          balanceChanges: { rJvmNLNfjnUwoECUmF5qZrgvdNnkzxZsAD: [{ currency: "XRP", value: "-0.000012" }] },
+          ammChanges: {
+            status: "modified",
+            ammID: "383669860F36CDD7BF543C0711DD523E35F60ACA22C8AAD8FDDBB2632C4C5821",
+            account: "rGHt6LT5v9DVaEAmFzj5ciuxuj41ZjLofs",
+            asset: { currency: "XRP" },
+            asset2: {
+              currency: "5553444300000000000000000000000000000000",
+              counterparty: "rcEGREd8NmkKRE8GE424sksyt1tJVFZwu",
+            },
+            auctionSlot: {
+              account: "r3j3kxPwubYWHsPhxWpnqjQDmFStwxsi1F",
+              discountedFee: 91,
+              expiration: 764544622,
+              price: {
+                currency: "03B20F3A7D26D33C6DA3503E5CCE3E67B102D4D2",
+                issuer: "rGHt6LT5v9DVaEAmFzj5ciuxuj41ZjLofs",
+                value: "110900",
+              },
+            },
+            lpTokenBalance: {
+              currency: "03B20F3A7D26D33C6DA3503E5CCE3E67B102D4D2",
+              value: "17613632.34138682",
+              counterparty: "rGHt6LT5v9DVaEAmFzj5ciuxuj41ZjLofs",
+            },
+            tradingFee: 919,
+            ownerNode: "0",
+            voteSlots: [
+              { account: "r3QJXYTQNXzLjSbssksvszKviqcauks1c", tradingFee: 800, voteWeight: 358 },
+              { account: "rhffrVwLs8GfHQw5ApipBXx1sg1pABLLVW", tradingFee: 955, voteWeight: 7898 },
+              { account: "rJvmNLNfjnUwoECUmF5qZrgvdNnkzxZsAD", tradingFee: 980, voteWeight: 2732 },
+              { account: "rDrQkwbjuCdoFbHMarr3jmoLN8zqV7naoT", tradingFee: 910, voteWeight: 668 },
+              { account: "rH7X49JP6tV1wvvQYRtZbHexq658LEkcqb", tradingFee: 801, voteWeight: 704 },
+              { account: "r3XXvZM8FbcttXscsGbdcANn4qszrn5KnY", tradingFee: 794, voteWeight: 118 },
+              { account: "rUB9QLPXk31m6fj7LyVPQqRm2E6WA2QTRq", tradingFee: 800, voteWeight: 3009 },
+              { account: "rATFSnZxyKNbaGA4BHdJGeULB1SP1vx4k", tradingFee: 945, voteWeight: 1971 },
+            ],
+            voteSlotsChanges: [
+              { status: "added", account: "rJvmNLNfjnUwoECUmF5qZrgvdNnkzxZsAD", tradingFee: 980, voteWeight: 2732 },
+              { status: "removed", account: "rpXJ9ET5PRdBLpEC31gNBdk5cDcyTNA1kx", tradingFee: 30, voteWeight: 96 },
+            ],
+            tradingFeeChanges: 17,
+            auctionSlotChanges: { discountedFeeChange: 1 },
+          },
+          ledgerVersion: 86796491,
+          indexInLedger: 44,
+        },
+      });
+    });
+
     it("AMMWithdraw", function () {
       const tx = require("../examples/responses/AMMWithdraw.json");
       const result: any = Models.getTxDetails(tx, false);
@@ -4077,6 +4149,232 @@ describe("Models", () => {
           },
           ledgerVersion: 86795606,
           indexInLedger: 61,
+        },
+      });
+    });
+
+    it("AMMBid2", function () {
+      const tx = require("../examples/responses/AMMBid2.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "ammBid",
+        address: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
+        sequence: 84616253,
+        id: "196195D2D87BD56E33A1472A90B6D2DED78C9832C12DDF010E90F782CC6EE5A7",
+        ctid: "C52CB6C400010000",
+        specification: {
+          source: { address: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk", tag: 20221212 },
+          memos: [{ data: "AMM bid initiated via XPmarket.com" }],
+          asset: {
+            currency: "7853504543544152000000000000000000000000",
+            counterparty: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
+          },
+          asset2: { currency: "XRP" },
+          bidMin: {
+            currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+            value: "23000",
+            counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+          },
+          bidMax: {
+            currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+            value: "23000",
+            counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+          },
+          authAccounts: ["rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk"],
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-03-23T18:48:00.000Z",
+          fee: "0.000012",
+          balanceChanges: {
+            rs8aNjM13G824PA132sDBJM5hqeh92bGPr: [
+              {
+                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+                value: "1050",
+              },
+            ],
+            rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS: [
+              {
+                counterparty: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr",
+                currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+                value: "-1050",
+              },
+              {
+                counterparty: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
+                currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+                value: "23000",
+              },
+            ],
+            rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk: [
+              { currency: "XRP", value: "-0.000012" },
+              {
+                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+                value: "-23000",
+              },
+            ],
+          },
+          ammChanges: {
+            status: "modified",
+            ammID: "C55741BDA5F2590DD0F0EF7F620F133C0B73C382A8987068CA2DD886D99FD3B5",
+            account: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+            asset: { currency: "XRP" },
+            asset2: {
+              currency: "7853504543544152000000000000000000000000",
+              counterparty: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
+            },
+            auctionSlot: {
+              account: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
+              authAccounts: ["rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk"],
+              discountedFee: 80,
+              expiration: 764621271,
+              price: {
+                currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+                issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                value: "23000",
+              },
+            },
+            lpTokenBalance: {
+              currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+              value: "2452936.638489328",
+              counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+            },
+            tradingFee: 800,
+            ownerNode: "0",
+            voteSlots: [{ account: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr", tradingFee: 800, voteWeight: 100000 }],
+            lpTokenBalanceChange: {
+              currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+              counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+              value: "-21950",
+            },
+            auctionSlotChanges: {
+              accountChanges: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
+              expirationChange: 80061,
+              priceChange: {
+                currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                value: "2000",
+              },
+              authAccountsChanges: [{ status: "added", account: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk" }],
+            },
+          },
+          ledgerVersion: 86816452,
+          indexInLedger: 1,
+        },
+      });
+    });
+
+    it("AMMBid3", function () {
+      const tx = require("../examples/responses/AMMBid3.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "ammBid",
+        address: "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH",
+        sequence: 1819,
+        id: "243140B591F2A2EDEFB4B6D9E91865B42260CF3B26BFF388211A51FE762A77A6",
+        ctid: "C52CB6FB00210000",
+        specification: {
+          source: { address: "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH", tag: 80008000 },
+          asset: { currency: "XRP" },
+          asset2: {
+            currency: "7853504543544152000000000000000000000000",
+            counterparty: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
+          },
+          bidMin: {
+            currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+            value: "192615",
+            counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+          },
+          bidMax: {
+            currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+            value: "192615",
+            counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-03-23T18:51:30.000Z",
+          fee: "0.000012",
+          balanceChanges: {
+            rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH: [
+              {
+                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+                value: "-192615",
+              },
+              { currency: "XRP", value: "-0.000012" },
+            ],
+            rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS: [
+              {
+                counterparty: "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH",
+                currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+                value: "192615",
+              },
+              {
+                counterparty: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
+                currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+                value: "-21850",
+              },
+            ],
+            rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk: [
+              {
+                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+                value: "21850",
+              },
+            ],
+          },
+          ammChanges: {
+            status: "modified",
+            ammID: "C55741BDA5F2590DD0F0EF7F620F133C0B73C382A8987068CA2DD886D99FD3B5",
+            account: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+            asset: { currency: "XRP" },
+            asset2: {
+              currency: "7853504543544152000000000000000000000000",
+              counterparty: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
+            },
+            auctionSlot: {
+              account: "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH",
+              discountedFee: 80,
+              expiration: 764621482,
+              price: {
+                currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+                issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                value: "192615",
+              },
+            },
+            lpTokenBalance: {
+              currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+              value: "2474787.636783337",
+              counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+            },
+            tradingFee: 800,
+            ownerNode: "0",
+            voteSlots: [{ account: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr", tradingFee: 800, voteWeight: 100000 }],
+            lpTokenBalanceChange: {
+              currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+              counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+              value: "-170765",
+            },
+            auctionSlotChanges: {
+              accountChanges: "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH",
+              expirationChange: 211,
+              priceChange: {
+                currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
+                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                value: "169615",
+              },
+              authAccountsChanges: [
+                {
+                  account: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
+                  status: "removed",
+                },
+              ],
+            },
+          },
+          ledgerVersion: 86816507,
+          indexInLedger: 33,
         },
       });
     });

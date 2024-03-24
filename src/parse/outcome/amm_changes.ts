@@ -1,4 +1,5 @@
 import BigNumber from "bignumber.js";
+import { AuthAccount } from "xrpl";
 import { normalizeNodes } from "../utils";
 import { removeUndefined } from "../../common";
 import { FormattedIssuedCurrency, FormattedAmount, VoteSlotInterface } from "../../types";
@@ -24,7 +25,7 @@ interface FormattedVoteSlot {
 
 // changes of LPTokenBalance, VoteSlots
 interface FormattedAmmSummaryInterface {
-  status?: string;
+  status?: "created" | "modified" | "deleted";
   ammID?: string;
   account?: string;
   asset?: FormattedIssuedCurrency;
@@ -38,7 +39,7 @@ interface FormattedAmmSummaryInterface {
   /// changes
   lpTokenBalanceChange?: FormattedAmount;
   tradingFeeChanges?: number;
-  voteSlotsChanges?: any[];
+  voteSlotsChanges?: FormattedAmmVoteSlotChanges[];
   auctionSlotChanges?: FormattedAuctionSlotChanges;
 }
 
@@ -61,15 +62,15 @@ interface FormattedAmmActionSlotChanges {
 }
 
 interface FormattedAmmVoteSlotChanges {
-  status: string;
+  status: "added" | "modified" | "removed";
   account: string;
   tradingFee?: number;
   voteWeight?: number;
-  tradingFeeChange: number;
-  voteWeightChange: number;
+  tradingFeeChange?: number;
+  voteWeightChange?: number;
 }
 
-function parseAmmStatus(node: any): string | undefined {
+function parseAmmStatus(node: any): "created" | "modified" | "deleted" | undefined {
   if (node.diffType === "CreatedNode") {
     return "created";
   }
@@ -109,27 +110,34 @@ function summarizeVoteSlotsChanges(node: any): FormattedAmmVoteSlotChanges[] | u
   const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields;
   const prev = node.previousFields || {};
 
-  const changes = final.VoteSlots.map((slot: VoteSlotInterface) => {
+  const changes = final.VoteSlots.reduce((acc: FormattedAmmVoteSlotChanges[], slot: VoteSlotInterface) => {
     const prevSlot = prev.VoteSlots.find((s: VoteSlotInterface) => s.VoteEntry.Account === slot.VoteEntry.Account);
 
-    if (prevSlot) {
-      const tradingFeeChange = slot.VoteEntry.TradingFee - prevSlot.VoteEntry.TradingFee;
-      const voteWeightChange = slot.VoteEntry.VoteWeight - prevSlot.VoteEntry.VoteWeight;
-      return removeUndefined({
-        status: "modified",
+    if (!prevSlot) {
+      return acc.concat({
+        status: "added",
         account: slot.VoteEntry.Account,
-        tradingFeeChange: tradingFeeChange !== 0 ? tradingFeeChange : undefined,
-        voteWeightChange: voteWeightChange !== 0 ? voteWeightChange : undefined,
+        tradingFee: slot.VoteEntry.TradingFee,
+        voteWeight: slot.VoteEntry.VoteWeight,
       });
     }
 
-    return {
-      status: "added",
-      account: slot.VoteEntry.Account,
-      tradingFee: slot.VoteEntry.TradingFee,
-      voteWeight: slot.VoteEntry.VoteWeight,
-    };
-  });
+    const tradingFeeChange = slot.VoteEntry.TradingFee - prevSlot.VoteEntry.TradingFee;
+    const voteWeightChange = slot.VoteEntry.VoteWeight - prevSlot.VoteEntry.VoteWeight;
+
+    if (tradingFeeChange !== 0 || voteWeightChange !== 0) {
+      return acc.concat(
+        removeUndefined({
+          status: "modified" as "modified", // use as "modified" because "removeUndefined" is used
+          account: slot.VoteEntry.Account,
+          tradingFeeChange: tradingFeeChange || undefined,
+          voteWeightChange: voteWeightChange || undefined,
+        })
+      );
+    }
+
+    return acc;
+  }, []);
 
   // removed VoteSlots
   const removed = prev.VoteSlots.filter((s: VoteSlotInterface) => {
@@ -189,26 +197,28 @@ function summarizeActionSlotChanges(node: any): FormattedAuctionSlotChanges | un
       changes.timeIntervalChange = final.AuctionSlot.TimeInterval - prev.AuctionSlot.TimeInterval;
     }
 
-    if (prev.AuctionSlot.AuthAccounts) {
-      const authAccountsChanges = final.AuctionSlot.AuthAccounts.map((account: string) => {
-        if (!prev.AuctionSlot.AuthAccounts.includes(account)) {
+    if (!isEqualAuthAccounts(final.AuctionSlot.AuthAccounts, prev.AuctionSlot.AuthAccounts)) {
+      const prevAuthAccounts = prev.AuctionSlot.AuthAccounts || [];
+      const finalAuthAccounts = final.AuctionSlot.AuthAccounts || [];
+      let authAccountsChanges = finalAuthAccounts.map((auth: AuthAccount) => {
+        if (!prevAuthAccounts.includes(auth.AuthAccount.Account)) {
           return {
             status: "added",
-            account,
+            account: auth.AuthAccount.Account,
           };
         }
       });
 
-      const removed = prev.AuctionSlot.AuthAccounts.filter((account: string) => {
-        return !final.AuctionSlot.AuthAccounts.includes(account);
+      const removed = prevAuthAccounts.filter((auth: AuthAccount) => {
+        return !finalAuthAccounts.includes(auth.AuthAccount.Account);
       });
 
       if (removed.length > 0) {
-        authAccountsChanges.concat(
-          removed.map((account: string) => {
+        authAccountsChanges = authAccountsChanges.concat(
+          removed.map((account: AuthAccount) => {
             return {
               status: "removed",
-              account,
+              account: account.AuthAccount.Account,
             };
           })
         );
@@ -223,6 +233,31 @@ function summarizeActionSlotChanges(node: any): FormattedAuctionSlotChanges | un
   }
 
   return removeUndefined(changes);
+}
+
+function isEqualAuthAccounts(obj1: AuthAccount[] | undefined, obj2: AuthAccount[] | undefined): boolean {
+  if (obj1 === undefined && obj2 === undefined) {
+    return true;
+  }
+
+  if ((obj1 === undefined && obj2 !== undefined) || (obj1 !== undefined && obj2 === undefined)) {
+    return false;
+  }
+
+  if ((obj1 as AuthAccount[]).length !== (obj2 as AuthAccount[]).length) {
+    return false;
+  }
+
+  const obj1Sorted = (obj1 as AuthAccount[]).sort((a, b) => a.AuthAccount.Account.localeCompare(b.AuthAccount.Account));
+  const obj2Sorted = (obj2 as AuthAccount[]).sort((a, b) => a.AuthAccount.Account.localeCompare(b.AuthAccount.Account));
+
+  for (let i = 0; i < obj1Sorted.length; i++) {
+    if (obj1Sorted[i].AuthAccount.Account !== obj2Sorted[i].AuthAccount.Account) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 function summarizeAmm(node: any): FormattedAmmSummaryInterface {
