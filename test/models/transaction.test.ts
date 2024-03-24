@@ -4080,6 +4080,51 @@ describe("Models", () => {
         },
       });
     });
+
+    it("Clawback", function () {
+      const tx = require("../examples/responses/Clawback.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "clawback",
+        address: "rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89",
+        sequence: 85888971,
+        id: "1640F4B6B56B0C0F9017359264EBEAB224C1C5461996937EBD1B9E17BF4DED2E",
+        ctid: "C521D5DB00330000",
+        specification: {
+          source: { address: "rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89" },
+          memos: [{ data: "YOINKED" }],
+          amount: {
+            currency: "594F494E4B000000000000000000000000000000",
+            value: "1",
+            counterparty: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-02-20T22:03:30.000Z",
+          fee: "0.000012",
+          balanceChanges: {
+            rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89: [
+              { currency: "XRP", value: "-0.000012" },
+              {
+                counterparty: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",
+                currency: "594F494E4B000000000000000000000000000000",
+                value: "1",
+              },
+            ],
+            rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD: [
+              {
+                counterparty: "rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89",
+                currency: "594F494E4B000000000000000000000000000000",
+                value: "-1",
+              },
+            ],
+          },
+          ledgerVersion: 86103515,
+          indexInLedger: 51,
+        },
+      });
+    });
   });
 
   describe("getAccountTxDetails", () => {

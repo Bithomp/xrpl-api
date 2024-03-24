@@ -47,6 +47,8 @@ import { FormattedInvokeSpecification } from "../types/invoke";
 import { FormattedUNLReportSpecification } from "../types/unl_reports";
 import { FormattedRemitsSpecification } from "../types/remits";
 
+import { FormattedClawbackSpecification } from "../types/clawback";
+
 import {
   FormattedAmmBidSpecification,
   FormattedAmmCreateSpecification,
@@ -93,6 +95,8 @@ import parseImport from "./specification/import";
 import parseInvoke from "./specification/invoke";
 import parseUNLReport from "./specification/unl-report";
 import parseRemit from "./specification/remit";
+
+import parseClawback from "./specification/clawback";
 
 import parseAmmBid from "./specification/amm-bid";
 import parseAmmCreate from "./specification/amm-create";
@@ -142,6 +146,8 @@ const transactionTypeToType = {
   Invoke: "invoke",
   UNLReport: "unlReport",
   Remit: "remit",
+
+  Clawback: "clawback",
 
   AMMBid: "ammBid",
   AMMCreate: "ammCreate",
@@ -194,6 +200,8 @@ const parserTypeFunc = {
   unlReport: parseUNLReport,
   remit: parseRemit,
 
+  clawback: parseClawback,
+
   ammBid: parseAmmBid,
   ammCreate: parseAmmCreate,
   ammDelete: parseAmmDelete,
@@ -237,6 +245,7 @@ export type FormattedSpecification =
   | FormattedInvokeSpecification
   | FormattedUNLReportSpecification
   | FormattedRemitsSpecification
+  | FormattedClawbackSpecification
   | FormattedAmmBidSpecification
   | FormattedAmmCreateSpecification
   | FormattedAmmDeleteSpecification
