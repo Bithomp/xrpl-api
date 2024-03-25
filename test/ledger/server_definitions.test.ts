@@ -23,6 +23,12 @@ describe("Client", () => {
         });
       } else {
         // for version 2.0.0 and above
+        // if present, native_currency_code will be "XRP"
+        if (result.native_currency_code) {
+          expect(result.native_currency_code).to.eql("XRP");
+        }
+
+        delete result.native_currency_code; // can be omitted from some servers
         expect(Object.keys(result).sort()).to.eql([
           "FIELDS",
           "LEDGER_ENTRY_TYPES",
@@ -30,10 +36,8 @@ describe("Client", () => {
           "TRANSACTION_TYPES",
           "TYPES",
           "hash",
-          "native_currency_code"
+          // "native_currency_code"
         ]);
-
-        expect(result.native_currency_code).to.eql("XRP");
       }
     });
   });
