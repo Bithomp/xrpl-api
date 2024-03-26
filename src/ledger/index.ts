@@ -5,6 +5,7 @@ export * from "./account_nfts";
 export * from "./account_objects";
 export * from "./account_offers";
 export * from "./account_tx";
+export * from "./amm_info";
 export * from "./book_offers";
 export * from "./currency";
 export * from "./fee";
