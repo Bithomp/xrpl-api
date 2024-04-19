@@ -117,6 +117,7 @@ describe("Client", () => {
           date: 588708441,
           hash: "A34F834AA65C01458FC0AFCDDE7F8F433DAD7B871282E8511ECDEE8E28758DCE",
           ledger_index: 41103238,
+          ctid: "C2732F8600000000",
           meta: {
             AffectedNodes: [
               {
@@ -355,6 +356,7 @@ describe("Client", () => {
           date: 588708441,
           hash: "A34F834AA65C01458FC0AFCDDE7F8F433DAD7B871282E8511ECDEE8E28758DCE",
           ledger_index: 41103238,
+          ctid: "C2732F8600000000",
           meta: {
             AffectedNodes: [
               {

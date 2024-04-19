@@ -199,6 +199,7 @@ export async function getTransactionByCTID(
     };
   }
 
+  ledgerTx.ctid = ctid;
   const result = ledgerTxToTx(ledgerTx, ledgerIndex, ledger.close_time);
   if (formatted === true) {
     return getTxDetails(result, options.includeRawTransaction === true, undefined, options.definitions);

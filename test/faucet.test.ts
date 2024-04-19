@@ -130,7 +130,7 @@ describe("Faucet", () => {
           classicAddress: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
           address: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
         },
-        amount: 10000,
+        amount: 100,
       });
     });
 
