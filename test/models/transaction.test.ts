@@ -3721,7 +3721,7 @@ describe("Models", () => {
             auctionSlot: {
               account: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q",
               discountedFee: 100,
-              expiration: 764541290,
+              expiration: 1711226090,
               price: {
                 currency: "03B7FD829F075C67B6C87A45FA0E67CF4E5A83A9",
                 issuer: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
@@ -3808,7 +3808,7 @@ describe("Models", () => {
             auctionSlot: {
               account: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q",
               discountedFee: 100,
-              expiration: 764541290,
+              expiration: 1711226090,
               price: {
                 currency: "03B7FD829F075C67B6C87A45FA0E67CF4E5A83A9",
                 issuer: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
@@ -3865,7 +3865,7 @@ describe("Models", () => {
             auctionSlot: {
               account: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q",
               discountedFee: 27,
-              expiration: 764541290,
+              expiration: 1711226090,
               price: {
                 currency: "03B7FD829F075C67B6C87A45FA0E67CF4E5A83A9",
                 issuer: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
@@ -3935,7 +3935,7 @@ describe("Models", () => {
             auctionSlot: {
               account: "r3j3kxPwubYWHsPhxWpnqjQDmFStwxsi1F",
               discountedFee: 91,
-              expiration: 764544622,
+              expiration: 1711229422,
               price: {
                 currency: "03B20F3A7D26D33C6DA3503E5CCE3E67B102D4D2",
                 issuer: "rGHt6LT5v9DVaEAmFzj5ciuxuj41ZjLofs",
@@ -4027,7 +4027,7 @@ describe("Models", () => {
             auctionSlot: {
               account: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q",
               discountedFee: 26,
-              expiration: 764541222,
+              expiration: 1711226022,
               price: {
                 currency: "037C35306B24AAB7FF90848206E003279AA47090",
                 issuer: "rw3tWE23X3Qn43XGKwqVJ7J8QA42rYEGy4",
@@ -4118,7 +4118,7 @@ describe("Models", () => {
             auctionSlot: {
               account: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr",
               discountedFee: 80,
-              expiration: 764541210,
+              expiration: 1711226010,
               price: {
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
                 issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
@@ -4228,7 +4228,7 @@ describe("Models", () => {
               account: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
               authAccounts: ["rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk"],
               discountedFee: 80,
-              expiration: 764621271,
+              expiration: 1711306071,
               price: {
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
                 issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
@@ -4337,7 +4337,7 @@ describe("Models", () => {
             auctionSlot: {
               account: "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH",
               discountedFee: 80,
-              expiration: 764621482,
+              expiration: 1711306282,
               price: {
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
                 issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",

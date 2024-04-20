@@ -7,6 +7,7 @@ import parseAmount from "../ledger/amount";
 import parseAsset from "../ledger/asset";
 import parseAuthAccounts from "../ledger/auth-accounts";
 import { getNativeCurrency } from "../../client";
+import { ledgerTimeToUnixTime } from "../../models";
 
 interface FormattedAuctionSlot {
   account: string;
@@ -90,7 +91,7 @@ function parseAuctionSlot(auctionSlot: any): FormattedAuctionSlot {
     account: auctionSlot.Account,
     authAccounts: parseAuthAccounts(auctionSlot.AuthAccounts),
     discountedFee: auctionSlot.DiscountedFee,
-    expiration: auctionSlot.Expiration,
+    expiration: auctionSlot.Expiration ? ledgerTimeToUnixTime(auctionSlot.Expiration) : undefined,
     price: auctionSlot.Price,
     timeInterval: auctionSlot.TimeInterval,
   };
