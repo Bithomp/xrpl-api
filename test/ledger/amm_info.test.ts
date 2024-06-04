@@ -13,6 +13,7 @@ describe("Client", () => {
     describe("getAmmInfo", () => {
       it("works by amm account", async function () {
         const result: any = await Client.getAmmInfo("rGHt6LT5v9DVaEAmFzj5ciuxuj41ZjLofs");
+        delete result._nodepref; // can be omitted
         expect(Object.keys(result).sort()).to.eql(["amm", "ledger_hash", "ledger_index", "validated"]);
         expect(Object.keys(result.amm).sort()).to.eql([
           "account",
@@ -31,6 +32,7 @@ describe("Client", () => {
           { currency: "XRP" },
           { currency: "5553444300000000000000000000000000000000", issuer: "rcEGREd8NmkKRE8GE424sksyt1tJVFZwu" }
         );
+        delete result._nodepref; // can be omitted
         expect(Object.keys(result).sort()).to.eql(["amm", "ledger_hash", "ledger_index", "validated"]);
         expect(Object.keys(result.amm).sort()).to.eql([
           "account",

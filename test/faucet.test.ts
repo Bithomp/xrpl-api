@@ -151,8 +151,8 @@ describe("Faucet", () => {
       });
     });
 
-    it("works with existing address on hooks-testnet-v3 xrpl network", async function () {
-      const res = await Faucet.foundWallet("hooks-testnet-v3", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
+    it("works with existing address on xahau-test xrpl network", async function () {
+      const res = await Faucet.foundWallet("xahau-test", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
 
       expect(res.hash).to.be.a("string");
       delete res.hash;
@@ -162,7 +162,7 @@ describe("Faucet", () => {
           classicAddress: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
           address: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
         },
-        amount: 10000,
+        amount: 1000,
       });
     });
   });

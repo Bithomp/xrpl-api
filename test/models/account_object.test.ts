@@ -4,11 +4,11 @@ import { Models } from "../../src/index";
 describe("Models", () => {
   describe("accountObjectsToAccountLines", () => {
     it("returns account lines", function () {
-      const objects = require("../examples/responses/objects/rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf.json");
-      const result: any = Models.accountObjectsToAccountLines("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf", objects);
+      const objects = require("../examples/responses/objects/rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8.json");
+      const result: any = Models.accountObjectsToAccountLines("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8", objects);
       expect(result).to.eql([
         {
-          account: "rNTvdxPWujQn2sUXYBGxmWrGe4ethkLyhb",
+          account: "rESkTa8rXUGKs1njRrJGYSTwB5R1XYCEAt",
           balance: "123.45",
           currency: "FOO",
           limit: "1000000000",

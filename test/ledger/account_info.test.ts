@@ -30,18 +30,18 @@ describe("Client", () => {
       });
 
       it("is for activated", async function () {
-        const accountInfo: any = await Client.getAccountInfo("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+        const accountInfo: any = await Client.getAccountInfo("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8");
         expect(accountInfo.account_data).to.eql({
-          Account: "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
-          Balance: "999999976",
+          Account: "rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8",
+          Balance: "1053449964",
           Domain: "746573742E626974686F6D702E636F6D",
-          Flags: 786432,
+          Flags: 524288,
           LedgerEntryType: "AccountRoot",
           OwnerCount: 1,
-          PreviousTxnID: "3F369023F112D844619805ED2C5F8D9CB0BCE7DB18CAE681A92785164A61A8B5",
-          PreviousTxnLgrSeq: 22442907,
-          Sequence: 22442870,
-          index: "D88BB94773475A04F50EA227E03A67D0FBC5D70DC17CFDB256BCC9F1FA8C1A6E",
+          PreviousTxnID: "3423C1251C57DEB0336721B5BA55870F565CE693E4833E6E33CA0CB4049FF52F",
+          PreviousTxnLgrSeq: 21406,
+          Sequence: 8090,
+          index: "A852DD21A058CBD616BFBE48467EBE560F05EE0A69E70047D52496AF76599B5B",
         });
       });
 
@@ -49,15 +49,16 @@ describe("Client", () => {
         const accountInfo: any = await Client.getAccountInfo("rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM");
         expect(accountInfo.account_data).to.eql({
           Account: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
-          Balance: "971999712",
+          Balance: "1995999964",
+          FirstNFTokenSequence: 15382,
           Flags: 0,
           LedgerEntryType: "AccountRoot",
           MintedNFTokens: 1,
           NFTokenMinter: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
           OwnerCount: 2,
-          PreviousTxnID: "DED688260C4B14B18ED5FA55923F8BDE8282159C1FEC5DCD48E27EE8DAAE0C31",
-          PreviousTxnLgrSeq: 34643391,
-          Sequence: 34625359,
+          PreviousTxnID: "EE9AAB7DB794EFE2C0C21DBEC79DAFC3F60EB824BAD925B8B53265B963D0DE4E",
+          PreviousTxnLgrSeq: 33942,
+          Sequence: 15383,
           index: "F7660AA3686F858FFD9142AD3C2730CDCB1CF8D11664DB34F27F1A421BD1512B",
         });
       });
@@ -73,36 +74,36 @@ describe("Client", () => {
       });
 
       it("is for activated", async function () {
-        const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+        const accountInfoData: any = await Client.getAccountInfoData("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8");
         expect(accountInfoData).to.eql({
-          Account: "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
-          Balance: "999999976",
+          Account: "rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8",
+          Balance: "1053449964",
           Domain: "746573742E626974686F6D702E636F6D",
-          Flags: 786432,
+          Flags: 524288,
           LedgerEntryType: "AccountRoot",
           OwnerCount: 1,
-          PreviousTxnID: "3F369023F112D844619805ED2C5F8D9CB0BCE7DB18CAE681A92785164A61A8B5",
-          PreviousTxnLgrSeq: 22442907,
-          Sequence: 22442870,
-          index: "D88BB94773475A04F50EA227E03A67D0FBC5D70DC17CFDB256BCC9F1FA8C1A6E",
+          PreviousTxnID: "3423C1251C57DEB0336721B5BA55870F565CE693E4833E6E33CA0CB4049FF52F",
+          PreviousTxnLgrSeq: 21406,
+          Sequence: 8090,
+          index: "A852DD21A058CBD616BFBE48467EBE560F05EE0A69E70047D52496AF76599B5B",
         });
       });
 
       it("is for activated with signers", async function () {
-        const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf", {
+        const accountInfoData: any = await Client.getAccountInfoData("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8", {
           signerLists: true,
         });
         expect(accountInfoData).to.eql({
-          Account: "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf",
-          Balance: "999999976",
+          Account: "rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8",
+          Balance: "1053449964",
           Domain: "746573742E626974686F6D702E636F6D",
-          Flags: 786432,
+          Flags: 524288,
           LedgerEntryType: "AccountRoot",
           OwnerCount: 1,
-          PreviousTxnID: "3F369023F112D844619805ED2C5F8D9CB0BCE7DB18CAE681A92785164A61A8B5",
-          PreviousTxnLgrSeq: 22442907,
-          Sequence: 22442870,
-          index: "D88BB94773475A04F50EA227E03A67D0FBC5D70DC17CFDB256BCC9F1FA8C1A6E",
+          PreviousTxnID: "3423C1251C57DEB0336721B5BA55870F565CE693E4833E6E33CA0CB4049FF52F",
+          PreviousTxnLgrSeq: 21406,
+          Sequence: 8090,
+          index: "A852DD21A058CBD616BFBE48467EBE560F05EE0A69E70047D52496AF76599B5B",
           signer_lists: [],
         });
       });
@@ -122,29 +123,27 @@ describe("Client", () => {
       });
 
       it("parses getSettings", async function () {
-        const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+        const accountInfoData: any = await Client.getAccountInfoData("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8");
         const result: any = Models.getSettings(accountInfoData);
         expect(result).to.eql({
-          requireAuth: true,
           disallowXRP: true,
           domain: "test.bithomp.com",
         });
       });
 
       it("parses getSettings with signers", async function () {
-        const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf", {
+        const accountInfoData: any = await Client.getAccountInfoData("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8", {
           signerLists: true,
         });
         const result: any = Models.getSettings(accountInfoData);
         expect(result).to.eql({
-          requireAuth: true,
           disallowXRP: true,
           domain: "test.bithomp.com",
         });
       });
 
       it("parses getSettings show false", async function () {
-        const accountInfoData: any = await Client.getAccountInfoData("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf", {
+        const accountInfoData: any = await Client.getAccountInfoData("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8", {
           signerLists: true,
         });
         const result: any = Models.getSettings(accountInfoData, false);
@@ -158,7 +157,7 @@ describe("Client", () => {
           globalFreeze: false,
           noFreeze: false,
           passwordSpent: false,
-          requireAuth: true,
+          requireAuth: false,
           requireDestTag: false,
           disallowIncomingCheck: false,
           disallowIncomingNFTokenOffer: false,

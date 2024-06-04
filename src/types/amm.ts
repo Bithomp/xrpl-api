@@ -16,6 +16,7 @@ export const AMMDepositFlagsKeys = {
   twoAsset: AMMDepositFlags.tfTwoAsset,
   oneAssetLPToken: AMMDepositFlags.tfOneAssetLPToken,
   limitLPToken: AMMDepositFlags.tfLimitLPToken,
+  twoAssetIfEmpty: AMMDepositFlags.tfTwoAssetIfEmpty,
 };
 
 export interface AMMDepositFlagsKeysInterface {

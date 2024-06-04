@@ -11,10 +11,10 @@ describe("Client", () => {
     });
 
     it("works", async function () {
-      const result: any = await Client.getAccountObjects("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+      const result: any = await Client.getAccountObjects("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8");
       expect(Object.keys(result)).to.eql(["account", "account_objects", "ledger_hash", "ledger_index", "validated"]);
       expect(JSON.stringify(result.account_objects)).to.eql(
-        '[{"Balance":{"currency":"FOO","issuer":"rrrrrrrrrrrrrrrrrrrrBZbvji","value":"-123.45"},"Flags":131072,"HighLimit":{"currency":"FOO","issuer":"rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf","value":"1000000000"},"HighNode":"0","LedgerEntryType":"RippleState","LowLimit":{"currency":"FOO","issuer":"rNTvdxPWujQn2sUXYBGxmWrGe4ethkLyhb","value":"0"},"LowNode":"0","PreviousTxnID":"682BC63E6B3A17304301D921383516F4EF5F4A521B170EAF8492486B21D638FD","PreviousTxnLgrSeq":22442930,"index":"7A130F5FC6D937B65545220DC483B918A4A137D918EF2F126ECD4CBBFE44A633"}]'
+        '[{"Balance":{"currency":"FOO","issuer":"rrrrrrrrrrrrrrrrrrrrBZbvji","value":"-123.45"},"Flags":131072,"HighLimit":{"currency":"FOO","issuer":"rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8","value":"1000000000"},"HighNode":"0","LedgerEntryType":"RippleState","LowLimit":{"currency":"FOO","issuer":"rESkTa8rXUGKs1njRrJGYSTwB5R1XYCEAt","value":"0"},"LowNode":"0","PreviousTxnID":"AF70FD60A6B535152E3188F4F5DC504AF44DDEC08534AEDBD7203E59EEADC706","PreviousTxnLgrSeq":8214,"index":"B3640F185360BA74AE095111422699F02B7408C6B26A743216ABC65840D0E27F"}]'
       );
     });
   });
@@ -22,19 +22,28 @@ describe("Client", () => {
   describe("getAccountAllObjects", () => {
     before(async function () {
       this.timeout(15000);
-      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
+      Client.setup(nconf.get("xrpl:connections:mainnet"), { nativeCurrency: "XRP" });
       await Client.connect();
     });
 
     it("works", async function () {
+      this.timeout(240000);
       const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B");
-      expect(Object.keys(result)).to.eql(["account", "account_objects", "ledger_hash", "ledger_index", "validated"]);
+      expect(Object.keys(result).sort()).to.eql([
+        "account",
+        "account_objects",
+        "ledger_hash",
+        "ledger_index",
+        "limit",
+        "validated",
+      ]);
       expect(result.account_objects.length).to.gt(500);
     });
 
     it("works with limit 50", async function () {
       const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", { limit: 50 });
-      expect(Object.keys(result)).to.eql([
+      delete result._nodepref; // can be omitted
+      expect(Object.keys(result).sort()).to.eql([
         "account",
         "account_objects",
         "ledger_hash",
@@ -68,7 +77,8 @@ describe("Client", () => {
 
     it("works with limit 500", async function () {
       const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", { limit: 500 });
-      expect(Object.keys(result)).to.eql([
+      delete result._nodepref; // can be omitted
+      expect(Object.keys(result).sort()).to.eql([
         "account",
         "account_objects",
         "ledger_hash",
@@ -84,7 +94,8 @@ describe("Client", () => {
 
     it("works with limit 401", async function () {
       const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", { limit: 401 });
-      expect(Object.keys(result)).to.eql([
+      delete result._nodepref; // can be omitted
+      expect(Object.keys(result).sort()).to.eql([
         "account",
         "account_objects",
         "ledger_hash",
@@ -100,7 +111,8 @@ describe("Client", () => {
 
     it("works with timeout", async function () {
       const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", { timeout: 1 });
-      expect(Object.keys(result)).to.eql([
+      delete result._nodepref; // can be omitted
+      expect(Object.keys(result).sort()).to.eql([
         "account",
         "account_objects",
         "ledger_hash",
@@ -123,11 +135,11 @@ describe("Client", () => {
     });
 
     it("works", async function () {
-      const result: any = await Client.getAccountLinesObjects("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+      const result: any = await Client.getAccountLinesObjects("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8");
       expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "lines"]);
       expect(result.lines).to.eql([
         {
-          account: "rNTvdxPWujQn2sUXYBGxmWrGe4ethkLyhb",
+          account: "rESkTa8rXUGKs1njRrJGYSTwB5R1XYCEAt",
           balance: "123.45",
           currency: "FOO",
           limit: "1000000000",
@@ -154,11 +166,11 @@ describe("Client", () => {
         {
           amount: "3000000",
           flags: 0,
-          index: "3A3EEF42653BBA9D0756C5A5CEB10E74A95531903661284404914E414E980EE0",
-          ledger_index: 34625417,
-          nft_id: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF67650000099B00000000",
+          index: "E3E5D27670290E8EFF64C23EA0F00FE26EAB6EC86D4EF2DC5D82CD9698EF1054",
+          ledger_index: 15581,
+          nft_id: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF676506A7E2A800003C0D",
           owner: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
-          transaction_hash: "086208948599E016B24FAA892995598ED8FECF2017DC78CAF09A82F44680C283",
+          transaction_hash: "C4BC1F6334BF92DEF98C6779DD4AA2127A9426B29A83EABD629515DD1C7CE62C",
         },
       ]);
     });
@@ -172,11 +184,11 @@ describe("Client", () => {
           amount: "4000000",
           destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
           flags: 1,
-          index: "82962760B13C541370C2B9A2CE0F09AE65117C53CBB9ADB0FB168273253C5A14",
-          ledger_index: 34625415,
-          nft_id: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF67650000099B00000000",
+          index: "8F5547F1AFD835A36C13D01D1C0F2E5D1F886FBAE122DBAE591F64A861742EE0",
+          ledger_index: 15579,
+          nft_id: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF676506A7E2A800003C0D",
           owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
-          transaction_hash: "C5FDD937F0F5A82A95251A307F154C227FFD54C1E051B0057E56301BD479EBA3",
+          transaction_hash: "2607C20AF02367AD9FB6323F7B809097E0AB05845A6FE4FD682EC8407F5CF1B3",
         },
       ]);
     });

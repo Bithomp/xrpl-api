@@ -11,11 +11,11 @@ describe("Client", () => {
     });
 
     it("works", async function () {
-      const result: any = await Client.getAccountLines("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf");
+      const result: any = await Client.getAccountLines("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8");
       expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "lines", "validated"]);
       expect(result.lines).to.eql([
         {
-          account: "rNTvdxPWujQn2sUXYBGxmWrGe4ethkLyhb",
+          account: "rESkTa8rXUGKs1njRrJGYSTwB5R1XYCEAt",
           balance: "123.45",
           currency: "FOO",
           limit: "1000000000",

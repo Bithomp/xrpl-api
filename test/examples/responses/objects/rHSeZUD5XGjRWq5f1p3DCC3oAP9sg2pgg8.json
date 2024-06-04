@@ -2,10 +2,10 @@
   {
     "Balance": { "currency": "FOO", "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji", "value": "-123.45" },
     "Flags": 131072,
-    "HighLimit": { "currency": "FOO", "issuer": "rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf", "value": "1000000000" },
+    "HighLimit": { "currency": "FOO", "issuer": "rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8", "value": "1000000000" },
     "HighNode": "0",
     "LedgerEntryType": "RippleState",
-    "LowLimit": { "currency": "FOO", "issuer": "rNTvdxPWujQn2sUXYBGxmWrGe4ethkLyhb", "value": "0" },
+    "LowLimit": { "currency": "FOO", "issuer": "rESkTa8rXUGKs1njRrJGYSTwB5R1XYCEAt", "value": "0" },
     "LowNode": "0",
     "PreviousTxnID": "682BC63E6B3A17304301D921383516F4EF5F4A521B170EAF8492486B21D638FD",
     "PreviousTxnLgrSeq": 22442930,

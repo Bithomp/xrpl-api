@@ -3769,6 +3769,7 @@ describe("Models", () => {
             oneAssetLPToken: false,
             singleAsset: false,
             twoAsset: true,
+            twoAssetIfEmpty: false,
           },
         },
         outcome: {

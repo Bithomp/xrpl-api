@@ -202,7 +202,7 @@ export function createPaymentTransaction(address: string, paymentArgument: Payme
   }
   if (payment.noDirectRipple === true) {
     // eslint-disable-next-line no-bitwise
-    txJSON.Flags |= PaymentFlags.tfNoDirectRipple;
+    txJSON.Flags |= PaymentFlags.tfNoRippleDirect;
   }
   if (payment.limitQuality === true) {
     // eslint-disable-next-line no-bitwise

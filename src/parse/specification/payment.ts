@@ -10,7 +10,7 @@ import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types
 
 function isNoDirectRipple(tx: any) {
   // eslint-disable-next-line no-bitwise
-  return (tx.Flags & PaymentFlags.tfNoDirectRipple) !== 0;
+  return (tx.Flags & PaymentFlags.tfNoRippleDirect) !== 0;
 }
 
 function isQualityLimited(tx: any) {

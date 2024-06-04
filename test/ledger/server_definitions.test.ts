@@ -29,9 +29,13 @@ describe("Client", () => {
         }
 
         delete result.native_currency_code; // can be omitted from some servers
+        delete result.TRANSACTION_FLAGS; // can be omitted from some servers
+        delete result.TRANSACTION_FLAGS_INDICES; // can be omitted from some servers
         expect(Object.keys(result).sort()).to.eql([
           "FIELDS",
           "LEDGER_ENTRY_TYPES",
+          // "TRANSACTION_FLAGS",
+          // "TRANSACTION_FLAGS_INDICES",
           "TRANSACTION_RESULTS",
           "TRANSACTION_TYPES",
           "TYPES",
@@ -51,9 +55,13 @@ describe("Client", () => {
 
     it("getServerDefinitions", async function () {
       const result: any = await Client.getServerDefinitions();
+      delete result.TRANSACTION_FLAGS; // can be omitted from some servers
+      delete result.TRANSACTION_FLAGS_INDICES; // can be omitted from some servers
       expect(Object.keys(result).sort()).to.eql([
         "FIELDS",
         "LEDGER_ENTRY_TYPES",
+        // "TRANSACTION_FLAGS",
+        // "TRANSACTION_FLAGS_INDICES",
         "TRANSACTION_RESULTS",
         "TRANSACTION_TYPES",
         "TYPES",

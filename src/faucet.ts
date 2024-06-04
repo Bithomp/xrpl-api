@@ -55,28 +55,22 @@ export const FaucetNetworks = {
   // @deprecated name use xahau-test
   beta: {
     // hooks-testnet-v3, hooks-v3, beta, xahau-test are all the same
-    // https://beta.bithomp.com
+    // https://test.xahauexplorer.com
     url: "https://hooks-testnet-v3.xrpl-labs.com/newcreds",
     format: "xrpl-labs",
   },
   // @deprecated name use xahau-test
   "hooks-testnet-v3": {
     // hooks-testnet-v3, hooks-v3, beta, xahau-test are all the same
-    // https://beta.bithomp.com
+    // https://test.xahauexplorer.com
     url: "https://hooks-testnet-v3.xrpl-labs.com/newcreds",
     format: "xrpl-labs",
   },
   "xahau-test": {
     // hooks-testnet-v3, hooks-v3, beta, xahau-test are all the same
-    // https://beta.bithomp.com
+    // https://test.xahauexplorer.com
     url: "https://hooks-testnet-v3.xrpl-labs.com/newcreds",
     format: "xrpl-labs",
-  },
-  amm: {
-    // AMM
-    // https://amm.bithomp.com
-    url: "https://ammfaucet.devnet.rippletest.net/accounts",
-    format: "xrpl",
   },
 };
 

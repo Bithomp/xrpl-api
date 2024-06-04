@@ -4,7 +4,7 @@ import { Wallet } from "../src/index";
 describe("Wallet", () => {
   describe("isValidClassicAddress", () => {
     it("works for valid", async function () {
-      expect(Wallet.isValidClassicAddress("rLRUyXNh6QNmkdR1xJrnJBGURQeNp9Ltyf")).to.eql(true);
+      expect(Wallet.isValidClassicAddress("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8")).to.eql(true);
     });
 
     it("does not work for invalid", async function () {
