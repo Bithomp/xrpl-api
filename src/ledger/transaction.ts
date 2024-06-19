@@ -232,6 +232,7 @@ interface SubmitPaymentTransactionV1Interface {
   memos?: FormattedMemo[];
   secret: string;
   fee?: string;
+  sequence?: number;
 }
 
 export async function submitPaymentTransactionV1(
@@ -278,7 +279,13 @@ export async function submitPaymentTransactionV1(
   } else {
     transaction.Fee = submitParams.fee;
   }
-  transaction.Sequence = submitParams.sequence;
+
+  if (data.sequence) {
+    transaction.Sequence = data.sequence;
+  } else {
+    transaction.Sequence = submitParams.sequence;
+  }
+
   transaction.LastLedgerSequence = submitParams.lastLedgerSequence;
 
   // sign transaction
