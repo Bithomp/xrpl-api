@@ -233,6 +233,7 @@ interface SubmitPaymentTransactionV1Interface {
   secret: string;
   fee?: string;
   sequence?: number;
+  lastLedgerSequence?: number;
 }
 
 export async function submitPaymentTransactionV1(
@@ -268,8 +269,14 @@ export async function submitPaymentTransactionV1(
   };
 
   const transaction = createPaymentTransaction(data.sourceAddress, txPayment);
-  const submitParams = await getTxSubmitParams(data.sourceAddress, transaction, definitions, connection);
 
+  // remove unnecessary network queries
+  const skip = {
+    fee: data.fee ? true : false,
+    sequence: data.sequence ? true : false,
+    lastLedgerSequence: data.lastLedgerSequence ? true : false,
+  };
+  const submitParams = await getTxSubmitParams(data.sourceAddress, transaction, definitions, connection, skip);
   if ("error" in submitParams) {
     return submitParams as ErrorResponse;
   }
@@ -286,7 +293,11 @@ export async function submitPaymentTransactionV1(
     transaction.Sequence = submitParams.sequence;
   }
 
-  transaction.LastLedgerSequence = submitParams.lastLedgerSequence;
+  if (data.lastLedgerSequence) {
+    transaction.LastLedgerSequence = data.lastLedgerSequence;
+  } else if (submitParams.lastLedgerSequence) {
+    transaction.LastLedgerSequence = submitParams.lastLedgerSequence;
+  }
 
   // sign transaction
   const wallet = walletFromSeed(data.secret, { seedAddress: transaction.Account });
@@ -385,7 +396,8 @@ export async function getTxSubmitParams(
   account: string,
   tx?: string | any,
   definitions?: XrplDefinitionsBase,
-  connection?: Connection
+  connection?: Connection,
+  skip?: { fee?: boolean; sequence?: boolean; lastLedgerSequence?: boolean }
 ): Promise<AccountPaymentParamsInterface | ErrorResponse> {
   try {
     connection = connection || Client.findConnection("submit") || undefined; // eslint-disable-line no-param-reassign
@@ -393,60 +405,70 @@ export async function getTxSubmitParams(
       throw new Error("There is no connection");
     }
 
-    const feePromise = new Promise(async (resolve, rejects) => {
-      try {
-        if (tx && typeof tx === "object") {
-          // eslint-disable-next-line no-param-reassign
-          tx = { ...tx, Sequence: 0, Fee: "0", SigningPubKey: "" };
+    let feePromise: Promise<string> | undefined;
+    let sequencePromise: Promise<number> | undefined;
+    let lastLedgerSequencePromise: Promise<number | undefined> | undefined;
+
+    if (skip?.fee !== true) {
+      feePromise = new Promise(async (resolve, rejects) => {
+        try {
+          if (tx && typeof tx === "object") {
+            // eslint-disable-next-line no-param-reassign
+            tx = { ...tx, Sequence: 0, Fee: "0", SigningPubKey: "" };
+          }
+
+          const baseFee = await Client.getFee({ connection, tx, definitions });
+          let fee = parseFloat(baseFee as string);
+          if (fee > FEE_LIMIT) {
+            fee = FEE_LIMIT;
+          }
+
+          resolve(xrpToDrops(fee.toString()));
+        } catch (e: any) {
+          rejects(e);
         }
+      });
+    }
 
-        const baseFee = await Client.getFee({ connection, tx, definitions });
-        let fee = parseFloat(baseFee as string);
-        if (fee > FEE_LIMIT) {
-          fee = FEE_LIMIT;
+    if (skip?.sequence !== true) {
+      sequencePromise = new Promise(async (resolve, rejects) => {
+        try {
+          const accountData = await Client.getAccountInfoData(account, { connection });
+
+          if (!accountData) {
+            return rejects(new Error("Account not found"));
+          }
+
+          if ("error" in accountData) {
+            return rejects(new Error(accountData.error));
+          }
+
+          resolve(accountData.Sequence);
+        } catch (e: any) {
+          rejects(e);
         }
+      });
+    }
 
-        resolve(xrpToDrops(fee.toString()));
-      } catch (e: any) {
-        rejects(e);
-      }
-    });
-
-    const sequencePromise = new Promise(async (resolve, rejects) => {
-      try {
-        const accountData = await Client.getAccountInfoData(account, { connection });
-
-        if (!accountData) {
-          return rejects(new Error("Account not found"));
+    if (skip?.lastLedgerSequence !== true) {
+      lastLedgerSequencePromise = new Promise(async (resolve) => {
+        try {
+          const ledgerIndex = await Client.getLedgerIndex();
+          if (ledgerIndex !== undefined) {
+            resolve(ledgerIndex + MAX_LEDGERS_AWAIT);
+          }
+          resolve(undefined);
+        } catch (e: any) {
+          resolve(undefined);
         }
-
-        if ("error" in accountData) {
-          return rejects(new Error(accountData.error));
-        }
-
-        resolve(accountData.Sequence);
-      } catch (e: any) {
-        rejects(e);
-      }
-    });
-
-    const lastLedgerSequencePromise = new Promise(async (resolve) => {
-      try {
-        const ledgerIndex = await Client.getLedgerIndex();
-        if (ledgerIndex !== undefined) {
-          resolve(ledgerIndex + MAX_LEDGERS_AWAIT);
-        }
-        resolve(undefined);
-      } catch (e: any) {
-        resolve(undefined);
-      }
-    });
+      });
+    }
 
     const result = await Promise.all([feePromise, sequencePromise, lastLedgerSequencePromise]);
     return {
-      fee: result[0] as string,
-      sequence: result[1] as number,
-      lastLedgerSequence: result[2] as number,
+      fee: result[0],
+      sequence: result[1],
+      lastLedgerSequence: result[2],
       networkID: connection.getNetworkID(),
     };
   } catch (e: any) {
