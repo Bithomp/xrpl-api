@@ -528,6 +528,30 @@ describe("Client", () => {
         expect(result.validated).to.eq(true);
       });
 
+      it("is OK with provided sequence and fee", async function () {
+        this.timeout(15000);
+
+        const accountData = await Client.getAccountInfoData("rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz");
+        const payment = {
+          sourceAddress: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          sourceValue: "0.0001",
+          sourceCurrency: "XRP",
+          destinationAddress: "rBbfoBCNMpAaj35K5A9UV9LDkRSh6ZU9Ef",
+          destinationValue: "0.0001",
+          destinationCurrency: "XRP",
+          memos: [{ type: "memo", format: "plain/text", data: "Bithomp test" }],
+          sequence: (accountData as Models.AccountInfoDataResponse).Sequence,
+          fee: "0.000123",
+          secret: nconf.get("xrpl:accounts:activation:secret"),
+        };
+
+        const result: any = await Client.submitPaymentTransactionV1(payment);
+        expect(result.error).to.eq(undefined);
+        expect(result.validated).to.eq(true);
+        expect(result.Sequence).to.eq(payment.sequence);
+        expect(result.Fee).to.eq("123");
+      });
+
       it("is failed for not activated", async function () {
         this.timeout(15000);
 
