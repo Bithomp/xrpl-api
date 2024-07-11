@@ -3,7 +3,7 @@ import * as assert from "assert";
 import { AccountRootFlagsKeys } from "../../models/account_info";
 import { removeUndefined } from "../../common";
 import parseFields from "../ledger/fields";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 
 function getAccountRootModifiedNode(tx: any) {
@@ -63,7 +63,7 @@ function parseSettings(tx: any) {
   assert.ok(txType === "AccountSet" || txType === "SetRegularKey" || txType === "SignerListSet");
 
   const baseSettings = removeUndefined({
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 

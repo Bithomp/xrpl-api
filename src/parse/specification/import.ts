@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseImportBlob } from "../ledger/import";
 
@@ -18,7 +18,7 @@ function parseImport(tx: any): FormattedImportSpecification {
   return removeUndefined({
     blob: parseImportBlob(tx.Blob),
     source: removeUndefined(source),
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

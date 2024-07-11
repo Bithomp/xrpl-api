@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 
 import { FormattedSourceAddress } from "../../types/account";
@@ -18,7 +18,7 @@ function parseEscrowCancel(tx: any): FormattedEscrowCancelSpecification {
     source: removeUndefined(source),
     owner: tx.Owner,
     escrowSequence: tx.OfferSequence,
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

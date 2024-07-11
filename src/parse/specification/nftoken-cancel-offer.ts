@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { FormattedNFTokenCancelOfferSpecification } from "../../types/nftokens";
 
@@ -9,7 +9,7 @@ function parseNFTokenCancelOffer(tx: any): FormattedNFTokenCancelOfferSpecificat
 
   return removeUndefined({
     nftokenOffers: tx.NFTokenOffers,
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

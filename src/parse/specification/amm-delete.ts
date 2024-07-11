@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import parseAsset from "../ledger/asset";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 import { FormattedSourceAddress } from "../../types/account";
@@ -19,7 +19,7 @@ function parseAmmDelete(tx: any): FormattedAmmDeleteSpecification {
     source: Object.keys(source).length > 0 ? source : undefined,
     asset: parseAsset(tx.Asset),
     asset2: parseAsset(tx.Asset2),
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

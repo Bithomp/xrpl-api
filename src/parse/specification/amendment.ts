@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { FormattedAmendmentSpecification } from "../../types/amendments";
 
@@ -9,7 +9,7 @@ function parseAmendment(tx: any): FormattedAmendmentSpecification {
 
   return removeUndefined({
     amendment: tx.Amendment,
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

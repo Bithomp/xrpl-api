@@ -2,7 +2,7 @@ import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import { parseTimestamp } from "../utils";
 import parseRippledAmount from "../ledger/ripple-amount";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 
 import { FormattedPaymentChannelFundSpecification } from "../../types/payment_channels";
@@ -14,7 +14,7 @@ function parsePaymentChannelFund(tx: any): FormattedPaymentChannelFundSpecificat
     channel: tx.Channel,
     amount: parseRippledAmount(tx.Amount), // Legacy support
     expiration: tx.Expiration && parseTimestamp(tx.Expiration),
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

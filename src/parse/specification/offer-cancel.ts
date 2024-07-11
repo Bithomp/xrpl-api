@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { FormattedOfferCancelSpecification } from "../../types/offers";
 
@@ -8,7 +8,7 @@ function parseOfferCancel(tx: any): FormattedOfferCancelSpecification {
 
   return {
     orderSequence: tx.OfferSequence,
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   };
 }

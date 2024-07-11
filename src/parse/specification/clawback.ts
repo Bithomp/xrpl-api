@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 import { FormattedSourceAddress } from "../../types/account";
@@ -18,7 +18,7 @@ function parseClawback(tx: any): FormattedClawbackSpecification {
   return removeUndefined({
     source: Object.keys(source).length > 0 ? source : undefined,
     amount: tx.Amount ? parseAmount(tx.Amount) : undefined,
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

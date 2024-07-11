@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import parseNFTokenFlags from "../ledger/nftoken-flags";
 
@@ -15,7 +15,7 @@ function parseNFTokenMint(tx: any): FormattedNFTokenMintSpecification {
     transferFee: tx.TransferFee,
     uri: tx.URI,
     flags: parseNFTokenFlags(tx.Flags),
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

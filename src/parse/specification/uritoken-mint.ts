@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import parseURITokenFlags from "../ledger/uritoken-flags";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
@@ -26,7 +26,7 @@ function parseNFTokenMint(tx: any): FormattedURITokenMintSpecification {
     amount: tx.Amount,
     source: Object.keys(source).length > 0 ? source : undefined,
     destination: Object.keys(destination).length > 0 ? destination : undefined,
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

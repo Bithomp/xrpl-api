@@ -1494,7 +1494,7 @@ describe("Models", () => {
           flags: { burnable: false },
           source: { address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU" },
           destination: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
-          emitDetails: {
+          emittedDetails: {
             emitBurden: "1",
             emitGeneration: 1,
             emitHookHash: "6DAE1BECB44B1B0F7034A642849AECB73B8E3CF31ED7AF9C0BA16DF8363E3DE7",
@@ -3476,7 +3476,7 @@ describe("Models", () => {
                 },
                 source: { address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU" },
                 destination: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
-                emitDetails: {
+                emittedDetails: {
                   emitBurden: "1",
                   emitGeneration: 1,
                   emitHookHash: "6DAE1BECB44B1B0F7034A642849AECB73B8E3CF31ED7AF9C0BA16DF8363E3DE7",

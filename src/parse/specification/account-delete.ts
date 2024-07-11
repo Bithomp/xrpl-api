@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 import {
@@ -25,7 +25,7 @@ function parseAccountDelete(tx: any): FormattedAccountDeleteSpecification {
   return removeUndefined({
     source: Object.keys(source).length > 0 ? source : undefined,
     destination: Object.keys(destination).length > 0 ? destination : undefined,
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

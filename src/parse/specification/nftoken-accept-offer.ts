@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { FormattedNFTokenAcceptOfferSpecification } from "../../types/nftokens";
 
@@ -11,7 +11,7 @@ function parseNFTokenAcceptOffer(tx: any): FormattedNFTokenAcceptOfferSpecificat
     nftokenSellOffer: tx.NFTokenSellOffer,
     nftokenBuyOffer: tx.NFTokenBuyOffer,
     nftokenBrokerFee: tx.NFTokenBrokerFee,
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

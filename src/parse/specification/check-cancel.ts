@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 
 import { FormattedCheckCancelSpecification } from "../../types/checks";
@@ -10,7 +10,7 @@ function parseCheckCancel(tx: any): FormattedCheckCancelSpecification {
 
   return removeUndefined({
     checkID: tx.CheckID,
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

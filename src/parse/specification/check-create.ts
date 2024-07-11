@@ -2,7 +2,7 @@ import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import { parseTimestamp } from "../utils";
 import parseAmount from "../ledger/amount";
-import { parseEmitDetails } from "../ledger/emit_details";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
@@ -27,7 +27,7 @@ function parseCheckCreate(tx: any): FormattedCheckCreateSpecification {
     sendMax: parseAmount(tx.SendMax),
     expiration: tx.Expiration && parseTimestamp(tx.Expiration),
     invoiceID: tx.InvoiceID,
-    emitDetails: parseEmitDetails(tx),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }
