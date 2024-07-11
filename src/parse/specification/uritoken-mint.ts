@@ -1,16 +1,14 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import { parseMemos } from "../ledger/memos";
 import parseURITokenFlags from "../ledger/uritoken-flags";
 import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
 import { FormattedURITokenMintSpecification } from "../../types/uritokens";
 
 function parseNFTokenMint(tx: any): FormattedURITokenMintSpecification {
   assert.ok(tx.TransactionType === "URITokenMint");
-
-  const emittedDetails = parseEmittedDetails(tx);
 
   const source: FormattedSourceAddress = removeUndefined({
     address: parseAccount(tx.Account),
@@ -28,7 +26,7 @@ function parseNFTokenMint(tx: any): FormattedURITokenMintSpecification {
     amount: tx.Amount,
     source: Object.keys(source).length > 0 ? source : undefined,
     destination: Object.keys(destination).length > 0 ? destination : undefined,
-    emittedDetails,
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

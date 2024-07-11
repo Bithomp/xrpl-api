@@ -1,5 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 
@@ -20,6 +21,7 @@ function parseUNLReport(tx: any): FormattedUNLReportSpecification {
     source: removeUndefined(source),
     activeValidator,
     importVLKey,
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

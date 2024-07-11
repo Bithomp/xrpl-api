@@ -1,5 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import parseNFTOfferFlags from "../ledger/nftoken-offer-flags";
 import { ledgerTimeToUnixTime } from "../../models/ledger";
@@ -33,6 +34,7 @@ function parseNFTokenCreateOffer(tx: any): FormattedNFTokenCreateOfferSpecificat
     destination: Object.keys(destination).length > 0 ? destination : undefined,
     expiration,
     flags: parseNFTOfferFlags(tx.Flags),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

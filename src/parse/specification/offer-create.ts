@@ -2,6 +2,7 @@ import * as assert from "assert";
 import { OfferCreateFlags } from "xrpl";
 import { parseTimestamp } from "../utils";
 import parseAmount from "../ledger/amount";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { removeUndefined } from "../../common";
 import { FormattedOfferCreateSpecification, OfferCreateTransaction } from "../../types";
@@ -16,7 +17,6 @@ function parseOfferCreate(tx: OfferCreateTransaction): FormattedOfferCreateSpeci
   const totalPrice = direction === "buy" ? takerGetsAmount : takerPaysAmount;
 
   return removeUndefined({
-    memos: parseMemos(tx),
     direction: direction,
     quantity: quantity,
     totalPrice: totalPrice,
@@ -27,6 +27,8 @@ function parseOfferCreate(tx: OfferCreateTransaction): FormattedOfferCreateSpeci
     // eslint-disable-next-line no-bitwise
     fillOrKill: (tx.Flags & OfferCreateFlags.tfFillOrKill) !== 0 || undefined,
     expirationTime: parseTimestamp(tx.Expiration),
+    emittedDetails: parseEmittedDetails(tx),
+    memos: parseMemos(tx),
   });
 }
 

@@ -1,5 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 
 import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
@@ -20,6 +21,7 @@ function parseInvoke(tx: any): FormattedInvokeSpecification {
   return {
     source: removeUndefined(source),
     destination: removeUndefined(destination),
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   };
 }

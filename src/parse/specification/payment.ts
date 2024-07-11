@@ -3,6 +3,7 @@ import { PaymentFlags } from "xrpl";
 import { isPartialPayment, removeGenericCounterparty } from "../utils";
 import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 
 import { FormattedPaymentSpecification } from "../../types/payments";
@@ -36,12 +37,13 @@ function parsePayment(tx: any): FormattedPaymentSpecification {
   return removeUndefined({
     source: removeUndefined(source),
     destination: removeUndefined(destination),
-    memos: parseMemos(tx),
     invoiceID: tx.InvoiceID,
     paths: tx.Paths ? JSON.stringify(tx.Paths) : undefined,
     allowPartialPayment: isPartialPayment(tx) || undefined,
     noDirectRipple: isNoDirectRipple(tx) || undefined,
     limitQuality: isQualityLimited(tx) || undefined,
+    emittedDetails: parseEmittedDetails(tx),
+    memos: parseMemos(tx),
   });
 }
 

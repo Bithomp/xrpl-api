@@ -2,6 +2,7 @@ import * as assert from "assert";
 import { TrustSetFlags } from "xrpl";
 import { parseQuality } from "../utils";
 import { removeUndefined } from "../../common";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 
 import { FormattedTrustlineSpecification } from "../../types/trustlines";
@@ -25,12 +26,13 @@ function parseTrustline(tx: any): FormattedTrustlineSpecification {
     limit: tx.LimitAmount.value,
     currency: tx.LimitAmount.currency,
     counterparty: tx.LimitAmount.issuer,
-    memos: parseMemos(tx),
     qualityIn: parseQuality(tx.QualityIn),
     qualityOut: parseQuality(tx.QualityOut),
     ripplingDisabled: parseFlag(tx.Flags, TrustSetFlags.tfSetNoRipple, TrustSetFlags.tfClearNoRipple),
     frozen: parseFlag(tx.Flags, TrustSetFlags.tfSetFreeze, TrustSetFlags.tfClearFreeze),
     authorized: parseFlag(tx.Flags, TrustSetFlags.tfSetfAuth, 0),
+    emittedDetails: parseEmittedDetails(tx),
+    memos: parseMemos(tx),
   });
 }
 

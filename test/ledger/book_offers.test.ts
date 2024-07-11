@@ -144,8 +144,8 @@ describe("Client", () => {
         expect(Object.keys(result)).to.eql(["taker", "error", "error_code", "error_message", "status", "validated"]);
         expect(result.taker).to.eql(taker);
         expect(result.status).to.eql("error");
-        expect(["srcIsrMalformed", "dstIsrMalformed"].includes(result.error)).to.eq(true);
-        expect([70, 53].includes(result.error_code)).to.eq(true);
+        expect(["srcIsrMalformed", "dstIsrMalformed", "dstAmtMalformed"].includes(result.error)).to.eq(true);
+        expect([70, 53, 51].includes(result.error_code)).to.eq(true);
 
         // error_message: "Invalid field 'taker_pays.issuer', bad issuer.",
         // delete result.error_message; // could be different, depending on server

@@ -1,5 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 import parseURITokenFlags from "../ledger/uritoken-flags";
@@ -91,6 +92,7 @@ function parseRemit(tx: any): FormattedRemitsSpecification {
     blob: tx.Blob,
     inform: tx.Inform,
     invoiceID: tx.InvoiceID,
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }
