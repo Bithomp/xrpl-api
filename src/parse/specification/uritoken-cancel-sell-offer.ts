@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseEmitDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 
 import { FormattedURITokenCancelSellOfferSpecification } from "../../types/uritokens";
@@ -10,7 +10,7 @@ function parseNFTokenBurn(tx: any): FormattedURITokenCancelSellOfferSpecificatio
 
   return removeUndefined({
     uritokenID: tx.URITokenID,
-    emittedDetails: parseEmittedDetails(tx),
+    emitDetails: parseEmitDetails(tx),
     memos: parseMemos(tx),
   });
 }

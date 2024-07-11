@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
-import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseEmitDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 import { FormattedSourceAddress } from "../../types/account";
@@ -20,7 +20,7 @@ function parseAmmCreate(tx: any): FormattedAmmCreateSpecification {
     amount: parseAmount(tx.Amount),
     amount2: parseAmount(tx.Amount2),
     tradingFee: tx.TradingFee,
-    emittedDetails: parseEmittedDetails(tx),
+    emitDetails: parseEmitDetails(tx),
     memos: parseMemos(tx),
   });
 }

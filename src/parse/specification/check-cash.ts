@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
-import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseEmitDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 
 import { FormattedCheckCashSpecification } from "../../types/checks";
@@ -13,7 +13,7 @@ function parseCheckCash(tx: any): FormattedCheckCashSpecification {
     checkID: tx.CheckID,
     amount: tx.Amount && parseAmount(tx.Amount),
     deliverMin: tx.DeliverMin && parseAmount(tx.DeliverMin),
-    emittedDetails: parseEmittedDetails(tx),
+    emitDetails: parseEmitDetails(tx),
     memos: parseMemos(tx),
   });
 }

@@ -3,7 +3,7 @@ import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
 import parseAsset from "../ledger/asset";
 import parseAuthAccounts from "../ledger/auth-accounts";
-import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseEmitDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 import { FormattedSourceAddress } from "../../types/account";
@@ -24,7 +24,7 @@ function parseAmmBid(tx: any): FormattedAmmBidSpecification {
     bidMin: tx.BidMin ? parseAmount(tx.BidMin) : undefined,
     bidMax: tx.BidMax ? parseAmount(tx.BidMax) : undefined,
     authAccounts: parseAuthAccounts(tx.AuthAccounts),
-    emittedDetails: parseEmittedDetails(tx),
+    emitDetails: parseEmitDetails(tx),
     memos: parseMemos(tx),
   });
 }

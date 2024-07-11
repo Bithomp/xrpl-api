@@ -4,6 +4,6 @@ import { FormattedMemo } from "./memos";
 
 export type FormattedBaseSpecification = {
   source?: FormattedSourceAddress;
-  emittedDetails?: FormattedEmitDetails;
+  emitDetails?: FormattedEmitDetails;
   memos?: FormattedMemo[];
 };

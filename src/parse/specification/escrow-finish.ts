@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseEmitDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 
 import { FormattedSourceAddress } from "../../types/account";
@@ -20,7 +20,7 @@ function parseEscrowFinish(tx: any): FormattedEscrowFinishSpecification {
     escrowSequence: tx.OfferSequence,
     condition: tx.Condition,
     fulfillment: tx.Fulfillment,
-    emittedDetails: parseEmittedDetails(tx),
+    emitDetails: parseEmitDetails(tx),
     memos: parseMemos(tx),
   });
 }

@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import { parseTimestamp } from "../utils";
-import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseEmitDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 
 import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
@@ -27,7 +27,7 @@ function parseEscrowCreation(tx: any): FormattedEscrowCreateSpecification {
     condition: tx.Condition,
     allowCancelAfter: parseTimestamp(tx.CancelAfter),
     allowExecuteAfter: parseTimestamp(tx.FinishAfter),
-    emittedDetails: parseEmittedDetails(tx),
+    emitDetails: parseEmitDetails(tx),
     memos: parseMemos(tx),
   });
 }

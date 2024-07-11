@@ -3,7 +3,7 @@ import { PaymentFlags } from "xrpl";
 import { isPartialPayment, removeGenericCounterparty } from "../utils";
 import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
-import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseEmitDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 
 import { FormattedPaymentSpecification } from "../../types/payments";
@@ -42,7 +42,7 @@ function parsePayment(tx: any): FormattedPaymentSpecification {
     allowPartialPayment: isPartialPayment(tx) || undefined,
     noDirectRipple: isNoDirectRipple(tx) || undefined,
     limitQuality: isQualityLimited(tx) || undefined,
-    emittedDetails: parseEmittedDetails(tx),
+    emitDetails: parseEmitDetails(tx),
     memos: parseMemos(tx),
   });
 }

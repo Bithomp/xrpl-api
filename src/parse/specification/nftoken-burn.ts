@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseEmitDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 
 import { FormattedNFTokenBurnSpecification } from "../../types/nftokens";
@@ -11,7 +11,7 @@ function parseNFTokenBurn(tx: any): FormattedNFTokenBurnSpecification {
   return removeUndefined({
     account: tx.Account,
     nftokenID: tx.NFTokenID,
-    emittedDetails: parseEmittedDetails(tx),
+    emitDetails: parseEmitDetails(tx),
     memos: parseMemos(tx),
   });
 }

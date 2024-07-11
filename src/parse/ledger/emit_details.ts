@@ -9,7 +9,7 @@ import { FormattedEmitDetails } from "../../types/emit_details";
 //     "EmitParentTxnID": "BD3338E3799624DF13EA1CA46CD7305A643B99941F3563FAC35FB3D456153622"
 //   }
 // }
-export function parseEmittedDetails(tx: any): FormattedEmitDetails | undefined {
+export function parseEmitDetails(tx: any): FormattedEmitDetails | undefined {
   if (tx && tx.EmitDetails) {
     return {
       emitBurden: tx.EmitDetails.EmitBurden,
