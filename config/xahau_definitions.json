@@ -2649,6 +2649,7 @@
     "terNO_HOOK": -86,
 
     "tesSUCCESS": 0,
+    "tesPARTIAL": 1,
 
     "tecCLAIM": 100,
     "tecPATH_PARTIAL": 101,
