@@ -1,0 +1,407 @@
+{
+  "Account": "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh",
+  "EmitDetails": {
+    "EmitBurden": "1",
+    "EmitGeneration": 1,
+    "EmitHookHash": "610F33B8EBF7EC795F822A454FB852156AEFE50BE0CB8326338A81CD74801864",
+    "EmitNonce": "198789B4BAA79FD6D522211B8AEE777E4846A887A435CA8B7C7452A64AF4A617",
+    "EmitParentTxnID": "FDCA3EBCB58E6A0E927AE58A77AB50BAC1582CDA82913A624370D49284E33AC4"
+  },
+  "Fee": "10",
+  "FirstLedgerSequence": 6295150,
+  "Flags": 2147483648,
+  "GenesisMints": [
+    {
+      "GenesisMint": {
+        "Amount": "42946089",
+        "Destination": "rwietsevLFg8XSmG3bEZzFein1g8RBqWDZ"
+      }
+    },
+    {
+      "GenesisMint": {
+        "Amount": "2146872",
+        "Destination": "rD74dUPRFNfgnY2NzrxxYRXN4BrfGSN6Mv"
+      }
+    },
+    {
+      "GenesisMint": {
+        "Amount": "2146872",
+        "Destination": "rN7XCq12KBvBLKad3wWsVUwmb3dNx1fx3e"
+      }
+    },
+    {
+      "GenesisMint": {
+        "Amount": "2146872",
+        "Destination": "ra7MQw7YoMjUw6thxmSGE6jpAEY3LTHxev"
+      }
+    },
+    {
+      "GenesisMint": {
+        "Amount": "2146872",
+        "Destination": "rfMB6RCNdWSB6TJXYwCEU5HvDC2eArJp8h"
+      }
+    },
+    {
+      "GenesisMint": {
+        "Amount": "2146872",
+        "Destination": "r4FF5jjJMS2XqWDyTYStWrgARsj3FjaJ2J"
+      }
+    },
+    {
+      "GenesisMint": {
+        "Amount": "2146872",
+        "Destination": "rwyypATD1dQxDbdQjMvrqnsHr2cQw5rjMh"
+      }
+    },
+    {
+      "GenesisMint": {
+        "Amount": "2146872",
+        "Destination": "r4FRPZbLnyuVeGiSi1Ap6uaaPvPXYZh1XN"
+      }
+    },
+    {
+      "GenesisMint": {
+        "Amount": "2146872",
+        "Destination": "r6QZ6zfK37ZSec5hWiQDtbTxUaU2NWG3F"
+      }
+    },
+    {
+      "GenesisMint": {
+        "Amount": "2146872",
+        "Destination": "rHsh4MNWJKXN2YGtSf95aEzFYzMqwGiBve"
+      }
+    }
+  ],
+  "LastLedgerSequence": 6295154,
+  "Sequence": 0,
+  "SigningPubKey": "000000000000000000000000000000000000000000000000000000000000000000",
+  "TransactionType": "GenesisMint",
+  "ctid": "C0600E6E00045359",
+  "date": 772016772,
+  "hash": "D2DB0E4D4EFFD4B7F416F3F4F1A31D63DCA41C40C20F1D12E356F1CDC6A15D30",
+  "inLedger": 6295150,
+  "ledger_index": 6295150,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rD74dUPRFNfgnY2NzrxxYRXN4BrfGSN6Mv",
+            "Balance": "159174659401507",
+            "Domain": "7872706C2D6C6162732E636F6D",
+            "Flags": 2164326400,
+            "OwnerCount": 1,
+            "RegularKey": "rhNj18Cjgqxangkw11H3XqtaKWrXGVTKjy",
+            "RewardAccumulator": "19f4d79112a",
+            "RewardLgrFirst": 6283944,
+            "RewardLgrLast": 6295150,
+            "RewardTime": 771979541,
+            "Sequence": 751983709
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "227791D4667E09F9E546791DC8FA2A80C850ECD7997686B1B54E30006E299A20",
+          "PreviousFields": {
+            "Balance": "159174657254635",
+            "RewardAccumulator": "185b1939911",
+            "RewardLgrLast": 6294459
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rN7XCq12KBvBLKad3wWsVUwmb3dNx1fx3e",
+            "Balance": "223214251528",
+            "Flags": 16777216,
+            "OwnerCount": 0,
+            "RegularKey": "rKLDcskSc7EaHDkBohxioXcASzDmWcQZNc",
+            "Sequence": 751983703
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "271591B2268E50B1F03705FA476AB2D671A0DE6FF49934C77684C643FF2EF631",
+          "PreviousFields": {
+            "Balance": "223212104656"
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh",
+            "Balance": "999999933970",
+            "Flags": 1048576,
+            "HookNamespaces": ["0000000000000000000000000000000000000000000000000000000000000000"],
+            "HookStateCount": 21,
+            "OwnerCount": 23,
+            "RegularKey": "rrrrrrrrrrrrrrrrrrrrBZbvji",
+            "Sequence": 1
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "2B6AC232AA4C4BE41BF49D2459FA4A0347E1B543A4C92FCEE0821C0201E2E9A8",
+          "PreviousFields": {
+            "Balance": "999999933980"
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "ra7MQw7YoMjUw6thxmSGE6jpAEY3LTHxev",
+            "Balance": "11682471076795",
+            "Flags": 0,
+            "OwnerCount": 0,
+            "RegularKey": "rMCouhZ7x83FDCgXfaew3pfn4CD15uD4sv",
+            "RewardAccumulator": "10d87badef2",
+            "RewardLgrFirst": 6196062,
+            "RewardLgrLast": 6295150,
+            "RewardTime": 771687351,
+            "Sequence": 751983714
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "36E78FF5F3A78D9B85468D77EA08EF21BC539A9438E071CD802A80C8F816B87A",
+          "PreviousFields": {
+            "Balance": "11682468929923",
+            "RewardAccumulator": "10ba690f62d",
+            "RewardLgrLast": 6294459
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rfMB6RCNdWSB6TJXYwCEU5HvDC2eArJp8h",
+            "Balance": "12214784251956",
+            "Flags": 65536,
+            "OwnerCount": 0,
+            "RegularKey": "rBBxktfjDKWkztUniKBGdcvpWENcNwXbZp",
+            "Sequence": 751983661
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "45E5512AB2F99A808ED3C60A9461EC8BDBA54976EA7CC044BE2A8B8C93C03FD8",
+          "PreviousFields": {
+            "Balance": "12214782105084"
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r4FRPZbLnyuVeGiSi1Ap6uaaPvPXYZh1XN",
+            "Balance": "8814784250121",
+            "Flags": 1048576,
+            "HookNamespaces": ["0000000000000000000000000000000000000000000000000000000000000000"],
+            "HookStateCount": 15,
+            "OwnerCount": 16,
+            "RegularKey": "rrrrrrrrrrrrrrrrrrrrBZbvji",
+            "Sequence": 751983660
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "7B4566CD6A6B1FDFFB1C33D8F7A186CF17DD191058C18C2F3B6F1237D70800DA",
+          "PreviousFields": {
+            "Balance": "8814782103249"
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rwietsevLFg8XSmG3bEZzFein1g8RBqWDZ",
+            "AccountIndex": "7",
+            "Balance": "6103320069",
+            "Flags": 1073741824,
+            "OwnerCount": 7,
+            "RegularKey": "r9PfV3sQpKLWxccdg3HL2FXKxGW2orAcLE",
+            "RewardAccumulator": "17d7",
+            "RewardLgrFirst": 6295149,
+            "RewardLgrLast": 6295150,
+            "RewardTime": 772016762,
+            "Sequence": 751998307
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "8C4F456312F02D5199BCB1FB8F657BF19675288E3F4EBF2AFCFB5A1253788404",
+          "PreviousFields": {
+            "Balance": "6060373980",
+            "RewardAccumulator": "0",
+            "RewardLgrLast": 6295149
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rHsh4MNWJKXN2YGtSf95aEzFYzMqwGiBve",
+            "Balance": "314784080977",
+            "Flags": 1048576,
+            "HookNamespaces": ["0000000000000000000000000000000000000000000000000000000000000000"],
+            "HookStateCount": 9,
+            "OwnerCount": 10,
+            "RegularKey": "rrrrrrrrrrrrrrrrrrrrBZbvji",
+            "Sequence": 751983660
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "97F932A936C9E4DA98302FB29A9190F8B31BBD0CE57A0E0B973D47AE5936D8B0",
+          "PreviousFields": {
+            "Balance": "314781934105"
+          }
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "EmittedTxn": {
+              "Account": "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh",
+              "EmitDetails": {
+                "EmitBurden": "1",
+                "EmitGeneration": 1,
+                "EmitHookHash": "610F33B8EBF7EC795F822A454FB852156AEFE50BE0CB8326338A81CD74801864",
+                "EmitNonce": "198789B4BAA79FD6D522211B8AEE777E4846A887A435CA8B7C7452A64AF4A617",
+                "EmitParentTxnID": "FDCA3EBCB58E6A0E927AE58A77AB50BAC1582CDA82913A624370D49284E33AC4"
+              },
+              "Fee": "10",
+              "FirstLedgerSequence": 6295150,
+              "Flags": 2147483648,
+              "GenesisMints": [
+                {
+                  "GenesisMint": {
+                    "Amount": "42946089",
+                    "Destination": "rwietsevLFg8XSmG3bEZzFein1g8RBqWDZ"
+                  }
+                },
+                {
+                  "GenesisMint": {
+                    "Amount": "2146872",
+                    "Destination": "rD74dUPRFNfgnY2NzrxxYRXN4BrfGSN6Mv"
+                  }
+                },
+                {
+                  "GenesisMint": {
+                    "Amount": "2146872",
+                    "Destination": "rN7XCq12KBvBLKad3wWsVUwmb3dNx1fx3e"
+                  }
+                },
+                {
+                  "GenesisMint": {
+                    "Amount": "2146872",
+                    "Destination": "ra7MQw7YoMjUw6thxmSGE6jpAEY3LTHxev"
+                  }
+                },
+                {
+                  "GenesisMint": {
+                    "Amount": "2146872",
+                    "Destination": "rfMB6RCNdWSB6TJXYwCEU5HvDC2eArJp8h"
+                  }
+                },
+                {
+                  "GenesisMint": {
+                    "Amount": "2146872",
+                    "Destination": "r4FF5jjJMS2XqWDyTYStWrgARsj3FjaJ2J"
+                  }
+                },
+                {
+                  "GenesisMint": {
+                    "Amount": "2146872",
+                    "Destination": "rwyypATD1dQxDbdQjMvrqnsHr2cQw5rjMh"
+                  }
+                },
+                {
+                  "GenesisMint": {
+                    "Amount": "2146872",
+                    "Destination": "r4FRPZbLnyuVeGiSi1Ap6uaaPvPXYZh1XN"
+                  }
+                },
+                {
+                  "GenesisMint": {
+                    "Amount": "2146872",
+                    "Destination": "r6QZ6zfK37ZSec5hWiQDtbTxUaU2NWG3F"
+                  }
+                },
+                {
+                  "GenesisMint": {
+                    "Amount": "2146872",
+                    "Destination": "rHsh4MNWJKXN2YGtSf95aEzFYzMqwGiBve"
+                  }
+                }
+              ],
+              "LastLedgerSequence": 6295154,
+              "Sequence": 0,
+              "SigningPubKey": "000000000000000000000000000000000000000000000000000000000000000000",
+              "TransactionType": "GenesisMint"
+            },
+            "Flags": 0,
+            "OwnerNode": "0"
+          },
+          "LedgerEntryType": "EmittedTxn",
+          "LedgerIndex": "997753B79DA7548ECAB29C9B391134623A89323AE2B3CB88F6BE6F404F25B5D3"
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r6QZ6zfK37ZSec5hWiQDtbTxUaU2NWG3F",
+            "Balance": "314784251976",
+            "Flags": 1048576,
+            "HookNamespaces": ["0000000000000000000000000000000000000000000000000000000000000000"],
+            "HookStateCount": 13,
+            "OwnerCount": 14,
+            "RegularKey": "rrrrrrrrrrrrrrrrrrrrBZbvji",
+            "Sequence": 751983660
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "ACFA648B64C39546C6416587F4EC8ED59528D995CDBCF93939C5EE6E174571E4",
+          "PreviousFields": {
+            "Balance": "314782105104"
+          }
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "Flags": 4,
+            "RootIndex": "B4DE823055D00BC12CD78FE1AAF74EE6062195B2629F49A25915A39C64BE1900"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "B4DE823055D00BC12CD78FE1AAF74EE6062195B2629F49A25915A39C64BE1900"
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rwyypATD1dQxDbdQjMvrqnsHr2cQw5rjMh",
+            "Balance": "314784231484",
+            "Flags": 1048576,
+            "HookNamespaces": ["0000000000000000000000000000000000000000000000000000000000000000"],
+            "HookStateCount": 10,
+            "OwnerCount": 11,
+            "RegularKey": "rrrrrrrrrrrrrrrrrrrrBZbvji",
+            "Sequence": 751983660
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "EDD9DFB768F7C38F40D58EE17320AD8D80E50D4A8F248696BEC895DB8358ADE6",
+          "PreviousFields": {
+            "Balance": "314782084612"
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r4FF5jjJMS2XqWDyTYStWrgARsj3FjaJ2J",
+            "Balance": "224784251836",
+            "Flags": 65536,
+            "OwnerCount": 0,
+            "RegularKey": "rHdaxhEWV2BdZjVdPRZFb88WkMW2AQNRgR",
+            "Sequence": 751983667
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "F5856191065AB52B67C090E67A3824A24B4B07A64177557F3BC7FAC1C6EBCD6B",
+          "PreviousFields": {
+            "Balance": "224782104964"
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 4,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

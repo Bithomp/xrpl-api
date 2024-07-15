@@ -58,6 +58,8 @@ import {
   FormattedAmmVoteSpecification,
 } from "../types/amm";
 
+import { FormattedGenesisMintSpecification } from "../types/genesis_mint";
+
 import { FormattedAmendmentSpecification } from "../types/amendments";
 import { FormattedFeeUpdateSpecification } from "../types/fees";
 
@@ -104,6 +106,8 @@ import parseAmmDelete from "./specification/amm-delete";
 import parseAmmDeposit from "./specification/amm-deposit";
 import parseAmmWithdraw from "./specification/amm-withdraw";
 import parseAmmVote from "./specification/amm-vote";
+
+import parseGenesisMint from "./specification/genesis-mint";
 
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
 import parseFeeUpdate from "./specification/fee-update"; // pseudo-transaction
@@ -155,6 +159,8 @@ const transactionTypeToType = {
   AMMDeposit: "ammDeposit",
   AMMWithdraw: "ammWithdraw",
   AMMVote: "ammVote",
+
+  GenesisMint: "genesisMint",
 
   EnableAmendment: "amendment", // pseudo-transaction
   SetFee: "feeUpdate", // pseudo-transaction
@@ -209,6 +215,8 @@ const parserTypeFunc = {
   ammWithdraw: parseAmmWithdraw,
   ammVote: parseAmmVote,
 
+  genesisMint: parseGenesisMint,
+
   amendment: parseAmendment, // pseudo-transaction
   feeUpdate: parseFeeUpdate, // pseudo-transaction
 };
@@ -252,6 +260,7 @@ export type FormattedSpecification =
   | FormattedAmmDepositSpecification
   | FormattedAmmWithdrawSpecification
   | FormattedAmmVoteSpecification
+  | FormattedGenesisMintSpecification
   | FormattedAmendmentSpecification
   | FormattedFeeUpdateSpecification;
 

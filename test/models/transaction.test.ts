@@ -1250,6 +1250,60 @@ describe("Models", () => {
       });
     });
 
+    it("GenesisMint", function () {
+      const tx = require("../examples/responses/GenesisMint.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "genesisMint",
+        address: "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh",
+        sequence: 0,
+        id: "D2DB0E4D4EFFD4B7F416F3F4F1A31D63DCA41C40C20F1D12E356F1CDC6A15D30",
+        ctid: "C0600E6E00045359",
+        specification: {
+          genesisMints: [
+            { amount: { currency: "XRP", value: "42.946089" }, destination: "rwietsevLFg8XSmG3bEZzFein1g8RBqWDZ" },
+            { amount: { currency: "XRP", value: "2.146872" }, destination: "rD74dUPRFNfgnY2NzrxxYRXN4BrfGSN6Mv" },
+            { amount: { currency: "XRP", value: "2.146872" }, destination: "rN7XCq12KBvBLKad3wWsVUwmb3dNx1fx3e" },
+            { amount: { currency: "XRP", value: "2.146872" }, destination: "ra7MQw7YoMjUw6thxmSGE6jpAEY3LTHxev" },
+            { amount: { currency: "XRP", value: "2.146872" }, destination: "rfMB6RCNdWSB6TJXYwCEU5HvDC2eArJp8h" },
+            { amount: { currency: "XRP", value: "2.146872" }, destination: "r4FF5jjJMS2XqWDyTYStWrgARsj3FjaJ2J" },
+            { amount: { currency: "XRP", value: "2.146872" }, destination: "rwyypATD1dQxDbdQjMvrqnsHr2cQw5rjMh" },
+            { amount: { currency: "XRP", value: "2.146872" }, destination: "r4FRPZbLnyuVeGiSi1Ap6uaaPvPXYZh1XN" },
+            { amount: { currency: "XRP", value: "2.146872" }, destination: "r6QZ6zfK37ZSec5hWiQDtbTxUaU2NWG3F" },
+            { amount: { currency: "XRP", value: "2.146872" }, destination: "rHsh4MNWJKXN2YGtSf95aEzFYzMqwGiBve" },
+          ],
+          emittedDetails: {
+            emitBurden: "1",
+            emitGeneration: 1,
+            emitHookHash: "610F33B8EBF7EC795F822A454FB852156AEFE50BE0CB8326338A81CD74801864",
+            emitNonce: "198789B4BAA79FD6D522211B8AEE777E4846A887A435CA8B7C7452A64AF4A617",
+            emitParentTxnID: "FDCA3EBCB58E6A0E927AE58A77AB50BAC1582CDA82913A624370D49284E33AC4",
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-06-18T09:06:12.000Z",
+          fee: "0.00001",
+          balanceChanges: {
+            rD74dUPRFNfgnY2NzrxxYRXN4BrfGSN6Mv: [{ currency: "XRP", value: "2.146872" }],
+            rN7XCq12KBvBLKad3wWsVUwmb3dNx1fx3e: [{ currency: "XRP", value: "2.146872" }],
+            rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh: [{ currency: "XRP", value: "-0.00001" }],
+            ra7MQw7YoMjUw6thxmSGE6jpAEY3LTHxev: [{ currency: "XRP", value: "2.146872" }],
+            rfMB6RCNdWSB6TJXYwCEU5HvDC2eArJp8h: [{ currency: "XRP", value: "2.146872" }],
+            r4FRPZbLnyuVeGiSi1Ap6uaaPvPXYZh1XN: [{ currency: "XRP", value: "2.146872" }],
+            rwietsevLFg8XSmG3bEZzFein1g8RBqWDZ: [{ currency: "XRP", value: "42.946089" }],
+            rHsh4MNWJKXN2YGtSf95aEzFYzMqwGiBve: [{ currency: "XRP", value: "2.146872" }],
+            r6QZ6zfK37ZSec5hWiQDtbTxUaU2NWG3F: [{ currency: "XRP", value: "2.146872" }],
+            rwyypATD1dQxDbdQjMvrqnsHr2cQw5rjMh: [{ currency: "XRP", value: "2.146872" }],
+            r4FF5jjJMS2XqWDyTYStWrgARsj3FjaJ2J: [{ currency: "XRP", value: "2.146872" }],
+          },
+          ledgerVersion: 6295150,
+          indexInLedger: 4,
+        },
+      });
+    });
+
     it("URITokenMint", function () {
       const tx = require("../examples/responses/URITokenMint.json");
       const result: any = Models.getTxDetails(tx, false);
