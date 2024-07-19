@@ -1,6 +1,6 @@
 {
   "name": "@bithomp/xrpl-api",
-  "version": "3.0.10",
+  "version": "3.1.0",
   "description": "A Bithomp JavaScript/TypeScript library for interacting with the XRP Ledger",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -11,19 +11,23 @@
     "url": "git+https://github.com/Bithomp/xrpl-api.git"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.0.0"
   },
   "keywords": [
     "xrpl",
-    "ws",
+    "rippled",
+    "clio",
     "xrp",
-    "xah",
     "nft",
     "xls20",
     "xls35",
     "unl",
     "bithomp",
-    "xahau"
+    "xahau",
+    "xahaud",
+    "xah",
+    "hooks",
+    "ws"
   ],
   "funding": {
     "type": "individual",
@@ -51,21 +55,21 @@
     "axios": "^1.7.2",
     "base-x": "^5.0.0",
     "bignumber.js": "^9.1.2",
-    "elliptic": "^6.5.5",
+    "elliptic": "^6.5.6",
     "lodash": "^4.17.21",
     "ripple-address-codec": "^5.0.0",
     "ripple-binary-codec": "^2.1.0",
-    "xrpl": "^3.1.0"
+    "xrpl": "^4.0.0"
   },
   "devDependencies": {
     "@types/chai": "^4.3.16",
     "@types/chai-as-promised": "^7.1.8",
-    "@types/lodash": "^4.17.6",
+    "@types/lodash": "^4.17.7",
     "@types/mocha": "^10.0.7",
     "@types/nconf": "^0.10.6",
-    "@types/node": "^20.14.10",
-    "@typescript-eslint/eslint-plugin": "^7.16.0",
-    "@typescript-eslint/parser": "^7.16.0",
+    "@types/node": "^20.14.11",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
+    "@typescript-eslint/parser": "^7.16.1",
     "chai": "^4.4.1",
     "chai-as-promised": "^7.1.2",
     "eslint": "^8.57.0",

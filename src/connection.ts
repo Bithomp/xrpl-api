@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { EventEmitter } from "events";
-import { Client, Request, Response, LedgerStream } from "xrpl";
+import { Client, Request, Response, LedgerStream, RIPPLED_API_V1, APIVersion } from "xrpl";
 import { StreamType, ledgerTimeToTimestamp } from "./models/ledger";
 import { removeUndefined, dropsToXrp } from "./common";
 import { sleep } from "./common/utils";
@@ -9,13 +9,19 @@ const RECONNECT_TIMEOUT = 1000 * 5; // 5 sec
 const LEDGER_CLOSED_TIMEOUT = 1000 * 15; // 15 sec
 const SERVER_INFO_UPDATE_INTERVAL = 1000 * 60 * 5; // 5 min (in ms)
 
+// min and max ledger index window to consider ledger as available,
+// used to prevent from requesting unavailable ledgers
 const AVAILABLE_LEDGER_INDEX_WINDOW = 1000;
+
+// Set default api version to 1, so it will be compatible with rippled and xahaud servers
+export const DEFAULT_API_VERSION = RIPPLED_API_V1;
 
 export interface ConnectionOptions {
   logger?: any;
   timeout?: number; // request timeout
   connectionTimeout?: number;
   networkID?: number;
+  apiVersion?: APIVersion; // default is 1, rippled 1.x: [1], rippled 2.x: [1, 2], xahaud: [1]
 }
 
 export interface LatencyInfo {
@@ -49,6 +55,7 @@ class Connection extends EventEmitter {
   public readonly connectionTimeout: number;
   public readonly hash?: string;
   private networkID?: number;
+  private apiVersion: APIVersion;
   private serverInfoUpdating: boolean;
   public serverInfo: any = {};
   private shutdown: boolean = false;
@@ -80,6 +87,8 @@ class Connection extends EventEmitter {
       this.networkID = options.networkID;
     }
 
+    this.apiVersion = options.apiVersion || DEFAULT_API_VERSION;
+
     this.serverInfoUpdating = false;
     this.serverInfo = null;
 
@@ -105,6 +114,7 @@ class Connection extends EventEmitter {
         this.url,
         removeUndefined({ timeout: this.timeout, connectionTimeout: this.connectionTimeout })
       );
+      this.client.apiVersion = this.apiVersion;
       this.setupEmitter();
 
       await this.client.connect();
