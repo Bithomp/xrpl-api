@@ -49,7 +49,7 @@ describe("Client", () => {
     it("works with no offers", async function () {
       const result: any = await Client.getAccountAllOffers("r4UPddYeGeZgDhSGPkooURsQtmGda4oYQW");
       expect(result.offers.length).to.eql(0);
-      expect(result.marker).to.a("string");
+      expect(result.marker).to.be.undefined;
     });
 
     it("works as formatted with offers", async function () {
@@ -64,7 +64,7 @@ describe("Client", () => {
     it("works as formatted with no offers", async function () {
       const result: any = await Client.getAccountAllOffers("r4UPddYeGeZgDhSGPkooURsQtmGda4oYQW", { formatted: true });
       expect(result.offers.length).to.eql(0);
-      expect(result.marker).to.a("string");
+      expect(result.marker).to.be.undefined;
     });
   });
 });

@@ -126,11 +126,6 @@ export async function getAccountAllOffers(
     } else {
       break;
     }
-
-    // can be empty even with marker
-    if (response.offers.length === 0) {
-      break;
-    }
   }
 
   if (response.error) {
