@@ -20,7 +20,7 @@ export interface GetTransactionsOptions {
   ledgerHash?: string;
   ledgerIndex?: LedgerIndex;
   binary?: boolean;
-  forward?: boolean;
+  forward?: boolean; // if true, will return transactions after marker, if false, will return transactions before marker
   limit: number;
   marker?: any;
   balanceChanges?: boolean;
@@ -322,9 +322,15 @@ async function applyStartTxOptions(options: FindProcessTransactionsOptions) {
       };
       // set min/max ledger to search from
       if (options.forward === true) {
-        options.ledgerIndexMin = (options as FindProcessTransactionsOptions).startTx.tx.ledger_index;
+        const ledgerIndex = (options as FindProcessTransactionsOptions).startTx.tx.ledger_index;
+        if (options.ledgerIndexMin === undefined || ledgerIndex > options.ledgerIndexMin) {
+          options.ledgerIndexMin = ledgerIndex;
+        }
       } else {
-        options.ledgerIndexMax = (options as FindProcessTransactionsOptions).startTx.tx.ledger_index;
+        const ledgerIndex = (options as FindProcessTransactionsOptions).startTx.tx.ledger_index;
+        if (options.ledgerIndexMax === undefined || ledgerIndex < options.ledgerIndexMax) {
+          options.ledgerIndexMax = ledgerIndex;
+        }
       }
     }
   }

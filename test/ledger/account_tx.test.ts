@@ -208,16 +208,105 @@ describe("Client", () => {
         expect(result[0].tx.hash).to.eq("A92198925ABAA11D1EB3F5967D88D5D1F5FF1D1D356BE3B10477F774906262E6");
       });
 
-      it("finds one previous with startTxHash", async function () {
+      it("finds transaction after first one with ledgerIndexMin", async function () {
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 1,
-          startTxHash: "262CF9482A2BD8EAF3F1210AD6F5B2D9D4FA710533D75C5E1855C631B337A297",
+          initiated: true,
+          forward: true,
+          excludeFailures: true,
+          types: ["Payment"],
+          startTxHash: "5252FE36681D56CB1218B34BBF7509C4B8008D45C0FE31A4168A83E87478B877", // 16659000
+          ledgerIndexMin: 16659001,
           timeout: 4000,
         });
 
         expect(result.length).to.eq(1);
-        expect(result[0].tx.hash).to.eq("EB467EEDE37080F926766246A9D1883665B29545685013B3CB502394ECEF2476");
+        expect(result[0].tx.hash).to.eq("A92198925ABAA11D1EB3F5967D88D5D1F5FF1D1D356BE3B10477F774906262E6"); // 16660323
+      });
+
+      it("finds transaction after first one with ledgerIndexMax", async function () {
+        const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
+        const result: any = await Client.findTransactions(address, {
+          limit: 1,
+          initiated: true,
+          forward: true,
+          excludeFailures: true,
+          types: ["Payment"],
+          startTxHash: "5252FE36681D56CB1218B34BBF7509C4B8008D45C0FE31A4168A83E87478B877", // 16659000
+          ledgerIndexMax: 16660324,
+          timeout: 4000,
+        });
+
+        expect(result.length).to.eq(1);
+        expect(result[0].tx.hash).to.eq("A92198925ABAA11D1EB3F5967D88D5D1F5FF1D1D356BE3B10477F774906262E6"); // 16660323
+      });
+
+      it("finds transaction after first one with ledgerIndexMin and ledgerIndexMax", async function () {
+        const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
+        const result: any = await Client.findTransactions(address, {
+          limit: 1,
+          initiated: true,
+          forward: true,
+          excludeFailures: true,
+          types: ["Payment"],
+          startTxHash: "5252FE36681D56CB1218B34BBF7509C4B8008D45C0FE31A4168A83E87478B877", // 16659000
+          ledgerIndexMin: 16659001,
+          ledgerIndexMax: 16660322,
+          timeout: 4000,
+        });
+
+        expect(result.length).to.eq(0);
+      });
+
+      it("finds one previous with startTxHash", async function () {
+        const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
+        const result: any = await Client.findTransactions(address, {
+          limit: 1,
+          startTxHash: "262CF9482A2BD8EAF3F1210AD6F5B2D9D4FA710533D75C5E1855C631B337A297", // 68996875
+          timeout: 4000,
+        });
+
+        expect(result.length).to.eq(1);
+        expect(result[0].tx.hash).to.eq("EB467EEDE37080F926766246A9D1883665B29545685013B3CB502394ECEF2476"); // 68996869
+      });
+
+      it("finds one previous with startTxHash and ledgerIndexMax", async function () {
+        const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
+        const result: any = await Client.findTransactions(address, {
+          limit: 1,
+          startTxHash: "262CF9482A2BD8EAF3F1210AD6F5B2D9D4FA710533D75C5E1855C631B337A297", // 68996875
+          ledgerIndexMax: 68996868,
+          timeout: 4000,
+        });
+
+        expect(result.length).to.eq(1);
+        expect(result[0].tx.hash).to.eq("F339A313713C12013CEDD2C9CE7108919059DA5BD64E5A929C45D1720835382B"); // 68996863
+      });
+
+      it("finds one previous with startTxHash and ledgerIndexMin", async function () {
+        const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
+        const result: any = await Client.findTransactions(address, {
+          limit: 1,
+          startTxHash: "262CF9482A2BD8EAF3F1210AD6F5B2D9D4FA710533D75C5E1855C631B337A297", // 68996875
+          ledgerIndexMin: 68996868,
+          timeout: 4000,
+        });
+
+        expect(result.length).to.eq(1);
+        expect(result[0].tx.hash).to.eq("EB467EEDE37080F926766246A9D1883665B29545685013B3CB502394ECEF2476"); // 68996869
+      });
+
+      it("finds one previous with startTxHash and ledgerIndexMin, ledgerIndexMax", async function () {
+        const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
+        const result: any = await Client.findTransactions(address, {
+          limit: 1,
+          startTxHash: "262CF9482A2BD8EAF3F1210AD6F5B2D9D4FA710533D75C5E1855C631B337A297", // 68996875
+          ledgerIndexMin: 68996870,
+          timeout: 4000,
+        });
+
+        expect(result.length).to.eq(0);
       });
 
       it("finds 10 previous with startTxHash", async function () {
