@@ -17,26 +17,26 @@ describe("Client", () => {
           {
             Flags: 11,
             Issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
-            NFTokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF676506A7E2A800003C0D",
+            NFTokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765279C77FB00000E60",
             NFTokenTaxon: 0,
             URI: "626974686F6D7024746573742E626974686F6D702E636F6D",
-            nft_serial: 15373,
+            nft_serial: 3680,
           },
           {
             Flags: 11,
             Issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
-            NFTokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765623F26AC00003C11",
+            NFTokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765556819FD00000E62",
             NFTokenTaxon: 0,
             URI: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
-            nft_serial: 15377,
+            nft_serial: 3682,
           },
           {
             Flags: 0,
             Issuer: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
-            NFTokenID: "0000000096559C6D26437B219661DD6AA2F68558B1A17BD3D4BC3BB100003C16",
+            NFTokenID: "0000000096559C6D26437B219661DD6AA2F68558B1A17BD3C7E52F0200000E67",
             NFTokenTaxon: 0,
             URI: "626974686F6D7024746573742E626974686F6D702E636F6D",
-            nft_serial: 15382,
+            nft_serial: 3687,
           },
         ]);
       });
@@ -49,26 +49,26 @@ describe("Client", () => {
           {
             Flags: 11,
             Issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
-            NFTokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF676506A7E2A800003C0D",
+            NFTokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765279C77FB00000E60",
             NFTokenTaxon: 0,
             URI: "626974686F6D7024746573742E626974686F6D702E636F6D",
-            nft_serial: 15373,
+            nft_serial: 3680,
           },
           {
             Flags: 11,
             Issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
-            NFTokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765623F26AC00003C11",
+            NFTokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765556819FD00000E62",
             NFTokenTaxon: 0,
             URI: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
-            nft_serial: 15377,
+            nft_serial: 3682,
           },
           {
             Flags: 0,
             Issuer: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
-            NFTokenID: "0000000096559C6D26437B219661DD6AA2F68558B1A17BD3D4BC3BB100003C16",
+            NFTokenID: "0000000096559C6D26437B219661DD6AA2F68558B1A17BD3C7E52F0200000E67",
             NFTokenTaxon: 0,
             URI: "626974686F6D7024746573742E626974686F6D702E636F6D",
-            nft_serial: 15382,
+            nft_serial: 3687,
           },
         ]);
       });
@@ -76,13 +76,13 @@ describe("Client", () => {
 
     describe("getAccountNftSellOffers", () => {
       it("works", async function () {
-        const nftokenID = "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF676506A7E2A800003C0D";
+        const nftokenID = "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765279C77FB00000E60";
         const result: any = await Client.getAccountNftSellOffers(nftokenID);
         expect(result.offers[0]).to.eql({
           amount: "4000000",
           destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
           flags: 1,
-          nft_offer_index: "8F5547F1AFD835A36C13D01D1C0F2E5D1F886FBAE122DBAE591F64A861742EE0",
+          nft_offer_index: "E08E4D6A7603B56E52748513834A293CAF5C786ADEE517FAB1ECA513405CF4E3",
           owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
         });
       });
@@ -90,12 +90,12 @@ describe("Client", () => {
 
     describe("getAccountNftBuyOffers", () => {
       it("works", async function () {
-        const nftokenID = "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF676506A7E2A800003C0D";
+        const nftokenID = "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765279C77FB00000E60";
         const result: any = await Client.getAccountNftBuyOffers(nftokenID);
         expect(result.offers[0]).to.eql({
           amount: "3000000",
           flags: 0,
-          nft_offer_index: "E3E5D27670290E8EFF64C23EA0F00FE26EAB6EC86D4EF2DC5D82CD9698EF1054",
+          nft_offer_index: "952C4637FC43E66046DF4CAAAC8CC8C244EA72DFC342ACB60F0B5D00DBFAE1AB",
           owner: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
         });
       });

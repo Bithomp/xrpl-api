@@ -33,14 +33,14 @@ describe("Client", () => {
         const accountInfo: any = await Client.getAccountInfo("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8");
         expect(accountInfo.account_data).to.eql({
           Account: "rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8",
-          Balance: "1053449964",
+          Balance: "99999904",
           Domain: "746573742E626974686F6D702E636F6D",
-          Flags: 524288,
+          Flags: 8388608,
           LedgerEntryType: "AccountRoot",
           OwnerCount: 1,
-          PreviousTxnID: "3423C1251C57DEB0336721B5BA55870F565CE693E4833E6E33CA0CB4049FF52F",
-          PreviousTxnLgrSeq: 21406,
-          Sequence: 8090,
+          PreviousTxnID: "6BB1966741BD7C7276B614C0BADB82A07732554870AD2E1FDA654C0F2A4A81B7",
+          PreviousTxnLgrSeq: 6052,
+          Sequence: 5012,
           index: "A852DD21A058CBD616BFBE48467EBE560F05EE0A69E70047D52496AF76599B5B",
         });
       });
@@ -49,16 +49,17 @@ describe("Client", () => {
         const accountInfo: any = await Client.getAccountInfo("rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM");
         expect(accountInfo.account_data).to.eql({
           Account: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
-          Balance: "1995999964",
-          FirstNFTokenSequence: 15382,
-          Flags: 0,
+          Balance: "95999952",
+          FirstNFTokenSequence: 3687,
+          Flags: 8388608,
+          Domain: "746573742E626974686F6D702E636F6D",
           LedgerEntryType: "AccountRoot",
           MintedNFTokens: 1,
           NFTokenMinter: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
           OwnerCount: 2,
-          PreviousTxnID: "EE9AAB7DB794EFE2C0C21DBEC79DAFC3F60EB824BAD925B8B53265B963D0DE4E",
-          PreviousTxnLgrSeq: 33942,
-          Sequence: 15383,
+          PreviousTxnID: "FB381CF4A7A9B33C86E80F6EC3B7E85FD970ED272367A290A0CED02F138A6856",
+          PreviousTxnLgrSeq: 4945,
+          Sequence: 3689,
           index: "F7660AA3686F858FFD9142AD3C2730CDCB1CF8D11664DB34F27F1A421BD1512B",
         });
       });
@@ -77,14 +78,14 @@ describe("Client", () => {
         const accountInfoData: any = await Client.getAccountInfoData("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8");
         expect(accountInfoData).to.eql({
           Account: "rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8",
-          Balance: "1053449964",
+          Balance: "99999904",
           Domain: "746573742E626974686F6D702E636F6D",
-          Flags: 524288,
+          Flags: 8388608,
           LedgerEntryType: "AccountRoot",
           OwnerCount: 1,
-          PreviousTxnID: "3423C1251C57DEB0336721B5BA55870F565CE693E4833E6E33CA0CB4049FF52F",
-          PreviousTxnLgrSeq: 21406,
-          Sequence: 8090,
+          PreviousTxnID: "6BB1966741BD7C7276B614C0BADB82A07732554870AD2E1FDA654C0F2A4A81B7",
+          PreviousTxnLgrSeq: 6052,
+          Sequence: 5012,
           index: "A852DD21A058CBD616BFBE48467EBE560F05EE0A69E70047D52496AF76599B5B",
         });
       });
@@ -95,14 +96,14 @@ describe("Client", () => {
         });
         expect(accountInfoData).to.eql({
           Account: "rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8",
-          Balance: "1053449964",
+          Balance: "99999904",
           Domain: "746573742E626974686F6D702E636F6D",
-          Flags: 524288,
+          Flags: 8388608,
           LedgerEntryType: "AccountRoot",
           OwnerCount: 1,
-          PreviousTxnID: "3423C1251C57DEB0336721B5BA55870F565CE693E4833E6E33CA0CB4049FF52F",
-          PreviousTxnLgrSeq: 21406,
-          Sequence: 8090,
+          PreviousTxnID: "6BB1966741BD7C7276B614C0BADB82A07732554870AD2E1FDA654C0F2A4A81B7",
+          PreviousTxnLgrSeq: 6052,
+          Sequence: 5012,
           index: "A852DD21A058CBD616BFBE48467EBE560F05EE0A69E70047D52496AF76599B5B",
           signer_lists: [],
         });
@@ -126,7 +127,7 @@ describe("Client", () => {
         const accountInfoData: any = await Client.getAccountInfoData("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8");
         const result: any = Models.getSettings(accountInfoData);
         expect(result).to.eql({
-          disallowXRP: true,
+          defaultRipple: true,
           domain: "test.bithomp.com",
         });
       });
@@ -137,7 +138,7 @@ describe("Client", () => {
         });
         const result: any = Models.getSettings(accountInfoData);
         expect(result).to.eql({
-          disallowXRP: true,
+          defaultRipple: true,
           domain: "test.bithomp.com",
         });
       });
@@ -149,10 +150,10 @@ describe("Client", () => {
         const result: any = Models.getSettings(accountInfoData, false);
         expect(result).to.eql({
           blackholed: false,
-          defaultRipple: false,
+          defaultRipple: true,
           depositAuth: false,
           disableMaster: false,
-          disallowXRP: true,
+          disallowXRP: false,
           domain: "test.bithomp.com",
           globalFreeze: false,
           noFreeze: false,

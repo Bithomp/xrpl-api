@@ -49,11 +49,12 @@ class Connection extends EventEmitter {
   public readonly url: string;
   public readonly type?: string;
   public readonly types: string[];
-  public latency: LatencyInfo[];
+  public latency: LatencyInfo[] = [];
   public readonly logger?: any;
   public readonly timeout?: number; // request timeout
   public readonly connectionTimeout: number;
   public readonly hash?: string;
+  private onlineSince: number | null = null
   private networkID?: number;
   private apiVersion: APIVersion;
   private serverInfoUpdating: boolean;
@@ -76,7 +77,6 @@ class Connection extends EventEmitter {
       this.types = [];
     }
 
-    this.latency = [];
     this.client = null;
     this.logger = options.logger;
     this.timeout = options.timeout; // request timeout
@@ -208,6 +208,14 @@ class Connection extends EventEmitter {
     return this.client.isConnected();
   }
 
+  public getOnlinePeriodMs(): number | null {
+    if (this.isConnected()) {
+      return this.onlineSince ? new Date().getTime() - this.onlineSince : 0;
+    }
+
+    return null;
+  }
+
   public getLatencyMs(): number {
     return this.latency.map((info) => info.delta).reduce((a, b) => a + b, 0) / this.latency.length || 0;
   }
@@ -313,6 +321,7 @@ class Connection extends EventEmitter {
       });
 
       this.emit("connected");
+      this.onlineSince = new Date().getTime();
     });
 
     this.client.on("disconnected", (code) => {
@@ -323,6 +332,7 @@ class Connection extends EventEmitter {
         url: this.url,
       });
 
+      this.onlineSince = 0;
       this.serverInfo = null;
       this.streamsSubscribed = false;
 

@@ -3,6 +3,7 @@ import { expect } from "chai";
 
 import { Connection } from "../src/connection";
 import { Client } from "../src/index";
+import { sleep } from "../src/common/utils";
 
 describe("Connection", () => {
   describe("mainnet", () => {
@@ -18,6 +19,20 @@ describe("Connection", () => {
     afterEach(async function () {
       this.timeout(15000);
       await connection.disconnect();
+    });
+
+    describe("isConnected", () => {
+      it("returns true", function () {
+        expect(connection.isConnected()).to.be.true;
+      });
+    });
+
+    describe("getOnlinePeriodMs", () => {
+      it("returns true", async function () {
+        await sleep(1000);
+
+        expect(connection.getOnlinePeriodMs()).to.be.greaterThan(1000);
+      });
     });
 
     describe("request", () => {

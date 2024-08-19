@@ -14,7 +14,7 @@ describe("Client", () => {
       const result: any = await Client.getAccountObjects("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8");
       expect(Object.keys(result)).to.eql(["account", "account_objects", "ledger_hash", "ledger_index", "validated"]);
       expect(JSON.stringify(result.account_objects)).to.eql(
-        '[{"Balance":{"currency":"FOO","issuer":"rrrrrrrrrrrrrrrrrrrrBZbvji","value":"-123.45"},"Flags":131072,"HighLimit":{"currency":"FOO","issuer":"rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8","value":"1000000000"},"HighNode":"0","LedgerEntryType":"RippleState","LowLimit":{"currency":"FOO","issuer":"rESkTa8rXUGKs1njRrJGYSTwB5R1XYCEAt","value":"0"},"LowNode":"0","PreviousTxnID":"AF70FD60A6B535152E3188F4F5DC504AF44DDEC08534AEDBD7203E59EEADC706","PreviousTxnLgrSeq":8214,"index":"B3640F185360BA74AE095111422699F02B7408C6B26A743216ABC65840D0E27F"}]'
+        '[{"Balance":{"currency":"FOO","issuer":"rrrrrrrrrrrrrrrrrrrrBZbvji","value":"-123.45"},"Flags":131072,"HighLimit":{"currency":"FOO","issuer":"rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8","value":"1000000000"},"HighNode":"0","LedgerEntryType":"RippleState","LowLimit":{"currency":"FOO","issuer":"rESkTa8rXUGKs1njRrJGYSTwB5R1XYCEAt","value":"0"},"LowNode":"0","PreviousTxnID":"4CB55AB8EDE52EE3661B864674F4157B1CB5A963F7A7128D76F0AC8C3350DCCE","PreviousTxnLgrSeq":5763,"index":"B3640F185360BA74AE095111422699F02B7408C6B26A743216ABC65840D0E27F"}]'
       );
     });
   });
@@ -29,6 +29,7 @@ describe("Client", () => {
     it("works", async function () {
       this.timeout(240000);
       const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B");
+      delete result._nodepref; // can be omitted
       expect(Object.keys(result).sort()).to.eql([
         "account",
         "account_objects",
@@ -166,11 +167,11 @@ describe("Client", () => {
         {
           amount: "3000000",
           flags: 0,
-          index: "E3E5D27670290E8EFF64C23EA0F00FE26EAB6EC86D4EF2DC5D82CD9698EF1054",
-          ledger_index: 15581,
-          nft_id: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF676506A7E2A800003C0D",
+          index: "952C4637FC43E66046DF4CAAAC8CC8C244EA72DFC342ACB60F0B5D00DBFAE1AB",
+          ledger_index: 3946,
+          nft_id: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765279C77FB00000E60",
           owner: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
-          transaction_hash: "C4BC1F6334BF92DEF98C6779DD4AA2127A9426B29A83EABD629515DD1C7CE62C",
+          transaction_hash: "7B7B75DC988D8F050E3F81F6B4E78F6DC8266A75637D223250C0068C81BD7CA2",
         },
       ]);
     });
@@ -179,16 +180,37 @@ describe("Client", () => {
       const result: any = await Client.getAccountNFTOffersObjects("r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh");
 
       expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "nft_offers"]);
+      console.log(JSON.stringify(result.nft_offers));
       expect(result.nft_offers).to.eql([
         {
-          amount: "4000000",
-          destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+          nft_id: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765556819FD00000E62",
+          amount: "1000000000000000",
           flags: 1,
-          index: "8F5547F1AFD835A36C13D01D1C0F2E5D1F886FBAE122DBAE591F64A861742EE0",
-          ledger_index: 15579,
-          nft_id: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF676506A7E2A800003C0D",
+          index: "9882F1D49B20BCCADB2820FA271F0F60B3086A36A8400C032B7AFA6E62B373A6",
           owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
-          transaction_hash: "2607C20AF02367AD9FB6323F7B809097E0AB05845A6FE4FD682EC8407F5CF1B3",
+          ledger_index: 3960,
+          transaction_hash: "F5CE59752106D006C948DEDCB1410538758213B983845586AC3DAC103CF6FCF0",
+        },
+        {
+          nft_id: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765556819FD00000E62",
+          amount: "0",
+          flags: 1,
+          index: "C9DFD4634864C7C4D179BAA9BF0DEB57B35300DFD5759622D0C07E7C13CC5AB8",
+          owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+          destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+          expiration: 2529122432,
+          ledger_index: 3962,
+          transaction_hash: "5F243E8311A6223A8A7B9ECDAA352A974761A65EC452EC65A9CC399F320FFCEE",
+        },
+        {
+          nft_id: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765279C77FB00000E60",
+          amount: "4000000",
+          flags: 1,
+          index: "E08E4D6A7603B56E52748513834A293CAF5C786ADEE517FAB1ECA513405CF4E3",
+          owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
+          destination: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
+          ledger_index: 3944,
+          transaction_hash: "1AAB4D978940C5A9FA8A0908F4059522D4DB93B287ACC55E6EA1F3F3D57B1876",
         },
       ]);
     });
