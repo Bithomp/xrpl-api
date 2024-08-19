@@ -180,7 +180,6 @@ describe("Client", () => {
       const result: any = await Client.getAccountNFTOffersObjects("r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh");
 
       expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "nft_offers"]);
-      console.log(JSON.stringify(result.nft_offers));
       expect(result.nft_offers).to.eql([
         {
           nft_id: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765556819FD00000E62",
