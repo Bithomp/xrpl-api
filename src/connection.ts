@@ -54,7 +54,7 @@ class Connection extends EventEmitter {
   public readonly timeout?: number; // request timeout
   public readonly connectionTimeout: number;
   public readonly hash?: string;
-  private onlineSince: number | null = null
+  private onlineSince: number | null = null;
   private networkID?: number;
   private apiVersion: APIVersion;
   private serverInfoUpdating: boolean;
@@ -157,7 +157,10 @@ class Connection extends EventEmitter {
       }
 
       const startDate: Date = new Date();
-      const response = await this.client.request(request);
+
+      // NOTE: Use this.client.connection.request(request); instead of this.client.request(request);
+      // To prevent xrpljs to mutate the response object by handlePartialPayment
+      const response = await this.client.connection.request(request);
       const endDate: Date = new Date();
 
       this.updateLatency(endDate.getTime() - startDate.getTime());
