@@ -158,8 +158,14 @@ class Connection extends EventEmitter {
 
       const startDate: Date = new Date();
 
+      // check apiVersion, if not present in original request or if different from DEFAULT_API_VERSION
+      // add apiVersion to request, NOTE: this will mutate the request object
+      if (this.apiVersion && !request.hasOwnProperty("api_version") && DEFAULT_API_VERSION !== this.apiVersion) {
+        request.api_version = this.apiVersion;
+      }
+
       // NOTE: Use this.client.connection.request(request); instead of this.client.request(request);
-      // To prevent xrpljs to mutate the response object by handlePartialPayment
+      // To prevent xrpl.js to mutate the response object by handlePartialPayment
       const response = await this.client.connection.request(request);
       const endDate: Date = new Date();
 
