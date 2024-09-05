@@ -9,7 +9,7 @@ export function decode(value: string): null | Buffer {
 
   try {
     return Buffer.from(base58.decode(value));
-  } catch (e) {
+  } catch (_err: any) {
     // avoid exception
   }
 
@@ -23,7 +23,7 @@ export function encode(buffer: Buffer | number[] | Uint8Array): null | string {
 
   try {
     return base58.encode(buffer);
-  } catch (e) {
+  } catch (_err: any) {
     // avoid exception
   }
 

@@ -80,7 +80,7 @@ export function sign(message: Buffer | string, secret: string): string {
   try {
     const decoded = codec.decode(secret, { versions: [0x20] });
     secret = VALIDATOR_HEX_PREFIX_ED25519 + bytesToHex(decoded.bytes.buffer); // eslint-disable-line no-param-reassign
-  } catch (err) {
+  } catch (_err: any) {
     // ignore
   }
 
@@ -100,7 +100,7 @@ export function verify(message: Buffer | string, signature: string, publicKey: s
 
   try {
     return rippleKeypairs.verify(message.toString("hex"), signature, publicKey);
-  } catch (err) {
+  } catch (_err: any) {
     // ignore
   }
 

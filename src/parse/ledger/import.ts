@@ -44,7 +44,7 @@ export function parseImportBlob(blob: string): FormattedImportBlobSpecification 
         outcome: parsedTX.outcome,
       },
     };
-  } catch (e) {
+  } catch (_err: any) {
     return blob;
   }
 }

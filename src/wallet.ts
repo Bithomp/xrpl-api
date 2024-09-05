@@ -33,7 +33,7 @@ export function isValidSecret(secret: string): boolean {
   try {
     deriveKeypair(secret);
     return true;
-  } catch (err) {
+  } catch (_err: any) {
     // Ignore error
   }
 

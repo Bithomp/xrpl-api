@@ -89,7 +89,7 @@ class EmittedTxns {
           let id: string | undefined;
           try {
             id = hashSignedTx(tx, this.definitions, false);
-          } catch (err) {
+          } catch (_err: any) {
             // ignore
           }
 

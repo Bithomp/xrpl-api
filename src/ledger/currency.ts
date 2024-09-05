@@ -168,7 +168,7 @@ async function getLedger(ledgerIndex: number): Promise<any> {
   let ledgerInfo: any = null;
   try {
     ledgerInfo = await Client.getLedger({ ledgerIndex, transactions: true, expand: true });
-  } catch (e: any) {
+  } catch (_err: any) {
     // Ignore
   }
 
