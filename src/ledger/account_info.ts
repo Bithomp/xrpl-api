@@ -3,6 +3,8 @@ import { Connection } from "../connection";
 import { LedgerIndex } from "../models/ledger";
 import { AccountInfoResponse, AccountInfoDataResponse } from "../models/account_info";
 import { ErrorResponse } from "../models/base_model";
+import { parseAccountInfoData } from "../parse/ledger/account-info";
+import { FormattedAccountInfoData } from "../types";
 
 export interface GetAccountInfoOptions {
   ledgerIndex?: LedgerIndex;
@@ -86,6 +88,10 @@ export async function getAccountInfo(
   return result;
 }
 
+export interface GetAccountInfoDataOptions extends GetAccountInfoOptions {
+  formatted?: boolean; // returns response in old old format data
+}
+
 /**
  * @returns {Promise<AccountInfoDataResponse>} like
  * {
@@ -104,15 +110,20 @@ export async function getAccountInfo(
  */
 export async function getAccountInfoData(
   account: string,
-  options: GetAccountInfoOptions = {}
-): Promise<AccountInfoDataResponse | ErrorResponse> {
+  options: GetAccountInfoDataOptions = {}
+): Promise<AccountInfoDataResponse | FormattedAccountInfoData | ErrorResponse> {
+  const formatted = options.formatted === true;
   const response = await getAccountInfo(account, options);
 
   if ("error" in response) {
     return response;
   }
 
-  return response?.account_data;
+  if (formatted) {
+    return parseAccountInfoData(response);
+  }
+
+  return response.account_data;
 }
 
 export async function isActivated(account: string): Promise<boolean> {

@@ -90,6 +90,20 @@ describe("Client", () => {
         });
       });
 
+      it("is for activated in old format", async function () {
+        const accountInfoData: any = await Client.getAccountInfoData("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8", {
+          formatted: true,
+        });
+
+        expect(accountInfoData).to.eql({
+          sequence: 5012,
+          xrpBalance: "99.999904",
+          ownerCount: 1,
+          previousAffectingTransactionID: "6BB1966741BD7C7276B614C0BADB82A07732554870AD2E1FDA654C0F2A4A81B7",
+          previousAffectingTransactionLedgerVersion: 6052,
+        });
+      });
+
       it("is for activated with signers", async function () {
         const accountInfoData: any = await Client.getAccountInfoData("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8", {
           signerLists: true,

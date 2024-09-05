@@ -16,3 +16,12 @@ export type FormattedDestinationAddress = {
   address: string;
   tag?: number;
 };
+
+export type FormattedAccountInfoData = {
+  sequence: number;
+  xrpBalance: string;
+  ownerCount: number;
+  previousInitiatedTransactionID?: string;
+  previousAffectingTransactionID: string;
+  previousAffectingTransactionLedgerVersion: number;
+};

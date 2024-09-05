@@ -117,7 +117,7 @@ class Connection extends EventEmitter {
       this.client.apiVersion = this.apiVersion;
       this.setupEmitter();
 
-      await this.client.connect();
+      await this.client.connection.connect();
       await this.updateServerInfo();
       await this.subscribe();
     } catch (err: any) {
@@ -208,7 +208,7 @@ class Connection extends EventEmitter {
       return false;
     }
 
-    return this.client.isConnected();
+    return this.client.connection.isConnected();
   }
 
   public getOnlinePeriodMs(): number | null {
@@ -302,11 +302,11 @@ class Connection extends EventEmitter {
   private async removeClient(): Promise<void> {
     try {
       if (this.client) {
-        await this.client.disconnect();
-        this.client.removeAllListeners();
+        await this.client.connection.disconnect();
+        this.client.connection.removeAllListeners();
         this.client = undefined;
       }
-    } catch (e: any) {
+    } catch (_err: any) {
       // ignore
     }
   }
@@ -316,7 +316,7 @@ class Connection extends EventEmitter {
       return;
     }
 
-    this.client.on("connected", () => {
+    this.client.connection.on("connected", () => {
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         emit: "connected",
@@ -327,7 +327,7 @@ class Connection extends EventEmitter {
       this.onlineSince = new Date().getTime();
     });
 
-    this.client.on("disconnected", (code) => {
+    this.client.connection.on("disconnected", (code) => {
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         emit: "disconnected",
@@ -342,7 +342,7 @@ class Connection extends EventEmitter {
       this.emit("disconnected", code);
     });
 
-    this.client.on("error", (source, message, error) => {
+    this.client.connection.on("error", (source, message, error) => {
       try {
         this.logger?.error({
           service: "Bithomp::XRPL::Connection",
@@ -365,17 +365,17 @@ class Connection extends EventEmitter {
       this.connectionValidation();
     });
 
-    this.client.on("ledgerClosed", (ledgerStream) => {
+    this.client.connection.on("ledgerClosed", (ledgerStream) => {
       this.onLedgerClosed(ledgerStream);
 
       this.emit("ledgerClosed", ledgerStream);
     });
 
-    this.client.on("transaction", (transactionStream) => {
+    this.client.connection.on("transaction", (transactionStream) => {
       this.emit("transaction", transactionStream);
     });
 
-    this.client.on("validationReceived", (validation) => {
+    this.client.connection.on("validationReceived", (validation) => {
       this.emit("validationReceived", validation);
     });
 
@@ -383,15 +383,15 @@ class Connection extends EventEmitter {
     //   this.emit("manifestReceived", manifest);
     // });
 
-    this.client.on("peerStatusChange", (status) => {
+    this.client.connection.on("peerStatusChange", (status) => {
       this.emit("peerStatusChange", status);
     });
 
-    this.client.on("consensusPhase", (consensus) => {
+    this.client.connection.on("consensusPhase", (consensus) => {
       this.emit("consensusPhase", consensus);
     });
 
-    this.client.on("path_find", (path) => {
+    this.client.connection.on("path_find", (path) => {
       this.emit("path_find", path);
     });
   }
@@ -577,7 +577,7 @@ class Connection extends EventEmitter {
           }
         }
       }
-    } catch (error) {
+    } catch (_err: any) {
       // ignore
     }
 

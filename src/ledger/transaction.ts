@@ -21,6 +21,7 @@ import {
   decodeCTID,
 } from "../models/transaction";
 
+import { AccountInfoDataResponse } from "../models/account_info";
 import { signTransaction, walletFromSeed } from "../wallet";
 
 const submitErrorsGroup = ["tem", "tef", "tel", "ter"];
@@ -338,7 +339,9 @@ export async function getAccountPaymentParams(
 
     const sequencePromise = new Promise(async (resolve, rejects) => {
       try {
-        const accountData = await Client.getAccountInfoData(account, { connection });
+        const accountData = (await Client.getAccountInfoData(account, { connection })) as
+          | AccountInfoDataResponse
+          | ErrorResponse;
 
         if (!accountData) {
           return rejects(new Error("Account not found"));
@@ -361,7 +364,7 @@ export async function getAccountPaymentParams(
           resolve(ledgerIndex + MAX_LEDGERS_AWAIT);
         }
         resolve(undefined);
-      } catch (e: any) {
+      } catch (_err: any) {
         resolve(undefined);
       }
     });
@@ -433,7 +436,9 @@ export async function getTxSubmitParams(
     if (skip?.sequence !== true) {
       sequencePromise = new Promise(async (resolve, rejects) => {
         try {
-          const accountData = await Client.getAccountInfoData(account, { connection });
+          const accountData = (await Client.getAccountInfoData(account, { connection })) as
+            | AccountInfoDataResponse
+            | ErrorResponse;
 
           if (!accountData) {
             return rejects(new Error("Account not found"));
@@ -458,7 +463,7 @@ export async function getTxSubmitParams(
             resolve(ledgerIndex + MAX_LEDGERS_AWAIT);
           }
           resolve(undefined);
-        } catch (e: any) {
+        } catch (_err: any) {
           resolve(undefined);
         }
       });

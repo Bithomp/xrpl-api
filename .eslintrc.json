@@ -21,7 +21,14 @@
     "no-useless-return": "error",
     "no-constant-condition": ["warn", { "checkLoops": false }],
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "req|res|next|__|^_" }],
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "req|res|next|__|^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
     "no-undef": "error",
     "@typescript-eslint/consistent-type-assertions": "error",
     "@typescript-eslint/array-type": "error",
