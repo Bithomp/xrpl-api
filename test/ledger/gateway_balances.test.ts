@@ -21,6 +21,19 @@ describe("Client", () => {
         expect(result.assets.rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW[0].currency).to.eq("BTH");
         expect(parseFloat(result.assets.rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW[0].value)).to.gt(0);
       });
+
+      it("works with obligations old formatted", async function () {
+        const result = (await Client.getBalanceSheet("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW", { formatted: true })) as any;
+        expect(result.obligations[0].currency).to.eql("BTH");
+        expect(parseFloat(result.obligations[0].value)).to.gt(0);
+      });
+
+      it("works with assets old formatted", async function () {
+        const result: any = await Client.getBalanceSheet("rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z", { formatted: true });
+        expect(result.assets[0].counterparty).to.eql("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW");
+        expect(result.assets[0].currency).to.eql("BTH");
+        expect(parseFloat(result.assets[0].value)).to.gt(0);
+      });
     });
 
     describe("getAccountObligations", () => {

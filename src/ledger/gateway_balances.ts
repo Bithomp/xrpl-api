@@ -5,11 +5,15 @@ import * as Client from "../client";
 import { Trustline } from "../models/account_lines";
 import { LedgerIndex } from "../models/ledger";
 import { ErrorResponse } from "../models/base_model";
+import { GatewayBalances } from "../models/gateway_balances";
+import { FormattedGatewayBalances } from "../types";
+import { parseGatewayBalances } from "../parse/ledger/gateway-balances";
 
 export interface GetBalanceSheetOptions {
   ledgerIndex?: LedgerIndex;
   hotwallet?: string;
   strict?: boolean;
+  formatted?: boolean; // returns response in old old format data
 }
 
 /**
@@ -41,7 +45,8 @@ export interface GetBalanceSheetOptions {
 export async function getBalanceSheet(
   account: string,
   options: GetBalanceSheetOptions = {}
-): Promise<object | ErrorResponse> {
+): Promise<GatewayBalances | FormattedGatewayBalances | ErrorResponse> {
+  const formatted = options.formatted === true;
   const connection: any = Client.findConnection("gateway_balances");
   if (!connection) {
     throw new Error("There is no connection");
@@ -76,7 +81,13 @@ export async function getBalanceSheet(
     };
   }
 
-  return response?.result;
+  const result = response.result as GatewayBalances;
+
+  if (formatted) {
+    return parseGatewayBalances(result);
+  }
+
+  return result;
 }
 
 export interface ObligationTrustline extends Trustline {

@@ -7,6 +7,7 @@ export * from "./checks";
 export * from "./deposits";
 export * from "./escrows";
 export * from "./fees";
+export * from "./gateway_balances";
 export * from "./ledger";
 export * from "./ledger_data";
 export * from "./ledger_entries";
