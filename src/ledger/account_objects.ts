@@ -1,6 +1,7 @@
 import { AccountObjectsRequest } from "xrpl";
 
 import * as Client from "../client";
+import { Connection } from "../connection";
 
 import {
   AccountObjectType,
@@ -26,6 +27,7 @@ export interface GetAccountObjectsOptions {
   ledgerIndex?: LedgerIndex;
   limit?: number; // The maximum number of objects to include in the results. Must be within the inclusive range 10 to 400 on non-admin connections. The default is 200.P
   marker?: string;
+  connection?: Connection;
 }
 
 /**
@@ -70,7 +72,7 @@ export async function getAccountObjects(
 ): Promise<AccountObjects | ErrorResponse> {
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
-  const connection: any = Client.findConnection("account_objects", undefined, undefined, hash);
+  const connection: any = options.connection || Client.findConnection("account_objects", undefined, undefined, hash);
   if (!connection) {
     throw new Error("There is no connection");
   }
@@ -125,8 +127,15 @@ export async function getAccountAllObjects(
   account: string,
   options: GetAccountAllObjectsOptions = {}
 ): Promise<AccountObjects | ErrorResponse> {
+  // create new object to prevent mutation of the original one
+  const loadOptions = { ...options };
+
+  // NOTE: set default connection, to make sure we have loaded all objects from the same server,
+  // otherwise it can fail with marker malformed
+  loadOptions.connection = loadOptions.connection || Client.findConnection("account_objects", undefined, undefined) as Connection;
+
   const timeStart = new Date();
-  const limit = options.limit;
+  const limit = loadOptions.limit;
   let response: any;
   const accountObjects: AccountObjects[] = [];
 
@@ -134,22 +143,22 @@ export async function getAccountAllObjects(
   while (true) {
     const currentTime = new Date();
     // timeout validation
-    if (options.timeout && currentTime.getTime() - timeStart.getTime() > options.timeout) {
-      options.timeout = currentTime.getTime() - timeStart.getTime();
+    if (loadOptions.timeout && currentTime.getTime() - timeStart.getTime() > loadOptions.timeout) {
+      loadOptions.timeout = currentTime.getTime() - timeStart.getTime();
       break;
     }
 
-    if (options.limit && limit) {
+    if (loadOptions.limit && limit) {
       const left = limit - accountObjects.length;
       const parts = Math.floor(left / OBJECTS_LIMIT_MAX);
       if (parts === 0) {
-        options.limit = left;
+        loadOptions.limit = left;
       } else {
-        options.limit = left - OBJECTS_LIMIT_MIN; // we should leave 10 objects for the next request
+        loadOptions.limit = left - OBJECTS_LIMIT_MIN; // we should leave 10 objects for the next request
       }
     }
 
-    response = await getAccountObjects(account, options);
+    response = await getAccountObjects(account, loadOptions);
     if (response.error) {
       return response;
     }
@@ -161,7 +170,7 @@ export async function getAccountAllObjects(
     }
 
     if (response.marker) {
-      options.marker = response.marker;
+      loadOptions.marker = response.marker;
     } else {
       break;
     }
@@ -181,6 +190,11 @@ export async function getAccountAllObjects(
   }
 
   response.account_objects = accountObjects;
+
+  if (!options.hasOwnProperty("limit")) {
+    // remove limit if it was not set, since it can be omitted from the server response
+    delete response.limit;
+  }
 
   return response;
 }

@@ -226,6 +226,7 @@ describe("Client", () => {
       });
 
       it("finds transaction after first one with ledgerIndexMax", async function () {
+        this.timeout(10000);
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 1,

@@ -35,7 +35,6 @@ describe("Client", () => {
         "account_objects",
         "ledger_hash",
         "ledger_index",
-        "limit",
         "validated",
       ]);
       expect(result.account_objects.length).to.gt(500);
@@ -118,7 +117,6 @@ describe("Client", () => {
         "account_objects",
         "ledger_hash",
         "ledger_index",
-        "limit",
         "marker",
         "validated",
       ]);
