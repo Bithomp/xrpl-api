@@ -147,6 +147,15 @@ export async function getTransactions(
   }
 
   const result = response?.result;
+  if (!result) {
+    return {
+      account,
+      status: "error",
+      error: "invalidResponse",
+    };
+  }
+
+
   if (Array.isArray(result.transactions)) {
     if (options.balanceChanges === true || options.specification === true) {
       for (const transaction of result.transactions) {
@@ -276,7 +285,7 @@ export async function findTransactions(
   }
 
   // return error information
-  if (accountTransactionsError) {
+  if (accountTransactionsError && transactions.length === 0) {
     return accountTransactionsError;
   }
 
