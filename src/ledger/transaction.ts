@@ -555,7 +555,8 @@ async function waitForFinalTransactionOutcome(
 
   const tx = await getTransaction(txHash);
   const error = (tx as any)?.error;
-  if (error === "Not connected") {
+  // there is no network connection
+  if (error === "notConnected") {
     return tx;
   }
 

@@ -28,10 +28,23 @@ export function compareTransactions(first: any, second: any): SortDirection {
   return first.tx.ledger_index < second.tx.ledger_index ? -1 : 1;
 }
 
+
+/**
+ * Asynchronously pauses the execution for the specified number of milliseconds.
+ * @param ms - The number of milliseconds to sleep.
+ * @returns A Promise that resolves after the specified number of milliseconds.
+ */
 export async function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
+}
+
+/**
+ * @return {Number} ms since unix epoch
+ */
+export function getTimestamp(): number {
+  return new Date().getTime();
 }
 
 /**
@@ -91,6 +104,13 @@ export function parseMarker(marker?: any): any {
   return { hash, marker };
 }
 
+/**
+ * Converts the given value from drops to XRP (native currency).
+ * 
+ * @param drops - The value in drops to be converted.
+ * @returns The converted value in XRP (native currency) as a string.
+ * @throws {ValidationError} If the value is invalid or has too many decimal places.
+ */
 export function dropsToXrp(drops: BigNumber.Value): string {
   if (typeof drops === "string") {
     if (!drops.match(/^-?[0-9]*\.?[0-9]*$/)) {
@@ -124,6 +144,13 @@ export function dropsToXrp(drops: BigNumber.Value): string {
   return new BigNumber(drops).dividedBy(1000000.0).toString(10);
 }
 
+/**
+ * Converts XRP (native currency) value to drops.
+ * 
+ * @param xrp - The XRP (native currency) value to convert.
+ * @returns The converted value in drops.
+ * @throws {ValidationError} If the provided XRP value is invalid.
+ */
 export function xrpToDrops(xrp: BigNumber.Value): string {
   if (typeof xrp === "string") {
     if (!xrp.match(/^-?[0-9]*\.?[0-9]*$/)) {
@@ -158,10 +185,22 @@ export function xrpToDrops(xrp: BigNumber.Value): string {
   return new BigNumber(xrp).times(1000000.0).integerValue(BigNumber.ROUND_FLOOR).toString(10);
 }
 
+/**
+ * Removes undefined values from an object.
+ * 
+ * @param obj - The object to remove undefined values from.
+ * @returns The object with undefined values removed.
+ */
 export function removeUndefined<T extends object>(obj: T): T {
   return _.omitBy(obj, (value) => value == null) as T; // eslint-disable-line eqeqeq
 }
 
+/**
+ * Retrieves the constructor name of an object.
+ * 
+ * @param object - The object to retrieve the constructor name from.
+ * @returns The constructor name of the object, or undefined if it cannot be determined.
+ */
 export function getConstructorName(object: object): string | undefined {
   if (object.constructor.name) {
     return object.constructor.name;

@@ -3,14 +3,14 @@ import { EventEmitter } from "events";
 import { Client, Request, Response, LedgerStream, RIPPLED_API_V1, APIVersion } from "xrpl";
 import { StreamType, ledgerTimeToTimestamp } from "./models/ledger";
 import { removeUndefined, dropsToXrp } from "./common";
-import { sleep } from "./common/utils";
+import { sleep, getTimestamp } from "./common/utils";
 
-const RECONNECT_TIMEOUT = 1000 * 5; // 5 sec
-const LEDGER_CLOSED_TIMEOUT = 1000 * 15; // 15 sec
+const RECONNECT_TIMEOUT = 1000 * 5; // 5 sec (in ms)
+const LEDGER_CLOSED_TIMEOUT = 1000 * 15; // 15 sec (in ms)
 const SERVER_INFO_UPDATE_INTERVAL = 1000 * 60 * 5; // 5 min (in ms)
 
 // min and max ledger index window to consider ledger as available,
-// used to prevent from requesting unavailable ledgers
+// used to prevent from requesting unreachable ledgers
 const AVAILABLE_LEDGER_INDEX_WINDOW = 1000;
 
 // Set default api version to 1, so it will be compatible with rippled and xahaud servers
@@ -151,12 +151,24 @@ class Connection extends EventEmitter {
         return this.updateSubscriptions(request);
       }
 
-      // check connection after updateSubscriptions to make sure we will not miss any streams update
-      if (!this.client || !this.isConnected()) {
-        return { error: "Not connected" };
+      // Check connection after updateSubscriptions to make sure we will not miss any streams update.
+      const waitTime = getTimestamp() + RECONNECT_TIMEOUT;
+      while ((!this.client || !this.isConnected())) {
+        // Give it time to reconnect
+        await sleep(100);
+
+        // check if connection is shutdown, there is no way to be connected again
+        if (this.shutdown) {
+          return { error: "shutdownConnection", error_message: "Connection is shutdown.", status: "error" };
+        }
+
+        // check if we are waiting too long
+        if (getTimestamp() > waitTime) {
+          return { error: "notConnected", error_message: "Not connected.", status: "error" };
+        }
       }
 
-      const startDate: Date = new Date();
+      const startTimestamp = getTimestamp();
 
       // check apiVersion, if not present in original request or if different from DEFAULT_API_VERSION
       // add apiVersion to request, NOTE: this will mutate the request object
@@ -167,13 +179,13 @@ class Connection extends EventEmitter {
       // NOTE: Use this.client.connection.request(request); instead of this.client.request(request);
       // To prevent xrpl.js to mutate the response object by handlePartialPayment
       const response = await this.client.connection.request(request);
-      const endDate: Date = new Date();
 
-      this.updateLatency(endDate.getTime() - startDate.getTime());
+      this.updateLatency(getTimestamp() - startTimestamp);
 
       return response;
     } catch (err: any) {
-      this.updateLatency(1000);
+      // update latency, as we have error
+      this.updateLatency(RECONNECT_TIMEOUT);
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         function: "request",
@@ -219,7 +231,7 @@ class Connection extends EventEmitter {
 
   public getOnlinePeriodMs(): number | null {
     if (this.isConnected()) {
-      return this.onlineSince ? new Date().getTime() - this.onlineSince : 0;
+      return this.onlineSince ? getTimestamp() - this.onlineSince : 0;
     }
 
     return null;
@@ -330,7 +342,7 @@ class Connection extends EventEmitter {
       });
 
       this.emit("connected");
-      this.onlineSince = new Date().getTime();
+      this.onlineSince = getTimestamp();
     });
 
     this.client.connection.on("disconnected", (code) => {
@@ -524,7 +536,7 @@ class Connection extends EventEmitter {
   }
 
   private onLedgerClosed(ledgerStream: LedgerStream): void {
-    const time: number = new Date().getTime();
+    const time: number = getTimestamp();
     const ledgerTime: number = ledgerTimeToTimestamp(ledgerStream.ledger_time);
 
     // ledgerTime could be more then current time
