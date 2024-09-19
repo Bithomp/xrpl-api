@@ -9,6 +9,11 @@ describe("Connection", () => {
   describe("mainnet", () => {
     let connection: Connection;
 
+    before(async function () {
+      // three is no need to connect to use global Client
+      await Client.disconnect();
+    });
+
     beforeEach(async function () {
       this.timeout(15000);
       const server = nconf.get("xrpl:connections:mainnet")[0];
@@ -91,6 +96,31 @@ describe("Connection", () => {
 
         connection.once("transaction", (transactionStream) => {
           expect(transactionStream.type).to.eq("transaction");
+          done();
+        });
+      });
+
+      it.skip("can subscribe and receive manifest", function (done) {
+        expect(connection.streams).to.eql({ ledger: 1 });
+
+        connection.request({
+          command: "subscribe",
+          streams: ["manifests"],
+        });
+
+        expect(connection.streams).to.eql({ ledger: 1, manifests: 1 });
+
+        // {
+        //   manifest: '24000000017121ED27AB698D6A96C3578060BA3CD16AB4C1016911156CA04D76AB1D43E3558202AD732103A72EEAD95D6E8BE295C6C0E822A07F45F1A5D3FCCC187886E702DDE951EFE8327646304402200A71F24BF9DD579F635DF3B85E8035090E5814BC7D3F85CFD758D5AD36D05AA2022067231482CDE6D6E1C6ED243BA85F57EDF05F490E22ED67C02A4609D3A89E8EE4701240EFBD4795D0805681C4F85130A1C3C2962CA930B1D7FD3C6B0121B124B9FFAFD554AF088DF83D3968573AC7C47E722CCA52892C1BC6CBF698CF7BAD789225F205',
+        //   master_key: 'nHBeudoVR9KCuDAcmAM3RYtLbyErj8mMesgNFV6Dr9LFGbWPy9p6',
+        //   master_signature: 'EFBD4795D0805681C4F85130A1C3C2962CA930B1D7FD3C6B0121B124B9FFAFD554AF088DF83D3968573AC7C47E722CCA52892C1BC6CBF698CF7BAD789225F205',
+        //   seq: 1,
+        //   signature: '304402200A71F24BF9DD579F635DF3B85E8035090E5814BC7D3F85CFD758D5AD36D05AA2022067231482CDE6D6E1C6ED243BA85F57EDF05F490E22ED67C02A4609D3A89E8EE4',
+        //   signing_key: 'n9Mk1XBGPV4NdRb1YvuW5hAMQhoD5KFkAahoKRqRPSALapoQreQP',
+        //   type: 'manifestReceived'
+        // }
+        connection.once("manifestReceived", (manifestStream) => {
+          expect(manifestStream.type).to.eq("manifestReceived");
           done();
         });
       });

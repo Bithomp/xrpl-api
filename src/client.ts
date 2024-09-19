@@ -73,14 +73,14 @@ export async function connect() {
   }
 }
 
-export function disconnect() {
+export async function disconnect() {
   logger?.debug({
     service: "Bithomp::XRPL::Client",
     function: "disconnect",
   });
 
   for (const connection of clientConnections) {
-    connection.disconnect();
+    await connection.disconnect();
   }
 }
 

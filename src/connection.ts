@@ -397,9 +397,9 @@ class Connection extends EventEmitter {
       this.emit("validationReceived", validation);
     });
 
-    // this.client.on("manifestReceived", (manifest) => {
-    //   this.emit("manifestReceived", manifest);
-    // });
+    this.client.connection.on("manifestReceived", (manifest) => {
+      this.emit("manifestReceived", manifest);
+    });
 
     this.client.connection.on("peerStatusChange", (status) => {
       this.emit("peerStatusChange", status);
@@ -488,9 +488,13 @@ class Connection extends EventEmitter {
   }
 
   private async subscribe(streams?: StreamType[], accounts?: string[]): Promise<Response | any> {
+    if (this.shutdown) {
+      return { error: "shutdownConnection", error_message: "Connection is shutdown.", status: "error" };
+    }
+
     // subscribed and no need to subscribe to new streams
     if (this.streamsSubscribed === true && streams === undefined && accounts === undefined) {
-      return null;
+      return { status: "success" };
     }
 
     streams = streams || (Object.keys(this.streams) as StreamType[]); // eslint-disable-line no-param-reassign
