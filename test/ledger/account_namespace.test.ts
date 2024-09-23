@@ -6,7 +6,7 @@ describe("Client", () => {
   describe("getAccountLines", () => {
     before(async function () {
       this.timeout(15000);
-      Client.setup(nconf.get("xrpl:connections:beta"), { nativeCurrency: "XAH" });
+      Client.setup(nconf.get("xrpl:connections:test-xahau"), { nativeCurrency: "XAH" });
       await Client.connect();
     });
 

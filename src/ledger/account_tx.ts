@@ -155,7 +155,6 @@ export async function getTransactions(
     };
   }
 
-
   if (Array.isArray(result.transactions)) {
     if (options.balanceChanges === true || options.specification === true) {
       for (const transaction of result.transactions) {
@@ -205,32 +204,35 @@ export async function findTransactions(
 ): Promise<object[] | ErrorResponse> {
   let transactions = [];
   let accountTransactionsError = null;
-  const formatted = options.legacy === true || options.formatted === true;
   const timeStart = new Date();
 
+  // create new object to prevent mutation of the original one
+  const loadOptions = { ...options };
+  const formatted = loadOptions.legacy === true || loadOptions.formatted === true;
+
   // TODO: Add support for binary
-  options.binary = false;
+  loadOptions.binary = false;
 
   // limit if sourceTag or destinationTag was used
-  applyLimitOptions(options);
+  applyLimitOptions(loadOptions);
 
   // apply start transaction parameters to options
-  await applyStartTxOptions(options);
+  await applyStartTxOptions(loadOptions);
 
-  while (transactions.length !== options.limit) {
+  while (transactions.length !== loadOptions.limit) {
     const currentTime = new Date();
     // timeout validation
-    if (options.timeout && currentTime.getTime() - timeStart.getTime() > options.timeout) {
+    if (loadOptions.timeout && currentTime.getTime() - timeStart.getTime() > loadOptions.timeout) {
       break;
     }
 
-    let limit = options.limit;
+    let limit = loadOptions.limit;
     // increase limit to make sure we can get all transaction with single request
-    if (transactions.length === 0 && options.startTxHash) {
+    if (transactions.length === 0 && loadOptions.startTxHash) {
       limit += LIMIT_INCREASE_COUNT;
     }
 
-    if (options.sourceTag || options.destinationTag) {
+    if (loadOptions.sourceTag || loadOptions.destinationTag) {
       limit += LIMIT_INCREASE_COUNT;
     }
 
@@ -240,7 +242,7 @@ export async function findTransactions(
 
     // request without balanceChanges and specification to reduce unnecessary work
     const accountTransactions: any = await getTransactions(account, {
-      ...options,
+      ...loadOptions,
       ...{ balanceChanges: false, specification: false, limit },
     });
 
@@ -251,20 +253,20 @@ export async function findTransactions(
     }
     let newTransactions = accountTransactions.transactions;
     // save marker for next request
-    options.marker = accountTransactions.marker;
+    loadOptions.marker = accountTransactions.marker;
 
     // filter transactions
     newTransactions = newTransactions
-      .filter(_.partial(filterHelperTransactions, account, options))
-      .filter(_.partial(filterHelperStartTx, options));
+      .filter(_.partial(filterHelperTransactions, account, loadOptions))
+      .filter(_.partial(filterHelperStartTx, loadOptions));
 
-    if (formatted !== true && (options.balanceChanges === true || options.specification === true)) {
+    if (formatted !== true && (loadOptions.balanceChanges === true || loadOptions.specification === true)) {
       for (const newTransaction of newTransactions) {
-        if (options.balanceChanges === true) {
+        if (loadOptions.balanceChanges === true) {
           newTransaction.balanceChanges = getBalanceChanges(newTransaction.meta);
         }
 
-        if (options.specification === true) {
+        if (loadOptions.specification === true) {
           const details = getAccountTxDetails(newTransaction, true);
           newTransaction.specification = details.specification;
           newTransaction.outcome = details.outcome;
@@ -277,9 +279,9 @@ export async function findTransactions(
     transactions = transactions.concat(newTransactions);
 
     // cleanup last transactions over limit
-    transactions = transactions.slice(0, options.limit);
+    transactions = transactions.slice(0, loadOptions.limit);
 
-    if (options.marker === undefined) {
+    if (loadOptions.marker === undefined) {
       break;
     }
   }
@@ -290,17 +292,17 @@ export async function findTransactions(
   }
 
   // return timeout and marker information if nothing was found
-  if (options.marker && transactions.length === 0) {
+  if (loadOptions.marker && transactions.length === 0) {
     return {
       status: "timeout",
       error: "searchTimeout",
-      marker: options.marker,
+      marker: loadOptions.marker,
     };
   }
 
   if (formatted === true) {
     transactions = transactions.map((transaction) =>
-      getAccountTxDetails(transaction, options.includeRawTransactions === true)
+      getAccountTxDetails(transaction, loadOptions.includeRawTransactions === true)
     ) as any;
   }
 
