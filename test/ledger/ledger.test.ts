@@ -64,6 +64,7 @@ describe("Client", () => {
       });
 
       it("by ledger_index", async function () {
+        this.timeout(15000);
         const result: any = await Client.getLedger({
           ledgerIndex: 66816622,
         });

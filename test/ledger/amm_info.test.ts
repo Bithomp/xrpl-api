@@ -28,6 +28,7 @@ describe("Client", () => {
       });
 
       it("works by amm assets", async function () {
+        this.timeout(15000);
         const result: any = await Client.getAmmInfoByAssets(
           { currency: "XRP" },
           { currency: "5553444300000000000000000000000000000000", issuer: "rcEGREd8NmkKRE8GE424sksyt1tJVFZwu" }

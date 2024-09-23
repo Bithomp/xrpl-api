@@ -80,7 +80,7 @@ export async function getAccountObjects(
   const request: AccountObjectsRequest = {
     command: "account_objects",
     account,
-    type: options.type,
+    type: options.type as any, // xrpl.js does not know about xahau types
     ledger_hash: options.ledgerHash,
     ledger_index: options.ledgerIndex || "validated",
     limit: options.limit || OBJECTS_LIMIT_DEFAULT,
@@ -132,7 +132,8 @@ export async function getAccountAllObjects(
 
   // NOTE: set default connection, to make sure we have loaded all objects from the same server,
   // otherwise it can fail with marker malformed
-  loadOptions.connection = loadOptions.connection || Client.findConnection("account_objects", undefined, undefined) as Connection;
+  loadOptions.connection =
+    loadOptions.connection || (Client.findConnection("account_objects", undefined, undefined) as Connection);
 
   const timeStart = new Date();
   const limit = loadOptions.limit;
@@ -191,7 +192,7 @@ export async function getAccountAllObjects(
 
   response.account_objects = accountObjects;
 
-  if (!options.hasOwnProperty("limit")) {
+  if (!options.hasOwnProperty("limit") || options.limit === undefined) {
     // remove limit if it was not set, since it can be omitted from the server response
     delete response.limit;
   }
@@ -306,6 +307,32 @@ export async function getAccountNFTOffersObjects(
   };
 }
 
+export interface GetAccountDepositPreauthObjectsOptions {
+  ledgerHash?: string;
+  ledgerIndex?: LedgerIndex;
+  limit?: number; // The maximum number of objects to include in the results. Must be within the inclusive range 10 to 400 on non-admin connections. The default is 200.P
+  marker?: string;
+}
+
+export async function getAccountDepositPreauthObjects(
+  account: string,
+  options: GetAccountDepositPreauthObjectsOptions = {}
+): Promise<any | ErrorResponse> {
+  const response = await getAccountAllObjects(account, {
+    type: "deposit_preauth",
+    ledgerHash: options.ledgerHash,
+    ledgerIndex: options.ledgerIndex,
+    limit: options.limit,
+    marker: options.marker,
+  });
+
+  if ("error" in response) {
+    return response;
+  }
+
+  return response;
+}
+
 // NOTE: URI Tokens is not part of mainnet, this code can be changed in the future without notice
 export interface GetAccountURITokensObjectsOptions {
   ledgerHash?: string;
@@ -317,9 +344,10 @@ export interface GetAccountURITokensObjectsOptions {
 // NOTE: URI Tokens is not part of mainnet, this code can be changed in the future without notice
 export async function getAccountURITokensObjects(
   account: string,
-  options: GetAccountNFTOffersObjectsOptions = {}
+  options: GetAccountURITokensObjectsOptions = {}
 ): Promise<AccountURITokensObjectsResponse | ErrorResponse> {
   const response = await getAccountAllObjects(account, {
+    type: "uri_token",
     ledgerHash: options.ledgerHash,
     ledgerIndex: options.ledgerIndex,
     limit: options.limit,
@@ -331,13 +359,13 @@ export async function getAccountURITokensObjects(
   }
 
   const accountObjects = response.account_objects;
-  const uriTokens = accountObjectsToURITokens(accountObjects);
+  const uritokens = accountObjectsToURITokens(accountObjects);
 
   return {
     account: response.account,
     ledger_hash: response.ledger_hash,
     ledger_index: response.ledger_index,
     validated: response.validated,
-    uritokens: uriTokens,
+    uritokens: uritokens,
   };
 }

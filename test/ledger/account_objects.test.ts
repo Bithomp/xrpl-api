@@ -213,6 +213,39 @@ describe("Client", () => {
     });
   });
 
+  describe("getAccountDepositPreauthObjects", () => {
+    before(async function () {
+      this.timeout(15000);
+      Client.setup(nconf.get("xrpl:connections:mainnet"), { nativeCurrency: "XRP" });
+      await Client.connect();
+    });
+
+    it("works for authorized", async function () {
+      const result: any = await Client.getAccountDepositPreauthObjects("rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn");
+
+      delete result._nodepref; // can be omitted
+      expect(Object.keys(result).sort()).to.eql([
+        "account",
+        "account_objects",
+        "ledger_hash",
+        "ledger_index",
+        "validated",
+      ]);
+      expect(result.account_objects).to.eql([
+        {
+          Account: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
+          Authorize: "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX",
+          Flags: 0,
+          LedgerEntryType: "DepositPreauth",
+          OwnerNode: "0",
+          PreviousTxnID: "CB1BF910C93D050254C049E9003DA1A265C107E0C8DE4A7CFF55FADFD39D5656",
+          PreviousTxnLgrSeq: 61965405,
+          index: "A43898B685C450DE8E194B24D9D54E62530536A770CCB311BFEE15A27381ABB2",
+        },
+      ]);
+    });
+  });
+
   describe("getAccountURITokensObjects", () => {
     before(async function () {
       this.timeout(15000);

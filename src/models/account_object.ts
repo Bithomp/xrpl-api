@@ -20,16 +20,7 @@ export type AccountObject =
   | LedgerEntry.Ticket
   | LedgerEntry.RippleState;
 
-// https://github.com/XRPLF/xrpl.js/blob/2b424276344b2aa8b8b76d621500f4d9e1436663/packages/xrpl/src/models/common/index.ts#L3
-export type AccountObjectType =
-  | "check"
-  | "escrow"
-  | "offer"
-  | "payment_channel"
-  | "signer_list"
-  | "state"
-  | "ticket"
-  | "nft_offer";
+export type AccountObjectType = Exclude<LedgerEntry.LedgerEntryFilter, "amendments" | "fee" | "hashes"> | "uri_token";
 
 export interface AccountObjects {
   account: string;
@@ -189,7 +180,7 @@ export function accountObjectsToURITokens(accountObjects: AccountObject[]): Acco
     return obj.LedgerEntryType === "URIToken";
   });
 
-  const uriTokens = uriTokenObjects.map((obj: any) => {
+  const uritokens = uriTokenObjects.map((obj: any) => {
     return removeUndefined({
       flags: obj.Flags,
       index: obj.index,
@@ -204,5 +195,5 @@ export function accountObjectsToURITokens(accountObjects: AccountObject[]): Acco
     });
   });
 
-  return uriTokens;
+  return uritokens;
 }
