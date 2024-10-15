@@ -114,7 +114,6 @@ class Connection extends EventEmitter {
         this.url,
         removeUndefined({ timeout: this.timeout, connectionTimeout: this.connectionTimeout })
       );
-      this.client.apiVersion = this.apiVersion;
       this.setupEmitter();
 
       await this.client.connection.connect();
@@ -153,7 +152,7 @@ class Connection extends EventEmitter {
 
       // Check connection after updateSubscriptions to make sure we will not miss any streams update.
       const waitTime = getTimestamp() + RECONNECT_TIMEOUT;
-      while ((!this.client || !this.isConnected())) {
+      while (!this.client || !this.isConnected()) {
         // Give it time to reconnect
         await sleep(100);
 

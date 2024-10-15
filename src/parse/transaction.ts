@@ -310,6 +310,7 @@ function parseTransaction(
     type: type,
     address: parseAccount(tx.Account),
     sequence: tx.Sequence,
+    ticketSequence: tx.TicketSequence,
     id: tx.hash,
     ctid: tx.ctid,
     specification: removeUndefined(specification),

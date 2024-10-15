@@ -12,6 +12,7 @@ describe("Client", () => {
 
     describe("getTransactions", () => {
       it("transactions with ledger version", async function () {
+        this.timeout(30000);
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.getTransactions(address, {
           limit: 10,
@@ -135,7 +136,7 @@ describe("Client", () => {
 
     describe("findTransactions", () => {
       it("transactions with ledger version", async function () {
-        this.timeout(20000);
+        this.timeout(30000);
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactions(address, {
           limit: 10,
@@ -581,7 +582,7 @@ describe("Client", () => {
 
     describe("findTransactions", () => {
       it("transactions with ledger version", async function () {
-        this.timeout(20000);
+        this.timeout(30000);
         const address = "rmv53yu8Wid6kj6AC6NvmiwSXNxRa8vTH";
         const result: any = await Client.findTransactions(address, {
           limit: 20,

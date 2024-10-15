@@ -25,7 +25,8 @@ function parsePayment(tx: any): FormattedPaymentSpecification {
 
   const source: FormattedSourceAddress = {
     address: tx.Account,
-    maxAmount: removeGenericCounterparty(parseAmount(tx.SendMax || tx.Amount), tx.Account),
+    // Note: DeliverMax is only present in rippled 2.0.0+
+    maxAmount: removeGenericCounterparty(parseAmount(tx.SendMax || tx.DeliverMax || tx.Amount), tx.Account),
     tag: tx.SourceTag,
   };
 

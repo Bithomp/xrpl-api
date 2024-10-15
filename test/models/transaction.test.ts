@@ -972,6 +972,45 @@ describe("Models", () => {
       });
     });
 
+    it("EscrowFinish", function () {
+      const tx = require("../examples/responses/transaction/DA9C1C116F256B6ABD31F1D15895C5E617CBBB6CD7AFE9A988803304E7C3DAD6.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "escrowExecution",
+        address: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+        sequence: 0,
+        ticketSequence: 7885,
+        id: "DA9C1C116F256B6ABD31F1D15895C5E617CBBB6CD7AFE9A988803304E7C3DAD6",
+        ctid: "C015D3F400010001",
+        specification: {
+          source: { address: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz" },
+          owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+          escrowSequence: 8013,
+          memos: [{ type: "memo", format: "plain/text", data: "Auto execution by xrplexplorer.com" }],
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-10-11T21:57:30.000Z",
+          fee: "0.000013",
+          balanceChanges: { rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz: [{ currency: "XRP", value: "-0.000003" }] },
+          escrowChanges: {
+            status: "executed",
+            escrowIndex: "5D21BE7B6427FDB7D82F4B07C08D7703B03AC8404C70DE99DFC00AE403108142",
+            escrowSequence: 8013,
+            amount: "10",
+            source: { address: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz" },
+            destination: { address: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz" },
+            allowExecuteAfter: "2024-10-11T21:57:19.000Z",
+            previousTxnID: "22B52ED8B70F1ADB49EABE0F94B797A7CEC678341F744AA20C54178D3096BE9B",
+            previousTxnLgrSeq: 1430511,
+          },
+          ledgerVersion: 1430516,
+          indexInLedger: 1,
+        },
+      });
+    });
+
     it("EscrowFinish IOU", function () {
       const tx = require("../examples/responses/transaction/CB192FC862D00F6A49E819EF99053BE534A6EC703418306E415C6230F5786FDB.json");
       const result: any = Models.getTxDetails(tx, false);
