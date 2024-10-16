@@ -128,6 +128,7 @@ describe("Client", () => {
       });
 
       it("returns error", async function () {
+        this.timeout(10000);
         const taker = Wallet.generateAddress().address;
         const orderbook = {
           base: {

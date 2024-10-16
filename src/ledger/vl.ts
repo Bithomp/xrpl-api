@@ -1,4 +1,6 @@
+import { decodeNodePublic } from "ripple-address-codec";
 import * as Client from "../client";
+import { bytesToHex } from "../parse/utils";
 import { VLInterface, ValidatorInterface, VLBlobInterface, VLSecretKeysInterface, encodeVLBlob } from "../models/vl";
 import { generateManifest } from "../models/manifest";
 import { unixTimeToLedgerTime } from "../models/ledger";
@@ -113,10 +115,13 @@ export async function getVLBlobValidatorsManifest(validatorsPublicKeys: string[]
 
   const validators = validatorsManifests.map((info) => {
     const validationPublicKey = info.requested;
+    const publicKeyBuffer = decodeNodePublic(validationPublicKey);
+    const publicKey = bytesToHex(publicKeyBuffer.buffer);
+
     const manifest = info.manifest;
 
     return {
-      validation_public_key: validationPublicKey,
+      validation_public_key: publicKey,
       manifest,
     };
   });

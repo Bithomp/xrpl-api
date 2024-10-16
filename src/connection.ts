@@ -48,7 +48,7 @@ class Connection extends EventEmitter {
   private client?: Client | null;
   public readonly url: string;
   public readonly type?: string;
-  public readonly types: string[];
+  public types: string[] = [];
   public latency: LatencyInfo[] = [];
   public readonly logger?: any;
   public readonly timeout?: number; // request timeout
@@ -71,11 +71,7 @@ class Connection extends EventEmitter {
     this.shutdown = false;
     this.url = url;
     this.type = type;
-    if (typeof this.type === "string") {
-      this.types = this.type.split(",").map((v) => v.trim());
-    } else {
-      this.types = [];
-    }
+    this.updateTypes();
 
     this.client = null;
     this.logger = options.logger;
@@ -303,6 +299,9 @@ class Connection extends EventEmitter {
         await this.removeClient();
         await sleep(RECONNECT_TIMEOUT);
 
+        this.updateTypes();
+        this.serverInfoUpdating = false;
+
         await this.connect();
       } catch (e: any) {
         this.logger?.warn({
@@ -411,6 +410,14 @@ class Connection extends EventEmitter {
     this.client.connection.on("path_find", (path) => {
       this.emit("path_find", path);
     });
+  }
+
+  private updateTypes(): void {
+    if (typeof this.type === "string") {
+      this.types = this.type.split(",").map((v) => v.trim());
+    } else {
+      this.types = [];
+    }
   }
 
   private async updateSubscriptions(request: any): Promise<Response | any> {
