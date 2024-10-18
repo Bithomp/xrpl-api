@@ -576,6 +576,7 @@ describe("Client", () => {
   describe("xahau", () => {
     before(async function () {
       this.timeout(15000);
+      await Client.disconnect();
       Client.setup(nconf.get("xrpl:connections:xahau"), { loadBalancing: true, nativeCurrency: "XRP" });
       await Client.connect();
     });

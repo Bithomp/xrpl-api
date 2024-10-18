@@ -125,8 +125,8 @@ function parseBalanceChanges(metadata: TransactionMetadata, nativeCurrency?: str
  *  @param {Object} metadata Transaction metadata
  *  @returns {Object} parsed balances
  */
-function parseFinalBalances(metadata: TransactionMetadata) {
-  return parseQuantities(metadata, parseFinalBalance);
+function parseFinalBalances(metadata: TransactionMetadata, nativeCurrency?: string) {
+  return parseQuantities(metadata, parseFinalBalance, nativeCurrency);
 }
 
 export { parseBalanceChanges, parseFinalBalances };
