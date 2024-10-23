@@ -75,7 +75,7 @@ BithompXRPL.Client.setup(config);
 // connect
 await BithompXRPL.Client.connect();
 
-// validator secrets, should not belong to any validators keys.
+// validator(master) secrets, should not belong to any validators keys.
 // can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
 // can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
 const vk = {
@@ -83,7 +83,7 @@ const vk = {
   publicKey: "ED________________________________",
 };
 
-// signing secrets, should not belong to any validators keys.
+// signing secrets, should not belong to any validators keys and should be different from vk.
 // can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
 // can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
 const sk = {
@@ -108,6 +108,9 @@ const vl = await BithompXRPL.Client.createVL(vk, sk, sequence, expiration, valid
 //   "public_key": "..." // vk.publicKey
 // }
 
+// NOTE: to be able rippled to accept the validator list, you have to add validator(master) public key
+// to [validator_list_keys] in rippled.cfg
+
 //  disconnect
 BithompXRPL.Client.disconnect();
 ```
@@ -131,7 +134,7 @@ BithompXRPL.Client.setup(config);
 // connect
 await BithompXRPL.Client.connect();
 
-// validator secrets, should not belong to any validators keys.
+// validator(master) secrets, should not belong to any validators keys.
 // can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
 // can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
 const vk = {
@@ -139,7 +142,7 @@ const vk = {
   publicKey: "ED________________________________",
 };
 
-// signing secrets, should not belong to any validators keys.
+// signing secrets, should not belong to any validators keys and should be different from vk.
 // can be any ed25519 (publicKey starts on `ED`) or secp256k1 could be used,
 // can ne generated with BithompXRPL.Validator.generateSecrets() or by generateSeed from ripple-keypairs
 const sk = {
@@ -170,6 +173,9 @@ const vl = await BithompXRPL.Client.createVLv2(vk, sk, [publishBlob, publishBlob
 //   "version": 2,
 //   "public_key": "..." // vk.publicKey
 // }
+
+// NOTE: to be able rippled to accept the validator list, you have to add validator(master) public key
+// to [validator_list_keys] in rippled.cfg
 
 //  disconnect
 BithompXRPL.Client.disconnect();
