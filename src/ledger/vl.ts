@@ -32,6 +32,10 @@ export async function createVL(
     throw new Error("Ephemeral key is required");
   }
 
+  if (masterKey.publicKey === ephemeralKey.publicKey) {
+    throw new Error("Master and ephemeral keys must be different.");
+  }
+
   if (typeof sequence !== "number") {
     throw new Error("sequence must be a number.");
   }

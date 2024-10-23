@@ -93,9 +93,9 @@ describe("Models", () => {
       // const ephemeralSecrets = Validator.generateSecrets();
       const ephemeralSecrets = {
         key_type: "ed25519",
-        secret_key: "pncRK5E6tyFQwTXaUpXKZkSkBwuJ1EEBDcbwMBJyAVTeDZUmR7u",
-        public_key: "nHUa1qqv3ih232B26LCEnS9kQ89Ab8A6jwWy5ARGztUfnej3fcBg",
-        PublicKey: "ED62A2B6119230C074AD9E3F942316A1B4B0AAF00ADCDB1714609CB964BEA1EED2",
+        secret_key: "pn4HMbinvJBvyYMtrrMtbJ3J2LBpKMp6gUWZ4QJo4ZU3rvc5NK4",
+        public_key: "nHBgYFyWpPaYWrnaQJSfWPLeeLtjRuB1jZV5DnLyqDqg2NAWEL5q",
+        PublicKey: "ED2B657034CF39EA782EA4A7CEBBD5066213F2C98D4EF1C6E1A2759C400E06E795",
       };
 
       // const masterSecrets = Validator.generateSecrets();
@@ -149,12 +149,11 @@ describe("Models", () => {
     });
 
     it("returns a manifest with Domain", function () {
-      // const ephemeralSecrets = Validator.generateSecrets();
       const ephemeralSecrets = {
         key_type: "ed25519",
-        secret_key: "pncRK5E6tyFQwTXaUpXKZkSkBwuJ1EEBDcbwMBJyAVTeDZUmR7u",
-        public_key: "nHUa1qqv3ih232B26LCEnS9kQ89Ab8A6jwWy5ARGztUfnej3fcBg",
-        PublicKey: "ED62A2B6119230C074AD9E3F942316A1B4B0AAF00ADCDB1714609CB964BEA1EED2",
+        secret_key: "pn4HMbinvJBvyYMtrrMtbJ3J2LBpKMp6gUWZ4QJo4ZU3rvc5NK4",
+        public_key: "nHBgYFyWpPaYWrnaQJSfWPLeeLtjRuB1jZV5DnLyqDqg2NAWEL5q",
+        PublicKey: "ED2B657034CF39EA782EA4A7CEBBD5066213F2C98D4EF1C6E1A2759C400E06E795",
       };
 
       // const masterSecrets = Validator.generateSecrets();

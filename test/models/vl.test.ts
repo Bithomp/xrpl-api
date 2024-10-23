@@ -66,6 +66,13 @@ describe("Models", () => {
       const result = Models.isValidVL(valid);
       expect(result).to.be.null;
     });
+
+    it("validates incorrect use of master and ephemeral", function () {
+      const valid = require("../examples/vl/invalid_with_master_ephemeral.json");
+      const result = Models.isValidVL(valid);
+
+      expect(result).to.be.eql("Master and ephemeral public keys must be different");
+    });
   });
 
   describe("parseValidationData", () => {

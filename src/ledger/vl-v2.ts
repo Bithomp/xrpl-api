@@ -32,6 +32,10 @@ export async function createVLv2(
     throw new Error("Ephemeral key is required");
   }
 
+  if (masterKey.publicKey === ephemeralKey.publicKey) {
+    throw new Error("Master and ephemeral keys must be different.");
+  }
+
   // sequence of the first blob
   let globalSequence: number | undefined;
 

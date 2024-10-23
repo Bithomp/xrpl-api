@@ -177,6 +177,11 @@ export function parseManifest(manifest: string): ManifestInterface {
     return decoded;
   }
 
+  if (decoded.SigningPubKey && decoded.PublicKey && decoded.SigningPubKey === decoded.PublicKey) {
+    decoded.error = "Master and ephemeral public keys must be different";
+    return decoded;
+  }
+
   return decoded;
 }
 

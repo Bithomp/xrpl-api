@@ -1,7 +1,7 @@
 import nconf from "nconf";
 import * as rippleKeypairs from "ripple-keypairs";
 import { expect } from "chai";
-import { Client, Models } from "../../src/index";
+import { Client, Models, Validator } from "../../src/index";
 
 describe("Client", () => {
   describe("mainnet", () => {
@@ -12,7 +12,7 @@ describe("Client", () => {
     });
 
     describe("createVL", () => {
-      it("should create a valid VL", async function () {
+      it("should create a valid VL with ripple-keypairs", async function () {
         this.timeout(15000);
 
         const secrets = {
@@ -41,6 +41,38 @@ describe("Client", () => {
         expect(vl.error).to.be.undefined;
         expect(vl.version).to.be.eql(1);
         expect(vl?.decodedManifest?.publicKey).to.be.eql(secrets.public_key);
+        expect(vl.blob?.expiration).to.be.eql(1696508603);
+      });
+
+      it("should create a valid VL with generateSecrets", async function () {
+        this.timeout(15000);
+
+        const masterSecrets = {
+          key_type: "ed25519",
+          secret_key: "pncRK5E6tyFQwTXaUpXKZkSkBwuJ1EEBDcbwMBJyAVTeDZUmR7u",
+          public_key: "nHUa1qqv3ih232B26LCEnS9kQ89Ab8A6jwWy5ARGztUfnej3fcBg",
+          PublicKey: "ED62A2B6119230C074AD9E3F942316A1B4B0AAF00ADCDB1714609CB964BEA1EED2",
+        };
+
+        const master = { privateKey: masterSecrets.secret_key, publicKey: masterSecrets.PublicKey };
+        const ephemeralSecrets = Validator.generateSecrets();
+        const ephemeral = { privateKey: ephemeralSecrets.secret_key, publicKey: ephemeralSecrets.PublicKey };
+        const validators = ["nHBidG3pZK11zQD6kpNDoAhDxH6WLGui6ZxSbUx7LSqLHsgzMPec"];
+        const result = await Client.createVL(master, ephemeral, 2, 1696508603, validators);
+
+        expect(Object.keys(result)).to.have.members(["blob", "manifest", "signature", "version", "public_key"]);
+
+        expect(result.version).to.eql(1);
+        expect(result.public_key).to.eql(master.publicKey);
+        expect(result.blob).to.be.eql(
+          "eyJzZXF1ZW5jZSI6MiwiZXhwaXJhdGlvbiI6NzQ5ODIzODAzLCJ2YWxpZGF0b3JzIjpbeyJ2YWxpZGF0aW9uX3B1YmxpY19rZXkiOiJFRDQyNDZBQTNBRTlEMjk4NjM5NDQ4MDBDQ0E5MTgyOUU0NDQ3NDk4QTIwQ0Q5QzM5NzNBNkI1OTM0NkM3NUFCOTUiLCJtYW5pZmVzdCI6IkpBQUFBQUZ4SWUxQ1JxbzY2ZEtZWTVSSUFNeXBHQ25rUkhTWW9nelp3NWM2YTFrMGJIV3JsWE1oQWttMWx6MGM4UVhXZko5YjF2QjcyZExhYnc4d1lJZDhNdG5wc0hIQkVDOHBka1l3UkFJZ1FsYjZISjUzaHNUQWZWaWQrQU9kQlZ2TUY3cmFoSUtOTEJIVWduNTJ6QkVDSUdMVXFGdThhMUFBSFJKY1ZvbktZRW5taEp3YkNYTG4ramU3bmExV0QxL29jQkpBRTR2ZnZyR1NtWkMydUFVR21NNWRJQnRvU2dFVWV5KzJWbGVEWUVzY2U5NHR4WWNqUjhaN1FMTmFsaUQ4dy9iRDUvaHZZUThtZVYxV2cxakpGTmUwQ0E9PSJ9XX0="
+        );
+        expect(result.manifest).to.be.a("string");
+
+        const vl = Models.parseVL(result);
+        expect(vl.error).to.be.undefined;
+        expect(vl.version).to.be.eql(1);
+        expect(vl?.decodedManifest?.publicKey).to.be.eql(masterSecrets.public_key);
         expect(vl.blob?.expiration).to.be.eql(1696508603);
       });
     });
