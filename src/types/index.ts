@@ -5,6 +5,7 @@ export * from "./amounts";
 export * from "./amm";
 export * from "./checks";
 export * from "./deposits";
+export * from "./did";
 export * from "./escrows";
 export * from "./fees";
 export * from "./gateway_balances";

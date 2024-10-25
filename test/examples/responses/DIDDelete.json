@@ -1,0 +1,64 @@
+{
+  "Account": "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
+  "Fee": "20",
+  "Flags": 2147483648,
+  "Sequence": 4098100,
+  "SigningPubKey": "03A7A865C3FFAB23459125B2DF8AF2813EABC26C5EF6FFD4CED672D84BF2AC1042",
+  "TransactionType": "DIDDelete",
+  "TxnSignature": "30450221009E6A4A33C3ED0C2C985C910C0E7499A76D2DAA48FD09E86B864FAA34CA1DF03602206D32AD9A975DB030ACA4A1F1A733DABBC735B78274BE35BC9ACA51F3707C5414",
+  "hash": "EAF3B729B4EB78E2DA65C3CDFF60910CF78776C046F72EB6F2CCD1A47CFE5DC8",
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
+            "Balance": "39999960",
+            "Flags": 0,
+            "OwnerCount": 0,
+            "Sequence": 4098101
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "09941CE88F84BF4A1DF30C8EEC333453985CCCACD7873CEEC09031B69D23D20E",
+          "PreviousFields": { "Balance": "39999980", "OwnerCount": 1, "Sequence": 4098100 },
+          "PreviousTxnID": "F5DAF71C4ADC343A20853876916B636BCCC06E56748E4BC7B0E7243847CC7C8B",
+          "PreviousTxnLgrSeq": 4098101
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
+            "RootIndex": "64FC25324D03A82A12380F4EAF16AB8AD291CBE8C9EA4F4106C7E6483E84F4EE"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "64FC25324D03A82A12380F4EAF16AB8AD291CBE8C9EA4F4106C7E6483E84F4EE",
+          "PreviousTxnID": "F5DAF71C4ADC343A20853876916B636BCCC06E56748E4BC7B0E7243847CC7C8B",
+          "PreviousTxnLgrSeq": 4098101
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "Account": "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
+            "DIDDocument": "A1B1",
+            "Data": "A1B1",
+            "Flags": 0,
+            "OwnerNode": "0",
+            "PreviousTxnID": "F5DAF71C4ADC343A20853876916B636BCCC06E56748E4BC7B0E7243847CC7C8B",
+            "PreviousTxnLgrSeq": 4098101,
+            "URI": "A1B1"
+          },
+          "LedgerEntryType": "DID",
+          "LedgerIndex": "C2A00F4633438A65D3D916E7DD84920923DF61278FC18A9D11B767FDAA416A1E"
+        }
+      }
+    ],
+    "TransactionIndex": 8,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "date": 779498422,
+  "ledger_index": 4098103,
+  "validated": true
+}

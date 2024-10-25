@@ -37,7 +37,7 @@ interface FormattedAmmSummaryInterface {
   ownerNode: string;
   voteSlots: FormattedVoteSlot[];
 
-  /// changes
+  // changes
   lpTokenBalanceChange?: FormattedAmount;
   tradingFeeChanges?: number;
   voteSlotsChanges?: FormattedAmmVoteSlotChanges[];

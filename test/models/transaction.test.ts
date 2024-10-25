@@ -4517,6 +4517,127 @@ describe("Models", () => {
         },
       });
     });
+
+    it("DIDSet", function () {
+      const tx = require("../examples/responses/DIDSet.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "didSet",
+        address: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
+        sequence: 4098099,
+        id: "F5DAF71C4ADC343A20853876916B636BCCC06E56748E4BC7B0E7243847CC7C8B",
+        specification: {
+          source: {
+            address: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
+          },
+          uri: "A1B1",
+          data: "A1B1",
+          didDocument: "A1B1",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-09-12T23:20:20.000Z",
+          fee: "0.00002",
+          balanceChanges: {
+            rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq: [
+              {
+                currency: "XRP",
+                value: "-0.00002",
+              },
+            ],
+          },
+          didChanges: {
+            status: "created",
+            didID: "C2A00F4633438A65D3D916E7DD84920923DF61278FC18A9D11B767FDAA416A1E",
+            account: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
+            uri: "A1B1",
+            data: "A1B1",
+            didDocument: "A1B1",
+          },
+          ledgerVersion: 4098101,
+          indexInLedger: 3,
+        },
+      });
+    });
+
+    it("DIDSet2", function () {
+      const tx = require("../examples/responses/DIDSet2.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "didSet",
+        address: "rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC",
+        sequence: 4098099,
+        id: "382DC2286F1B4425C6808FD32D6F0B12805797286A29B36D19BF71B512E06768",
+        specification: {
+          source: {
+            address: "rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC",
+          },
+          didDocument: "",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-09-12T23:20:20.000Z",
+          fee: "0.00002",
+          balanceChanges: {
+            rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC: [
+              {
+                currency: "XRP",
+                value: "-0.00002",
+              },
+            ],
+          },
+          didChanges: {
+            status: "modified",
+            didID: "4AD6E1C86D0D8C131C745FA9E18743DF6A05DFEF6DBAE30AA7223C6532D20AD6",
+            account: "rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC",
+            uri: "A1B1",
+            data: "A1B1",
+            didDocumentChanges: "A1B1",
+          },
+          ledgerVersion: 4098101,
+          indexInLedger: 6,
+        },
+      });
+    });
+
+    it("DIDDelete", function () {
+      const tx = require("../examples/responses/DIDDelete.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "didDelete",
+        address: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
+        sequence: 4098100,
+        id: "EAF3B729B4EB78E2DA65C3CDFF60910CF78776C046F72EB6F2CCD1A47CFE5DC8",
+        specification: {
+          source: {
+            address: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-09-12T23:20:22.000Z",
+          fee: "0.00002",
+          balanceChanges: {
+            rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq: [
+              {
+                currency: "XRP",
+                value: "-0.00002",
+              },
+            ],
+          },
+          didChanges: {
+            status: "deleted",
+            didID: "C2A00F4633438A65D3D916E7DD84920923DF61278FC18A9D11B767FDAA416A1E",
+            account: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
+            uri: "A1B1",
+            data: "A1B1",
+            didDocument: "A1B1",
+          },
+          ledgerVersion: 4098103,
+          indexInLedger: 8,
+        },
+      });
+    });
   });
 
   describe("getAccountTxDetails", () => {

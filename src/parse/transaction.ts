@@ -107,6 +107,9 @@ import parseAmmDeposit from "./specification/amm-deposit";
 import parseAmmWithdraw from "./specification/amm-withdraw";
 import parseAmmVote from "./specification/amm-vote";
 
+import parseDIDSet from "./specification/did-set";
+import parseDIDDelete from "./specification/did-delete";
+
 import parseGenesisMint from "./specification/genesis-mint";
 
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
@@ -159,6 +162,9 @@ const transactionTypeToType = {
   AMMDeposit: "ammDeposit",
   AMMWithdraw: "ammWithdraw",
   AMMVote: "ammVote",
+
+  DIDSet: "didSet",
+  DIDDelete: "didDelete",
 
   GenesisMint: "genesisMint",
 
@@ -214,6 +220,9 @@ const parserTypeFunc = {
   ammDeposit: parseAmmDeposit,
   ammWithdraw: parseAmmWithdraw,
   ammVote: parseAmmVote,
+
+  didSet: parseDIDSet,
+  didDelete: parseDIDDelete,
 
   genesisMint: parseGenesisMint,
 

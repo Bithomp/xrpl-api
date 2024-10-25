@@ -14,6 +14,7 @@ import {
   parseEscrowChanges,
   parseUNLReportChanges,
   parseAmmChanges,
+  parseDIDChanges,
 } from "./outcome/index";
 
 import { parseImportBlob } from "./ledger/import";
@@ -135,6 +136,7 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
   const emittedTxns = parseEmittedTxns(tx, definitions);
   const unlReportChanges = parseUNLReportChanges(tx);
   const ammChanges = parseAmmChanges(metadata);
+  const didChanges = parseDIDChanges(metadata);
 
   removeEmptyCounterpartyInBalanceChanges(balanceChanges);
   removeEmptyCounterpartyInBalanceChanges(lockedBalanceChanges);
@@ -155,6 +157,7 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     uritokenSellOfferChanges: Object.keys(uritokenSellOfferChanges).length > 0 ? uritokenSellOfferChanges : undefined,
     affectedObjects: affectedObjects ? removeUndefined(affectedObjects) : undefined,
     ammChanges: ammChanges ? removeUndefined(ammChanges) : undefined,
+    didChanges: didChanges ? removeUndefined(didChanges) : undefined,
     unlReportChanges,
     hooksExecutions,
     emittedTxns,

@@ -1,0 +1,52 @@
+{
+  "Account": "rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC",
+  "DIDDocument": "",
+  "Fee": "20",
+  "Flags": 2147483648,
+  "Sequence": 4098099,
+  "SigningPubKey": "03A004C4033945AE1CFDE6B9E33D03227BDC9BBFBF5D11E583824BEC5247B21E33",
+  "TransactionType": "DIDSet",
+  "TxnSignature": "3045022100AE9C337218868ADFF8F275E290A1163E2B508F4ECE18DABA44049B67EC56CBFE02204CCD97B4E02D643BF58D6E9828DF75E54CE17BD14F695AC1D58A7BF12FE614D7",
+  "hash": "382DC2286F1B4425C6808FD32D6F0B12805797286A29B36D19BF71B512E06768",
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC",
+            "Balance": "39999960",
+            "Flags": 0,
+            "OwnerCount": 1,
+            "Sequence": 4098100
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "2B07EC9473534141A38EA2572EB3D19BB2352620F4A2A86512CC04A45B8AC060",
+          "PreviousFields": { "Balance": "39999980", "Sequence": 4098099 },
+          "PreviousTxnID": "72686DA8C370F36F49E7FE0033C3DD22186E59F530542622AFE20C3340860143",
+          "PreviousTxnLgrSeq": 4098099
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC",
+            "Data": "A1B1",
+            "Flags": 0,
+            "OwnerNode": "0",
+            "URI": "A1B1"
+          },
+          "LedgerEntryType": "DID",
+          "LedgerIndex": "4AD6E1C86D0D8C131C745FA9E18743DF6A05DFEF6DBAE30AA7223C6532D20AD6",
+          "PreviousFields": { "DIDDocument": "A1B1" },
+          "PreviousTxnID": "72686DA8C370F36F49E7FE0033C3DD22186E59F530542622AFE20C3340860143",
+          "PreviousTxnLgrSeq": 4098099
+        }
+      }
+    ],
+    "TransactionIndex": 6,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "date": 779498420,
+  "ledger_index": 4098101,
+  "validated": true
+}
