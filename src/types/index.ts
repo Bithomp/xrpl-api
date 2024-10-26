@@ -14,6 +14,7 @@ export * from "./ledger_data";
 export * from "./ledger_entries";
 export * from "./memos";
 export * from "./offers";
+export * from "./oracle";
 export * from "./queue_data";
 export * from "./settings";
 export * from "./signers";

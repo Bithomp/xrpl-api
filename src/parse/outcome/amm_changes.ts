@@ -131,6 +131,8 @@ function summarizeVoteSlotsChanges(node: any): FormattedAmmVoteSlotChanges[] | u
         removeUndefined({
           status: "modified" as "modified", // use as "modified" because "removeUndefined" is used
           account: slot.VoteEntry.Account,
+          tradingFee: slot.VoteEntry.TradingFee,
+          voteWeight: slot.VoteEntry.VoteWeight,
           tradingFeeChange: tradingFeeChange || undefined,
           voteWeightChange: voteWeightChange || undefined,
         })

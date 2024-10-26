@@ -1,0 +1,224 @@
+{
+  "Account": "rnggG2p5R3tLNAXaw1YUsDGaXDupavQEb3",
+  "AssetClass": "737461626C6520746F6B656E",
+  "Fee": "10",
+  "LastUpdateTime": 1726179141,
+  "OracleDocumentID": 0,
+  "PriceDataSeries": [
+    {
+      "PriceData": {
+        "AssetPrice": "1615",
+        "BaseAsset": "XRP",
+        "QuoteAsset": "4644555344000000000000000000000000000000",
+        "Scale": 4
+      }
+    },
+    {
+      "PriceData": {
+        "AssetPrice": "1aefb",
+        "BaseAsset": "XRP",
+        "QuoteAsset": "4D4D584E00000000000000000000000000000000",
+        "Scale": 4
+      }
+    },
+    {
+      "PriceData": {
+        "AssetPrice": "dcc0",
+        "BaseAsset": "XRP",
+        "QuoteAsset": "5059555344000000000000000000000000000000",
+        "Scale": 5
+      }
+    },
+    {
+      "PriceData": {
+        "AssetPrice": "35ef35d",
+        "BaseAsset": "XRP",
+        "QuoteAsset": "5553444300000000000000000000000000000000",
+        "Scale": 8
+      }
+    },
+    {
+      "PriceData": {
+        "AssetPrice": "35e0ed9",
+        "BaseAsset": "XRP",
+        "QuoteAsset": "5553445400000000000000000000000000000000",
+        "Scale": 8
+      }
+    }
+  ],
+  "Provider": "68747470733A2F2F74687265657872702E646576",
+  "Sequence": 5014573,
+  "SigningPubKey": "EDA9DF430C6733F86A0AA0BF0E9F74F75041C8D3C756B2FC090A77DCCD5E4D1F0B",
+  "TransactionType": "OracleSet",
+  "TxnSignature": "C9DAB27952913A354598154098EDBA7BC2799558EF31B73C47AF3B4D43370503FEDE98B216F9727308BD595BE9AE4DE9957ACA4F1F7E32CEEF9D69EDF3DEA207",
+  "ctid": "C03E836300000002",
+  "date": 779494342,
+  "hash": "CEB10113EC38D92DAEADDFA65B22AC7E237EA8F2BC659079E3E46CA48889D530",
+  "inLedger": 4096867,
+  "ledger_index": 4096867,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rnggG2p5R3tLNAXaw1YUsDGaXDupavQEb3",
+            "Balance": "85629930",
+            "Flags": 0,
+            "OwnerCount": 9,
+            "Sequence": 5014574
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "E88E4309505003154FCE1785352260B49A3390AC2B449778EFFD6AACF01F6BC1",
+          "PreviousFields": {
+            "Balance": "85629940",
+            "Sequence": 5014573
+          },
+          "PreviousTxnID": "229141A01E620FC354ABB4ACBB09DBC8B180B727BDDF029E6F0BE299E22702C0",
+          "PreviousTxnLgrSeq": 4096866
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "AssetClass": "737461626C6520746F6B656E",
+            "Flags": 0,
+            "LastUpdateTime": 1726179141,
+            "Owner": "rnggG2p5R3tLNAXaw1YUsDGaXDupavQEb3",
+            "OwnerNode": "0",
+            "PriceDataSeries": [
+              {
+                "PriceData": {
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "4555525300000000000000000000000000000000"
+                }
+              },
+              {
+                "PriceData": {
+                  "AssetPrice": "1615",
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "4644555344000000000000000000000000000000",
+                  "Scale": 4
+                }
+              },
+              {
+                "PriceData": {
+                  "AssetPrice": "1aefb",
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "4D4D584E00000000000000000000000000000000",
+                  "Scale": 4
+                }
+              },
+              {
+                "PriceData": {
+                  "AssetPrice": "dcc0",
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "5059555344000000000000000000000000000000",
+                  "Scale": 5
+                }
+              },
+              {
+                "PriceData": {
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "5455534400000000000000000000000000000000"
+                }
+              },
+              {
+                "PriceData": {
+                  "AssetPrice": "35ef35d",
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "5553444300000000000000000000000000000000",
+                  "Scale": 8
+                }
+              },
+              {
+                "PriceData": {
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "5553444400000000000000000000000000000000"
+                }
+              },
+              {
+                "PriceData": {
+                  "AssetPrice": "35e0ed9",
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "5553445400000000000000000000000000000000",
+                  "Scale": 8
+                }
+              }
+            ],
+            "Provider": "68747470733A2F2F74687265657872702E646576"
+          },
+          "LedgerEntryType": "Oracle",
+          "LedgerIndex": "FE4D66612679B103E4F33AC419274CF4E0887B41D3E508DAEF69A7EF04999556",
+          "PreviousFields": {
+            "LastUpdateTime": 1726179138,
+            "PriceDataSeries": [
+              {
+                "PriceData": {
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "4555525300000000000000000000000000000000"
+                }
+              },
+              {
+                "PriceData": {
+                  "AssetPrice": "1615",
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "4644555344000000000000000000000000000000",
+                  "Scale": 4
+                }
+              },
+              {
+                "PriceData": {
+                  "AssetPrice": "1af0d",
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "4D4D584E00000000000000000000000000000000",
+                  "Scale": 4
+                }
+              },
+              {
+                "PriceData": {
+                  "AssetPrice": "dcc0",
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "5059555344000000000000000000000000000000",
+                  "Scale": 5
+                }
+              },
+              {
+                "PriceData": {
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "5455534400000000000000000000000000000000"
+                }
+              },
+              {
+                "PriceData": {
+                  "AssetPrice": "dce7",
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "5553444300000000000000000000000000000000",
+                  "Scale": 5
+                }
+              },
+              {
+                "PriceData": {
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "5553444400000000000000000000000000000000"
+                }
+              },
+              {
+                "PriceData": {
+                  "AssetPrice": "35e0ce5",
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "5553445400000000000000000000000000000000",
+                  "Scale": 8
+                }
+              }
+            ]
+          },
+          "PreviousTxnID": "D9A8BEFFC054C78E419685D4ACE0FDE339514010B90B68AC5A55EE46F2E82C91",
+          "PreviousTxnLgrSeq": 4096866
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

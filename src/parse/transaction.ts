@@ -110,6 +110,9 @@ import parseAmmVote from "./specification/amm-vote";
 import parseDIDSet from "./specification/did-set";
 import parseDIDDelete from "./specification/did-delete";
 
+import parseOracleSet from "./specification/oracle-set";
+import parseOracleDelete from "./specification/oracle-delete";
+
 import parseGenesisMint from "./specification/genesis-mint";
 
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
@@ -165,6 +168,9 @@ const transactionTypeToType = {
 
   DIDSet: "didSet",
   DIDDelete: "didDelete",
+
+  OracleSet: "oracleSet",
+  OracleDelete: "oracleDelete",
 
   GenesisMint: "genesisMint",
 
@@ -223,6 +229,9 @@ const parserTypeFunc = {
 
   didSet: parseDIDSet,
   didDelete: parseDIDDelete,
+
+  oracleSet: parseOracleSet,
+  oracleDelete: parseOracleDelete,
 
   genesisMint: parseGenesisMint,
 

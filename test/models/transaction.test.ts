@@ -3981,6 +3981,8 @@ describe("Models", () => {
               {
                 status: "modified",
                 account: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q",
+                tradingFee: 1000,
+                voteWeight: 40,
                 voteWeightChange: -99960,
               },
               { status: "added", account: "rMCrWrijywQBB5PPRD1pXgraw9EL8LoncN", tradingFee: 200, voteWeight: 417 },
@@ -4560,7 +4562,7 @@ describe("Models", () => {
       });
     });
 
-    it("DIDSet2", function () {
+    it("DIDSet update", function () {
       const tx = require("../examples/responses/DIDSet2.json");
       const result: any = Models.getTxDetails(tx, false);
       expect(result).to.eql({
@@ -4635,6 +4637,405 @@ describe("Models", () => {
           },
           ledgerVersion: 4098103,
           indexInLedger: 8,
+        },
+      });
+    });
+
+    it("OracleSet", function () {
+      const tx = require("../examples/responses/OracleSet.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "oracleSet",
+        address: "rnggG2p5R3tLNAXaw1YUsDGaXDupavQEb3",
+        sequence: 3577567,
+        id: "B4678B5ACD238F3FFAC34987C3F6E1A67275168B8A6609E21FF216EEB282DCAB",
+        ctid: "C03696EC00000002",
+        specification: {
+          source: { address: "rnggG2p5R3tLNAXaw1YUsDGaXDupavQEb3" },
+          oracleDocumentID: 0,
+          provider: "68747470733A2F2F74687265657872702E646576",
+          assetClass: "737461626C6520746F6B656E",
+          lastUpdateTime: 1724570689,
+          priceDataSeries: [
+            {
+              baseAsset: "XRP",
+              quoteAsset: "4644555344000000000000000000000000000000",
+              assetPrice: "6018",
+              scale: 4,
+              originalAssetPrice: "0.6018",
+            },
+            {
+              baseAsset: "XRP",
+              quoteAsset: "4D4D584E00000000000000000000000000000000",
+              assetPrice: "115104",
+              scale: 4,
+              originalAssetPrice: "11.5104",
+            },
+            {
+              baseAsset: "XRP",
+              quoteAsset: "5059555344000000000000000000000000000000",
+              assetPrice: "60211",
+              scale: 5,
+              originalAssetPrice: "0.60211",
+            },
+            {
+              baseAsset: "XRP",
+              quoteAsset: "5455534400000000000000000000000000000000",
+              assetPrice: "6016",
+              scale: 4,
+              originalAssetPrice: "0.6016",
+            },
+            {
+              baseAsset: "XRP",
+              quoteAsset: "5553444300000000000000000000000000000000",
+              assetPrice: "60155",
+              scale: 5,
+              originalAssetPrice: "0.60155",
+            },
+            {
+              baseAsset: "XRP",
+              quoteAsset: "5553445400000000000000000000000000000000",
+              assetPrice: "6017375",
+              scale: 7,
+              originalAssetPrice: "0.6017375",
+            },
+          ],
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-08-25T07:24:52.000Z",
+          fee: "0.00001",
+          balanceChanges: { rnggG2p5R3tLNAXaw1YUsDGaXDupavQEb3: [{ currency: "XRP", value: "-0.00001" }] },
+          oracleChanges: {
+            status: "created",
+            oracleID: "FE4D66612679B103E4F33AC419274CF4E0887B41D3E508DAEF69A7EF04999556",
+            provider: "68747470733A2F2F74687265657872702E646576",
+            assetClass: "737461626C6520746F6B656E",
+            lastUpdateTime: 1724570689,
+            priceDataSeries: [
+              {
+                baseAsset: "XRP",
+                quoteAsset: "4644555344000000000000000000000000000000",
+                assetPrice: "6018",
+                scale: 4,
+                originalAssetPrice: "0.6018",
+              },
+              {
+                baseAsset: "XRP",
+                quoteAsset: "4D4D584E00000000000000000000000000000000",
+                assetPrice: "115104",
+                scale: 4,
+                originalAssetPrice: "11.5104",
+              },
+              {
+                baseAsset: "XRP",
+                quoteAsset: "5059555344000000000000000000000000000000",
+                assetPrice: "60211",
+                scale: 5,
+                originalAssetPrice: "0.60211",
+              },
+              {
+                baseAsset: "XRP",
+                quoteAsset: "5455534400000000000000000000000000000000",
+                assetPrice: "6016",
+                scale: 4,
+                originalAssetPrice: "0.6016",
+              },
+              {
+                baseAsset: "XRP",
+                quoteAsset: "5553444300000000000000000000000000000000",
+                assetPrice: "60155",
+                scale: 5,
+                originalAssetPrice: "0.60155",
+              },
+              {
+                baseAsset: "XRP",
+                quoteAsset: "5553445400000000000000000000000000000000",
+                assetPrice: "6017375",
+                scale: 7,
+                originalAssetPrice: "0.6017375",
+              },
+            ],
+          },
+          ledgerVersion: 3577580,
+          indexInLedger: 0,
+        },
+      });
+    });
+
+    it("OracleSet update", function () {
+      const tx = require("../examples/responses/OracleSet2.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "oracleSet",
+        address: "rnggG2p5R3tLNAXaw1YUsDGaXDupavQEb3",
+        sequence: 5014573,
+        id: "CEB10113EC38D92DAEADDFA65B22AC7E237EA8F2BC659079E3E46CA48889D530",
+        ctid: "C03E836300000002",
+        specification: {
+          source: { address: "rnggG2p5R3tLNAXaw1YUsDGaXDupavQEb3" },
+          oracleDocumentID: 0,
+          provider: "68747470733A2F2F74687265657872702E646576",
+          assetClass: "737461626C6520746F6B656E",
+          lastUpdateTime: 1726179141,
+          priceDataSeries: [
+            {
+              baseAsset: "XRP",
+              quoteAsset: "4644555344000000000000000000000000000000",
+              assetPrice: "5653",
+              scale: 4,
+              originalAssetPrice: "0.5653",
+            },
+            {
+              baseAsset: "XRP",
+              quoteAsset: "4D4D584E00000000000000000000000000000000",
+              assetPrice: "110331",
+              scale: 4,
+              originalAssetPrice: "11.0331",
+            },
+            {
+              baseAsset: "XRP",
+              quoteAsset: "5059555344000000000000000000000000000000",
+              assetPrice: "56512",
+              scale: 5,
+              originalAssetPrice: "0.56512",
+            },
+            {
+              baseAsset: "XRP",
+              quoteAsset: "5553444300000000000000000000000000000000",
+              assetPrice: "56554333",
+              scale: 8,
+              originalAssetPrice: "0.56554333",
+            },
+            {
+              baseAsset: "XRP",
+              quoteAsset: "5553445400000000000000000000000000000000",
+              assetPrice: "56495833",
+              scale: 8,
+              originalAssetPrice: "0.56495833",
+            },
+          ],
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-09-12T22:12:22.000Z",
+          fee: "0.00001",
+          balanceChanges: { rnggG2p5R3tLNAXaw1YUsDGaXDupavQEb3: [{ currency: "XRP", value: "-0.00001" }] },
+          oracleChanges: {
+            status: "modified",
+            oracleID: "FE4D66612679B103E4F33AC419274CF4E0887B41D3E508DAEF69A7EF04999556",
+            provider: "68747470733A2F2F74687265657872702E646576",
+            assetClass: "737461626C6520746F6B656E",
+            lastUpdateTime: 1726179141,
+            priceDataSeries: [
+              { baseAsset: "XRP", quoteAsset: "4555525300000000000000000000000000000000" },
+              {
+                baseAsset: "XRP",
+                quoteAsset: "4644555344000000000000000000000000000000",
+                assetPrice: "5653",
+                scale: 4,
+                originalAssetPrice: "0.5653",
+              },
+              {
+                baseAsset: "XRP",
+                quoteAsset: "4D4D584E00000000000000000000000000000000",
+                assetPrice: "110331",
+                scale: 4,
+                originalAssetPrice: "11.0331",
+              },
+              {
+                baseAsset: "XRP",
+                quoteAsset: "5059555344000000000000000000000000000000",
+                assetPrice: "56512",
+                scale: 5,
+                originalAssetPrice: "0.56512",
+              },
+              { baseAsset: "XRP", quoteAsset: "5455534400000000000000000000000000000000" },
+              {
+                baseAsset: "XRP",
+                quoteAsset: "5553444300000000000000000000000000000000",
+                assetPrice: "56554333",
+                scale: 8,
+                originalAssetPrice: "0.56554333",
+              },
+              { baseAsset: "XRP", quoteAsset: "5553444400000000000000000000000000000000" },
+              {
+                baseAsset: "XRP",
+                quoteAsset: "5553445400000000000000000000000000000000",
+                assetPrice: "56495833",
+                scale: 8,
+                originalAssetPrice: "0.56495833",
+              },
+            ],
+            lastUpdateTimeChanges: 3,
+            priceDataSeriesChanges: [
+              {
+                status: "modified",
+                baseAsset: "XRP",
+                quoteAsset: "4D4D584E00000000000000000000000000000000",
+                assetPrice: "110331",
+                scale: 4,
+                originalAssetPrice: "11.0331",
+                assetPriceChange: "-18",
+                originalPriceChange: "-0.0018",
+              },
+              {
+                status: "modified",
+                baseAsset: "XRP",
+                quoteAsset: "5553444300000000000000000000000000000000",
+                assetPrice: "56554333",
+                scale: 8,
+                originalAssetPrice: "0.56554333",
+                assetPriceChange: "56497782",
+                scaleChange: 3,
+                originalPriceChange: "0.00003333",
+              },
+              {
+                status: "modified",
+                baseAsset: "XRP",
+                quoteAsset: "5553445400000000000000000000000000000000",
+                assetPrice: "56495833",
+                scale: 8,
+                originalAssetPrice: "0.56495833",
+                assetPriceChange: "500",
+                originalPriceChange: "0.000005",
+              },
+            ],
+          },
+          ledgerVersion: 4096867,
+          indexInLedger: 0,
+        },
+      });
+    });
+
+    it("OracleSet update 2", function () {
+      const tx = require("../examples/responses/OracleSet3.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "oracleSet",
+        address: "rPNQEyvtT2xVqhuNSFSzRQjqdHUEUeHr8h",
+        sequence: 3441048,
+        id: "1EDC129E63F734FFCF776D623833793580743FEB68C26961D97AD61CC657EF3B",
+        ctid: "C046254400000002",
+        specification: {
+          source: { address: "rPNQEyvtT2xVqhuNSFSzRQjqdHUEUeHr8h" },
+          oracleDocumentID: 1,
+          provider: "42616E642050726F746F636F6C",
+          assetClass: "63757272656E6379",
+          lastUpdateTime: 1727732389,
+          priceDataSeries: [
+            {
+              baseAsset: "BTC",
+              quoteAsset: "USD",
+              assetPrice: "63719168728200",
+              scale: 9,
+              originalAssetPrice: "63719.1687282",
+            },
+            {
+              baseAsset: "ETH",
+              quoteAsset: "USD",
+              assetPrice: "2609294193000",
+              scale: 9,
+              originalAssetPrice: "2609.294193",
+            },
+            { baseAsset: "XRP", quoteAsset: "USD", assetPrice: "624100000", scale: 9, originalAssetPrice: "0.6241" },
+          ],
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-09-30T21:39:52.000Z",
+          fee: "0.00002",
+          balanceChanges: { rPNQEyvtT2xVqhuNSFSzRQjqdHUEUeHr8h: [{ currency: "XRP", value: "-0.00002" }] },
+          oracleChanges: {
+            status: "modified",
+            oracleID: "C2C071249153646820D07F5B61C737717EC55E0384706E1E52EFFBE39341E1E3",
+            provider: "42616E642050726F746F636F6C",
+            assetClass: "63757272656E6379",
+            lastUpdateTime: 1727732389,
+            priceDataSeries: [
+              { baseAsset: "XRP", quoteAsset: "USD", assetPrice: "624100000", scale: 9, originalAssetPrice: "0.6241" },
+              {
+                baseAsset: "BTC",
+                quoteAsset: "USD",
+                assetPrice: "63719168728200",
+                scale: 9,
+                originalAssetPrice: "63719.1687282",
+              },
+              {
+                baseAsset: "ETH",
+                quoteAsset: "USD",
+                assetPrice: "2609294193000",
+                scale: 9,
+                originalAssetPrice: "2609.294193",
+              },
+            ],
+            lastUpdateTimeChanges: 600,
+            priceDataSeriesChanges: [
+              {
+                status: "modified",
+                baseAsset: "XRP",
+                quoteAsset: "USD",
+                assetPrice: "624100000",
+                scale: 9,
+                originalAssetPrice: "0.6241",
+                assetPriceChange: "-375080",
+                originalPriceChange: "-0.00037508",
+              },
+              {
+                status: "modified",
+                baseAsset: "BTC",
+                quoteAsset: "USD",
+                assetPrice: "63719168728200",
+                scale: 9,
+                originalAssetPrice: "63719.1687282",
+                assetPriceChange: "-41831271800",
+                originalPriceChange: "-41.8312718",
+              },
+              {
+                status: "modified",
+                baseAsset: "ETH",
+                quoteAsset: "USD",
+                assetPrice: "2609294193000",
+                scale: 9,
+                originalAssetPrice: "2609.294193",
+                assetPriceChange: "-3503143000",
+                originalPriceChange: "-3.503143",
+              },
+            ],
+          },
+          ledgerVersion: 4597060,
+          indexInLedger: 0,
+        },
+      });
+    });
+
+    it("OracleDelete", function () {
+      const tx = require("../examples/responses/OracleDelete.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "oracleDelete",
+        address: "rhMB4JUAmKRBSha6QcgRim93hWb3py87qt",
+        sequence: 4599329,
+        id: "1D5648206811AB004C857856F4EA6DBDF7509DF076843847F47CFA148D2E1FB0",
+        ctid: "C0462E2200000002",
+        specification: { source: { address: "rhMB4JUAmKRBSha6QcgRim93hWb3py87qt" }, oracleDocumentID: 1 },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-09-30T23:33:40.000Z",
+          fee: "0.00002",
+          balanceChanges: { rhMB4JUAmKRBSha6QcgRim93hWb3py87qt: [{ currency: "XRP", value: "-0.00002" }] },
+          oracleChanges: {
+            status: "deleted",
+            oracleID: "2B046E623D4DC52F8066746A94B1505EFDF553060D407EC21F205D6C6AA66D16",
+            provider: "0123",
+            assetClass: "20382A62402D23574E35295961607053",
+            lastUpdateTime: 1727739212,
+            priceDataSeries: [
+              { baseAsset: "BTC", quoteAsset: "ETH", assetPrice: "740", scale: 1, originalAssetPrice: "74" },
+            ],
+          },
+          ledgerVersion: 4599330,
+          indexInLedger: 0,
         },
       });
     });

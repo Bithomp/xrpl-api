@@ -1,0 +1,81 @@
+{
+  "Account": "rhMB4JUAmKRBSha6QcgRim93hWb3py87qt",
+  "Fee": "20",
+  "Flags": 2147483648,
+  "OracleDocumentID": 1,
+  "Sequence": 4599329,
+  "SigningPubKey": "02CD04B554B8A8C0DC7E75C73741D25CA3C9654DAA6EB90824EFE7A2EF89594123",
+  "TransactionType": "OracleDelete",
+  "TxnSignature": "3045022100DD190C859FE0BDF681868AE103F085640B5A146BF19BCAA902B795B11F43F164022071F2CEB84A8749CEA5E64E4B5E863957A9300CAC0F6BD5AB3312F84C9E62132F",
+  "ctid": "C0462E2200000002",
+  "date": 781054420,
+  "hash": "1D5648206811AB004C857856F4EA6DBDF7509DF076843847F47CFA148D2E1FB0",
+  "inLedger": 4599330,
+  "ledger_index": 4599330,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "AssetClass": "20382A62402D23574E35295961607053",
+            "Flags": 0,
+            "LastUpdateTime": 1727739212,
+            "Owner": "rhMB4JUAmKRBSha6QcgRim93hWb3py87qt",
+            "OwnerNode": "0",
+            "PreviousTxnID": "D2BD355782669827D6A1D5C43643FDF443DC22FC7F4163C9F9D938CA3D72CBD4",
+            "PreviousTxnLgrSeq": 4599329,
+            "PriceDataSeries": [
+              {
+                "PriceData": {
+                  "AssetPrice": "2e4",
+                  "BaseAsset": "BTC",
+                  "QuoteAsset": "ETH",
+                  "Scale": 1
+                }
+              }
+            ],
+            "Provider": "0123"
+          },
+          "LedgerEntryType": "Oracle",
+          "LedgerIndex": "2B046E623D4DC52F8066746A94B1505EFDF553060D407EC21F205D6C6AA66D16"
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rhMB4JUAmKRBSha6QcgRim93hWb3py87qt",
+            "Balance": "39999960",
+            "Flags": 0,
+            "OwnerCount": 0,
+            "Sequence": 4599330
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "FEDE5C64412F71A0D18196B7FB8C0C4D166CEEEFE7FC36DAEEF261EEC88A84E2",
+          "PreviousFields": {
+            "Balance": "39999980",
+            "OwnerCount": 1,
+            "Sequence": 4599329
+          },
+          "PreviousTxnID": "D2BD355782669827D6A1D5C43643FDF443DC22FC7F4163C9F9D938CA3D72CBD4",
+          "PreviousTxnLgrSeq": 4599329
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "rhMB4JUAmKRBSha6QcgRim93hWb3py87qt",
+            "RootIndex": "FFEEC2435BCC7366B592761560C2DB68A1E11B2F93870779C39F17D4634A355A"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "FFEEC2435BCC7366B592761560C2DB68A1E11B2F93870779C39F17D4634A355A",
+          "PreviousTxnID": "D2BD355782669827D6A1D5C43643FDF443DC22FC7F4163C9F9D938CA3D72CBD4",
+          "PreviousTxnLgrSeq": 4599329
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

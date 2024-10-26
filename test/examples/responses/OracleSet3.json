@@ -1,0 +1,140 @@
+{
+  "Account": "rPNQEyvtT2xVqhuNSFSzRQjqdHUEUeHr8h",
+  "AssetClass": "63757272656E6379",
+  "Fee": "20",
+  "LastUpdateTime": 1727732389,
+  "OracleDocumentID": 1,
+  "PriceDataSeries": [
+    {
+      "PriceData": {
+        "AssetPrice": "39f3c66adc88",
+        "BaseAsset": "BTC",
+        "QuoteAsset": "USD",
+        "Scale": 9
+      }
+    },
+    {
+      "PriceData": {
+        "AssetPrice": "25f860db168",
+        "BaseAsset": "ETH",
+        "QuoteAsset": "USD",
+        "Scale": 9
+      }
+    },
+    {
+      "PriceData": {
+        "AssetPrice": "253302a0",
+        "BaseAsset": "XRP",
+        "QuoteAsset": "USD",
+        "Scale": 9
+      }
+    }
+  ],
+  "Provider": "42616E642050726F746F636F6C",
+  "Sequence": 3441048,
+  "SigningPubKey": "EDC05BBC0C20FA195C360A8D4FF48F988FD52E8731AF7424F29473AB8C2659BF8F",
+  "TransactionType": "OracleSet",
+  "TxnSignature": "8E744EC95F14FC9257CB20AEBBF91B0D176024642B64E3A30CB44BCBCD04F9C3A7716461F60DDA4C9B0DE270A72D1D467A036E3F1AC07CE279225C07FB0BF40D",
+  "ctid": "C046254400000002",
+  "date": 781047592,
+  "hash": "1EDC129E63F734FFCF776D623833793580743FEB68C26961D97AD61CC657EF3B",
+  "inLedger": 4597060,
+  "ledger_index": 4597060,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rPNQEyvtT2xVqhuNSFSzRQjqdHUEUeHr8h",
+            "Balance": "99980600",
+            "Flags": 0,
+            "OwnerCount": 2,
+            "Sequence": 3441049
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "A2A5B53DB4535BBAB26DA21BE7B000E1B0352A7CFE518DDFD7EF8D7DA8F24BA9",
+          "PreviousFields": {
+            "Balance": "99980620",
+            "Sequence": 3441048
+          },
+          "PreviousTxnID": "D933335E9E28EFDFE5988A272B05EF60CA0E674C27D9EFF7484686150BE955EA",
+          "PreviousTxnLgrSeq": 4596862
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "AssetClass": "63757272656E6379",
+            "Flags": 0,
+            "LastUpdateTime": 1727732389,
+            "Owner": "rPNQEyvtT2xVqhuNSFSzRQjqdHUEUeHr8h",
+            "OwnerNode": "0",
+            "PriceDataSeries": [
+              {
+                "PriceData": {
+                  "AssetPrice": "253302a0",
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "USD",
+                  "Scale": 9
+                }
+              },
+              {
+                "PriceData": {
+                  "AssetPrice": "39f3c66adc88",
+                  "BaseAsset": "BTC",
+                  "QuoteAsset": "USD",
+                  "Scale": 9
+                }
+              },
+              {
+                "PriceData": {
+                  "AssetPrice": "25f860db168",
+                  "BaseAsset": "ETH",
+                  "QuoteAsset": "USD",
+                  "Scale": 9
+                }
+              }
+            ],
+            "Provider": "42616E642050726F746F636F6C"
+          },
+          "LedgerEntryType": "Oracle",
+          "LedgerIndex": "C2C071249153646820D07F5B61C737717EC55E0384706E1E52EFFBE39341E1E3",
+          "PreviousFields": {
+            "LastUpdateTime": 1727731789,
+            "PriceDataSeries": [
+              {
+                "PriceData": {
+                  "AssetPrice": "2538bbc8",
+                  "BaseAsset": "XRP",
+                  "QuoteAsset": "USD",
+                  "Scale": 9
+                }
+              },
+              {
+                "PriceData": {
+                  "AssetPrice": "39fd83c16a00",
+                  "BaseAsset": "BTC",
+                  "QuoteAsset": "USD",
+                  "Scale": 9
+                }
+              },
+              {
+                "PriceData": {
+                  "AssetPrice": "26056db69c0",
+                  "BaseAsset": "ETH",
+                  "QuoteAsset": "USD",
+                  "Scale": 9
+                }
+              }
+            ]
+          },
+          "PreviousTxnID": "D933335E9E28EFDFE5988A272B05EF60CA0E674C27D9EFF7484686150BE955EA",
+          "PreviousTxnLgrSeq": 4596862
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}
