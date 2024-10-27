@@ -188,10 +188,13 @@ class Connection extends EventEmitter {
         error: err?.message || err?.name || err,
       });
 
-      if (err.data) {
+      // TimeoutError
+      if (err.name === "TimeoutError") {
+        return { error: "timeout", error_message: "Request timeout.", status: "error" };
+      } else if (err.data) {
         return err.data;
       } else {
-        return { error: err?.message || err?.name || err };
+        return { error: err?.message || err?.name || err, status: "error" };
       }
     }
   }
@@ -307,6 +310,7 @@ class Connection extends EventEmitter {
         this.logger?.warn({
           service: "Bithomp::XRPL::Connection",
           function: "reconnect",
+          url: this.url,
           error: e.message,
         });
       }
@@ -364,6 +368,7 @@ class Connection extends EventEmitter {
           service: "Bithomp::XRPL::Connection",
           emit: "error",
           source,
+          url: this.url,
           error: message || error?.name || error,
         });
 
@@ -658,6 +663,7 @@ class Connection extends EventEmitter {
       this.logger?.warn({
         service: "Bithomp::XRPL::Connection",
         function: "connectionValidationTimeout",
+        url: this.url,
         error: e.message,
       });
 

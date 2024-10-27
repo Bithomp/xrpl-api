@@ -582,7 +582,7 @@ describe("Client", () => {
     });
 
     describe("findTransactions", () => {
-      it("transactions with ledger version", async function () {
+      it("transactions with ledger ledgerIndexMax and startTxHash", async function () {
         this.timeout(30000);
         const address = "rmv53yu8Wid6kj6AC6NvmiwSXNxRa8vTH";
         const result: any = await Client.findTransactions(address, {

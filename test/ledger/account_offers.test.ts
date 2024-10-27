@@ -47,6 +47,7 @@ describe("Client", () => {
     });
 
     it("works with no offers", async function () {
+      this.timeout(10000);
       const result: any = await Client.getAccountAllOffers("r4UPddYeGeZgDhSGPkooURsQtmGda4oYQW");
       expect(result.offers.length).to.eql(0);
       expect(result.marker).to.be.undefined;
@@ -62,6 +63,7 @@ describe("Client", () => {
     });
 
     it("works as formatted with no offers", async function () {
+      this.timeout(10000);
       const result: any = await Client.getAccountAllOffers("r4UPddYeGeZgDhSGPkooURsQtmGda4oYQW", { formatted: true });
       expect(result.offers.length).to.eql(0);
       expect(result.marker).to.be.undefined;
