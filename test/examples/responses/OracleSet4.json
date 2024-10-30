@@ -1,0 +1,87 @@
+{
+  "Account": "rhMB4JUAmKRBSha6QcgRim93hWb3py87qt",
+  "AssetClass": "20382A62402D23574E35295961607053",
+  "Fee": "20",
+  "Flags": 2147483648,
+  "LastUpdateTime": 1727739212,
+  "OracleDocumentID": 1,
+  "PriceDataSeries": [
+    {
+      "PriceData": {
+        "AssetPrice": "2e4",
+        "BaseAsset": "BTC",
+        "QuoteAsset": "ETH",
+        "Scale": 1
+      }
+    }
+  ],
+  "Provider": "0123",
+  "Sequence": 4599328,
+  "SigningPubKey": "02CD04B554B8A8C0DC7E75C73741D25CA3C9654DAA6EB90824EFE7A2EF89594123",
+  "TransactionType": "OracleSet",
+  "TxnSignature": "3045022100DE1E005C5FE77F7B01618545DF2934431AFE09EAD1F2FABDD75D162B731FAE6D02205AA28C83B12BB5266EDA9D6D101E7168ADF021460EB064751864D10DC95726E5",
+  "ctid": "C0462E2100000002",
+  "date": 781054412,
+  "hash": "D2BD355782669827D6A1D5C43643FDF443DC22FC7F4163C9F9D938CA3D72CBD4",
+  "inLedger": 4599329,
+  "ledger_index": 4599329,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "Oracle",
+          "LedgerIndex": "2B046E623D4DC52F8066746A94B1505EFDF553060D407EC21F205D6C6AA66D16",
+          "NewFields": {
+            "AssetClass": "20382A62402D23574E35295961607053",
+            "LastUpdateTime": 1727739212,
+            "Owner": "rhMB4JUAmKRBSha6QcgRim93hWb3py87qt",
+            "PriceDataSeries": [
+              {
+                "PriceData": {
+                  "AssetPrice": "2e4",
+                  "BaseAsset": "BTC",
+                  "QuoteAsset": "ETH",
+                  "Scale": 1
+                }
+              }
+            ],
+            "Provider": "0123"
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rhMB4JUAmKRBSha6QcgRim93hWb3py87qt",
+            "Balance": "39999980",
+            "Flags": 0,
+            "OwnerCount": 1,
+            "Sequence": 4599329
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "FEDE5C64412F71A0D18196B7FB8C0C4D166CEEEFE7FC36DAEEF261EEC88A84E2",
+          "PreviousFields": {
+            "Balance": "40000000",
+            "OwnerCount": 0,
+            "Sequence": 4599328
+          },
+          "PreviousTxnID": "87CE8E255D5C59478E482B72A610EDB926378502D705284C4CD79B85CFC68FC4",
+          "PreviousTxnLgrSeq": 4599328
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "FFEEC2435BCC7366B592761560C2DB68A1E11B2F93870779C39F17D4634A355A",
+          "NewFields": {
+            "Owner": "rhMB4JUAmKRBSha6QcgRim93hWb3py87qt",
+            "RootIndex": "FFEEC2435BCC7366B592761560C2DB68A1E11B2F93870779C39F17D4634A355A"
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}
