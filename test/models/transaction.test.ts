@@ -5009,6 +5009,72 @@ describe("Models", () => {
       });
     });
 
+    it("OracleSet with 0 scale", function () {
+      const tx = require("../examples/responses/OracleSet5.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "oracleSet",
+        address: "rMS69A6J39RmBg5yWDft5XAM8zTGbtMMZy",
+        sequence: 394010,
+        id: "B8989813E544CFBCA1715D282F9E076A62073B3DF56D7FF79264EE00935AC8F0",
+        ctid: "C005FD8E00020002",
+        specification: {
+          source: { address: "rMS69A6J39RmBg5yWDft5XAM8zTGbtMMZy" },
+          oracleDocumentID: 1,
+          provider: "68747470733A2F2F74687265657872702E646576",
+          assetClass: "63757272656E6379",
+          lastUpdateTime: 1714783776,
+          priceDataSeries: [
+            { baseAsset: "XRP", quoteAsset: "AUD", assetPrice: "80495", scale: 5, originalAssetPrice: "0.80495" },
+            { baseAsset: "XRP", quoteAsset: "BRL", assetPrice: "27108", scale: 4, originalAssetPrice: "2.7108" },
+            { baseAsset: "XRP", quoteAsset: "EUR", assetPrice: "49351667", scale: 8, originalAssetPrice: "0.49351667" },
+            { baseAsset: "XRP", quoteAsset: "IDR", assetPrice: "8510", originalAssetPrice: "8510" },
+            { baseAsset: "XRP", quoteAsset: "KRW", assetPrice: "75465", scale: 2, originalAssetPrice: "754.65" },
+            { baseAsset: "XRP", quoteAsset: "MXN", assetPrice: "90031", scale: 4, originalAssetPrice: "9.0031" },
+            { baseAsset: "XRP", quoteAsset: "THB", assetPrice: "1949", scale: 2, originalAssetPrice: "19.49" },
+            { baseAsset: "XRP", quoteAsset: "USD", assetPrice: "53126667", scale: 8, originalAssetPrice: "0.53126667" },
+          ],
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-05-04T00:49:41.000Z",
+          fee: "0.00001",
+          balanceChanges: { rMS69A6J39RmBg5yWDft5XAM8zTGbtMMZy: [{ currency: "XRP", value: "-0.00001" }] },
+          oracleChanges: {
+            status: "created",
+            oracleID: "0C4BB18EFF935769DECC587F9283659C984A18D43DFA67AF84AAB161D8A15360",
+            provider: "68747470733A2F2F74687265657872702E646576",
+            assetClass: "63757272656E6379",
+            lastUpdateTime: 1714783776,
+            priceDataSeries: [
+              { baseAsset: "XRP", quoteAsset: "AUD", assetPrice: "80495", scale: 5, originalAssetPrice: "0.80495" },
+              { baseAsset: "XRP", quoteAsset: "BRL", assetPrice: "27108", scale: 4, originalAssetPrice: "2.7108" },
+              {
+                baseAsset: "XRP",
+                quoteAsset: "EUR",
+                assetPrice: "49351667",
+                scale: 8,
+                originalAssetPrice: "0.49351667",
+              },
+              { baseAsset: "XRP", quoteAsset: "IDR", assetPrice: "8510", originalAssetPrice: "8510" },
+              { baseAsset: "XRP", quoteAsset: "KRW", assetPrice: "75465", scale: 2, originalAssetPrice: "754.65" },
+              { baseAsset: "XRP", quoteAsset: "MXN", assetPrice: "90031", scale: 4, originalAssetPrice: "9.0031" },
+              { baseAsset: "XRP", quoteAsset: "THB", assetPrice: "1949", scale: 2, originalAssetPrice: "19.49" },
+              {
+                baseAsset: "XRP",
+                quoteAsset: "USD",
+                assetPrice: "53126667",
+                scale: 8,
+                originalAssetPrice: "0.53126667",
+              },
+            ],
+          },
+          ledgerVersion: 392590,
+          indexInLedger: 2,
+        },
+      });
+    });
+
     it("OracleDelete", function () {
       const tx = require("../examples/responses/OracleDelete.json");
       const result: any = Models.getTxDetails(tx, false);

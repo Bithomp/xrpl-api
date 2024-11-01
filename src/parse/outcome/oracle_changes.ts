@@ -24,7 +24,7 @@ interface FormattedPriceDataSeriesChanges {
   baseAsset: string;
   quoteAsset: string;
   assetPrice?: string; // BigNumber
-  scale?: number;
+  scale?: number; // if missing, it is 0
   originalAssetPrice?: string; // BigNumber
   assetPriceChange?: string; // BigNumber
   scaleChange?: number;
@@ -60,7 +60,7 @@ function hexPriceToBigNumber(hex: string | undefined): BigNumber | undefined {
 }
 
 function getOriginalAssetPrice(assetPrice: BigNumber | undefined, scale: number | undefined): BigNumber | undefined {
-  if (assetPrice === undefined || scale === undefined) {
+  if (assetPrice === undefined) {
     return undefined;
   }
 
@@ -68,7 +68,7 @@ function getOriginalAssetPrice(assetPrice: BigNumber | undefined, scale: number 
     return assetPrice;
   }
 
-  if (scale === 0) {
+  if (scale === 0 || scale === undefined) {
     return assetPrice;
   }
 
