@@ -14,3 +14,4 @@ export { parseUNLReportChanges } from "./unl_report_changes";
 export { parseAmmChanges } from "./amm_changes";
 export { parseDIDChanges } from "./did_changes";
 export { parseOracleChanges } from "./oracle_changes";
+export { parseDeliveredAmount } from "./delivered_amount";

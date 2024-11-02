@@ -3,7 +3,6 @@ import BigNumber from "bignumber.js";
 import { TransactionMetadata } from "xrpl";
 import { dropsToXrp } from "../../common";
 import { normalizeNodes } from "../utils";
-
 import { getNativeCurrency } from "../../client";
 
 function groupByAddress(balanceChanges) {
