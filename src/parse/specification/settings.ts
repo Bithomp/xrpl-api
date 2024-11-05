@@ -1,6 +1,6 @@
 import _ from "lodash";
 import * as assert from "assert";
-import { AccountRootFlagsKeys } from "../../models/account_info";
+import { getAccountRootFlagsKeys } from "../../models/account_info";
 import { removeUndefined } from "../../common";
 import parseFields from "../ledger/fields";
 import { parseEmittedDetails } from "../ledger/emit_details";
@@ -31,7 +31,7 @@ function parseSettingsFlags(tx: any): any {
     // eslint-disable-next-line no-bitwise
     const clearedFlags = oldFlags & changedFlags;
 
-    Object.entries(AccountRootFlagsKeys).forEach((entry) => {
+    Object.entries(getAccountRootFlagsKeys()).forEach((entry) => {
       const [flagName, flagValue] = entry;
       // eslint-disable-next-line no-bitwise
       if (setFlags & flagValue) {

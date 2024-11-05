@@ -177,6 +177,10 @@ class Connection extends EventEmitter {
 
       this.updateLatency(getTimestamp() - startTimestamp);
 
+      // trigger connectionValidation to as we have response
+      // Xahau could be delayed with ledgerClosed event stream
+      this.connectionValidation();
+
       return response;
     } catch (err: any) {
       // update latency, as we have error

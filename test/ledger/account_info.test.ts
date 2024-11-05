@@ -64,6 +64,42 @@ describe("Client", () => {
         });
       });
     });
+
+    describe("xahau", () => {
+      before(async function () {
+        this.timeout(15000);
+        Client.setup(nconf.get("xrpl:connections:xahau"), { loadBalancing: true, nativeCurrency: "XAH" });
+        await Client.connect();
+      });
+
+      it("parses getSettings", async function () {
+        const accountInfoData: any = await Client.getAccountInfoData("rwietsevLFg8XSmG3bEZzFein1g8RBqWDZ", {
+          signerLists: true,
+        });
+        const result: any = Models.getSettings(accountInfoData, false);
+        expect(result).to.eql({
+          passwordSpent: false,
+          requireDestTag: false,
+          requireAuth: false,
+          depositAuth: false,
+          disallowXRP: false,
+          disableMaster: false,
+          noFreeze: false,
+          globalFreeze: false,
+          defaultRipple: false,
+          disallowIncomingNFTokenOffer: false,
+          disallowIncomingCheck: false,
+          disallowIncomingPayChan: false,
+          disallowIncomingTrustline: false,
+          uriTokenIssuer: true,
+          disallowIncomingRemit: false,
+          blackholed: false,
+          emailHash: "AC143BF8B62329B70917F5BA2347BC99",
+          domain: "wietse.com",
+          regularKey: "r9PfV3sQpKLWxccdg3HL2FXKxGW2orAcLE",
+        });
+      });
+    });
   });
 
   describe("getAccountInfoData", () => {
@@ -178,6 +214,8 @@ describe("Client", () => {
           disallowIncomingNFTokenOffer: false,
           disallowIncomingPayChan: false,
           disallowIncomingTrustline: false,
+          amm: false,
+          allowTrustLineClawback: false,
         });
       });
     });
@@ -229,6 +267,8 @@ describe("Client", () => {
           disallowIncomingNFTokenOffer: false,
           disallowIncomingPayChan: false,
           disallowIncomingTrustline: false,
+          amm: false,
+          allowTrustLineClawback: false,
         });
       });
 
@@ -317,6 +357,8 @@ describe("Client", () => {
           disallowIncomingNFTokenOffer: false,
           disallowIncomingPayChan: false,
           disallowIncomingTrustline: false,
+          amm: false,
+          allowTrustLineClawback: false,
         });
       });
     });

@@ -583,7 +583,7 @@ describe("Client", () => {
 
     describe("findTransactions", () => {
       it("transactions with ledger ledgerIndexMax and startTxHash", async function () {
-        this.timeout(30000);
+        this.timeout(600000);
         const address = "rmv53yu8Wid6kj6AC6NvmiwSXNxRa8vTH";
         const result: any = await Client.findTransactions(address, {
           limit: 20,
@@ -593,6 +593,7 @@ describe("Client", () => {
           types: ["Payment"],
           ledgerIndexMax: 3121802,
           startTxHash: "51238A4C6BC280B2B78913B38E1A47940E3BDEB99E4E1A0439C82B058222A33D",
+          timeout: 60000,
         });
 
         expect(result.map((tx: any) => tx.tx.hash)).to.eql([

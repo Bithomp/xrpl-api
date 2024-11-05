@@ -112,7 +112,7 @@ export async function getTransactions(
     throw new Error("There is no connection");
   }
 
-  const response = await connection.request({
+  const command = {
     command: "account_tx",
     account,
     ledger_index_min: options.ledgerIndexMin,
@@ -123,8 +123,9 @@ export async function getTransactions(
     forward: !!options.forward,
     limit: options.limit,
     marker: options.marker,
-  });
+  };
 
+  const response = await connection.request(command);
   if (!response) {
     return {
       account,
