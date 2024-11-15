@@ -29,6 +29,21 @@ interface GenerateAddressInterface {
   seed: string;
 }
 
+export interface VerifySignatureInterface {
+  signedBy?: string;
+  signatureValid?: boolean;
+  signatureMultiSign?: boolean;
+  error?: string;
+}
+
+interface Signer {
+  Signer: {
+    SigningPubKey: string;
+    TxnSignature: string;
+    Account?: string;
+  };
+}
+
 export function isValidSecret(secret: string): boolean {
   try {
     deriveKeypair(secret);
@@ -189,11 +204,105 @@ export function signTransaction(
  * @param signedTransaction - A signed transaction (hex string of signTransaction result) to be verified offline.
  * @returns Returns true if a signedTransaction is valid.
  */
-export function verifyTransaction(wallet: Wallet, signedTransaction: Transaction | string): boolean {
-  const tx = typeof signedTransaction === "string" ? decode(signedTransaction) : signedTransaction;
-  const messageHex: string = encodeForSigning(tx);
+export function verifyTransaction(signedTransaction: Transaction | string, definitions?: XrplDefinitionsBase): boolean {
+  const tx = typeof signedTransaction === "string" ? decode(signedTransaction, definitions) : signedTransaction;
+  const messageHex: string = encodeForSigning(tx, definitions);
   const signature = tx.TxnSignature as string;
-  return verify(messageHex, signature, wallet.publicKey);
+  const publicKey = tx.SigningPubKey as string;
+  return verify(messageHex, signature, publicKey);
+}
+
+/**
+ * Verifies the signature of a signed transaction.
+ * Based on verify-xrpl-signature, https://github.com/XRPL-Labs/verify-xrpl-signature/blob/master/src/index.ts
+ *
+ * @param signedTransaction - The signed transaction, either as a `Transaction` object or a string.
+ * @param explicitMultiSigner - (Optional) The explicit multi-signer address or public key.
+ * @param definitions - (Optional) The XRPL definitions base.
+ * @returns An object containing the verification result, including:
+ * - `signedBy`: The address that signed the transaction.
+ * - `signatureValid`: A boolean indicating whether the signature is valid.
+ * - `signatureMultiSign`: A boolean indicating whether the signature is a multi-signature.
+ * - `error`: An error message if the verification failed.
+ */
+export function verifySignature(
+  signedTransaction: Transaction | string,
+  explicitMultiSigner?: string | null,
+  definitions?: XrplDefinitionsBase
+): VerifySignatureInterface {
+  let tx: Transaction | undefined;
+  let signedBy: string = "";
+  let signatureValid: boolean = false;
+
+  try {
+    if (typeof signedTransaction === "string") {
+      tx = decode(signedTransaction, definitions) as any as Transaction;
+    } else if (signedTransaction !== null && typeof signedTransaction === "object") {
+      tx = signedTransaction;
+    }
+  } catch (err: any) {
+    return { signatureValid: false, error: err.message };
+  }
+
+  if (!tx) {
+    return { signatureValid: false, error: "The transaction could not be decoded." };
+  }
+
+  if (!tx.TxnSignature && !tx.Signers) {
+    return { signatureValid: false, error: "The transaction must be signed to verify the signature." };
+  }
+
+  const signatureMultiSign =
+    typeof tx.Signers !== "undefined" &&
+    Array.isArray(tx.Signers) &&
+    tx.Signers.length > 0 &&
+    typeof tx.SigningPubKey === "string" &&
+    tx.SigningPubKey === "";
+
+  try {
+    if (signatureMultiSign && explicitMultiSigner && explicitMultiSigner.match(/^r/)) {
+      signedBy = explicitMultiSigner;
+    } else if (signatureMultiSign && explicitMultiSigner) {
+      signedBy = deriveAddress(explicitMultiSigner);
+    } else {
+      let signer = tx.SigningPubKey;
+      if (signatureMultiSign && tx.Signers && tx.Signers.length > 0) {
+        const firstSigner: any = Object.values(tx.Signers)[0];
+        signer = firstSigner.Signer.SigningPubKey;
+      }
+      signedBy = deriveAddress(signer as string);
+    }
+  } catch (err: any) {
+    return { signatureValid: false, error: err.message };
+  }
+
+  try {
+    if (signatureMultiSign && tx.Signers) {
+      const matchingSigners = Object.values(tx.Signers).filter((signer: Signer) => {
+        return deriveAddress(signer.Signer.SigningPubKey) === signedBy;
+      });
+      if (matchingSigners.length > 0) {
+        const multiSigner = matchingSigners[0];
+        signatureValid = verify(
+          encodeForMultisigning(tx, signedBy, definitions),
+          multiSigner.Signer.TxnSignature,
+          multiSigner.Signer.SigningPubKey
+        );
+      } else {
+        return { signatureValid: false, error: "Explicit MultiSigner not in Signers" };
+      }
+    } else {
+      signatureValid = verify(encodeForSigning(tx, definitions), tx.TxnSignature as string, tx.SigningPubKey as string);
+    }
+  } catch (err: any) {
+    return { signedBy, signatureValid: false, error: err.message };
+  }
+
+  return {
+    signedBy,
+    signatureValid,
+    signatureMultiSign,
+  };
 }
 
 /**
