@@ -5,6 +5,7 @@ import parseAmount from "../ledger/amount";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { removeUndefined } from "../../common";
+import { FormattedSourceAddress } from "../../types/account";
 import { FormattedOfferCreateSpecification, OfferCreateTransaction } from "../../types";
 
 function parseOfferCreate(tx: OfferCreateTransaction): FormattedOfferCreateSpecification {
@@ -16,7 +17,13 @@ function parseOfferCreate(tx: OfferCreateTransaction): FormattedOfferCreateSpeci
   const quantity = direction === "buy" ? takerPaysAmount : takerGetsAmount;
   const totalPrice = direction === "buy" ? takerGetsAmount : takerPaysAmount;
 
+  const source: FormattedSourceAddress = {
+    address: tx.Account,
+    tag: tx.SourceTag,
+  };
+
   return removeUndefined({
+    source: Object.keys(source).length > 0 ? source : undefined,
     direction: direction,
     quantity: quantity,
     totalPrice: totalPrice,

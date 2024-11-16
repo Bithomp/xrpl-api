@@ -38,6 +38,9 @@ export type FormattedNFTokenMintSpecification = {
   transferFee?: number;
   uri?: string;
   flags?: NFTokenFlagsKeysInterface;
+  amount?: Amount;
+  destination?: FormattedDestinationAddress;
+  expiration?: number;
 } & FormattedBaseSpecification;
 
 export type FormattedNFTokenCancelOfferSpecification = {

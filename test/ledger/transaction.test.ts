@@ -960,6 +960,7 @@ describe("Client", () => {
                   key: "0000000000000000000000000000000000000000000000000000000000000000",
                 },
                 specification: {
+                  source: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T", tag: undefined },
                   account: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
                   nftokenID: "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000",
                 },
@@ -2610,6 +2611,7 @@ describe("Client", () => {
                   key: "0000000000000000000000000000000000000000000000000000000000000000",
                 },
                 specification: {
+                  source: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T", tag: undefined },
                   account: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
                   nftokenID: "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000",
                 },
