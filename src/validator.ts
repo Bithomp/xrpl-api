@@ -1,7 +1,6 @@
 import * as assert from "assert";
-import { decodeNodePublic, encodeNodePublic, codec } from "ripple-address-codec";
+import { encodeAccountID, decodeNodePublic, encodeNodePublic, codec } from "ripple-address-codec";
 import * as Crypto from "crypto";
-import * as Base58 from "./base58";
 import elliptic from "elliptic";
 const secp256k1 = new elliptic.ec("secp256k1");
 const ed25519 = new elliptic.eddsa("ed25519");
@@ -29,15 +28,8 @@ export function classicAddressFromValidatorPK(pk: string | Buffer): string | nul
   const pubkeyOuterHash = Crypto.createHash("ripemd160");
   pubkeyOuterHash.update(pubkeyInnerHash.digest());
   const accountID = pubkeyOuterHash.digest();
-  const addressTypePrefix = Buffer.from([0x00]);
-  const payload = Buffer.concat([addressTypePrefix, accountID]);
-  const chksumHash1 = Crypto.createHash("sha256").update(payload).digest();
-  const chksumHash2 = Crypto.createHash("sha256").update(chksumHash1).digest();
-  const checksum = chksumHash2.slice(0, 4);
-  const dataToEncode = Buffer.concat([payload, checksum]);
-  const address = Base58.encode(dataToEncode);
 
-  return address;
+  return encodeAccountID(accountID);
 }
 
 export interface GenerateSecretsInterface {
