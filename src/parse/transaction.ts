@@ -311,26 +311,31 @@ function parseTransaction(
   nativeCurrency?: string,
   definitions?: XrplDefinitionsBase
 ): FormattedTransaction {
-  const type = parseTransactionType(tx.TransactionType);
+  let universalTx = tx;
+  if (universalTx.tx_json) {
+    universalTx = { ...universalTx, ...universalTx.tx_json };
+  }
+
+  const type = parseTransactionType(universalTx.TransactionType);
 
   const parser: Function = parserTypeFunc[type];
 
   /* eslint-disable multiline-ternary */
-  const specification = parser ? parser(tx) : unrecognizedParser(tx);
+  const specification = parser ? parser(universalTx) : unrecognizedParser(universalTx);
   /* eslint-enable multiline-ternary */
 
   if (!parser) {
     includeRawTransaction = true; // eslint-disable-line no-param-reassign
   }
 
-  const outcome = parseOutcome(tx, nativeCurrency, definitions);
+  const outcome = parseOutcome(universalTx, nativeCurrency, definitions);
   return removeUndefined({
     type: type,
-    address: parseAccount(tx.Account),
-    sequence: tx.Sequence,
-    ticketSequence: tx.TicketSequence,
-    id: tx.hash,
-    ctid: tx.ctid,
+    address: parseAccount(universalTx.Account),
+    sequence: universalTx.Sequence,
+    ticketSequence: universalTx.TicketSequence,
+    id: universalTx.hash,
+    ctid: universalTx.ctid,
     specification: removeUndefined(specification),
     outcome: outcome ? removeUndefined(outcome) : undefined,
     rawTransaction: includeRawTransaction ? JSON.stringify(tx) : undefined,

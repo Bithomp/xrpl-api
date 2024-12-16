@@ -46,6 +46,7 @@ export function setup(servers: ClientConnection[], options: ClientOptions = {}) 
           timeout: server.timeout,
           connectionTimeout: server.connectionTimeout,
           networkID: server.networkID,
+          apiVersion: options.apiVersion,
         })
       );
     }
