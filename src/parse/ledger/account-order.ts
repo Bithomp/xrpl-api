@@ -3,7 +3,7 @@ import parseAmount from "./amount";
 import { parseTimestamp, adjustQualityForXRP } from "../utils";
 import { removeUndefined } from "../../common";
 import { orderFlags } from "../../types/flags";
-import { FormattedOfferCreateSpecification } from "../../types";
+import { FormattedOfferCreateSpecification, FormattedIssuedCurrencyAmount } from "../../types";
 
 export type FormattedAccountOrders = {
   /** Unique Address identifying the account that made the offers. */
@@ -57,8 +57,8 @@ function computeQuality(takerGets, takerPays) {
 export function parseAccountOrder(address: string, order: any): FormattedAccountOrder {
   // eslint-disable-next-line no-bitwise
   const direction = (order.flags & orderFlags.Sell) === 0 ? "buy" : "sell";
-  const takerGetsAmount = parseAmount(order.taker_gets);
-  const takerPaysAmount = parseAmount(order.taker_pays);
+  const takerGetsAmount = parseAmount(order.taker_gets) as FormattedIssuedCurrencyAmount;
+  const takerPaysAmount = parseAmount(order.taker_pays) as FormattedIssuedCurrencyAmount;
   const quantity = direction === "buy" ? takerPaysAmount : takerGetsAmount;
   const totalPrice = direction === "buy" ? takerGetsAmount : takerPaysAmount;
 

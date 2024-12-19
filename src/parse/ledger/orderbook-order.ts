@@ -35,8 +35,8 @@ export type FormattedOrderbookOrder = {
 export function parseOrderbookOrder(data: BookOffer): FormattedOrderbookOrder {
   // eslint-disable-next-line no-bitwise
   const direction = (data.Flags & orderFlags.Sell) === 0 ? "buy" : "sell";
-  const takerGetsAmount = parseAmount(data.TakerGets);
-  const takerPaysAmount = parseAmount(data.TakerPays);
+  const takerGetsAmount = parseAmount(data.TakerGets) as FormattedIssuedCurrencyAmount;
+  const takerPaysAmount = parseAmount(data.TakerPays) as FormattedIssuedCurrencyAmount;
   const quantity = direction === "buy" ? takerPaysAmount : takerGetsAmount;
   const totalPrice = direction === "buy" ? takerGetsAmount : takerPaysAmount;
 
@@ -60,8 +60,8 @@ export function parseOrderbookOrder(data: BookOffer): FormattedOrderbookOrder {
   const takerGetsFunded = data.taker_gets_funded ? parseAmount(data.taker_gets_funded) : undefined;
   const takerPaysFunded = data.taker_pays_funded ? parseAmount(data.taker_pays_funded) : undefined;
   const available = removeUndefined({
-    fundedAmount: takerGetsFunded,
-    priceOfFundedAmount: takerPaysFunded,
+    fundedAmount: takerGetsFunded as FormattedIssuedCurrencyAmount,
+    priceOfFundedAmount: takerPaysFunded as FormattedIssuedCurrencyAmount,
   });
   const state = _.isEmpty(available) ? undefined : available;
   return removeUndefined({ specification, properties, state, data });

@@ -1,10 +1,10 @@
 import { parseImportBlob } from "../ledger/import";
 import parseAmount from "../ledger/amount";
 import { isPartialPayment } from "../utils";
-import { FormattedIssuedCurrencyAmount } from "../../types";
+import { FormattedIssuedCurrencyAmount, FormattedIssuedMPTAmount } from "../../types";
 import { parseBalanceChanges } from "./balance_changes";
 
-function parseDeliveredAmount(tx: any): FormattedIssuedCurrencyAmount | undefined {
+function parseDeliveredAmount(tx: any): FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount | undefined {
   if (!["Import", "Payment"].includes(tx.TransactionType) || tx.meta.TransactionResult !== "tesSUCCESS") {
     return undefined;
   }

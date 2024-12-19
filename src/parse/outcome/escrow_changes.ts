@@ -3,7 +3,7 @@ import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types
 import { normalizeNodes, parseTimestamp } from "../utils";
 
 interface FormattedEscrowSummaryInterface {
-  status?: string;
+  status?: "created" | "cancelled" | "executed" | "deleted";
   escrowIndex?: number;
   escrowSequence?: number;
   amount?: string;

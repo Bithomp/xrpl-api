@@ -17,6 +17,7 @@ import {
   parseDIDChanges,
   parseOracleChanges,
   parseDeliveredAmount,
+  parseMPTokenChanges,
 } from "./outcome/index";
 
 import { parseTimestamp } from "./utils";
@@ -36,26 +37,10 @@ type Orderbook = {
   [key: string]: OfferDescription[];
 };
 
-type BalanceSheetItem = {
-  counterparty: string;
-  currency: string;
-  value: string;
-};
-
-type BalanceSheet = {
-  [key: string]: BalanceSheetItem[];
-};
-
 function removeEmptyCounterparty(amount) {
   if (amount.counterparty === "") {
     delete amount.counterparty;
   }
-}
-
-function removeEmptyCounterpartyInBalanceChanges(balanceChanges: BalanceSheet) {
-  Object.entries(balanceChanges).forEach(([_, changes]) => {
-    changes.forEach(removeEmptyCounterparty);
-  });
 }
 
 function removeEmptyCounterpartyInOrderbookChanges(orderbookChanges: Orderbook) {
@@ -88,8 +73,6 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
   const didChanges = parseDIDChanges(metadata);
   const oracleChanges = parseOracleChanges(metadata);
 
-  removeEmptyCounterpartyInBalanceChanges(balanceChanges);
-  removeEmptyCounterpartyInBalanceChanges(lockedBalanceChanges);
   removeEmptyCounterpartyInOrderbookChanges(orderbookChanges);
 
   return removeUndefined({

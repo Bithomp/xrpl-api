@@ -16,6 +16,11 @@ export interface FormattedIssuedCurrencyAmount extends FormattedIssuedCurrency {
   value: string;
 }
 
-export type Amount = IssuedCurrencyAmount | string; // string as drops amount
+export interface FormattedIssuedMPTAmount {
+  mpt_issuance_id?: string;
+  value: string;
+}
 
-export type FormattedAmount = FormattedIssuedCurrencyAmount | string; // string as native currency (XRP, XAH) amount
+export type Amount = IssuedCurrencyAmount | FormattedIssuedMPTAmount | string; // string as drops amount
+
+export type FormattedAmount = FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount | string; // string as native currency (XRP, XAH) amount

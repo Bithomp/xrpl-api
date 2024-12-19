@@ -4,24 +4,32 @@ import { xrpToDrops } from "../common";
 
 import { getNativeCurrency } from "../client";
 
-export function toRippledAmount(amount: Amount | FormattedIssuedCurrencyAmount): Amount {
+export function toRippledAmount(amount: Amount | FormattedIssuedCurrencyAmount): Amount | undefined {
   if (typeof amount === "string") return amount;
 
-  if (amount.currency === getNativeCurrency()) {
-    return xrpToDrops(amount.value);
-  }
-  if (amount.currency === "drops") {
-    return amount.value;
+  if ("currency" in amount) {
+    if (amount.currency === getNativeCurrency()) {
+      return xrpToDrops(amount.value);
+    } else if (amount.currency === "drops") {
+      return amount.value;
+    }
+
+    // if amount is IssuedCurrencyAmount use issuer, else if FormattedIssuedCurrencyAmount use counterparty
+    const issuer = (amount as FormattedIssuedCurrencyAmount).counterparty || (amount as IssuedCurrencyAmount).issuer;
+
+    return {
+      currency: amount.currency,
+      issuer,
+      value: amount.value,
+    };
   }
 
-  // if amount is IssuedCurrencyAmount use issuer, else if FormattedIssuedCurrencyAmount use counterparty
-  const issuer = (amount as FormattedIssuedCurrencyAmount).counterparty || (amount as IssuedCurrencyAmount).issuer;
-
-  return {
-    currency: amount.currency,
-    issuer,
-    value: amount.value,
-  };
+  if ("mpt_issuance_id" in amount) {
+    return {
+      value: amount.value,
+      mpt_issuance_id: amount.mpt_issuance_id,
+    };
+  }
 }
 
 /**

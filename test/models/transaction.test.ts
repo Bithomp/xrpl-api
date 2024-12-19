@@ -5116,6 +5116,130 @@ describe("Models", () => {
         },
       });
     });
+
+    it("payment MPToken from issuer", function () {
+      const tx = require("../examples/responses/Payment_MPToken.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "payment",
+        address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+        sequence: 6560008,
+        id: "573A1719C6838A13CC1437FF149EA029098096F72DFA74A5DA4EC3ADD5564126",
+        ctid: "C064191000030002",
+        specification: {
+          source: {
+            address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+            maxAmount: {
+              mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+              value: "1000",
+            },
+          },
+          destination: {
+            address: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-12-10T12:14:21.000Z",
+          fee: "0.00012",
+          balanceChanges: {
+            raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [
+              {
+                currency: "XRP",
+                value: "-0.00012",
+              },
+            ],
+            rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: [
+              {
+                value: "1000",
+                mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+              },
+            ],
+          },
+          ledgerVersion: 6560016,
+          indexInLedger: 3,
+          deliveredAmount: {
+            mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+            value: "1000",
+          },
+        },
+      });
+    });
+
+    it("payment MPToken to issuer", function () {
+      const tx = require("../examples/responses/Payment_MPToken2.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "payment",
+        address: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
+        sequence: 6560009,
+        id: "4E5B94079CD725CFAE03FCF3A1645B27FA22B253B72B72AD62729C8C91C78D9A",
+        ctid: "C064191200030002",
+        specification: {
+          source: {
+            address: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
+            maxAmount: { mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578", value: "100" },
+          },
+          destination: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-12-10T12:14:23.000Z",
+          fee: "0.00012",
+          balanceChanges: {
+            rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: [
+              { currency: "XRP", value: "-0.00012" },
+              { value: "-100", mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578" },
+            ],
+          },
+          ledgerVersion: 6560018,
+          indexInLedger: 3,
+          deliveredAmount: { mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578", value: "100" },
+        },
+      });
+    });
+
+    it("clawback MPToken", function () {
+      const tx = require("../examples/responses/Clawback_MPToken.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "clawback",
+        address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+        sequence: 6560010,
+        id: "0598801183DB0C85052E4C0F6A1F4C7FF955FEF687C64F5A7661BA9C102CF2EF",
+        ctid: "C064191600010002",
+        specification: {
+          source: {
+            address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+          },
+          amount: {
+            mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+            value: "10000",
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-12-10T12:14:40.000Z",
+          fee: "0.00012",
+          balanceChanges: {
+            raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [
+              {
+                currency: "XRP",
+                value: "-0.00012",
+              },
+            ],
+            rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: [
+              {
+                value: "-900",
+                mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+              },
+            ],
+          },
+          ledgerVersion: 6560022,
+          indexInLedger: 1,
+        },
+      });
+    });
   });
 
   describe("getAccountTxDetails", () => {

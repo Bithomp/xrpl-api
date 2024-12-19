@@ -5,7 +5,23 @@ import { dropsToXrp } from "../../common";
 import { normalizeNodes } from "../utils";
 import { getNativeCurrency } from "../../client";
 
-function groupByAddress(balanceChanges) {
+interface BalanceChangeQuantity {
+  counterparty?: string;
+  currency?: string;
+  value: string;
+  mpt_issuance_id?: string;
+}
+
+export interface AddressBalanceChangeQuantity {
+  address: string;
+  balance: BalanceChangeQuantity;
+}
+
+export interface BalanceChanges {
+  [key: string]: BalanceChangeQuantity[];
+}
+
+function groupByAddress(balanceChanges: AddressBalanceChangeQuantity[]) {
   const grouped = _.groupBy(balanceChanges, function (node) {
     return node.address;
   });
@@ -16,17 +32,31 @@ function groupByAddress(balanceChanges) {
   });
 }
 
-function parseValue(value) {
-  return new BigNumber(value.value || value);
+function parseValue(value): BigNumber {
+  // MPToken has array for previous fields if it is created/empty
+  if (Array.isArray(value)) {
+    return new BigNumber(0);
+  }
+
+  if (typeof value === "string" || typeof value === "number") {
+    return new BigNumber(value);
+  }
+
+  return new BigNumber(value.value ?? value.MPTAmount ?? 0);
 }
 
 function computeBalanceChange(node) {
   let value: null | BigNumber = null;
   if (node.newFields.Balance) {
     value = parseValue(node.newFields.Balance);
+  } else if (node.newFields.MPTAmount) {
+    value = parseValue(node.newFields);
   } else if (node.previousFields.Balance && node.finalFields.Balance) {
     value = parseValue(node.finalFields.Balance).minus(parseValue(node.previousFields.Balance));
+  } else if (node.previousFields.MPTAmount || node.finalFields.MPTAmount) {
+    value = parseValue(node.finalFields).minus(parseValue(node.previousFields));
   }
+
   return value === null ? null : value.isZero() ? null : value;
 }
 
@@ -35,11 +65,14 @@ function parseFinalBalance(node) {
     return parseValue(node.newFields.Balance);
   } else if (node.finalFields.Balance) {
     return parseValue(node.finalFields.Balance);
+  } else if (node.finalFields.MPTAmount) {
+    return parseValue(node.finalFields);
   }
+
   return null;
 }
 
-function parseXRPQuantity(node: any, valueParser: any, nativeCurrency?: string) {
+function parseXRPQuantity(node: any, valueParser: any, nativeCurrency?: string): AddressBalanceChangeQuantity | null {
   const value = valueParser(node);
 
   if (value === null) {
@@ -49,14 +82,13 @@ function parseXRPQuantity(node: any, valueParser: any, nativeCurrency?: string) 
   return {
     address: node.finalFields.Account || node.newFields.Account,
     balance: {
-      counterparty: "",
       currency: nativeCurrency || getNativeCurrency(),
       value: dropsToXrp(value).toString(),
     },
   };
 }
 
-function flipTrustlinePerspective(quantity) {
+function flipTrustlinePerspective(quantity): AddressBalanceChangeQuantity {
   const negatedBalance = new BigNumber(quantity.balance.value).negated();
   return {
     address: quantity.balance.counterparty,
@@ -68,7 +100,7 @@ function flipTrustlinePerspective(quantity) {
   };
 }
 
-function parseTrustlineQuantity(node, valueParser) {
+function parseTrustlineQuantity(node, valueParser): AddressBalanceChangeQuantity[] | null {
   const value = valueParser(node);
 
   if (value === null) {
@@ -94,15 +126,36 @@ function parseTrustlineQuantity(node, valueParser) {
   return [result, flipTrustlinePerspective(result)];
 }
 
+function parseMPTQuantity(node, valueParser): AddressBalanceChangeQuantity | null {
+  const value = valueParser(node);
+
+  if (value === null) {
+    return null;
+  }
+
+  const fields = _.isEmpty(node.newFields) ? node.finalFields : node.newFields;
+
+  return {
+    address: fields.Account,
+    balance: {
+      value: value.toString(),
+      mpt_issuance_id: fields.MPTokenIssuanceID,
+    },
+  };
+}
+
 function parseQuantities(metadata: TransactionMetadata, valueParser: any, nativeCurrency?: string) {
   const values = normalizeNodes(metadata).map(function (node) {
     if (node.entryType === "AccountRoot") {
       return [parseXRPQuantity(node, valueParser, nativeCurrency)];
     } else if (node.entryType === "RippleState") {
       return parseTrustlineQuantity(node, valueParser);
+    } else if (node.entryType === "MPToken") {
+      return [parseMPTQuantity(node, valueParser)];
     }
     return [];
   });
+
   return groupByAddress(_.compact(_.flatten(values)));
 }
 

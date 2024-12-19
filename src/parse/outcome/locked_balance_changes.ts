@@ -1,12 +1,24 @@
 import _ from "lodash";
 import BigNumber from "bignumber.js";
 import { TransactionMetadata } from "xrpl";
-import { dropsToXrp } from "../../common";
 import { normalizeNodes } from "../utils";
 
-import { getNativeCurrency } from "../../client";
+interface LockedBalanceChangeQuantity {
+  counterparty: string;
+  currency: string;
+  value: string;
+}
 
-function groupByAddress(lockedBalanceChanges) {
+export interface AddressLockedBalanceChangeQuantity {
+  address: string;
+  lockedBalance: LockedBalanceChangeQuantity;
+}
+
+export interface LockedBalanceChanges {
+  [key: string]: LockedBalanceChangeQuantity[];
+}
+
+function groupByAddress(lockedBalanceChanges: AddressLockedBalanceChangeQuantity[]) {
   const grouped = _.groupBy(lockedBalanceChanges, function (node) {
     return node.address;
   });
@@ -17,8 +29,8 @@ function groupByAddress(lockedBalanceChanges) {
   });
 }
 
-function parseValue(value) {
-  return new BigNumber(value.value || value);
+function parseValue(value): BigNumber {
+  return new BigNumber(value.value ?? value);
 }
 
 function computeBalanceChange(node: any) {
@@ -42,24 +54,7 @@ function parseFinalBalance(node) {
   return null;
 }
 
-function parseXRPQuantity(node, valueParser) {
-  const value = valueParser(node);
-
-  if (value === null) {
-    return null;
-  }
-
-  return {
-    address: node.finalFields.Account || node.newFields.Account,
-    lockedBalance: {
-      counterparty: "",
-      currency: getNativeCurrency(),
-      value: dropsToXrp(value).toString(),
-    },
-  };
-}
-
-function parseTrustlineQuantity(node, valueParser) {
+function parseTrustlineQuantity(node, valueParser): AddressLockedBalanceChangeQuantity[] | null {
   const value = valueParser(node);
 
   if (value === null) {
@@ -72,6 +67,7 @@ function parseTrustlineQuantity(node, valueParser) {
    * the trustline can be created when the offer is taken.
    */
   const fields = _.isEmpty(node.newFields) ? node.finalFields : node.newFields;
+  // prettier-ignore
   const LockedBalanceFields = _.isEmpty(node.newFields?.LockedBalance) ? _.isEmpty(node.finalFields?.LockedBalance) ? node.previousFields : node.finalFields : node.newFields;
 
   const result = {
@@ -87,13 +83,12 @@ function parseTrustlineQuantity(node, valueParser) {
 
 function parseQuantities(metadata: TransactionMetadata, valueParser) {
   const values = normalizeNodes(metadata).map(function (node) {
-    if (node.entryType === "AccountRoot") {
-      return [parseXRPQuantity(node, valueParser)];
-    } else if (node.entryType === "RippleState") {
+    if (node.entryType === "RippleState") {
       return parseTrustlineQuantity(node, valueParser);
     }
     return [];
   });
+
   return groupByAddress(_.compact(_.flatten(values)));
 }
 

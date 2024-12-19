@@ -1,5 +1,5 @@
 import { FormattedBaseSpecification } from "./specification";
-import { FormattedIssuedCurrencyAmount } from "./amounts";
+import { FormattedIssuedCurrencyAmount, FormattedIssuedMPTAmount } from "./amounts";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "./account";
 
 export type FormattedCheckCancelSpecification = {
@@ -31,7 +31,7 @@ export type FormattedCheckCreateSpecification = {
 
   // amount the check is allowed to debit the sender,
   // including transfer fees on non-XRP currencies.
-  sendMax: FormattedIssuedCurrencyAmount;
+  sendMax: FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount;
 
   // (Optional) time in seconds since the Ripple Epoch.
   expiration?: string;

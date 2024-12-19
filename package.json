@@ -78,7 +78,7 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-n": "^17.13.2",
     "eslint-plugin-promise": "^7.1.0",
-    "mocha": "^10.8.2",
+    "mocha": "^11.0.1",
     "nconf": "^0.12.1",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
