@@ -1,8 +1,8 @@
 import _ from "lodash";
+import { LedgerEntry } from "xrpl";
 import { parseTimestamp, adjustQualityForXRP } from "../utils";
 import { removeUndefined } from "../../common";
 
-import { orderFlags } from "../../types/flags";
 import parseAmount from "./amount";
 import {
   Amount,
@@ -34,7 +34,7 @@ export type FormattedOrderbookOrder = {
 
 export function parseOrderbookOrder(data: BookOffer): FormattedOrderbookOrder {
   // eslint-disable-next-line no-bitwise
-  const direction = (data.Flags & orderFlags.Sell) === 0 ? "buy" : "sell";
+  const direction = (data.Flags & LedgerEntry.OfferFlags.lsfSell) === 0 ? "buy" : "sell";
   const takerGetsAmount = parseAmount(data.TakerGets) as FormattedIssuedCurrencyAmount;
   const takerPaysAmount = parseAmount(data.TakerPays) as FormattedIssuedCurrencyAmount;
   const quantity = direction === "buy" ? takerPaysAmount : takerGetsAmount;
@@ -47,7 +47,7 @@ export function parseOrderbookOrder(data: BookOffer): FormattedOrderbookOrder {
     quantity: quantity,
     totalPrice: totalPrice,
     // eslint-disable-next-line no-bitwise
-    passive: (data.Flags & orderFlags.Passive) !== 0 || undefined,
+    passive: (data.Flags & LedgerEntry.OfferFlags.lsfPassive) !== 0 || undefined,
     expirationTime: parseTimestamp(data.Expiration),
   });
 

@@ -10,14 +10,12 @@ describe("Models", () => {
       expect(result).to.eql({
         rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
           {
-            counterparty: "",
             currency: "XRP",
             value: "999.999904",
           },
         ],
         r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
           {
-            counterparty: "",
             currency: "XRP",
             value: "999.999832",
           },
@@ -37,7 +35,6 @@ describe("Models", () => {
             value: "100",
           },
           {
-            counterparty: "",
             currency: "XRP",
             value: "4736.99982",
           },
@@ -51,7 +48,6 @@ describe("Models", () => {
         ],
         rELeasERs3m4inA1UinRLTpXemqyStqzwh: [
           {
-            counterparty: "",
             currency: "XRP",
             value: "49.999976",
           },
@@ -66,7 +62,6 @@ describe("Models", () => {
       expect(result).to.eql({
         rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89: [
           {
-            counterparty: "",
             currency: "XRP",
             value: "19.754728",
           },

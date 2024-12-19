@@ -1,3 +1,4 @@
+import { TransactionMetadata } from "xrpl";
 import { normalizeNodes } from "../utils";
 import { removeUndefined } from "../../common";
 
@@ -58,7 +59,7 @@ function summarizeDID(node: any): FormattedDIDSummaryInterface {
   return removeUndefined(summary);
 }
 
-function parseDIDChanges(metadata: any): FormattedDIDSummaryInterface | undefined {
+function parseDIDChanges(metadata: TransactionMetadata): FormattedDIDSummaryInterface | undefined {
   const dids = normalizeNodes(metadata).filter((n) => {
     return n.entryType === "DID";
   });

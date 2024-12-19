@@ -1,8 +1,8 @@
 import BigNumber from "bignumber.js";
+import { LedgerEntry } from "xrpl";
 import parseAmount from "./amount";
 import { parseTimestamp, adjustQualityForXRP } from "../utils";
 import { removeUndefined } from "../../common";
-import { orderFlags } from "../../types/flags";
 import { FormattedOfferCreateSpecification, FormattedIssuedCurrencyAmount } from "../../types";
 
 export type FormattedAccountOrders = {
@@ -56,7 +56,7 @@ function computeQuality(takerGets, takerPays) {
 // the flags are also different
 export function parseAccountOrder(address: string, order: any): FormattedAccountOrder {
   // eslint-disable-next-line no-bitwise
-  const direction = (order.flags & orderFlags.Sell) === 0 ? "buy" : "sell";
+  const direction = (order.flags & LedgerEntry.OfferFlags.lsfSell) === 0 ? "buy" : "sell";
   const takerGetsAmount = parseAmount(order.taker_gets) as FormattedIssuedCurrencyAmount;
   const takerPaysAmount = parseAmount(order.taker_pays) as FormattedIssuedCurrencyAmount;
   const quantity = direction === "buy" ? takerPaysAmount : takerGetsAmount;
@@ -69,7 +69,7 @@ export function parseAccountOrder(address: string, order: any): FormattedAccount
     quantity: quantity,
     totalPrice: totalPrice,
     // eslint-disable-next-line no-bitwise
-    passive: (order.flags & orderFlags.Passive) !== 0 || undefined,
+    passive: (order.flags & LedgerEntry.OfferFlags.lsfPassive) !== 0 || undefined,
     // rippled currently does not provide "expiration" in account_offers
     expirationTime: parseTimestamp(order.expiration),
   });

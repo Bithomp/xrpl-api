@@ -1,4 +1,5 @@
 import BigNumber from "bignumber.js";
+import { TransactionMetadata } from "xrpl";
 import { normalizeNodes } from "../utils";
 import { removeUndefined } from "../../common";
 import { OraclePriceDataSeriesInterface, FormattedOraclePriceDataSeriesInterface } from "../../types";
@@ -206,7 +207,7 @@ function summarizeOracle(node: any): FormattedOracleSummaryInterface {
   return removeUndefined(summary);
 }
 
-function parseOracleChanges(metadata: any): FormattedOracleSummaryInterface | undefined {
+function parseOracleChanges(metadata: TransactionMetadata): FormattedOracleSummaryInterface | undefined {
   const oracles = normalizeNodes(metadata).filter((n) => {
     return n.entryType === "Oracle";
   });

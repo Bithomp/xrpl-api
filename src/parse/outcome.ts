@@ -25,33 +25,6 @@ import { parseTimestamp } from "./utils";
 import { removeUndefined, dropsToXrp } from "../common";
 import { Outcome } from "../types/outcome";
 
-type OfferDescription = {
-  direction: string;
-  quantity: any;
-  totalPrice: any;
-  sequence: number;
-  status: string;
-  makerExchangeRate: string;
-};
-
-type Orderbook = {
-  [key: string]: OfferDescription[];
-};
-
-function removeEmptyCounterparty(amount) {
-  if (amount.counterparty === "") {
-    delete amount.counterparty;
-  }
-}
-
-function removeEmptyCounterpartyInOrderbookChanges(orderbookChanges: Orderbook) {
-  Object.entries(orderbookChanges).forEach(([_, changes]) => {
-    changes.forEach((change) => {
-      Object.entries(change).forEach(removeEmptyCounterparty);
-    });
-  });
-}
-
 function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefinitionsBase): Outcome | undefined {
   const metadata = tx.meta || tx.metaData;
   if (!metadata) {
@@ -75,8 +48,6 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
   const oracleChanges = parseOracleChanges(metadata);
   const mptokenIssuanceChanges = parseMPTokenIssuanceChanges(tx);
   const mptokenChanges = parseMPTokenChanges(tx);
-
-  removeEmptyCounterpartyInOrderbookChanges(orderbookChanges);
 
   return removeUndefined({
     result: tx.meta.TransactionResult,

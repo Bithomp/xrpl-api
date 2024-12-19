@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import { AuthAccount } from "xrpl";
+import { AuthAccount, TransactionMetadata } from "xrpl";
 import { normalizeNodes } from "../utils";
 import { removeUndefined } from "../../common";
 import { FormattedIssuedCurrency, FormattedAmount, VoteSlotInterface } from "../../types";
@@ -313,7 +313,7 @@ function summarizeAmm(node: any): FormattedAmmSummaryInterface {
   return removeUndefined(summary);
 }
 
-function parseAmmChanges(metadata: any): FormattedAmmSummaryInterface | undefined {
+function parseAmmChanges(metadata: TransactionMetadata): FormattedAmmSummaryInterface | undefined {
   const amms = normalizeNodes(metadata).filter((n) => {
     return n.entryType === "AMM";
   });

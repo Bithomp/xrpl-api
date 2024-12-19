@@ -126,7 +126,7 @@ function parseTrustlineQuantity(node, valueParser): AddressBalanceChangeQuantity
   return [result, flipTrustlinePerspective(result)];
 }
 
-function parseMPTQuantity(node, valueParser): AddressBalanceChangeQuantity | null {
+function parseMPTQuantity(node: any, valueParser: any): AddressBalanceChangeQuantity | null {
   const value = valueParser(node);
 
   if (value === null) {
