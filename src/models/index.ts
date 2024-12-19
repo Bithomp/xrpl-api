@@ -19,6 +19,8 @@ export { parseBalanceChanges, parseFinalBalances } from "../parse/outcome/balanc
 export { parseLockedBalanceChanges } from "../parse/outcome/locked_balance_changes";
 export { parseChannelChanges } from "../parse/outcome/channel_changes";
 export { parseOrderbookChanges } from "../parse/outcome/orderbook_changes";
+export { parseMPTokenIssuanceChanges } from "../parse/outcome/mptoken_issuance_changes";
+export { parseMPTokenChanges } from "../parse/outcome/mptoken_changes";
 
 import parseNFTokenBurn from "../parse/specification/nftoken-burn";
 import parseNFTokenMint from "../parse/specification/nftoken-mint";

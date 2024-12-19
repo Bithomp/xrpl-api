@@ -1,0 +1,72 @@
+{
+  "Account": "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+  "AssetScale": 2,
+  "Fee": "120",
+  "Flags": 126,
+  "LastLedgerSequence": 6560028,
+  "MPTokenMetadata": "464F4F",
+  "MaximumAmount": "50000000",
+  "Sequence": 6560006,
+  "SigningPubKey": "EDB239B6EE5584177D922FA609A147C2DD31C4B4C40036A9A4615872217BAB2E84",
+  "TransactionType": "MPTokenIssuanceCreate",
+  "TransferFee": 314,
+  "TxnSignature": "88BFC3D454BD6DADB5CF8DC45BEA33FBD9A15CCCD027C66DC61525ACD708BC3A00E075CA5707F4F6C51A960087FCC1D8F218A991898C9044965D986C9CFDFA08",
+  "ctid": "C064190A00010002",
+  "date": 787148041,
+  "hash": "B84FF7A93AD7F623CCF36653CBEE449E3CA9237472BF0BD9BEDBDD42E03A1F00",
+  "inLedger": 6560010,
+  "ledger_index": 6560010,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+            "Balance": "99999880",
+            "Flags": 0,
+            "OwnerCount": 1,
+            "Sequence": 6560007
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "3B965D470F38B19D8BF6546462E6C14AE1931B10846C23C385617D5D37BB9800",
+          "PreviousFields": {
+            "Balance": "100000000",
+            "OwnerCount": 0,
+            "Sequence": 6560006
+          },
+          "PreviousTxnID": "2F9C20051E4EB5B15B591ED1FEAD8EF984D7FA9DC616924FD71FDFB3169F1B11",
+          "PreviousTxnLgrSeq": 6560006
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "MPTokenIssuance",
+          "LedgerIndex": "97D421D3B638C73B2F4F9DB4F776552EAE11024B7C74E2BFD3EA4B6504B1349D",
+          "NewFields": {
+            "AssetScale": 2,
+            "Flags": 126,
+            "Issuer": "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+            "MPTokenMetadata": "464F4F",
+            "MaximumAmount": "50000000",
+            "Sequence": 6560006,
+            "TransferFee": 314
+          }
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "B3012B165305688AFBAF3646BBD4168E63878116F272F8B827EE496A2DD4282D",
+          "NewFields": {
+            "Owner": "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+            "RootIndex": "B3012B165305688AFBAF3646BBD4168E63878116F272F8B827EE496A2DD4282D"
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 1,
+    "TransactionResult": "tesSUCCESS",
+    "mpt_issuance_id": "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578"
+  },
+  "validated": true
+}

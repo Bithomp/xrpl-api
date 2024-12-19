@@ -1,0 +1,64 @@
+{
+  "Account": "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+  "Fee": "120",
+  "Flags": 1,
+  "LastLedgerSequence": 6560038,
+  "MPTokenIssuanceID": "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+  "Sequence": 6560009,
+  "SigningPubKey": "EDB239B6EE5584177D922FA609A147C2DD31C4B4C40036A9A4615872217BAB2E84",
+  "TransactionType": "MPTokenIssuanceSet",
+  "TxnSignature": "9FF202DBD316AEB55C1D3F867D672E1E78CA2F358F8146E80571FB09090C4AA6F372D8B120F5EEDD037E0A5F27DA2A5A48E59C16C7C2F4A6B6E4D451DF16920C",
+  "ctid": "C064191400010002",
+  "date": 787148071,
+  "hash": "ABBA490FEEAB799CAACFC5ECC1384C518EF215D8E93680F11AF086693E74B03C",
+  "inLedger": 6560020,
+  "ledger_index": 6560020,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+            "Balance": "99999520",
+            "Flags": 0,
+            "OwnerCount": 1,
+            "Sequence": 6560010
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "3B965D470F38B19D8BF6546462E6C14AE1931B10846C23C385617D5D37BB9800",
+          "PreviousFields": {
+            "Balance": "99999640",
+            "Sequence": 6560009
+          },
+          "PreviousTxnID": "573A1719C6838A13CC1437FF149EA029098096F72DFA74A5DA4EC3ADD5564126",
+          "PreviousTxnLgrSeq": 6560016
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "AssetScale": 2,
+            "Flags": 127,
+            "Issuer": "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+            "MPTokenMetadata": "464F4F",
+            "MaximumAmount": "50000000",
+            "OutstandingAmount": "900",
+            "OwnerNode": "0",
+            "Sequence": 6560006,
+            "TransferFee": 314
+          },
+          "LedgerEntryType": "MPTokenIssuance",
+          "LedgerIndex": "97D421D3B638C73B2F4F9DB4F776552EAE11024B7C74E2BFD3EA4B6504B1349D",
+          "PreviousFields": {
+            "Flags": 126
+          },
+          "PreviousTxnID": "4E5B94079CD725CFAE03FCF3A1645B27FA22B253B72B72AD62729C8C91C78D9A",
+          "PreviousTxnLgrSeq": 6560018
+        }
+      }
+    ],
+    "TransactionIndex": 1,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

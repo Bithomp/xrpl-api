@@ -17,6 +17,7 @@ import {
   parseDIDChanges,
   parseOracleChanges,
   parseDeliveredAmount,
+  parseMPTokenIssuanceChanges,
   parseMPTokenChanges,
 } from "./outcome/index";
 
@@ -72,6 +73,8 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
   const ammChanges = parseAmmChanges(metadata);
   const didChanges = parseDIDChanges(metadata);
   const oracleChanges = parseOracleChanges(metadata);
+  const mptokenIssuanceChanges = parseMPTokenIssuanceChanges(tx);
+  const mptokenChanges = parseMPTokenChanges(tx);
 
   removeEmptyCounterpartyInOrderbookChanges(orderbookChanges);
 
@@ -92,6 +95,8 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     ammChanges: ammChanges ? removeUndefined(ammChanges) : undefined,
     didChanges: didChanges ? removeUndefined(didChanges) : undefined,
     oracleChanges: oracleChanges ? removeUndefined(oracleChanges) : undefined,
+    mptokenIssuanceChanges: Object.keys(mptokenIssuanceChanges).length > 0 ? mptokenIssuanceChanges : undefined,
+    mptokenChanges: Object.keys(mptokenChanges).length > 0 ? mptokenChanges : undefined,
     unlReportChanges,
     hooksExecutions,
     emittedTxns,

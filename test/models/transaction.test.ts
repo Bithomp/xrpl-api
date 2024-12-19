@@ -5129,39 +5129,49 @@ describe("Models", () => {
         specification: {
           source: {
             address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
-            maxAmount: {
-              mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
-              value: "1000",
-            },
+            maxAmount: { mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578", value: "1000" },
           },
-          destination: {
-            address: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
-          },
+          destination: { address: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt" },
         },
         outcome: {
           result: "tesSUCCESS",
           timestamp: "2024-12-10T12:14:21.000Z",
           fee: "0.00012",
           balanceChanges: {
-            raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [
-              {
-                currency: "XRP",
-                value: "-0.00012",
-              },
-            ],
+            raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [{ currency: "XRP", value: "-0.00012" }],
             rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: [
-              {
-                value: "1000",
-                mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
-              },
+              { value: "1000", mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578" },
             ],
+          },
+          mptokenIssuanceChanges: {
+            "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
+              status: "modified",
+              flags: 126,
+              mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+              issuer: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+              sequence: 6560006,
+              transferFee: 314,
+              maximumAmount: "50000000",
+              outstandingAmount: "1000",
+              scale: 2,
+              outstandingAmountChange: "1000",
+            },
+          },
+          mptokenChanges: {
+            "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
+              rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: {
+                status: "modified",
+                flags: 2,
+                mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+                account: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
+                amount: "1000",
+                amountChange: "1000",
+              },
+            },
           },
           ledgerVersion: 6560016,
           indexInLedger: 3,
-          deliveredAmount: {
-            mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
-            value: "1000",
-          },
+          deliveredAmount: { mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578", value: "1000" },
         },
       });
     });
@@ -5192,6 +5202,32 @@ describe("Models", () => {
               { value: "-100", mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578" },
             ],
           },
+          mptokenIssuanceChanges: {
+            "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
+              status: "modified",
+              flags: 126,
+              mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+              issuer: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+              sequence: 6560006,
+              transferFee: 314,
+              maximumAmount: "50000000",
+              outstandingAmount: "900",
+              scale: 2,
+              outstandingAmountChange: "-100",
+            },
+          },
+          mptokenChanges: {
+            "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
+              rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: {
+                status: "modified",
+                flags: 2,
+                mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+                account: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
+                amount: "900",
+                amountChange: "-100",
+              },
+            },
+          },
           ledgerVersion: 6560018,
           indexInLedger: 3,
           deliveredAmount: { mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578", value: "100" },
@@ -5209,31 +5245,43 @@ describe("Models", () => {
         id: "0598801183DB0C85052E4C0F6A1F4C7FF955FEF687C64F5A7661BA9C102CF2EF",
         ctid: "C064191600010002",
         specification: {
-          source: {
-            address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
-          },
-          amount: {
-            mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
-            value: "10000",
-          },
+          source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
+          amount: { mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578", value: "10000" },
         },
         outcome: {
           result: "tesSUCCESS",
           timestamp: "2024-12-10T12:14:40.000Z",
           fee: "0.00012",
           balanceChanges: {
-            raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [
-              {
-                currency: "XRP",
-                value: "-0.00012",
-              },
-            ],
+            raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [{ currency: "XRP", value: "-0.00012" }],
             rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: [
-              {
-                value: "-900",
-                mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
-              },
+              { value: "-900", mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578" },
             ],
+          },
+          mptokenIssuanceChanges: {
+            "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
+              status: "modified",
+              flags: 127,
+              mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+              issuer: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+              sequence: 6560006,
+              transferFee: 314,
+              maximumAmount: "50000000",
+              outstandingAmount: "0",
+              scale: 2,
+              outstandingAmountChange: "-900",
+            },
+          },
+          mptokenChanges: {
+            "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
+              rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: {
+                status: "modified",
+                flags: 2,
+                mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+                account: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
+                amountChange: "-900",
+              },
+            },
           },
           ledgerVersion: 6560022,
           indexInLedger: 1,
