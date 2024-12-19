@@ -3,10 +3,10 @@ import { removeUndefined } from "../../common";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 import { FormattedSourceAddress } from "../../types/account";
-import { FormattedOracleDeleteSpecification } from "../../types/oracle";
+import { FormattedMPTokenIssuanceDestroySpecification } from "../../types/mptokens";
 
-function parseDidDelete(tx: any): FormattedOracleDeleteSpecification {
-  assert.ok(tx.TransactionType === "OracleDelete");
+function parseMPTokenIssuanceCreate(tx: any): FormattedMPTokenIssuanceDestroySpecification {
+  assert.ok(tx.TransactionType === "MPTokenIssuanceDestroy");
 
   const source: FormattedSourceAddress = removeUndefined({
     address: parseAccount(tx.Account),
@@ -15,10 +15,10 @@ function parseDidDelete(tx: any): FormattedOracleDeleteSpecification {
 
   return removeUndefined({
     source: Object.keys(source).length > 0 ? source : undefined,
-    oracleDocumentID: tx.OracleDocumentID,
+    mptIssuanceID: tx.MPTokenIssuanceID,
 
     memos: parseMemos(tx),
   });
 }
 
-export default parseDidDelete;
+export default parseMPTokenIssuanceCreate;

@@ -2,7 +2,6 @@ import * as assert from "assert";
 import { OfferCreateFlags } from "xrpl";
 import { parseTimestamp } from "../utils";
 import parseAmount from "../ledger/amount";
-import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { removeUndefined } from "../../common";
 import { FormattedSourceAddress } from "../../types/account";
@@ -34,7 +33,7 @@ function parseOfferCreate(tx: OfferCreateTransaction): FormattedOfferCreateSpeci
     // eslint-disable-next-line no-bitwise
     fillOrKill: (tx.Flags & OfferCreateFlags.tfFillOrKill) !== 0 || undefined,
     expirationTime: parseTimestamp(tx.Expiration),
-    emittedDetails: parseEmittedDetails(tx),
+
     memos: parseMemos(tx),
   });
 }

@@ -5288,6 +5288,167 @@ describe("Models", () => {
         },
       });
     });
+
+    it("MPTokenAuthorize", function () {
+      const tx = require("../examples/responses/MPTokenAuthorize.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "MPTokenAuthorize",
+        address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+        sequence: 6560007,
+        id: "7D444B9006061FC5E47623596D61A57862AE951A2D62BCA17A26103EA3A67A19",
+        ctid: "C064190E00000002",
+        specification: {
+          source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
+          flags: { unauthorize: false },
+          holder: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
+          mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-12-10T12:14:12.000Z",
+          fee: "0.00012",
+          balanceChanges: { raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [{ currency: "XRP", value: "-0.00012" }] },
+          mptokenChanges: {
+            "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
+              rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: {
+                status: "modified",
+                flags: 2,
+                mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+                account: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
+                flagsChange: 0,
+              },
+            },
+          },
+          ledgerVersion: 6560014,
+          indexInLedger: 0,
+        },
+      });
+    });
+
+    it("MPTokenIssuanceCreate", function () {
+      const tx = require("../examples/responses/MPTokenIssuanceCreate.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "MPTokenIssuanceCreate",
+        address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+        sequence: 6560006,
+        id: "B84FF7A93AD7F623CCF36653CBEE449E3CA9237472BF0BD9BEDBDD42E03A1F00",
+        ctid: "C064190A00010002",
+        specification: {
+          source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
+          scale: 2,
+          flags: {
+            canLock: true,
+            requireAuth: true,
+            canEscrow: true,
+            canTrade: true,
+            canTransfer: true,
+            canClawback: true,
+          },
+          metadata: "464F4F",
+          maximumAmount: "50000000",
+          transferFee: 314,
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-12-10T12:14:01.000Z",
+          fee: "0.00012",
+          balanceChanges: { raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [{ currency: "XRP", value: "-0.00012" }] },
+          mptokenIssuanceChanges: {
+            "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
+              status: "added",
+              flags: 126,
+              mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+              issuer: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+              sequence: 6560006,
+              transferFee: 314,
+              maximumAmount: "50000000",
+              scale: 2,
+            },
+          },
+          ledgerVersion: 6560010,
+          indexInLedger: 1,
+        },
+      });
+    });
+
+    it("MPTokenIssuanceDestroy", function () {
+      const tx = require("../examples/responses/MPTokenIssuanceDestroy.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "MPTokenIssuanceDestroy",
+        address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+        sequence: 6560011,
+        id: "A6190CD72076A65E4AF41DA5B2D2BF24EA607872BCD084893BBD1AB8F50C61E9",
+        ctid: "C064191800010002",
+        specification: {
+          source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
+          mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-12-10T12:14:42.000Z",
+          fee: "0.00012",
+          balanceChanges: { raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [{ currency: "XRP", value: "-0.00012" }] },
+          mptokenIssuanceChanges: {
+            "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
+              status: "removed",
+              flags: 127,
+              mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+              issuer: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+              sequence: 6560006,
+              transferFee: 314,
+              maximumAmount: "50000000",
+              outstandingAmount: "0",
+              scale: 2,
+            },
+          },
+          ledgerVersion: 6560024,
+          indexInLedger: 1,
+        },
+      });
+    });
+
+    it("MPTokenIssuanceSet", function () {
+      const tx = require("../examples/responses/MPTokenIssuanceSet.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "MPTokenIssuanceSet",
+        address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+        sequence: 6560009,
+        id: "ABBA490FEEAB799CAACFC5ECC1384C518EF215D8E93680F11AF086693E74B03C",
+        ctid: "C064191400010002",
+        specification: {
+          source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
+          flags: { lock: true, unlock: false },
+          mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-12-10T12:14:31.000Z",
+          fee: "0.00012",
+          balanceChanges: { raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [{ currency: "XRP", value: "-0.00012" }] },
+          mptokenIssuanceChanges: {
+            "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
+              status: "modified",
+              flags: 127,
+              mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+              issuer: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
+              sequence: 6560006,
+              transferFee: 314,
+              maximumAmount: "50000000",
+              outstandingAmount: "900",
+              scale: 2,
+              outstandingAmountChange: "900",
+              flagsChange: 126,
+            },
+          },
+          ledgerVersion: 6560020,
+          indexInLedger: 1,
+        },
+      });
+    });
   });
 
   describe("getAccountTxDetails", () => {

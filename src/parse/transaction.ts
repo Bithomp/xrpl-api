@@ -58,6 +58,17 @@ import {
   FormattedAmmVoteSpecification,
 } from "../types/amm";
 
+import { FormattedDIDSetSpecification, FormattedDIDDeleteSpecification } from "../types/did";
+
+import { FormattedOracleSetSpecification, FormattedOracleDeleteSpecification } from "../types/oracle";
+
+import {
+  FormattedMPTokenIssuanceCreateSpecification,
+  FormattedMPTokenAuthorizeSpecification,
+  FormattedMPTokenIssuanceSetSpecification,
+  FormattedMPTokenIssuanceDestroySpecification,
+} from "../types/mptokens";
+
 import { FormattedGenesisMintSpecification } from "../types/genesis_mint";
 
 import { FormattedAmendmentSpecification } from "../types/amendments";
@@ -112,6 +123,11 @@ import parseDIDDelete from "./specification/did-delete";
 
 import parseOracleSet from "./specification/oracle-set";
 import parseOracleDelete from "./specification/oracle-delete";
+
+import parseMPTokenIssuanceCreate from "./specification/mptoken-issuance-create";
+import parseMPTokenAuthorize from "./specification/mptoken-authorize";
+import parseMPTokenIssuanceSet from "./specification/mptoken-issuance-set";
+import parseMPTokenIssuanceDestroy from "./specification/mptoken-issuance-destroy";
 
 import parseGenesisMint from "./specification/genesis-mint";
 
@@ -171,6 +187,11 @@ const transactionTypeToType = {
 
   OracleSet: "oracleSet",
   OracleDelete: "oracleDelete",
+
+  MPTokenIssuanceCreate: "MPTokenIssuanceCreate",
+  MPTokenAuthorize: "MPTokenAuthorize",
+  MPTokenIssuanceSet: "MPTokenIssuanceSet",
+  MPTokenIssuanceDestroy: "MPTokenIssuanceDestroy",
 
   GenesisMint: "genesisMint",
 
@@ -233,6 +254,11 @@ const parserTypeFunc = {
   oracleSet: parseOracleSet,
   oracleDelete: parseOracleDelete,
 
+  MPTokenIssuanceCreate: parseMPTokenIssuanceCreate,
+  MPTokenAuthorize: parseMPTokenAuthorize,
+  MPTokenIssuanceSet: parseMPTokenIssuanceSet,
+  MPTokenIssuanceDestroy: parseMPTokenIssuanceDestroy,
+
   genesisMint: parseGenesisMint,
 
   amendment: parseAmendment, // pseudo-transaction
@@ -280,7 +306,15 @@ export type FormattedSpecification =
   | FormattedAmmVoteSpecification
   | FormattedGenesisMintSpecification
   | FormattedAmendmentSpecification
-  | FormattedFeeUpdateSpecification;
+  | FormattedFeeUpdateSpecification
+  | FormattedDIDSetSpecification
+  | FormattedDIDDeleteSpecification
+  | FormattedOracleSetSpecification
+  | FormattedOracleDeleteSpecification
+  | FormattedMPTokenIssuanceCreateSpecification
+  | FormattedMPTokenAuthorizeSpecification
+  | FormattedMPTokenIssuanceSetSpecification
+  | FormattedMPTokenIssuanceDestroySpecification;
 
 type FormattedUnrecognizedParserSpecification = {
   UNAVAILABLE: string;
