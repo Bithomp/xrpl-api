@@ -171,7 +171,6 @@ export function signTransaction(
    * This will throw a more clear error for JS users if the supplied transaction has incorrect formatting
   NOTE: it does not support Xahau txs yet
    */
-  // eslint-disable-next-line
   if (validateTx !== false) {
     validate(tx as unknown as Record<string, unknown>);
   }
@@ -342,9 +341,7 @@ function removeTrailingZeros(tx: Transaction): void {
     tx.Amount.value.includes(".") &&
     tx.Amount.value.endsWith("0")
   ) {
-    // eslint-disable-next-line no-param-reassign -- Required to update Transaction.Amount.value
     tx.Amount = { ...tx.Amount };
-    // eslint-disable-next-line no-param-reassign -- Required to update Transaction.Amount.value
     tx.Amount.value = new BigNumber(tx.Amount.value).toString();
   }
 }
@@ -362,7 +359,6 @@ function hashSignedTx(tx: Transaction | string, definitions?: XrplDefinitionsBas
   let txObject: Transaction;
   if (typeof tx === "string") {
     txBlob = tx;
-    // eslint-disable-next-line
     txObject = decode(tx, definitions) as unknown as Transaction;
   } else {
     txBlob = encode(tx, definitions);

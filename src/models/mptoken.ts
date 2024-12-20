@@ -17,7 +17,7 @@ export function buildMPTokenIssuanceID(sequence: number, issuer: string): string
   );
 }
 
-export function parseMptID(mptIssuanceID: string): MPTokenInterface | null {
+export function parseMPTokenIssuanceID(mptIssuanceID: string): MPTokenInterface | null {
   if (typeof mptIssuanceID !== "string" || mptIssuanceID.length !== 48) {
     return null;
   }

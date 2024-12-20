@@ -354,9 +354,7 @@ function parseTransaction(
 
   const parser: Function = parserTypeFunc[type];
 
-  /* eslint-disable multiline-ternary */
   const specification = parser ? parser(universalTx) : unrecognizedParser(universalTx);
-  /* eslint-enable multiline-ternary */
 
   if (!parser) {
     includeRawTransaction = true; // eslint-disable-line no-param-reassign

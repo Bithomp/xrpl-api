@@ -9,6 +9,7 @@ export * from "./account_namespace";
 export * from "./account_uritokens";
 export * from "./vl";
 export * from "./server_definitions";
+export * from "./mptoken";
 
 export { parseAffectedObjects } from "../parse/outcome/affected_objects";
 export { parseNFTokenChanges } from "../parse/outcome/nftoken_changes";
