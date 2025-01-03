@@ -248,15 +248,14 @@ export async function findTransactions(
     });
 
     // check for error
-    if (!accountTransactions || accountTransactions.error) {
+    if (accountTransactions.error) {
       // try again
       if (accountTransactions.error_message === "Request timeout.") {
         continue;
       } else {
         accountTransactionsError = accountTransactions;
+        break;
       }
-
-      break;
     }
 
     let newTransactions = accountTransactions.transactions;
