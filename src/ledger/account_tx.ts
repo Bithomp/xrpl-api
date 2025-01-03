@@ -220,6 +220,20 @@ export async function findTransactions(
   // apply start transaction parameters to options
   await applyStartTxOptions(loadOptions);
 
+  let getTransactionsLimit = loadOptions.limit;
+  // increase limit to make sure we can get all transaction with single request
+  if (transactions.length === 0 && loadOptions.startTxHash) {
+    getTransactionsLimit += LIMIT_INCREASE_COUNT;
+  }
+
+  if (loadOptions.sourceTag || loadOptions.destinationTag) {
+    getTransactionsLimit += LIMIT_INCREASE_COUNT;
+  }
+
+  if (getTransactionsLimit > MAX_LIMIT) {
+    getTransactionsLimit = MAX_LIMIT;
+  }
+
   while (transactions.length !== loadOptions.limit) {
     const currentTime = new Date();
     // timeout validation
@@ -227,31 +241,24 @@ export async function findTransactions(
       break;
     }
 
-    let limit = loadOptions.limit;
-    // increase limit to make sure we can get all transaction with single request
-    if (transactions.length === 0 && loadOptions.startTxHash) {
-      limit += LIMIT_INCREASE_COUNT;
-    }
-
-    if (loadOptions.sourceTag || loadOptions.destinationTag) {
-      limit += LIMIT_INCREASE_COUNT;
-    }
-
-    if (limit > MAX_LIMIT) {
-      limit = MAX_LIMIT;
-    }
-
     // request without balanceChanges and specification to reduce unnecessary work
     const accountTransactions: any = await getTransactions(account, {
       ...loadOptions,
-      ...{ balanceChanges: false, specification: false, limit },
+      ...{ balanceChanges: false, specification: false, limit: getTransactionsLimit },
     });
 
     // check for error
     if (!accountTransactions || accountTransactions.error) {
-      accountTransactionsError = accountTransactions;
+      // try again
+      if (accountTransactions.error_message === "Request timeout.") {
+        continue;
+      } else {
+        accountTransactionsError = accountTransactions;
+      }
+
       break;
     }
+
     let newTransactions = accountTransactions.transactions;
     // save marker for next request
     loadOptions.marker = accountTransactions.marker;
@@ -276,11 +283,23 @@ export async function findTransactions(
       }
     }
 
-    // merge found newly found transactions with old ones
-    transactions = transactions.concat(newTransactions);
+    // we need load more since filter removed all transactions,
+    // it will increase limit until it reaches MAX_LIMIT
+    if (newTransactions.length === 0 && getTransactionsLimit < MAX_LIMIT) {
+      getTransactionsLimit += LIMIT_INCREASE_COUNT;
 
-    // cleanup last transactions over limit
-    transactions = transactions.slice(0, loadOptions.limit);
+      if (getTransactionsLimit > MAX_LIMIT) {
+        getTransactionsLimit = MAX_LIMIT;
+      }
+    }
+
+    if (newTransactions.length > 0) {
+      // merge found newly found transactions with old ones
+      transactions = transactions.concat(newTransactions);
+
+      // cleanup last transactions over limit
+      transactions = transactions.slice(0, loadOptions.limit);
+    }
 
     if (loadOptions.marker === undefined) {
       break;
