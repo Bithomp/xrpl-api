@@ -313,7 +313,7 @@ export async function findTransactions(
   // return timeout and marker information if nothing was found
   if (loadOptions.marker && transactions.length === 0) {
     return {
-      status: "timeout",
+      status: "error",
       error: "searchTimeout",
       marker: loadOptions.marker,
     };

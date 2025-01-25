@@ -569,9 +569,9 @@ async function waitForFinalTransactionOutcome(
 
   if (tx && !tx.hasOwnProperty("error") && (tx as any).validated === false) {
     if (tx.hasOwnProperty("LastLedgerSequence")) {
-      return { ...tx, status: "timeout", error: "lastLedgerIndexReached" } as any;
+      return { ...tx, status: "error", error: "lastLedgerIndexReached" } as any;
     } else {
-      return { ...tx, status: "timeout", error: "waitingForValidation" } as any;
+      return { ...tx, status: "error", error: "waitingForValidation" } as any;
     }
   }
 

@@ -4,7 +4,7 @@ export interface ErrorResponse {
   transaction?: string;
   public_key?: string;
   nft_id?: string;
-  status: "error" | "timeout";
+  status: "error";
   error: string;
   error_code?: string;
   error_message?: string;
