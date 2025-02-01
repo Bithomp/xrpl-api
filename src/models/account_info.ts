@@ -35,7 +35,6 @@ export const AccountRootFlagsKeys = {
 export const XRPLAccountRootFlagsKeys = {
   ...AccountRootFlagsKeys,
 
-  amm: LedgerEntry.AccountRootFlags.lsfAMM,
   allowTrustLineClawback: LedgerEntry.AccountRootFlags.lsfAllowTrustLineClawback,
 };
 
@@ -120,13 +119,13 @@ export interface SignerListFlagsKeysInterface {
 
 export const AccountFields = {
   EmailHash: { name: "emailHash", encoding: "hex", length: 32, defaults: "00000000000000000000000000000000" },
-  WalletLocator: { name: "walletLocator" },
   MessageKey: { name: "messageKey" },
   Domain: { name: "domain", encoding: "hex" },
   TransferRate: { name: "transferRate", defaults: 0, shift: 9 },
   TickSize: { name: "tickSize", defaults: 0 },
   RegularKey: { name: "regularKey" },
   NFTokenMinter: { name: "nftokenMinter" },
+  WalletLocator: { name: "walletLocator" },
 };
 
 export interface AccountInfoResponse extends AccountSignerListResponse {
@@ -174,13 +173,13 @@ export interface AccountInfoDataResponse extends LedgerEntry.AccountRoot, Accoun
 export interface AccountFieldsInterface {
   blackholed?: boolean;
   emailHash?: string;
-  walletLocator?: string;
   messageKey?: string;
   domain?: string;
   transferRate?: number;
   tickSize?: number;
   regularKey?: string;
   nftokenMinter?: string;
+  walletLocator?: string;
 }
 
 export interface AccountSettingsInterface extends AccountFieldsInterface, AccountRootFlagsKeysInterface {}

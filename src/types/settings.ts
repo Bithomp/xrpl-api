@@ -21,7 +21,6 @@ export type FormattedSettingsSpecification = {
   disallowIncomingTrustline?: boolean;
   domain?: string;
   emailHash?: string | null;
-  walletLocator?: string | null;
   enableTransactionIDTracking?: boolean;
   globalFreeze?: boolean;
   messageKey?: string;
@@ -34,4 +33,5 @@ export type FormattedSettingsSpecification = {
   transferRate?: number | null;
   tickSize?: number;
   nftokenMinter?: string;
+  walletLocator?: string | null;
 } & FormattedBaseSpecification;

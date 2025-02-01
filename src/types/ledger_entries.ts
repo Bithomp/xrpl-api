@@ -18,7 +18,6 @@ export interface AccountRootLedgerEntry {
   TickSize?: number;
   TransferRate?: number;
   WalletLocator?: string;
-  WalletSize?: number; // DEPRECATED
 }
 
 export interface AmendmentsLedgerEntry {

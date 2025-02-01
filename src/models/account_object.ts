@@ -111,12 +111,12 @@ const RippleStateToTrustLine = (ledgerEntry: LedgerEntry.RippleState, account: s
   const parties = [ledgerEntry.HighLimit, ledgerEntry.LowLimit];
   const [self, counterparty] = ledgerEntry.HighLimit.issuer === account ? parties : parties.reverse();
 
+  /* eslint-disable no-bitwise */
   const ripplingFlags = [
-    // eslint-disable-next-line no-bitwise
     (RippleStateFlags.lsfHighNoRipple & ledgerEntry.Flags) === RippleStateFlags.lsfHighNoRipple,
-    // eslint-disable-next-line no-bitwise
     (RippleStateFlags.lsfLowNoRipple & ledgerEntry.Flags) === RippleStateFlags.lsfLowNoRipple,
   ];
+  /* eslint-enable no-bitwise */
 
   const [no_ripple, no_ripple_peer] =
     ledgerEntry.HighLimit.issuer === account ? ripplingFlags : ripplingFlags.reverse();
