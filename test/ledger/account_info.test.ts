@@ -214,7 +214,6 @@ describe("Client", () => {
           disallowIncomingNFTokenOffer: false,
           disallowIncomingPayChan: false,
           disallowIncomingTrustline: false,
-          amm: false,
           allowTrustLineClawback: false,
         });
       });
@@ -267,7 +266,6 @@ describe("Client", () => {
           disallowIncomingNFTokenOffer: false,
           disallowIncomingPayChan: false,
           disallowIncomingTrustline: false,
-          amm: false,
           allowTrustLineClawback: false,
         });
       });
@@ -357,7 +355,6 @@ describe("Client", () => {
           disallowIncomingNFTokenOffer: false,
           disallowIncomingPayChan: false,
           disallowIncomingTrustline: false,
-          amm: false,
           allowTrustLineClawback: false,
         });
       });

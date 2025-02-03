@@ -56,6 +56,7 @@ import {
   FormattedAmmDepositSpecification,
   FormattedAmmWithdrawSpecification,
   FormattedAmmVoteSpecification,
+  FormattedAmmClawbackSpecification,
 } from "../types/amm";
 
 import { FormattedDIDSetSpecification, FormattedDIDDeleteSpecification } from "../types/did";
@@ -117,6 +118,7 @@ import parseAmmDelete from "./specification/amm-delete";
 import parseAmmDeposit from "./specification/amm-deposit";
 import parseAmmWithdraw from "./specification/amm-withdraw";
 import parseAmmVote from "./specification/amm-vote";
+import parseAmmClawback from "./specification/amm-clawback";
 
 import parseDIDSet from "./specification/did-set";
 import parseDIDDelete from "./specification/did-delete";
@@ -181,6 +183,7 @@ const transactionTypeToType = {
   AMMDeposit: "ammDeposit",
   AMMWithdraw: "ammWithdraw",
   AMMVote: "ammVote",
+  AMMClawback: "AMMClawback",
 
   DIDSet: "didSet",
   DIDDelete: "didDelete",
@@ -247,6 +250,7 @@ const parserTypeFunc = {
   ammDeposit: parseAmmDeposit,
   ammWithdraw: parseAmmWithdraw,
   ammVote: parseAmmVote,
+  AMMClawback: parseAmmClawback,
 
   didSet: parseDIDSet,
   didDelete: parseDIDDelete,
@@ -304,6 +308,7 @@ export type FormattedSpecification =
   | FormattedAmmDepositSpecification
   | FormattedAmmWithdrawSpecification
   | FormattedAmmVoteSpecification
+  | FormattedAmmClawbackSpecification
   | FormattedGenesisMintSpecification
   | FormattedAmendmentSpecification
   | FormattedFeeUpdateSpecification

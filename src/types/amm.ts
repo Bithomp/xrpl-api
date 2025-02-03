@@ -47,6 +47,18 @@ export interface AMMWithdrawFlagsKeysInterface {
   limitLPToken?: boolean;
 }
 
+export enum AMMClawbackFlags {
+  tfClawTwoAssets = 0x00000001,
+}
+
+export const AMMClawbackFlagsKeys = {
+  clawTwoAssets: AMMClawbackFlags.tfClawTwoAssets,
+};
+
+export interface AMMClawbackFlagsKeysInterface {
+  clawTwoAssets?: boolean;
+}
+
 export type FormattedAmmBidSpecification = {
   asset?: FormattedIssuedCurrency;
   asset2?: FormattedIssuedCurrency;
@@ -90,4 +102,11 @@ export type FormattedAmmVoteSpecification = {
   asset?: FormattedIssuedCurrency;
   asset2?: FormattedIssuedCurrency;
   tradingFee: Number;
+} & FormattedBaseSpecification;
+
+export type FormattedAmmClawbackSpecification = {
+  asset?: FormattedIssuedCurrency;
+  asset2?: FormattedIssuedCurrency;
+  amount?: FormattedAmount;
+  holder?: string;
 } & FormattedBaseSpecification;

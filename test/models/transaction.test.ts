@@ -4486,6 +4486,80 @@ describe("Models", () => {
       });
     });
 
+    it("AMMClawback", function () {
+      const tx = require("../examples/responses/AMMClawback.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "AMMClawback",
+        address: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B",
+        sequence: 8018880,
+        id: "578CC95D2EF98E1729B37F96A5CE2692AD8C5C27DE88A9D2AE416EF791588DAD",
+        ctid: "C07A5BC9000D0002",
+        specification: {
+          source: { address: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B" },
+          asset: { currency: "USD", counterparty: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B" },
+          asset2: { currency: "XRP" },
+          amount: { currency: "USD", value: "10", counterparty: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B" },
+          holder: "raRjfQPhoZPukjd7av9LjnsNYAJ6KXHbyu",
+          flags: { clawTwoAssets: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-02-02T06:31:42.000Z",
+          fee: "0.01",
+          balanceChanges: {
+            raRjfQPhoZPukjd7av9LjnsNYAJ6KXHbyu: [
+              {
+                counterparty: "rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa",
+                currency: "03930D02208264E2E40EC1B0C09E4DB96EE197B1",
+                value: "-10000",
+              },
+              { currency: "XRP", value: "10" },
+            ],
+            rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa: [
+              {
+                counterparty: "raRjfQPhoZPukjd7av9LjnsNYAJ6KXHbyu",
+                currency: "03930D02208264E2E40EC1B0C09E4DB96EE197B1",
+                value: "10000",
+              },
+              { counterparty: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B", currency: "USD", value: "-10" },
+              { currency: "XRP", value: "-10" },
+            ],
+            rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B: [
+              { counterparty: "rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa", currency: "USD", value: "10" },
+              { currency: "XRP", value: "-0.01" },
+            ],
+          },
+          ammChanges: {
+            status: "deleted",
+            ammID: "9790F0B1835205A362D9E43623D22F9DC5FD38B2AC825D8F1DBD8C9C9EF5623D",
+            account: "rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa",
+            asset: { currency: "XRP" },
+            asset2: { currency: "USD", counterparty: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B" },
+            auctionSlot: {
+              account: "raRjfQPhoZPukjd7av9LjnsNYAJ6KXHbyu",
+              expiration: 1738564300,
+              price: {
+                currency: "03930D02208264E2E40EC1B0C09E4DB96EE197B1",
+                issuer: "rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa",
+                value: "0",
+              },
+            },
+            lpTokenBalance: {
+              currency: "03930D02208264E2E40EC1B0C09E4DB96EE197B1",
+              value: "10000",
+              counterparty: "rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa",
+            },
+            ownerNode: "0",
+            voteSlots: [{ account: "raRjfQPhoZPukjd7av9LjnsNYAJ6KXHbyu", voteWeight: 100000, tradingFee: undefined }],
+          },
+          ledgerVersion: 8018889,
+          indexInLedger: 13,
+        },
+      });
+    });
+
     it("Clawback", function () {
       const tx = require("../examples/responses/Clawback.json");
       const result: any = Models.getTxDetails(tx, false);

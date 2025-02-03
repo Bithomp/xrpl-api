@@ -2,7 +2,6 @@ import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
 import parseAsset from "../ledger/asset";
-import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 import { FormattedSourceAddress } from "../../types/account";
@@ -26,7 +25,6 @@ function parseAmmDeposit(tx: any): FormattedAmmWithdrawSpecification {
     ePrice: tx.EPrice ? parseAmount(tx.EPrice) : undefined,
     lpTokenIn: tx.LPTokenOut ? parseAmount(tx.LPTokenIn) : undefined,
     flags: parseAmmWithdrawFlags(tx.Flags),
-    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }
