@@ -10,6 +10,102 @@ describe("Models", () => {
   });
 
   describe("getTxDetails", () => {
+    it("Unknown with includeRawTransaction is false", function () {
+      const tx = require("../examples/responses/Unknown.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "Unknown",
+        address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH",
+        sequence: 751990994,
+        id: "0F3E271A9BD4F52654F8444AA228C029F69E850D62C101965FF1A9E5D77505D8",
+        specification: {
+          UNAVAILABLE: "Unrecognized transaction type.",
+          SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is may included in this response.",
+          source: {
+            address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH",
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2023-10-30T14:25:41.000Z",
+          fee: "0.009584",
+          balanceChanges: {
+            r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH: [
+              {
+                currency: "XRP",
+                value: "-0.009584",
+              },
+            ],
+          },
+          hooksExecutions: [
+            {
+              account: "r4FRPZbLnyuVeGiSi1Ap6uaaPvPXYZh1XN",
+              emitCount: 0,
+              executionIndex: 0,
+              hash: "5EDF6439C47C423EAC99C1061EE2A0CE6A24A58C8E8A66E4B3AF91D76772DC77",
+              instructionCount: "28f",
+              result: 3,
+              returnCode: "d7",
+              returnString: "Governance: Setup completed successfully.",
+              stateChangeCount: 14,
+            },
+          ],
+          ledgerVersion: 2479,
+          indexInLedger: 0,
+        },
+      });
+    });
+
+    it("Unknown with includeRawTransaction is not set", function () {
+      const tx = require("../examples/responses/Unknown.json");
+      const result: any = Models.getTxDetails(tx);
+
+      expect(result).to.eql({
+        type: "Unknown",
+        address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH",
+        sequence: 751990994,
+        id: "0F3E271A9BD4F52654F8444AA228C029F69E850D62C101965FF1A9E5D77505D8",
+        specification: {
+          UNAVAILABLE: "Unrecognized transaction type.",
+          SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is may included in this response.",
+          source: {
+            address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH",
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2023-10-30T14:25:41.000Z",
+          fee: "0.009584",
+          balanceChanges: {
+            r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH: [
+              {
+                currency: "XRP",
+                value: "-0.009584",
+              },
+            ],
+          },
+          hooksExecutions: [
+            {
+              account: "r4FRPZbLnyuVeGiSi1Ap6uaaPvPXYZh1XN",
+              emitCount: 0,
+              executionIndex: 0,
+              hash: "5EDF6439C47C423EAC99C1061EE2A0CE6A24A58C8E8A66E4B3AF91D76772DC77",
+              instructionCount: "28f",
+              result: 3,
+              returnCode: "d7",
+              returnString: "Governance: Setup completed successfully.",
+              stateChangeCount: 14,
+            },
+          ],
+          ledgerVersion: 2479,
+          indexInLedger: 0,
+        },
+        rawTransaction:
+          '{"Account":"r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH","Destination":"r4FRPZbLnyuVeGiSi1Ap6uaaPvPXYZh1XN","Fee":"9584","LastLedgerSequence":2487,"NetworkID":21337,"Sequence":751990994,"SigningPubKey":"027762ED27368AC47EC67F719994CA1DC80D064626E3D16F56A562A902CEF1ABAD","TransactionType":"Unknown","TxnSignature":"304502210087E39DD0DB46D58D1A1011712C45003A91D0C06BAB9A994CF281123D426E3E8302202A4C8E4C35773E15D238747007D30F53AB3A1CF1430B0B3DDCC2471D46F3E4AD","date":751991141,"hash":"0F3E271A9BD4F52654F8444AA228C029F69E850D62C101965FF1A9E5D77505D8","inLedger":2479,"ledger_index":2479,"meta":{"AffectedNodes":[{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"06E2961E37E5AFEBF846B9DB7C40C6130CE1C42184D3E680548180FCAF0EDA0F","NewFields":{"HookStateData":"05","HookStateKey":"0000000000000000000000000A6B1AD78F34822DB4A37C2A85F2169FF73DEA6D"}}},{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"1C31CBDFF726913B9952D4564A55A00FC38A67EB652EC55F897F5AD0A2EC4DA7","NewFields":{"HookStateData":"05A528BCFA2189C8E2E7813775ED71B2C4BE349F","HookStateKey":"0000000000000000000000000000000000000000000000000000000000000003"}}},{"ModifiedNode":{"FinalFields":{"Account":"r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH","AccountIndex":"1","Balance":"9971248","Flags":0,"OwnerCount":0,"Sequence":751990995},"LedgerEntryType":"AccountRoot","LedgerIndex":"1F8413A032002246D339E5CDE05FC08369F549BB4BAD6C6CE1FF9B43170857AE","PreviousFields":{"Balance":"9980832","Sequence":751990994}}},{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"4E404BB1EF3C7553182C01FC82B67CEB67AD61C4DAEC5C129F1A6DF6F2B9AA12","NewFields":{"HookStateData":"03","HookStateKey":"00000000000000000000000005A528BCFA2189C8E2E7813775ED71B2C4BE349F"}}},{"CreatedNode":{"LedgerEntryType":"DirectoryNode","LedgerIndex":"6231E8D2704D79862AB3BE399E46475A05F44DA333C9A043209476615078A016","NewFields":{"Owner":"r4FRPZbLnyuVeGiSi1Ap6uaaPvPXYZh1XN","RootIndex":"6231E8D2704D79862AB3BE399E46475A05F44DA333C9A043209476615078A016"}}},{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"6CBCEC0A16CF4121AAEB5DBDB592EEF65FE0D66E62410A252D9B9D80FA9E19F8","NewFields":{"HookStateData":"09546BA97BCA9CEEFAFDE2F2F16DF8F2ADFFB720","HookStateKey":"0000000000000000000000000000000000000000000000000000000000000006"}}},{"ModifiedNode":{"FinalFields":{"Account":"r4FRPZbLnyuVeGiSi1Ap6uaaPvPXYZh1XN","Balance":"8600000000000","Flags":1048576,"HookNamespaces":["0000000000000000000000000000000000000000000000000000000000000000"],"HookStateCount":15,"OwnerCount":16,"RegularKey":"rrrrrrrrrrrrrrrrrrrrBZbvji","Sequence":751983660},"LedgerEntryType":"AccountRoot","LedgerIndex":"7B4566CD6A6B1FDFFB1C33D8F7A186CF17DD191058C18C2F3B6F1237D70800DA","PreviousFields":{"OwnerCount":1}}},{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"A768A58ADCEB6B8243E0ACC3A1702A5DBBB4976F9D82147AE0F8E7E7EEA2CAB2","NewFields":{"HookStateData":"02","HookStateKey":"0000000000000000000000001C930D3407DFFDE95414C52536768F364D597068"}}},{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"A9B53DD30E5ABD44957DE7A1B55557ADEA0BA71CB6B4A4D67C93B801A9672739","NewFields":{"HookStateData":"07","HookStateKey":"0000000000000000000000000000000000000000000000000000000000004D43"}}},{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"B210C5E2CC5920A174E6CF38CAE7511C7E6FB552FADADD6192D5CAB5B2744273","NewFields":{"HookStateData":"06","HookStateKey":"00000000000000000000000009546BA97BCA9CEEFAFDE2F2F16DF8F2ADFFB720"}}},{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"B46BF0290BED108270F953CB3D3C7422F57A0A3DC1B6DBB5BBC45EF261B237DD","NewFields":{"HookStateData":"0A6B1AD78F34822DB4A37C2A85F2169FF73DEA6D","HookStateKey":"0000000000000000000000000000000000000000000000000000000000000005"}}},{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"BAE734F6A9CF684F9466988061249B09E71FE3B207A67851390ED15E3A77C07A","NewFields":{"HookStateData":"1C930D3407DFFDE95414C52536768F364D597068","HookStateKey":"0000000000000000000000000000000000000000000000000000000000000002"}}},{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"BCF7E70B318D32AE50852339944CCD0FC66079AB50B3A9681CFFAAC8A0544AA3","NewFields":{"HookStateData":"00","HookStateKey":"000000000000000000000000EC9C5F71402D7D041B7FFCCB67C59A7AC8E8BC30"}}},{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"C513B3FC11591EF7D5F39CCD689FBBEC03EE0114A5034B72CBC8C6415D1D7FF5","NewFields":{"HookStateData":"09C4CDC8A07EBD1F4F252D0DEDBFF9B65F74FB1A","HookStateKey":"0000000000000000000000000000000000000000000000000000000000000004"}}},{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"CD3589B5696675E2080385E463EAF086DB12741694E86F4B6898643DA1297C70","NewFields":{"HookStateData":"01","HookStateKey":"000000000000000000000000EBA07753C1AC98CC847E34B6A2A5DCA59D0D7ED4"}}},{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"CF2D59F6F6A9842B7D632186024BFD165359B8015CED5AA1C027E838B22C9BAD","NewFields":{"HookStateData":"04","HookStateKey":"00000000000000000000000009C4CDC8A07EBD1F4F252D0DEDBFF9B65F74FB1A"}}},{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"E36D9C81EA1F28C94CD2C00013D5542644D73C1AC683BED0F864682232601836","NewFields":{"HookStateData":"EBA07753C1AC98CC847E34B6A2A5DCA59D0D7ED4","HookStateKey":"0000000000000000000000000000000000000000000000000000000000000001"}}},{"CreatedNode":{"LedgerEntryType":"HookState","LedgerIndex":"F0F13E6D58C4ABEC357C9E610B4D908DFA63002045C1764FC122EA254DD6CFF6","NewFields":{"HookStateData":"EC9C5F71402D7D041B7FFCCB67C59A7AC8E8BC30"}}}],"HookExecutions":[{"HookExecution":{"HookAccount":"r4FRPZbLnyuVeGiSi1Ap6uaaPvPXYZh1XN","HookEmitCount":0,"HookExecutionIndex":0,"HookHash":"5EDF6439C47C423EAC99C1061EE2A0CE6A24A58C8E8A66E4B3AF91D76772DC77","HookInstructionCount":"28f","HookResult":3,"HookReturnCode":"d7","HookReturnString":"476F7665726E616E63653A20536574757020636F6D706C65746564207375636365737366756C6C792E00","HookStateChangeCount":14}}],"TransactionIndex":0,"TransactionResult":"tesSUCCESS"},"validated":true}',
+      });
+    });
+
     it("NFTokenMint", function () {
       const tx = require("../examples/responses/NFTokenMint.json");
       const result: any = Models.getTxDetails(tx, false);

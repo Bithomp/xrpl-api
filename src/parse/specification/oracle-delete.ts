@@ -16,7 +16,6 @@ function parseDidDelete(tx: any): FormattedOracleDeleteSpecification {
   return removeUndefined({
     source: Object.keys(source).length > 0 ? source : undefined,
     oracleDocumentID: tx.OracleDocumentID,
-
     memos: parseMemos(tx),
   });
 }

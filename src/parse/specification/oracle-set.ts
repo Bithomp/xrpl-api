@@ -1,6 +1,5 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
-import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseAccount } from "../ledger/account";
 import { parsePriceDataSeries } from "../outcome/oracle_changes";
@@ -23,8 +22,6 @@ function parseDidSet(tx: any): FormattedOracleSetSpecification {
     assetClass: tx.AssetClass,
     lastUpdateTime: tx.LastUpdateTime,
     priceDataSeries: tx.PriceDataSeries ? tx.PriceDataSeries.map(parsePriceDataSeries) : undefined,
-
-    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

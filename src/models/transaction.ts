@@ -47,7 +47,7 @@ export interface AccountPaymentParamsInterface {
 
 export function getTxDetails(
   tx: TransactionResponse,
-  includeRawTransaction: boolean,
+  includeRawTransaction?: boolean,
   nativeCurrency?: string,
   definitions?: XrplDefinitionsBase
 ): FormattedTransaction {
@@ -56,7 +56,7 @@ export function getTxDetails(
 
 export function getAccountTxDetails(
   tx: AccountTransaction,
-  includeRawTransaction: boolean,
+  includeRawTransaction?: boolean,
   nativeCurrency?: string
 ): FormattedTransaction {
   return getTxDetails(accountTxToTx(tx), includeRawTransaction, nativeCurrency);
@@ -66,7 +66,7 @@ export function getLedgerTxDetails(
   tx: LedgerTransaction,
   ledgerIndex: number,
   closeTime: number,
-  includeRawTransaction: boolean,
+  includeRawTransaction?: boolean,
   nativeCurrency?: string,
   definitions?: XrplDefinitionsBase
 ): FormattedTransaction {
@@ -75,7 +75,7 @@ export function getLedgerTxDetails(
 
 export function getStreamTxDetails(
   tx: StreamTransaction,
-  includeRawTransaction: boolean,
+  includeRawTransaction?: boolean,
   nativeCurrency?: string,
   definitions?: XrplDefinitionsBase
 ): FormattedTransaction {

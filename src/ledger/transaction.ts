@@ -123,11 +123,10 @@ export async function getTransaction(
     }
 
     if (options.specification === true) {
-      const includeRawTransaction = options.includeRawTransaction === true;
-      const details = getTxDetails(result, includeRawTransaction, undefined, options.definitions);
+      const details = getTxDetails(result, options.includeRawTransaction, undefined, options.definitions);
       result.specification = details.specification;
       result.outcome = details.outcome;
-      if (includeRawTransaction) {
+      if (details.rawTransaction) {
         result.rawTransaction = details.rawTransaction;
       }
     }
@@ -214,11 +213,10 @@ export async function getTransactionByCTID(
   }
 
   if (options.specification === true) {
-    const includeRawTransaction = options.includeRawTransaction === true;
-    const details = getTxDetails(result, includeRawTransaction, undefined, options.definitions);
+    const details = getTxDetails(result, options.includeRawTransaction, undefined, options.definitions);
     result.specification = details.specification;
     result.outcome = details.outcome;
-    if (includeRawTransaction) {
+    if (details.rawTransaction) {
       result.rawTransaction = details.rawTransaction;
     }
   }

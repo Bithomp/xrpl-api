@@ -5,6 +5,7 @@ import { parseAccount } from "./ledger/account";
 import { parseOutcome } from "./outcome";
 import { Outcome } from "../types/outcome";
 
+import { FormattedUnrecognizedParserSpecification } from "../types/unrecognized";
 import { FormattedAccountDeleteSpecification } from "../types/account";
 import { FormattedSettingsSpecification } from "../types/settings";
 import {
@@ -75,6 +76,7 @@ import { FormattedGenesisMintSpecification } from "../types/genesis_mint";
 import { FormattedAmendmentSpecification } from "../types/amendments";
 import { FormattedFeeUpdateSpecification } from "../types/fees";
 
+import unrecognizedParser from "./specification/unrecognized";
 import parseSettings from "./specification/settings";
 import parseAccountDelete from "./specification/account-delete";
 import parseCheckCancel from "./specification/check-cancel";
@@ -270,6 +272,7 @@ const parserTypeFunc = {
 };
 
 export type FormattedSpecification =
+  | FormattedUnrecognizedParserSpecification
   | FormattedSettingsSpecification
   | FormattedAccountDeleteSpecification
   | FormattedCheckCancelSpecification
@@ -321,18 +324,6 @@ export type FormattedSpecification =
   | FormattedMPTokenIssuanceSetSpecification
   | FormattedMPTokenIssuanceDestroySpecification;
 
-type FormattedUnrecognizedParserSpecification = {
-  UNAVAILABLE: string;
-  SEE_RAW_TRANSACTION: string;
-};
-
-function unrecognizedParser(_tx: any): FormattedUnrecognizedParserSpecification {
-  return {
-    UNAVAILABLE: "Unrecognized transaction type.",
-    SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is included in this response.",
-  };
-}
-
 export interface FormattedTransaction {
   type: string;
   address: string;
@@ -346,7 +337,7 @@ export interface FormattedTransaction {
 // includeRawTransaction: undefined by default (getTransaction)
 function parseTransaction(
   tx: any,
-  includeRawTransaction: boolean,
+  includeRawTransaction?: boolean,
   nativeCurrency?: string,
   definitions?: XrplDefinitionsBase
 ): FormattedTransaction {
@@ -356,12 +347,10 @@ function parseTransaction(
   }
 
   const type = parseTransactionType(universalTx.TransactionType);
-
   const parser: Function = parserTypeFunc[type];
 
   const specification = parser ? parser(universalTx) : unrecognizedParser(universalTx);
-
-  if (!parser) {
+  if (!parser && includeRawTransaction !== false) {
     includeRawTransaction = true; // eslint-disable-line no-param-reassign
   }
 

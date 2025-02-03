@@ -165,12 +165,11 @@ export async function getTransactions(
         }
 
         if (options.specification === true) {
-          const includeRawTransaction = options.includeRawTransactions === true;
-          const details = getAccountTxDetails(transaction, includeRawTransaction);
+          const details = getAccountTxDetails(transaction, options.includeRawTransactions);
           transaction.specification = details.specification;
           transaction.outcome = details.outcome;
 
-          if (includeRawTransaction) {
+          if (details.rawTransaction) {
             transaction.rawTransaction = details.rawTransaction;
           }
         }
@@ -278,12 +277,11 @@ export async function findTransactions(
         }
 
         if (loadOptions.specification === true) {
-          const includeRawTransaction = options.includeRawTransactions === true;
-          const details = getAccountTxDetails(newTransaction, includeRawTransaction);
+          const details = getAccountTxDetails(newTransaction, options.includeRawTransactions);
           newTransaction.specification = details.specification;
           newTransaction.outcome = details.outcome;
 
-          if (includeRawTransaction) {
+          if (details.rawTransaction) {
             newTransaction.rawTransaction = details.rawTransaction;
           }
         }
