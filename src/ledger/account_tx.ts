@@ -25,6 +25,7 @@ export interface GetTransactionsOptions {
   marker?: any;
   balanceChanges?: boolean;
   specification?: boolean;
+  includeRawTransactions?: boolean; // for legacy and formatted
 }
 
 /**
@@ -164,10 +165,14 @@ export async function getTransactions(
         }
 
         if (options.specification === true) {
-          const details = getAccountTxDetails(transaction, true);
+          const includeRawTransaction = options.includeRawTransactions === true;
+          const details = getAccountTxDetails(transaction, includeRawTransaction);
           transaction.specification = details.specification;
           transaction.outcome = details.outcome;
-          transaction.rawTransaction = details.rawTransaction;
+
+          if (includeRawTransaction) {
+            transaction.rawTransaction = details.rawTransaction;
+          }
         }
       }
     }
@@ -192,7 +197,6 @@ export interface FindTransactionsOptions extends GetTransactionsOptions {
   timeout?: number;
   legacy?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification, same as formatted
   formatted?: boolean; // returns response in old RippleLib format will overwrite balanceChanges and specification, same as legacy
-  includeRawTransactions?: boolean; // for legacy and formatted
 }
 
 interface FindProcessTransactionsOptions extends FindTransactionsOptions {
@@ -274,10 +278,14 @@ export async function findTransactions(
         }
 
         if (loadOptions.specification === true) {
-          const details = getAccountTxDetails(newTransaction, true);
+          const includeRawTransaction = options.includeRawTransactions === true;
+          const details = getAccountTxDetails(newTransaction, includeRawTransaction);
           newTransaction.specification = details.specification;
           newTransaction.outcome = details.outcome;
-          newTransaction.rawTransaction = details.rawTransaction;
+
+          if (includeRawTransaction) {
+            newTransaction.rawTransaction = details.rawTransaction;
+          }
         }
       }
     }
