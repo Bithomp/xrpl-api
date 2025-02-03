@@ -52,24 +52,15 @@ export const FaucetNetworks = {
     url: "https://faucet.devnet.rippletest.net/accounts",
     format: "xrpl",
   },
-  // @deprecated name use xahau-test
-  beta: {
-    // hooks-testnet-v3, hooks-v3, beta, xahau-test are all the same
-    // https://test.xahauexplorer.com
-    url: "https://hooks-testnet-v3.xrpl-labs.com/newcreds",
-    format: "xrpl-labs",
-  },
-  // @deprecated name use xahau-test
-  "hooks-testnet-v3": {
-    // hooks-testnet-v3, hooks-v3, beta, xahau-test are all the same
-    // https://test.xahauexplorer.com
-    url: "https://hooks-testnet-v3.xrpl-labs.com/newcreds",
-    format: "xrpl-labs",
-  },
   "xahau-test": {
-    // hooks-testnet-v3, hooks-v3, beta, xahau-test are all the same
+    // beta, hooks-testnet-v3, hooks-v3, beta, xahau-test are all the same
     // https://test.xahauexplorer.com
-    url: "https://hooks-testnet-v3.xrpl-labs.com/newcreds",
+    url: "https://xahau-test.net/newcreds",
+    format: "xrpl-labs",
+  },
+  "xahau-jshooks": {
+    // https://jshooks.xahauexplorer.com
+    url: "https://jshooks.xahau-test.net/newcreds",
     format: "xrpl-labs",
   },
 };

@@ -16,7 +16,7 @@ describe("Faucet", () => {
 
     it("returns data for xahau-test", () => {
       expect(Faucet.getFaucetNetwork("xahau-test")).to.eql({
-        url: "https://hooks-testnet-v3.xrpl-labs.com/newcreds",
+        url: "https://xahau-test.net/newcreds",
         format: "xrpl-labs",
       });
     });
@@ -104,6 +104,7 @@ describe("Faucet", () => {
   });
 
   describe("foundWallet", () => {
+    // skip to not generate new accounts every time
     it.skip("works with new address on test xrpl network", async function () {
       const res = await Faucet.foundWallet("test");
 
@@ -134,6 +135,7 @@ describe("Faucet", () => {
       });
     });
 
+    // skip to not generate new accounts every time
     it.skip("works with new address on xahau-test network", async function () {
       const res = await Faucet.foundWallet("xahau-test");
 
@@ -163,6 +165,21 @@ describe("Faucet", () => {
           address: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
         },
         amount: 1000,
+      });
+    });
+
+    it("works with existing address on xahau-jshooks xrpl network", async function () {
+      const res = await Faucet.foundWallet("xahau-jshooks", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
+
+      expect(res.hash).to.be.a("string");
+      delete res.hash;
+      expect(res).to.eql({
+        account: {
+          xAddress: "TVPHVUZfDDJo631W4CZg5oa8fNwwGhn4j9CMTkc35mXminK",
+          classicAddress: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
+          address: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
+        },
+        amount: 50,
       });
     });
   });
