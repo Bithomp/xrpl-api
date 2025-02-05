@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { PaymentChannelClaimFlags } from "xrpl";
 import { removeUndefined } from "../../common";
-import parseRippledAmount from "../ledger/ripple-amount";
+import parseAmount from "../ledger/amount";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { FormattedPaymentChannelClaimSpecification } from "../../types/payment_channels";
@@ -11,8 +11,8 @@ function parsePaymentChannelClaim(tx: any): FormattedPaymentChannelClaimSpecific
 
   return removeUndefined({
     channel: tx.Channel,
-    balance: parseRippledAmount(tx.Balance), // Legacy support
-    amount: parseRippledAmount(tx.Amount), // Legacy support
+    balance: parseAmount(tx.Balance), // Legacy support
+    amount: parseAmount(tx.Amount), // Legacy support
     signature: tx.Signature,
     publicKey: tx.PublicKey,
     // eslint-disable-next-line no-bitwise
