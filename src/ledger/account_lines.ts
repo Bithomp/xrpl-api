@@ -5,7 +5,7 @@ import { AccountLinesResponse } from "../models/account_lines";
 import { ErrorResponse } from "../models/base_model";
 
 export interface GetAccountLinesOptions {
-  counterparty?: string;
+  issuer?: string;
   currency?: string;
   ledgerIndex?: LedgerIndex;
   limit?: number;
@@ -49,8 +49,6 @@ export async function getAccountLines(
   const response = await connection.request({
     command: "account_lines",
     account,
-    counterparty: options.counterparty,
-    currency: options.currency,
     ledger_index: options.ledgerIndex || "validated",
     limit: options.limit,
     marker: options.marker,
@@ -78,6 +76,20 @@ export async function getAccountLines(
   }
 
   const result = response.result;
+
+  // filter out lines with the same currency and issuer
+  if (options.currency || options.issuer) {
+    result.lines = result.lines.filter((line: any) => {
+      if (options.currency && line.currency !== options.currency) {
+        return false;
+      }
+      if (options.issuer && line.account !== options.issuer) {
+        return false;
+      }
+      return true;
+    });
+  }
+
   const newMarker = createMarker(connection.hash, result.marker);
   if (newMarker) {
     result.marker = newMarker;

@@ -2,7 +2,9 @@ import _ from "lodash";
 import { PaymentFlags } from "xrpl";
 import { TransactionJSON } from "../types";
 import {
+  IssuedCurrencyAmount,
   FormattedIssuedCurrencyAmount,
+  FormattedIssuedMPTAmount,
   Adjustment,
   MaxAdjustment,
   MinAdjustment,
@@ -58,21 +60,37 @@ function isXRPToXRPPayment(payment: Payment): boolean {
   );
 }
 
-function isIOUWithoutCounterparty(amount: FormattedIssuedCurrencyAmount): boolean {
-  return (
-    // eslint-disable-next-line eqeqeq
-    amount && amount.currency !== getNativeCurrency() && amount.currency !== "drops" && amount.counterparty == null
-  );
+function isIOUWithoutCounterparty(
+  amount: IssuedCurrencyAmount | FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount
+): boolean {
+  if (typeof amount === "object") {
+    if ("currency" in amount && amount.currency !== getNativeCurrency() && amount.currency !== "drops") {
+      return false;
+    }
+
+    if ("mpt_issuance_id" in amount && amount.mpt_issuance_id) {
+      return false;
+    }
+
+    if (
+      // eslint-disable-next-line eqeqeq
+      (amount as IssuedCurrencyAmount).issuer == null &&
+      // eslint-disable-next-line eqeqeq
+      (amount as FormattedIssuedCurrencyAmount).counterparty == null // @deprecated
+    ) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function applyAnyCounterpartyEncoding(payment: Payment): void {
-  // Convert blank counterparty to sender or receiver's address
-  //   (Ripple convention for 'any counterparty')
-  // https://developers.ripple.com/payment.html#special-issuer-values-for-sendmax-and-amount
+  // Convert blank counterparty(issuer) to sender or receiver's address
   [payment.source, payment.destination].forEach((adjustment) => {
     ["amount", "minAmount", "maxAmount"].forEach((key) => {
       if (isIOUWithoutCounterparty(adjustment[key])) {
-        adjustment[key].counterparty = adjustment.address;
+        adjustment[key].issuer = adjustment.address;
       }
     });
   });

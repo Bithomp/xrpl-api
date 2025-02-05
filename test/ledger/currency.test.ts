@@ -75,7 +75,6 @@ describe("Client", () => {
               hash: "7DFCD417FCEE35F7BB3ABECD05C27BA71F1E845BFD29C19AF3CF5E55B44EA55C",
               type: "payment",
               account: "rBzoA1EXxE2FeGV4Z57pMGRuzd3dfKxVUt",
-              counterparty: undefined,
               destination: "rp9d3gds8bY7hkP8FmNqJZ1meMtYLtyPoz",
               memos: [
                 {
@@ -107,7 +106,6 @@ describe("Client", () => {
               hash: "A089A7959F9A41880F4EA593397F9596411F5440262F6CAD3AD185CD5CFD4145",
               type: "payment",
               account: "rNYz5LwCTfVgknuj3C68FTjdCoJfbkPsY9",
-              counterparty: undefined,
               destination: "rMp1zbKWYiSVJ535tLjV9B1PaHyXiS5TxU",
               memos: [
                 {
@@ -154,8 +152,6 @@ describe("Client", () => {
               hash: "D55976EF95C9B93C99E08F6F1F17252B4C65359143125CA7E791C5C3352FF04D",
               type: "settings",
               account: "richard43NZXStHcjJi2UB8LGDQGFLKNs",
-              counterparty: undefined,
-              destination: undefined,
               memos: [
                 {
                   Memo: {
@@ -186,9 +182,6 @@ describe("Client", () => {
               hash: "92F6908D293BC3EBDFFA384286AC6A5DC7CB8740DAFFFD8C18C27E054EC6C0D0",
               type: "order",
               account: "rQ3fNyLjbvcDaPNS4EAJY8aT9zR3uGk17c",
-              counterparty: undefined,
-              destination: undefined,
-              memos: undefined,
             },
           });
         });

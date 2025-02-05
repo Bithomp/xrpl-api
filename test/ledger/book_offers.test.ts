@@ -73,6 +73,66 @@ describe("Client", () => {
         const orderbook = {
           base: {
             currency: "USD",
+            issuer: "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B",
+          },
+          counter: {
+            currency: "BTC",
+            issuer: "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B",
+          },
+        };
+
+        const result: any = await Client.getOrderbook(taker, orderbook);
+        expect(Object.keys(result)).to.eql(["bids", "asks"]);
+        delete result.bids[0].state;
+        expect(Object.keys(result.bids[0])).to.eql(["specification", "properties", "data"]);
+        delete result.bids[0].data.taker_gets_funded;
+        delete result.bids[0].data.taker_pays_funded;
+        expect(Object.keys(result.bids[0].data)).to.eql([
+          "Account",
+          "BookDirectory",
+          "BookNode",
+          "Flags",
+          "LedgerEntryType",
+          "OwnerNode",
+          "PreviousTxnID",
+          "PreviousTxnLgrSeq",
+          "Sequence",
+          "TakerGets",
+          "TakerPays",
+          "index",
+          "owner_funds",
+          "quality",
+        ]);
+
+        delete result.asks[0].state;
+        expect(Object.keys(result.asks[0])).to.eql(["specification", "properties", "data"]);
+        delete result.asks[0].data.taker_gets_funded;
+        delete result.asks[0].data.taker_pays_funded;
+
+        expect(Object.keys(result.asks[0].data)).to.eql([
+          "Account",
+          "BookDirectory",
+          "BookNode",
+          "Flags",
+          "LedgerEntryType",
+          "OwnerNode",
+          "PreviousTxnID",
+          "PreviousTxnLgrSeq",
+          "Sequence",
+          "TakerGets",
+          "TakerPays",
+          "index",
+          "owner_funds",
+          "quality",
+        ]);
+      });
+
+      it("returns offers with old counterparty style", async function () {
+        this.timeout(10000);
+        const taker = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
+        const orderbook = {
+          base: {
+            currency: "USD",
             counterparty: "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B",
           },
           counter: {
@@ -133,11 +193,11 @@ describe("Client", () => {
         const orderbook = {
           base: {
             currency: "",
-            counterparty: "",
+            issuer: "",
           },
           counter: {
             currency: "",
-            counterparty: "",
+            issuer: "",
           },
         };
         const result: any = await Client.getOrderbook(taker, orderbook);

@@ -30,6 +30,7 @@ describe("Client", () => {
 
       it("works with assets old formatted", async function () {
         const result: any = await Client.getBalanceSheet("rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z", { formatted: true });
+        expect(result.assets[0].issuer).to.eql("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW");
         expect(result.assets[0].counterparty).to.eql("rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW");
         expect(result.assets[0].currency).to.eql("BTH");
         expect(parseFloat(result.assets[0].value)).to.gt(0);

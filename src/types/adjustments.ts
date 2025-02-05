@@ -1,19 +1,19 @@
-import { FormattedIssuedCurrencyAmount } from "./amounts";
+import { IssuedCurrencyAmount, FormattedIssuedCurrencyAmount } from "./amounts";
 
 export type Adjustment = {
   address: string;
-  amount: FormattedIssuedCurrencyAmount;
+  amount: IssuedCurrencyAmount | FormattedIssuedCurrencyAmount; // @deprecated FormattedIssuedCurrencyAmount
   tag?: number;
 };
 
 export type MaxAdjustment = {
   address: string;
-  maxAmount: FormattedIssuedCurrencyAmount;
+  maxAmount: IssuedCurrencyAmount | FormattedIssuedCurrencyAmount; // @deprecated FormattedIssuedCurrencyAmount
   tag?: number;
 };
 
 export type MinAdjustment = {
   address: string;
-  minAmount: FormattedIssuedCurrencyAmount;
+  minAmount: IssuedCurrencyAmount | FormattedIssuedCurrencyAmount; // @deprecated FormattedIssuedCurrencyAmount
   tag?: number;
 };

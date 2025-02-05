@@ -4,9 +4,10 @@ import { TransactionMetadata } from "xrpl";
 import { normalizeNodes } from "../utils";
 
 interface LockedBalanceChangeQuantity {
-  counterparty: string;
+  issuer: string;
   currency: string;
   value: string;
+  counterparty: string; // @deprecated
 }
 
 export interface AddressLockedBalanceChangeQuantity {
@@ -73,9 +74,10 @@ function parseTrustlineQuantity(node, valueParser): AddressLockedBalanceChangeQu
   const result = {
     address: fields.LowLimit.issuer,
     lockedBalance: {
-      counterparty: LockedBalanceFields.LockedBalance.issuer,
+      issuer: LockedBalanceFields.LockedBalance.issuer,
       currency: LockedBalanceFields.LockedBalance.currency,
       value: value.toString(),
+      counterparty: LockedBalanceFields.LockedBalance.issuer, // @deprecated
     },
   };
   return [result];

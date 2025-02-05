@@ -2,7 +2,7 @@ import { FormattedIssuedCurrency, IssuedCurrency } from "../../types";
 
 import { getNativeCurrency } from "../../client";
 
-function parseAsset(asset: IssuedCurrency): FormattedIssuedCurrency | undefined {
+function parseAsset(asset: IssuedCurrency): IssuedCurrency | FormattedIssuedCurrency | undefined {
   if (asset === undefined) {
     return undefined;
   }
@@ -14,8 +14,9 @@ function parseAsset(asset: IssuedCurrency): FormattedIssuedCurrency | undefined 
   }
 
   return {
+    issuer: asset.issuer,
     currency: asset.currency,
-    counterparty: asset.issuer,
+    counterparty: asset.issuer, // @deprecated
   };
 }
 

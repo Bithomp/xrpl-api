@@ -2,6 +2,7 @@ import * as Client from "../client";
 import { hexToString } from "../parse/utils";
 import { parseTransactionType } from "../parse/transaction";
 import { getNativeCurrency } from "../client";
+import { removeUndefined } from "../common";
 
 const maxLength = 12;
 
@@ -70,7 +71,8 @@ interface DecodedNFTCurrencyTransactionInterface {
   type?: string;
   account?: string;
   destination?: string;
-  counterparty?: string;
+  issuer?: string;
+  counterparty?: string; // @deprecated
   hash?: string;
   memos?: string;
 }
@@ -105,14 +107,15 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
         } = transaction;
         const type = parseTransactionType(transaction.TransactionType);
 
-        ctiTx = {
+        ctiTx = removeUndefined({
           type,
           account,
           destination,
-          counterparty: limit?.issuer,
+          issuer: limit?.issuer,
+          counterparty: limit?.issuer, // @deprecated
           hash,
           memos,
-        };
+        });
 
         break;
       }

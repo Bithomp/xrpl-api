@@ -189,10 +189,11 @@ function summarizeActionSlotChanges(node: any): FormattedAuctionSlotChanges | un
     if (final.AuctionSlot.Price.value !== prev.AuctionSlot.Price.value) {
       changes.priceChange = {
         currency: final.AuctionSlot.Price.currency,
-        counterparty: final.AuctionSlot.Price.issuer,
+        issuer: final.AuctionSlot.Price.issuer,
         value: new BigNumber(final.AuctionSlot.Price.value)
           .minus(new BigNumber(prev.AuctionSlot.Price.value))
           .toString(10),
+        counterparty: final.AuctionSlot.Price.issuer, // @deprecated
       };
     }
 
@@ -290,8 +291,9 @@ function summarizeAmm(node: any): FormattedAmmSummaryInterface {
     // The change of LPTokenBalance
     summary.lpTokenBalanceChange = {
       currency: final.LPTokenBalance.currency,
-      counterparty: final.LPTokenBalance.issuer,
+      issuer: final.LPTokenBalance.issuer,
       value: new BigNumber(final.LPTokenBalance.value).minus(new BigNumber(prev.LPTokenBalance.value)).toString(10),
+      counterparty: final.LPTokenBalance.issuer, // @deprecated
     };
   }
 

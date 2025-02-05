@@ -68,6 +68,12 @@ export async function getBookOffers(
   return result;
 }
 
+/**
+ * Convert the issue object to the taker amount format
+ * @param obj - The issue object support both counterparty and issuer, counterparty is deprecated
+ * @returns The taker amount object
+ * @throws When the issue object is invalid
+ */
 function convertIssueToTakerAmount<T>(obj: T & { counterparty?: string; issuer?: string }): T & { issuer?: string } {
   const issuer = obj.counterparty != null ? obj.counterparty : obj.issuer != null ? obj.issuer : undefined; // eslint-disable-line eqeqeq
   const withIssuer = Object.assign({}, obj, { issuer });

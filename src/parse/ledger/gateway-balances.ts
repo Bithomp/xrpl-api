@@ -6,24 +6,26 @@ export function parseGatewayBalances(balanceSheet: GatewayBalances): FormattedGa
 
   if (typeof balanceSheet.balances === "object") {
     Object.entries(balanceSheet.balances).forEach((entry) => {
-      const [counterparty, balances] = entry;
+      const [issuer, balances] = entry;
       balances.forEach((balance) => {
         if (!result.balances) {
           result.balances = [];
         }
 
-        result.balances.push(Object.assign({ counterparty }, balance));
+        // counterparty is deprecated
+        result.balances.push(Object.assign({ issuer, counterparty: issuer }, balance));
       });
     });
   }
   if (typeof balanceSheet.assets === "object") {
-    Object.entries(balanceSheet.assets).forEach(([counterparty, assets]) => {
+    Object.entries(balanceSheet.assets).forEach(([issuer, assets]) => {
       assets.forEach((balance) => {
         if (!result.assets) {
           result.assets = [];
         }
 
-        result.assets.push(Object.assign({ counterparty }, balance));
+        // counterparty is deprecated
+        result.assets.push(Object.assign({ issuer, counterparty: issuer }, balance));
       });
     });
   }

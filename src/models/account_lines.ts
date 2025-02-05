@@ -1,7 +1,7 @@
 // https://github.com/XRPLF/xrpl.js/blob/2b424276344b2aa8b8b76d621500f4d9e1436663/packages/xrpl/src/models/methods/accountLines.ts#L5
 
 export interface Trustline {
-  /** The unique Address of the counterparty to this trust line. */
+  /** The unique Address of the counterparty(issuer) to this trust line. */
   account: string;
   /**
    * Representation of the numeric balance currently held against this line. A

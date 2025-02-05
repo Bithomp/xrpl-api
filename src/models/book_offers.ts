@@ -1,15 +1,15 @@
 import _ from "lodash";
 import BigNumber from "bignumber.js";
 import { parseOrderbookOrder } from "../parse/ledger/orderbook-order";
-import { FormattedIssuedCurrency } from "../types";
+import { IssuedCurrency, FormattedIssuedCurrency } from "../types";
 
 export type OrderbookInfo = {
-  base: FormattedIssuedCurrency;
-  counter: FormattedIssuedCurrency;
+  base: IssuedCurrency | FormattedIssuedCurrency;
+  counter: IssuedCurrency | FormattedIssuedCurrency;
 };
 
-function isSameIssue(a: FormattedIssuedCurrency, b: FormattedIssuedCurrency) {
-  return a.currency === b.currency && a.counterparty === b.counterparty;
+function isSameIssue(a: IssuedCurrency, b: IssuedCurrency) {
+  return a.currency === b.currency && a.issuer === b.issuer;
 }
 
 function directionFilter(direction: string, order: any) {

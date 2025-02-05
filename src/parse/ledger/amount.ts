@@ -1,9 +1,10 @@
 import { dropsToXrp } from "../../common";
-import { FormattedIssuedCurrencyAmount, FormattedIssuedMPTAmount, Amount } from "../../types";
+import { IssuedCurrencyAmount, FormattedIssuedCurrencyAmount, FormattedIssuedMPTAmount, Amount } from "../../types";
 
 import { getNativeCurrency } from "../../client";
 
-function parseAmount(amount: Amount): FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount {
+function parseAmount(amount: Amount): IssuedCurrencyAmount | FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount {
+  // convert drops to XRP object format
   if (typeof amount === "string") {
     return {
       currency: getNativeCurrency(),
@@ -11,14 +12,17 @@ function parseAmount(amount: Amount): FormattedIssuedCurrencyAmount | FormattedI
     };
   }
 
+  // IssuedCurrencyAmount + FormattedIssuedCurrencyAmount format
   if ("value" in amount && "currency" in amount && "issuer" in amount) {
     return {
+      issuer: amount.issuer,
       currency: amount.currency,
       value: amount.value,
-      counterparty: amount.issuer,
+      counterparty: amount.issuer, // @deprecated FormattedIssuedCurrencyAmount
     };
   }
 
+  // Rest including MPT
   return amount;
 }
 

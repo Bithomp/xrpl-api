@@ -30,9 +30,10 @@ describe("Models", () => {
       expect(result).to.eql({
         r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk: [
           {
-            counterparty: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
+            issuer: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
             currency: "546F6B656E466F72457363726F77000000000000",
             value: "100",
+            counterparty: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
           },
           {
             currency: "XRP",
@@ -41,9 +42,10 @@ describe("Models", () => {
         ],
         rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV: [
           {
-            counterparty: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            issuer: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
             currency: "546F6B656E466F72457363726F77000000000000",
             value: "-100",
+            counterparty: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
           },
         ],
         rELeasERs3m4inA1UinRLTpXemqyStqzwh: [
@@ -66,16 +68,18 @@ describe("Models", () => {
             value: "19.754728",
           },
           {
-            counterparty: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",
+            issuer: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",
             currency: "594F494E4B000000000000000000000000000000",
             value: "-413.3967",
+            counterparty: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",
           },
         ],
         rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD: [
           {
-            counterparty: "rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89",
+            issuer: "rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89",
             currency: "594F494E4B000000000000000000000000000000",
             value: "413.3967",
+            counterparty: "rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89",
           },
         ],
       });

@@ -1,4 +1,4 @@
-import { FormattedIssuedCurrency } from "./amounts";
+import { IssuedCurrency, FormattedIssuedCurrency } from "./amounts";
 
 type FormattedGatewayBalanceObligations = {
   currency: string;
@@ -6,7 +6,7 @@ type FormattedGatewayBalanceObligations = {
 };
 
 export type FormattedGatewayBalances = {
-  balances?: FormattedIssuedCurrency[];
-  assets?: FormattedIssuedCurrency[];
+  balances?: IssuedCurrency[] | FormattedIssuedCurrency[];
+  assets?: IssuedCurrency[] | FormattedIssuedCurrency[];
   obligations?: FormattedGatewayBalanceObligations[];
 };

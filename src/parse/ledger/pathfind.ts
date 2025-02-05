@@ -1,21 +1,18 @@
 import _ from "lodash";
 import parseAmount from "./amount";
-import { FormattedIssuedCurrencyAmount, Amount } from "../../types";
+import { Amount } from "../../types";
 import { Path, GetPaths } from "../../types/path_find";
 import { PathFindResponseResult } from "../../models/path_find";
+import { removeGenericCounterparty } from "../utils";
 
 function parsePaths(paths) {
   return paths.map((steps) => steps.map((step) => _.omit(step, ["type", "type_hex"])));
 }
 
-function removeAnyCounterpartyEncoding(address: string, amount: FormattedIssuedCurrencyAmount) {
-  return amount.counterparty === address ? _.omit(amount, "counterparty") : amount;
-}
-
 function createAdjustment(address: string, adjustmentWithoutAddress: object): any {
   const amountKey = Object.keys(adjustmentWithoutAddress)[0];
   const amount = adjustmentWithoutAddress[amountKey];
-  return _.set({ address: address }, amountKey, removeAnyCounterpartyEncoding(address, amount));
+  return _.set({ address: address }, amountKey, removeGenericCounterparty(amount, address));
 }
 
 function parseAlternative(

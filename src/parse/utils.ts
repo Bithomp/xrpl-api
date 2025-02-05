@@ -2,7 +2,7 @@ import _ from "lodash";
 import BigNumber from "bignumber.js";
 import { Node, PaymentFlags, TransactionMetadata } from "xrpl";
 import { ledgerTimeToISO8601 } from "../models";
-import { FormattedIssuedCurrencyAmount, FormattedIssuedMPTAmount } from "../types";
+import { IssuedCurrencyAmount, FormattedIssuedCurrencyAmount, FormattedIssuedMPTAmount } from "../types";
 import { getNativeCurrency } from "../client";
 
 function adjustQualityForXRP(quality: string, takerGetsCurrency: string, takerPaysCurrency: string) {
@@ -34,11 +34,15 @@ function isPartialPayment(tx: any) {
 }
 
 function removeGenericCounterparty(
-  amount: FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount,
+  amount: IssuedCurrencyAmount | FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount,
   address: string
 ): FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount {
+  // @deprecated FormattedIssuedCurrencyAmount
   if ("counterparty" in amount) {
     return amount.counterparty === address ? _.omit(amount, "counterparty") : amount;
+  }
+  if ("issuer" in amount) {
+    return amount.issuer === address ? _.omit(amount, "issuer") : amount;
   }
 
   return amount;

@@ -878,15 +878,35 @@ describe("Models", () => {
         outcome: {
           balanceChanges: {
             rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW: [
-              { counterparty: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z", currency: "BTH", value: "-0.059286072222" },
-              { counterparty: "rogue5HnPRSszD9CWGSUz8UGHMVwSSKF6", currency: "BTH", value: "0.05928607222222222" },
+              {
+                issuer: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+                currency: "BTH",
+                value: "-0.059286072222",
+                counterparty: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+              },
+              {
+                issuer: "rogue5HnPRSszD9CWGSUz8UGHMVwSSKF6",
+                currency: "BTH",
+                value: "0.05928607222222222",
+                counterparty: "rogue5HnPRSszD9CWGSUz8UGHMVwSSKF6",
+              },
             ],
             rogue5HnPRSszD9CWGSUz8UGHMVwSSKF6: [
-              { counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW", currency: "BTH", value: "-0.05928607222222222" },
+              {
+                issuer: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
+                currency: "BTH",
+                value: "-0.05928607222222222",
+                counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
+              },
               { currency: "XRP", value: "53.347465" },
             ],
             rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z: [
-              { counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW", currency: "BTH", value: "0.059286072222" },
+              {
+                issuer: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
+                currency: "BTH",
+                value: "0.059286072222",
+                counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
+              },
               { currency: "XRP", value: "-53.357465" },
             ],
           },
@@ -898,9 +918,10 @@ describe("Models", () => {
               {
                 direction: "buy",
                 quantity: {
+                  issuer: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
                   currency: "BTH",
-                  counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
                   value: "0.0592860722222222",
+                  counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
                 },
                 totalPrice: {
                   currency: "XRP",
@@ -926,9 +947,10 @@ describe("Models", () => {
             },
           ],
           quantity: {
-            counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
+            issuer: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
             currency: "BTH",
             value: "0.07712338548602358",
+            counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
           },
           totalPrice: {
             currency: "XRP",
@@ -949,7 +971,10 @@ describe("Models", () => {
         sequence: 382,
         id: "711C4F606C63076137FAE90ADC36379D7066CF551E96DA6FE2BDAB5ECBFACF2B",
         specification: {
-          amount: "0.001",
+          amount: {
+            currency: "XRP",
+            value: "0.001",
+          },
           source: { address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn" },
           destination: { address: "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX" },
           settleDelay: 60,
@@ -1047,9 +1072,10 @@ describe("Models", () => {
           lockedBalanceChanges: {
             r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk: [
               {
-                counterparty: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
+                issuer: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
                 currency: "546F6B656E466F72457363726F77000000000000",
                 value: "10",
+                counterparty: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
               },
             ],
           },
@@ -1141,9 +1167,10 @@ describe("Models", () => {
           lockedBalanceChanges: {
             r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk: [
               {
-                counterparty: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
+                issuer: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
                 currency: "546F6B656E466F72457363726F77000000000000",
                 value: "-10",
+                counterparty: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
               },
             ],
           },
@@ -1197,9 +1224,10 @@ describe("Models", () => {
           lockedBalanceChanges: {
             r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk: [
               {
-                counterparty: "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8",
+                issuer: "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8",
                 currency: "EVR",
                 value: "-10",
+                counterparty: "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8",
               },
             ],
           },
@@ -1381,11 +1409,21 @@ describe("Models", () => {
           fee: "0.00002",
           balanceChanges: {
             rMVjmjek75ZADVE7c5LfChRHYvbhNNbsBg: [
-              { counterparty: "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h", currency: "TST", value: "1000" },
+              {
+                issuer: "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h",
+                currency: "TST",
+                value: "1000",
+                counterparty: "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h",
+              },
               { currency: "XRP", value: "1.2" },
             ],
             r42Dswghppme2z9yMFzc12YsxiL9Xbss6h: [
-              { counterparty: "rMVjmjek75ZADVE7c5LfChRHYvbhNNbsBg", currency: "TST", value: "-1000" },
+              {
+                issuer: "rMVjmjek75ZADVE7c5LfChRHYvbhNNbsBg",
+                currency: "TST",
+                value: "-1000",
+                counterparty: "rMVjmjek75ZADVE7c5LfChRHYvbhNNbsBg",
+              },
               { currency: "XRP", value: "-1.20002" },
             ],
           },
@@ -3881,7 +3919,12 @@ describe("Models", () => {
         specification: {
           source: { address: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q", tag: 24546893 },
           amount: { currency: "XRP", value: "1" },
-          amount2: { currency: "XAH", value: "4", counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv" },
+          amount2: {
+            issuer: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+            currency: "XAH",
+            value: "4",
+            counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+          },
           tradingFee: 1000,
         },
         outcome: {
@@ -3892,24 +3935,46 @@ describe("Models", () => {
             rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q: [
               { currency: "XRP", value: "-3" },
               {
-                counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
+                issuer: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
                 currency: "03B7FD829F075C67B6C87A45FA0E67CF4E5A83A9",
                 value: "2000",
+                counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
               },
-              { counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv", currency: "XAH", value: "-4" },
+              {
+                issuer: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+                currency: "XAH",
+                value: "-4",
+                counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+              },
             ],
             r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M: [
               {
-                counterparty: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q",
+                issuer: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q",
                 currency: "03B7FD829F075C67B6C87A45FA0E67CF4E5A83A9",
                 value: "-2000",
+                counterparty: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q",
               },
               { currency: "XRP", value: "1" },
-              { counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv", currency: "XAH", value: "4" },
+              {
+                issuer: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+                currency: "XAH",
+                value: "4",
+                counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+              },
             ],
             rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv: [
-              { counterparty: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q", currency: "XAH", value: "4" },
-              { counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M", currency: "XAH", value: "-4" },
+              {
+                issuer: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q",
+                currency: "XAH",
+                value: "4",
+                counterparty: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q",
+              },
+              {
+                issuer: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
+                currency: "XAH",
+                value: "-4",
+                counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
+              },
             ],
           },
           ammChanges: {
@@ -3917,7 +3982,11 @@ describe("Models", () => {
             ammID: "FDBB2384C0776C38C6111619B87B8CC0C3E64FD50DFB3CEC064F61458BF447F5",
             account: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
             asset: { currency: "XRP" },
-            asset2: { currency: "XAH", counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv" },
+            asset2: {
+              issuer: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+              currency: "XAH",
+              counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+            },
             auctionSlot: {
               account: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q",
               discountedFee: 100,
@@ -3929,6 +3998,7 @@ describe("Models", () => {
               },
             },
             lpTokenBalance: {
+              issuer: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
               currency: "03B7FD829F075C67B6C87A45FA0E67CF4E5A83A9",
               value: "2000",
               counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
@@ -3955,10 +4025,20 @@ describe("Models", () => {
         specification: {
           source: { address: "rNfJfoyVG2aGCHwcSUVAkkTBq6isLBnAZD", tag: 24546893 },
           asset: { currency: "XRP" },
-          asset2: { currency: "XAH", counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv" },
+          asset2: {
+            issuer: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+            currency: "XAH",
+            counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+          },
           amount: { currency: "XRP", value: "27.16367" },
-          amount2: { currency: "XAH", value: "117.000119", counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv" },
+          amount2: {
+            issuer: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+            currency: "XAH",
+            value: "117.000119",
+            counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+          },
           lpTokenOut: {
+            issuer: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
             currency: "03B7FD829F075C67B6C87A45FA0E67CF4E5A83A9",
             value: "56072.5201461639",
             counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
@@ -3980,24 +4060,46 @@ describe("Models", () => {
             rNfJfoyVG2aGCHwcSUVAkkTBq6isLBnAZD: [
               { currency: "XRP", value: "-27.163682" },
               {
-                counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
+                issuer: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
                 currency: "03B7FD829F075C67B6C87A45FA0E67CF4E5A83A9",
                 value: "56354.29114386244",
+                counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
               },
-              { counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv", currency: "XAH", value: "-117.0001180443003" },
+              {
+                issuer: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+                currency: "XAH",
+                value: "-117.0001180443003",
+                counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+              },
             ],
             r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M: [
               {
-                counterparty: "rNfJfoyVG2aGCHwcSUVAkkTBq6isLBnAZD",
+                issuer: "rNfJfoyVG2aGCHwcSUVAkkTBq6isLBnAZD",
                 currency: "03B7FD829F075C67B6C87A45FA0E67CF4E5A83A9",
                 value: "-56354.29114386244",
+                counterparty: "rNfJfoyVG2aGCHwcSUVAkkTBq6isLBnAZD",
               },
               { currency: "XRP", value: "27.16367" },
-              { counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv", currency: "XAH", value: "117.000118044300315" },
+              {
+                issuer: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+                currency: "XAH",
+                value: "117.000118044300315",
+                counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+              },
             ],
             rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv: [
-              { counterparty: "rNfJfoyVG2aGCHwcSUVAkkTBq6isLBnAZD", currency: "XAH", value: "117.0001180443003" },
-              { counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M", currency: "XAH", value: "-117.000118044300315" },
+              {
+                issuer: "rNfJfoyVG2aGCHwcSUVAkkTBq6isLBnAZD",
+                currency: "XAH",
+                value: "117.0001180443003",
+                counterparty: "rNfJfoyVG2aGCHwcSUVAkkTBq6isLBnAZD",
+              },
+              {
+                issuer: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
+                currency: "XAH",
+                value: "-117.000118044300315",
+                counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
+              },
             ],
           },
           ammChanges: {
@@ -4005,7 +4107,11 @@ describe("Models", () => {
             ammID: "FDBB2384C0776C38C6111619B87B8CC0C3E64FD50DFB3CEC064F61458BF447F5",
             account: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
             asset: { currency: "XRP" },
-            asset2: { currency: "XAH", counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv" },
+            asset2: {
+              issuer: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+              currency: "XAH",
+              counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+            },
             auctionSlot: {
               account: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q",
               discountedFee: 100,
@@ -4017,6 +4123,7 @@ describe("Models", () => {
               },
             },
             lpTokenBalance: {
+              issuer: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
               currency: "03B7FD829F075C67B6C87A45FA0E67CF4E5A83A9",
               value: "58354.29114386244",
               counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
@@ -4025,6 +4132,7 @@ describe("Models", () => {
             ownerNode: "0",
             voteSlots: [{ account: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q", tradingFee: 1000, voteWeight: 100000 }],
             lpTokenBalanceChange: {
+              issuer: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
               currency: "03B7FD829F075C67B6C87A45FA0E67CF4E5A83A9",
               value: "56354.29114386244",
               counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
@@ -4049,7 +4157,11 @@ describe("Models", () => {
         specification: {
           source: { address: "rMCrWrijywQBB5PPRD1pXgraw9EL8LoncN", tag: 24546893 },
           asset: { currency: "XRP" },
-          asset2: { currency: "XAH", counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv" },
+          asset2: {
+            issuer: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+            currency: "XAH",
+            counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+          },
           tradingFee: 200,
         },
         outcome: {
@@ -4062,7 +4174,11 @@ describe("Models", () => {
             ammID: "FDBB2384C0776C38C6111619B87B8CC0C3E64FD50DFB3CEC064F61458BF447F5",
             account: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
             asset: { currency: "XRP" },
-            asset2: { currency: "XAH", counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv" },
+            asset2: {
+              issuer: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+              currency: "XAH",
+              counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
+            },
             auctionSlot: {
               account: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q",
               discountedFee: 27,
@@ -4074,6 +4190,7 @@ describe("Models", () => {
               },
             },
             lpTokenBalance: {
+              issuer: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
               currency: "03B7FD829F075C67B6C87A45FA0E67CF4E5A83A9",
               value: "4943067.194505277",
               counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
@@ -4116,6 +4233,7 @@ describe("Models", () => {
           source: { address: "rJvmNLNfjnUwoECUmF5qZrgvdNnkzxZsAD", tag: 24546893 },
           asset: { currency: "XRP" },
           asset2: {
+            issuer: "rcEGREd8NmkKRE8GE424sksyt1tJVFZwu",
             currency: "5553444300000000000000000000000000000000",
             counterparty: "rcEGREd8NmkKRE8GE424sksyt1tJVFZwu",
           },
@@ -4132,6 +4250,7 @@ describe("Models", () => {
             account: "rGHt6LT5v9DVaEAmFzj5ciuxuj41ZjLofs",
             asset: { currency: "XRP" },
             asset2: {
+              issuer: "rcEGREd8NmkKRE8GE424sksyt1tJVFZwu",
               currency: "5553444300000000000000000000000000000000",
               counterparty: "rcEGREd8NmkKRE8GE424sksyt1tJVFZwu",
             },
@@ -4146,6 +4265,7 @@ describe("Models", () => {
               },
             },
             lpTokenBalance: {
+              issuer: "rGHt6LT5v9DVaEAmFzj5ciuxuj41ZjLofs",
               currency: "03B20F3A7D26D33C6DA3503E5CCE3E67B102D4D2",
               value: "17613632.34138682",
               counterparty: "rGHt6LT5v9DVaEAmFzj5ciuxuj41ZjLofs",
@@ -4187,7 +4307,11 @@ describe("Models", () => {
         specification: {
           source: { address: "rMCrWrijywQBB5PPRD1pXgraw9EL8LoncN", tag: 24546893 },
           asset: { currency: "XRP" },
-          asset2: { currency: "EUR", counterparty: "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq" },
+          asset2: {
+            issuer: "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq",
+            currency: "EUR",
+            counterparty: "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq",
+          },
           amount: { currency: "XRP", value: "16.858683" },
           flags: {
             lpToken: false,
@@ -4207,6 +4331,7 @@ describe("Models", () => {
             rMCrWrijywQBB5PPRD1pXgraw9EL8LoncN: [
               { currency: "XRP", value: "16.863796" },
               {
+                issuer: "rw3tWE23X3Qn43XGKwqVJ7J8QA42rYEGy4",
                 counterparty: "rw3tWE23X3Qn43XGKwqVJ7J8QA42rYEGy4",
                 currency: "037C35306B24AAB7FF90848206E003279AA47090",
                 value: "-6864.97874001452",
@@ -4214,9 +4339,10 @@ describe("Models", () => {
             ],
             rw3tWE23X3Qn43XGKwqVJ7J8QA42rYEGy4: [
               {
-                counterparty: "rMCrWrijywQBB5PPRD1pXgraw9EL8LoncN",
+                issuer: "rMCrWrijywQBB5PPRD1pXgraw9EL8LoncN",
                 currency: "037C35306B24AAB7FF90848206E003279AA47090",
                 value: "6864.97874001452",
+                counterparty: "rMCrWrijywQBB5PPRD1pXgraw9EL8LoncN",
               },
               { currency: "XRP", value: "-16.863808" },
             ],
@@ -4226,7 +4352,11 @@ describe("Models", () => {
             ammID: "7165CD0362BF03D6348FC0CB60BA0E7CE1F940A8A7A1434CB12E7CA9D6442430",
             account: "rw3tWE23X3Qn43XGKwqVJ7J8QA42rYEGy4",
             asset: { currency: "XRP" },
-            asset2: { currency: "EUR", counterparty: "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq" },
+            asset2: {
+              issuer: "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq",
+              currency: "EUR",
+              counterparty: "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq",
+            },
             auctionSlot: {
               account: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q",
               discountedFee: 26,
@@ -4238,6 +4368,7 @@ describe("Models", () => {
               },
             },
             lpTokenBalance: {
+              issuer: "rw3tWE23X3Qn43XGKwqVJ7J8QA42rYEGy4",
               currency: "037C35306B24AAB7FF90848206E003279AA47090",
               value: "37078.59446892016",
               counterparty: "rw3tWE23X3Qn43XGKwqVJ7J8QA42rYEGy4",
@@ -4250,6 +4381,7 @@ describe("Models", () => {
               { account: "rMCrWrijywQBB5PPRD1pXgraw9EL8LoncN", tradingFee: 100, voteWeight: 15622 },
             ],
             lpTokenBalanceChange: {
+              issuer: "rw3tWE23X3Qn43XGKwqVJ7J8QA42rYEGy4",
               currency: "037C35306B24AAB7FF90848206E003279AA47090",
               value: "-6864.97874001452",
               counterparty: "rw3tWE23X3Qn43XGKwqVJ7J8QA42rYEGy4",
@@ -4274,15 +4406,18 @@ describe("Models", () => {
           source: { address: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr", tag: 80008000 },
           asset: { currency: "XRP" },
           asset2: {
+            issuer: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
             currency: "7853504543544152000000000000000000000000",
             counterparty: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
           },
           bidMin: {
+            issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
             currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
             value: "21000",
             counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
           },
           bidMax: {
+            issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
             currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
             value: "21000",
             counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
@@ -4295,17 +4430,19 @@ describe("Models", () => {
           balanceChanges: {
             rs8aNjM13G824PA132sDBJM5hqeh92bGPr: [
               {
-                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
                 value: "-21000",
+                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               },
               { currency: "XRP", value: "-0.000012" },
             ],
             rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS: [
               {
-                counterparty: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr",
+                issuer: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr",
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
                 value: "21000",
+                counterparty: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr",
               },
             ],
           },
@@ -4315,6 +4452,7 @@ describe("Models", () => {
             account: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
             asset: { currency: "XRP" },
             asset2: {
+              issuer: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
               currency: "7853504543544152000000000000000000000000",
               counterparty: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
             },
@@ -4329,6 +4467,7 @@ describe("Models", () => {
               },
             },
             lpTokenBalance: {
+              issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
               value: "3776.89696386333",
               counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
@@ -4337,6 +4476,7 @@ describe("Models", () => {
             ownerNode: "0",
             voteSlots: [{ account: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr", tradingFee: 800, voteWeight: 100000 }],
             lpTokenBalanceChange: {
+              issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
               value: "-21000",
               counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
@@ -4344,6 +4484,7 @@ describe("Models", () => {
             auctionSlotChanges: {
               expirationChange: 530,
               priceChange: {
+                issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
                 value: "21000",
                 counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
@@ -4369,16 +4510,19 @@ describe("Models", () => {
           source: { address: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk", tag: 20221212 },
           memos: [{ data: "AMM bid initiated via XPmarket.com" }],
           asset: {
+            issuer: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
             currency: "7853504543544152000000000000000000000000",
             counterparty: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
           },
           asset2: { currency: "XRP" },
           bidMin: {
+            issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
             currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
             value: "23000",
             counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
           },
           bidMax: {
+            issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
             currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
             value: "23000",
             counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
@@ -4392,29 +4536,33 @@ describe("Models", () => {
           balanceChanges: {
             rs8aNjM13G824PA132sDBJM5hqeh92bGPr: [
               {
-                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
                 value: "1050",
+                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               },
             ],
             rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS: [
               {
-                counterparty: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr",
+                issuer: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr",
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
                 value: "-1050",
+                counterparty: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr",
               },
               {
-                counterparty: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
+                issuer: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
                 value: "23000",
+                counterparty: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
               },
             ],
             rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk: [
               { currency: "XRP", value: "-0.000012" },
               {
-                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
                 value: "-23000",
+                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               },
             ],
           },
@@ -4424,6 +4572,7 @@ describe("Models", () => {
             account: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
             asset: { currency: "XRP" },
             asset2: {
+              issuer: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
               currency: "7853504543544152000000000000000000000000",
               counterparty: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
             },
@@ -4439,6 +4588,7 @@ describe("Models", () => {
               },
             },
             lpTokenBalance: {
+              issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
               value: "2452936.638489328",
               counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
@@ -4447,17 +4597,19 @@ describe("Models", () => {
             ownerNode: "0",
             voteSlots: [{ account: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr", tradingFee: 800, voteWeight: 100000 }],
             lpTokenBalanceChange: {
+              issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
-              counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               value: "-21950",
+              counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
             },
             auctionSlotChanges: {
               accountChanges: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
               expirationChange: 80061,
               priceChange: {
+                issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
-                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
                 value: "2000",
+                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               },
               authAccountsChanges: [{ status: "added", account: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk" }],
             },
@@ -4481,15 +4633,18 @@ describe("Models", () => {
           source: { address: "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH", tag: 80008000 },
           asset: { currency: "XRP" },
           asset2: {
+            issuer: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
             currency: "7853504543544152000000000000000000000000",
             counterparty: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
           },
           bidMin: {
+            issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
             currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
             value: "192615",
             counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
           },
           bidMax: {
+            issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
             currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
             value: "192615",
             counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
@@ -4502,29 +4657,33 @@ describe("Models", () => {
           balanceChanges: {
             rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH: [
               {
-                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
                 value: "-192615",
+                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               },
               { currency: "XRP", value: "-0.000012" },
             ],
             rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS: [
               {
-                counterparty: "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH",
+                issuer: "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH",
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
                 value: "192615",
+                counterparty: "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH",
               },
               {
-                counterparty: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
+                issuer: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
                 value: "-21850",
+                counterparty: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
               },
             ],
             rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk: [
               {
-                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
+                issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
                 value: "21850",
+                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               },
             ],
           },
@@ -4534,6 +4693,7 @@ describe("Models", () => {
             account: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
             asset: { currency: "XRP" },
             asset2: {
+              issuer: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
               currency: "7853504543544152000000000000000000000000",
               counterparty: "rh5jzTCdMRCVjQ7LT6zucjezC47KATkuvv",
             },
@@ -4548,6 +4708,7 @@ describe("Models", () => {
               },
             },
             lpTokenBalance: {
+              issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
               value: "2474787.636783337",
               counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
@@ -4556,17 +4717,19 @@ describe("Models", () => {
             ownerNode: "0",
             voteSlots: [{ account: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr", tradingFee: 800, voteWeight: 100000 }],
             lpTokenBalanceChange: {
+              issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
-              counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               value: "-170765",
+              counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
             },
             auctionSlotChanges: {
               accountChanges: "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH",
               expirationChange: 211,
               priceChange: {
+                issuer: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
                 currency: "03DD35D1879DBE4FE3290B911A14875DE6534DFD",
-                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
                 value: "169615",
+                counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               },
               authAccountsChanges: [
                 {
@@ -4594,9 +4757,18 @@ describe("Models", () => {
         ctid: "C07A5BC9000D0002",
         specification: {
           source: { address: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B" },
-          asset: { currency: "USD", counterparty: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B" },
+          asset: {
+            issuer: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B",
+            currency: "USD",
+            counterparty: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B",
+          },
           asset2: { currency: "XRP" },
-          amount: { currency: "USD", value: "10", counterparty: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B" },
+          amount: {
+            issuer: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B",
+            currency: "USD",
+            value: "10",
+            counterparty: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B",
+          },
           holder: "raRjfQPhoZPukjd7av9LjnsNYAJ6KXHbyu",
           flags: { clawTwoAssets: false },
         },
@@ -4607,23 +4779,35 @@ describe("Models", () => {
           balanceChanges: {
             raRjfQPhoZPukjd7av9LjnsNYAJ6KXHbyu: [
               {
-                counterparty: "rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa",
+                issuer: "rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa",
                 currency: "03930D02208264E2E40EC1B0C09E4DB96EE197B1",
                 value: "-10000",
+                counterparty: "rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa",
               },
               { currency: "XRP", value: "10" },
             ],
             rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa: [
               {
-                counterparty: "raRjfQPhoZPukjd7av9LjnsNYAJ6KXHbyu",
+                issuer: "raRjfQPhoZPukjd7av9LjnsNYAJ6KXHbyu",
                 currency: "03930D02208264E2E40EC1B0C09E4DB96EE197B1",
                 value: "10000",
+                counterparty: "raRjfQPhoZPukjd7av9LjnsNYAJ6KXHbyu",
               },
-              { counterparty: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B", currency: "USD", value: "-10" },
+              {
+                issuer: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B",
+                counterparty: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B",
+                currency: "USD",
+                value: "-10",
+              },
               { currency: "XRP", value: "-10" },
             ],
             rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B: [
-              { counterparty: "rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa", currency: "USD", value: "10" },
+              {
+                issuer: "rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa",
+                currency: "USD",
+                value: "10",
+                counterparty: "rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa",
+              },
               { currency: "XRP", value: "-0.01" },
             ],
           },
@@ -4632,7 +4816,11 @@ describe("Models", () => {
             ammID: "9790F0B1835205A362D9E43623D22F9DC5FD38B2AC825D8F1DBD8C9C9EF5623D",
             account: "rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa",
             asset: { currency: "XRP" },
-            asset2: { currency: "USD", counterparty: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B" },
+            asset2: {
+              issuer: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B",
+              currency: "USD",
+              counterparty: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B",
+            },
             auctionSlot: {
               account: "raRjfQPhoZPukjd7av9LjnsNYAJ6KXHbyu",
               expiration: 1738564300,
@@ -4643,6 +4831,7 @@ describe("Models", () => {
               },
             },
             lpTokenBalance: {
+              issuer: "rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa",
               currency: "03930D02208264E2E40EC1B0C09E4DB96EE197B1",
               value: "10000",
               counterparty: "rw5yZTv1NAraLa5zaSqApuYxcuAgNYnCoa",
@@ -4669,6 +4858,7 @@ describe("Models", () => {
           source: { address: "rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89" },
           memos: [{ data: "YOINKED" }],
           amount: {
+            issuer: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",
             currency: "594F494E4B000000000000000000000000000000",
             value: "1",
             counterparty: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",
@@ -4682,16 +4872,18 @@ describe("Models", () => {
             rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89: [
               { currency: "XRP", value: "-0.000012" },
               {
-                counterparty: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",
+                issuer: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",
                 currency: "594F494E4B000000000000000000000000000000",
                 value: "1",
+                counterparty: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",
               },
             ],
             rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD: [
               {
-                counterparty: "rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89",
+                issuer: "rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89",
                 currency: "594F494E4B000000000000000000000000000000",
                 value: "-1",
+                counterparty: "rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89",
               },
             ],
           },
@@ -5634,6 +5826,7 @@ describe("Models", () => {
           source: {
             address: "rULQj9eStEKAhF5qugaAwadh5enRwDyf1i",
             maxAmount: {
+              issuer: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
               currency: "4C53474400000000000000000000000000000000",
               value: "37907",
               counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
@@ -5648,18 +5841,21 @@ describe("Models", () => {
           balanceChanges: {
             rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA: [
               {
-                counterparty: "rULQj9eStEKAhF5qugaAwadh5enRwDyf1i",
+                issuer: "rULQj9eStEKAhF5qugaAwadh5enRwDyf1i",
                 currency: "4C53474400000000000000000000000000000000",
                 value: "37907",
+                counterparty: "rULQj9eStEKAhF5qugaAwadh5enRwDyf1i",
               },
               {
-                counterparty: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V",
+                issuer: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V",
                 currency: "4C53474400000000000000000000000000000000",
                 value: "-37907",
+                counterparty: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V",
               },
             ],
             rULQj9eStEKAhF5qugaAwadh5enRwDyf1i: [
               {
+                issuer: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
                 counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
                 currency: "4C53474400000000000000000000000000000000",
                 value: "-37907",
@@ -5668,6 +5864,7 @@ describe("Models", () => {
             ],
             r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V: [
               {
+                issuer: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
                 counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
                 currency: "4C53474400000000000000000000000000000000",
                 value: "37907",
@@ -5677,6 +5874,7 @@ describe("Models", () => {
           ledgerVersion: 71226014,
           indexInLedger: 92,
           deliveredAmount: {
+            issuer: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
             currency: "4C53474400000000000000000000000000000000",
             value: "37907",
             counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
@@ -5759,6 +5957,7 @@ describe("Models", () => {
           source: {
             address: "rULQj9eStEKAhF5qugaAwadh5enRwDyf1i",
             maxAmount: {
+              issuer: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
               currency: "4C53474400000000000000000000000000000000",
               value: "37907",
               counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
@@ -5775,35 +5974,40 @@ describe("Models", () => {
           balanceChanges: {
             rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA: [
               {
-                counterparty: "rULQj9eStEKAhF5qugaAwadh5enRwDyf1i",
+                issuer: "rULQj9eStEKAhF5qugaAwadh5enRwDyf1i",
                 currency: "4C53474400000000000000000000000000000000",
                 value: "37907",
+                counterparty: "rULQj9eStEKAhF5qugaAwadh5enRwDyf1i",
               },
               {
-                counterparty: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V",
+                issuer: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V",
                 currency: "4C53474400000000000000000000000000000000",
                 value: "-37907",
+                counterparty: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V",
               },
             ],
             rULQj9eStEKAhF5qugaAwadh5enRwDyf1i: [
               {
-                counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
+                issuer: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
                 currency: "4C53474400000000000000000000000000000000",
                 value: "-37907",
+                counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
               },
               { currency: "XRP", value: "-0.00001" },
             ],
             r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V: [
               {
-                counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
+                issuer: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
                 currency: "4C53474400000000000000000000000000000000",
                 value: "37907",
+                counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
               },
             ],
           },
           ledgerVersion: 71226014,
           indexInLedger: 92,
           deliveredAmount: {
+            issuer: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
             currency: "4C53474400000000000000000000000000000000",
             value: "37907",
             counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",

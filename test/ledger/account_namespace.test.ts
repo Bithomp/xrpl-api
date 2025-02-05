@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { Client } from "../../src/index";
 
 describe("Client", () => {
-  describe("getAccountLines", () => {
+  describe("getAccountNamespace", () => {
     before(async function () {
       this.timeout(15000);
       Client.setup(nconf.get("xrpl:connections:test-xahau"), { nativeCurrency: "XAH" });

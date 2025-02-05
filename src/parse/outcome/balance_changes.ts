@@ -6,9 +6,10 @@ import { normalizeNodes } from "../utils";
 import { getNativeCurrency } from "../../client";
 
 interface BalanceChangeQuantity {
-  counterparty?: string;
+  issuer?: string;
   currency?: string;
   value: string;
+  counterparty?: string; // @deprecated
   mpt_issuance_id?: string;
 }
 
@@ -91,11 +92,12 @@ function parseXRPQuantity(node: any, valueParser: any, nativeCurrency?: string):
 function flipTrustlinePerspective(quantity): AddressBalanceChangeQuantity {
   const negatedBalance = new BigNumber(quantity.balance.value).negated();
   return {
-    address: quantity.balance.counterparty,
+    address: quantity.balance.issuer,
     balance: {
-      counterparty: quantity.address,
+      issuer: quantity.address,
       currency: quantity.balance.currency,
       value: negatedBalance.toString(),
+      counterparty: quantity.address, // @deprecated
     },
   };
 }
@@ -118,9 +120,10 @@ function parseTrustlineQuantity(node, valueParser): AddressBalanceChangeQuantity
   const result = {
     address: fields.LowLimit.issuer,
     balance: {
-      counterparty: fields.HighLimit.issuer,
+      issuer: fields.HighLimit.issuer,
       currency: fields.Balance.currency,
       value: value.toString(),
+      counterparty: fields.HighLimit.issuer, // @deprecated
     },
   };
   return [result, flipTrustlinePerspective(result)];
