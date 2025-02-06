@@ -5876,6 +5876,39 @@ describe("Models", () => {
         },
       });
     });
+
+    it("Payment with signers", function () {
+      const tx = require("../examples/responses/transaction/2B495E748FE751B0364FEE828F4C2E4C599E47C952B1650C9047B37DB809D21A.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "payment",
+        address: "rEXmdJZRfjXN3XGVdz99dGSZpQyJqUeirE",
+        sequence: 59970534,
+        id: "2B495E748FE751B0364FEE828F4C2E4C599E47C952B1650C9047B37DB809D21A",
+        ctid: "C5995F2000360000",
+        specification: {
+          source: { address: "rEXmdJZRfjXN3XGVdz99dGSZpQyJqUeirE", maxAmount: { currency: "XRP", value: "32079955" } },
+          destination: { address: "rDsbeomae4FXwgQTJp9Rs64Qg9vDiTCdBv", tag: 999 },
+          signers: [
+            { address: "rpFtpLAdkkrVzAmsf1gvpRnxs4t6kwb93C" },
+            { address: "rpxfwNAyPPrMMySaxAsU94ym7U5SHY6c1D" },
+          ],
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-02-05T10:03:52.000Z",
+          fee: "0.000045",
+          balanceChanges: {
+            rDsbeomae4FXwgQTJp9Rs64Qg9vDiTCdBv: [{ currency: "XRP", value: "32079955" }],
+            rEXmdJZRfjXN3XGVdz99dGSZpQyJqUeirE: [{ currency: "XRP", value: "-32079955.000045" }],
+          },
+          ledgerIndex: 93937440,
+          ledgerVersion: 93937440,
+          indexInLedger: 54,
+          deliveredAmount: { currency: "XRP", value: "32079955" },
+        },
+      });
+    });
   });
 
   describe("getAccountTxDetails", () => {

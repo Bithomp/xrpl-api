@@ -1,5 +1,5 @@
 import { FormattedBaseSpecification } from "./specification";
-import { FormattedIssuedCurrencyAmount, FormattedIssuedMPTAmount } from "./amounts";
+import { IssuedCurrencyAmount, FormattedIssuedCurrencyAmount, FormattedIssuedMPTAmount } from "./amounts";
 
 export type FormattedAccountDeleteSpecification = {
   source?: FormattedSourceAddress;
@@ -8,7 +8,7 @@ export type FormattedAccountDeleteSpecification = {
 
 export type FormattedSourceAddress = {
   address: string;
-  maxAmount?: FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount;
+  maxAmount?: IssuedCurrencyAmount | FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount;
   tag?: number;
 };
 

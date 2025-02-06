@@ -16,6 +16,7 @@ import { sign, verify, deriveKeypair, deriveAddress } from "ripple-keypairs";
 
 import * as Base58 from "./base58";
 import { sha512Half } from "./common";
+import { TransactionSigner } from "./types/signers";
 
 enum HashPrefix {
   // transaction plus signature to give transaction ID 'TXN'
@@ -34,14 +35,6 @@ export interface VerifySignatureInterface {
   signatureValid?: boolean;
   signatureMultiSign?: boolean;
   error?: string;
-}
-
-interface Signer {
-  Signer: {
-    SigningPubKey: string;
-    TxnSignature: string;
-    Account?: string;
-  };
 }
 
 export function isValidSecret(secret: string): boolean {
@@ -277,7 +270,7 @@ export function verifySignature(
 
   try {
     if (signatureMultiSign && tx.Signers) {
-      const matchingSigners = Object.values(tx.Signers).filter((signer: Signer) => {
+      const matchingSigners = Object.values(tx.Signers).filter((signer: TransactionSigner) => {
         return deriveAddress(signer.Signer.SigningPubKey) === signedBy;
       });
       if (matchingSigners.length > 0) {
