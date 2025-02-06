@@ -4,10 +4,10 @@ import { isPartialPayment } from "../utils";
 import { removeUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
-
+import { parseSigners } from "../ledger/signers";
+import { parseSignerRegularKey } from "../ledger/regular-key";
 import { parseSourceWithAmount } from "../ledger/source";
 import { parseDestination } from "../ledger/destination";
-import { parseSigners } from "../ledger/signers";
 
 import { FormattedPaymentSpecification } from "../../types/payments";
 
@@ -29,6 +29,7 @@ function parsePayment(tx: any): FormattedPaymentSpecification {
     source: parseSourceWithAmount(tx),
     destination: parseDestination(tx),
     signers: parseSigners(tx),
+    signer: parseSignerRegularKey(tx),
     invoiceID: tx.InvoiceID,
     paths: tx.Paths ? JSON.stringify(tx.Paths) : undefined,
     allowPartialPayment: isPartialPayment(tx) || undefined,

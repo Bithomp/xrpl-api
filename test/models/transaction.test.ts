@@ -5909,6 +5909,34 @@ describe("Models", () => {
         },
       });
     });
+
+    it("Payment with signers", function () {
+      const tx = require("../examples/responses/transaction/7DF0F2A6DCDB43B2EC36FBE90891632CFD435D8E9496484AE16DDCB0FB0ED45E.json");
+      const result: any = Models.getTxDetails(tx, false);
+      console.log(JSON.stringify(result));
+      expect(result).to.eql({
+        type: "settings",
+        address: "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh",
+        sequence: 44195,
+        id: "7DF0F2A6DCDB43B2EC36FBE90891632CFD435D8E9496484AE16DDCB0FB0ED45E",
+        ctid: "C06B94E900010000",
+        specification: {
+          source: { address: "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh" },
+          signer: { address: "rBmVUQNF6tJy4cLvoKdPXb4BNqKBk5JY1Y" },
+          emailHash: "00000000000000000000000000000000",
+          domain: "",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2014-06-06T19:58:00.000Z",
+          fee: "0.00001",
+          balanceChanges: { rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh: [{ currency: "XRP", value: "-0.00001" }] },
+          ledgerIndex: 7050473,
+          ledgerVersion: 7050473,
+          indexInLedger: 1,
+        },
+      });
+    });
   });
 
   describe("getAccountTxDetails", () => {

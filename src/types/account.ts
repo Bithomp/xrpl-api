@@ -17,6 +17,10 @@ export type FormattedDestinationAddress = {
   tag?: number;
 };
 
+export type FormattedSignerRegularKey = {
+  address: string;
+};
+
 export type FormattedAccountInfoData = {
   sequence: number;
   xrpBalance: string;
