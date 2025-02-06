@@ -214,6 +214,7 @@ describe("Client", () => {
           { specification: true }
         );
         expect(result.specification).to.eql({
+          source: { address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6" },
           depositAuth: false,
           memos: [
             {
@@ -238,6 +239,7 @@ describe("Client", () => {
           { specification: true }
         );
         expect(result.specification).to.eql({
+          source: { address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6" },
           memos: [
             {
               data: '"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW5jZWxsZWRfc2FsZV9zZXF1ZW5jZSI6ODQwLCJjdXJyZW5jeSI6IjAyMzAzMTUxNkQ1MjcyMzE0RTQ2NTQwMDAwMDAwMDAwMDAwMDAwMDAiLCJpc3N1ZXIiOiJyVVk1ZHo4VFVWVmdxcktQbWRraHpZNVgyaGJrQjNwYUY1IiwiaWF0IjoxNjQ1MTE3MTA2LCJpc3MiOiJTb2xvZ2VuaWMgRm91bmRhdGlvbiJ9.z46Ccefl9djKats0FkXKJfhb4Krf-98Jqr75nwdMi9NH9z7UcgLSGVLAEpRIEySSu1NylNBgbbSUuJgllWsPJQ"',
@@ -271,6 +273,7 @@ describe("Client", () => {
           sequence: 865,
           id: "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
           specification: {
+            source: { address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6" },
             depositAuth: false,
             memos: [
               {
@@ -315,6 +318,7 @@ describe("Client", () => {
           type: "settings",
           sequence: 865,
           specification: {
+            source: { address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6" },
             depositAuth: false,
             memos: [
               {
@@ -338,6 +342,7 @@ describe("Client", () => {
           sequence: 865,
           id: "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
           specification: {
+            source: { address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6" },
             depositAuth: false,
             memos: [
               {
@@ -531,6 +536,7 @@ describe("Client", () => {
           sequence: 865,
           id: "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
           specification: {
+            source: { address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6" },
             depositAuth: false,
             memos: [
               {
@@ -1117,7 +1123,7 @@ describe("Client", () => {
                   key: "0000000000000000000000000000000000000000000000000000000000000000",
                 },
                 specification: {
-                  source: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T", tag: undefined },
+                  source: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
                   account: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
                   nftokenID: "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000",
                 },
@@ -1162,9 +1168,7 @@ describe("Client", () => {
                 },
               },
             },
-            source: {
-              address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
-            },
+            source: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
           },
           outcome: {
             result: "tesSUCCESS",
@@ -2436,7 +2440,9 @@ describe("Client", () => {
                   "809956DD229FAD8682B7A04D05CC5EC2740575D5637E193E226CA1B30654D23B",
                   "0831D4BC39770DE5660C05CA6F75A478EB25A467F214C24FBC046F907E9F063A",
                 ],
-                specification: {},
+                specification: {
+                  source: { address: "rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1" },
+                },
                 outcome: {
                   balanceChanges: {
                     rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1: [
@@ -2770,7 +2776,7 @@ describe("Client", () => {
                   key: "0000000000000000000000000000000000000000000000000000000000000000",
                 },
                 specification: {
-                  source: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T", tag: undefined },
+                  source: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
                   account: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
                   nftokenID: "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000",
                 },
@@ -2815,9 +2821,7 @@ describe("Client", () => {
                 },
               },
             },
-            source: {
-              address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
-            },
+            source: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
           },
           outcome: {
             result: "tesSUCCESS",

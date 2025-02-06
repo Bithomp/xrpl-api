@@ -1,7 +1,6 @@
 import { FormattedBaseSpecification } from "./specification";
-import { FormattedSourceAddress, FormattedDestinationAddress } from "./account";
+import { FormattedDestinationAddress } from "./account";
 
 export type FormattedInvokeSpecification = {
-  source: FormattedSourceAddress;
-  destination: FormattedDestinationAddress;
+  destination?: FormattedDestinationAddress;
 } & FormattedBaseSpecification;

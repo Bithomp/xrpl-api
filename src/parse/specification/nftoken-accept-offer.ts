@@ -2,19 +2,18 @@ import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
-import { FormattedSourceAddress } from "../../types/account";
+import { parseSigners } from "../ledger/signers";
+import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseSource } from "../ledger/source";
 import { FormattedNFTokenAcceptOfferSpecification } from "../../types/nftokens";
 
 function parseNFTokenAcceptOffer(tx: any): FormattedNFTokenAcceptOfferSpecification {
   assert.ok(tx.TransactionType === "NFTokenAcceptOffer");
 
-  const source: FormattedSourceAddress = {
-    address: tx.Account,
-    tag: tx.SourceTag,
-  };
-
   return removeUndefined({
-    source: Object.keys(source).length > 0 ? source : undefined,
+    signers: parseSigners(tx),
+    signer: parseSignerRegularKey(tx),
+    source: parseSource(tx),
     nftokenSellOffer: tx.NFTokenSellOffer,
     nftokenBuyOffer: tx.NFTokenBuyOffer,
     nftokenBrokerFee: tx.NFTokenBrokerFee,

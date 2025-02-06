@@ -4,27 +4,21 @@ import { parseTimestamp } from "../utils";
 import parseAmount from "../ledger/amount";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
-import { parseAccount } from "../ledger/account";
-import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
+import { parseSigners } from "../ledger/signers";
+import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseSource } from "../ledger/source";
+import { parseDestination } from "../ledger/destination";
 import { FormattedPaymentChannelCreateSpecification } from "../../types/payment_channels";
 
 function parsePaymentChannelCreate(tx: any): FormattedPaymentChannelCreateSpecification {
   assert.ok(tx.TransactionType === "PaymentChannelCreate");
 
-  const source: FormattedSourceAddress = {
-    address: parseAccount(tx.Account),
-    tag: tx.SourceTag,
-  };
-
-  const destination: FormattedDestinationAddress = {
-    address: tx.Destination,
-    tag: tx.DestinationTag,
-  };
-
   return removeUndefined({
-    source: removeUndefined(source),
-    destination: removeUndefined(destination),
-    amount: parseAmount(tx.Amount), // Legacy support
+    signers: parseSigners(tx),
+    signer: parseSignerRegularKey(tx),
+    source: parseSource(tx),
+    destination: parseDestination(tx),
+    amount: parseAmount(tx.Amount),
     settleDelay: tx.SettleDelay,
     publicKey: tx.PublicKey,
     cancelAfter: tx.CancelAfter && parseTimestamp(tx.CancelAfter),

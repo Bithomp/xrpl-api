@@ -2,20 +2,18 @@ import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
-
-import { FormattedSourceAddress } from "../../types/account";
+import { parseSigners } from "../ledger/signers";
+import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseSource } from "../ledger/source";
 import { FormattedEscrowFinishSpecification } from "../../types/escrows";
 
 function parseEscrowFinish(tx: any): FormattedEscrowFinishSpecification {
   assert.ok(tx.TransactionType === "EscrowFinish");
 
-  const source: FormattedSourceAddress = {
-    address: tx.Account,
-    tag: tx.SourceTag,
-  };
-
   return removeUndefined({
-    source: removeUndefined(source),
+    signers: parseSigners(tx),
+    signer: parseSignerRegularKey(tx),
+    source: parseSource(tx),
     owner: tx.Owner,
     escrowSequence: tx.OfferSequence,
     condition: tx.Condition,

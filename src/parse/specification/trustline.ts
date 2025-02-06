@@ -4,7 +4,9 @@ import { parseQuality } from "../utils";
 import { removeUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
-
+import { parseSigners } from "../ledger/signers";
+import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseSource } from "../ledger/source";
 import { FormattedTrustlineSpecification } from "../../types/trustlines";
 
 function parseFlag(flagsValue, trueValue, falseValue) {
@@ -23,6 +25,9 @@ function parseTrustline(tx: any): FormattedTrustlineSpecification {
   assert.ok(tx.TransactionType === "TrustSet");
 
   return removeUndefined({
+    signers: parseSigners(tx),
+    signer: parseSignerRegularKey(tx),
+    source: parseSource(tx),
     limit: tx.LimitAmount.value,
     currency: tx.LimitAmount.currency,
     counterparty: tx.LimitAmount.issuer,

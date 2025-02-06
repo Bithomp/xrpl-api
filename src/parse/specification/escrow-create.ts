@@ -3,27 +3,21 @@ import { removeUndefined } from "../../common";
 import { parseTimestamp } from "../utils";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
-
-import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
+import { parseSigners } from "../ledger/signers";
+import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseSource } from "../ledger/source";
+import { parseDestination } from "../ledger/destination";
 import { FormattedEscrowCreateSpecification } from "../../types/escrows";
 
 function parseEscrowCreation(tx: any): FormattedEscrowCreateSpecification {
   assert.ok(tx.TransactionType === "EscrowCreate");
 
-  const source: FormattedSourceAddress = {
-    address: tx.Account,
-    tag: tx.SourceTag,
-  };
-
-  const destination: FormattedDestinationAddress = {
-    address: tx.Destination,
-    tag: tx.DestinationTag,
-  };
-
   return removeUndefined({
+    signers: parseSigners(tx),
+    signer: parseSignerRegularKey(tx),
+    source: parseSource(tx),
+    destination: parseDestination(tx),
     amount: tx.Amount,
-    source: removeUndefined(source),
-    destination: removeUndefined(destination),
     condition: tx.Condition,
     allowCancelAfter: parseTimestamp(tx.CancelAfter),
     allowExecuteAfter: parseTimestamp(tx.FinishAfter),

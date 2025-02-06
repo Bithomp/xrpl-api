@@ -4,20 +4,18 @@ import parseAmount from "../ledger/amount";
 import parseAsset from "../ledger/asset";
 import parseAuthAccounts from "../ledger/auth-accounts";
 import { parseMemos } from "../ledger/memos";
-import { parseAccount } from "../ledger/account";
-import { FormattedSourceAddress } from "../../types/account";
+import { parseSigners } from "../ledger/signers";
+import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseSource } from "../ledger/source";
 import { FormattedAmmBidSpecification } from "../../types/amm";
 
 function parseAmmBid(tx: any): FormattedAmmBidSpecification {
   assert.ok(tx.TransactionType === "AMMBid");
 
-  const source: FormattedSourceAddress = removeUndefined({
-    address: parseAccount(tx.Account),
-    tag: tx.SourceTag,
-  });
-
   return removeUndefined({
-    source: Object.keys(source).length > 0 ? source : undefined,
+    signers: parseSigners(tx),
+    signer: parseSignerRegularKey(tx),
+    source: parseSource(tx),
     asset: parseAsset(tx.Asset),
     asset2: parseAsset(tx.Asset2),
     bidMin: tx.BidMin ? parseAmount(tx.BidMin) : undefined,

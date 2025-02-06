@@ -2,12 +2,13 @@ import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
-import { parseAccount } from "../ledger/account";
+import { parseSigners } from "../ledger/signers";
+import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseSource } from "../ledger/source";
+import { parseDestination } from "../ledger/destination";
 import parseURITokenFlags from "../ledger/uritoken-flags";
 import { Amount } from "../../types";
 import { URITokenFlagsKeysInterface } from "../../types/uritokens";
-
-import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
 import { FormattedRemitsSpecification } from "../../types/remits";
 
 // [
@@ -73,19 +74,11 @@ function parseMintURIToken(mintURIToken?: {
 function parseRemit(tx: any): FormattedRemitsSpecification {
   assert.ok(tx.TransactionType === "Remit");
 
-  const source: FormattedSourceAddress = {
-    address: parseAccount(tx.Account),
-    tag: tx.SourceTag,
-  };
-
-  const destination: FormattedDestinationAddress = {
-    address: tx.Destination,
-    tag: tx.DestinationTag,
-  };
-
   return removeUndefined({
-    source: removeUndefined(source),
-    destination: removeUndefined(destination),
+    signers: parseSigners(tx),
+    signer: parseSignerRegularKey(tx),
+    source: parseSource(tx),
+    destination: parseDestination(tx),
     amounts: parseAmounts(tx.Amounts),
     uritokenIDs: tx.URITokenIDs,
     uritokenMint: parseMintURIToken(tx.MintURIToken),

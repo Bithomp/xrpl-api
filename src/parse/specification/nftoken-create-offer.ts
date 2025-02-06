@@ -4,8 +4,10 @@ import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import parseNFTOfferFlags from "../ledger/nftoken-offer-flags";
 import { ledgerTimeToUnixTime } from "../../models/ledger";
-import { parseAccount } from "../ledger/account";
-import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
+import { parseSigners } from "../ledger/signers";
+import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseSource } from "../ledger/source";
+import { parseDestination } from "../ledger/destination";
 import { FormattedNFTokenCreateOfferSpecification } from "../../types/nftokens";
 
 function parseNFTokenCreateOffer(tx: any): FormattedNFTokenCreateOfferSpecification {
@@ -16,21 +18,14 @@ function parseNFTokenCreateOffer(tx: any): FormattedNFTokenCreateOfferSpecificat
     expiration = ledgerTimeToUnixTime(tx.Expiration);
   }
 
-  const source: FormattedSourceAddress = removeUndefined({
-    address: parseAccount(tx.Account),
-    tag: tx.SourceTag,
-  });
-
-  const destination: FormattedDestinationAddress = removeUndefined({
-    address: tx.Destination,
-  });
-
   return removeUndefined({
+    signers: parseSigners(tx),
+    signer: parseSignerRegularKey(tx),
+    source: parseSource(tx),
+    destination: parseDestination(tx),
     nftokenID: tx.NFTokenID,
     amount: tx.Amount,
     owner: tx.Owner,
-    source: Object.keys(source).length > 0 ? source : undefined,
-    destination: Object.keys(destination).length > 0 ? destination : undefined,
     expiration,
     flags: parseNFTOfferFlags(tx.Flags),
     emittedDetails: parseEmittedDetails(tx),

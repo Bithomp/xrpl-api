@@ -3,8 +3,11 @@ import { OfferCreateFlags } from "xrpl";
 import { parseTimestamp } from "../utils";
 import parseAmount from "../ledger/amount";
 import { parseMemos } from "../ledger/memos";
+import { parseEmittedDetails } from "../ledger/emit_details";
 import { removeUndefined } from "../../common";
-import { FormattedSourceAddress } from "../../types/account";
+import { parseSigners } from "../ledger/signers";
+import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseSource } from "../ledger/source";
 import { FormattedOfferCreateSpecification, OfferCreateTransaction, FormattedIssuedCurrencyAmount } from "../../types";
 
 function parseOfferCreate(tx: OfferCreateTransaction): FormattedOfferCreateSpecification {
@@ -16,13 +19,10 @@ function parseOfferCreate(tx: OfferCreateTransaction): FormattedOfferCreateSpeci
   const quantity = direction === "buy" ? takerPaysAmount : takerGetsAmount;
   const totalPrice = direction === "buy" ? takerGetsAmount : takerPaysAmount;
 
-  const source: FormattedSourceAddress = {
-    address: tx.Account,
-    tag: tx.SourceTag,
-  };
-
   return removeUndefined({
-    source: Object.keys(source).length > 0 ? source : undefined,
+    signers: parseSigners(tx),
+    signer: parseSignerRegularKey(tx),
+    source: parseSource(tx),
     direction: direction,
     quantity: quantity,
     totalPrice: totalPrice,
@@ -33,7 +33,7 @@ function parseOfferCreate(tx: OfferCreateTransaction): FormattedOfferCreateSpeci
     // eslint-disable-next-line no-bitwise
     fillOrKill: (tx.Flags & OfferCreateFlags.tfFillOrKill) !== 0 || undefined,
     expirationTime: parseTimestamp(tx.Expiration),
-
+    emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });
 }

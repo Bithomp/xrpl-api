@@ -1,11 +1,8 @@
 import { FormattedBaseSpecification } from "./specification";
-import { FormattedDestinationAddress, FormattedSourceAddress } from "./account";
 import { Amount } from "./amounts";
 import { URITokenFlagsKeysInterface } from "./uritokens";
 
 export type FormattedRemitsSpecification = {
-  source: FormattedSourceAddress;
-  destination: FormattedDestinationAddress;
   amounts?: Amount[];
   uritokenIDs?: string[];
   uritokenMint?: {

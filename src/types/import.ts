@@ -1,5 +1,4 @@
 import { FormattedBaseSpecification } from "./specification";
-import { FormattedSourceAddress } from "./account";
 import { FormattedSpecification } from "../parse/transaction";
 import { Outcome } from "./outcome";
 
@@ -20,6 +19,5 @@ export type FormattedImportBlobSpecification = {
 };
 
 export type FormattedImportSpecification = {
-  source: FormattedSourceAddress;
   blob: FormattedImportBlobSpecification | string;
 } & FormattedBaseSpecification;

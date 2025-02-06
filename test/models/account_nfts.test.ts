@@ -175,7 +175,7 @@ describe("Models", () => {
       const result: any = Models.parseNFTokenBurn(tx);
 
       expect(result).to.eql({
-        source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3", tag: undefined },
+        source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
         account: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
         nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
       });
@@ -207,7 +207,7 @@ describe("Models", () => {
       const result: any = Models.parseNFTokenCancelOffer(tx);
 
       expect(result).to.eql({
-        source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3", tag: undefined },
+        source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
         nftokenOffers: ["D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8"],
       });
     });
@@ -250,7 +250,7 @@ describe("Models", () => {
       const result: any = Models.parseNFTokenAcceptOffer(tx);
 
       expect(result).to.eql({
-        source: { address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw", tag: undefined },
+        source: { address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw" },
         nftokenSellOffer: "D3C21058E60B6597BCB33A7A77B5FC90959082C96057EDBB388CE365E8D3245D",
       });
     });
@@ -260,7 +260,7 @@ describe("Models", () => {
       const result: any = Models.parseNFTokenAcceptOffer(tx);
 
       expect(result).to.eql({
-        source: { address: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz", tag: undefined },
+        source: { address: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz" },
         nftokenBuyOffer: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
       });
     });
