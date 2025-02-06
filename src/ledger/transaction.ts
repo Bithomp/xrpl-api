@@ -338,6 +338,10 @@ export async function getAccountPaymentParams(
         fee = FEE_LIMIT;
       }
 
+      if (!fee) {
+        throw new Error("Fee is not defined");
+      }
+
       resolve(xrpToDrops(fee.toString()));
     });
 
@@ -428,6 +432,10 @@ export async function getTxSubmitParams(
           let fee = parseFloat(baseFee as string);
           if (fee > FEE_LIMIT) {
             fee = FEE_LIMIT;
+          }
+
+          if (!fee) {
+            throw new Error("Fee is not defined");
           }
 
           resolve(xrpToDrops(fee.toString()));
