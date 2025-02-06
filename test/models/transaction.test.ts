@@ -51,6 +51,7 @@ describe("Models", () => {
               stateChangeCount: 14,
             },
           ],
+          ledgerIndex: 2479,
           ledgerVersion: 2479,
           indexInLedger: 0,
         },
@@ -98,6 +99,7 @@ describe("Models", () => {
               stateChangeCount: 14,
             },
           ],
+          ledgerIndex: 2479,
           ledgerVersion: 2479,
           indexInLedger: 0,
         },
@@ -116,8 +118,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [{ currency: "XRP", value: "-0.000012" }] },
           fee: "0.000012",
-          indexInLedger: 0,
+          ledgerIndex: 1309371,
           ledgerVersion: 1309371,
+          indexInLedger: 0,
           nftokenChanges: {
             r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
               {
@@ -176,8 +179,9 @@ describe("Models", () => {
             rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [{ currency: "XRP", value: "-0.000001" }],
           },
           fee: "0.000012",
-          indexInLedger: 0,
+          ledgerIndex: 75445,
           ledgerVersion: 75445,
+          indexInLedger: 0,
           nftokenChanges: {
             rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz: [
               {
@@ -257,8 +261,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [{ currency: "XRP", value: "-0.000012" }] },
           fee: "0.000012",
-          indexInLedger: 0,
+          ledgerIndex: 1310248,
           ledgerVersion: 1310248,
+          indexInLedger: 0,
           nftokenChanges: {
             r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
               {
@@ -421,6 +426,7 @@ describe("Models", () => {
               },
             },
           },
+          ledgerIndex: 5283673,
           ledgerVersion: 5283673,
           indexInLedger: 0,
         },
@@ -472,6 +478,7 @@ describe("Models", () => {
               },
             },
           },
+          ledgerIndex: 1310364,
           ledgerVersion: 1310364,
           indexInLedger: 0,
         },
@@ -566,6 +573,7 @@ describe("Models", () => {
               },
             },
           },
+          ledgerIndex: 34643386,
           ledgerVersion: 34643386,
           indexInLedger: 0,
         },
@@ -631,6 +639,7 @@ describe("Models", () => {
               },
             },
           },
+          ledgerIndex: 75358,
           ledgerVersion: 75358,
           indexInLedger: 0,
         },
@@ -699,6 +708,7 @@ describe("Models", () => {
               },
             },
           },
+          ledgerIndex: 1104,
           ledgerVersion: 1104,
           indexInLedger: 0,
         },
@@ -774,6 +784,7 @@ describe("Models", () => {
               },
             },
           },
+          ledgerIndex: 1214,
           ledgerVersion: 1214,
           indexInLedger: 0,
         },
@@ -839,6 +850,7 @@ describe("Models", () => {
               },
             },
           },
+          ledgerIndex: 1309479,
           ledgerVersion: 1309479,
           indexInLedger: 0,
         },
@@ -855,8 +867,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz: [{ currency: "XRP", value: "-0.000015" }] },
           fee: "0.000015",
-          indexInLedger: 0,
+          ledgerIndex: 44093,
           ledgerVersion: 44093,
+          indexInLedger: 0,
           result: "tesSUCCESS",
           timestamp: "2022-03-03T12:47:41.000Z",
         },
@@ -911,8 +924,9 @@ describe("Models", () => {
             ],
           },
           fee: "0.01",
-          indexInLedger: 7,
+          ledgerIndex: 62799452,
           ledgerVersion: 62799452,
+          indexInLedger: 7,
           orderbookChanges: {
             rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z: [
               {
@@ -993,8 +1007,9 @@ describe("Models", () => {
             channelAmountDrops: "1000",
             channelBalanceDrops: "0",
           },
-          ledgerVersion: 61965340,
+          ledgerIndex: 61965340,
           indexInLedger: 0,
+          ledgerVersion: 61965340,
         },
       });
     });
@@ -1035,6 +1050,7 @@ describe("Models", () => {
             previousTxnID: "C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7",
             previousTxnLgrSeq: 28991004,
           },
+          ledgerIndex: 28991004,
           ledgerVersion: 28991004,
           indexInLedger: 8,
         },
@@ -1098,6 +1114,7 @@ describe("Models", () => {
             previousTxnID: "885CDCF781073DB9306A4B5FF61F358AE1B2452B57B7FACC090DF91125CC86D6",
             previousTxnLgrSeq: 3530986,
           },
+          ledgerIndex: 3530986,
           ledgerVersion: 3530986,
           indexInLedger: 0,
         },
@@ -1137,6 +1154,7 @@ describe("Models", () => {
             previousTxnID: "22B52ED8B70F1ADB49EABE0F94B797A7CEC678341F744AA20C54178D3096BE9B",
             previousTxnLgrSeq: 1430511,
           },
+          ledgerIndex: 1430516,
           ledgerVersion: 1430516,
           indexInLedger: 1,
         },
@@ -1193,6 +1211,7 @@ describe("Models", () => {
             previousTxnID: "885CDCF781073DB9306A4B5FF61F358AE1B2452B57B7FACC090DF91125CC86D6",
             previousTxnLgrSeq: 3530986,
           },
+          ledgerIndex: 3532083,
           ledgerVersion: 3532083,
           indexInLedger: 1,
         },
@@ -1250,6 +1269,7 @@ describe("Models", () => {
             previousTxnID: "A13EFDD3A6AEEA913B17FD8E7E48D4CC7AA1A5978C5D713CEA5076EADBC600CF",
             previousTxnLgrSeq: 2981239,
           },
+          ledgerIndex: 2981507,
           ledgerVersion: 2981507,
           indexInLedger: 3,
         },
@@ -1297,6 +1317,7 @@ describe("Models", () => {
             previousTxnID: "C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7",
             previousTxnLgrSeq: 28991004,
           },
+          ledgerIndex: 29187944,
           ledgerVersion: 29187944,
           indexInLedger: 0,
         },
@@ -1326,6 +1347,7 @@ describe("Models", () => {
           timestamp: "2022-04-09T06:46:40.000Z",
           fee: "0.000015",
           balanceChanges: { r4eecBHFbkHpLQEvSnB93bc3C2SVMjVKie: [{ currency: "XRP", value: "-0.000015" }] },
+          ledgerIndex: 70868873,
           ledgerVersion: 70868873,
           indexInLedger: 21,
         },
@@ -1382,6 +1404,7 @@ describe("Models", () => {
               },
             },
           },
+          ledgerIndex: 8898769,
           ledgerVersion: 8898769,
           indexInLedger: 0,
         },
@@ -1427,6 +1450,7 @@ describe("Models", () => {
               { currency: "XRP", value: "-1.20002" },
             ],
           },
+          ledgerIndex: 8877824,
           ledgerVersion: 8877824,
           indexInLedger: 8,
         },
@@ -1481,6 +1505,7 @@ describe("Models", () => {
             rwyypATD1dQxDbdQjMvrqnsHr2cQw5rjMh: [{ currency: "XRP", value: "2.146872" }],
             r4FF5jjJMS2XqWDyTYStWrgARsj3FjaJ2J: [{ currency: "XRP", value: "2.146872" }],
           },
+          ledgerIndex: 6295150,
           ledgerVersion: 6295150,
           indexInLedger: 4,
         },
@@ -1498,8 +1523,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
-          indexInLedger: 1,
+          ledgerIndex: 7751960,
           ledgerVersion: 7751960,
+          indexInLedger: 1,
           uritokenChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
@@ -1549,8 +1575,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
-          indexInLedger: 0,
+          ledgerIndex: 7753203,
           ledgerVersion: 7753203,
+          indexInLedger: 0,
           uritokenChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
@@ -1601,8 +1628,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
-          indexInLedger: 0,
+          ledgerIndex: 7754301,
           ledgerVersion: 7754301,
+          indexInLedger: 0,
           uritokenChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
@@ -1667,8 +1695,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
-          indexInLedger: 0,
+          ledgerIndex: 7753249,
           ledgerVersion: 7753249,
+          indexInLedger: 0,
           uritokenChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
@@ -1765,6 +1794,7 @@ describe("Models", () => {
               },
             },
           },
+          ledgerIndex: 4722790,
           ledgerVersion: 4722790,
           indexInLedger: 0,
         },
@@ -1785,8 +1815,9 @@ describe("Models", () => {
             rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM: [{ currency: "XRP", value: "-1.001" }],
           },
           fee: "0.001",
-          indexInLedger: 0,
+          ledgerIndex: 7752185,
           ledgerVersion: 7752185,
+          indexInLedger: 0,
           uritokenChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
@@ -1853,8 +1884,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
-          indexInLedger: 2,
+          ledgerIndex: 7752093,
           ledgerVersion: 7752093,
+          indexInLedger: 2,
           uritokenSellOfferChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
@@ -1905,8 +1937,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
-          indexInLedger: 0,
+          ledgerIndex: 7752106,
           ledgerVersion: 7752106,
+          indexInLedger: 0,
           uritokenSellOfferChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
@@ -1963,8 +1996,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
-          indexInLedger: 1,
+          ledgerIndex: 7761676,
           ledgerVersion: 7761676,
+          indexInLedger: 1,
           uritokenSellOfferChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               // {
@@ -2020,8 +2054,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
-          indexInLedger: 0,
+          ledgerIndex: 7761622,
           ledgerVersion: 7761622,
+          indexInLedger: 0,
           uritokenSellOfferChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
@@ -2075,8 +2110,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
-          indexInLedger: 0,
+          ledgerIndex: 7753887,
           ledgerVersion: 7753887,
+          indexInLedger: 0,
           uritokenSellOfferChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
               {
@@ -2122,8 +2158,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [{ currency: "XRP", value: "-0.001" }] },
           fee: "0.001",
-          indexInLedger: 0,
+          ledgerIndex: 7753874,
           ledgerVersion: 7753874,
+          indexInLedger: 0,
           result: "tesSUCCESS",
           timestamp: "2023-10-26T11:01:41.000Z",
         },
@@ -2145,8 +2182,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1: [{ currency: "XRP", value: "2.001337" }] },
           fee: "0",
-          indexInLedger: 0,
+          ledgerIndex: 4142,
           ledgerVersion: 4142,
+          indexInLedger: 0,
           deliveredAmount: {
             currency: "XRP",
             value: "2.001337",
@@ -3743,6 +3781,7 @@ describe("Models", () => {
               },
             },
           ],
+          ledgerIndex: 4722789,
           ledgerVersion: 4722789,
           indexInLedger: 0,
           deliveredAmount: { currency: "XRP", value: "-0.011075" },
@@ -3760,8 +3799,9 @@ describe("Models", () => {
         outcome: {
           balanceChanges: { r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH: [{ currency: "XRP", value: "-0.009584" }] },
           fee: "0.009584",
-          indexInLedger: 0,
+          ledgerIndex: 2479,
           ledgerVersion: 2479,
+          indexInLedger: 0,
           hooksExecutions: [
             {
               account: "r4FRPZbLnyuVeGiSi1Ap6uaaPvPXYZh1XN",
@@ -3805,7 +3845,6 @@ describe("Models", () => {
           result: "tesSUCCESS",
           timestamp: "2023-10-30T12:46:51.000Z",
           fee: "0",
-          balanceChanges: {},
           unlReportChanges: {
             status: "added",
             activeValidator: {
@@ -3813,6 +3852,7 @@ describe("Models", () => {
               publicKey: "EDA4A1278B9FDCABFAE094956DB1D7A0FCB9E99E40FB02C8ED26E6B2C4B83DB932",
             },
           },
+          ledgerIndex: 512,
           ledgerVersion: 512,
           indexInLedger: 0,
         },
@@ -3837,7 +3877,6 @@ describe("Models", () => {
           result: "tesSUCCESS",
           timestamp: "2023-10-30T12:46:51.000Z",
           fee: "0",
-          balanceChanges: {},
           unlReportChanges: {
             status: "added",
             importVLKey: {
@@ -3845,6 +3884,7 @@ describe("Models", () => {
               publicKey: "ED45D1840EE724BE327ABE9146503D5848EFD5F38B6D5FEDE71E80ACCE5E6E738B",
             },
           },
+          ledgerIndex: 512,
           ledgerVersion: 512,
           indexInLedger: 2,
         },
@@ -3868,7 +3908,7 @@ describe("Models", () => {
           result: "tesSUCCESS",
           timestamp: "2023-11-06T23:30:30.000Z",
           fee: "0",
-          balanceChanges: {},
+          ledgerIndex: 214272,
           ledgerVersion: 214272,
           indexInLedger: 1,
         },
@@ -3892,7 +3932,6 @@ describe("Models", () => {
           result: "tesSUCCESS",
           timestamp: "2023-11-06T23:30:30.000Z",
           fee: "0",
-          balanceChanges: {},
           unlReportChanges: {
             status: "added",
             activeValidator: {
@@ -3900,6 +3939,7 @@ describe("Models", () => {
               publicKey: "ED0EA5543E538BE8C0D6A6E643678B5B3854BF423736E813502BEE6558BC0D5B1A",
             },
           },
+          ledgerIndex: 214272,
           ledgerVersion: 214272,
           indexInLedger: 2,
         },
@@ -4006,6 +4046,7 @@ describe("Models", () => {
             tradingFee: 1000,
             voteSlots: [{ account: "rpSVjvfXqPtfX5VQU3rKmBbbF2dYeiCc6Q", tradingFee: 1000, voteWeight: 100000 }],
           },
+          ledgerIndex: 86795627,
           ledgerVersion: 86795627,
           indexInLedger: 12,
         },
@@ -4138,6 +4179,7 @@ describe("Models", () => {
               counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
             },
           },
+          ledgerIndex: 86795744,
           ledgerVersion: 86795744,
           indexInLedger: 37,
         },
@@ -4214,6 +4256,7 @@ describe("Models", () => {
             tradingFeeChanges: -729,
             auctionSlotChanges: { discountedFeeChange: -73 },
           },
+          ledgerIndex: 86795860,
           ledgerVersion: 86795860,
           indexInLedger: 31,
         },
@@ -4289,6 +4332,7 @@ describe("Models", () => {
             tradingFeeChanges: 17,
             auctionSlotChanges: { discountedFeeChange: 1 },
           },
+          ledgerIndex: 86796491,
           ledgerVersion: 86796491,
           indexInLedger: 44,
         },
@@ -4387,6 +4431,7 @@ describe("Models", () => {
               counterparty: "rw3tWE23X3Qn43XGKwqVJ7J8QA42rYEGy4",
             },
           },
+          ledgerIndex: 86796197,
           ledgerVersion: 86796197,
           indexInLedger: 47,
         },
@@ -4491,6 +4536,7 @@ describe("Models", () => {
               },
             },
           },
+          ledgerIndex: 86795606,
           ledgerVersion: 86795606,
           indexInLedger: 61,
         },
@@ -4614,6 +4660,7 @@ describe("Models", () => {
               authAccountsChanges: [{ status: "added", account: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk" }],
             },
           },
+          ledgerIndex: 86816452,
           ledgerVersion: 86816452,
           indexInLedger: 1,
         },
@@ -4739,6 +4786,7 @@ describe("Models", () => {
               ],
             },
           },
+          ledgerIndex: 86816507,
           ledgerVersion: 86816507,
           indexInLedger: 33,
         },
@@ -4839,6 +4887,7 @@ describe("Models", () => {
             ownerNode: "0",
             voteSlots: [{ account: "raRjfQPhoZPukjd7av9LjnsNYAJ6KXHbyu", voteWeight: 100000, tradingFee: undefined }],
           },
+          ledgerIndex: 8018889,
           ledgerVersion: 8018889,
           indexInLedger: 13,
         },
@@ -4887,6 +4936,7 @@ describe("Models", () => {
               },
             ],
           },
+          ledgerIndex: 86103515,
           ledgerVersion: 86103515,
           indexInLedger: 51,
         },
@@ -4929,6 +4979,7 @@ describe("Models", () => {
             data: "A1B1",
             didDocument: "A1B1",
           },
+          ledgerIndex: 4098101,
           ledgerVersion: 4098101,
           indexInLedger: 3,
         },
@@ -4969,6 +5020,7 @@ describe("Models", () => {
             data: "A1B1",
             didDocumentChanges: "A1B1",
           },
+          ledgerIndex: 4098101,
           ledgerVersion: 4098101,
           indexInLedger: 6,
         },
@@ -5008,6 +5060,7 @@ describe("Models", () => {
             data: "A1B1",
             didDocument: "A1B1",
           },
+          ledgerIndex: 4098103,
           ledgerVersion: 4098103,
           indexInLedger: 8,
         },
@@ -5130,6 +5183,7 @@ describe("Models", () => {
               },
             ],
           },
+          ledgerIndex: 3577580,
           ledgerVersion: 3577580,
           indexInLedger: 0,
         },
@@ -5275,6 +5329,7 @@ describe("Models", () => {
               },
             ],
           },
+          ledgerIndex: 4096867,
           ledgerVersion: 4096867,
           indexInLedger: 0,
         },
@@ -5376,6 +5431,7 @@ describe("Models", () => {
               },
             ],
           },
+          ledgerIndex: 4597060,
           ledgerVersion: 4597060,
           indexInLedger: 0,
         },
@@ -5442,6 +5498,7 @@ describe("Models", () => {
               },
             ],
           },
+          ledgerIndex: 392590,
           ledgerVersion: 392590,
           indexInLedger: 2,
         },
@@ -5473,6 +5530,7 @@ describe("Models", () => {
               { baseAsset: "BTC", quoteAsset: "ETH", assetPrice: "740", scale: 1, originalAssetPrice: "74" },
             ],
           },
+          ledgerIndex: 4599330,
           ledgerVersion: 4599330,
           indexInLedger: 0,
         },
@@ -5531,6 +5589,7 @@ describe("Models", () => {
               },
             },
           },
+          ledgerIndex: 6560016,
           ledgerVersion: 6560016,
           indexInLedger: 3,
           deliveredAmount: { mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578", value: "1000" },
@@ -5590,6 +5649,7 @@ describe("Models", () => {
               },
             },
           },
+          ledgerIndex: 6560018,
           ledgerVersion: 6560018,
           indexInLedger: 3,
           deliveredAmount: { mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578", value: "100" },
@@ -5645,6 +5705,7 @@ describe("Models", () => {
               },
             },
           },
+          ledgerIndex: 6560022,
           ledgerVersion: 6560022,
           indexInLedger: 1,
         },
@@ -5682,6 +5743,7 @@ describe("Models", () => {
               },
             },
           },
+          ledgerIndex: 6560014,
           ledgerVersion: 6560014,
           indexInLedger: 0,
         },
@@ -5729,6 +5791,7 @@ describe("Models", () => {
               scale: 2,
             },
           },
+          ledgerIndex: 6560010,
           ledgerVersion: 6560010,
           indexInLedger: 1,
         },
@@ -5766,6 +5829,7 @@ describe("Models", () => {
               scale: 2,
             },
           },
+          ledgerIndex: 6560024,
           ledgerVersion: 6560024,
           indexInLedger: 1,
         },
@@ -5806,6 +5870,7 @@ describe("Models", () => {
               flagsChange: 126,
             },
           },
+          ledgerIndex: 6560020,
           ledgerVersion: 6560020,
           indexInLedger: 1,
         },
@@ -5871,6 +5936,7 @@ describe("Models", () => {
               },
             ],
           },
+          ledgerIndex: 71226014,
           ledgerVersion: 71226014,
           indexInLedger: 92,
           deliveredAmount: {
@@ -5897,8 +5963,9 @@ describe("Models", () => {
           timestamp: "2022-03-22T16:13:41.000Z",
           balanceChanges: { rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy: [{ currency: "XRP", value: "-0.0001" }] },
           fee: "0.0001",
-          indexInLedger: 0,
+          ledgerIndex: 593274,
           ledgerVersion: 593274,
+          indexInLedger: 0,
           nftokenChanges: {
             rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy: [
               {
@@ -6004,6 +6071,7 @@ describe("Models", () => {
               },
             ],
           },
+          ledgerIndex: 71226014,
           ledgerVersion: 71226014,
           indexInLedger: 92,
           deliveredAmount: {

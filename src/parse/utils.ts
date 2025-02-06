@@ -37,7 +37,7 @@ function removeGenericCounterparty(
   amount: IssuedCurrencyAmount | FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount,
   address: string
 ): FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount {
-  // @deprecated FormattedIssuedCurrencyAmount
+  // @deprecated, use issuer
   if ("counterparty" in amount) {
     return amount.counterparty === address ? _.omit(amount, "counterparty") : amount;
   }

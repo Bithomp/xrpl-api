@@ -13,7 +13,7 @@ export interface GetAccountOffers {
   ledgerIndex?: LedgerIndex;
   limit?: number;
   marker?: any;
-  legacy?: boolean; // @deprecated returns response in old old format data, same as formatted
+  legacy?: boolean; // @deprecated, use formatted
   formatted?: boolean; // returns response in old old format data, same as legacy
 }
 

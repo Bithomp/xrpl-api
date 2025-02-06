@@ -7,7 +7,7 @@ interface LockedBalanceChangeQuantity {
   issuer: string;
   currency: string;
   value: string;
-  counterparty: string; // @deprecated
+  counterparty: string; // @deprecated, use issuer
 }
 
 export interface AddressLockedBalanceChangeQuantity {
@@ -77,7 +77,7 @@ function parseTrustlineQuantity(node, valueParser): AddressLockedBalanceChangeQu
       issuer: LockedBalanceFields.LockedBalance.issuer,
       currency: LockedBalanceFields.LockedBalance.currency,
       value: value.toString(),
-      counterparty: LockedBalanceFields.LockedBalance.issuer, // @deprecated
+      counterparty: LockedBalanceFields.LockedBalance.issuer, // @deprecated, use issuer
     },
   };
   return [result];

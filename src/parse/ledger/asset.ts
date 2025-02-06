@@ -16,7 +16,7 @@ function parseAsset(asset: IssuedCurrency): IssuedCurrency | FormattedIssuedCurr
   return {
     issuer: asset.issuer,
     currency: asset.currency,
-    counterparty: asset.issuer, // @deprecated
+    counterparty: asset.issuer, // @deprecated, use issuer
   };
 }
 

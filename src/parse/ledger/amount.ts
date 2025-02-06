@@ -18,7 +18,7 @@ function parseAmount(amount: Amount): IssuedCurrencyAmount | FormattedIssuedCurr
       issuer: amount.issuer,
       currency: amount.currency,
       value: amount.value,
-      counterparty: amount.issuer, // @deprecated FormattedIssuedCurrencyAmount
+      counterparty: amount.issuer, // @deprecated, use issuer
     };
   }
 

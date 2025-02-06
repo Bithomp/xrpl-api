@@ -4,7 +4,8 @@ import { BalanceChanges } from "../parse/outcome/balance_changes";
 
 export type Outcome = {
   result?: string;
-  ledgerVersion?: number;
+  ledgerIndex?: number;
+  ledgerVersion?: number; // @deprecated, use ledgerIndex
   indexInLedger?: number;
   fee?: string;
   balanceChanges?: BalanceChanges;

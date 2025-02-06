@@ -72,7 +72,7 @@ interface DecodedNFTCurrencyTransactionInterface {
   account?: string;
   destination?: string;
   issuer?: string;
-  counterparty?: string; // @deprecated
+  counterparty?: string; // @deprecated, use issuer
   hash?: string;
   memos?: string;
 }
@@ -112,7 +112,7 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
           account,
           destination,
           issuer: limit?.issuer,
-          counterparty: limit?.issuer, // @deprecated
+          counterparty: limit?.issuer, // @deprecated, use issuer
           hash,
           memos,
         });

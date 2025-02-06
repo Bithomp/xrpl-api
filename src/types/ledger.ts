@@ -17,14 +17,14 @@ export interface Ledger {
 }
 
 export type FormattedLedger = {
-  // TODO: properties in type don't match response object. Fix!
   // closed: boolean,
   stateHash: string;
   closeTime: string;
   closeTimeResolution: number;
   closeFlags: number;
   ledgerHash: string;
-  ledgerVersion: number;
+  ledgerIndex: number;
+  ledgerVersion: number; // @deprecated, use ledgerIndex
   parentLedgerHash: string;
   parentCloseTime: string;
   totalDrops: string;

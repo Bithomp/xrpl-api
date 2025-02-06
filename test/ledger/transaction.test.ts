@@ -224,8 +224,9 @@ describe("Client", () => {
         expect(result.outcome).to.eql({
           balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
           fee: "0.00001",
-          indexInLedger: 42,
+          ledgerIndex: 69773479,
           ledgerVersion: 69773479,
+          indexInLedger: 42,
           result: "tesSUCCESS",
           timestamp: "2022-02-18T13:13:21.000Z",
         });
@@ -249,8 +250,9 @@ describe("Client", () => {
         expect(result.outcome).to.eql({
           balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.01" }] },
           fee: "0.01",
-          indexInLedger: 4,
+          ledgerIndex: 69754983,
           ledgerVersion: 69754983,
+          indexInLedger: 4,
           result: "tesSUCCESS",
           timestamp: "2022-02-17T16:58:50.000Z",
         });
@@ -281,6 +283,7 @@ describe("Client", () => {
             timestamp: "2022-02-18T13:13:21.000Z",
             fee: "0.00001",
             balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
+            ledgerIndex: 69773479,
             ledgerVersion: 69773479,
             indexInLedger: 42,
           },
@@ -305,6 +308,7 @@ describe("Client", () => {
             timestamp: "2022-02-18T13:13:21.000Z",
             fee: "0.00001",
             balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
+            ledgerIndex: 69773479,
             ledgerVersion: 69773479,
             indexInLedger: 42,
           },
@@ -346,6 +350,7 @@ describe("Client", () => {
             timestamp: "2022-02-18T13:13:21.000Z",
             fee: "0.00001",
             balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
+            ledgerIndex: 69773479,
             ledgerVersion: 69773479,
             indexInLedger: 42,
           },
@@ -538,6 +543,7 @@ describe("Client", () => {
             timestamp: "2022-02-18T13:13:21.000Z",
             fee: "0.00001",
             balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
+            ledgerIndex: 69773479,
             ledgerVersion: 69773479,
             indexInLedger: 42,
           },
@@ -1228,6 +1234,7 @@ describe("Client", () => {
                 },
               },
             ],
+            ledgerIndex: 4722789,
             ledgerVersion: 4722789,
             indexInLedger: 0,
             deliveredAmount: {
@@ -1250,8 +1257,9 @@ describe("Client", () => {
           outcome: {
             balanceChanges: { rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1: [{ currency: "XAH", value: "2.001337" }] },
             fee: "0",
-            indexInLedger: 0,
+            ledgerIndex: 4142,
             ledgerVersion: 4142,
+            indexInLedger: 0,
             deliveredAmount: {
               currency: "XAH",
               value: "2.001337",
@@ -2875,6 +2883,7 @@ describe("Client", () => {
                 },
               },
             ],
+            ledgerIndex: 4722789,
             ledgerVersion: 4722789,
             indexInLedger: 0,
             deliveredAmount: {

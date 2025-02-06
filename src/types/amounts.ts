@@ -2,17 +2,17 @@ export interface IssuedCurrency {
   currency: string;
   issuer?: string;
 }
-// @deprecated
+// @deprecated, use IssuedCurrency
 export interface FormattedIssuedCurrency {
   currency: string;
-  counterparty?: string; // @deprecated
+  counterparty?: string;
 }
 
 export interface IssuedCurrencyAmount extends IssuedCurrency {
   value: string;
 }
 
-// @deprecated
+// @deprecated, use IssuedCurrencyAmount
 export interface FormattedIssuedCurrencyAmount extends FormattedIssuedCurrency {
   value: string;
 }

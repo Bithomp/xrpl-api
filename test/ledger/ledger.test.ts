@@ -54,6 +54,7 @@ describe("Client", () => {
           "closeTimeResolution",
           "close_time",
           "ledgerHash",
+          "ledgerIndex",
           "ledgerVersion",
           "parentCloseTime",
           "parentLedgerHash",
@@ -188,6 +189,9 @@ describe("Client", () => {
 
         const transactions: any = result.ledger.transactions.sort((a: any, b: any) => a.id.localeCompare(b.id));
         expect(transactions[0].id).to.eql("05403FE48CCFCB45888FB3FDA0A791B0B3AA29360050412B95FCA436E1A41DCF");
+        expect(transactions[0].outcome.result).to.eql("tesSUCCESS");
+        expect(transactions[0].outcome.ledgerIndex).to.eql(66816622);
+        expect(transactions[0].outcome.ledgerVersion).to.eql(66816622);
       });
     });
   });

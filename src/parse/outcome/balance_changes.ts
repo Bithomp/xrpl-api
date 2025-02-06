@@ -9,7 +9,7 @@ interface BalanceChangeQuantity {
   issuer?: string;
   currency?: string;
   value: string;
-  counterparty?: string; // @deprecated
+  counterparty?: string; // @deprecated, use issuer
   mpt_issuance_id?: string;
 }
 
@@ -97,7 +97,7 @@ function flipTrustlinePerspective(quantity): AddressBalanceChangeQuantity {
       issuer: quantity.address,
       currency: quantity.balance.currency,
       value: negatedBalance.toString(),
-      counterparty: quantity.address, // @deprecated
+      counterparty: quantity.address, // @deprecated, use issuer
     },
   };
 }
@@ -123,7 +123,7 @@ function parseTrustlineQuantity(node, valueParser): AddressBalanceChangeQuantity
       issuer: fields.HighLimit.issuer,
       currency: fields.Balance.currency,
       value: value.toString(),
-      counterparty: fields.HighLimit.issuer, // @deprecated
+      counterparty: fields.HighLimit.issuer, // @deprecated, use issuer
     },
   };
   return [result, flipTrustlinePerspective(result)];

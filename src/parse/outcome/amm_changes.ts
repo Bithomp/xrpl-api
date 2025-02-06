@@ -193,7 +193,7 @@ function summarizeActionSlotChanges(node: any): FormattedAuctionSlotChanges | un
         value: new BigNumber(final.AuctionSlot.Price.value)
           .minus(new BigNumber(prev.AuctionSlot.Price.value))
           .toString(10),
-        counterparty: final.AuctionSlot.Price.issuer, // @deprecated
+        counterparty: final.AuctionSlot.Price.issuer, // @deprecated, use issuer
       };
     }
 
@@ -293,7 +293,7 @@ function summarizeAmm(node: any): FormattedAmmSummaryInterface {
       currency: final.LPTokenBalance.currency,
       issuer: final.LPTokenBalance.issuer,
       value: new BigNumber(final.LPTokenBalance.value).minus(new BigNumber(prev.LPTokenBalance.value)).toString(10),
-      counterparty: final.LPTokenBalance.issuer, // @deprecated
+      counterparty: final.LPTokenBalance.issuer, // @deprecated, use issuer
     };
   }
 

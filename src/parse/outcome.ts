@@ -53,7 +53,7 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     result: tx.meta.TransactionResult,
     timestamp: parseTimestamp(tx.date),
     fee: dropsToXrp(tx.Fee),
-    balanceChanges,
+    balanceChanges: Object.keys(balanceChanges).length > 0 ? balanceChanges : undefined,
     lockedBalanceChanges: Object.keys(lockedBalanceChanges).length > 0 ? lockedBalanceChanges : undefined,
     orderbookChanges: Object.keys(orderbookChanges).length > 0 ? orderbookChanges : undefined,
     channelChanges,
@@ -71,7 +71,8 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     unlReportChanges,
     hooksExecutions,
     emittedTxns,
-    ledgerVersion: tx.ledger_index,
+    ledgerIndex: tx.ledger_index || tx.inLedger,
+    ledgerVersion: tx.ledger_index || tx.inLedger, // @deprecated, use ledgerIndex
     indexInLedger: tx.meta.TransactionIndex,
     deliveredAmount: parseDeliveredAmount(tx),
   });

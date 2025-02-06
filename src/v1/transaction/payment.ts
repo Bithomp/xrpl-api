@@ -76,7 +76,7 @@ function isIOUWithoutCounterparty(
       // eslint-disable-next-line eqeqeq
       (amount as IssuedCurrencyAmount).issuer == null &&
       // eslint-disable-next-line eqeqeq
-      (amount as FormattedIssuedCurrencyAmount).counterparty == null // @deprecated
+      (amount as FormattedIssuedCurrencyAmount).counterparty == null // @deprecated, use issuer
     ) {
       return true;
     }
