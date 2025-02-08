@@ -1,10 +1,10 @@
 import { removeUndefined } from "../../common";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "../../types/account";
-import { normalizeNodes, parseTimestamp } from "../utils";
+import { NormalizedNode, normalizeNode, parseTimestamp } from "../utils";
 
 interface FormattedEscrowSummaryInterface {
   status?: "created" | "cancelled" | "executed" | "deleted";
-  escrowIndex?: number;
+  escrowIndex?: string;
   escrowSequence?: number;
   amount?: string;
   condition?: string;
@@ -16,7 +16,7 @@ interface FormattedEscrowSummaryInterface {
   previousTxnLgrSeq?: number;
 }
 
-function parseEscrowStatus(tx: any, node: any) {
+function parseEscrowStatus(tx: any, node: NormalizedNode) {
   if (node.diffType === "CreatedNode") {
     return "created";
   }
@@ -47,8 +47,8 @@ function parseEscrowSequence(tx: any) {
   return undefined;
 }
 
-function summarizeEscrow(tx: any, node: any): FormattedEscrowSummaryInterface {
-  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields;
+function summarizeEscrow(tx: any, node: NormalizedNode): FormattedEscrowSummaryInterface {
+  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields as any;
 
   const source: FormattedSourceAddress = {
     address: final.Account,
@@ -88,11 +88,18 @@ function summarizeEscrow(tx: any, node: any): FormattedEscrowSummaryInterface {
 }
 
 function parseEscrowChanges(tx: any): FormattedEscrowSummaryInterface | undefined {
-  const escrows = normalizeNodes(tx.meta).filter((n: any) => {
-    return n.entryType === "Escrow";
+  const affectedNodes = tx.meta.AffectedNodes.filter((affectedNode: any) => {
+    const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
+    return node.LedgerEntryType === "Escrow";
   });
 
-  return escrows.length === 1 ? summarizeEscrow(tx, escrows[0]) : undefined;
+  if (affectedNodes.length !== 1) {
+    return undefined;
+  }
+
+  const normalizedNode = normalizeNode(affectedNodes[0]);
+
+  return summarizeEscrow(tx, normalizedNode);
 }
 
 export { parseEscrowChanges };

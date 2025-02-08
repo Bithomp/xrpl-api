@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 import { TransactionMetadata } from "xrpl";
-import { normalizeNodes } from "../utils";
+import { NormalizedNode, normalizeNode } from "../utils";
 import { removeUndefined } from "../../common";
 import { OraclePriceDataSeriesInterface, FormattedOraclePriceDataSeriesInterface } from "../../types";
 
@@ -32,7 +32,7 @@ interface FormattedPriceDataSeriesChanges {
   originalPriceChange?: string; // BigNumber
 }
 
-function parseOracleStatus(node: any): "created" | "modified" | "deleted" | undefined {
+function parseOracleStatus(node: NormalizedNode): "created" | "modified" | "deleted" | undefined {
   if (node.diffType === "CreatedNode") {
     return "created";
   }
@@ -90,9 +90,9 @@ function parsePriceDataSeries(series: OraclePriceDataSeriesInterface): Formatted
   });
 }
 
-function summarizePriceDataSeriesChanges(node: any): FormattedPriceDataSeriesChanges[] | undefined {
-  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields;
-  const prev = node.previousFields || {};
+function summarizePriceDataSeriesChanges(node: NormalizedNode): FormattedPriceDataSeriesChanges[] | undefined {
+  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields as any;
+  const prev = node.previousFields as any;
 
   const changes = final.PriceDataSeries.reduce(
     (acc: FormattedPriceDataSeriesChanges[], series: OraclePriceDataSeriesInterface) => {
@@ -177,13 +177,13 @@ function summarizePriceDataSeriesChanges(node: any): FormattedPriceDataSeriesCha
   return changes;
 }
 
-function summarizeOracle(node: any): FormattedOracleSummaryInterface {
-  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields;
-  const prev = node.previousFields || {};
+function summarizeOracle(node: NormalizedNode): FormattedOracleSummaryInterface {
+  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields as any;
+  const prev = node.previousFields as any;
 
   const summary: FormattedOracleSummaryInterface = {
     status: parseOracleStatus(node),
-    oracleID: node.LedgerIndex,
+    oracleID: node.ledgerIndex,
     oracleDocumentID: final.OracleDocumentID,
     provider: final.Provider,
     uri: final.URI,
@@ -208,11 +208,18 @@ function summarizeOracle(node: any): FormattedOracleSummaryInterface {
 }
 
 function parseOracleChanges(metadata: TransactionMetadata): FormattedOracleSummaryInterface | undefined {
-  const oracles = normalizeNodes(metadata).filter((n) => {
-    return n.entryType === "Oracle";
+  const affectedNodes = metadata.AffectedNodes.filter((affectedNode: any) => {
+    const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
+    return node.LedgerEntryType === "Oracle";
   });
 
-  return oracles.length === 1 ? summarizeOracle(oracles[0]) : undefined;
+  if (affectedNodes.length !== 1) {
+    return undefined;
+  }
+
+  const normalizedNode = normalizeNode(affectedNodes[0]);
+
+  return summarizeOracle(normalizedNode);
 }
 
 export { parseOracleChanges, parsePriceDataSeries };

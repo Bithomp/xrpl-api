@@ -5,6 +5,19 @@ import { ledgerTimeToISO8601 } from "../models";
 import { IssuedCurrencyAmount, FormattedIssuedCurrencyAmount, FormattedIssuedMPTAmount } from "../types";
 import { getNativeCurrency } from "../client";
 
+type NormalizedNode = {
+  diffType: string;
+  entryType: string;
+  ledgerIndex: string;
+  newFields: { [field: string]: unknown };
+  finalFields: { [field: string]: unknown };
+  previousFields: { [field: string]: unknown };
+
+  // from Node object
+  PreviousTxnID?: string;
+  PreviousTxnLgrSeq?: number;
+};
+
 function adjustQualityForXRP(quality: string, takerGetsCurrency: string, takerPaysCurrency: string) {
   // quality = takerPays.value/takerGets.value
   // using drops (1e-6 XRP) for XRP values
@@ -48,7 +61,7 @@ function removeGenericCounterparty(
   return amount;
 }
 
-function normalizeNode(affectedNode: Node) {
+function normalizeNode(affectedNode: Node): NormalizedNode {
   const diffType = Object.keys(affectedNode)[0];
   const node = affectedNode[diffType];
   return Object.assign({}, node, {
@@ -61,7 +74,7 @@ function normalizeNode(affectedNode: Node) {
   });
 }
 
-function normalizeNodes(metadata: TransactionMetadata) {
+function normalizeNodes(metadata: TransactionMetadata): NormalizedNode[] {
   if (!metadata.AffectedNodes) {
     return [];
   }
@@ -120,12 +133,14 @@ function parseUint64(buf: Buffer, cur: number): string {
 }
 
 export {
+  NormalizedNode,
   parseQuality,
   parseTimestamp,
   adjustQualityForXRP,
   isPartialPayment,
   removeGenericCounterparty,
   normalizeNodes,
+  normalizeNode,
   hexToString,
   stringToHex,
   bytesToHex,

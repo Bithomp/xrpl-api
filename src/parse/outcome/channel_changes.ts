@@ -1,5 +1,6 @@
 import BigNumber from "bignumber.js";
-import { normalizeNodes } from "../utils";
+import { TransactionMetadata } from "xrpl";
+import { NormalizedNode, normalizeNode } from "../utils";
 
 function parsePaymentChannelStatus(node) {
   if (node.diffType === "CreatedNode") {
@@ -16,9 +17,9 @@ function parsePaymentChannelStatus(node) {
   return undefined;
 }
 
-function summarizePaymentChannel(node) {
-  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields;
-  const prev = node.previousFields || {};
+function summarizePaymentChannel(node: NormalizedNode) {
+  const final = node.diffType === "CreatedNode" ? node.newFields : (node.finalFields as any);
+  const prev = node.previousFields as any;
 
   const summary = {
     // Status may be 'created', 'modified', or 'deleted'.
@@ -77,12 +78,19 @@ function summarizePaymentChannel(node) {
   return summary;
 }
 
-function parseChannelChanges(metadata) {
-  const paymentChannels = normalizeNodes(metadata).filter((n) => {
-    return n.entryType === "PayChannel";
+function parseChannelChanges(metadata: TransactionMetadata) {
+  const affectedNodes = metadata.AffectedNodes.filter((affectedNode: any) => {
+    const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
+    return node.LedgerEntryType === "PayChannel";
   });
 
-  return paymentChannels.length === 1 ? summarizePaymentChannel(paymentChannels[0]) : undefined;
+  if (affectedNodes.length !== 1) {
+    return undefined;
+  }
+
+  const normalizedNode = normalizeNode(affectedNodes[0]);
+
+  return summarizePaymentChannel(normalizedNode);
 }
 
 export { parseChannelChanges };

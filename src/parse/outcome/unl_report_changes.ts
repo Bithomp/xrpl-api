@@ -1,5 +1,5 @@
 import { removeUndefined } from "../../common";
-import { normalizeNodes } from "../utils";
+import { NormalizedNode, normalizeNode } from "../utils";
 
 interface FormattedUNLReportSummaryInterface {
   status: "added";
@@ -13,8 +13,8 @@ interface FormattedUNLReportSummaryInterface {
   };
 }
 
-function summarizeUNLReport(tx: any, node: any) {
-  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields;
+function summarizeUNLReport(tx: any, node: NormalizedNode) {
+  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields as any;
 
   if (tx.ImportVLKey && final.ImportVLKeys) {
     for (const vlKey of final.ImportVLKeys) {
@@ -50,11 +50,18 @@ function summarizeUNLReport(tx: any, node: any) {
 }
 
 function parseUNLReportChanges(tx: any) {
-  const escrows = normalizeNodes(tx.meta).filter((n: any) => {
-    return n.entryType === "UNLReport";
+  const affectedNodes = tx.meta.AffectedNodes.filter((affectedNode: any) => {
+    const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
+    return node.LedgerEntryType === "UNLReport";
   });
 
-  return escrows.length === 1 ? summarizeUNLReport(tx, escrows[0]) : undefined;
+  if (affectedNodes.length !== 1) {
+    return undefined;
+  }
+
+  const normalizedNode = normalizeNode(affectedNodes[0]);
+
+  return summarizeUNLReport(tx, normalizedNode);
 }
 
 export { parseUNLReportChanges };

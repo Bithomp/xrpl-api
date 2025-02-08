@@ -1,9 +1,9 @@
 import _ from "lodash";
 import BigNumber from "bignumber.js";
-import { TransactionMetadata } from "xrpl";
+import { TransactionMetadata } from "xrpl"; // Node, CreatedNode, ModifiedNode, DeletedNode,
 import { dropsToXrp } from "../../common";
-import { normalizeNodes } from "../utils";
 import { getNativeCurrency } from "../../client";
+import { NormalizedNode, normalizeNode } from "../utils";
 
 interface BalanceChangeQuantity {
   issuer?: string;
@@ -46,7 +46,7 @@ function parseValue(value): BigNumber {
   return new BigNumber(value.value ?? value.MPTAmount ?? 0);
 }
 
-function computeBalanceChange(node) {
+function computeBalanceChange(node: NormalizedNode): BigNumber | null {
   let value: null | BigNumber = null;
   if (node.newFields.Balance) {
     value = parseValue(node.newFields.Balance);
@@ -61,7 +61,7 @@ function computeBalanceChange(node) {
   return value === null ? null : value.isZero() ? null : value;
 }
 
-function parseFinalBalance(node) {
+function parseFinalBalance(node: NormalizedNode): BigNumber | null {
   if (node.newFields.Balance) {
     return parseValue(node.newFields.Balance);
   } else if (node.finalFields.Balance) {
@@ -73,7 +73,11 @@ function parseFinalBalance(node) {
   return null;
 }
 
-function parseXRPQuantity(node: any, valueParser: any, nativeCurrency?: string): AddressBalanceChangeQuantity | null {
+function parseXRPQuantity(
+  node: NormalizedNode,
+  valueParser: any,
+  nativeCurrency?: string
+): AddressBalanceChangeQuantity | null {
   const value = valueParser(node);
 
   if (value === null) {
@@ -81,7 +85,7 @@ function parseXRPQuantity(node: any, valueParser: any, nativeCurrency?: string):
   }
 
   return {
-    address: node.finalFields.Account || node.newFields.Account,
+    address: (node.finalFields.Account || node.newFields.Account) as string,
     balance: {
       currency: nativeCurrency || getNativeCurrency(),
       value: dropsToXrp(value).toString(),
@@ -89,7 +93,7 @@ function parseXRPQuantity(node: any, valueParser: any, nativeCurrency?: string):
   };
 }
 
-function flipTrustlinePerspective(quantity): AddressBalanceChangeQuantity {
+function flipTrustlinePerspective(quantity: any): AddressBalanceChangeQuantity {
   const negatedBalance = new BigNumber(quantity.balance.value).negated();
   return {
     address: quantity.balance.issuer,
@@ -102,7 +106,7 @@ function flipTrustlinePerspective(quantity): AddressBalanceChangeQuantity {
   };
 }
 
-function parseTrustlineQuantity(node, valueParser): AddressBalanceChangeQuantity[] | null {
+function parseTrustlineQuantity(node: NormalizedNode, valueParser: any): AddressBalanceChangeQuantity[] | null {
   const value = valueParser(node);
 
   if (value === null) {
@@ -114,7 +118,7 @@ function parseTrustlineQuantity(node, valueParser): AddressBalanceChangeQuantity
    * If an offer is placed to acquire an asset with no existing trustline,
    * the trustline can be created when the offer is taken.
    */
-  const fields = _.isEmpty(node.newFields) ? node.finalFields : node.newFields;
+  const fields = _.isEmpty(node.newFields) ? node.finalFields : (node.newFields as any);
 
   // the balance is always from low node's perspective
   const result = {
@@ -129,14 +133,14 @@ function parseTrustlineQuantity(node, valueParser): AddressBalanceChangeQuantity
   return [result, flipTrustlinePerspective(result)];
 }
 
-function parseMPTQuantity(node: any, valueParser: any): AddressBalanceChangeQuantity | null {
+function parseMPTQuantity(node: NormalizedNode, valueParser: any): AddressBalanceChangeQuantity | null {
   const value = valueParser(node);
 
   if (value === null) {
     return null;
   }
 
-  const fields = _.isEmpty(node.newFields) ? node.finalFields : node.newFields;
+  const fields = _.isEmpty(node.newFields) ? node.finalFields : (node.newFields as any);
 
   return {
     address: fields.Account,
@@ -148,14 +152,21 @@ function parseMPTQuantity(node: any, valueParser: any): AddressBalanceChangeQuan
 }
 
 function parseQuantities(metadata: TransactionMetadata, valueParser: any, nativeCurrency?: string) {
-  const values = normalizeNodes(metadata).map(function (node) {
-    if (node.entryType === "AccountRoot") {
-      return [parseXRPQuantity(node, valueParser, nativeCurrency)];
-    } else if (node.entryType === "RippleState") {
-      return parseTrustlineQuantity(node, valueParser);
-    } else if (node.entryType === "MPToken") {
-      return [parseMPTQuantity(node, valueParser)];
+  const values = metadata.AffectedNodes.map(function (affectedNode: any) {
+    const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
+    if (!["AccountRoot", "RippleState", "MPToken"].includes(node.LedgerEntryType)) {
+      return [];
     }
+
+    const normalizedNode = normalizeNode(affectedNode);
+    if (node.LedgerEntryType === "AccountRoot") {
+      return [parseXRPQuantity(normalizedNode, valueParser, nativeCurrency)];
+    } else if (node.LedgerEntryType === "RippleState") {
+      return parseTrustlineQuantity(normalizedNode, valueParser);
+    } else if (node.LedgerEntryType === "MPToken") {
+      return [parseMPTQuantity(normalizedNode, valueParser)];
+    }
+
     return [];
   });
 
@@ -169,7 +180,7 @@ function parseQuantities(metadata: TransactionMetadata, valueParser: any, native
  *  @param {Object} metadata Transaction metadata
  *  @returns {Object} parsed balance changes
  */
-function parseBalanceChanges(metadata: TransactionMetadata, nativeCurrency?: string) {
+function parseBalanceChanges(metadata: TransactionMetadata, nativeCurrency?: string): BalanceChanges {
   return parseQuantities(metadata, computeBalanceChange, nativeCurrency);
 }
 

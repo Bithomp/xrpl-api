@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 import { AuthAccount, TransactionMetadata } from "xrpl";
-import { normalizeNodes } from "../utils";
 import { removeUndefined } from "../../common";
+import { NormalizedNode, normalizeNode } from "../utils";
 import { FormattedIssuedCurrency, FormattedAmount, VoteSlotInterface } from "../../types";
 import parseAmount from "../ledger/amount";
 import parseAsset from "../ledger/asset";
@@ -71,7 +71,7 @@ interface FormattedAmmVoteSlotChanges {
   voteWeightChange?: number;
 }
 
-function parseAmmStatus(node: any): "created" | "modified" | "deleted" | undefined {
+function parseAmmStatus(node: NormalizedNode): "created" | "modified" | "deleted" | undefined {
   if (node.diffType === "CreatedNode") {
     return "created";
   }
@@ -107,9 +107,9 @@ function parseVoteSlot(voteSlot: VoteSlotInterface): FormattedVoteSlot {
   };
 }
 
-function summarizeVoteSlotsChanges(node: any): FormattedAmmVoteSlotChanges[] | undefined {
-  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields;
-  const prev = node.previousFields || {};
+function summarizeVoteSlotsChanges(node: NormalizedNode): FormattedAmmVoteSlotChanges[] | undefined {
+  const final = node.diffType === "CreatedNode" ? node.newFields : (node.finalFields as any);
+  const prev = node.previousFields as any;
 
   const changes = final.VoteSlots.reduce((acc: FormattedAmmVoteSlotChanges[], slot: VoteSlotInterface) => {
     const prevSlot = prev.VoteSlots.find((s: VoteSlotInterface) => s.VoteEntry.Account === slot.VoteEntry.Account);
@@ -167,9 +167,9 @@ function summarizeVoteSlotsChanges(node: any): FormattedAmmVoteSlotChanges[] | u
   return changes;
 }
 
-function summarizeActionSlotChanges(node: any): FormattedAuctionSlotChanges | undefined {
-  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields;
-  const prev = node.previousFields || {};
+function summarizeActionSlotChanges(node: NormalizedNode): FormattedAuctionSlotChanges | undefined {
+  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields as any;
+  const prev = node.previousFields as any;
 
   const changes: FormattedAmmActionSlotChanges = {};
 
@@ -264,9 +264,9 @@ function isEqualAuthAccounts(obj1: AuthAccount[] | undefined, obj2: AuthAccount[
   return true;
 }
 
-function summarizeAmm(node: any): FormattedAmmSummaryInterface {
-  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields;
-  const prev = node.previousFields || {};
+function summarizeAmm(node: NormalizedNode): FormattedAmmSummaryInterface {
+  const final = node.diffType === "CreatedNode" ? node.newFields : (node.finalFields as any);
+  const prev = node.previousFields as any;
 
   // asset could be missed for new AMM if it is XRP
   let asset = parseAsset(final.Asset);
@@ -276,7 +276,7 @@ function summarizeAmm(node: any): FormattedAmmSummaryInterface {
 
   const summary: FormattedAmmSummaryInterface = {
     status: parseAmmStatus(node),
-    ammID: node.LedgerIndex,
+    ammID: node.ledgerIndex,
     account: final.Account,
     asset: asset,
     asset2: parseAsset(final.Asset2),
@@ -316,11 +316,18 @@ function summarizeAmm(node: any): FormattedAmmSummaryInterface {
 }
 
 function parseAmmChanges(metadata: TransactionMetadata): FormattedAmmSummaryInterface | undefined {
-  const amms = normalizeNodes(metadata).filter((n) => {
-    return n.entryType === "AMM";
+  const affectedNodes = metadata.AffectedNodes.filter((affectedNode: any) => {
+    const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
+    return node.LedgerEntryType === "AMM";
   });
 
-  return amms.length === 1 ? summarizeAmm(amms[0]) : undefined;
+  if (affectedNodes.length !== 1) {
+    return undefined;
+  }
+
+  const normalizedNode = normalizeNode(affectedNodes[0]);
+
+  return summarizeAmm(normalizedNode);
 }
 
 export { parseAmmChanges };

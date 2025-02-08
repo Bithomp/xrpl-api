@@ -1,5 +1,5 @@
 import { TransactionMetadata } from "xrpl";
-import { normalizeNodes } from "../utils";
+import { NormalizedNode, normalizeNode } from "../utils";
 import { removeUndefined } from "../../common";
 
 interface FormattedDIDSummaryInterface {
@@ -16,7 +16,7 @@ interface FormattedDIDSummaryInterface {
   didDocumentChanges?: string;
 }
 
-function parseDIDStatus(node: any): "created" | "modified" | "deleted" | undefined {
+function parseDIDStatus(node: NormalizedNode): "created" | "modified" | "deleted" | undefined {
   if (node.diffType === "CreatedNode") {
     return "created";
   }
@@ -31,13 +31,13 @@ function parseDIDStatus(node: any): "created" | "modified" | "deleted" | undefin
   return undefined;
 }
 
-function summarizeDID(node: any): FormattedDIDSummaryInterface {
-  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields;
-  const prev = node.previousFields || {};
+function summarizeDID(node: NormalizedNode): FormattedDIDSummaryInterface {
+  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields as any;
+  const prev = node.previousFields as any;
 
   const summary: FormattedDIDSummaryInterface = {
     status: parseDIDStatus(node),
-    didID: node.LedgerIndex,
+    didID: node.ledgerIndex,
     account: final.Account,
     uri: final.URI,
     data: final.Data,
@@ -60,11 +60,18 @@ function summarizeDID(node: any): FormattedDIDSummaryInterface {
 }
 
 function parseDIDChanges(metadata: TransactionMetadata): FormattedDIDSummaryInterface | undefined {
-  const dids = normalizeNodes(metadata).filter((n) => {
-    return n.entryType === "DID";
+  const affectedNodes = metadata.AffectedNodes.filter((affectedNode: any) => {
+    const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
+    return node.LedgerEntryType === "DID";
   });
 
-  return dids.length === 1 ? summarizeDID(dids[0]) : undefined;
+  if (affectedNodes.length !== 1) {
+    return undefined;
+  }
+
+  const normalizedNode = normalizeNode(affectedNodes[0]);
+
+  return summarizeDID(normalizedNode);
 }
 
 export { parseDIDChanges };

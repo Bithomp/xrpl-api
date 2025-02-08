@@ -1,7 +1,7 @@
 import _ from "lodash";
 import BigNumber from "bignumber.js";
 import { TransactionMetadata } from "xrpl";
-import { normalizeNodes } from "../utils";
+import { NormalizedNode, normalizeNode } from "../utils";
 
 interface LockedBalanceChangeQuantity {
   issuer: string;
@@ -34,7 +34,7 @@ function parseValue(value): BigNumber {
   return new BigNumber(value.value ?? value);
 }
 
-function computeBalanceChange(node: any) {
+function computeBalanceChange(node: NormalizedNode) {
   let value: null | BigNumber = null;
   if (node.newFields.LockedBalance) {
     value = parseValue(node.newFields.LockedBalance);
@@ -84,10 +84,17 @@ function parseTrustlineQuantity(node, valueParser): AddressLockedBalanceChangeQu
 }
 
 function parseQuantities(metadata: TransactionMetadata, valueParser) {
-  const values = normalizeNodes(metadata).map(function (node) {
-    if (node.entryType === "RippleState") {
-      return parseTrustlineQuantity(node, valueParser);
+  const values = metadata.AffectedNodes.map(function (affectedNode: any) {
+    const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
+    if (node.LedgerEntryType !== "RippleState") {
+      return [];
     }
+
+    const normalizedNode = normalizeNode(affectedNode);
+    if (node.LedgerEntryType === "RippleState") {
+      return parseTrustlineQuantity(normalizedNode, valueParser);
+    }
+
     return [];
   });
 
