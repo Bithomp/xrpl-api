@@ -61,7 +61,7 @@ class MPTokenChanges {
     for (const affectedNode of this.tx.meta.AffectedNodes) {
       const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
       if (node?.LedgerEntryType === "MPToken" && node?.LedgerIndex) {
-        // create a new URIToken entry with or without offer
+        // create a new AMM entry
         if (affectedNode.CreatedNode) {
           const mptIssuanceID = node.NewFields.MPTokenIssuanceID;
           const account = node.NewFields.Account;
@@ -75,7 +75,7 @@ class MPTokenChanges {
           });
         }
 
-        // modify an existing URIToken entry, create an offer, cancel an offer, change an owner, or change an offer
+        // modify an existing AMM entry
         if (affectedNode.ModifiedNode) {
           const mptIssuanceID = node.FinalFields.MPTokenIssuanceID;
           const account = node.FinalFields.Account;
@@ -102,7 +102,7 @@ class MPTokenChanges {
           });
         }
 
-        // delete an existing URIToken entry with or without an offer
+        // delete an existing AMM entry
         if (affectedNode.DeletedNode) {
           const mptIssuanceID = node.FinalFields.MPTokenIssuanceID;
           const account = node.FinalFields.Account;

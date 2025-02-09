@@ -8,18 +8,8 @@ describe("Models", () => {
       const result: any = Models.parseFinalBalances(tx.meta);
 
       expect(result).to.eql({
-        rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [
-          {
-            currency: "XRP",
-            value: "999.999904",
-          },
-        ],
-        r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
-          {
-            currency: "XRP",
-            value: "999.999832",
-          },
-        ],
+        rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw: [{ currency: "XRP", value: "999.999904" }],
+        r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [{ currency: "XRP", value: "999.999832" }],
       });
     });
 
@@ -35,10 +25,7 @@ describe("Models", () => {
             value: "100",
             counterparty: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
           },
-          {
-            currency: "XRP",
-            value: "4736.99982",
-          },
+          { currency: "XRP", value: "4736.99982" },
         ],
         rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV: [
           {
@@ -48,12 +35,7 @@ describe("Models", () => {
             counterparty: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
           },
         ],
-        rELeasERs3m4inA1UinRLTpXemqyStqzwh: [
-          {
-            currency: "XRP",
-            value: "49.999976",
-          },
-        ],
+        rELeasERs3m4inA1UinRLTpXemqyStqzwh: [{ currency: "XRP", value: "49.999976" }],
       });
     });
 
@@ -63,10 +45,7 @@ describe("Models", () => {
 
       expect(result).to.eql({
         rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89: [
-          {
-            currency: "XRP",
-            value: "19.754728",
-          },
+          { currency: "XRP", value: "19.754728" },
           {
             issuer: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",
             currency: "594F494E4B000000000000000000000000000000",

@@ -1,5 +1,5 @@
 import { FormattedBaseSpecification } from "./specification";
-import { FormattedIssuedCurrencyAmount, FormattedIssuedMPTAmount } from "./amounts";
+import { IssuedCurrencyAmount, FormattedIssuedCurrencyAmount, FormattedIssuedMPTAmount } from "./amounts";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "./account";
 
 export type FormattedCheckCancelSpecification = {
@@ -14,13 +14,13 @@ export type FormattedCheckCashSpecification = {
   // (Optional) redeem the Check for exactly this amount, if possible.
   // The currency must match that of the `SendMax` of the corresponding
   // `CheckCreate` transaction.
-  amount: FormattedIssuedCurrencyAmount;
+  amount: IssuedCurrencyAmount | FormattedIssuedCurrencyAmount;
 
   // (Optional) redeem the Check for at least this amount and
   // for as much as possible.
   // The currency must match that of the `SendMax` of the corresponding
   // `CheckCreate` transaction.
-  deliverMin: FormattedIssuedCurrencyAmount;
+  deliverMin: IssuedCurrencyAmount | FormattedIssuedCurrencyAmount;
 
   // *must* include either Amount or DeliverMin, but not both.
 } & FormattedBaseSpecification;
@@ -31,11 +31,8 @@ export type FormattedCheckCreateSpecification = {
 
   // amount the check is allowed to debit the sender,
   // including transfer fees on non-XRP currencies.
-  sendMax: FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount;
+  sendMax: IssuedCurrencyAmount | FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount;
 
   // (Optional) time in seconds since the Ripple Epoch.
   expiration?: string;
-
-  // (Optional) 256-bit hash representing a specific reason or identifier.
-  invoiceID?: string;
 } & FormattedBaseSpecification;

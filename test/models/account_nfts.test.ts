@@ -5,28 +5,19 @@ describe("Models", () => {
   describe("parseNFTokenFlags", () => {
     it("parses flags", function () {
       const result: any = Models.parseNFTokenFlags(2147483659);
-      expect(result).to.eql({
-        burnable: true,
-        onlyXRP: true,
-        transferable: true,
-        trustLine: false,
-      });
+      expect(result).to.eql({ burnable: true, onlyXRP: true, transferable: true, trustLine: false });
     });
   });
 
   describe("parseNFTokenFlags", () => {
     it("parses flags sell", function () {
       const result: any = Models.parseNFTOfferFlags(1);
-      expect(result).to.eql({
-        sellToken: true,
-      });
+      expect(result).to.eql({ sellToken: true });
     });
 
     it("parses flags buy", function () {
       const result: any = Models.parseNFTOfferFlags(0);
-      expect(result).to.eql({
-        sellToken: false,
-      });
+      expect(result).to.eql({ sellToken: false });
     });
   });
 

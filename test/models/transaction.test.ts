@@ -22,21 +22,14 @@ describe("Models", () => {
         specification: {
           UNAVAILABLE: "Unrecognized transaction type.",
           SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is may included in this response.",
-          source: {
-            address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH",
-          },
+          source: { address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH" },
         },
         outcome: {
           result: "tesSUCCESS",
           timestamp: "2023-10-30T14:25:41.000Z",
           fee: "0.009584",
           balanceChanges: {
-            r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH: [
-              {
-                currency: "XRP",
-                value: "-0.009584",
-              },
-            ],
+            r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH: [{ currency: "XRP", value: "-0.009584" }],
           },
           hooksExecutions: [
             {
@@ -70,21 +63,14 @@ describe("Models", () => {
         specification: {
           UNAVAILABLE: "Unrecognized transaction type.",
           SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is may included in this response.",
-          source: {
-            address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH",
-          },
+          source: { address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH" },
         },
         outcome: {
           result: "tesSUCCESS",
           timestamp: "2023-10-30T14:25:41.000Z",
           fee: "0.009584",
           balanceChanges: {
-            r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH: [
-              {
-                currency: "XRP",
-                value: "-0.009584",
-              },
-            ],
+            r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH: [{ currency: "XRP", value: "-0.009584" }],
           },
           hooksExecutions: [
             {
@@ -133,12 +119,7 @@ describe("Models", () => {
           affectedObjects: {
             nftokens: {
               "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000": {
-                flags: {
-                  burnable: true,
-                  onlyXRP: true,
-                  transferable: true,
-                  trustLine: false,
-                },
+                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false },
                 issuer: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
                 nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
                 nftokenTaxon: 0,
@@ -153,12 +134,7 @@ describe("Models", () => {
         sequence: 1309348,
         specification: {
           source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
-          flags: {
-            burnable: true,
-            onlyXRP: true,
-            transferable: true,
-            trustLine: false,
-          },
+          flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false },
           nftokenTaxon: 0,
           uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
         },
@@ -215,9 +191,7 @@ describe("Models", () => {
           affectedObjects: {
             nftokenOffers: {
               AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021: {
-                flags: {
-                  sellToken: false,
-                },
+                flags: { sellToken: false },
                 index: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
                 nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
                 owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
@@ -225,12 +199,7 @@ describe("Models", () => {
             },
             nftokens: {
               "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001": {
-                flags: {
-                  burnable: true,
-                  onlyXRP: true,
-                  transferable: true,
-                  trustLine: false,
-                },
+                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false },
                 issuer: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
                 nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
                 nftokenTaxon: 0,
@@ -297,9 +266,7 @@ describe("Models", () => {
           affectedObjects: {
             nftokenOffers: {
               D3C21058E60B6597BCB33A7A77B5FC90959082C96057EDBB388CE365E8D3245D: {
-                flags: {
-                  sellToken: true,
-                },
+                flags: { sellToken: true },
                 index: "D3C21058E60B6597BCB33A7A77B5FC90959082C96057EDBB388CE365E8D3245D",
                 nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
                 owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
@@ -307,12 +274,7 @@ describe("Models", () => {
             },
             nftokens: {
               "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000": {
-                flags: {
-                  burnable: true,
-                  onlyXRP: true,
-                  transferable: true,
-                  trustLine: false,
-                },
+                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false },
                 issuer: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
                 nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
                 nftokenTaxon: 0,
@@ -464,12 +426,7 @@ describe("Models", () => {
           affectedObjects: {
             nftokens: {
               "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001": {
-                flags: {
-                  burnable: true,
-                  onlyXRP: true,
-                  transferable: true,
-                  trustLine: false,
-                },
+                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false },
                 issuer: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
                 nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
                 nftokenTaxon: 0,
@@ -544,12 +501,7 @@ describe("Models", () => {
             nftokens: {
               "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765727D1EA000000005": {
                 nftokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765727D1EA000000005",
-                flags: {
-                  burnable: true,
-                  onlyXRP: true,
-                  trustLine: false,
-                  transferable: true,
-                },
+                flags: { burnable: true, onlyXRP: true, trustLine: false, transferable: true },
                 transferFee: 0,
                 issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
                 nftokenTaxon: 0,
@@ -566,9 +518,7 @@ describe("Models", () => {
               "29FDECF9D4172AC30CADC10CF2BAD7D35EDF5EDC71739871ACF493D69322CC4D": {
                 index: "29FDECF9D4172AC30CADC10CF2BAD7D35EDF5EDC71739871ACF493D69322CC4D",
                 nftokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765727D1EA000000005",
-                flags: {
-                  sellToken: true,
-                },
+                flags: { sellToken: true },
                 owner: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
               },
             },
@@ -615,9 +565,7 @@ describe("Models", () => {
           affectedObjects: {
             nftokenOffers: {
               AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021: {
-                flags: {
-                  sellToken: false,
-                },
+                flags: { sellToken: false },
                 index: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
                 nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
                 owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
@@ -625,12 +573,7 @@ describe("Models", () => {
             },
             nftokens: {
               "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001": {
-                flags: {
-                  burnable: true,
-                  onlyXRP: true,
-                  transferable: true,
-                  trustLine: false,
-                },
+                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false },
                 issuer: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
                 nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
                 nftokenTaxon: 0,
@@ -684,9 +627,7 @@ describe("Models", () => {
           affectedObjects: {
             nftokenOffers: {
               "5770CF1626D6C26E965C05AE9B4686DB835565AE323C116A1771E80E8F2EFE25": {
-                flags: {
-                  sellToken: true,
-                },
+                flags: { sellToken: true },
                 index: "5770CF1626D6C26E965C05AE9B4686DB835565AE323C116A1771E80E8F2EFE25",
                 nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
                 owner: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
@@ -694,12 +635,7 @@ describe("Models", () => {
             },
             nftokens: {
               "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000": {
-                flags: {
-                  burnable: false,
-                  onlyXRP: false,
-                  transferable: true,
-                  trustLine: false,
-                },
+                flags: { burnable: false, onlyXRP: false, transferable: true, trustLine: false },
                 issuer: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
                 nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
                 nftokenTaxon: 0,
@@ -726,11 +662,7 @@ describe("Models", () => {
         id: "AF749F0704733FCD442128D7792EC1F5CF8FDFF4ACC9C0BE5B4C6AF68DE811FF",
         specification: {
           nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
-          amount: {
-            currency: "EVR",
-            issuer: "rHdSF3FWTFR11zZ4dPy17Rch1Ygch3gy8p",
-            value: "-2560",
-          },
+          amount: { currency: "EVR", issuer: "rHdSF3FWTFR11zZ4dPy17Rch1Ygch3gy8p", value: "-2560" },
           owner: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw",
           source: { address: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg" },
           expiration: 5241652095,
@@ -745,11 +677,7 @@ describe("Models", () => {
             rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg: [
               {
                 status: "created",
-                amount: {
-                  currency: "EVR",
-                  issuer: "rHdSF3FWTFR11zZ4dPy17Rch1Ygch3gy8p",
-                  value: "-2560",
-                },
+                amount: { currency: "EVR", issuer: "rHdSF3FWTFR11zZ4dPy17Rch1Ygch3gy8p", value: "-2560" },
                 nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
                 owner: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
                 index: "81B2D5752716704EA92506003F3F58E51B795BE9DADB2698471700FF8FD4B5F6",
@@ -760,9 +688,7 @@ describe("Models", () => {
           affectedObjects: {
             nftokenOffers: {
               "81B2D5752716704EA92506003F3F58E51B795BE9DADB2698471700FF8FD4B5F6": {
-                flags: {
-                  sellToken: false,
-                },
+                flags: { sellToken: false },
                 index: "81B2D5752716704EA92506003F3F58E51B795BE9DADB2698471700FF8FD4B5F6",
                 nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
                 owner: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
@@ -770,12 +696,7 @@ describe("Models", () => {
             },
             nftokens: {
               "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000": {
-                flags: {
-                  burnable: false,
-                  onlyXRP: false,
-                  transferable: true,
-                  trustLine: false,
-                },
+                flags: { burnable: false, onlyXRP: false, transferable: true, trustLine: false },
                 issuer: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
                 nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
                 nftokenTaxon: 0,
@@ -826,9 +747,7 @@ describe("Models", () => {
           affectedObjects: {
             nftokenOffers: {
               D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8: {
-                flags: {
-                  sellToken: true,
-                },
+                flags: { sellToken: true },
                 index: "D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8",
                 nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
                 owner: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
@@ -836,12 +755,7 @@ describe("Models", () => {
             },
             nftokens: {
               "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000": {
-                flags: {
-                  burnable: true,
-                  onlyXRP: true,
-                  transferable: true,
-                  trustLine: false,
-                },
+                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false },
                 issuer: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
                 nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
                 nftokenTaxon: 0,
@@ -938,10 +852,7 @@ describe("Models", () => {
                   value: "0.0592860722222222",
                   counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
                 },
-                totalPrice: {
-                  currency: "XRP",
-                  value: "53.357465",
-                },
+                totalPrice: { currency: "XRP", value: "53.357465" },
                 sequence: 282,
                 status: "filled",
                 makerExchangeRate: "0.001111111111111111",
@@ -967,10 +878,7 @@ describe("Models", () => {
             value: "0.07712338548602358",
             counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
           },
-          totalPrice: {
-            currency: "XRP",
-            value: "63.100951",
-          },
+          totalPrice: { currency: "XRP", value: "63.100951" },
         },
         type: "order",
       });
@@ -986,10 +894,7 @@ describe("Models", () => {
         sequence: 382,
         id: "711C4F606C63076137FAE90ADC36379D7066CF551E96DA6FE2BDAB5ECBFACF2B",
         specification: {
-          amount: {
-            currency: "XRP",
-            value: "0.001",
-          },
+          amount: { currency: "XRP", value: "0.001" },
           source: { address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn" },
           destination: { address: "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX" },
           signer: { address: "rD9iJmieYHn8jTtPjwwkW2Wm9sVDvPXLoJ" },
@@ -1004,10 +909,10 @@ describe("Models", () => {
           channelChanges: {
             status: "created",
             channelId: "C7F634794B79DB40E87179A9D1BF05D05797AE7E92DF8E93FD6656E8C4BE3AE7",
-            source: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
-            destination: "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX",
+            source: { address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn" },
+            destination: { address: "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX" },
             channelAmountDrops: "1000",
-            channelBalanceDrops: "0",
+            amount: { currency: "XRP", value: "0.001" },
           },
           ledgerIndex: 61965340,
           indexInLedger: 0,
@@ -1074,12 +979,8 @@ describe("Models", () => {
             currency: "546F6B656E466F72457363726F77000000000000",
             value: "10",
           },
-          source: {
-            address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
-          },
-          destination: {
-            address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
-          },
+          source: { address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk" },
+          destination: { address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk" },
           allowExecuteAfter: "2022-06-22T10:16:00.000Z",
         },
         outcome: {
@@ -1106,12 +1007,8 @@ describe("Models", () => {
               issuer: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
               value: "10",
             },
-            source: {
-              address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
-            },
-            destination: {
-              address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
-            },
+            source: { address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk" },
+            destination: { address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk" },
             allowExecuteAfter: "2022-06-22T10:16:00.000Z",
             previousTxnID: "885CDCF781073DB9306A4B5FF61F358AE1B2452B57B7FACC090DF91125CC86D6",
             previousTxnLgrSeq: 3530986,
@@ -1173,9 +1070,7 @@ describe("Models", () => {
         sequence: 3334670,
         id: "CB192FC862D00F6A49E819EF99053BE534A6EC703418306E415C6230F5786FDB",
         specification: {
-          source: {
-            address: "rELeasERs3m4inA1UinRLTpXemqyStqzwh",
-          },
+          source: { address: "rELeasERs3m4inA1UinRLTpXemqyStqzwh" },
           owner: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
           escrowSequence: 3334565,
         },
@@ -1203,12 +1098,8 @@ describe("Models", () => {
               issuer: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
               value: "10",
             },
-            source: {
-              address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
-            },
-            destination: {
-              address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
-            },
+            source: { address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk" },
+            destination: { address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk" },
             allowExecuteAfter: "2022-06-22T10:16:00.000Z",
             previousTxnID: "885CDCF781073DB9306A4B5FF61F358AE1B2452B57B7FACC090DF91125CC86D6",
             previousTxnLgrSeq: 3530986,
@@ -1231,9 +1122,7 @@ describe("Models", () => {
         ctid: "C02D7E8300035359",
         id: "39F0A0A1F3873B781768C841EE24C00D6F2038FECDE69C723B858F458504C220",
         specification: {
-          source: {
-            address: "rELeasERs3m4inA1UinRLTpXemqyStqzwh",
-          },
+          source: { address: "rELeasERs3m4inA1UinRLTpXemqyStqzwh" },
           owner: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
           escrowSequence: 753804730,
         },
@@ -1256,17 +1145,9 @@ describe("Models", () => {
             status: "executed",
             escrowIndex: "8DA872D7A3FC26C2F39BC7BC803D2B0D56A46444C27B47260AA3E789F5726512",
             escrowSequence: 753804730,
-            amount: {
-              currency: "EVR",
-              issuer: "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8",
-              value: "10",
-            },
-            source: {
-              address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
-            },
-            destination: {
-              address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
-            },
+            amount: { currency: "EVR", issuer: "rEvernodee8dJLaFsujS6q1EiXvZYmHXr8", value: "10" },
+            source: { address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk" },
+            destination: { address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk" },
             allowExecuteAfter: "2024-02-13T11:25:00.000Z",
             previousTxnID: "A13EFDD3A6AEEA913B17FD8E7E48D4CC7AA1A5978C5D713CEA5076EADBC600CF",
             previousTxnLgrSeq: 2981239,
@@ -1289,9 +1170,7 @@ describe("Models", () => {
         id: "B24B9D7843F99AED7FB8A3929151D0CCF656459AE40178B77C9D44CED64E839B",
         ctid: "C1BD5F6800000000",
         specification: {
-          source: {
-            address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
-          },
+          source: { address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn" },
           owner: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
           escrowSequence: 366,
         },
@@ -1306,14 +1185,8 @@ describe("Models", () => {
             escrowSequence: 366,
             amount: "10000",
             condition: "A0258020A82A88B2DF843A54F58772E4A3861866ECDB4157645DD9AE528C1D3AEEDABAB6810120",
-            source: {
-              address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
-              tag: 11747,
-            },
-            destination: {
-              address: "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX",
-              tag: 23480,
-            },
+            source: { address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn", tag: 11747 },
+            destination: { address: "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX", tag: 23480 },
             allowCancelAfter: "2017-04-13T23:10:32.000Z",
             allowExecuteAfter: "2017-04-12T23:15:32.000Z",
             previousTxnID: "C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7",
@@ -1337,12 +1210,7 @@ describe("Models", () => {
         id: "E5535D1C02FAAB40F0B7652DC7EB86D1366B13D4517A7305F53BC664C686351A",
         specification: {
           source: { address: "r4eecBHFbkHpLQEvSnB93bc3C2SVMjVKie" },
-          memos: [
-            {
-              data: "LEDGER2",
-              type: "[https://xrpl.services]-Memo",
-            },
-          ],
+          memos: [{ data: "LEDGER2", type: "[https://xrpl.services]-Memo" }],
           regularKey: "rJ6kUAyW5uzxM1yjHtjXVYRscM9pogCt1C",
         },
         outcome: {
@@ -1372,9 +1240,7 @@ describe("Models", () => {
           destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
           uritokenMint: {
             uri: "626974686F6D705F72656D697424746573742E78616861756578706C6F7265722E636F6D",
-            flags: {
-              burnable: true,
-            },
+            flags: { burnable: true },
           },
         },
         outcome: {
@@ -1543,9 +1409,7 @@ describe("Models", () => {
           affectedObjects: {
             uritokens: {
               DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB: {
-                flags: {
-                  burnable: false,
-                },
+                flags: { burnable: false },
                 uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
                 uri: "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D",
                 issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -1559,9 +1423,7 @@ describe("Models", () => {
         sequence: 7751097,
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
-          flags: {
-            burnable: false,
-          },
+          flags: { burnable: false },
           uri: "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D",
         },
         type: "uritokenMint",
@@ -1596,9 +1458,7 @@ describe("Models", () => {
           affectedObjects: {
             uritokens: {
               "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
-                flags: {
-                  burnable: true,
-                },
+                flags: { burnable: true },
                 uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
                 uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
                 issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -1612,9 +1472,7 @@ describe("Models", () => {
         sequence: 7751104,
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
-          flags: {
-            burnable: true,
-          },
+          flags: { burnable: true },
           uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
         },
         type: "uritokenMint",
@@ -1659,9 +1517,7 @@ describe("Models", () => {
           affectedObjects: {
             uritokens: {
               "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
-                flags: {
-                  burnable: true,
-                },
+                flags: { burnable: true },
                 uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
                 uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
                 issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -1676,9 +1532,7 @@ describe("Models", () => {
         },
         sequence: 7751113,
         specification: {
-          flags: {
-            burnable: true,
-          },
+          flags: { burnable: true },
           amount: "1000000",
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
@@ -1726,9 +1580,7 @@ describe("Models", () => {
           affectedObjects: {
             uritokens: {
               "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
-                flags: {
-                  burnable: true,
-                },
+                flags: { burnable: true },
                 uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
                 uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
                 issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -1856,9 +1708,7 @@ describe("Models", () => {
           affectedObjects: {
             uritokens: {
               DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB: {
-                flags: {
-                  burnable: false,
-                },
+                flags: { burnable: false },
                 uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
                 uri: "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D",
                 issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -1906,9 +1756,7 @@ describe("Models", () => {
           affectedObjects: {
             uritokens: {
               DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB: {
-                flags: {
-                  burnable: false,
-                },
+                flags: { burnable: false },
                 uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
                 uri: "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D",
                 issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -1965,9 +1813,7 @@ describe("Models", () => {
           affectedObjects: {
             uritokens: {
               DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB: {
-                flags: {
-                  burnable: false,
-                },
+                flags: { burnable: false },
                 uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
                 uri: "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D",
                 issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -2007,8 +1853,7 @@ describe("Models", () => {
           indexInLedger: 1,
           uritokenSellOfferChanges: {
             r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh: [
-              // {
-              //   status: "deleted",
+              // { //   status: "deleted",
               //   uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
               //   amount: "1000000",
               // },
@@ -2023,9 +1868,7 @@ describe("Models", () => {
           affectedObjects: {
             uritokens: {
               "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
-                flags: {
-                  burnable: true,
-                },
+                flags: { burnable: true },
                 uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
                 uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
                 issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -2081,9 +1924,7 @@ describe("Models", () => {
           affectedObjects: {
             uritokens: {
               "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
-                flags: {
-                  burnable: true,
-                },
+                flags: { burnable: true },
                 uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
                 uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
                 issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -2132,9 +1973,7 @@ describe("Models", () => {
           affectedObjects: {
             uritokens: {
               "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B": {
-                flags: {
-                  burnable: true,
-                },
+                flags: { burnable: true },
                 uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
                 uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
                 issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -2193,10 +2032,7 @@ describe("Models", () => {
           ledgerIndex: 4142,
           ledgerVersion: 4142,
           indexInLedger: 0,
-          deliveredAmount: {
-            currency: "XRP",
-            value: "2.001337",
-          },
+          deliveredAmount: { currency: "XRP", value: "2.001337" },
           result: "tesSUCCESS",
           timestamp: "2023-10-30T15:49:01.000Z",
         },
@@ -3300,10 +3136,7 @@ describe("Models", () => {
                       PreviousTxnLgrSeq: 83540125,
                       PreviousTxnID: "F5C5889DB56D0A94909631E74A5F0A4D0B1E4D7089C0573902D6CED628EBCA68",
                       LedgerIndex: "F7BB536A19A61B2D0C8E508D159BEC1C44842C5246E21BB5E21140F8A5EB48CC",
-                      PreviousFields: {
-                        Sequence: 63841540,
-                        Balance: "59997312",
-                      },
+                      PreviousFields: { Sequence: 63841540, Balance: "59997312" },
                       FinalFields: {
                         Flags: 0,
                         Sequence: 63841541,
@@ -3371,14 +3204,7 @@ describe("Models", () => {
               ],
               specification: { source: { address: "rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1" } },
               outcome: {
-                balanceChanges: {
-                  rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1: [
-                    {
-                      currency: "XRP",
-                      value: "-0.001337",
-                    },
-                  ],
-                },
+                balanceChanges: { rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1: [{ currency: "XRP", value: "-0.001337" }] },
                 fee: "0.001337",
                 indexInLedger: 32,
                 result: "tesSUCCESS",
@@ -3755,9 +3581,7 @@ describe("Models", () => {
             {
               specification: {
                 uri: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
-                flags: {
-                  burnable: false,
-                },
+                flags: { burnable: false },
                 source: { address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU" },
                 destination: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
                 emittedDetails: {
@@ -4786,12 +4610,7 @@ describe("Models", () => {
                 value: "169615",
                 counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
               },
-              authAccountsChanges: [
-                {
-                  account: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
-                  status: "removed",
-                },
-              ],
+              authAccountsChanges: [{ account: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk", status: "removed" }],
             },
           },
           ledgerIndex: 86816507,
@@ -4960,9 +4779,7 @@ describe("Models", () => {
         sequence: 4098099,
         id: "F5DAF71C4ADC343A20853876916B636BCCC06E56748E4BC7B0E7243847CC7C8B",
         specification: {
-          source: {
-            address: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
-          },
+          source: { address: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq" },
           uri: "A1B1",
           data: "A1B1",
           didDocument: "A1B1",
@@ -4971,14 +4788,7 @@ describe("Models", () => {
           result: "tesSUCCESS",
           timestamp: "2024-09-12T23:20:20.000Z",
           fee: "0.00002",
-          balanceChanges: {
-            rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq: [
-              {
-                currency: "XRP",
-                value: "-0.00002",
-              },
-            ],
-          },
+          balanceChanges: { rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq: [{ currency: "XRP", value: "-0.00002" }] },
           didChanges: {
             status: "created",
             didID: "C2A00F4633438A65D3D916E7DD84920923DF61278FC18A9D11B767FDAA416A1E",
@@ -5002,24 +4812,12 @@ describe("Models", () => {
         address: "rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC",
         sequence: 4098099,
         id: "382DC2286F1B4425C6808FD32D6F0B12805797286A29B36D19BF71B512E06768",
-        specification: {
-          source: {
-            address: "rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC",
-          },
-          didDocument: "",
-        },
+        specification: { source: { address: "rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC" }, didDocument: "" },
         outcome: {
           result: "tesSUCCESS",
           timestamp: "2024-09-12T23:20:20.000Z",
           fee: "0.00002",
-          balanceChanges: {
-            rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC: [
-              {
-                currency: "XRP",
-                value: "-0.00002",
-              },
-            ],
-          },
+          balanceChanges: { rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC: [{ currency: "XRP", value: "-0.00002" }] },
           didChanges: {
             status: "modified",
             didID: "4AD6E1C86D0D8C131C745FA9E18743DF6A05DFEF6DBAE30AA7223C6532D20AD6",
@@ -5043,23 +4841,12 @@ describe("Models", () => {
         address: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
         sequence: 4098100,
         id: "EAF3B729B4EB78E2DA65C3CDFF60910CF78776C046F72EB6F2CCD1A47CFE5DC8",
-        specification: {
-          source: {
-            address: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
-          },
-        },
+        specification: { source: { address: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq" } },
         outcome: {
           result: "tesSUCCESS",
           timestamp: "2024-09-12T23:20:22.000Z",
           fee: "0.00002",
-          balanceChanges: {
-            rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq: [
-              {
-                currency: "XRP",
-                value: "-0.00002",
-              },
-            ],
-          },
+          balanceChanges: { rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq: [{ currency: "XRP", value: "-0.00002" }] },
           didChanges: {
             status: "deleted",
             didID: "C2A00F4633438A65D3D916E7DD84920923DF61278FC18A9D11B767FDAA416A1E",
@@ -5918,10 +5705,9 @@ describe("Models", () => {
       });
     });
 
-    it("Payment with signers", function () {
+    it("Payment with signer", function () {
       const tx = require("../examples/responses/transaction/7DF0F2A6DCDB43B2EC36FBE90891632CFD435D8E9496484AE16DDCB0FB0ED45E.json");
       const result: any = Models.getTxDetails(tx, false);
-      console.log(JSON.stringify(result));
       expect(result).to.eql({
         type: "settings",
         address: "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh",
@@ -5942,6 +5728,130 @@ describe("Models", () => {
           ledgerIndex: 7050473,
           ledgerVersion: 7050473,
           indexInLedger: 1,
+        },
+      });
+    });
+
+    it("CheckCreate", function () {
+      const tx = require("../examples/responses/CheckCreate.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "checkCreate",
+        address: "r3bHm7MsgqDi3HPFeTuZrxM5oiF4L4eMjX",
+        sequence: 93993915,
+        id: "38226E39968CD8B46BCBCFC6837CD3A7A43794207FC8BF6143A97317503238A1",
+        ctid: "C59A3BC300780000",
+        specification: {
+          source: { address: "r3bHm7MsgqDi3HPFeTuZrxM5oiF4L4eMjX" },
+          destination: { address: "r9PpzByDqSefhyU82bLDzr125NwQTKXEut" },
+          sendMax: {
+            issuer: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
+            currency: "4655524945000000000000000000000000000000",
+            value: "80000000",
+            counterparty: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
+          },
+          expiration: "2025-02-14T22:52:51.000Z",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-02-07T22:52:52.000Z",
+          fee: "0.000012",
+          balanceChanges: { r3bHm7MsgqDi3HPFeTuZrxM5oiF4L4eMjX: [{ currency: "XRP", value: "-0.000012" }] },
+          checkChanges: {
+            status: "created",
+            checkID: "E4AB0D75BABD04FE2C2CBAB26000A4BF01BD40D62C2516645B0FCEC91CBAA10C",
+            source: { address: "r3bHm7MsgqDi3HPFeTuZrxM5oiF4L4eMjX" },
+            destination: { address: "r9PpzByDqSefhyU82bLDzr125NwQTKXEut" },
+            sendMax: {
+              issuer: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
+              currency: "4655524945000000000000000000000000000000",
+              value: "80000000",
+              counterparty: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
+            },
+            sequence: 93993915,
+            expiration: 1739573571,
+          },
+          ledgerIndex: 93993923,
+          ledgerVersion: 93993923,
+          indexInLedger: 120,
+        },
+      });
+    });
+
+    it("CheckCash", function () {
+      const tx = require("../examples/responses/CheckCash.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "checkCash",
+        address: "r9PpzByDqSefhyU82bLDzr125NwQTKXEut",
+        sequence: 93703482,
+        id: "2FB2EB6610847DB59CB74164FB3BB723C6FBE3740E7629C07B77AE69B4FA380F",
+        ctid: "C59A3BD700180000",
+        specification: {
+          source: { address: "r9PpzByDqSefhyU82bLDzr125NwQTKXEut" },
+          checkID: "E4AB0D75BABD04FE2C2CBAB26000A4BF01BD40D62C2516645B0FCEC91CBAA10C",
+          amount: {
+            issuer: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
+            currency: "4655524945000000000000000000000000000000",
+            value: "80000000",
+            counterparty: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
+          },
+          memos: [{ data: "First Ledger token claim" }],
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-02-07T22:54:20.000Z",
+          fee: "0.000012",
+          balanceChanges: {
+            r9PpzByDqSefhyU82bLDzr125NwQTKXEut: [
+              { currency: "XRP", value: "-0.000012" },
+              {
+                issuer: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
+                currency: "4655524945000000000000000000000000000000",
+                value: "80000000",
+                counterparty: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
+              },
+            ],
+            rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC: [
+              {
+                issuer: "r3bHm7MsgqDi3HPFeTuZrxM5oiF4L4eMjX",
+                currency: "4655524945000000000000000000000000000000",
+                value: "80000000",
+                counterparty: "r3bHm7MsgqDi3HPFeTuZrxM5oiF4L4eMjX",
+              },
+              {
+                issuer: "r9PpzByDqSefhyU82bLDzr125NwQTKXEut",
+                currency: "4655524945000000000000000000000000000000",
+                value: "-80000000",
+                counterparty: "r9PpzByDqSefhyU82bLDzr125NwQTKXEut",
+              },
+            ],
+            r3bHm7MsgqDi3HPFeTuZrxM5oiF4L4eMjX: [
+              {
+                issuer: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
+                currency: "4655524945000000000000000000000000000000",
+                value: "-80000000",
+                counterparty: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
+              },
+            ],
+          },
+          checkChanges: {
+            status: "deleted",
+            checkID: "E4AB0D75BABD04FE2C2CBAB26000A4BF01BD40D62C2516645B0FCEC91CBAA10C",
+            source: { address: "r3bHm7MsgqDi3HPFeTuZrxM5oiF4L4eMjX" },
+            destination: { address: "r9PpzByDqSefhyU82bLDzr125NwQTKXEut" },
+            sendMax: {
+              issuer: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
+              currency: "4655524945000000000000000000000000000000",
+              value: "80000000",
+              counterparty: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
+            },
+            sequence: 93993915,
+            expiration: 1739573571,
+          },
+          ledgerIndex: 93993943,
+          ledgerVersion: 93993943,
+          indexInLedger: 24,
         },
       });
     });
@@ -6047,12 +5957,7 @@ describe("Models", () => {
           affectedObjects: {
             nftokens: {
               "000A0000C54635B0A3EF854BD72AD1A192DBC9EBC5DF262F2DCBAB9D00000002": {
-                flags: {
-                  burnable: false,
-                  onlyXRP: true,
-                  transferable: true,
-                  trustLine: false,
-                },
+                flags: { burnable: false, onlyXRP: true, transferable: true, trustLine: false },
                 issuer: "rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy",
                 nftokenID: "000A0000C54635B0A3EF854BD72AD1A192DBC9EBC5DF262F2DCBAB9D00000002",
                 nftokenTaxon: 0,
@@ -6064,12 +5969,7 @@ describe("Models", () => {
         },
         sequence: 1238,
         specification: {
-          flags: {
-            burnable: false,
-            onlyXRP: true,
-            transferable: true,
-            trustLine: false,
-          },
+          flags: { burnable: false, onlyXRP: true, transferable: true, trustLine: false },
           source: { address: "rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy" },
           nftokenTaxon: 0,
           transferFee: 0,
@@ -6099,9 +5999,7 @@ describe("Models", () => {
               counterparty: "rnyGDFEqnNwpyzievKCMhHUi4xs6HnUqPA",
             },
           },
-          destination: {
-            address: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V",
-          },
+          destination: { address: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V" },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6549,21 +6447,14 @@ describe("Models", () => {
           A5BE06459D1A2FA5C68A40A8245CD2B801648064D8C531A1B35FAF2C9BF79DBE: {
             index: "A5BE06459D1A2FA5C68A40A8245CD2B801648064D8C531A1B35FAF2C9BF79DBE",
             nftokenID: "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F",
-            flags: {
-              sellToken: false,
-            },
+            flags: { sellToken: false },
             owner: "rNDZcpmnXG3zCLKtWqYE9LNNQRZrtLtjx2",
           },
         },
         nftokens: {
           "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F": {
             nftokenID: "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F",
-            flags: {
-              burnable: true,
-              onlyXRP: false,
-              trustLine: false,
-              transferable: true,
-            },
+            flags: { burnable: true, onlyXRP: false, trustLine: false, transferable: true },
             transferFee: 1,
             issuer: "r4K2ggLxfX8vp5vEi3sDEeAQg3PGEH84WV",
             nftokenTaxon: 0,
@@ -6582,21 +6473,14 @@ describe("Models", () => {
           AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021: {
             index: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
             nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
-            flags: {
-              sellToken: false,
-            },
+            flags: { sellToken: false },
             owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
           },
         },
         nftokens: {
           "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001": {
             nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
-            flags: {
-              burnable: true,
-              onlyXRP: true,
-              trustLine: false,
-              transferable: true,
-            },
+            flags: { burnable: true, onlyXRP: true, trustLine: false, transferable: true },
             transferFee: 0,
             issuer: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
             nftokenTaxon: 0,
