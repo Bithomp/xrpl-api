@@ -1253,7 +1253,7 @@ describe("Client", () => {
     describe("getTxDetails", () => {
       it("Import", function () {
         const tx = require("../examples/responses/Import.json");
-        const result: any = Models.getTxDetails(tx, false);
+        const result: any = Models.getTxDetails(tx, false, "XAH");
 
         expect(result).to.eql({
           address: "rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1",
@@ -2466,7 +2466,7 @@ describe("Client", () => {
       it("Import with NFT", function () {
         const tx = require("../examples/responses/Import2.json");
         const xahauDefinitions = new Wallet.XrplDefinitions(xahauEnums);
-        const result: any = Models.getTxDetails(tx, false, undefined, xahauDefinitions);
+        const result: any = Models.getTxDetails(tx, false, "XAH", xahauDefinitions);
 
         expect(result).to.eql({
           type: "import",
