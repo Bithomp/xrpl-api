@@ -83,7 +83,7 @@ function summarizePaymentChannel(node: NormalizedNode): FormattedChannelSummaryI
     // This is positive if this is a PaymentChannelFund transaction.
     summary.channelAmountChangeDrops = new BigNumber(final.Amount).minus(new BigNumber(prev.Amount || 0)).toString(10);
 
-    summary.amountChange = parseAmount(prev.SendMax) as IssuedCurrencyAmount;
+    summary.amountChange = parseAmount(prev.Amount) as IssuedCurrencyAmount;
     summary.amountChange.value = new BigNumber(summary.amountChange.value)
       .minus(new BigNumber(summary.amount.value))
       .toString(10);
@@ -95,7 +95,7 @@ function summarizePaymentChannel(node: NormalizedNode): FormattedChannelSummaryI
       .minus(new BigNumber(prev.Balance || 0))
       .toString(10);
 
-    summary.balanceChange = parseAmount(prev.SendMax) as IssuedCurrencyAmount;
+    summary.balanceChange = parseAmount(prev.Balance) as IssuedCurrencyAmount;
     summary.balanceChange.value = new BigNumber(summary.balanceChange.value)
       .minus(new BigNumber(summary.balance?.value || 0))
       .toString(10);

@@ -1,5 +1,5 @@
 import axios from "axios";
-import AddressCodec = require("ripple-address-codec");
+import * as AddressCodec from "ripple-address-codec";
 
 interface FaucetNetworkInterface {
   url: string;

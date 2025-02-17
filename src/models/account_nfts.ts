@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import AddressCodec = require("ripple-address-codec");
+import * as AddressCodec from "ripple-address-codec";
 
 import { SortDirection } from "../common";
 import { bytesToHex } from "../parse/utils";

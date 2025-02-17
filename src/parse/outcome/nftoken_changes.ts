@@ -1,5 +1,5 @@
 import _ from "lodash";
-import AddressCodec = require("ripple-address-codec");
+import * as AddressCodec from "ripple-address-codec";
 import { removeUndefined } from "../../common";
 
 export function parseNFTokenChanges(tx: object): object {
