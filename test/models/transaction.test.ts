@@ -979,6 +979,46 @@ describe("Models", () => {
       });
     });
 
+    it("PaymentChannelFund", function () {
+      const tx = require("../examples/responses/PaymentChannelFund.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "paymentChannelFund",
+        address: "rNixEReo8KruCW6pekB5dJS4JGwoU2WbxJ",
+        sequence: 74831787,
+        id: "7264EC4D5DBFB8F017845B24274246E519B8447B2E7652659A784A4B65FD4937",
+        ctid: "C539977B00110000",
+        specification: {
+          source: { address: "rNixEReo8KruCW6pekB5dJS4JGwoU2WbxJ" },
+          channel: "1804E5E43616131C9292E738269DB882D1659D1216CD24EEB91DAE34654F94C2",
+          amount: { currency: "XRP", value: "10" },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-04-30T07:26:12.000Z",
+          fee: "0.000012",
+          balanceChanges: { rNixEReo8KruCW6pekB5dJS4JGwoU2WbxJ: [{ currency: "XRP", value: "-10.000012" }] },
+          channelChanges: {
+            status: "modified",
+            channelId: "1804E5E43616131C9292E738269DB882D1659D1216CD24EEB91DAE34654F94C2",
+            source: { address: "rNixEReo8KruCW6pekB5dJS4JGwoU2WbxJ" },
+            destination: { address: "rLggTEwmTe3eJgyQbCSk4wQazow2TeKrtR" },
+            channelAmountDrops: "10008001",
+            amount: { currency: "XRP", value: "10.008001" },
+            channelBalanceDrops: "0",
+            balance: { currency: "XRP", value: "0" },
+            channelAmountChangeDrops: "10000000",
+            amountChange: { currency: "XRP", value: "-10" },
+            previousTxnID: "4AA23FFA33512CFEFFEDFCC5B1812D633D39B12647CB8160793E8A2D5800ED44",
+          },
+          ledgerIndex: 87660411,
+          ledgerVersion: 87660411,
+          indexInLedger: 17,
+        },
+      });
+    });
+
     it("EscrowCreate", function () {
       const tx = require("../examples/responses/transaction/C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7.json");
       const result: any = Models.getTxDetails(tx, false);
