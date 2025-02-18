@@ -4,10 +4,10 @@ import { TransactionMetadata } from "xrpl";
 import { NormalizedNode, normalizeNode } from "../utils";
 
 interface LockedBalanceChangeQuantity {
-  issuer: string;
-  currency: string;
-  value: string;
-  counterparty: string; // @deprecated, use issuer
+  issuer: string; // currency issuer
+  currency: string; // currency code
+  value: string; // balance change
+  counterparty: string; // address of the counterparty (issuer of the currency or holder of the balance)
 }
 
 export interface AddressLockedBalanceChangeQuantity {
@@ -68,18 +68,30 @@ function parseTrustlineQuantity(node, valueParser): AddressLockedBalanceChangeQu
    * the trustline can be created when the offer is taken.
    */
   const fields = _.isEmpty(node.newFields) ? node.finalFields : node.newFields;
-  // prettier-ignore
-  const LockedBalanceFields = _.isEmpty(node.newFields?.LockedBalance) ? _.isEmpty(node.finalFields?.LockedBalance) ? node.previousFields : node.finalFields : node.newFields;
+  const previousFields = node.previousFields as any;
+  let viewLowest = true;
+
+  if (previousFields && previousFields.Balance && previousFields.Balance.value !== "0") {
+    viewLowest = previousFields.Balance.value[0] !== "-"; // if positive, viewLowest is true, else false
+  } else {
+    viewLowest = fields.Balance.value[0] !== "-"; // if positive, viewLowest is true, else false
+  }
+
+  const sign = viewLowest ? 1 : -1;
+  const currency = fields.Balance.currency;
+  const issuer = viewLowest ? fields.HighLimit.issuer : fields.LowLimit.issuer;
+  const holder = viewLowest ? fields.LowLimit.issuer : fields.HighLimit.issuer;
 
   const result = {
-    address: fields.LowLimit.issuer,
+    address: holder,
     lockedBalance: {
-      issuer: LockedBalanceFields.LockedBalance.issuer,
-      currency: LockedBalanceFields.LockedBalance.currency,
-      value: value.toString(),
-      counterparty: LockedBalanceFields.LockedBalance.issuer, // @deprecated, use issuer
+      issuer,
+      currency,
+      value: value.times(sign).toString(),
+      counterparty: issuer,
     },
   };
+
   return [result];
 }
 

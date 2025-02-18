@@ -29,7 +29,7 @@ describe("Models", () => {
         ],
         rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV: [
           {
-            issuer: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
+            issuer: "rM3YFJAHYBufChMHsBLZzwzg7a2oBCP7vV",
             currency: "546F6B656E466F72457363726F77000000000000",
             value: "-100",
             counterparty: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
@@ -47,7 +47,7 @@ describe("Models", () => {
         rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89: [
           { currency: "XRP", value: "19.754728" },
           {
-            issuer: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",
+            issuer: "rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89",
             currency: "594F494E4B000000000000000000000000000000",
             value: "-413.3967",
             counterparty: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",

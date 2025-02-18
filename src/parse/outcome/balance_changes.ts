@@ -6,11 +6,11 @@ import { getNativeCurrency } from "../../client";
 import { NormalizedNode, normalizeNode } from "../utils";
 
 interface BalanceChangeQuantity {
-  issuer?: string;
-  currency?: string;
-  value: string;
-  counterparty?: string; // @deprecated, use issuer
-  mpt_issuance_id?: string;
+  issuer?: string; // currency issuer
+  currency?: string; // currency code
+  value: string; // balance change
+  counterparty?: string; // address of the counterparty (issuer of the currency or holder of the balance)
+  mpt_issuance_id?: string; // MPToken issuance ID
 }
 
 export interface AddressBalanceChangeQuantity {
@@ -98,10 +98,10 @@ function flipTrustlinePerspective(quantity: any): AddressBalanceChangeQuantity {
   return {
     address: quantity.balance.issuer,
     balance: {
-      issuer: quantity.address,
+      issuer: quantity.balance.issuer,
       currency: quantity.balance.currency,
       value: negatedBalance.toString(),
-      counterparty: quantity.address, // @deprecated, use issuer
+      counterparty: quantity.address,
     },
   };
 }
@@ -119,15 +119,28 @@ function parseTrustlineQuantity(node: NormalizedNode, valueParser: any): Address
    * the trustline can be created when the offer is taken.
    */
   const fields = _.isEmpty(node.newFields) ? node.finalFields : (node.newFields as any);
+  const previousFields = node.previousFields as any;
+  let viewLowest = true;
+
+  if (previousFields && previousFields.Balance && previousFields.Balance.value !== "0") {
+    viewLowest = previousFields.Balance.value[0] !== "-"; // if positive, viewLowest is true, else false
+  } else {
+    viewLowest = fields.Balance.value[0] !== "-"; // if positive, viewLowest is true, else false
+  }
+
+  const sign = viewLowest ? 1 : -1;
+  const currency = fields.Balance.currency;
+  const issuer = viewLowest ? fields.HighLimit.issuer : fields.LowLimit.issuer;
+  const holder = viewLowest ? fields.LowLimit.issuer : fields.HighLimit.issuer;
 
   // the balance is always from low node's perspective
   const result = {
-    address: fields.LowLimit.issuer,
+    address: holder,
     balance: {
-      issuer: fields.HighLimit.issuer,
-      currency: fields.Balance.currency,
-      value: value.toString(),
-      counterparty: fields.HighLimit.issuer, // @deprecated, use issuer
+      issuer,
+      currency,
+      value: value.times(sign).toString(),
+      counterparty: issuer,
     },
   };
   return [result, flipTrustlinePerspective(result)];
