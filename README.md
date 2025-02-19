@@ -168,7 +168,7 @@ const vl = await BithompXRPL.Client.createVLv2(vk, sk, [publishBlob, publishBlob
 
 // vl will contain the signed validator list with
 // {
-//   "blobs-v2": "...",
+//   "blobs_v2": "...",
 //   "manifest": "...", // signed with vk.privateKey and sk.privateKey
 //   "version": 2,
 //   "public_key": "..." // vk.publicKey

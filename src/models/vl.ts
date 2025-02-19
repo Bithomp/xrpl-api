@@ -22,7 +22,8 @@ export interface VLInterface {
   blob?: string;
 
   // list of blobs for version 2
-  "blobs-v2"?: VLBlobInfoInterface[];
+  // https://github.com/XRPLF/rippled/blob/develop/include/xrpl/protocol/jss.h
+  blobs_v2?: VLBlobInfoInterface[];
 
   // string representing the base-64 or hex-encoded signature
   // of the blob, using the ephemeral(signing) private key,
@@ -276,9 +277,13 @@ export function parseVL(vl: VLInterface): ParsedVLInterface {
       }
     }
   } else if (decoded.version === 2) {
-    const blobs = vl["blobs-v2"] as VLBlobInfoInterface[];
+    const blobs = (vl["blobs-v2"] || vl["blobs_v2"]) as VLBlobInfoInterface[];
     if (!decoded.blobs) {
       decoded.blobs = [];
+    }
+
+    if (!blobs) {
+      return decoded;
     }
 
     for (const blobInfo of blobs) {
@@ -384,7 +389,11 @@ export function isValidVL(vl: VLInterface): string | null {
       }
     }
   } else if (vl.version === 2) {
-    const blobs = vl["blobs-v2"] as VLBlobInfoInterface[];
+    const blobs = (vl["blobs-v2"] || vl["blobs_v2"]) as VLBlobInfoInterface[];
+    if (!blobs) {
+      return "blobs_v2 missing from vl";
+    }
+
     for (const blobInfo of blobs) {
       const blob: VLBlobInterface = decodeVLBlob(blobInfo.blob as string);
       error = isValidVLBlob(blob);
@@ -421,14 +430,15 @@ function isValidVLFormat(vl: VLInterface): string | null {
       error = "Blob missing from vl";
     }
   } else if (version === 2) {
+    const blobs = (vl["blobs-v2"] || vl["blobs_v2"]) as VLBlobInfoInterface[];
     if (blob !== undefined) {
       error = "Blob should not be present in vl version 2";
-    } else if (vl["blobs-v2"] === undefined) {
-      error = "blobs-v2 missing from vl";
-    } else if (!Array.isArray(vl["blobs-v2"])) {
-      error = "blobs-v2 should be an array";
-    } else if (vl["blobs-v2"].length === 0) {
-      error = "blobs-v2 should not be empty";
+    } else if (blobs === undefined) {
+      error = "blobs_v2 missing from vl";
+    } else if (!Array.isArray(blobs)) {
+      error = "blobs_v2 should be an array";
+    } else if (blobs.length === 0) {
+      error = "blobs_v2 should not be empty";
     }
   } else {
     error = "Version is not supported";

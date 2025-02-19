@@ -108,7 +108,7 @@ export async function createVLv2(
   });
 
   return {
-    "blobs-v2": blobs,
+    "blobs_v2": blobs,
     manifest: globalManifest,
     public_key: masterKey.publicKey,
     version: 2,

@@ -99,12 +99,12 @@ describe("Client", () => {
         };
         const result = await Client.createVLv2(master, ephemeral, [publishBlob]);
 
-        expect(Object.keys(result)).to.have.members(["blobs-v2", "manifest", "version", "public_key"]);
+        expect(Object.keys(result)).to.have.members(["blobs_v2", "manifest", "version", "public_key"]);
 
         expect(result.version).to.eql(2);
         expect(result.public_key).to.eql(master.publicKey);
 
-        const blobs_v2 = result["blobs-v2"] as any[];
+        const blobs_v2 = result["blobs_v2"] as any[];
         expect(blobs_v2).to.be.a("array");
         expect(blobs_v2).to.have.length(1);
 
@@ -144,12 +144,12 @@ describe("Client", () => {
         };
         const result = await Client.createVLv2(master, ephemeral, [publishBlob]);
 
-        expect(Object.keys(result)).to.have.members(["blobs-v2", "manifest", "version", "public_key"]);
+        expect(Object.keys(result)).to.have.members(["blobs_v2", "manifest", "version", "public_key"]);
 
         expect(result.version).to.eql(2);
         expect(result.public_key).to.eql(master.publicKey);
 
-        const blobs_v2 = result["blobs-v2"] as any[];
+        const blobs_v2 = result["blobs_v2"] as any[];
         expect(blobs_v2).to.be.a("array");
         expect(blobs_v2).to.have.length(1);
 
@@ -198,12 +198,12 @@ describe("Client", () => {
         };
         const result = await Client.createVLv2(master, ephemeral, [publishBlob1, publishBlob2]);
 
-        expect(Object.keys(result)).to.have.members(["blobs-v2", "manifest", "version", "public_key"]);
+        expect(Object.keys(result)).to.have.members(["blobs_v2", "manifest", "version", "public_key"]);
 
         expect(result.version).to.eql(2);
         expect(result.public_key).to.eql(master.publicKey);
 
-        const blobs_v2 = result["blobs-v2"] as any[];
+        const blobs_v2 = result["blobs_v2"] as any[];
         expect(blobs_v2).to.be.a("array");
         expect(blobs_v2).to.have.length(2);
 

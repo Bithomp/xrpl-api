@@ -45,6 +45,14 @@ describe("Models", () => {
       const result = Models.parseVL(valid);
       expect(JSON.stringify(result)).to.be.eql(JSON.stringify(expected));
     });
+
+    it("parses valid from devnet", function () {
+      const valid = require("../examples/vl/dev_valid.json");
+      const expected = require("../examples/vl/decoded_dev_valid.json");
+
+      const result = Models.parseVL(valid);
+      expect(JSON.stringify(result)).to.be.eql(JSON.stringify(expected));
+    });
   });
 
   describe("isValidVL", () => {
