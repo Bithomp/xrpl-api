@@ -3714,7 +3714,7 @@ describe("Models", () => {
           ledgerIndex: 4722789,
           ledgerVersion: 4722789,
           indexInLedger: 0,
-          deliveredAmount: { currency: "XRP", value: "-0.011075" },
+          deliveredAmount: { currency: "XAH", value: "0.011075" },
         },
       });
     });
@@ -5430,6 +5430,273 @@ describe("Models", () => {
       });
     });
 
+    it("payment with conversion", function () {
+      const tx = require("../examples/responses/Payment8.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "payment",
+        address: "rsdMbYxHmYswHCg1V6vBsnxmHuCjpn6SC4",
+        sequence: 566,
+        id: "1A06B8E85C40B3756BE0B24A04DEE76E5BC5B0EFFBABB15F4634860CA78807F4",
+        ctid: "C2164A5E00280000",
+        specification: {
+          source: { address: "rsdMbYxHmYswHCg1V6vBsnxmHuCjpn6SC4", maxAmount: { currency: "XRP", value: "100" } },
+          destination: { address: "rsdMbYxHmYswHCg1V6vBsnxmHuCjpn6SC4" },
+          paths:
+            '[[{"currency":"STR","issuer":"rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS","type":48},{"account":"rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS","type":1},{"currency":"XLM","issuer":"rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y","type":48},{"account":"rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y","type":1}]]',
+          allowPartialPayment: true,
+          noDirectRipple: true,
+          limitQuality: true,
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2017-12-14T07:03:01.000Z",
+          fee: "0.000012",
+          balanceChanges: {
+            rsdMbYxHmYswHCg1V6vBsnxmHuCjpn6SC4: [
+              {
+                issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                currency: "STR",
+                value: "-33.25485454522",
+                counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+              },
+              {
+                issuer: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+                currency: "XLM",
+                value: "321.460718999999",
+                counterparty: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+              },
+              { currency: "XRP", value: "-83.401513" },
+            ],
+            rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS: [
+              {
+                issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                currency: "STR",
+                value: "33.25485454522",
+                counterparty: "rsdMbYxHmYswHCg1V6vBsnxmHuCjpn6SC4",
+              },
+              {
+                issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                currency: "STR",
+                value: "-96.12698199997",
+                counterparty: "rKRJXyp435p1RTWAMfpqnv6uvyPDFvQm5g",
+              },
+              {
+                issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                currency: "STR",
+                value: "53.10678676002636",
+                counterparty: "r4najz5nPC2zoYWiereTZN6kxJezP2ZJrD",
+              },
+              {
+                issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                currency: "STR",
+                value: "231.9903459528",
+                counterparty: "rGMNHZyj7NizdpDYW4mLZeeWEXeMm6Vv1y",
+              },
+              {
+                issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                currency: "STR",
+                value: "0.0500803973963",
+                counterparty: "r3bjHrjg5y1xE2VzGLuQYMW97ZTSfgN32x",
+              },
+              {
+                issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                currency: "STR",
+                value: "-221.6395525863",
+                counterparty: "rMxkau5LJiidEk1S9X8RxxnX1uCx1zryvb",
+              },
+            ],
+            rKRJXyp435p1RTWAMfpqnv6uvyPDFvQm5g: [
+              {
+                issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                currency: "STR",
+                value: "96.12698199997",
+                counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+              },
+              {
+                issuer: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+                currency: "XLM",
+                value: "-97.32147299998",
+                counterparty: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+              },
+            ],
+            rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y: [
+              {
+                issuer: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+                currency: "XLM",
+                value: "-321.460718999999",
+                counterparty: "rsdMbYxHmYswHCg1V6vBsnxmHuCjpn6SC4",
+              },
+              {
+                issuer: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+                currency: "XLM",
+                value: "224.139246",
+                counterparty: "rMxkau5LJiidEk1S9X8RxxnX1uCx1zryvb",
+              },
+              {
+                issuer: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+                currency: "XLM",
+                value: "97.32147299998",
+                counterparty: "rKRJXyp435p1RTWAMfpqnv6uvyPDFvQm5g",
+              },
+            ],
+            rMxkau5LJiidEk1S9X8RxxnX1uCx1zryvb: [
+              {
+                issuer: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+                currency: "XLM",
+                value: "-224.139246",
+                counterparty: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+              },
+              {
+                issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                currency: "STR",
+                value: "221.6395525863",
+                counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+              },
+            ],
+            r4najz5nPC2zoYWiereTZN6kxJezP2ZJrD: [
+              { currency: "XRP", value: "15.53285" },
+              {
+                issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                currency: "STR",
+                value: "-53.10678676002636",
+                counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+              },
+            ],
+            rGMNHZyj7NizdpDYW4mLZeeWEXeMm6Vv1y: [
+              {
+                issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                currency: "STR",
+                value: "-231.9903459528",
+                counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+              },
+              { currency: "XRP", value: "67.854057" },
+            ],
+            r3bjHrjg5y1xE2VzGLuQYMW97ZTSfgN32x: [
+              {
+                issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                currency: "STR",
+                value: "-0.0500803973963",
+                counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+              },
+              { currency: "XRP", value: "0.014594" },
+            ],
+          },
+          orderbookChanges: {
+            rMxkau5LJiidEk1S9X8RxxnX1uCx1zryvb: [
+              {
+                direction: "buy",
+                quantity: {
+                  issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                  currency: "STR",
+                  value: "221.639552586397",
+                  counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                },
+                totalPrice: {
+                  issuer: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+                  currency: "XLM",
+                  value: "224.139246",
+                  counterparty: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+                },
+                sequence: 119367,
+                status: "partially-filled",
+                makerExchangeRate: "0.9888475871217922",
+              },
+            ],
+            rKRJXyp435p1RTWAMfpqnv6uvyPDFvQm5g: [
+              {
+                direction: "buy",
+                quantity: {
+                  issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                  currency: "STR",
+                  value: "96.126982",
+                  counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                },
+                totalPrice: {
+                  issuer: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+                  currency: "XLM",
+                  value: "97.321473",
+                  counterparty: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+                },
+                sequence: 158077,
+                status: "filled",
+                makerExchangeRate: "0.9877263366122706",
+              },
+            ],
+            rGMNHZyj7NizdpDYW4mLZeeWEXeMm6Vv1y: [
+              {
+                direction: "buy",
+                quantity: { currency: "XRP", value: "67.854057" },
+                totalPrice: {
+                  issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                  currency: "STR",
+                  value: "231.990345952928",
+                  counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                },
+                sequence: 293916,
+                status: "partially-filled",
+                makerExchangeRate: "0.2924865523293398",
+              },
+            ],
+            r3bjHrjg5y1xE2VzGLuQYMW97ZTSfgN32x: [
+              {
+                direction: "buy",
+                quantity: { currency: "XRP", value: "0.014594" },
+                totalPrice: {
+                  issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                  currency: "STR",
+                  value: "0.05008039739634",
+                  counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                },
+                sequence: 145259,
+                status: "filled",
+                makerExchangeRate: "0.2913978587417789",
+              },
+            ],
+            rsdMbYxHmYswHCg1V6vBsnxmHuCjpn6SC4: [
+              {
+                direction: "buy",
+                quantity: { currency: "XRP", value: "9.680707" },
+                totalPrice: {
+                  issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                  currency: "STR",
+                  value: "33.25485454522",
+                  counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                },
+                sequence: 565,
+                status: "filled",
+                makerExchangeRate: "0.2911065807500724",
+              },
+            ],
+            r4najz5nPC2zoYWiereTZN6kxJezP2ZJrD: [
+              {
+                direction: "buy",
+                quantity: { currency: "XRP", value: "15.53285" },
+                totalPrice: {
+                  issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                  currency: "STR",
+                  value: "53.1067867600263",
+                  counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                },
+                sequence: 862709,
+                status: "filled",
+                makerExchangeRate: "0.2924833262619007",
+              },
+            ],
+          },
+          ledgerIndex: 35015262,
+          ledgerVersion: 35015262,
+          indexInLedger: 40,
+          deliveredAmount: {
+            issuer: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+            currency: "XLM",
+            value: "321.460718999999",
+            counterparty: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+          },
+        },
+      });
+    });
+
     it("payment MPToken from issuer", function () {
       const tx = require("../examples/responses/Payment_MPToken.json");
       const result: any = Models.getTxDetails(tx, false);
@@ -5950,6 +6217,12 @@ describe("Models", () => {
           ledgerIndex: 93993943,
           ledgerVersion: 93993943,
           indexInLedger: 24,
+          deliveredAmount: {
+            counterparty: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
+            currency: "4655524945000000000000000000000000000000",
+            issuer: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
+            value: "80000000",
+          },
         },
       });
     });

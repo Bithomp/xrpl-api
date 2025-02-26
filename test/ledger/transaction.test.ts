@@ -1243,7 +1243,7 @@ describe("Client", () => {
             indexInLedger: 0,
             deliveredAmount: {
               currency: "XAH",
-              value: "-0.011075",
+              value: "0.011075",
             },
           },
         });
@@ -2892,7 +2892,7 @@ describe("Client", () => {
             indexInLedger: 0,
             deliveredAmount: {
               currency: "XAH",
-              value: "-0.011075",
+              value: "0.011075",
             },
           },
         });

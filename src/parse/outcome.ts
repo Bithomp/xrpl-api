@@ -1,5 +1,6 @@
 import { XrplDefinitionsBase } from "ripple-binary-codec";
 import { getNativeCurrency } from "../client";
+import { BalanceChanges } from "./outcome/balance_changes";
 import {
   parseBalanceChanges,
   parseLockedBalanceChanges,
@@ -58,12 +59,14 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     return undefined;
   }
 
+  const balanceChanges = getBalanceChanges(tx, nativeCurrency || getNativeCurrency());
+
   return removeUndefined({
     result: tx.meta.TransactionResult,
     timestamp: parseTimestamp(tx.date),
     fee: dropsToXrp(tx.Fee),
 
-    balanceChanges: getBalanceChanges(tx, nativeCurrency || getNativeCurrency()),
+    balanceChanges,
     lockedBalanceChanges: getLockedBalanceChanges(tx),
     orderbookChanges: getOrderbookChanges(tx),
     channelChanges: getChannelChanges(tx),
@@ -86,14 +89,14 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     ledgerIndex: tx.ledger_index || tx.inLedger,
     ledgerVersion: tx.ledger_index || tx.inLedger, // @deprecated, use ledgerIndex
     indexInLedger: tx.meta.TransactionIndex,
-    deliveredAmount: parseDeliveredAmount(tx),
+    deliveredAmount: parseDeliveredAmount(tx, balanceChanges as BalanceChanges),
   });
 }
 
 /**
  * XRPL and Xahau
  */
-function getBalanceChanges(tx: any, nativeCurrency?: string): any {
+function getBalanceChanges(tx: any, nativeCurrency?: string): BalanceChanges | undefined {
   const balanceChanges = parseBalanceChanges(tx.meta, nativeCurrency);
 
   return Object.keys(balanceChanges).length > 0 ? balanceChanges : undefined;
