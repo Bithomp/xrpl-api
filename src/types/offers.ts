@@ -1,5 +1,17 @@
+import { LedgerEntry } from "xrpl";
+const { OfferFlags } = LedgerEntry;
 import { FormattedBaseSpecification } from "./specification";
 import { FormattedIssuedCurrencyAmount } from "./amounts";
+
+export const OfferFlagsKeys = {
+  passive: OfferFlags.lsfPassive,
+  sell: OfferFlags.lsfSell,
+};
+
+export interface OfferFlagsKeysInterface {
+  passive: boolean;
+  sell: boolean;
+}
 
 export type FormattedOfferCancelSpecification = {
   orderSequence: number;

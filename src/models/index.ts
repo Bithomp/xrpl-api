@@ -35,6 +35,7 @@ import parseNFTokenCreateOffer from "../parse/specification/nftoken-create-offer
 import parseURITokenFlags from "../parse/ledger/uritoken-flags";
 
 import parseTrustlineFlags from "../parse/ledger/trustline-flags";
+import parseOfferFlags from "../parse/ledger/offer-flags";
 
 export {
   parseNFTokenMint,
@@ -46,4 +47,5 @@ export {
   parseNFTokenCreateOffer,
   parseURITokenFlags,
   parseTrustlineFlags,
+  parseOfferFlags,
 };

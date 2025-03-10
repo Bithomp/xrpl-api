@@ -5,7 +5,6 @@ describe("Models", () => {
   describe("parseTrustlineFlags", () => {
     it("parses flags for not burnable", function () {
       const result: any = Models.parseTrustlineFlags(0);
-      console.log(result);
       expect(result).to.eql({
         lowReserve: false,
         highReserve: false,
@@ -23,7 +22,6 @@ describe("Models", () => {
 
     it("parses flags for burnable", function () {
       const result: any = Models.parseTrustlineFlags(3276800);
-      console.log(result);
       expect(result).to.eql({
         lowReserve: false,
         highReserve: true,
