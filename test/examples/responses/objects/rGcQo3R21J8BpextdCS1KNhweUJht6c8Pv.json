@@ -1,0 +1,14 @@
+[
+  {
+    "Balance": { "currency": "BTC", "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji", "value": "-594.373" },
+    "Flags": 3211264,
+    "HighLimit": { "currency": "BTC", "issuer": "rGcQo3R21J8BpextdCS1KNhweUJht6c8Pv", "value": "0" },
+    "HighNode": "149",
+    "LedgerEntryType": "RippleState",
+    "LowLimit": { "currency": "BTC", "issuer": "rs2vd5QdZg2WmAB8EYd4AKxUxP2BY1zacn", "value": "10000000000" },
+    "LowNode": "0",
+    "PreviousTxnID": "CB0FD0D3F0AAD683170230489C01F8211813A58C1B3CD1E1120AF3245F031335",
+    "PreviousTxnLgrSeq": 23937190,
+    "index": "B7781C7CC19D55E073F4C2E3A4DE7AE3DD1186270CA1FDB4DA2554F5C1C37739"
+  }
+]

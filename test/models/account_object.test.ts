@@ -125,6 +125,72 @@ describe("Models", () => {
       ]);
     });
 
+    it("returns account lines with issuer as reserve owner with positive balance", function () {
+      const objects = require("../examples/responses/objects/ravc8BJ3j1UPUXTyj2T2yutQSF82ZvJw9E.json");
+      const result: any = Models.accountObjectsToAccountLines("ravc8BJ3j1UPUXTyj2T2yutQSF82ZvJw9E", objects);
+      expect(result).to.eql([
+        {
+          account: "rQsYRw8vEPGGphTStYbPuLB71VzhrfQ7zf",
+          balance: "100",
+          currency: "HSC",
+          limit: "0",
+          limit_peer: "7777777777770000e-4",
+          no_ripple: false,
+          no_ripple_peer: false,
+        },
+        {
+          account: "rQsYRw8vEPGGphTStYbPuLB71VzhrfQ7zf",
+          balance: "0",
+          currency: "JPY",
+          limit: "100000",
+          limit_peer: "0",
+          no_ripple: true,
+          no_ripple_peer: false,
+        },
+      ]);
+    });
+
+    it("returns account lines with holder as reserve owner with negative balance", function () {
+      const objects = require("../examples/responses/objects/rGcQo3R21J8BpextdCS1KNhweUJht6c8Pv.json");
+      const result: any = Models.accountObjectsToAccountLines("rGcQo3R21J8BpextdCS1KNhweUJht6c8Pv", objects);
+      expect(result).to.eql([
+        {
+          account: "rs2vd5QdZg2WmAB8EYd4AKxUxP2BY1zacn",
+          balance: "594.373",
+          currency: "BTC",
+          limit: "0",
+          limit_peer: "10000000000",
+          no_ripple: true,
+          no_ripple_peer: true,
+        },
+      ]);
+    });
+
+    it("returns account lines with holder as reserve owner with positive balance for issuer", function () {
+      const objects = require("../examples/responses/objects/rw4nfCN97BtDxjxDv9dDJV53CtGxB2yoNA.json");
+      const result: any = Models.accountObjectsToAccountLines("rw4nfCN97BtDxjxDv9dDJV53CtGxB2yoNA", objects);
+      expect(result).to.eql([
+        {
+          account: 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B',
+          balance: '0',
+          currency: 'TCC',
+          limit: '50',
+          limit_peer: '0',
+          no_ripple: true,
+          no_ripple_peer: false
+        },
+        {
+          account: 'rp2PaYDxVwDvaZVLEQv7bHhoFQEyX1mEx7',
+          balance: '0.006',
+          currency: 'USD',
+          limit: '10',
+          limit_peer: '0',
+          no_ripple: false,
+          no_ripple_peer: false
+        }
+      ]);
+    });
+
     it("returns all account lines", function () {
       const objects = require("../examples/responses/objects/rQHqfA5bbxgPbBQajcRBBJSfuKLMDW17nr.json");
       const result: any = Models.accountObjectsToAccountLines("rQHqfA5bbxgPbBQajcRBBJSfuKLMDW17nr", objects);

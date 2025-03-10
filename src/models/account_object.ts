@@ -93,11 +93,41 @@ export interface AccountURITokensObjectsResponse {
  */
 export function accountObjectsToAccountLines(account: string, accountObjects: AccountObject[]): Trustline[] {
   const notInDefaultState = accountObjects.filter((node: any) => {
-    return (
-      node.LedgerEntryType === "RippleState" &&
+    if (node.LedgerEntryType !== "RippleState") {
+      return false;
+    }
+
+    if (node.HighLimit.issuer === account) {
       // eslint-disable-next-line no-bitwise
-      node.Flags & RippleStateFlags[node.HighLimit.issuer === account ? "lsfHighReserve" : "lsfLowReserve"]
-    );
+      if (node.Flags & RippleStateFlags.lsfHighReserve) {
+        if (isPositiveBalance(node.Balance.value)) {
+          return false;
+        }
+
+        return true;
+      }
+
+      // if balance is positive, it's a trustline reserve owned by the issuer, but balance is belongs to the account
+      if (isNegativeBalance(node.Balance.value)) {
+        return true;
+      }
+    } else {
+      // eslint-disable-next-line no-bitwise
+      if (node.Flags & RippleStateFlags.lsfLowReserve) {
+        if (isNegativeBalance(node.Balance.value)) {
+          return false;
+        }
+
+        return true;
+      }
+
+      // if balance is negative, it's a trustline reserve owned by the issuer, but balance is belongs to the account
+      if (isPositiveBalance(node.Balance.value)) {
+        return true;
+      }
+    }
+
+    return false;
   });
 
   const accountLinesFormatted = notInDefaultState.map((node) =>
@@ -105,6 +135,14 @@ export function accountObjectsToAccountLines(account: string, accountObjects: Ac
   );
 
   return accountLinesFormatted;
+}
+
+function isPositiveBalance(balance: string): boolean {
+  return balance !== "0" && balance[0] !== "-";
+}
+
+function isNegativeBalance(balance: string): boolean {
+  return balance !== "0" && balance[0] === "-";
 }
 
 const RippleStateToTrustLine = (ledgerEntry: LedgerEntry.RippleState, account: string): Trustline => {

@@ -24,7 +24,7 @@ export function classicAddressFromValidatorPK(pk: string | Buffer): string | nul
   assert.ok(Crypto.getHashes().includes("sha256"));
   assert.ok(Crypto.getHashes().includes("ripemd160"));
 
-  const pubkeyInnerHash = Crypto.createHash("sha256").update(Buffer.from(pubkey));
+  const pubkeyInnerHash = Crypto.createHash("sha256").update(pubkey);
   const pubkeyOuterHash = Crypto.createHash("ripemd160");
   pubkeyOuterHash.update(pubkeyInnerHash.digest());
   const accountID = pubkeyOuterHash.digest();

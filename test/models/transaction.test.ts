@@ -177,7 +177,7 @@ describe("Models", () => {
           affectedObjects: {
             nftokens: {
               "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000": {
-                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false },
+                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false, mutable: false },
                 issuer: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
                 nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
                 nftokenTaxon: 0,
@@ -192,7 +192,7 @@ describe("Models", () => {
         sequence: 1309348,
         specification: {
           source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
-          flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false },
+          flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false, mutable: false },
           nftokenTaxon: 0,
           uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
         },
@@ -257,7 +257,7 @@ describe("Models", () => {
             },
             nftokens: {
               "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001": {
-                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false },
+                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false, mutable: false },
                 issuer: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
                 nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
                 nftokenTaxon: 0,
@@ -332,7 +332,7 @@ describe("Models", () => {
             },
             nftokens: {
               "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000": {
-                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false },
+                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false, mutable: false },
                 issuer: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
                 nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
                 nftokenTaxon: 0,
@@ -424,7 +424,7 @@ describe("Models", () => {
             nftokens: {
               "000B000058460DD5D3FBA79460A3EDB465367A05F40097800000099B00000000": {
                 nftokenID: "000B000058460DD5D3FBA79460A3EDB465367A05F40097800000099B00000000",
-                flags: { burnable: true, onlyXRP: true, trustLine: false, transferable: true },
+                flags: { burnable: true, onlyXRP: true, trustLine: false, transferable: true, mutable: false },
                 transferFee: 0,
                 issuer: "r9skPKe94BNdQqZkLYjSEkmuV7qHQyYgtp",
                 nftokenTaxon: 0,
@@ -484,7 +484,7 @@ describe("Models", () => {
           affectedObjects: {
             nftokens: {
               "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001": {
-                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false },
+                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false, mutable: false },
                 issuer: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
                 nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
                 nftokenTaxon: 0,
@@ -559,7 +559,7 @@ describe("Models", () => {
             nftokens: {
               "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765727D1EA000000005": {
                 nftokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765727D1EA000000005",
-                flags: { burnable: true, onlyXRP: true, trustLine: false, transferable: true },
+                flags: { burnable: true, onlyXRP: true, trustLine: false, transferable: true, mutable: false },
                 transferFee: 0,
                 issuer: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
                 nftokenTaxon: 0,
@@ -631,7 +631,7 @@ describe("Models", () => {
             },
             nftokens: {
               "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001": {
-                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false },
+                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false, mutable: false },
                 issuer: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
                 nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
                 nftokenTaxon: 0,
@@ -693,7 +693,7 @@ describe("Models", () => {
             },
             nftokens: {
               "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000": {
-                flags: { burnable: false, onlyXRP: false, transferable: true, trustLine: false },
+                flags: { burnable: false, onlyXRP: false, transferable: true, trustLine: false, mutable: false },
                 issuer: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
                 nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
                 nftokenTaxon: 0,
@@ -754,7 +754,7 @@ describe("Models", () => {
             },
             nftokens: {
               "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000": {
-                flags: { burnable: false, onlyXRP: false, transferable: true, trustLine: false },
+                flags: { burnable: false, onlyXRP: false, transferable: true, trustLine: false, mutable: false },
                 issuer: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg",
                 nftokenID: "0008000083CD166E1806EF2076C55077AEFD418E771A516C0000099B00000000",
                 nftokenTaxon: 0,
@@ -813,7 +813,7 @@ describe("Models", () => {
             },
             nftokens: {
               "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000": {
-                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false },
+                flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false, mutable: false },
                 issuer: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
                 nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
                 nftokenTaxon: 0,
@@ -3643,7 +3643,7 @@ describe("Models", () => {
                   nftokens: {
                     "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000": {
                       nftokenID: "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000",
-                      flags: { burnable: false, onlyXRP: false, trustLine: false, transferable: true },
+                      flags: { burnable: false, onlyXRP: false, trustLine: false, transferable: true, mutable: false },
                       transferFee: 314,
                       issuer: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
                       nftokenTaxon: 0,
@@ -6328,7 +6328,7 @@ describe("Models", () => {
           affectedObjects: {
             nftokens: {
               "000A0000C54635B0A3EF854BD72AD1A192DBC9EBC5DF262F2DCBAB9D00000002": {
-                flags: { burnable: false, onlyXRP: true, transferable: true, trustLine: false },
+                flags: { burnable: false, onlyXRP: true, transferable: true, trustLine: false, mutable: false },
                 issuer: "rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy",
                 nftokenID: "000A0000C54635B0A3EF854BD72AD1A192DBC9EBC5DF262F2DCBAB9D00000002",
                 nftokenTaxon: 0,
@@ -6340,7 +6340,7 @@ describe("Models", () => {
         },
         sequence: 1238,
         specification: {
-          flags: { burnable: false, onlyXRP: true, transferable: true, trustLine: false },
+          flags: { burnable: false, onlyXRP: true, transferable: true, trustLine: false, mutable: false },
           source: { address: "rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy" },
           nftokenTaxon: 0,
           transferFee: 0,
@@ -6825,7 +6825,7 @@ describe("Models", () => {
         nftokens: {
           "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F": {
             nftokenID: "00090001E9DE3F31905919768FAB16D17D15DFA911D48C16343168CA0000002F",
-            flags: { burnable: true, onlyXRP: false, trustLine: false, transferable: true },
+            flags: { burnable: true, onlyXRP: false, trustLine: false, transferable: true, mutable: false },
             transferFee: 1,
             issuer: "r4K2ggLxfX8vp5vEi3sDEeAQg3PGEH84WV",
             nftokenTaxon: 0,
@@ -6851,7 +6851,7 @@ describe("Models", () => {
         nftokens: {
           "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001": {
             nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
-            flags: { burnable: true, onlyXRP: true, trustLine: false, transferable: true },
+            flags: { burnable: true, onlyXRP: true, trustLine: false, transferable: true, mutable: false },
             transferFee: 0,
             issuer: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
             nftokenTaxon: 0,

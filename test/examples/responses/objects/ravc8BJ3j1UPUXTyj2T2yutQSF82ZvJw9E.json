@@ -1,0 +1,26 @@
+[
+  {
+    "Balance": { "currency": "HSC", "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji", "value": "100" },
+    "Flags": 131072,
+    "HighLimit": { "currency": "HSC", "issuer": "rQsYRw8vEPGGphTStYbPuLB71VzhrfQ7zf", "value": "7777777777770000e-4" },
+    "HighNode": "0",
+    "LedgerEntryType": "RippleState",
+    "LowLimit": { "currency": "HSC", "issuer": "ravc8BJ3j1UPUXTyj2T2yutQSF82ZvJw9E", "value": "0" },
+    "LowNode": "0",
+    "PreviousTxnID": "08AF1B4D726136E187EF041725BE8B7B57935D19CAE6C09C8CD082A2E646E53A",
+    "PreviousTxnLgrSeq": 7398820,
+    "index": "70EE5CC818CD35C00A94D5F09FB14F6DC61E223B7FBC328A193D90DE1076701A"
+  },
+  {
+    "Balance": { "currency": "JPY", "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji", "value": "0" },
+    "Flags": 1114112,
+    "HighLimit": { "currency": "JPY", "issuer": "rQsYRw8vEPGGphTStYbPuLB71VzhrfQ7zf", "value": "0" },
+    "HighNode": "0",
+    "LedgerEntryType": "RippleState",
+    "LowLimit": { "currency": "JPY", "issuer": "ravc8BJ3j1UPUXTyj2T2yutQSF82ZvJw9E", "value": "100000" },
+    "LowNode": "0",
+    "PreviousTxnID": "2542CF05FCCEE93274382A3104329A6F168772D9099D5718989A4305EFD1057B",
+    "PreviousTxnLgrSeq": 7402341,
+    "index": "928B7CE1C75EA615171C67EE2E325BCC001984A56D51E44E2324C7067A15ACA2"
+  }
+]

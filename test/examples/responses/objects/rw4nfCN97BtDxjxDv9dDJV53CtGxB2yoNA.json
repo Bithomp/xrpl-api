@@ -1,0 +1,38 @@
+[
+  {
+    "Balance": { "currency": "TCC", "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji", "value": "0" },
+    "Flags": 2228224,
+    "HighLimit": { "currency": "TCC", "issuer": "rw4nfCN97BtDxjxDv9dDJV53CtGxB2yoNA", "value": "50" },
+    "HighNode": "0",
+    "LedgerEntryType": "RippleState",
+    "LowLimit": { "currency": "TCC", "issuer": "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", "value": "0" },
+    "LowNode": "1cc",
+    "PreviousTxnID": "109E9B44C51E5EA37F8179BF16FEB1453020C6A17ED4E32E04165B2764280A20",
+    "PreviousTxnLgrSeq": 5641775,
+    "index": "8C674706D4F08690227CCFD67CA7CB2C2A3916D803DB4D211385C71F4DEC4B75"
+  },
+  {
+    "Balance": { "currency": "TCC", "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji", "value": "5" },
+    "Flags": 131072,
+    "HighLimit": { "currency": "TCC", "issuer": "rw4nfCN97BtDxjxDv9dDJV53CtGxB2yoNA", "value": "20" },
+    "HighNode": "0",
+    "LedgerEntryType": "RippleState",
+    "LowLimit": { "currency": "TCC", "issuer": "rwEfqtWx173PaWiafXUM8YGNJCLG3pmCgG", "value": "0" },
+    "LowNode": "0",
+    "PreviousTxnID": "F9913B10CAA73AD82A3155F10C57F00C56E9FD56E42BB28C72F583BA89BDCE12",
+    "PreviousTxnLgrSeq": 5692003,
+    "index": "FD8A339620E203E28EE0CA9B0DD7F3249F8173FD0C603E2E1DAF21BE354D31A1"
+  },
+  {
+    "Balance": { "currency": "USD", "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji", "value": "-0.006" },
+    "Flags": 131072,
+    "HighLimit": { "currency": "USD", "issuer": "rw4nfCN97BtDxjxDv9dDJV53CtGxB2yoNA", "value": "10" },
+    "HighNode": "0",
+    "LedgerEntryType": "RippleState",
+    "LowLimit": { "currency": "USD", "issuer": "rp2PaYDxVwDvaZVLEQv7bHhoFQEyX1mEx7", "value": "0" },
+    "LowNode": "1",
+    "PreviousTxnID": "E1094AC1C44A6A445C40CAAD98965DFF3505219D994726EED77BEAAAB6F124D7",
+    "PreviousTxnLgrSeq": 5750967,
+    "index": "9FB81D82FDDEC8A0740EBD5A2E0DBAB153CBFED20DC652ED625A6AD697802C3E"
+  }
+]

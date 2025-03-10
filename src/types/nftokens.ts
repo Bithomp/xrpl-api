@@ -8,7 +8,7 @@ export const NFTokenFlagsKeys = {
   onlyXRP: NFTokenMintFlags.tfOnlyXRP,
   trustLine: NFTokenMintFlags.tfTrustLine,
   transferable: NFTokenMintFlags.tfTransferable,
-  // reservedFlag: NFTokenMintFlags.tfReservedFlag,
+  mutable: NFTokenMintFlags.tfMutable,
 };
 
 export interface NFTokenFlagsKeysInterface {
@@ -16,7 +16,7 @@ export interface NFTokenFlagsKeysInterface {
   onlyXRP?: boolean;
   trustLine?: boolean;
   transferable?: boolean;
-  // reservedFlag?: boolean
+  mutable?: boolean;
 }
 
 export const NFTokenOfferFlagsKeys = {

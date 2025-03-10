@@ -5,7 +5,7 @@ describe("Models", () => {
   describe("parseNFTokenFlags", () => {
     it("parses flags", function () {
       const result: any = Models.parseNFTokenFlags(2147483659);
-      expect(result).to.eql({ burnable: true, onlyXRP: true, transferable: true, trustLine: false });
+      expect(result).to.eql({ burnable: true, onlyXRP: true, transferable: true, trustLine: false, mutable: false });
     });
   });
 
@@ -185,6 +185,7 @@ describe("Models", () => {
           onlyXRP: true,
           transferable: true,
           trustLine: false,
+          mutable: false,
         },
         nftokenTaxon: 0,
         uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
