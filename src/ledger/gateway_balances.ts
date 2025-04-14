@@ -129,7 +129,7 @@ function ObligationToObligationTrustline(account: string, value: string, currenc
   return {
     account,
     currency,
-    balance: new BigNumber(-value).toString(),
+    balance: new BigNumber(value).times(-1).toString(),
     limit: "0",
     limit_peer: "0",
     quality_in: 0,

@@ -1,55 +1,37 @@
 import _ from "lodash";
-import { BigNumber as GlobalBigNumber } from "bignumber.js";
-import { LedgerEntry, TransactionMetadata } from "xrpl";
+import GlobalBigNumber from "bignumber.js";
 const BigNumber = GlobalBigNumber.clone({ DECIMAL_PLACES: 40 });
+import { LedgerEntry, TransactionMetadata } from "xrpl";
 import { removeUndefined } from "../../common";
 import { ledgerTimeToTimestamp } from "../../models";
 import { NormalizedNode, normalizeNode } from "../utils";
 import { parseOrderbookQuality } from "./orderbook_quality";
 import parseCurrencyAmount from "../ledger/currency-amount";
-import { IssuedCurrencyAmount, FormattedAmount, FormattedIssuedCurrencyAmount } from "../../types";
+import parseOfferFlags from "../ledger/offer-flags";
+import {
+  IssuedCurrencyAmount,
+  FormattedAmount,
+  FormattedIssuedCurrencyAmount,
+  OfferFlagsKeysInterface,
+} from "../../types";
 import { getNativeCurrency } from "../../client";
 
 type OfferDescription = {
-  direction: string;
+  flags: OfferFlagsKeysInterface;
+  account?: string;
   quantity: any;
   totalPrice: any;
   sequence: number;
   status?: string;
   makerExchangeRate: string;
   expirationTime?: string;
+
+  direction: string; // @deprecated
 };
 
 type Orderbook = {
   [key: string]: OfferDescription[];
 };
-
-type OrderChange = {
-  taker_pays?: FormattedAmount;
-  taker_gets?: FormattedAmount;
-  sell: boolean;
-  sequence: number;
-  status?: string;
-  quality: string;
-  expiration?: string;
-};
-
-function convertOrderChange(order: OrderChange): OfferDescription {
-  const takerGets = order.taker_gets;
-  const takerPays = order.taker_pays;
-  const direction = order.sell ? "sell" : "buy";
-  const quantity = direction === "buy" ? takerPays : takerGets;
-  const totalPrice = direction === "buy" ? takerGets : takerPays;
-  return removeUndefined({
-    direction: direction,
-    quantity: quantity,
-    totalPrice: totalPrice,
-    sequence: order.sequence,
-    status: order.status,
-    makerExchangeRate: order.quality,
-    expirationTime: order.expiration,
-  });
-}
 
 function getExpirationTime(node: NormalizedNode): string | undefined {
   const expirationTime = (node.finalFields.Expiration || node.newFields.Expiration) as number;
@@ -123,17 +105,24 @@ function parseChangeAmount(node: NormalizedNode, type: string): FormattedAmount 
 }
 
 function parseOrderChange(node: NormalizedNode): OfferDescription {
-  const orderChange = convertOrderChange({
-    taker_pays: parseChangeAmount(node, "TakerPays"),
-    taker_gets: parseChangeAmount(node, "TakerGets"),
-    // eslint-disable-next-line no-bitwise
-    sell: ((node.finalFields.Flags as any) & LedgerEntry.OfferFlags.lsfSell) !== 0,
+  const flags = parseOfferFlags(node.finalFields.Flags as number);
+  const takerPays = parseChangeAmount(node, "TakerPays");
+  const takerGets = parseChangeAmount(node, "TakerGets");
+
+  const orderChange = removeUndefined({
+    flags,
+    quantity: flags.sell === true ? takerGets : takerPays,
+    totalPrice: flags.sell === true ? takerPays : takerGets,
     sequence: (node.finalFields.Sequence || node.newFields.Sequence) as number,
     status: parseOrderStatus(node),
-    quality: getQuality(node),
-    expiration: getExpirationTime(node),
+    makerExchangeRate: getQuality(node),
+    expirationTime: getExpirationTime(node),
+
+    // eslint-disable-next-line no-bitwise
+    direction: ((node.finalFields.Flags as any) & LedgerEntry.OfferFlags.lsfSell) === 0 ? "buy" : "sell", // @deprecated
   });
 
+  // make sure address does not show up in the final object
   Object.defineProperty(orderChange, "account", {
     value: node.finalFields.Account || node.newFields.Account,
   });
@@ -141,7 +130,7 @@ function parseOrderChange(node: NormalizedNode): OfferDescription {
   return orderChange;
 }
 
-function groupByAddress(orderChanges) {
+function groupByAddress(orderChanges: OfferDescription[]): Orderbook {
   return _.groupBy(orderChanges, function (change) {
     return change.account;
   });

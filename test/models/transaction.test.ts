@@ -903,6 +903,10 @@ describe("Models", () => {
           orderbookChanges: {
             rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z: [
               {
+                flags: {
+                  passive: false,
+                  sell: false,
+                },
                 direction: "buy",
                 quantity: {
                   issuer: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
@@ -923,6 +927,12 @@ describe("Models", () => {
         sequence: 1733045,
         specification: {
           source: { address: "rogue5HnPRSszD9CWGSUz8UGHMVwSSKF6" },
+          flags: {
+            fillOrKill: false,
+            immediateOrCancel: true,
+            passive: false,
+            sell: true,
+          },
           direction: "sell",
           immediateOrCancel: true,
           memos: [
@@ -5585,6 +5595,10 @@ describe("Models", () => {
           orderbookChanges: {
             rMxkau5LJiidEk1S9X8RxxnX1uCx1zryvb: [
               {
+                flags: {
+                  passive: false,
+                  sell: false,
+                },
                 direction: "buy",
                 quantity: {
                   issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
@@ -5605,6 +5619,10 @@ describe("Models", () => {
             ],
             rKRJXyp435p1RTWAMfpqnv6uvyPDFvQm5g: [
               {
+                flags: {
+                  passive: false,
+                  sell: false,
+                },
                 direction: "buy",
                 quantity: {
                   issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
@@ -5625,6 +5643,10 @@ describe("Models", () => {
             ],
             rGMNHZyj7NizdpDYW4mLZeeWEXeMm6Vv1y: [
               {
+                flags: {
+                  passive: false,
+                  sell: false,
+                },
                 direction: "buy",
                 quantity: { currency: "XRP", value: "67.854057" },
                 totalPrice: {
@@ -5640,6 +5662,10 @@ describe("Models", () => {
             ],
             r3bjHrjg5y1xE2VzGLuQYMW97ZTSfgN32x: [
               {
+                flags: {
+                  passive: false,
+                  sell: false,
+                },
                 direction: "buy",
                 quantity: { currency: "XRP", value: "0.014594" },
                 totalPrice: {
@@ -5655,6 +5681,10 @@ describe("Models", () => {
             ],
             rsdMbYxHmYswHCg1V6vBsnxmHuCjpn6SC4: [
               {
+                flags: {
+                  passive: false,
+                  sell: false,
+                },
                 direction: "buy",
                 quantity: { currency: "XRP", value: "9.680707" },
                 totalPrice: {
@@ -5670,6 +5700,10 @@ describe("Models", () => {
             ],
             r4najz5nPC2zoYWiereTZN6kxJezP2ZJrD: [
               {
+                flags: {
+                  passive: false,
+                  sell: false,
+                },
                 direction: "buy",
                 quantity: { currency: "XRP", value: "15.53285" },
                 totalPrice: {

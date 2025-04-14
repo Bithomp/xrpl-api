@@ -2,13 +2,14 @@ import _ from "lodash";
 import { LedgerEntry } from "xrpl";
 import { parseTimestamp, adjustQualityForXRP } from "../utils";
 import { removeUndefined } from "../../common";
-
 import parseAmount from "./amount";
+import parseOfferFlags from "../ledger/offer-flags";
 import {
   Amount,
   OfferLedgerEntry,
-  FormattedIssuedCurrencyAmount,
+  IssuedCurrencyAmount,
   FormattedOfferCreateSpecification,
+  OfferCreateFlagsKeysInterface,
 } from "../../types";
 
 export interface BookOffer extends OfferLedgerEntry {
@@ -26,42 +27,44 @@ export type FormattedOrderbookOrder = {
     makerExchangeRate: string;
   };
   state?: {
-    fundedAmount?: FormattedIssuedCurrencyAmount;
-    priceOfFundedAmount?: FormattedIssuedCurrencyAmount;
+    fundedAmount?: IssuedCurrencyAmount;
+    priceOfFundedAmount?: IssuedCurrencyAmount;
   };
   data: BookOffer;
 };
 
 export function parseOrderbookOrder(data: BookOffer): FormattedOrderbookOrder {
-  // eslint-disable-next-line no-bitwise
-  const direction = (data.Flags & LedgerEntry.OfferFlags.lsfSell) === 0 ? "buy" : "sell";
-  const takerGetsAmount = parseAmount(data.TakerGets) as FormattedIssuedCurrencyAmount;
-  const takerPaysAmount = parseAmount(data.TakerPays) as FormattedIssuedCurrencyAmount;
-  const quantity = direction === "buy" ? takerPaysAmount : takerGetsAmount;
-  const totalPrice = direction === "buy" ? takerGetsAmount : takerPaysAmount;
+  const flags = parseOfferFlags(data.Flags);
+  const takerGets = parseAmount(data.TakerGets) as IssuedCurrencyAmount;
+  const takerPays = parseAmount(data.TakerPays) as IssuedCurrencyAmount;
+  const quantity = flags.sell === true ? takerGets : takerPays;
+  const totalPrice = flags.sell === true ? takerPays : takerGets;
 
   // note: immediateOrCancel and fillOrKill orders cannot enter the order book
   // so we can omit those flags here
   const specification: FormattedOfferCreateSpecification = removeUndefined({
-    direction: direction,
+    flags: flags as OfferCreateFlagsKeysInterface,
     quantity: quantity,
     totalPrice: totalPrice,
-    // eslint-disable-next-line no-bitwise
-    passive: (data.Flags & LedgerEntry.OfferFlags.lsfPassive) !== 0 || undefined,
     expirationTime: parseTimestamp(data.Expiration),
+
+    /* eslint-disable no-bitwise */
+    direction: (data.Flags & LedgerEntry.OfferFlags.lsfSell) === 0 ? "buy" : "sell", // @deprecated
+    passive: (data.Flags & LedgerEntry.OfferFlags.lsfPassive) !== 0 || undefined,
+    /* eslint-enable no-bitwise */
   });
 
   const properties = {
     maker: data.Account,
     sequence: data.Sequence,
-    makerExchangeRate: adjustQualityForXRP(data.quality as string, takerGetsAmount.currency, takerPaysAmount.currency),
+    makerExchangeRate: adjustQualityForXRP(data.quality as string, takerGets.currency, takerPays.currency),
   };
 
   const takerGetsFunded = data.taker_gets_funded ? parseAmount(data.taker_gets_funded) : undefined;
   const takerPaysFunded = data.taker_pays_funded ? parseAmount(data.taker_pays_funded) : undefined;
   const available = removeUndefined({
-    fundedAmount: takerGetsFunded as FormattedIssuedCurrencyAmount,
-    priceOfFundedAmount: takerPaysFunded as FormattedIssuedCurrencyAmount,
+    fundedAmount: takerGetsFunded as IssuedCurrencyAmount,
+    priceOfFundedAmount: takerPaysFunded as IssuedCurrencyAmount,
   });
   const state = _.isEmpty(available) ? undefined : available;
   return removeUndefined({ specification, properties, state, data });

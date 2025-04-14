@@ -3,7 +3,8 @@ import { LedgerEntry } from "xrpl";
 import parseAmount from "./amount";
 import { parseTimestamp, adjustQualityForXRP } from "../utils";
 import { removeUndefined } from "../../common";
-import { FormattedOfferCreateSpecification, FormattedIssuedCurrencyAmount } from "../../types";
+import parseOfferFlags from "../ledger/offer-flags";
+import { FormattedOfferCreateSpecification, FormattedIssuedCurrencyAmount, OfferCreateFlagsKeysInterface } from "../../types";
 
 export type FormattedAccountOrders = {
   /** Unique Address identifying the account that made the offers. */
@@ -55,23 +56,24 @@ function computeQuality(takerGets, takerPays) {
 // rippled 'account_offers' returns a different format for orders than 'tx'
 // the flags are also different
 export function parseAccountOrder(address: string, order: any): FormattedAccountOrder {
-  // eslint-disable-next-line no-bitwise
-  const direction = (order.flags & LedgerEntry.OfferFlags.lsfSell) === 0 ? "buy" : "sell";
+  const flags = parseOfferFlags(order.flags);
   const takerGetsAmount = parseAmount(order.taker_gets) as FormattedIssuedCurrencyAmount;
   const takerPaysAmount = parseAmount(order.taker_pays) as FormattedIssuedCurrencyAmount;
-  const quantity = direction === "buy" ? takerPaysAmount : takerGetsAmount;
-  const totalPrice = direction === "buy" ? takerGetsAmount : takerPaysAmount;
+  const quantity = flags.sell === true ? takerGetsAmount : takerPaysAmount;
+  const totalPrice = flags.sell === true ? takerPaysAmount : takerGetsAmount;
 
   // note: immediateOrCancel and fillOrKill orders cannot enter the order book
   // so we can omit those flags here
   const specification = removeUndefined({
-    direction: direction,
+    flags: flags as OfferCreateFlagsKeysInterface,
     quantity: quantity,
     totalPrice: totalPrice,
-    // eslint-disable-next-line no-bitwise
-    passive: (order.flags & LedgerEntry.OfferFlags.lsfPassive) !== 0 || undefined,
-    // rippled currently does not provide "expiration" in account_offers
     expirationTime: parseTimestamp(order.expiration),
+
+    /* eslint-disable no-bitwise */
+    direction: (order.flags & LedgerEntry.OfferFlags.lsfSell) === 0 ? "buy" : "sell", // @deprecated
+    passive: (order.flags & LedgerEntry.OfferFlags.lsfPassive) !== 0 || undefined, // @deprecated
+    /* eslint-enable no-bitwise */
   });
 
   /* eslint-disable multiline-ternary */

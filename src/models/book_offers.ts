@@ -45,7 +45,7 @@ export function formatBidsAndAsks(orderbook: OrderbookInfo, offers: any[]) {
   // we sort the orders so that earlier orders are closer to mid-market
   const orders = offers
     .sort((a, b) => {
-      return new BigNumber(a.quality).comparedTo(b.quality);
+      return new BigNumber(a.quality).comparedTo(b.quality) ?? 0;
     })
     .map(parseOrderbookOrder);
 

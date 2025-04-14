@@ -31,7 +31,14 @@ import { Outcome } from "../types/outcome";
 const ESCROW_TYPES = ["EscrowFinish", "EscrowCreate", "EscrowCancel"];
 const CHANNEL_TYPES = ["PaymentChannelCreate", "PaymentChannelFund", "PaymentChannelClaim"];
 const CHECK_TYPES = ["CheckCreate", "CheckCash", "CheckCancel"];
-const NFTOKEN_TYPES = ["NFTokenMint", "NFTokenBurn", "NFTokenCreateOffer", "NFTokenCancelOffer", "NFTokenAcceptOffer"];
+const NFTOKEN_TYPES = [
+  "NFTokenMint",
+  "NFTokenBurn",
+  "NFTokenCreateOffer",
+  "NFTokenCancelOffer",
+  "NFTokenAcceptOffer",
+  "NFTokenModify",
+];
 const URITOKEN_TYPES = [
   "Remit",
   "URITokenMint",

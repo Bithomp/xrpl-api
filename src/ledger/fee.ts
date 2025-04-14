@@ -1,4 +1,4 @@
-import { BigNumber } from "bignumber.js";
+import BigNumber from "bignumber.js";
 import { encode, XrplDefinitionsBase } from "ripple-binary-codec";
 
 import * as Client from "../client";
