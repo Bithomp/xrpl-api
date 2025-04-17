@@ -1,0 +1,67 @@
+{
+  "Account": "rK6g2UYc4GpQH8DYdPG7wywyQbxkJpQTTN",
+  "Balance": "30000",
+  "Channel": "467D994665CBC68A483FE56EFEB079314D8EF0AEAD069F25885034D378616A29",
+  "Fee": "12",
+  "Flags": 2147483648,
+  "LastLedgerSequence": 39471022,
+  "PublicKey": "ED010EDDA974B8FDCBFCABC9F631E91F2D355E6F7C1F2F9E675AE61B853A2E2069",
+  "Sequence": 189747,
+  "Signature": "8DE4015CD528693A060A57BD03AFDC713D4F86EA4D12713F39EED1DFB7AA0AB9B07C244F89D1C28097C08584BDB58DFCA4D4444861ABC57CA9F75990ED546E0B",
+  "SigningPubKey": "03D488B5AA26C87CB14BF23D470520F592A0006A916F5FEEAAB48335D8811A2E9F",
+  "TransactionType": "PaymentChannelClaim",
+  "TxnSignature": "304402202DB1FFD6DAC9719BD685C59859563267A168A0AD12E05F11356536F8987D1E55022043BB31185708204BB1AB31B2A1F327C96DDA4DFE8D836422F03BCEBCF52633F0",
+  "hash": "A95D84E9C6791C871385C01171162021A9BDF3474F1159192F67A4EECA77CB4E",
+  "ctid": "C25A47AD000C0000",
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rK6g2UYc4GpQH8DYdPG7wywyQbxkJpQTTN",
+            "Balance": "3210419209",
+            "Flags": 0,
+            "OwnerCount": 580,
+            "Sequence": 189748
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "1779FCFCF53ACAF81150E49FCDA32AE74B3DB67FCA77C054E0DEA3DEC4EFE053",
+          "PreviousFields": {
+            "Balance": "3210409221",
+            "Sequence": 189747
+          },
+          "PreviousTxnID": "728CFC0002C084304F295C8F63A190BD18EE2F5742B300233D794C22C7BD08E4",
+          "PreviousTxnLgrSeq": 39471015
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rD1ioePTv7P1jgELM3tDkDU1LJqTEwuwo",
+            "Amount": "10000000",
+            "Balance": "30000",
+            "Destination": "rK6g2UYc4GpQH8DYdPG7wywyQbxkJpQTTN",
+            "Flags": 0,
+            "OwnerNode": "0",
+            "PublicKey": "ED010EDDA974B8FDCBFCABC9F631E91F2D355E6F7C1F2F9E675AE61B853A2E2069",
+            "SettleDelay": 3600,
+            "SourceTag": 3222008151
+          },
+          "LedgerEntryType": "PayChannel",
+          "LedgerIndex": "467D994665CBC68A483FE56EFEB079314D8EF0AEAD069F25885034D378616A29",
+          "PreviousFields": {
+            "Balance": "20000"
+          },
+          "PreviousTxnID": "26E07B54FC19456664B4FE94B7BDAA810CCD43EE09C5FBB83009D2184C76BBF9",
+          "PreviousTxnLgrSeq": 39470305
+        }
+      }
+    ],
+    "TransactionIndex": 12,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true,
+  "date": 582649952,
+  "ledger_index": 39471021,
+  "inLedger": 39471021
+}

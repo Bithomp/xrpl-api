@@ -1029,6 +1029,86 @@ describe("Models", () => {
       });
     });
 
+    it("PaymentChannelClaim", function () {
+      const tx = require("../examples/responses/PaymentChannelClaim.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "paymentChannelClaim",
+        address: "rK6g2UYc4GpQH8DYdPG7wywyQbxkJpQTTN",
+        sequence: 189747,
+        id: "A95D84E9C6791C871385C01171162021A9BDF3474F1159192F67A4EECA77CB4E",
+        ctid: "C25A47AD000C0000",
+        specification: {
+          source: { address: "rK6g2UYc4GpQH8DYdPG7wywyQbxkJpQTTN" },
+          channel: "467D994665CBC68A483FE56EFEB079314D8EF0AEAD069F25885034D378616A29",
+          balance: { currency: "XRP", value: "0.03" },
+          signature:
+            "8DE4015CD528693A060A57BD03AFDC713D4F86EA4D12713F39EED1DFB7AA0AB9B07C244F89D1C28097C08584BDB58DFCA4D4444861ABC57CA9F75990ED546E0B",
+          publicKey: "ED010EDDA974B8FDCBFCABC9F631E91F2D355E6F7C1F2F9E675AE61B853A2E2069",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2018-06-18T15:12:32.000Z",
+          fee: "0.000012",
+          balanceChanges: { rK6g2UYc4GpQH8DYdPG7wywyQbxkJpQTTN: [{ currency: "XRP", value: "0.009988" }] },
+          channelChanges: {
+            status: "modified",
+            channelId: "467D994665CBC68A483FE56EFEB079314D8EF0AEAD069F25885034D378616A29",
+            source: { address: "rD1ioePTv7P1jgELM3tDkDU1LJqTEwuwo", tag: 3222008151 },
+            destination: { address: "rK6g2UYc4GpQH8DYdPG7wywyQbxkJpQTTN" },
+            channelAmountDrops: "10000000",
+            amount: { currency: "XRP", value: "10" },
+            channelBalanceDrops: "30000",
+            balance: { currency: "XRP", value: "0.03" },
+            channelBalanceChangeDrops: "10000",
+            balanceChange: { currency: "XRP", value: "-0.01" },
+            previousTxnID: "26E07B54FC19456664B4FE94B7BDAA810CCD43EE09C5FBB83009D2184C76BBF9",
+          },
+          ledgerIndex: 39471021,
+          ledgerVersion: 39471021,
+          indexInLedger: 12,
+        },
+      });
+    });
+
+    it("PaymentChannelClaim2", function () {
+      const tx = require("../examples/responses/PaymentChannelClaim2.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "paymentChannelClaim",
+        address: "rGuVmkbuFWGwcvCpNhKCzXBP7pwAWjvHZG",
+        sequence: 3,
+        id: "0250382FDAAA5E1C80A80CFB1F2AC4BB60165803ACC29ECB6E17D68FB5DF5B3D",
+        ctid: "C25B3D0F00000000",
+        specification: {
+          source: { address: "rGuVmkbuFWGwcvCpNhKCzXBP7pwAWjvHZG" },
+          channel: "9ECE979F8C9C92F4520050A5E251902050419F8EF45F0E7F05EBBDE8E5DF3077",
+          close: true,
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2018-06-21T06:59:52.000Z",
+          fee: "0.000012",
+          balanceChanges: { rGuVmkbuFWGwcvCpNhKCzXBP7pwAWjvHZG: [{ currency: "XRP", value: "9.919988" }] },
+          channelChanges: {
+            status: "deleted",
+            channelId: "9ECE979F8C9C92F4520050A5E251902050419F8EF45F0E7F05EBBDE8E5DF3077",
+            source: { address: "rGuVmkbuFWGwcvCpNhKCzXBP7pwAWjvHZG", tag: 2934205934 },
+            destination: { address: "rK6g2UYc4GpQH8DYdPG7wywyQbxkJpQTTN" },
+            channelAmountDrops: "10000000",
+            amount: { currency: "XRP", value: "10" },
+            channelBalanceDrops: "80000",
+            balance: { currency: "XRP", value: "0.08" },
+          },
+          ledgerIndex: 39533839,
+          ledgerVersion: 39533839,
+          indexInLedger: 0,
+        },
+      });
+    });
+
     it("EscrowCreate", function () {
       const tx = require("../examples/responses/transaction/C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7.json");
       const result: any = Models.getTxDetails(tx, false);
