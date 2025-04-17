@@ -13,7 +13,7 @@ function parseAmount(amount: Amount): IssuedCurrencyAmount | FormattedIssuedCurr
   }
 
   // IssuedCurrencyAmount + FormattedIssuedCurrencyAmount format
-  if ("value" in amount && "currency" in amount && "issuer" in amount) {
+  if (amount && "value" in amount && "currency" in amount && "issuer" in amount) {
     return {
       issuer: amount.issuer,
       currency: amount.currency,
