@@ -200,6 +200,54 @@ describe("Models", () => {
       });
     });
 
+    it("NFTokenModify", function () {
+      const tx = require("../examples/responses/NFTokenModify.json");
+      const result: any = Models.getTxDetails(tx, false);
+
+      expect(result).to.eql({
+        type: "NFTokenModify",
+        address: "rniNyQQA1bzfSQ4mF7f1QCQQsh5VYb7BoG",
+        sequence: 2143284,
+        id: "837CEEB73FE69C22525DDDD8B3B7AE4DB708A5C7877325C75BA89C9716D0EEC4",
+        ctid: "C020B435000B0002",
+        specification: {
+          source: { address: "rniNyQQA1bzfSQ4mF7f1QCQQsh5VYb7BoG" },
+          nftokenID: "0010000035308C84A98C961A792FD63695C66FFD4120DE0D46DD60CE0020B433",
+          uri: "ABC123",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-04-21T20:11:52.000Z",
+          fee: "0.0001",
+          balanceChanges: { rniNyQQA1bzfSQ4mF7f1QCQQsh5VYb7BoG: [{ currency: "XRP", value: "-0.0001" }] },
+          nftokenChanges: {
+            rniNyQQA1bzfSQ4mF7f1QCQQsh5VYb7BoG: [
+              {
+                status: "modified",
+                nftokenID: "0010000035308C84A98C961A792FD63695C66FFD4120DE0D46DD60CE0020B433",
+                uri: "ABC123",
+              },
+            ],
+          },
+          affectedObjects: {
+            nftokens: {
+              "0010000035308C84A98C961A792FD63695C66FFD4120DE0D46DD60CE0020B433": {
+                nftokenID: "0010000035308C84A98C961A792FD63695C66FFD4120DE0D46DD60CE0020B433",
+                flags: { burnable: false, onlyXRP: false, trustLine: false, transferable: false, mutable: true },
+                transferFee: 0,
+                issuer: "rniNyQQA1bzfSQ4mF7f1QCQQsh5VYb7BoG",
+                nftokenTaxon: 0,
+                sequence: 2143283,
+              },
+            },
+          },
+          ledgerIndex: 2143285,
+          ledgerVersion: 2143285,
+          indexInLedger: 11,
+        },
+      });
+    });
+
     it("NFTokenAcceptOfferBuy", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy.json");
       const result: any = Models.getTxDetails(tx, false);

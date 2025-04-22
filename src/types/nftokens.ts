@@ -43,6 +43,12 @@ export type FormattedNFTokenMintSpecification = {
   expiration?: number;
 } & FormattedBaseSpecification;
 
+export type FormattedNFTokenModifySpecification = {
+  nftokenID: string;
+  owner?: string;
+  uri?: string;
+} & FormattedBaseSpecification;
+
 export type FormattedNFTokenCancelOfferSpecification = {
   nftokenOffers: string[];
 } & FormattedBaseSpecification;

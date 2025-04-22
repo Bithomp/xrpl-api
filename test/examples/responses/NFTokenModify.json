@@ -1,0 +1,72 @@
+{
+  "Account": "rniNyQQA1bzfSQ4mF7f1QCQQsh5VYb7BoG",
+  "Fee": "100",
+  "Flags": 2147483648,
+  "NFTokenID": "0010000035308C84A98C961A792FD63695C66FFD4120DE0D46DD60CE0020B433",
+  "Sequence": 2143284,
+  "SigningPubKey": "03F0E64ABF700ADB9ED3A06B0EC327C7772E04023FCD1CA254056034AA42E78ACD",
+  "TransactionType": "NFTokenModify",
+  "TxnSignature": "304402207B40B8AB326076AEB291C98527C33B14DEF18F1C7DB7885ED1F1E714AA8EC6FA02204761AAAA66D9F777D30986DF138F130F8290ED6A41157655AD81A146BAD6F6BC",
+  "URI": "ABC123",
+  "hash": "837CEEB73FE69C22525DDDD8B3B7AE4DB708A5C7877325C75BA89C9716D0EEC4",
+  "ctid": "C020B435000B0002",
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "NFTokens": [
+              {
+                "NFToken": {
+                  "NFTokenID": "0010000035308C84A98C961A792FD63695C66FFD4120DE0D46DD60CE0020B433",
+                  "URI": "ABC123"
+                }
+              }
+            ]
+          },
+          "LedgerEntryType": "NFTokenPage",
+          "LedgerIndex": "35308C84A98C961A792FD63695C66FFD4120DE0DFFFFFFFFFFFFFFFFFFFFFFFF",
+          "PreviousFields": {
+            "NFTokens": [
+              {
+                "NFToken": {
+                  "NFTokenID": "0010000035308C84A98C961A792FD63695C66FFD4120DE0D46DD60CE0020B433"
+                }
+              }
+            ]
+          },
+          "PreviousTxnID": "44035F41B756A753EA32682BBEC66A9BD0052B7E452699C68C4D57E2B1225585",
+          "PreviousTxnLgrSeq": 2143284
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rniNyQQA1bzfSQ4mF7f1QCQQsh5VYb7BoG",
+            "Balance": "39999800",
+            "FirstNFTokenSequence": 2143283,
+            "Flags": 0,
+            "MintedNFTokens": 1,
+            "OwnerCount": 1,
+            "Sequence": 2143285
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "C622144A210506EEAB59F5B3E27F42811C3316657212BFF24B0D6D8A3DCD0059",
+          "PreviousFields": {
+            "Balance": "39999900",
+            "Sequence": 2143284
+          },
+          "PreviousTxnID": "44035F41B756A753EA32682BBEC66A9BD0052B7E452699C68C4D57E2B1225585",
+          "PreviousTxnLgrSeq": 2143284
+        }
+      }
+    ],
+    "TransactionIndex": 11,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true,
+  "date": 798581512,
+  "ledger_index": 2143285,
+  "inLedger": 2143285
+}

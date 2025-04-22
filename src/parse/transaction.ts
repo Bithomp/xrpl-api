@@ -31,6 +31,7 @@ import { FormattedTrustlineSpecification } from "../types/trustlines";
 import {
   FormattedNFTokenBurnSpecification,
   FormattedNFTokenMintSpecification,
+  FormattedNFTokenModifySpecification,
   FormattedNFTokenCancelOfferSpecification,
   FormattedNFTokenCreateOfferSpecification,
   FormattedNFTokenAcceptOfferSpecification,
@@ -97,6 +98,7 @@ import parseTrustline from "./specification/trustline";
 
 import parseNFTokenBurn from "./specification/nftoken-burn";
 import parseNFTokenMint from "./specification/nftoken-mint";
+import parseNFTokenModify from "./specification/nftoken-modify";
 import parseNFTokenCancelOffer from "./specification/nftoken-cancel-offer";
 import parseNFTokenCreateOffer from "./specification/nftoken-create-offer";
 import parseNFTokenAcceptOffer from "./specification/nftoken-accept-offer";
@@ -162,6 +164,7 @@ const transactionTypeToType = {
 
   NFTokenBurn: "nftokenBurn",
   NFTokenMint: "nftokenMint",
+  NFTokenModify: "NFTokenModify",
   NFTokenCancelOffer: "nftokenCancelOffer",
   NFTokenCreateOffer: "nftokenCreateOffer",
   NFTokenAcceptOffer: "nftokenAcceptOffer",
@@ -229,6 +232,7 @@ const parserTypeFunc = {
 
   nftokenBurn: parseNFTokenBurn,
   nftokenMint: parseNFTokenMint,
+  NFTokenModify: parseNFTokenModify,
   nftokenCancelOffer: parseNFTokenCancelOffer,
   nftokenCreateOffer: parseNFTokenCreateOffer,
   nftokenAcceptOffer: parseNFTokenAcceptOffer,
@@ -292,6 +296,7 @@ export type FormattedSpecification =
   | FormattedTrustlineSpecification
   | FormattedNFTokenBurnSpecification
   | FormattedNFTokenMintSpecification
+  | FormattedNFTokenModifySpecification
   | FormattedNFTokenCancelOfferSpecification
   | FormattedNFTokenCreateOfferSpecification
   | FormattedNFTokenAcceptOfferSpecification

@@ -7,9 +7,10 @@ export function parseNFTokenChanges(tx: object): object {
 }
 
 interface AccountNFTokenChangesInterface {
-  status: "added" | "removed";
+  status: "added" | "removed" | "modified";
   nftokenID: string;
   uri?: string;
+  previousURI?: string; // for modify
 }
 
 class NFTokenChanges {
@@ -32,8 +33,12 @@ class NFTokenChanges {
       return this.changes;
     }
 
-    this.parseAffectedNodes();
-    this.parseNFTokensChanges();
+    if (this.tx.TransactionType === "NFTokenModify") {
+      this.parseNFTokensURIChanges();
+    } else {
+      this.parseAffectedNodes();
+      this.parseNFTokensChanges();
+    }
 
     return this.changes;
   }
@@ -172,5 +177,76 @@ class NFTokenChanges {
     }
 
     return undefined;
+  }
+
+  private parseNFTokensURIChanges(): void {
+    // const account = this.tx.Owner;
+    const nftokenID = this.tx.NFTokenID;
+
+    const nftokenChanges = this.findNFTokenChangedNode(nftokenID);
+    if (!nftokenChanges) {
+      return;
+    }
+
+    const [currentTokenNode, previousTokenNode] = nftokenChanges;
+    const uri = currentTokenNode?.URI;
+    const previousURI = previousTokenNode?.URI;
+    if (uri === previousURI) {
+      return;
+    }
+
+    this.addChange(currentTokenNode.account, {
+      status: "modified",
+      nftokenID,
+      uri,
+      previousURI,
+    });
+  }
+
+  private findNFTokenChangedNode(nftokenID: string): any {
+    let currentTokenNode: any;
+    let previousTokenNode: any;
+
+    for (const affectedNode of this.tx.meta.AffectedNodes) {
+      const node = affectedNode.ModifiedNode;
+      if (node?.LedgerEntryType === "NFTokenPage") {
+        if (Array.isArray(node.FinalFields?.NFTokens)) {
+          for (const tokenNode of node.FinalFields?.NFTokens) {
+            if (tokenNode.NFToken.NFTokenID === nftokenID) {
+              currentTokenNode = tokenNode.NFToken;
+
+              const account = AddressCodec.encodeAccountID(Buffer.from(node?.LedgerIndex.slice(0, 40), "hex"));
+              currentTokenNode.account = account;
+
+              // early return if we have both current and previous token nodes
+              if (currentTokenNode && previousTokenNode) {
+                return [currentTokenNode, previousTokenNode];
+              }
+            }
+          }
+        }
+
+        if (Array.isArray(node.PreviousFields?.NFTokens)) {
+          for (const tokenNode of node.PreviousFields?.NFTokens) {
+            if (tokenNode.NFToken.NFTokenID === nftokenID) {
+              previousTokenNode = tokenNode.NFToken;
+
+              // early return if we have both current and previous token nodes
+              if (currentTokenNode && previousTokenNode) {
+                return [currentTokenNode, previousTokenNode];
+              }
+            }
+          }
+        }
+      }
+    }
+
+    if (!currentTokenNode || !previousTokenNode) {
+      // If we don't find both current and previous token nodes, return undefined
+      return undefined;
+    }
+
+    // return both current and previous token nodes
+    return [currentTokenNode, previousTokenNode];
   }
 }
