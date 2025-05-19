@@ -6388,6 +6388,30 @@ describe("Models", () => {
         },
       });
     });
+
+    it("EnableAmendment", function () {
+      const tx = require("../examples/responses/EnableAmendment.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "amendment",
+        address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+        sequence: 0,
+        id: "976281D793337FF5377A36409F2A1432DADAB64DB5064E12E71B1AC491EA3021",
+        ctid: "C5B7380100240000",
+        specification: {
+          source: { address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp" },
+          amendment: "DAF3A6EB04FA5DC51E8E4F23E9B7022B693EFA636F23F22664746C77B5786B23",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-05-04T12:09:01.000Z",
+          fee: "0",
+          ledgerIndex: 95893505,
+          ledgerVersion: 95893505,
+          indexInLedger: 36,
+        },
+      });
+    });
   });
 
   describe("getAccountTxDetails", () => {
