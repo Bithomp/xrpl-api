@@ -10,7 +10,7 @@ function parseMemos(tx: any): FormattedMemo[] | undefined {
     return removeUndefined({
       type: hexToString(m.Memo.MemoType),
       format: hexToString(m.Memo.MemoFormat),
-      data: hexToString(m.Memo.MemoData),
+      data: decodeData(m.Memo.MemoData),
     });
   });
 }
@@ -23,6 +23,22 @@ function formattedMemoToMemo(memo: FormattedMemo): Memo {
       MemoFormat: stringToHex(memo.format),
     }),
   };
+}
+
+function decodeData(data?: string): string | undefined {
+  if (!data) {
+    return undefined;
+  }
+
+  const decoded = hexToString(data);
+
+  // if decoded has '�', it means that the data is not valid utf-8
+  // and we should return the original data
+  if (decoded && decoded.includes("�")) {
+    return data;
+  }
+
+  return decoded;
 }
 
 export { parseMemos, formattedMemoToMemo };

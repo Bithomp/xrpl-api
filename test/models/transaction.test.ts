@@ -985,7 +985,7 @@ describe("Models", () => {
           immediateOrCancel: true,
           memos: [
             {
-              data: "\u001fϫ�\u001b��?|}�u\u001b�҉vR�\t\u0000\u0000\u0001\u001a@�\u001f��*��?�Z�}���@J��i�;y?�\u0000\u0000\u0000\u0000\u0000\u0000",
+              data: "1FCFAB861BB2983F7C7DCA751BFFD289765289090000011A408C1FFFFD2AC3E73FAE5ABE7DA9B9EA404AADC169C23B793FF0000000000000",
             },
           ],
           quantity: {
