@@ -1,3 +1,6 @@
+// Latest version for xahau network definitions is available by this link:
+// https://xahau.network/server_definitions
+
 interface FieldInfo {
   nth: number;
   isVLEncoded: boolean;

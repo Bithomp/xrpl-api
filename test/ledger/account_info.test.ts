@@ -91,6 +91,7 @@ describe("Client", () => {
           disallowIncomingCheck: false,
           disallowIncomingPayChan: false,
           disallowIncomingTrustline: false,
+          tshCollect: false,
           uriTokenIssuer: true,
           disallowIncomingRemit: false,
           blackholed: false,

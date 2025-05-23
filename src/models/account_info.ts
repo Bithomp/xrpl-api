@@ -9,10 +9,12 @@ import { getNativeCurrency } from "../client";
 
 // https://github.com/Xahau/xahaud/blob/dev/src/ripple/protocol/LedgerFormats.h
 export enum XahauAccountRootFlags {
-  lsfURITokenIssuer = 0x40000000, // True, has minted tokens in the past
+  lsfTshCollect = 0x02000000, // The TSH pays for the execution of their own Hook Chain.
+
+  lsfURITokenIssuer = 0x40000000, // This account cannot be deleted after it has issued a URIToken.
 
   // conflict with LedgerEntry.AccountRootFlags.lsfAllowTrustLineClawback
-  lsfDisallowIncomingRemit = 0x80000000, // True, no remits allowed to this account
+  lsfDisallowIncomingRemit = 0x80000000, // This account blocks incoming remit transactions.
 }
 
 export const AccountRootFlagsKeys = {
@@ -42,6 +44,7 @@ export const XRPLAccountRootFlagsKeys = {
 export const XahauAccountRootFlagsKeys = {
   ...AccountRootFlagsKeys,
 
+  tshCollect: XahauAccountRootFlags.lsfTshCollect,
   uriTokenIssuer: XahauAccountRootFlags.lsfURITokenIssuer,
   disallowIncomingRemit: XahauAccountRootFlags.lsfDisallowIncomingRemit,
 };
@@ -73,15 +76,17 @@ export interface AccountRootFlagsKeysInterface {
   disallowIncomingTrustline?: boolean;
 
   // XRPL specific
-  amm?: boolean;
   allowTrustLineClawback?: boolean;
 
   // Xahau specific
+  tshCollect?: boolean;
   uriTokenIssuer?: boolean;
   disallowIncomingRemit?: boolean;
 }
 
 export enum XahauAccountSetAsfFlags {
+  asfTshCollect = 11, // The TSH pays for the execution of their own Hook Chain. Added by the [Hooks amendment][].
+
   // conflict with AccountSetAsfFlags.asfAllowTrustLineClawback
   asfDisallowIncomingRemit = 16,
 }
@@ -106,6 +111,7 @@ export const AccountSetFlags = {
   allowTrustLineClawback: AccountSetAsfFlags.asfAllowTrustLineClawback,
 
   // Xahau specific
+  tshCollect: XahauAccountSetAsfFlags.asfTshCollect,
   disallowIncomingRemit: XahauAccountSetAsfFlags.asfDisallowIncomingRemit,
 };
 
