@@ -1,9 +1,11 @@
 import crypto from "crypto";
 import { EventEmitter } from "events";
-import { Client, Request, Response, LedgerStream, RIPPLED_API_V1, APIVersion } from "xrpl";
+import { Request, Response, LedgerStream, RIPPLED_API_V1, APIVersion } from "xrpl";
 import { StreamType, ledgerTimeToTimestamp } from "./models/ledger";
 import { removeUndefined, dropsToXrp } from "./common";
 import { sleep, getTimestamp } from "./common/utils";
+
+import * as XRPLConnection from "xrpl/dist/npm/client/connection";
 
 const RECONNECT_TIMEOUT = 1000 * 5; // 5 sec (in ms)
 const LEDGER_CLOSED_TIMEOUT = 1000 * 15; // 15 sec (in ms)
@@ -45,7 +47,7 @@ export interface ConnectionAccountsInfo {
 }
 
 class Connection extends EventEmitter {
-  private client?: Client | null;
+  private client?: XRPLConnection.Connection | null;
   public readonly url: string;
   public readonly type?: string;
   public types: string[] = [];
@@ -106,13 +108,13 @@ class Connection extends EventEmitter {
 
       await this.removeClient();
 
-      this.client = new Client(
+      this.client = new XRPLConnection.Connection(
         this.url,
         removeUndefined({ timeout: this.timeout, connectionTimeout: this.connectionTimeout })
       );
       this.setupEmitter();
 
-      await this.client.connection.connect();
+      await this.client.connect();
       await this.updateServerInfo();
       await this.subscribe();
     } catch (err: any) {
@@ -173,7 +175,7 @@ class Connection extends EventEmitter {
 
       // NOTE: Use this.client.connection.request(request); instead of this.client.request(request);
       // To prevent xrpl.js to mutate the response object by handlePartialPayment
-      const response = await this.client.connection.request(request);
+      const response = await this.client.request(request);
 
       this.updateLatency(getTimestamp() - startTimestamp);
 
@@ -228,7 +230,7 @@ class Connection extends EventEmitter {
       return false;
     }
 
-    return this.client.connection.isConnected();
+    return this.client.isConnected();
   }
 
   public getOnlinePeriodMs(): number | null {
@@ -326,8 +328,8 @@ class Connection extends EventEmitter {
   private async removeClient(): Promise<void> {
     try {
       if (this.client) {
-        await this.client.connection.disconnect();
-        this.client.connection.removeAllListeners();
+        await this.client.disconnect();
+        this.client.removeAllListeners();
         this.client = undefined;
       }
     } catch (_err: any) {
@@ -340,7 +342,7 @@ class Connection extends EventEmitter {
       return;
     }
 
-    this.client.connection.on("connected", () => {
+    this.client.on("connected", () => {
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         emit: "connected",
@@ -351,7 +353,7 @@ class Connection extends EventEmitter {
       this.onlineSince = getTimestamp();
     });
 
-    this.client.connection.on("disconnected", (code) => {
+    this.client.on("disconnected", (code) => {
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         emit: "disconnected",
@@ -366,7 +368,7 @@ class Connection extends EventEmitter {
       this.emit("disconnected", code);
     });
 
-    this.client.connection.on("error", (source, message, error) => {
+    this.client.on("error", (source, message, error) => {
       try {
         this.logger?.error({
           service: "Bithomp::XRPL::Connection",
@@ -390,33 +392,33 @@ class Connection extends EventEmitter {
       this.connectionValidation();
     });
 
-    this.client.connection.on("ledgerClosed", (ledgerStream) => {
+    this.client.on("ledgerClosed", (ledgerStream) => {
       this.onLedgerClosed(ledgerStream);
 
       this.emit("ledgerClosed", ledgerStream);
     });
 
-    this.client.connection.on("transaction", (transactionStream) => {
+    this.client.on("transaction", (transactionStream) => {
       this.emit("transaction", transactionStream);
     });
 
-    this.client.connection.on("validationReceived", (validation) => {
+    this.client.on("validationReceived", (validation) => {
       this.emit("validationReceived", validation);
     });
 
-    this.client.connection.on("manifestReceived", (manifest) => {
+    this.client.on("manifestReceived", (manifest) => {
       this.emit("manifestReceived", manifest);
     });
 
-    this.client.connection.on("peerStatusChange", (status) => {
+    this.client.on("peerStatusChange", (status) => {
       this.emit("peerStatusChange", status);
     });
 
-    this.client.connection.on("consensusPhase", (consensus) => {
+    this.client.on("consensusPhase", (consensus) => {
       this.emit("consensusPhase", consensus);
     });
 
-    this.client.connection.on("path_find", (path) => {
+    this.client.on("path_find", (path) => {
       this.emit("path_find", path);
     });
   }
