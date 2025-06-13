@@ -8,6 +8,7 @@ import { ErrorResponse } from "../models/base_model";
 import { GatewayBalances } from "../models/gateway_balances";
 import { FormattedGatewayBalances } from "../types";
 import { parseGatewayBalances } from "../parse/ledger/gateway-balances";
+import { removeUndefined } from "../common/utils";
 
 export interface GetBalanceSheetOptions {
   ledgerIndex?: LedgerIndex;
@@ -69,16 +70,17 @@ export async function getBalanceSheet(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       account,
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   const result = response.result as GatewayBalances;
@@ -100,16 +102,17 @@ export interface ObligationTrustline extends Trustline {
 export async function getAccountObligations(account: string): Promise<object | ErrorResponse> {
   const response = (await getBalanceSheet(account)) as any;
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       account,
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   const obligations: any = response.obligations;

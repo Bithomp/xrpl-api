@@ -15,6 +15,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: false,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
       ]);
     });
@@ -33,6 +35,8 @@ describe("Models", () => {
           locked_balance: "13.37",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
       ]);
     });
@@ -49,6 +53,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rcoreNywaoz2ZCQ8Lg2EbSLnGuRBmun6D",
@@ -58,6 +64,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B",
@@ -67,6 +75,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rsoLo2S1kiGeCcn6hCUXVrCpGMWLrRrLZz",
@@ -76,6 +86,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rHXuEaRYnnJHbDeuBH5w8yPh5uwNVh5zAg",
@@ -85,6 +97,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rcvxE9PS9YBwxtGg1qNeewV6ZB3wGubZq",
@@ -94,6 +108,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rcxJwVnftZzXqyH9YheB8TgeiZUhNo1Eu",
@@ -103,6 +119,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rcEGREd8NmkKRE8GE424sksyt1tJVFZwu",
@@ -112,6 +130,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq",
@@ -121,6 +141,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
       ]);
     });
@@ -137,6 +159,8 @@ describe("Models", () => {
           limit_peer: "7777777777770000e-4",
           no_ripple: false,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rQsYRw8vEPGGphTStYbPuLB71VzhrfQ7zf",
@@ -146,6 +170,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
       ]);
     });
@@ -162,6 +188,8 @@ describe("Models", () => {
           limit_peer: "10000000000",
           no_ripple: true,
           no_ripple_peer: true,
+          authorized: false,
+          peer_authorized: false,
         },
       ]);
     });
@@ -171,23 +199,27 @@ describe("Models", () => {
       const result: any = Models.accountObjectsToAccountLines("rw4nfCN97BtDxjxDv9dDJV53CtGxB2yoNA", objects);
       expect(result).to.eql([
         {
-          account: 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B',
-          balance: '0',
-          currency: 'TCC',
-          limit: '50',
-          limit_peer: '0',
+          account: "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B",
+          balance: "0",
+          currency: "TCC",
+          limit: "50",
+          limit_peer: "0",
           no_ripple: true,
-          no_ripple_peer: false
+          no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
-          account: 'rp2PaYDxVwDvaZVLEQv7bHhoFQEyX1mEx7',
-          balance: '0.006',
-          currency: 'USD',
-          limit: '10',
-          limit_peer: '0',
+          account: "rp2PaYDxVwDvaZVLEQv7bHhoFQEyX1mEx7",
+          balance: "0.006",
+          currency: "USD",
+          limit: "10",
+          limit_peer: "0",
           no_ripple: false,
-          no_ripple_peer: false
-        }
+          no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
+        },
       ]);
     });
 
@@ -204,6 +236,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rEFMsxytphWCgfTdAXBBYvwhnB5GWjBrY5",
@@ -213,6 +247,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rGiWhwhtGNdu4Df4ZB68HzQNuxTTy28B5V",
@@ -222,6 +258,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: true,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rEFMsxytphWCgfTdAXBBYvwhnB5GWjBrY5",
@@ -231,6 +269,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rEFMsxytphWCgfTdAXBBYvwhnB5GWjBrY5",
@@ -240,6 +280,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: true,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rEFMsxytphWCgfTdAXBBYvwhnB5GWjBrY5",
@@ -249,6 +291,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rEFMsxytphWCgfTdAXBBYvwhnB5GWjBrY5",
@@ -258,6 +302,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rEFMsxytphWCgfTdAXBBYvwhnB5GWjBrY5",
@@ -267,6 +313,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: true,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rEFMsxytphWCgfTdAXBBYvwhnB5GWjBrY5",
@@ -276,6 +324,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rEFMsxytphWCgfTdAXBBYvwhnB5GWjBrY5",
@@ -285,6 +335,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rEFMsxytphWCgfTdAXBBYvwhnB5GWjBrY5",
@@ -294,6 +346,8 @@ describe("Models", () => {
           limit_peer: "301669700.0912015",
           no_ripple: true,
           no_ripple_peer: true,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rEFMsxytphWCgfTdAXBBYvwhnB5GWjBrY5",
@@ -303,6 +357,8 @@ describe("Models", () => {
           limit_peer: "3445.229131879006",
           no_ripple: true,
           no_ripple_peer: true,
+          authorized: false,
+          peer_authorized: false,
         },
         {
           account: "rEFMsxytphWCgfTdAXBBYvwhnB5GWjBrY5",
@@ -312,6 +368,8 @@ describe("Models", () => {
           limit_peer: "0",
           no_ripple: true,
           no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
         },
       ]);
     });

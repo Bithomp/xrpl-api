@@ -3,7 +3,7 @@ import { getBalanceChanges } from "xrpl";
 
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
-import { compareTransactions, parseMarker, createMarker } from "../common/utils";
+import { compareTransactions, parseMarker, createMarker, removeUndefined } from "../common/utils";
 import { getAccountTxDetails } from "../models/transaction";
 import { ErrorResponse } from "../models/base_model";
 
@@ -136,16 +136,17 @@ export async function getTransactions(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       account,
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   const result = response?.result;

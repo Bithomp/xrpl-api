@@ -1,6 +1,7 @@
 import * as Client from "../client";
 import { Connection } from "../connection";
 import { ErrorResponse } from "../models/base_model";
+import { removeUndefined } from "../common/utils";
 
 export interface GetServerInfoOptions {
   url?: string;
@@ -30,15 +31,16 @@ export async function getServerInfo(options: GetServerInfoOptions = {}): Promise
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   return response?.result;

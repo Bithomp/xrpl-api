@@ -5,6 +5,7 @@ import { LedgerIndex } from "../models/ledger";
 import { parseLedger } from "../parse/ledger/ledger";
 import { ErrorResponse } from "../models/base_model";
 import { FormattedLedger } from "../types";
+import { removeUndefined } from "../common/utils";
 
 export interface GetLedgerOptions {
   ledgerIndex?: LedgerIndex;
@@ -65,15 +66,16 @@ export async function getLedger(options: GetLedgerOptions = {}): Promise<object 
   });
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   const result = response?.result;

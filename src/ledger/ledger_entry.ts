@@ -40,16 +40,17 @@ export async function getLedgerEntry(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       ledger_entry: ledgerEntry,
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   return response?.result;

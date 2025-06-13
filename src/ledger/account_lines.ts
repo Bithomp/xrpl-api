@@ -3,6 +3,7 @@ import { LedgerIndex } from "../models/ledger";
 import { parseMarker, createMarker } from "../common/utils";
 import { AccountLinesResponse } from "../models/account_lines";
 import { ErrorResponse } from "../models/base_model";
+import { removeUndefined } from "../common";
 
 export interface GetAccountLinesOptions {
   issuer?: string;
@@ -63,16 +64,17 @@ export async function getAccountLines(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       account,
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   const result = response.result;

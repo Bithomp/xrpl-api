@@ -3,6 +3,7 @@ import { Connection } from "../connection";
 import { ErrorResponse } from "../models/base_model";
 import { IssuedCurrency } from "../types";
 import { LedgerIndex } from "../models/ledger";
+import { removeUndefined } from "../common/utils";
 
 export interface GetAmmInfoOptions {
   url?: string;
@@ -45,15 +46,16 @@ export async function getAmmInfo(ammAccount: string, options: GetAmmInfoOptions 
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   return response?.result;
@@ -93,15 +95,16 @@ export async function getAmmInfoByAssets(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   return response?.result;

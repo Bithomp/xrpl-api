@@ -6,7 +6,7 @@ import * as Client from "../client";
 import { Connection } from "../connection";
 
 import { xrpToDrops } from "../common";
-import { sleep } from "../common/utils";
+import { sleep, removeUndefined } from "../common/utils";
 import { FormattedMemo } from "../types";
 
 import { createPaymentTransaction, Payment } from "../v1/transaction/payment";
@@ -99,16 +99,17 @@ export async function getTransaction(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       transaction,
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   const result = response?.result;

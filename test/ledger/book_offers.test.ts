@@ -202,7 +202,7 @@ describe("Client", () => {
         };
         const result: any = await Client.getOrderbook(taker, orderbook);
 
-        expect(Object.keys(result)).to.eql(["taker", "error", "error_code", "error_message", "status", "validated"]);
+        expect(Object.keys(result)).to.eql(["taker", "error", "error_code", "error_message", "status"]);
         expect(result.taker).to.eql(taker);
         expect(result.status).to.eql("error");
         expect(["srcIsrMalformed", "dstIsrMalformed", "dstAmtMalformed"].includes(result.error)).to.eq(true);

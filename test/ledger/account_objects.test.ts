@@ -127,26 +127,162 @@ describe("Client", () => {
   });
 
   describe("getAccountLinesObjects", () => {
-    before(async function () {
-      this.timeout(15000);
-      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
-      await Client.connect();
+    describe("testnet", () => {
+      before(async function () {
+        this.timeout(15000);
+        Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
+        await Client.connect();
+      });
+
+      it("returns trustline data", async function () {
+        const result: any = await Client.getAccountLinesObjects("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8");
+        expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "lines"]);
+        expect(result.lines).to.eql([
+          {
+            account: "rESkTa8rXUGKs1njRrJGYSTwB5R1XYCEAt",
+            balance: "123.45",
+            currency: "FOO",
+            limit: "1000000000",
+            limit_peer: "0",
+            no_ripple: false,
+            no_ripple_peer: false,
+            authorized: false,
+            peer_authorized: false,
+          },
+        ]);
+      });
     });
 
-    it("works", async function () {
-      const result: any = await Client.getAccountLinesObjects("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8");
-      expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "lines"]);
-      expect(result.lines).to.eql([
-        {
-          account: "rESkTa8rXUGKs1njRrJGYSTwB5R1XYCEAt",
-          balance: "123.45",
-          currency: "FOO",
-          limit: "1000000000",
-          limit_peer: "0",
-          no_ripple: false,
-          no_ripple_peer: false,
-        },
-      ]);
+    describe("mainnet", () => {
+      before(async function () {
+        this.timeout(15000);
+        Client.setup(nconf.get("xrpl:connections:mainnet"), { nativeCurrency: "XRP" });
+        await Client.connect();
+      });
+
+      it("returns authorized", async function () {
+        const result: any = await Client.getAccountLinesObjects("rQGiUHkytmWPj7VFvy1NLGYm6nSvCHENCA");
+        expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "lines"]);
+        expect(result.lines).to.eql([
+          {
+            account: "rw1nGFn6rnH242H83bBUo5NwHtbQ8juSNC",
+            balance: "0",
+            currency: "LCA",
+            limit: "0.01",
+            limit_peer: "100000000",
+            no_ripple: true,
+            no_ripple_peer: true,
+            authorized: true,
+            peer_authorized: false,
+          },
+          {
+            account: "rw1nGFn6rnH242H83bBUo5NwHtbQ8juSNC",
+            balance: "0",
+            currency: "LCD",
+            limit: "0.01",
+            limit_peer: "100000000",
+            no_ripple: true,
+            no_ripple_peer: true,
+            authorized: true,
+            peer_authorized: false,
+          },
+          {
+            account: "rJJNT6SVFVkaYzm81jujHbWTZ1Wb8HLhB1",
+            balance: "0",
+            currency: "LCA",
+            limit: "0.01",
+            limit_peer: "100000000",
+            no_ripple: true,
+            no_ripple_peer: true,
+            authorized: true,
+            peer_authorized: false,
+          },
+          {
+            account: "rJJNT6SVFVkaYzm81jujHbWTZ1Wb8HLhB1",
+            balance: "0",
+            currency: "LCD",
+            limit: "0.01",
+            limit_peer: "100000000",
+            no_ripple: true,
+            no_ripple_peer: true,
+            authorized: true,
+            peer_authorized: false,
+          },
+          {
+            account: "rJaCBQcmGgimWTMxopwbCTbrBTQDbwG6UL",
+            balance: "0",
+            currency: "LCA",
+            limit: "0.01",
+            limit_peer: "100000000",
+            no_ripple: true,
+            no_ripple_peer: true,
+            authorized: true,
+            peer_authorized: false,
+          },
+          {
+            account: "rJaCBQcmGgimWTMxopwbCTbrBTQDbwG6UL",
+            balance: "0",
+            currency: "LCD",
+            limit: "0.01",
+            limit_peer: "100000000",
+            no_ripple: true,
+            no_ripple_peer: true,
+            authorized: true,
+            peer_authorized: false,
+          },
+          {
+            account: "r9L5QruaoJhZYRYbJyxnSSRtBwtME3Ga6U",
+            balance: "0",
+            currency: "LCA",
+            limit: "0.01",
+            limit_peer: "100000000",
+            no_ripple: true,
+            no_ripple_peer: true,
+            authorized: true,
+            peer_authorized: false,
+          },
+          {
+            account: "r9L5QruaoJhZYRYbJyxnSSRtBwtME3Ga6U",
+            balance: "0",
+            currency: "LCD",
+            limit: "0.01",
+            limit_peer: "100000000",
+            no_ripple: true,
+            no_ripple_peer: true,
+            authorized: true,
+            peer_authorized: false,
+          },
+        ]);
+      });
+
+      it("returns no_ripple", async function () {
+        const result: any = await Client.getAccountLinesObjects("rpcEZUtUwJURmxrbhkjv4uMRVswtydS3Dg");
+        expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "lines"]);
+        expect(result.lines).to.eql([
+          {
+            account: "rhHwR3yzmjvkToyASSMcbDMbKtSGMHtcbu",
+            balance: "0",
+            currency: "4D4F445300000000000000000000000000000000",
+            limit: "0",
+            limit_peer: "0",
+            no_ripple: true,
+            no_ripple_peer: true,
+            authorized: false,
+            peer_authorized: false,
+          },
+          {
+            account: "r9oEWVeqiao7eYAfbgykhy7E9H1KHBuAXL",
+            balance: "141421356.2373095",
+            currency: "03987CA593B67B2FEE3AD107E76AA8AA1FE117B3",
+            limit: "141421357",
+            limit_peer: "0",
+            no_ripple: true,
+            no_ripple_peer: false,
+            authorized: false,
+            peer_authorized: false,
+          },
+        ]);
+      });
     });
   });
 

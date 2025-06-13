@@ -6,6 +6,7 @@ import { AccountOffers } from "../models/account_offers";
 import { parseMarker, createMarker } from "../common/utils";
 import { ErrorResponse } from "../models/base_model";
 import { FormattedAccountOrders, FormattedAccountOrder, parseAccountOrder } from "../parse/ledger/account-order";
+import { removeUndefined } from "../common";
 
 const OFFERS_LIMIT_MAX = 400;
 
@@ -65,16 +66,17 @@ export async function getAccountOffers(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       account,
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   const result = response.result;
@@ -129,16 +131,17 @@ export async function getAccountAllOffers(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       account,
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   response.offers = accountOffers;

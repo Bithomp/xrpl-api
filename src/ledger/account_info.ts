@@ -5,6 +5,7 @@ import { AccountInfoResponse, AccountInfoDataResponse } from "../models/account_
 import { ErrorResponse } from "../models/base_model";
 import { parseAccountInfoData } from "../parse/ledger/account-info";
 import { FormattedAccountInfoData } from "../types";
+import { removeUndefined } from "../common";
 
 export interface GetAccountInfoOptions {
   ledgerIndex?: LedgerIndex;
@@ -58,16 +59,17 @@ export async function getAccountInfo(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       account,
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   const result = response.result as AccountInfoResponse;

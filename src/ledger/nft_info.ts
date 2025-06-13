@@ -1,5 +1,6 @@
 import * as Client from "../client";
 import { ErrorResponse } from "../models/base_model";
+import { removeUndefined } from "../common/utils";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface GetNftInfoOptions { }
@@ -29,15 +30,16 @@ export async function getNftInfo(nft_id: string, _options: GetNftInfoOptions = {
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   return response?.result;

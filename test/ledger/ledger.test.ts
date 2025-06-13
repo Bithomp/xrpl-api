@@ -84,7 +84,6 @@ describe("Client", () => {
           error_code: 21,
           error_message: "ledgerNotFound",
           status: "error",
-          validated: undefined,
         });
       });
 

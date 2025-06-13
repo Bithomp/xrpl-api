@@ -8,6 +8,7 @@ export interface ErrorResponse {
   error: string;
   error_code?: string;
   error_message?: string;
+  error_exception?: string;
   api_version?: number;
   marker?: any;
   validated?: boolean;

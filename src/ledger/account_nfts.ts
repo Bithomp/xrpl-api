@@ -3,6 +3,7 @@ import { LedgerIndex } from "../models/ledger";
 import { sortHelperAccountNFToken } from "../models/account_nfts";
 import { parseMarker, createMarker } from "../common/utils";
 import { ErrorResponse } from "../models/base_model";
+import { removeUndefined } from "../common";
 
 export interface GetAccountNftsOptions {
   ledgerIndex?: LedgerIndex;
@@ -30,7 +31,10 @@ export interface GetAccountNftsOptions {
  * }
  * @exception {Error}
  */
-export async function getAccountNfts(account: string, options: GetAccountNftsOptions = {}): Promise<object[] | ErrorResponse> {
+export async function getAccountNfts(
+  account: string,
+  options: GetAccountNftsOptions = {}
+): Promise<object[] | ErrorResponse> {
   const { hash, marker } = parseMarker(options.marker);
   options.marker = marker;
   const connection: any = Client.findConnection(undefined, undefined, undefined, hash);
@@ -54,16 +58,17 @@ export async function getAccountNfts(account: string, options: GetAccountNftsOpt
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       account,
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   const result = response?.result;
@@ -132,16 +137,17 @@ export async function findAccountNfts(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       account,
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   response.account_nfts = accountNfts;
@@ -196,16 +202,17 @@ export async function getAccountNftSellOffers(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       nft_id: nftID,
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   return response?.result;
@@ -258,16 +265,17 @@ export async function getAccountNftBuyOffers(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       nft_id: nftID,
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   return response?.result;

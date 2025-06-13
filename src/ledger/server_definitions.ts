@@ -2,6 +2,7 @@ import * as Client from "../client";
 import { Connection } from "../connection";
 import { ErrorResponse } from "../models/base_model";
 import { ServerDefinitionsResponseResult } from "../models/server_definitions";
+import { removeUndefined } from "../common/utils";
 
 export interface GetServerDefinitionsOptions {
   connection?: Connection;
@@ -31,15 +32,16 @@ export async function getServerDefinitions(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   return response?.result;

@@ -4,6 +4,7 @@ import { OrderbookInfo, formatBidsAndAsks } from "../models/book_offers";
 import { IssuedCurrency } from "../types";
 import { parseMarker, createMarker } from "../common/utils";
 import { ErrorResponse } from "../models/base_model";
+import { removeUndefined } from "../common";
 
 export interface GetGetBookOffersOptions {
   ledgerIndex?: LedgerIndex;
@@ -47,16 +48,17 @@ export async function getBookOffers(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated } = response;
 
-    return {
+    return removeUndefined({
       taker,
       error,
       error_code,
       error_message,
+      error_exception,
       status,
       validated,
-    };
+    });
   }
 
   const result = response.result;

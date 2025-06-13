@@ -146,18 +146,20 @@ function isNegativeBalance(balance: string): boolean {
 }
 
 const RippleStateToTrustLine = (ledgerEntry: LedgerEntry.RippleState, account: string): Trustline => {
-  const parties = [ledgerEntry.HighLimit, ledgerEntry.LowLimit];
-  const [self, counterparty] = ledgerEntry.HighLimit.issuer === account ? parties : parties.reverse();
+  const viewLowest = ledgerEntry.LowLimit.issuer === account;
+  const flags = ledgerEntry.Flags;
+
+  const self = viewLowest ? ledgerEntry.LowLimit : ledgerEntry.HighLimit;
+  const counterparty = viewLowest ? ledgerEntry.HighLimit : ledgerEntry.LowLimit;
+
+  const { lsfLowNoRipple, lsfHighNoRipple, lsfLowAuth, lsfHighAuth } = RippleStateFlags;
 
   /* eslint-disable no-bitwise */
-  const ripplingFlags = [
-    (RippleStateFlags.lsfHighNoRipple & ledgerEntry.Flags) === RippleStateFlags.lsfHighNoRipple,
-    (RippleStateFlags.lsfLowNoRipple & ledgerEntry.Flags) === RippleStateFlags.lsfLowNoRipple,
-  ];
+  const no_ripple = (flags & (viewLowest ? lsfLowNoRipple : lsfHighNoRipple)) !== 0;
+  const no_ripple_peer = (flags & (viewLowest ? lsfHighNoRipple : lsfLowNoRipple)) !== 0;
+  const authorized = (flags & (viewLowest ? lsfLowAuth : lsfHighAuth)) !== 0;
+  const peer_authorized = (flags & (viewLowest ? lsfHighAuth : lsfLowAuth)) !== 0;
   /* eslint-enable no-bitwise */
-
-  const [no_ripple, no_ripple_peer] =
-    ledgerEntry.HighLimit.issuer === account ? ripplingFlags : ripplingFlags.reverse();
 
   /* eslint-disable multiline-ternary */
   const balance =
@@ -182,6 +184,8 @@ const RippleStateToTrustLine = (ledgerEntry: LedgerEntry.RippleState, account: s
     locked_balance: lockedBalance,
     no_ripple,
     no_ripple_peer,
+    authorized,
+    peer_authorized,
   }) as Trustline;
 };
 
