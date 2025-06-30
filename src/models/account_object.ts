@@ -168,7 +168,11 @@ const RippleStateToTrustLine = (ledgerEntry: LedgerEntry.RippleState, account: s
       : ledgerEntry.Balance.value;
   /* eslint-enable multiline-ternary */
 
-  const lockedBalance = (ledgerEntry as any).LockedBalance?.value;
+  let lockedBalance = (ledgerEntry as any).LockedBalance?.value;
+  if (lockedBalance && lockedBalance.startsWith("-")) {
+    lockedBalance = lockedBalance.slice(1);
+  }
+
   let lockCount = undefined;
   if (lockedBalance) {
     lockCount = (ledgerEntry as any).LockCount;

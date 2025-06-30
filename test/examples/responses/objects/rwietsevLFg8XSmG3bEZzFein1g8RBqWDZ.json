@@ -1,0 +1,56 @@
+[
+  {
+    "Balance": {
+      "currency": "XRP",
+      "issuer": "rrrrrrrrrrrrrrrrrrrrBZbvji",
+      "value": "-45.9031084076433"
+    },
+    "Flags": 2228224,
+    "HighLimit": {
+      "currency": "XRP",
+      "issuer": "rwietsevLFg8XSmG3bEZzFein1g8RBqWDZ",
+      "value": "1000000000",
+      "issuerDetails": {
+        "address": "rwietsevLFg8XSmG3bEZzFein1g8RBqWDZ",
+        "username": null,
+        "service": "XRPL-Labs"
+      }
+    },
+    "HighNode": "0",
+    "LedgerEntryType": "RippleState",
+    "LockCount": 1,
+    "LockedBalance": {
+      "currency": "XRP",
+      "issuer": "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq",
+      "value": "-10"
+    },
+    "LowLimit": {
+      "currency": "XRP",
+      "issuer": "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq",
+      "value": "0",
+      "issuerDetails": {
+        "address": "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq",
+        "username": "gatehub",
+        "service": "GateHub Crypto"
+      }
+    },
+    "LowNode": "1",
+    "PreviousTxnID": "7F1AB1398ED11A52CB67AD2A604702BBFBC6426A2B559B65916CE22BD7D917EE",
+    "PreviousTxnLgrSeq": 15269000,
+    "index": "FE40332BC636F6524788D549CDE73BC4A2C20A88800512D415F2568CBB1A2CAD",
+    "flags": {
+      "lowReserve": false,
+      "highReserve": true,
+      "lowAuth": false,
+      "highAuth": false,
+      "lowNoRipple": false,
+      "highNoRipple": true,
+      "lowFreeze": false,
+      "highFreeze": false,
+      "ammNode": false,
+      "lowDeepFreeze": false,
+      "highDeepFreeze": false
+    },
+    "previousTxAt": 1751280852
+  }
+]

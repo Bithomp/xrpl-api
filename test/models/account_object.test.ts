@@ -41,6 +41,26 @@ describe("Models", () => {
       ]);
     });
 
+    it("returns account lines with negative locked balance", function () {
+      const objects = require("../examples/responses/objects/rwietsevLFg8XSmG3bEZzFein1g8RBqWDZ.json");
+      const result: any = Models.accountObjectsToAccountLines("rwietsevLFg8XSmG3bEZzFein1g8RBqWDZ", objects);
+      expect(result).to.eql([
+        {
+          account: "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq",
+          balance: "45.9031084076433",
+          currency: "XRP",
+          limit: "1000000000",
+          limit_peer: "0",
+          lock_count: 1,
+          locked_balance: "10",
+          no_ripple: true,
+          no_ripple_peer: false,
+          authorized: false,
+          peer_authorized: false,
+        },
+      ]);
+    });
+
     it("returns account lines with balances", function () {
       const objects = require("../examples/responses/objects/rhuCDThQpvQ6inFv1KguGymhXBK7K2So9m.json");
       const result: any = Models.accountObjectsToAccountLines("rhuCDThQpvQ6inFv1KguGymhXBK7K2So9m", objects);
