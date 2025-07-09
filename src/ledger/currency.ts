@@ -5,7 +5,7 @@ import { getNativeCurrency } from "../client";
 import { removeUndefined } from "../common";
 import { AMM_LP_TOKEN_REGEX } from "../models/amm_info";
 
-const maxLength = 16; // Maximum length of a currency string
+const maxLength = 20; // Maximum length of a currency string
 
 export async function parseCurrencyInformation(
   currency: any
@@ -50,7 +50,7 @@ async function decodeCurrencyHex(
 
   if (prefix === "02" && isXlf15d(currencyCode)) {
     return await decodeXlf15d(currencyCode);
-  } else if (AMM_LP_TOKEN_REGEX.test(currencyCode)) {
+  } else if (prefix === "03" && AMM_LP_TOKEN_REGEX.test(currencyCode)) {
     return decodeLPTokenHex(currencyCode);
   } else {
     return decodeHex(currencyCode);
@@ -158,12 +158,27 @@ interface DecodeHexCurrencyInterface {
 }
 
 function decodeHex(currencyHex: string): DecodeHexCurrencyInterface | null {
-  const decodedHex = hexToString(currencyHex)?.slice(0, maxLength)?.trim() as string;
-  if (decodedHex.match(/[a-zA-Z0-9]{3,}/) && decodedHex.toUpperCase() !== getNativeCurrency()) {
+  const decoded = hexToString(currencyHex)
+    ?.slice(0, maxLength)
+    ?.replace(/\u0000+$/, "") // remove trailing null characters
+    ?.trim() as string;
+
+  // remove all not printable characters, zero-width space, and multiple spaces
+  const trimmed = decoded
+    .replace(/[^-\w\(\)\u1F60-\uFFFFäÄÉéöÖüÜßåÅøØáÁ\u0600-\u06FF\u0080-\u02af@:%_\+.~#'?\$&//=<>]*/g, "") // remove all not printable characters
+    .replace(/[�]*/g, "") // remove zero-width space
+    .replace(/\s+/g, " ") // replace multiple spaces with a single space
+    .trim();
+
+  if (
+    trimmed.length > 1 && // at least 2 characters
+    trimmed.length >= decoded.length / 4 && // more than 25% of the original length
+    trimmed.toUpperCase() !== getNativeCurrency()
+  ) {
     return {
       type: "hex",
       currencyCode: currencyHex,
-      currency: decodedHex.trim().replace(/\0/g, ""),
+      currency: trimmed,
     };
   }
 

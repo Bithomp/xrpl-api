@@ -49,7 +49,7 @@ describe("Client", () => {
       });
 
       describe("when HEX", () => {
-        it("is OK for HADALITE", async function () {
+        it("is OK for string HADALITE", async function () {
           expect(await Client.parseCurrencyInformation("484144414C495445000000000000000000000000")).to.eql({
             currencyCode: "484144414C495445000000000000000000000000",
             currency: "HADALITE",
@@ -57,12 +57,40 @@ describe("Client", () => {
           });
         });
 
-        it("is OK for $Dboyfriend🔥", async function () {
+        it("is OK for emoji $Dboyfriend🔥", async function () {
           expect(await Client.parseCurrencyInformation("2444626F79667269656E64F09F94A50000000000")).to.eql({
             currencyCode: "2444626F79667269656E64F09F94A50000000000",
             currency: "$Dboyfriend🔥",
             type: "hex",
           });
+        });
+
+        it("is OK for name with dots D.O.G.E.", async function () {
+          expect(await Client.parseCurrencyInformation("442E4F2E472E452E000000000000000000000000")).to.eql({
+            currencyCode: "442E4F2E472E452E000000000000000000000000",
+            currency: "D.O.G.E.",
+            type: "hex",
+          });
+        });
+
+        it("is OK for (O_o)", async function () {
+          expect(await Client.parseCurrencyInformation("02930015040A13E900000000000000284F5F6F29")).to.eql({
+            currencyCode: "02930015040A13E900000000000000284F5F6F29",
+            currency: "(O_o)",
+            type: "hex",
+          });
+        });
+
+        it("is OK for <%<<<<<<<<<<<<<<<>>>", async function () {
+          expect(await Client.parseCurrencyInformation("3C253C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3E3E3E")).to.eql({
+            currencyCode: "3C253C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3E3E3E",
+            currency: "<%<<<<<<<<<<<<<<<>>>",
+            type: "hex",
+          });
+        });
+
+        it("is null for not hex", async function () {
+          expect(await Client.parseCurrencyInformation("E5F5829DB36F0DAB19F03114B7876A6B7FB38990")).to.be.null;
         });
       });
 
