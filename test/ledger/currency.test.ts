@@ -58,6 +58,16 @@ describe("Client", () => {
         });
       });
 
+      describe("when LP Token", () => {
+        it("is OK", async function () {
+          expect(await Client.parseCurrencyInformation("037FEC3ED56671877B6A0EA59C6FFACCA0C88CDF")).to.eql({
+            currencyCode: "037FEC3ED56671877B6A0EA59C6FFACCA0C88CDF",
+            currency: "LP Token",
+            type: "lp_token",
+          });
+        });
+      });
+
       describe("when NFT", () => {
         it("is OK for Plasticats", async function () {
           this.timeout(15000);

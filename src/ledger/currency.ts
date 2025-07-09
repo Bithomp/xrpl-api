@@ -3,6 +3,7 @@ import { hexToString } from "../parse/utils";
 import { parseTransactionType } from "../parse/transaction";
 import { getNativeCurrency } from "../client";
 import { removeUndefined } from "../common";
+import { AMM_LP_TOKEN_REGEX } from "../models/amm_info";
 
 const maxLength = 12;
 
@@ -49,6 +50,8 @@ async function decodeCurrencyHex(
 
   if (prefix === "02" && isXlf15d(currencyCode)) {
     return await decodeXlf15d(currencyCode);
+  } else if (AMM_LP_TOKEN_REGEX.test(currencyCode)) {
+    return decodeLPTokenHex(currencyCode);
   } else {
     return decodeHex(currencyCode);
   }
@@ -165,6 +168,14 @@ function decodeHex(currencyHex: string): DecodeHexCurrencyInterface | null {
   }
 
   return null;
+}
+
+function decodeLPTokenHex(currencyHex: string): DecodeHexCurrencyInterface | null {
+  return {
+    type: "lp_token",
+    currencyCode: currencyHex,
+    currency: "LP Token",
+  };
 }
 
 async function getLedger(ledgerIndex: number): Promise<any> {
