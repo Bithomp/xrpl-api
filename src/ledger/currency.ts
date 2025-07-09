@@ -7,7 +7,7 @@ import { AMM_LP_TOKEN_REGEX } from "../models/amm_info";
 
 const maxLength = 20; // Maximum length of a currency string
 
-const DECODED_HEX_CURRENCY_REGEX = /[^-\w\(\)\u0070-\uFFFF@:%_\+.~#'?\$&//=<>\^\\]*/g;
+const DECODED_HEX_CURRENCY_REGEX = /[^-\w\(\)\[\]\u0070-\uFFFF@:%_\+.~#'?\$&//=<>\^\\ ]*/g;
 
 export async function parseCurrencyInformation(
   currency: any

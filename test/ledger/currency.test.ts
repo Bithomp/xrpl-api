@@ -81,10 +81,10 @@ describe("Client", () => {
           });
         });
 
-        it("is OK for ASCII /(^x^)\\", async function () {
+        it("is OK for ASCII /( ^x^ )\\", async function () {
           expect(await Client.parseCurrencyInformation("02930015040A13E90000002F28205E785E20295C")).to.eql({
             currencyCode: "02930015040A13E90000002F28205E785E20295C",
-            currency: "/(^x^)\\",
+            currency: "/( ^x^ )\\",
             type: "hex",
           });
         });
