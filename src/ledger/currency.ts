@@ -5,7 +5,7 @@ import { getNativeCurrency } from "../client";
 import { removeUndefined } from "../common";
 import { AMM_LP_TOKEN_REGEX } from "../models/amm_info";
 
-const maxLength = 12;
+const maxLength = 16; // Maximum length of a currency string
 
 export async function parseCurrencyInformation(
   currency: any

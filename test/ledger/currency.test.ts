@@ -56,6 +56,14 @@ describe("Client", () => {
             type: "hex",
           });
         });
+
+        it("is OK for $Dboyfriend🔥", async function () {
+          expect(await Client.parseCurrencyInformation("2444626F79667269656E64F09F94A50000000000")).to.eql({
+            currencyCode: "2444626F79667269656E64F09F94A50000000000",
+            currency: "$Dboyfriend🔥",
+            type: "hex",
+          });
+        });
       });
 
       describe("when LP Token", () => {
