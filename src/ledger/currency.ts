@@ -257,10 +257,6 @@ function isDemurrageHex(currencyHex: string): boolean {
     return false;
   }
 
-  if (currencyText.toUpperCase() === getNativeCurrency()) {
-    return false;
-  }
-
   const interestPeriod = hex2double(currencyHex.substring(16, 32));
   if (isNaN(interestPeriod)) {
     return false;

@@ -110,6 +110,48 @@ describe("Client", () => {
         });
       });
 
+      describe("when demurrage", () => {
+        it("is OK -0.5", async function () {
+          expect(await Client.parseCurrencyInformation("0158415500000000C1F76FF6ECB0BAC600000000")).to.eql({
+            currencyCode: "0158415500000000C1F76FF6ECB0BAC600000000",
+            currency: "XAU (-0.5%pa)",
+            type: "demurrage",
+          });
+        });
+
+        it("is OK 10", async function () {
+          expect(await Client.parseCurrencyInformation("015858580000000041B3B8CA7AC2E71800000000")).to.eql({
+            currencyCode: "015858580000000041B3B8CA7AC2E71800000000",
+            currency: "XXX (+10%pa)",
+            type: "demurrage",
+          });
+        });
+
+        it("is OK -60", async function () {
+          expect(await Client.parseCurrencyInformation("01434E5900000000C180694BFF0A625D00000000")).to.eql({
+            currencyCode: "01434E5900000000C180694BFF0A625D00000000",
+            currency: "CNY (-60%pa)",
+            type: "demurrage",
+          });
+        });
+
+        it("is OK -0.5", async function () {
+          expect(await Client.parseCurrencyInformation("0158415500000000C1F76FF6ECB0CC8E00000000")).to.eql({
+            currencyCode: "0158415500000000C1F76FF6ECB0CC8E00000000",
+            currency: "XAU (-0.5%pa)",
+            type: "demurrage",
+          });
+        });
+
+        it("is OK for XRP -0.5", async function () {
+          expect(await Client.parseCurrencyInformation("0158525000000000C1F76FF6ECB0BAC600000000")).to.eql({
+            currencyCode: "0158525000000000C1F76FF6ECB0BAC600000000",
+            currency: "XRP (-0.5%pa)",
+            type: "demurrage",
+          });
+        });
+      });
+
       describe("when NFT", () => {
         it("is OK for Plasticats", async function () {
           this.timeout(15000);
@@ -251,40 +293,6 @@ describe("Client", () => {
             ctiVerified: true,
             timestamp: undefined,
             ctiTx: {},
-          });
-        });
-      });
-
-      describe("when demurrage", () => {
-        it("is OK -0.5", async function () {
-          expect(await Client.parseCurrencyInformation("0158415500000000C1F76FF6ECB0BAC600000000")).to.eql({
-            currencyCode: "0158415500000000C1F76FF6ECB0BAC600000000",
-            currency: "XAU (-0.5%pa)",
-            type: "demurrage",
-          });
-        });
-
-        it("is OK 10", async function () {
-          expect(await Client.parseCurrencyInformation("015858580000000041B3B8CA7AC2E71800000000")).to.eql({
-            currencyCode: "015858580000000041B3B8CA7AC2E71800000000",
-            currency: "XXX (+10%pa)",
-            type: "demurrage",
-          });
-        });
-
-        it("is OK -60", async function () {
-          expect(await Client.parseCurrencyInformation("01434E5900000000C180694BFF0A625D00000000")).to.eql({
-            currencyCode: "01434E5900000000C180694BFF0A625D00000000",
-            currency: "CNY (-60%pa)",
-            type: "demurrage",
-          });
-        });
-
-        it("is OK -0.5", async function () {
-          expect(await Client.parseCurrencyInformation("0158415500000000C1F76FF6ECB0CC8E00000000")).to.eql({
-            currencyCode: "0158415500000000C1F76FF6ECB0CC8E00000000",
-            currency: "XAU (-0.5%pa)",
-            type: "demurrage",
           });
         });
       });
