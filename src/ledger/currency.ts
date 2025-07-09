@@ -54,6 +54,8 @@ async function decodeCurrencyHex(
     return await decodeXlf15d(currencyCode);
   } else if (prefix === "03" && AMM_LP_TOKEN_REGEX.test(currencyCode)) {
     return decodeLPTokenHex(currencyCode);
+  } else if (prefix === "01" && isDemurrageHex(currencyCode)) {
+    return decodeDemurrageHex(currencyCode);
   } else {
     return decodeHex(currencyCode);
   }
@@ -200,6 +202,82 @@ function decodeLPTokenHex(currencyHex: string): DecodeHexCurrencyInterface | nul
     currencyCode: currencyHex,
     currency: "LP Token",
   };
+}
+
+/**
+ * @deprecated demurrage/interest-bearing
+ *
+ * Decode a demurrage currency hex string.
+ * This function extracts the currency code, interest rate, and other details from the hex string.
+ * It returns an object containing the type, currency code, and formatted currency string.
+ * * @param {string} currencyHex - The hex string representing the demurrage currency.
+ * @returns {DecodeHexCurrencyInterface | null} - An object with the type, currency code, and formatted currency string, or null if the input is invalid.
+ *
+ * https://ripple.github.io/ripple-demurrage-tool/
+ * https://github.com/ripple/ripple-demurrage-tool/blob/master/demudemo.js
+ * https://github.com/XRPLF/xrpl.js/blob/0.11.0/src/js/ripple/currency.js
+ */
+function decodeDemurrageHex(currencyHex: string): DecodeHexCurrencyInterface | null {
+  const hex = currencyHex.substring(2, 8);
+  const currencyText = hexToString(hex)?.trim()?.replace(/\0/g, "") as string;
+  let valuePrefix = "";
+
+  const year = 31536000;
+  const decimals = 2;
+
+  const interestPeriod = hex2double(currencyHex.substring(16, 32));
+  const interest = Math.exp(year / interestPeriod);
+
+  // prettier-ignore
+  const percentage = (interest * 100) - 100;
+  const decimalMultiplier = decimals ? Math.pow(10, decimals) : 100;
+  const rate = Math.round(percentage * decimalMultiplier) / decimalMultiplier;
+
+  valuePrefix = `(${rate > 0 ? "+" : ""}${rate}%pa)`;
+
+  const currency = `${currencyText} ${valuePrefix}`;
+
+  return {
+    type: "demurrage",
+    currencyCode: currencyHex,
+    currency,
+  };
+}
+
+function isDemurrageHex(currencyHex: string): boolean {
+  const hex = currencyHex.substring(2, 8);
+  const currencyText = hexToString(hex)?.trim()?.replace(/\0/g, "") as string;
+
+  if (!currencyText || currencyText.length < 3) {
+    return false;
+  }
+
+  // a-zA-Z0-9 are allowed, but not special characters
+  if (!currencyText.match(/^[a-zA-Z0-9\s]+$/)) {
+    return false;
+  }
+
+  if (currencyText.toUpperCase() === getNativeCurrency()) {
+    return false;
+  }
+
+  const interestPeriod = hex2double(currencyHex.substring(16, 32));
+  if (isNaN(interestPeriod)) {
+    return false;
+  }
+
+  const interestStart = Buffer.from(currencyHex.substring(8, 16), "hex").readUInt32BE(0);
+  if (isNaN(interestStart) || interestStart < 0) {
+    return false;
+  }
+
+  return true;
+}
+
+function hex2double(hex: string): number {
+  const buffer = Buffer.from(hex, "hex");
+  const view = new DataView(buffer.buffer, buffer.byteOffset, buffer.byteLength);
+  return view.getFloat64(0, false); // false for big-endian
 }
 
 async function getLedger(ledgerIndex: number): Promise<any> {
