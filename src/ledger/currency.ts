@@ -7,6 +7,8 @@ import { AMM_LP_TOKEN_REGEX } from "../models/amm_info";
 
 const maxLength = 20; // Maximum length of a currency string
 
+const DECODED_HEX_CURRENCY_REGEX = /[^-\w\(\)\u0070-\uFFFF@:%_\+.~#'?\$&//=<>\^\\]*/g;
+
 export async function parseCurrencyInformation(
   currency: any
 ): Promise<null | DecodeHexCurrencyInterface | DecodedNFTCurrencyInterface> {
@@ -158,21 +160,28 @@ interface DecodeHexCurrencyInterface {
 }
 
 function decodeHex(currencyHex: string): DecodeHexCurrencyInterface | null {
-  const decoded = hexToString(currencyHex)
+  let hex = currencyHex;
+  const prefix = currencyHex.substring(0, 2);
+  if (prefix === "02") {
+    hex = currencyHex.substring(16, currencyHex.length);
+  }
+
+  const decoded = hexToString(hex)
     ?.slice(0, maxLength)
+    ?.replace(/^\u0000+/, "") // remove leading null characters
     ?.replace(/\u0000+$/, "") // remove trailing null characters
     ?.trim() as string;
 
   // remove all not printable characters, zero-width space, and multiple spaces
   const trimmed = decoded
-    .replace(/[^-\w\(\)\u1F60-\uFFFFäÄÉéöÖüÜßåÅøØáÁ\u0600-\u06FF\u0080-\u02af@:%_\+.~#'?\$&//=<>]*/g, "") // remove all not printable characters
-    .replace(/[�]*/g, "") // remove zero-width space
+    .replace(DECODED_HEX_CURRENCY_REGEX, "") // remove all not printable characters
+    .replace(/[�]*/g, "") // remove replacement character
     .replace(/\s+/g, " ") // replace multiple spaces with a single space
     .trim();
 
   if (
     trimmed.length > 1 && // at least 2 characters
-    trimmed.length >= decoded.length / 4 && // more than 25% of the original length
+    trimmed.length >= decoded.length / 2 && // more than half of the decoded string
     trimmed.toUpperCase() !== getNativeCurrency()
   ) {
     return {

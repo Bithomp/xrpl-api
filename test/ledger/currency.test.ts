@@ -73,10 +73,18 @@ describe("Client", () => {
           });
         });
 
-        it("is OK for (O_o)", async function () {
+        it("is OK for ASCII (O_o)", async function () {
           expect(await Client.parseCurrencyInformation("02930015040A13E900000000000000284F5F6F29")).to.eql({
             currencyCode: "02930015040A13E900000000000000284F5F6F29",
             currency: "(O_o)",
+            type: "hex",
+          });
+        });
+
+        it("is OK for ASCII /(^x^)\\", async function () {
+          expect(await Client.parseCurrencyInformation("02930015040A13E90000002F28205E785E20295C")).to.eql({
+            currencyCode: "02930015040A13E90000002F28205E785E20295C",
+            currency: "/(^x^)\\",
             type: "hex",
           });
         });
@@ -85,6 +93,14 @@ describe("Client", () => {
           expect(await Client.parseCurrencyInformation("3C253C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3E3E3E")).to.eql({
             currencyCode: "3C253C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3E3E3E",
             currency: "<%<<<<<<<<<<<<<<<>>>",
+            type: "hex",
+          });
+        });
+
+        it("is OK for name with trailing nulls", async function () {
+          expect(await Client.parseCurrencyInformation("0000000000000000000000003D3D3D0000000000")).to.eql({
+            currencyCode: "0000000000000000000000003D3D3D0000000000",
+            currency: "===",
             type: "hex",
           });
         });
