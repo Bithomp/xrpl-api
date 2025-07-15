@@ -1,11 +1,12 @@
 import * as assert from "assert";
-import { TrustSetFlags } from "xrpl";
+import { TrustSetFlags, TrustSet } from "xrpl";
 import { parseQuality } from "../utils";
 import { removeUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseDelegate } from "../ledger/delegate";
 import { parseSource } from "../ledger/source";
 import { FormattedTrustlineSpecification } from "../../types/trustlines";
 
@@ -21,12 +22,13 @@ function parseFlag(flagsValue, trueValue, falseValue) {
   return undefined;
 }
 
-function parseTrustline(tx: any): FormattedTrustlineSpecification {
+function parseTrustSet(tx: TrustSet): FormattedTrustlineSpecification {
   assert.ok(tx.TransactionType === "TrustSet");
 
   return removeUndefined({
     signers: parseSigners(tx),
     signer: parseSignerRegularKey(tx),
+    delegate: parseDelegate(tx),
     source: parseSource(tx),
     limit: tx.LimitAmount.value,
     currency: tx.LimitAmount.currency,
@@ -41,4 +43,4 @@ function parseTrustline(tx: any): FormattedTrustlineSpecification {
   });
 }
 
-export default parseTrustline;
+export default parseTrustSet;

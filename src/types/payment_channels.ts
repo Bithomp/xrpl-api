@@ -6,8 +6,6 @@ export type FormattedPaymentChannelClaimSpecification = {
   channel: string;
   balance?: FormattedAmount;
   amount?: FormattedAmount;
-  signature: string;
-  publicKey: string;
   renew?: boolean;
   close?: boolean;
 } & FormattedBaseSpecification;
@@ -18,11 +16,11 @@ export type FormattedPaymentChannelCreateSpecification = {
   amount?: FormattedAmount;
   settleDelay: number;
   publicKey?: string;
-  cancelAfter?: string;
+  cancelAfter?: string | number;
 } & FormattedBaseSpecification;
 
 export type FormattedPaymentChannelFundSpecification = {
   channel: string;
   amount?: FormattedAmount;
-  expiration?: string;
+  expiration?: string | number;
 } & FormattedBaseSpecification;

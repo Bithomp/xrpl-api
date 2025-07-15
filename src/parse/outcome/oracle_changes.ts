@@ -1,8 +1,8 @@
 import BigNumber from "bignumber.js";
-import { TransactionMetadata } from "xrpl";
+import { TransactionMetadata, PriceData } from "xrpl";
 import { NormalizedNode, normalizeNode } from "../utils";
 import { removeUndefined } from "../../common";
-import { OraclePriceDataSeriesInterface, FormattedOraclePriceDataSeriesInterface } from "../../types";
+import { FormattedOraclePriceDataSeriesInterface } from "../../types";
 
 interface FormattedOracleSummaryInterface {
   status?: "created" | "modified" | "deleted";
@@ -48,7 +48,7 @@ function parseOracleStatus(node: NormalizedNode): "created" | "modified" | "dele
 }
 
 // UINT64 as string to BigNumber
-function hexPriceToBigNumber(hex: string | undefined): BigNumber | undefined {
+function hexPriceToBigNumber(hex: string | number | undefined): BigNumber | undefined {
   if (hex === undefined) {
     return undefined;
   }
@@ -76,7 +76,7 @@ function getOriginalAssetPrice(assetPrice: BigNumber | undefined, scale: number 
   return assetPrice.dividedBy(new BigNumber(10).pow(scale));
 }
 
-function parsePriceDataSeries(series: OraclePriceDataSeriesInterface): FormattedOraclePriceDataSeriesInterface {
+function parsePriceDataSeries(series: PriceData): FormattedOraclePriceDataSeriesInterface {
   const assetPrice = hexPriceToBigNumber(series.PriceData.AssetPrice);
   const scale = series.PriceData.Scale;
   const originalAssetPrice = getOriginalAssetPrice(assetPrice, scale);
@@ -91,72 +91,69 @@ function parsePriceDataSeries(series: OraclePriceDataSeriesInterface): Formatted
 }
 
 function summarizePriceDataSeriesChanges(node: NormalizedNode): FormattedPriceDataSeriesChanges[] | undefined {
-  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields as any;
+  const final = node.diffType === "CreatedNode" ? node.newFields : (node.finalFields as any);
   const prev = node.previousFields as any;
 
-  const changes = final.PriceDataSeries.reduce(
-    (acc: FormattedPriceDataSeriesChanges[], series: OraclePriceDataSeriesInterface) => {
-      const prevSeries = prev.PriceDataSeries.find(
-        (s: OraclePriceDataSeriesInterface) =>
-          s.PriceData.BaseAsset === series.PriceData.BaseAsset && s.PriceData.QuoteAsset === series.PriceData.QuoteAsset
-      );
+  const changes = final.PriceDataSeries.reduce((acc: FormattedPriceDataSeriesChanges[], series: PriceData) => {
+    const prevSeries = prev.PriceDataSeries.find(
+      (s: PriceData) =>
+        s.PriceData.BaseAsset === series.PriceData.BaseAsset && s.PriceData.QuoteAsset === series.PriceData.QuoteAsset
+    );
 
-      const priceFinal = hexPriceToBigNumber(series.PriceData.AssetPrice) || new BigNumber(0);
-      const scaleFinal = series.PriceData.Scale || 0;
-      const originalPriceFinal = getOriginalAssetPrice(priceFinal, scaleFinal);
+    const priceFinal = hexPriceToBigNumber(series.PriceData.AssetPrice) || new BigNumber(0);
+    const scaleFinal = series.PriceData.Scale || 0;
+    const originalPriceFinal = getOriginalAssetPrice(priceFinal, scaleFinal);
 
-      if (!prevSeries) {
-        return acc.concat({
-          status: "added",
+    if (!prevSeries) {
+      return acc.concat({
+        status: "added",
+        baseAsset: series.PriceData.BaseAsset,
+        quoteAsset: series.PriceData.QuoteAsset,
+        assetPrice: priceFinal?.toString(),
+        scale: scaleFinal,
+        originalAssetPrice: originalPriceFinal?.toString(),
+      });
+    }
+
+    const pricePrev = hexPriceToBigNumber(prevSeries.PriceData.AssetPrice) || new BigNumber(0);
+    const scalePrev = prevSeries.PriceData.Scale || 0;
+
+    const assetPriceChange = (priceFinal || new BigNumber(0)).minus(pricePrev);
+    const scaleChange = (scaleFinal ?? 0) - scalePrev;
+
+    if (!assetPriceChange.isZero() || scaleChange !== 0) {
+      const originalPricePrev = getOriginalAssetPrice(pricePrev, scalePrev) || new BigNumber(0);
+      const originalPriceChange = (originalPriceFinal || new BigNumber(0)).minus(originalPricePrev);
+
+      return acc.concat(
+        removeUndefined({
+          status: "modified" as "modified", // use as "modified" because "removeUndefined" is used
           baseAsset: series.PriceData.BaseAsset,
           quoteAsset: series.PriceData.QuoteAsset,
           assetPrice: priceFinal?.toString(),
           scale: scaleFinal,
           originalAssetPrice: originalPriceFinal?.toString(),
-        });
-      }
+          assetPriceChange: assetPriceChange.isZero() ? undefined : assetPriceChange?.toString(),
+          scaleChange: scaleChange || undefined,
+          originalPriceChange: originalPriceChange.isZero() ? undefined : originalPriceChange.toString(),
+        })
+      );
+    }
 
-      const pricePrev = hexPriceToBigNumber(prevSeries.PriceData.AssetPrice) || new BigNumber(0);
-      const scalePrev = prevSeries.PriceData.Scale || 0;
-
-      const assetPriceChange = (priceFinal || new BigNumber(0)).minus(pricePrev);
-      const scaleChange = (scaleFinal ?? 0) - scalePrev;
-
-      if (!assetPriceChange.isZero() || scaleChange !== 0) {
-        const originalPricePrev = getOriginalAssetPrice(pricePrev, scalePrev) || new BigNumber(0);
-        const originalPriceChange = (originalPriceFinal || new BigNumber(0)).minus(originalPricePrev);
-
-        return acc.concat(
-          removeUndefined({
-            status: "modified" as "modified", // use as "modified" because "removeUndefined" is used
-            baseAsset: series.PriceData.BaseAsset,
-            quoteAsset: series.PriceData.QuoteAsset,
-            assetPrice: priceFinal?.toString(),
-            scale: scaleFinal,
-            originalAssetPrice: originalPriceFinal?.toString(),
-            assetPriceChange: assetPriceChange.isZero() ? undefined : assetPriceChange?.toString(),
-            scaleChange: scaleChange || undefined,
-            originalPriceChange: originalPriceChange.isZero() ? undefined : originalPriceChange.toString(),
-          })
-        );
-      }
-
-      return acc;
-    },
-    []
-  );
+    return acc;
+  }, []);
 
   // removed PriceDataSeries
-  const removed = prev.PriceDataSeries.filter((s: OraclePriceDataSeriesInterface) => {
+  const removed = prev.PriceDataSeries.filter((s: PriceData) => {
     return !final.PriceDataSeries.find(
-      (series: OraclePriceDataSeriesInterface) =>
+      (series: PriceData) =>
         series.PriceData.BaseAsset === s.PriceData.BaseAsset && series.PriceData.QuoteAsset === s.PriceData.QuoteAsset
     );
   });
 
   if (removed.length > 0) {
     return changes.concat(
-      removed.map((s: OraclePriceDataSeriesInterface) => {
+      removed.map((s: PriceData) => {
         const price = hexPriceToBigNumber(s.PriceData.AssetPrice);
         return {
           status: "removed",
@@ -178,7 +175,7 @@ function summarizePriceDataSeriesChanges(node: NormalizedNode): FormattedPriceDa
 }
 
 function summarizeOracle(node: NormalizedNode): FormattedOracleSummaryInterface {
-  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields as any;
+  const final = node.diffType === "CreatedNode" ? node.newFields : (node.finalFields as any);
   const prev = node.previousFields as any;
 
   const summary: FormattedOracleSummaryInterface = {

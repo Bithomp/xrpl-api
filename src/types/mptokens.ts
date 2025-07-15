@@ -48,7 +48,7 @@ export type FormattedMPTokenIssuanceCreateSpecification = {
   sequence?: number;
   scale?: number;
   flags?: MPTokenIssuanceCreateFlagsKeysInterface;
-  metadata?: string;
+  metadata?: string | null;
   maximumAmount?: string;
   transferFee?: number;
 } & FormattedBaseSpecification;

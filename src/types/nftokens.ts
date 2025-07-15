@@ -36,7 +36,7 @@ export type FormattedNFTokenMintSpecification = {
   nftokenTaxon: number;
   issuer?: string;
   transferFee?: number;
-  uri?: string;
+  uri?: string | null;
   flags?: NFTokenFlagsKeysInterface;
   amount?: Amount;
   destination?: FormattedDestinationAddress;
@@ -46,7 +46,7 @@ export type FormattedNFTokenMintSpecification = {
 export type FormattedNFTokenModifySpecification = {
   nftokenID: string;
   owner?: string;
-  uri?: string;
+  uri?: string | null;
 } & FormattedBaseSpecification;
 
 export type FormattedNFTokenCancelOfferSpecification = {
@@ -66,5 +66,5 @@ export type FormattedNFTokenCreateOfferSpecification = {
 export type FormattedNFTokenAcceptOfferSpecification = {
   nftokenSellOffer?: string;
   nftokenBuyOffer?: string;
-  nftokenBrokerFee?: string;
+  nftokenBrokerFee?: Amount;
 } & FormattedBaseSpecification;

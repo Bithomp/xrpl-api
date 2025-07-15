@@ -18,7 +18,6 @@ export * from "./oracle";
 export * from "./queue_data";
 export * from "./settings";
 export * from "./signers";
-export * from "./transactions";
 export * from "./trustlines";
 export * from "./nftokens";
 export * from "./uritokens";

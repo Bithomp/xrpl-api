@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { AccountSet } from "xrpl";
 import * as assert from "assert";
 import { getAccountRootFlagsKeys } from "../../models/account_info";
 import { removeUndefined } from "../../common";
@@ -7,6 +8,7 @@ import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseDelegate } from "../ledger/delegate";
 import { parseSource } from "../ledger/source";
 
 function getAccountRootModifiedNode(tx: any) {
@@ -15,7 +17,7 @@ function getAccountRootModifiedNode(tx: any) {
   return modifiedNodes[0].ModifiedNode;
 }
 
-function parseSettingsFlags(tx: any): any {
+function parseSettingsFlags(tx: AccountSet): any {
   const settings: any = {};
   if (tx.TransactionType !== "AccountSet") {
     return settings;
@@ -69,6 +71,7 @@ function parseSettings(tx: any) {
     source: parseSource(tx),
     signers: parseSigners(tx),
     signer: parseSignerRegularKey(tx),
+    delegate: parseDelegate(tx),
     emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });

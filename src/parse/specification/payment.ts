@@ -1,11 +1,12 @@
 import * as assert from "assert";
-import { PaymentFlags } from "xrpl";
+import { PaymentFlags, Payment } from "xrpl";
 import { isPartialPayment } from "../utils";
 import { removeUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseDelegate } from "../ledger/delegate";
 import { parseSourceWithAmount } from "../ledger/source";
 import { parseDestination } from "../ledger/destination";
 
@@ -22,7 +23,7 @@ function isQualityLimited(tx: any) {
 }
 
 // Payment specification
-function parsePayment(tx: any): FormattedPaymentSpecification {
+function parsePayment(tx: Payment): FormattedPaymentSpecification {
   assert.ok(tx.TransactionType === "Payment");
 
   return removeUndefined({
@@ -30,6 +31,7 @@ function parsePayment(tx: any): FormattedPaymentSpecification {
     destination: parseDestination(tx),
     signers: parseSigners(tx),
     signer: parseSignerRegularKey(tx),
+    delegate: parseDelegate(tx),
     invoiceID: tx.InvoiceID,
     paths: tx.Paths ? JSON.stringify(tx.Paths) : undefined,
     allowPartialPayment: isPartialPayment(tx) || undefined,

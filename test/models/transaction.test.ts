@@ -1000,6 +1000,95 @@ describe("Models", () => {
       });
     });
 
+    it("OfferCreate with delegate", function () {
+      const tx = require("../examples/responses/OfferCreate2.json");
+      const result: any = Models.getTxDetails(tx, false);
+      console.log(JSON.stringify(result));
+
+      expect(result).to.eql({
+        type: "order",
+        address: "rKM71RiJmqvZQfKUP3E7bwuZhvp8ArwxMi",
+        sequence: 4098680,
+        id: "7A6A4433685F1FDC03A2F47944E2E6A0C7A9473D1F2CFCBA9DF13801B0ECBC67",
+        ctid: "C03E8A7F00050002",
+        specification: {
+          signer: { address: "rffJ2L2nris6qYamn3C4RZYNcMoTfxjUUs" },
+          delegate: { address: "rffJ2L2nris6qYamn3C4RZYNcMoTfxjUUs" },
+          source: { address: "rKM71RiJmqvZQfKUP3E7bwuZhvp8ArwxMi" },
+          flags: { passive: false, immediateOrCancel: false, fillOrKill: false, sell: false },
+          quantity: { currency: "XRP", value: "0.01" },
+          totalPrice: {
+            issuer: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
+            currency: "USD",
+            value: "10000",
+            counterparty: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
+          },
+          direction: "buy",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-07-01T09:18:21.000Z",
+          fee: "0.0001",
+          balanceChanges: {
+            rffJ2L2nris6qYamn3C4RZYNcMoTfxjUUs: [{ currency: "XRP", value: "-0.0001" }],
+            rKM71RiJmqvZQfKUP3E7bwuZhvp8ArwxMi: [
+              {
+                issuer: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
+                currency: "USD",
+                value: "-10000",
+                counterparty: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
+              },
+              { currency: "XRP", value: "0.01" },
+            ],
+            rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw: [
+              {
+                issuer: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
+                currency: "USD",
+                value: "10000",
+                counterparty: "rKM71RiJmqvZQfKUP3E7bwuZhvp8ArwxMi",
+              },
+              {
+                issuer: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
+                currency: "USD",
+                value: "-10000",
+                counterparty: "rs1u43vgYD9Fhj8sqmfeupuRx1W8iFFBtY",
+              },
+            ],
+            rs1u43vgYD9Fhj8sqmfeupuRx1W8iFFBtY: [
+              { currency: "XRP", value: "-0.01" },
+              {
+                issuer: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
+                currency: "USD",
+                value: "10000",
+                counterparty: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
+              },
+            ],
+          },
+          orderbookChanges: {
+            rs1u43vgYD9Fhj8sqmfeupuRx1W8iFFBtY: [
+              {
+                flags: { passive: false, sell: false },
+                quantity: {
+                  issuer: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
+                  currency: "USD",
+                  value: "10000",
+                  counterparty: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
+                },
+                totalPrice: { currency: "XRP", value: "0.01" },
+                sequence: 4098678,
+                status: "filled",
+                makerExchangeRate: "1000000",
+                direction: "buy",
+              },
+            ],
+          },
+          ledgerIndex: 4098687,
+          ledgerVersion: 4098687,
+          indexInLedger: 5,
+        },
+      });
+    });
+
     it("PaymentChannelCreate", function () {
       const tx = require("../examples/responses/PaymentChannelCreate.json");
       const result: any = Models.getTxDetails(tx, false);
@@ -1091,9 +1180,6 @@ describe("Models", () => {
           source: { address: "rK6g2UYc4GpQH8DYdPG7wywyQbxkJpQTTN" },
           channel: "467D994665CBC68A483FE56EFEB079314D8EF0AEAD069F25885034D378616A29",
           balance: { currency: "XRP", value: "0.03" },
-          signature:
-            "8DE4015CD528693A060A57BD03AFDC713D4F86EA4D12713F39EED1DFB7AA0AB9B07C244F89D1C28097C08584BDB58DFCA4D4444861ABC57CA9F75990ED546E0B",
-          publicKey: "ED010EDDA974B8FDCBFCABC9F631E91F2D355E6F7C1F2F9E675AE61B853A2E2069",
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6409,6 +6495,39 @@ describe("Models", () => {
           ledgerIndex: 95893505,
           ledgerVersion: 95893505,
           indexInLedger: 36,
+        },
+      });
+    });
+
+    it("DelegateSet", function () {
+      const tx = require("../examples/responses/DelegateSet.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "DelegateSet",
+        address: "rKM71RiJmqvZQfKUP3E7bwuZhvp8ArwxMi",
+        sequence: 4098678,
+        id: "0E6D7F3A26B758EE6169995A2B7D10E10C4508BDE5EC7AEEDFA763BFD59F6764",
+        ctid: "C03E8A7900040002",
+        specification: {
+          source: { address: "rKM71RiJmqvZQfKUP3E7bwuZhvp8ArwxMi" },
+          authorize: "rffJ2L2nris6qYamn3C4RZYNcMoTfxjUUs",
+          permissions: ["OfferCreate"],
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-07-01T09:18:02.000Z",
+          fee: "0.0001",
+          balanceChanges: { rKM71RiJmqvZQfKUP3E7bwuZhvp8ArwxMi: [{ currency: "XRP", value: "-0.0001" }] },
+          delegateChanges: {
+            status: "created",
+            delegateIndex: "90F6714373D3CA017A1E6FE33E9F6A31ABBEA8DF1FD9A453BE45B21C0DE696B0",
+            account: "rKM71RiJmqvZQfKUP3E7bwuZhvp8ArwxMi",
+            authorize: "rffJ2L2nris6qYamn3C4RZYNcMoTfxjUUs",
+            permissions: ["OfferCreate"],
+          },
+          ledgerIndex: 4098681,
+          ledgerVersion: 4098681,
+          indexInLedger: 4,
         },
       });
     });

@@ -72,6 +72,8 @@ import {
   FormattedMPTokenIssuanceDestroySpecification,
 } from "../types/mptokens";
 
+import { FormattedDelegateSetSpecification } from "../types/delegate";
+
 import { FormattedGenesisMintSpecification } from "../types/genesis_mint";
 
 import { FormattedAmendmentSpecification } from "../types/amendments";
@@ -94,7 +96,7 @@ import parsePaymentChannelClaim from "./specification/payment-channel-claim";
 import parsePaymentChannelCreate from "./specification/payment-channel-create";
 import parsePaymentChannelFund from "./specification/payment-channel-fund";
 import parseTicketCreate from "./specification/ticket-create";
-import parseTrustline from "./specification/trustline";
+import parseTrustSet from "./specification/trust-set";
 
 import parseNFTokenBurn from "./specification/nftoken-burn";
 import parseNFTokenMint from "./specification/nftoken-mint";
@@ -134,6 +136,8 @@ import parseMPTokenIssuanceCreate from "./specification/mptoken-issuance-create"
 import parseMPTokenAuthorize from "./specification/mptoken-authorize";
 import parseMPTokenIssuanceSet from "./specification/mptoken-issuance-set";
 import parseMPTokenIssuanceDestroy from "./specification/mptoken-issuance-destroy";
+
+import parseDelegateSet from "./specification/delegate-set";
 
 import parseGenesisMint from "./specification/genesis-mint";
 
@@ -201,6 +205,8 @@ const transactionTypeToType = {
   MPTokenIssuanceSet: "MPTokenIssuanceSet",
   MPTokenIssuanceDestroy: "MPTokenIssuanceDestroy",
 
+  DelegateSet: "DelegateSet",
+
   GenesisMint: "genesisMint",
 
   EnableAmendment: "amendment", // pseudo-transaction
@@ -228,7 +234,7 @@ const parserTypeFunc = {
   paymentChannelCreate: parsePaymentChannelCreate,
   paymentChannelFund: parsePaymentChannelFund,
   ticketCreate: parseTicketCreate,
-  trustline: parseTrustline,
+  trustline: parseTrustSet,
 
   nftokenBurn: parseNFTokenBurn,
   nftokenMint: parseNFTokenMint,
@@ -268,6 +274,8 @@ const parserTypeFunc = {
   MPTokenAuthorize: parseMPTokenAuthorize,
   MPTokenIssuanceSet: parseMPTokenIssuanceSet,
   MPTokenIssuanceDestroy: parseMPTokenIssuanceDestroy,
+
+  DelegateSet: parseDelegateSet,
 
   genesisMint: parseGenesisMint,
 
@@ -327,7 +335,8 @@ export type FormattedSpecification =
   | FormattedMPTokenIssuanceCreateSpecification
   | FormattedMPTokenAuthorizeSpecification
   | FormattedMPTokenIssuanceSetSpecification
-  | FormattedMPTokenIssuanceDestroySpecification;
+  | FormattedMPTokenIssuanceDestroySpecification
+  | FormattedDelegateSetSpecification;
 
 export interface FormattedTransaction {
   type: string;

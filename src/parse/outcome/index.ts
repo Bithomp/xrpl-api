@@ -18,3 +18,4 @@ export { parseOracleChanges } from "./oracle_changes";
 export { parseDeliveredAmount } from "./delivered_amount";
 export { parseMPTokenIssuanceChanges } from "./mptoken_issuance_changes";
 export { parseMPTokenChanges } from "./mptoken_changes";
+export { parseDelegateChanges } from "./delegate_changes";

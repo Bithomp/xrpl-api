@@ -22,6 +22,7 @@ import {
   parseDeliveredAmount,
   parseMPTokenIssuanceChanges,
   parseMPTokenChanges,
+  parseDelegateChanges,
 } from "./outcome/index";
 
 import { parseTimestamp } from "./utils";
@@ -59,6 +60,7 @@ const MPTOKEN_TYPES = [
   "Payment",
   "Clawback",
 ];
+const DELEGATE_TYPES = ["DelegateSet"];
 
 function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefinitionsBase): Outcome | undefined {
   const metadata = tx.meta || tx.metaData;
@@ -89,6 +91,7 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     oracleChanges: getOracleChanges(tx),
     mptokenIssuanceChanges: getMPTokenIssuanceChanges(tx, nativeCurrency || getNativeCurrency()),
     mptokenChanges: getMPTokenChanges(tx, nativeCurrency || getNativeCurrency()),
+    delegateChanges: getDelegateChanges(tx, nativeCurrency || getNativeCurrency()),
     unlReportChanges: getUNLReportChanges(tx, nativeCurrency || getNativeCurrency()),
     hooksExecutions: getHooksExecutions(tx, nativeCurrency || getNativeCurrency()),
     emittedTxns: getEmittedTxns(tx, nativeCurrency || getNativeCurrency(), definitions), // only Xahau
@@ -335,6 +338,21 @@ function getMPTokenIssuanceChanges(tx: any, nativeCurrency?: string): any {
   const mptokenIssuanceChanges = parseMPTokenIssuanceChanges(tx);
 
   return Object.keys(mptokenIssuanceChanges).length > 0 ? mptokenIssuanceChanges : undefined;
+}
+
+/**
+ * only XRPL
+ */
+function getDelegateChanges(tx: any, nativeCurrency?: string): any {
+  if (nativeCurrency !== "XRP") {
+    return undefined;
+  }
+
+  if (!DELEGATE_TYPES.includes(tx.TransactionType)) {
+    return undefined;
+  }
+
+  return parseDelegateChanges(tx.meta);
 }
 
 export { parseOutcome };

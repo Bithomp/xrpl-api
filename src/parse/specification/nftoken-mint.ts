@@ -1,16 +1,18 @@
 import * as assert from "assert";
+import { NFTokenMint } from "xrpl";
 import { removeUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseDelegate } from "../ledger/delegate";
 import { parseSource } from "../ledger/source";
 import { parseDestination } from "../ledger/destination";
 import parseNFTokenFlags from "../ledger/nftoken-flags";
 import { ledgerTimeToUnixTime } from "../../models/ledger";
 import { FormattedNFTokenMintSpecification } from "../../types/nftokens";
 
-function parseNFTokenMint(tx: any): FormattedNFTokenMintSpecification {
+function parseNFTokenMint(tx: NFTokenMint): FormattedNFTokenMintSpecification {
   assert.ok(tx.TransactionType === "NFTokenMint");
 
   let expiration: any;
@@ -21,13 +23,14 @@ function parseNFTokenMint(tx: any): FormattedNFTokenMintSpecification {
   return removeUndefined({
     signers: parseSigners(tx),
     signer: parseSignerRegularKey(tx),
+    delegate: parseDelegate(tx),
     source: parseSource(tx),
     destination: parseDestination(tx),
     nftokenTaxon: tx.NFTokenTaxon,
     issuer: tx.Issuer,
     transferFee: tx.TransferFee,
     uri: tx.URI,
-    flags: parseNFTokenFlags(tx.Flags),
+    flags: parseNFTokenFlags(tx.Flags as number),
     amount: tx.Amount,
     expiration,
     emittedDetails: parseEmittedDetails(tx),
