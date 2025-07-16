@@ -128,6 +128,24 @@ export function isCTID(ctid: string | bigint): boolean {
   return true;
 }
 
+export function encodeCTIDforTransaction(transaction: TransactionResponse, networkID: number): string | undefined {
+  const tx = (transaction.tx || transaction) as TransactionResponse;
+  if (!tx.ledger_index) {
+    return undefined;
+  }
+
+  const meta = (transaction.meta || transaction.metaData) as TransactionMetadata;
+  if (!meta || !meta.TransactionIndex) {
+    return undefined;
+  }
+
+  if (typeof networkID !== "number") {
+    return undefined;
+  }
+
+  return encodeCTID(tx.ledger_index, meta.TransactionIndex, networkID);
+}
+
 /**
  * @param {number} ledgerIndex - The ledger sequence number.
  * @param {number} txIndex - The transaction index within the ledger.

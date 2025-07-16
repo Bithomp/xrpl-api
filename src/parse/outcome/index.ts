@@ -19,3 +19,4 @@ export { parseDeliveredAmount } from "./delivered_amount";
 export { parseMPTokenIssuanceChanges } from "./mptoken_issuance_changes";
 export { parseMPTokenChanges } from "./mptoken_changes";
 export { parseDelegateChanges } from "./delegate_changes";
+export { parseRemarksChanges } from "./remarks_changes";

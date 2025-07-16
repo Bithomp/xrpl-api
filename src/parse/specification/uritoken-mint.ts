@@ -9,7 +9,7 @@ import { parseSource } from "../ledger/source";
 import { parseDestination } from "../ledger/destination";
 import { FormattedURITokenMintSpecification } from "../../types/uritokens";
 
-function parseNFTokenMint(tx: any): FormattedURITokenMintSpecification {
+function parseURITokenMint(tx: any): FormattedURITokenMintSpecification {
   assert.ok(tx.TransactionType === "URITokenMint");
 
   return removeUndefined({
@@ -26,4 +26,4 @@ function parseNFTokenMint(tx: any): FormattedURITokenMintSpecification {
   });
 }
 
-export default parseNFTokenMint;
+export default parseURITokenMint;

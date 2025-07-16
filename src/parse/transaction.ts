@@ -74,6 +74,8 @@ import {
 
 import { FormattedDelegateSetSpecification } from "../types/delegate";
 
+import { FormattedSetRemarksSpecification } from "../types/remarks";
+
 import { FormattedGenesisMintSpecification } from "../types/genesis_mint";
 
 import { FormattedAmendmentSpecification } from "../types/amendments";
@@ -138,6 +140,8 @@ import parseMPTokenIssuanceSet from "./specification/mptoken-issuance-set";
 import parseMPTokenIssuanceDestroy from "./specification/mptoken-issuance-destroy";
 
 import parseDelegateSet from "./specification/delegate-set";
+
+import parseSetRemarks from "./specification/set-remarks";
 
 import parseGenesisMint from "./specification/genesis-mint";
 
@@ -206,6 +210,8 @@ const transactionTypeToType = {
   MPTokenIssuanceDestroy: "MPTokenIssuanceDestroy",
 
   DelegateSet: "DelegateSet",
+
+  SetRemarks: "SetRemarks",
 
   GenesisMint: "genesisMint",
 
@@ -277,6 +283,8 @@ const parserTypeFunc = {
 
   DelegateSet: parseDelegateSet,
 
+  SetRemarks: parseSetRemarks,
+
   genesisMint: parseGenesisMint,
 
   amendment: parseAmendment, // pseudo-transaction
@@ -336,7 +344,8 @@ export type FormattedSpecification =
   | FormattedMPTokenAuthorizeSpecification
   | FormattedMPTokenIssuanceSetSpecification
   | FormattedMPTokenIssuanceDestroySpecification
-  | FormattedDelegateSetSpecification;
+  | FormattedDelegateSetSpecification
+  | FormattedSetRemarksSpecification;
 
 export interface FormattedTransaction {
   type: string;

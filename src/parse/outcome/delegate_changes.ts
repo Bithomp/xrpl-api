@@ -27,7 +27,7 @@ function parseDelegateStatus(node: NormalizedNode): "created" | "modified" | "de
   return undefined;
 }
 
-function summarizeCheck(node: NormalizedNode): FormattedDelegateSummaryInterface {
+function summarizeDelegate(node: NormalizedNode): FormattedDelegateSummaryInterface {
   const final = node.diffType === "CreatedNode" ? node.newFields : (node.finalFields as any);
   const prev = node.previousFields as any;
 
@@ -86,7 +86,7 @@ function parseDelegateChanges(metadata: TransactionMetadata): FormattedDelegateS
 
   const normalizedNode = normalizeNode(affectedNodes[0]);
 
-  return summarizeCheck(normalizedNode);
+  return summarizeDelegate(normalizedNode);
 }
 
 export { parseDelegateChanges };

@@ -8,7 +8,7 @@ import { parseSource } from "../ledger/source";
 import { parseDestination } from "../ledger/destination";
 import { FormattedURITokenCreateSellOfferSpecification } from "../../types/uritokens";
 
-function parseNFTokenBurn(tx: any): FormattedURITokenCreateSellOfferSpecification {
+function parseURITokenCreateSellOffer(tx: any): FormattedURITokenCreateSellOfferSpecification {
   assert.ok(tx.TransactionType === "URITokenCreateSellOffer");
 
   return removeUndefined({
@@ -23,4 +23,4 @@ function parseNFTokenBurn(tx: any): FormattedURITokenCreateSellOfferSpecificatio
   });
 }
 
-export default parseNFTokenBurn;
+export default parseURITokenCreateSellOffer;

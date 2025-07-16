@@ -807,7 +807,8 @@ describe("Client", () => {
       });
     });
 
-    describe("getTransaction", () => {
+    // xahau tests network was reset, so we skip this test
+    describe.skip("getTransaction", () => {
       it("works with NFT burn2mint", async function () {
         const xahauDefinitions = new Wallet.XrplDefinitions(xahauEnums);
         const result: any = await Client.getTransaction(

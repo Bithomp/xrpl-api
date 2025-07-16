@@ -4,7 +4,7 @@ import { getBalanceChanges } from "xrpl";
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
 import { compareTransactions, parseMarker, createMarker, removeUndefined } from "../common/utils";
-import { getAccountTxDetails } from "../models/transaction";
+import { getAccountTxDetails, encodeCTIDforTransaction } from "../models/transaction";
 import { ErrorResponse } from "../models/base_model";
 
 const MAX_LIMIT = 1000;
@@ -173,6 +173,19 @@ export async function getTransactions(
           if (details.rawTransaction) {
             transaction.rawTransaction = details.rawTransaction;
           }
+        }
+      }
+    }
+  }
+
+  // add ctid to each transaction
+  if (Array.isArray(result.transactions)) {
+    for (const transaction of result.transactions) {
+      const tx = transaction.tx || transaction;
+      if (!tx.hasOwnProperty("ctid")) {
+        const ctid = encodeCTIDforTransaction(transaction, connection.getNetworkID());
+        if (ctid) {
+          tx.ctid = ctid;
         }
       }
     }

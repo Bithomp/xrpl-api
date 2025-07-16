@@ -22,6 +22,7 @@ describe("Client", () => {
 
         delete result.transactions[0].tx.inLedger; // can be missed, depending on the server
         delete result.transactions[0].tx.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
+        delete result.transactions[0].tx.ctid; // can be missed, depending on the server
         expect(result.transactions).to.eql([
           {
             meta: {
@@ -100,6 +101,7 @@ describe("Client", () => {
 
         delete result.transactions[0].tx.inLedger; // can be missed, depending on the server
         delete result.transactions[0].tx.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
+        delete result.transactions[0].tx.ctid; // can be missed, depending on the server
         expect(result.transactions[0].tx.date).to.eq(498983820);
         delete result.transactions[0].tx.date; // can be in different position, depending on the server
         expect(JSON.stringify(result.transactions)).to.eq(
@@ -146,6 +148,7 @@ describe("Client", () => {
 
         delete result[0].tx.inLedger; // can be missed, depending on the server
         delete result[0].tx.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
+        delete result[0].tx.ctid; // can be missed, depending on the server
         expect(result[0].tx.date).to.eq(667375232);
         delete result[0].tx.date; // can be in different position, depending on the server
         expect(JSON.stringify(result)).to.eq(
@@ -166,6 +169,7 @@ describe("Client", () => {
 
         delete result[0].tx.inLedger; // can be missed, depending on the server
         delete result[0].tx.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
+        delete result[0].tx.ctid; // can be missed, depending on the server
         expect(result[0].tx.date).to.eq(498983820);
         delete result[0].tx.date; // can be in different position, depending on the server
         expect(JSON.stringify(result)).to.eq(
@@ -186,6 +190,7 @@ describe("Client", () => {
 
         delete result[0].tx.inLedger; // can be missed, depending on the server
         delete result[0].tx.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
+        delete result[0].tx.ctid; // can be missed, depending on the server
         expect(result[0].tx.date).to.eq(498985950);
         delete result[0].tx.date; // can be in different position, depending on the server
         expect(JSON.stringify(result)).to.eq(
@@ -335,6 +340,7 @@ describe("Client", () => {
 
         delete result[0].tx.inLedger; // can be missed, depending on the server
         delete result[0].tx.DeliverMin; // can be missed, depending on the server 2.0.0 and greater
+        delete result[0].tx.ctid; // can be missed, depending on the server
         expect(result[0].tx.date).to.eq(498984910);
         delete result[0].tx.date; // can be in different position, depending on the server
         expect(JSON.stringify(result)).to.eq(
@@ -355,6 +361,7 @@ describe("Client", () => {
 
         delete result[0].tx.inLedger; // can be missed, depending on the server
         delete result[0].tx.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
+        delete result[0].tx.ctid; // can be missed, depending on the server
         expect(result[0].tx.date).to.eq(498985950);
         delete result[0].tx.date; // can be in different position, depending on the server
         expect(JSON.stringify(result)).to.eq(
@@ -375,6 +382,7 @@ describe("Client", () => {
         expect(result.length).to.eq(1);
         delete result[0].tx.inLedger; // can be missed, depending on the server
         delete result[0].tx.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
+        delete result[0].tx.ctid; // can be missed, depending on the server
         expect(result[0].tx.date).to.eq(690981391);
         delete result[0].tx.date; // can be in different position, depending on the server
         expect(JSON.stringify(result)).to.eq(
@@ -461,6 +469,7 @@ describe("Client", () => {
         const decodedTx = JSON.parse(result[0].rawTransaction);
         delete decodedTx.inLedger; // can be missed, depending on the server
         delete decodedTx.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
+        delete decodedTx.ctid; // can be missed, depending on the server
         expect(decodedTx.date).to.eq(498983820);
         delete decodedTx.date; // can be in different position
         expect(JSON.stringify(decodedTx)).to.eql(
@@ -524,6 +533,8 @@ describe("Client", () => {
           formatted: true,
         });
 
+        delete result[0].ctid; // can be missed, depending on the server
+
         expect(result[0]).to.eql({
           type: "payment",
           address: "rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk",
@@ -577,9 +588,11 @@ describe("Client", () => {
         const decodedTx = JSON.parse(result[0].rawTransaction);
         delete decodedTx.inLedger; // can be missed, depending on the server
         delete decodedTx.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
+        delete decodedTx.ctid; // can be missed, depending on the server
         expect(decodedTx.date).to.eq(498983820);
         delete decodedTx.date; // can be in different position, depending on server version
         result[0].rawTransaction = JSON.stringify(decodedTx);
+        delete result[0].ctid; // can be missed, depending on the server
         expect(result[0]).to.eql({
           type: "payment",
           address: "rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk",

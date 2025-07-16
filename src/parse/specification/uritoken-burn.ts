@@ -7,7 +7,7 @@ import { parseSignerRegularKey } from "../ledger/regular-key";
 import { parseSource } from "../ledger/source";
 import { FormattedURITokenBurnSpecification } from "../../types/uritokens";
 
-function parseNFTokenBurn(tx: any): FormattedURITokenBurnSpecification {
+function parseURITokenBurn(tx: any): FormattedURITokenBurnSpecification {
   assert.ok(tx.TransactionType === "URITokenBurn");
 
   return removeUndefined({
@@ -20,4 +20,4 @@ function parseNFTokenBurn(tx: any): FormattedURITokenBurnSpecification {
   });
 }
 
-export default parseNFTokenBurn;
+export default parseURITokenBurn;

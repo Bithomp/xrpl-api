@@ -389,7 +389,8 @@ describe("Client", () => {
       await Client.connect();
     });
 
-    it("works", async function () {
+    // xahau-test network was reset, so we skip this test
+    it.skip("works", async function () {
       const result: any = await Client.getAccountURITokensObjects("rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T");
       expect(Object.keys(result)).to.eql(["account", "ledger_hash", "ledger_index", "validated", "uritokens"]);
       expect(result.uritokens).to.eql([

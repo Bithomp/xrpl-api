@@ -23,6 +23,7 @@ import {
   parseMPTokenIssuanceChanges,
   parseMPTokenChanges,
   parseDelegateChanges,
+  parseRemarksChanges,
 } from "./outcome/index";
 
 import { parseTimestamp } from "./utils";
@@ -61,6 +62,7 @@ const MPTOKEN_TYPES = [
   "Clawback",
 ];
 const DELEGATE_TYPES = ["DelegateSet"];
+const REMARKS_TYPES = ["SetRemarks"];
 
 function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefinitionsBase): Outcome | undefined {
   const metadata = tx.meta || tx.metaData;
@@ -92,6 +94,7 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     mptokenIssuanceChanges: getMPTokenIssuanceChanges(tx, nativeCurrency || getNativeCurrency()),
     mptokenChanges: getMPTokenChanges(tx, nativeCurrency || getNativeCurrency()),
     delegateChanges: getDelegateChanges(tx, nativeCurrency || getNativeCurrency()),
+    remarksChanges: getRemarksChanges(tx, nativeCurrency || getNativeCurrency()),
     unlReportChanges: getUNLReportChanges(tx, nativeCurrency || getNativeCurrency()),
     hooksExecutions: getHooksExecutions(tx, nativeCurrency || getNativeCurrency()),
     emittedTxns: getEmittedTxns(tx, nativeCurrency || getNativeCurrency(), definitions), // only Xahau
@@ -353,6 +356,21 @@ function getDelegateChanges(tx: any, nativeCurrency?: string): any {
   }
 
   return parseDelegateChanges(tx.meta);
+}
+
+/**
+ * only XRPL
+ */
+function getRemarksChanges(tx: any, nativeCurrency?: string): any {
+  if (nativeCurrency !== "XAH") {
+    return undefined;
+  }
+
+  if (!REMARKS_TYPES.includes(tx.TransactionType)) {
+    return undefined;
+  }
+
+  return parseRemarksChanges(tx);
 }
 
 export { parseOutcome };

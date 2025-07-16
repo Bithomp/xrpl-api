@@ -1003,7 +1003,6 @@ describe("Models", () => {
     it("OfferCreate with delegate", function () {
       const tx = require("../examples/responses/OfferCreate2.json");
       const result: any = Models.getTxDetails(tx, false);
-      console.log(JSON.stringify(result));
 
       expect(result).to.eql({
         type: "order",
@@ -6528,6 +6527,110 @@ describe("Models", () => {
           ledgerIndex: 4098681,
           ledgerVersion: 4098681,
           indexInLedger: 4,
+        },
+      });
+    });
+
+    it("SetRemarks", function () {
+      const tx = require("../examples/responses/SetRemarks.json");
+      const result: any = Models.getTxDetails(tx, false, "XAH");
+
+      expect(result).to.eql({
+        type: "SetRemarks",
+        address: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76",
+        sequence: 752122656,
+        id: "5B6EE336C9032ED4E234B1BCC337FC406C7343BB14A1B6E9A5EBC7F2DF8012DF",
+        ctid: "C0D9940400215359",
+        specification: {
+          objectID: "E01B554D195050862E03A139E93C5856FF6E629D5EC85F3D9A743E19BE042702",
+          remarks: [
+            {
+              name: "B2M Infos for bridged XLS20 NFToken [JSON]",
+              value:
+                '{"NFT":"000A00004B50699E253C5098DEFE3A0872A79D129172F4966E6F47A0000004E9","Burn":"C4FD415E00150000","Import":"C002981E00005359","Remint":"C002A69A00005359","URIToken":"E01B554D195050862E03A139E93C5856FF6E629D5EC85F3D9A743E19BE042702"}',
+              flags: { immutable: true },
+            },
+          ],
+          source: { address: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76" },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-05-18T10:26:22.000Z",
+          fee: "0.000589",
+          balanceChanges: { rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76: [{ currency: "XAH", value: "-0.000589" }] },
+          remarksChanges: {
+            objectID: "E01B554D195050862E03A139E93C5856FF6E629D5EC85F3D9A743E19BE042702",
+            entryType: "URIToken",
+            remarks: [
+              {
+                name: "B2M Infos for bridged XLS20 NFToken [JSON]",
+                value:
+                  '{"NFT":"000A00004B50699E253C5098DEFE3A0872A79D129172F4966E6F47A0000004E9","Burn":"C4FD415E00150000","Import":"C002981E00005359","Remint":"C002A69A00005359","URIToken":"E01B554D195050862E03A139E93C5856FF6E629D5EC85F3D9A743E19BE042702"}',
+                flags: { immutable: true },
+                status: "created",
+              },
+            ],
+          },
+          ledgerIndex: 14259204,
+          ledgerVersion: 14259204,
+          indexInLedger: 33,
+        },
+      });
+    });
+
+    it("SetRemarks update", function () {
+      const tx = require("../examples/responses/SetRemarks2.json");
+      const result: any = Models.getTxDetails(tx, false, "XAH");
+
+      expect(result).to.eql({
+        type: "SetRemarks",
+        address: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76",
+        sequence: 752122665,
+        id: "FC7943396CCF38DC64C5B88E800966285B1F4757D4F47B8520BF073D21358BC9",
+        ctid: "C0E46059004B5359",
+        specification: {
+          objectID: "A5E3089238CC58ADFBADDBF225A682222FA3235CACD183222E156596284A5300",
+          remarks: [
+            {
+              name: "SND - Transaction with metadata",
+              value: "ipfs://f01551320bda659e0169ba5937b20ee83cbd5582f2d93817bca5b29a8659e88c4fd66a025",
+              flags: { immutable: false },
+            },
+          ],
+          source: { address: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76" },
+          memos: [{ type: "[https://xahau.services]-Memo", data: "https://ipfs.io/ipfs/f01551320<XRPL-HASH>" }],
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-06-17T13:11:01.000Z",
+          fee: "0.000589",
+          balanceChanges: { rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76: [{ currency: "XAH", value: "-0.000589" }] },
+          remarksChanges: {
+            objectID: "A5E3089238CC58ADFBADDBF225A682222FA3235CACD183222E156596284A5300",
+            entryType: "URIToken",
+            remarks: [
+              {
+                name: "Hook",
+                value: "ipfs://f015513207b7a3b7f705d1c98a2f4e4483bf1ada9c445edde766417098e96008b8c8cbe08",
+                flags: { immutable: false },
+              },
+              {
+                name: "SND - Transaction with metadata",
+                value: "ipfs://f01551320bda659e0169ba5937b20ee83cbd5582f2d93817bca5b29a8659e88c4fd66a025",
+                flags: { immutable: false },
+                status: "modified",
+                previousValue: "ipfs://f01551320c27b0ba6e2ad5fb1474461f3ff454745b259c2a538c6b964b5b47ec3e7f4d6bc",
+              },
+              {
+                name: "TXN - Signed Transaction",
+                value: "ipfs://f0155132073efa666a8681b7e7ec714f5d7bf6418d8ffad49c23a4cafaec2ddac16cf3f7a",
+                flags: { immutable: false },
+              },
+            ],
+          },
+          ledgerIndex: 14966873,
+          ledgerVersion: 14966873,
+          indexInLedger: 75,
         },
       });
     });

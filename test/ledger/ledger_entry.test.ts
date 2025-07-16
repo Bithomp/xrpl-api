@@ -31,7 +31,8 @@ describe("Client", () => {
       });
     });
 
-    describe("getLedgerEntryURIToken", () => {
+    // xahau tests network was reset, so we skip this test
+    describe.skip("getLedgerEntryURIToken", () => {
       it("is OK", async function () {
         const result: any = await Client.getLedgerEntryURIToken(
           "DB30404B34D1FEDCA500BD84F8A9AC77F18036A1E8966766BDE33595FC41CE57"
