@@ -136,7 +136,7 @@ export async function getTransactions(
   }
 
   if (response.error) {
-    const { error, error_code, error_message, error_exception, status, validated } = response;
+    const { error, error_code, error_message, error_exception, status, validated, warnings } = response;
 
     return removeUndefined({
       account,
@@ -146,16 +146,18 @@ export async function getTransactions(
       error_exception,
       status,
       validated,
+      warnings,
     });
   }
 
   const result = response?.result;
   if (!result) {
-    return {
+    return removeUndefined({
       account,
       status: "error",
       error: "invalidResponse",
-    };
+      warnings: response.warnings,
+    });
   }
 
   if (Array.isArray(result.transactions)) {
@@ -196,6 +198,10 @@ export async function getTransactions(
     result.marker = newMarker;
   }
 
+  if (response.warnings && response.warnings.length > 0) {
+    result.warnings = response.warnings;
+  }
+
   return result;
 }
 
@@ -216,10 +222,17 @@ interface FindProcessTransactionsOptions extends FindTransactionsOptions {
   startTx?: any;
 }
 
-export async function findTransactions(
+interface FindTransactionsResponse {
+  account: string;
+  transactions: any[];
+  marker?: any;
+  validated?: boolean; // assuming all transactions are validated
+}
+
+export async function findTransactionsExt(
   account: string,
   options: FindTransactionsOptions = { limit: DEFAULT_LIMIT, timeout: 15000 }
-): Promise<object[] | ErrorResponse> {
+): Promise<FindTransactionsResponse | ErrorResponse> {
   let transactions = [];
   let accountTransactionsError = null;
   const timeStart = new Date();
@@ -244,6 +257,10 @@ export async function findTransactions(
   }
 
   if (loadOptions.sourceTag || loadOptions.destinationTag) {
+    getTransactionsLimit += LIMIT_INCREASE_COUNT;
+  }
+
+  if (loadOptions.types) {
     getTransactionsLimit += LIMIT_INCREASE_COUNT;
   }
 
@@ -313,11 +330,29 @@ export async function findTransactions(
     }
 
     if (newTransactions.length > 0) {
+      // check how many transactions we can take from new transactions
+      const transactionsToTake = loadOptions.limit - transactions.length;
+      if (transactionsToTake !== newTransactions.length) {
+        const isClio = accountTransactions.warnings?.some((w: any) => w.id === 2001);
+        let markerTransaction: any = null;
+        if (isClio) {
+          markerTransaction = newTransactions[transactionsToTake - 1];
+        } else {
+          markerTransaction = newTransactions[transactionsToTake];
+        }
+
+        if (markerTransaction) {
+          loadOptions.marker = {
+            ledger: markerTransaction.tx.ledger_index,
+            seq: markerTransaction.meta.TransactionIndex,
+            bithompHash: loadOptions.marker.bithompHash,
+          };
+        }
+      }
+
+      newTransactions = newTransactions.slice(0, transactionsToTake);
       // merge found newly found transactions with old ones
       transactions = transactions.concat(newTransactions);
-
-      // cleanup last transactions over limit
-      transactions = transactions.slice(0, loadOptions.limit);
     }
 
     if (loadOptions.marker === undefined) {
@@ -345,7 +380,25 @@ export async function findTransactions(
     ) as any;
   }
 
-  return transactions;
+  return {
+    account,
+    transactions,
+    marker: loadOptions.marker,
+    validated: true, // assuming all transactions are validated
+  };
+}
+
+export async function findTransactions(
+  account: string,
+  options: FindTransactionsOptions = { limit: DEFAULT_LIMIT, timeout: 15000 }
+): Promise<object[] | ErrorResponse> {
+  const result = await findTransactionsExt(account, options);
+  if ((result as ErrorResponse).error) {
+    return result as ErrorResponse;
+  }
+
+  // return transactions only
+  return (result as FindTransactionsResponse).transactions || [];
 }
 
 function applyLimitOptions(options: FindProcessTransactionsOptions) {
