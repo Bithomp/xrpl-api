@@ -19,6 +19,7 @@ import {
   ledgerTxToTx,
   isCTID,
   decodeCTID,
+  encodeCTIDforTransaction,
 } from "../models/transaction";
 
 import { AccountInfoDataResponse } from "../models/account_info";
@@ -131,6 +132,17 @@ export async function getTransaction(
         result.rawTransaction = details.rawTransaction;
       }
     }
+  }
+
+  if (!result.hasOwnProperty("ctid")) {
+    const ctid = encodeCTIDforTransaction(result, connection.getNetworkID());
+    if (ctid) {
+      result.ctid = ctid;
+    }
+  }
+
+  if (result.hasOwnProperty("tx_json") && result.tx_json.hasOwnProperty("ctid")) {
+    delete result.tx_json.ctid; // added by clio
   }
 
   return result;

@@ -456,10 +456,10 @@ describe("Client", () => {
         delete result.warnings; // can be missed, depending on the server
         delete result.inLedger; // can be missed, depending on the server
         delete result.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
-        delete result.ctid; // TODO: CTID is not not fully supported by all nodes
 
         expect(result).to.eql({
           close_time_iso: "2018-08-27T18:07:21Z",
+          ctid: "C2732F8600000000",
           hash: "A34F834AA65C01458FC0AFCDDE7F8F433DAD7B871282E8511ECDEE8E28758DCE",
           ledger_hash: "2632789E97689AFFDF73361AC6980F113341C0ED69CCC3423B7C0EAC5D598F05",
           ledger_index: 41103238,
@@ -529,12 +529,12 @@ describe("Client", () => {
           { formatted: true }
         );
 
-        delete result.ctid; // TODO: CTID is not not fully supported by all nodes
         expect(result).to.eql({
           type: "settings",
           address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6",
           sequence: 865,
           id: "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
+          ctid: "C428A8A7002A0000",
           specification: {
             source: { address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6" },
             depositAuth: false,

@@ -129,8 +129,16 @@ export function isCTID(ctid: string | bigint): boolean {
 }
 
 export function encodeCTIDforTransaction(transaction: TransactionResponse, networkID: number): string | undefined {
-  const tx = (transaction.tx || transaction) as TransactionResponse;
-  if (!tx.ledger_index) {
+  let ledgerIndex: number | undefined;
+  if (transaction.ledger_index) {
+    ledgerIndex = transaction.ledger_index;
+  } else if (transaction.tx && (transaction.tx as any).ledger_index) {
+    ledgerIndex = (transaction.tx as any).ledger_index;
+  } else if (transaction.tx_json && (transaction.tx_json as any).ledger_index) {
+    ledgerIndex = (transaction.tx_json as any).ledger_index;
+  }
+
+  if (typeof ledgerIndex !== "number") {
     return undefined;
   }
 
@@ -143,7 +151,7 @@ export function encodeCTIDforTransaction(transaction: TransactionResponse, netwo
     return undefined;
   }
 
-  return encodeCTID(tx.ledger_index, meta.TransactionIndex, networkID);
+  return encodeCTID(ledgerIndex, meta.TransactionIndex, networkID);
 }
 
 /**
