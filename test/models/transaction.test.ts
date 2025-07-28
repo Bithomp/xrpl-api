@@ -6634,6 +6634,37 @@ describe("Models", () => {
         },
       });
     });
+
+    it("TrustSet with deep freeze", function () {
+      const tx = require("../examples/responses/TrustSet.json");
+      const result: any = Models.getTxDetails(tx, false);
+      console.log(JSON.stringify(result));
+      expect(result).to.eql({
+        type: "trustline",
+        address: "rLwNAmcqi7ipSZ5cUc6zXZMjwEddr2yc8x",
+        sequence: 9198426,
+        id: "F7F89216FDB0135847BB4966607ACCABF7555302DC8143D2E1C71FEA9249AF3E",
+        ctid: "C08C5FEE00010001",
+        specification: {
+          source: { address: "rLwNAmcqi7ipSZ5cUc6zXZMjwEddr2yc8x", tag: 608402356 },
+          limit: "0",
+          currency: "EQT",
+          counterparty: "rBeb4FLPG4XUwxdnnEztTLK6Zd9mxhDQ6E",
+          frozen: true,
+          deepFrozen: true,
+          authorized: true,
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-07-25T17:54:52.000Z",
+          fee: "0.00001",
+          balanceChanges: { rLwNAmcqi7ipSZ5cUc6zXZMjwEddr2yc8x: [{ currency: "XRP", value: "-0.00001" }] },
+          ledgerIndex: 9199598,
+          ledgerVersion: 9199598,
+          indexInLedger: 1,
+        },
+      });
+    });
   });
 
   describe("getAccountTxDetails", () => {
