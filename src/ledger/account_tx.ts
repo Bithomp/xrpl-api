@@ -202,6 +202,9 @@ export async function getTransactions(
     result.warnings = response.warnings;
   }
 
+  // required for new marker generation in case find transactions was used with special filters
+  result.bithompHash = connection.hash;
+
   return result;
 }
 
@@ -342,11 +345,16 @@ export async function findTransactionsExt(
         }
 
         if (markerTransaction) {
+          const bithompHash = loadOptions.marker?.bithompHash || accountTransactions.bithompHash;
           loadOptions.marker = {
             ledger: markerTransaction.tx.ledger_index,
             seq: markerTransaction.meta.TransactionIndex,
-            bithompHash: loadOptions.marker.bithompHash,
           };
+
+          // if only marker was provided, add bithompHash to marker
+          if (bithompHash) {
+            loadOptions.marker.bithompHash = bithompHash;
+          }
         }
       }
 
