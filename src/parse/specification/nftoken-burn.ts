@@ -17,7 +17,6 @@ function parseNFTokenBurn(tx: NFTokenBurn): FormattedNFTokenBurnSpecification {
     signer: parseSignerRegularKey(tx),
     delegate: parseDelegate(tx),
     source: parseSource(tx),
-    account: tx.Account,
     nftokenID: tx.NFTokenID,
     emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),

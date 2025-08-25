@@ -167,7 +167,6 @@ describe("Models", () => {
 
       expect(result).to.eql({
         source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
-        account: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
         nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
       });
     });

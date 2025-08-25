@@ -28,7 +28,6 @@ export interface NFTokenOfferFlagsKeysInterface {
 }
 
 export type FormattedNFTokenBurnSpecification = {
-  account: string;
   nftokenID: string;
 } & FormattedBaseSpecification;
 

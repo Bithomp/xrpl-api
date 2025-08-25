@@ -512,7 +512,6 @@ describe("Models", () => {
         id: "5139E9A51978E786FDB97D73F6245A11438A373133AC33A25D50F8E2C7AA5FEA",
         specification: {
           source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
-          account: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
           nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
         },
         outcome: {
@@ -559,7 +558,6 @@ describe("Models", () => {
         id: "8A988C1A8A3B3777420C0C49606F36FEC1D96D07F4C77ECB7BF3B1A8CF183BCB",
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
-          account: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
           nftokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765727D1EA000000005",
         },
         outcome: {
@@ -3845,7 +3843,6 @@ describe("Models", () => {
                 key: "0000000000000000000000000000000000000000000000000000000000000000",
               },
               specification: {
-                account: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
                 nftokenID: "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000",
                 source: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
               },

@@ -1,10 +1,9 @@
 import nconf from "nconf";
 import * as chai from "chai";
-import { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { Client } from "../../src/index";
-
 chai.use(chaiAsPromised);
+import { expect } from "chai";
+import { Client } from "../../src/index";
 
 describe("Client", () => {
   describe("getServerInfo", () => {

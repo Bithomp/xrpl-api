@@ -90,7 +90,7 @@ function stringToHex(value: string | undefined): string | undefined {
 }
 
 function bytesToHex(value: Uint8Array | ArrayBufferLike): string {
-  return Buffer.from(value).toString("hex").toUpperCase();
+  return Buffer.from(value as any).toString("hex").toUpperCase();
 }
 
 function hexToBytes(value: string): Uint8Array {

@@ -139,6 +139,27 @@ class Connection extends EventEmitter {
   }
 
   public async request(request: Request, options?: any): Promise<Response | any> {
+    const result = await this._request(request, options);
+
+    // handle mass timeout errors
+    if (result?.error === "timeout") {
+      // if we have more then 3 timeouts in last 10 requests, reconnect
+      const timeouts = this.latency.filter((info) => info.delta >= this.connectionTimeout).length;
+      if (timeouts >= 3) {
+        this.logger?.debug({
+          service: "Bithomp::XRPL::Connection",
+          function: "request",
+          url: this.url,
+          error: `Too many timeouts (${timeouts}) in last ${this.latency.length} requests, reconnecting...`,
+        });
+        this.reconnect();
+      }
+    }
+
+    return result;
+  }
+
+  async _request(request: Request, options?: any): Promise<Response | any> {
     try {
       if (
         options?.skip_subscription_update !== true &&
