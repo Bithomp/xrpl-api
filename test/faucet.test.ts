@@ -154,6 +154,7 @@ describe("Faucet", () => {
     });
 
     it("works with existing address on xahau-test xrpl network", async function () {
+      this.timeout(15000);
       const res = await Faucet.foundWallet("xahau-test", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
 
       expect(res.hash).to.be.a("string");
@@ -169,6 +170,7 @@ describe("Faucet", () => {
     });
 
     it("works with existing address on xahau-jshooks xrpl network", async function () {
+      this.timeout(15000);
       const res = await Faucet.foundWallet("xahau-jshooks", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
 
       expect(res.hash).to.be.a("string");

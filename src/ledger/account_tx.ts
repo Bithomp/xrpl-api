@@ -513,11 +513,23 @@ function counterpartyFilter(options: FindProcessTransactionsOptions, transaction
     return true;
   }
 
+  if (transaction.tx.Delegate === options.counterparty) {
+    return true;
+  }
+
   if (transaction.tx.Amount?.issuer === options.counterparty) {
     return true;
   }
 
   if (transaction.tx.SendMax?.issuer === options.counterparty) {
+    return true;
+  }
+
+  if (typeof transaction.tx.TakerGets === "object" && transaction.tx.TakerGets?.issuer === options.counterparty) {
+    return true;
+  }
+
+  if (typeof transaction.tx.TakerPays === "object" && transaction.tx.TakerPays?.issuer === options.counterparty) {
     return true;
   }
 

@@ -8,7 +8,7 @@ import { sleep, getTimestamp } from "./common/utils";
 import * as XRPLConnection from "xrpl/dist/npm/client/connection";
 
 const RECONNECT_TIMEOUT = 1000 * 5; // 5 sec (in ms)
-const LEDGER_CLOSED_TIMEOUT = 1000 * 15; // 15 sec (in ms)
+const LEDGER_CLOSED_TIMEOUT = 1000 * 20; // 20 sec (in ms)
 const SERVER_INFO_UPDATE_INTERVAL = 1000 * 60 * 5; // 5 min (in ms)
 
 // min and max ledger index window to consider ledger as available,
@@ -53,8 +53,8 @@ class Connection extends EventEmitter {
   public types: string[] = [];
   public latency: LatencyInfo[] = [];
   public readonly logger?: any;
-  public readonly timeout?: number; // request timeout
-  public readonly connectionTimeout: number;
+  public readonly timeout: number; // request timeout
+  public readonly connectionTimeout: number; // connection timeout
   public readonly hash?: string;
   private onlineSince: number | null = null;
   private networkID?: number;
@@ -77,7 +77,7 @@ class Connection extends EventEmitter {
 
     this.client = null;
     this.logger = options.logger;
-    this.timeout = options.timeout; // request timeout
+    this.timeout = options.timeout || LEDGER_CLOSED_TIMEOUT;
     this.connectionTimeout = options.connectionTimeout || RECONNECT_TIMEOUT;
     this.hash = crypto.createHash("sha256").update(url).digest("hex");
 
@@ -144,7 +144,7 @@ class Connection extends EventEmitter {
     // handle mass timeout errors
     if (result?.error === "timeout") {
       // if we have more then 3 timeouts in last 10 requests, reconnect
-      const timeouts = this.latency.filter((info) => info.delta >= this.connectionTimeout).length;
+      const timeouts = this.latency.filter((info) => info.delta >= this.timeout).length;
       if (timeouts >= 3) {
         this.logger?.debug({
           service: "Bithomp::XRPL::Connection",
@@ -207,7 +207,7 @@ class Connection extends EventEmitter {
       return response;
     } catch (err: any) {
       // update latency, as we have error
-      this.updateLatency(RECONNECT_TIMEOUT);
+      this.updateLatency(err.name === "TimeoutError" ? this.timeout : this.connectionTimeout);
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         function: "request",
@@ -230,7 +230,6 @@ class Connection extends EventEmitter {
     try {
       return await this.request({ command: "submit", tx_blob: transaction });
     } catch (err: any) {
-      this.updateLatency(1000);
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         function: "submit",
