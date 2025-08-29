@@ -85,12 +85,34 @@ function hexToString(hex: string | undefined): string | undefined {
   return hex ? Buffer.from(hex, "hex").toString("utf-8") : undefined;
 }
 
+/**
+ * Decode hex based data from hex to string.
+ * It has similar to hexToString functionality, but ff the decoded string contains invalid utf-8 characters, return the original hex string.
+ */
+function decodeHexData(data?: string): string | undefined {
+  if (!data) {
+    return undefined;
+  }
+
+  const decoded = hexToString(data);
+
+  // if decoded has '�', it means that the data is not valid utf-8
+  // and we should return the original data
+  if (decoded && decoded.includes("�")) {
+    return data;
+  }
+
+  return decoded;
+}
+
 function stringToHex(value: string | undefined): string | undefined {
   return value ? Buffer.from(value, "utf8").toString("hex").toUpperCase() : undefined;
 }
 
 function bytesToHex(value: Uint8Array | ArrayBufferLike): string {
-  return Buffer.from(value as any).toString("hex").toUpperCase();
+  return Buffer.from(value as any)
+    .toString("hex")
+    .toUpperCase();
 }
 
 function hexToBytes(value: string): Uint8Array {
@@ -142,6 +164,7 @@ export {
   normalizeNodes,
   normalizeNode,
   hexToString,
+  decodeHexData,
   stringToHex,
   bytesToHex,
   hexToBytes,

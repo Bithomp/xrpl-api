@@ -72,6 +72,12 @@ import {
   FormattedMPTokenIssuanceDestroySpecification,
 } from "../types/mptokens";
 
+import {
+  FormattedCredentialCreateSpecification,
+  FormattedCredentialAcceptSpecification,
+  FormattedCredentialDeleteSpecification,
+} from "../types/credentials";
+
 import { FormattedDelegateSetSpecification } from "../types/delegate";
 
 import { FormattedSetRemarksSpecification } from "../types/remarks";
@@ -143,6 +149,10 @@ import parseDelegateSet from "./specification/delegate-set";
 
 import parseSetRemarks from "./specification/set-remarks";
 
+import parseCredentialCreate from "./specification/credential-create";
+import parseCredentialAccept from "./specification/credential-accept";
+import parseCredentialDelete from "./specification/credential-delete";
+
 import parseGenesisMint from "./specification/genesis-mint";
 
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
@@ -208,6 +218,10 @@ const transactionTypeToType = {
   MPTokenAuthorize: "MPTokenAuthorize",
   MPTokenIssuanceSet: "MPTokenIssuanceSet",
   MPTokenIssuanceDestroy: "MPTokenIssuanceDestroy",
+
+  CredentialCreate: "CredentialCreate",
+  CredentialAccept: "CredentialAccept",
+  CredentialDelete: "CredentialDelete",
 
   DelegateSet: "DelegateSet",
 
@@ -281,6 +295,10 @@ const parserTypeFunc = {
   MPTokenIssuanceSet: parseMPTokenIssuanceSet,
   MPTokenIssuanceDestroy: parseMPTokenIssuanceDestroy,
 
+  CredentialCreate: parseCredentialCreate,
+  CredentialAccept: parseCredentialAccept,
+  CredentialDelete: parseCredentialDelete,
+
   DelegateSet: parseDelegateSet,
 
   SetRemarks: parseSetRemarks,
@@ -344,6 +362,9 @@ export type FormattedSpecification =
   | FormattedMPTokenAuthorizeSpecification
   | FormattedMPTokenIssuanceSetSpecification
   | FormattedMPTokenIssuanceDestroySpecification
+  | FormattedCredentialCreateSpecification
+  | FormattedCredentialAcceptSpecification
+  | FormattedCredentialDeleteSpecification
   | FormattedDelegateSetSpecification
   | FormattedSetRemarksSpecification;
 

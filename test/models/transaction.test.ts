@@ -6662,6 +6662,106 @@ describe("Models", () => {
         },
       });
     });
+
+    it("CredentialCreate", function () {
+      const tx = require("../examples/responses/CredentialCreate.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "CredentialCreate",
+        address: "rhvCTY6KfGZunJc2Avga53eqB5GSnYgcFT",
+        sequence: 5728901,
+        id: "8D3EA1549CCF578479645906F98075FEC3C8110D2DC7C56F20BEE49F6B55AB84",
+        ctid: "C0576A8700000002",
+        specification: {
+          source: { address: "rhvCTY6KfGZunJc2Avga53eqB5GSnYgcFT" },
+          subject: "r4wxAnN2D2gffEU4WQb2myHDy618DihCtP",
+          credentialType: "Administration",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-08-29T07:55:30.000Z",
+          fee: "0.0001",
+          balanceChanges: { rhvCTY6KfGZunJc2Avga53eqB5GSnYgcFT: [{ currency: "XRP", value: "-0.0001" }] },
+          credentialChanges: {
+            status: "created",
+            credentialIndex: "CCE60D65822A2C27CB478B2E1A68050486E6F1E0DFA977023D4407C51DFC07DC",
+            issuer: "rhvCTY6KfGZunJc2Avga53eqB5GSnYgcFT",
+            subject: "r4wxAnN2D2gffEU4WQb2myHDy618DihCtP",
+            credentialType: "Administration",
+            flags: { accepted: false },
+          },
+          ledgerIndex: 5728903,
+          ledgerVersion: 5728903,
+          indexInLedger: 0,
+        },
+      });
+    });
+
+    it("CredentialAccept", function () {
+      const tx = require("../examples/responses/CredentialAccept.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "CredentialAccept",
+        address: "r4wxAnN2D2gffEU4WQb2myHDy618DihCtP",
+        sequence: 5728899,
+        id: "E6A0503E311C9A68A948CC7C4CCE3DA307272A8E7E307F05313D2634BAD58BF9",
+        ctid: "C0576A8900010002",
+        specification: {
+          source: { address: "r4wxAnN2D2gffEU4WQb2myHDy618DihCtP" },
+          issuer: "rhvCTY6KfGZunJc2Avga53eqB5GSnYgcFT",
+          credentialType: "Administration",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-08-29T07:55:40.000Z",
+          fee: "0.0001",
+          balanceChanges: { r4wxAnN2D2gffEU4WQb2myHDy618DihCtP: [{ currency: "XRP", value: "-0.0001" }] },
+          credentialChanges: {
+            status: "modified",
+            credentialIndex: "CCE60D65822A2C27CB478B2E1A68050486E6F1E0DFA977023D4407C51DFC07DC",
+            issuer: "rhvCTY6KfGZunJc2Avga53eqB5GSnYgcFT",
+            subject: "r4wxAnN2D2gffEU4WQb2myHDy618DihCtP",
+            credentialType: "Administration",
+            flags: { accepted: true },
+            flagsChange: { accepted: false },
+            previousTxnID: "8D3EA1549CCF578479645906F98075FEC3C8110D2DC7C56F20BEE49F6B55AB84",
+          },
+          ledgerIndex: 5728905,
+          ledgerVersion: 5728905,
+          indexInLedger: 1,
+        },
+      });
+    });
+
+    it("CredentialDelete", function () {
+      const tx = require("../examples/responses/CredentialDelete.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "CredentialDelete",
+        address: "rfam8wvSzpVJF5pY57QoZk5KDcbN7rmGnA",
+        sequence: 5728674,
+        id: "5AA77FFA41A09C6EE580A4DB98D904CFD3EA655C226B83E7DA0BD01E6B3F5CD6",
+        ctid: "C05769A400030002",
+        specification: { source: { address: "rfam8wvSzpVJF5pY57QoZk5KDcbN7rmGnA" }, credentialType: "Administration" },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-08-29T07:43:31.000Z",
+          fee: "0.0001",
+          balanceChanges: { rfam8wvSzpVJF5pY57QoZk5KDcbN7rmGnA: [{ currency: "XRP", value: "-0.0001" }] },
+          credentialChanges: {
+            status: "deleted",
+            credentialIndex: "9FC6DEE173F7D796CC8EB0921C7A9831490749566BDC3B52D1857604BD49D4D6",
+            issuer: "rPgfVqatGapTMkpP8tm82XLqycx9aoKuBm",
+            subject: "rfam8wvSzpVJF5pY57QoZk5KDcbN7rmGnA",
+            credentialType: "Administration",
+            flags: { accepted: true },
+          },
+          ledgerIndex: 5728676,
+          ledgerVersion: 5728676,
+          indexInLedger: 3,
+        },
+      });
+    });
   });
 
   describe("getAccountTxDetails", () => {

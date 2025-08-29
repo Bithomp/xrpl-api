@@ -1,7 +1,7 @@
 import { FormattedRemark, Remark } from "../../types";
 
 import { removeUndefined } from "../../common";
-import { hexToString } from "../utils";
+import { hexToString, decodeHexData } from "../utils";
 import parseRemarkFlags from "./remark-flags";
 
 export const REMARKS_SUPPORTED_ENTRIES = [
@@ -31,23 +31,7 @@ function parseRemark(remark: Remark): FormattedRemark {
 
   return removeUndefined({
     name: hexToString(RemarkName),
-    value: decodeData(RemarkValue),
+    value: decodeHexData(RemarkValue),
     flags: parseRemarkFlags(Flags as number),
   });
-}
-
-function decodeData(data?: string): string | undefined {
-  if (!data) {
-    return undefined;
-  }
-
-  const decoded = hexToString(data);
-
-  // if decoded has '�', it means that the data is not valid utf-8
-  // and we should return the original data
-  if (decoded && decoded.includes("�")) {
-    return data;
-  }
-
-  return decoded;
 }

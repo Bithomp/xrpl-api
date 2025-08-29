@@ -517,6 +517,10 @@ function counterpartyFilter(options: FindProcessTransactionsOptions, transaction
     return true;
   }
 
+  if (transaction.tx.Subject === options.counterparty) {
+    return true;
+  }
+
   if (transaction.tx.Amount?.issuer === options.counterparty) {
     return true;
   }

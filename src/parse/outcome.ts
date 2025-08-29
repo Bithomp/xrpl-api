@@ -22,6 +22,7 @@ import {
   parseDeliveredAmount,
   parseMPTokenIssuanceChanges,
   parseMPTokenChanges,
+  parseCredentialChanges,
   parseDelegateChanges,
   parseRemarksChanges,
 } from "./outcome/index";
@@ -61,6 +62,7 @@ const MPTOKEN_TYPES = [
   "Payment",
   "Clawback",
 ];
+const CREDENTIAL_TYPES = ["CredentialCreate", "CredentialAccept", "CredentialDelete"];
 const DELEGATE_TYPES = ["DelegateSet"];
 const REMARKS_TYPES = ["SetRemarks"];
 
@@ -93,6 +95,7 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     oracleChanges: getOracleChanges(tx),
     mptokenIssuanceChanges: getMPTokenIssuanceChanges(tx, nativeCurrency || getNativeCurrency()),
     mptokenChanges: getMPTokenChanges(tx, nativeCurrency || getNativeCurrency()),
+    credentialChanges: getCredentialChanges(tx, nativeCurrency || getNativeCurrency()),
     delegateChanges: getDelegateChanges(tx, nativeCurrency || getNativeCurrency()),
     remarksChanges: getRemarksChanges(tx, nativeCurrency || getNativeCurrency()),
     unlReportChanges: getUNLReportChanges(tx, nativeCurrency || getNativeCurrency()),
@@ -341,6 +344,21 @@ function getMPTokenIssuanceChanges(tx: any, nativeCurrency?: string): any {
   const mptokenIssuanceChanges = parseMPTokenIssuanceChanges(tx);
 
   return Object.keys(mptokenIssuanceChanges).length > 0 ? mptokenIssuanceChanges : undefined;
+}
+
+/**
+ * only XRPL
+ */
+function getCredentialChanges(tx: any, nativeCurrency?: string): any {
+  if (nativeCurrency !== "XRP") {
+    return undefined;
+  }
+
+  if (!CREDENTIAL_TYPES.includes(tx.TransactionType)) {
+    return undefined;
+  }
+
+  return parseCredentialChanges(tx.meta);
 }
 
 /**
