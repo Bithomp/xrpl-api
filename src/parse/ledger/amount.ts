@@ -22,7 +22,12 @@ function parseAmount(amount: Amount): IssuedCurrencyAmount | FormattedIssuedCurr
     };
   }
 
-  // Rest including MPT
+  // return as copy of the original object, including MPT format
+  if (amount && typeof amount === "object") {
+    return { ...amount };
+  }
+
+  // unexpected format
   return amount;
 }
 
