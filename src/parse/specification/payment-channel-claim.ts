@@ -3,6 +3,7 @@ import { PaymentChannelClaimFlags, PaymentChannelClaim } from "xrpl";
 import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
 import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
@@ -11,7 +12,7 @@ import { parseSource } from "../ledger/source";
 import { FormattedPaymentChannelClaimSpecification } from "../../types/payment_channels";
 import { Amount } from "../../types";
 
-function parsePaymentChannelClaim(tx: PaymentChannelClaim): FormattedPaymentChannelClaimSpecification {
+function parsePaymentChannelClaim(tx: PaymentChannelClaim, nativeCurrency?: string): FormattedPaymentChannelClaimSpecification {
   assert.ok(tx.TransactionType === "PaymentChannelClaim");
 
   return removeUndefined({
@@ -27,6 +28,7 @@ function parsePaymentChannelClaim(tx: PaymentChannelClaim): FormattedPaymentChan
     // eslint-disable-next-line no-bitwise
     close: Boolean((tx.Flags as number) & PaymentChannelClaimFlags.tfClose) || undefined,
     emittedDetails: parseEmittedDetails(tx),
+    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),
   });
 }

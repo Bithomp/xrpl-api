@@ -4,6 +4,7 @@ import { removeUndefined } from "../../common";
 import { parseTimestamp } from "../utils";
 import parseAmount from "../ledger/amount";
 import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
@@ -12,7 +13,7 @@ import { parseSource } from "../ledger/source";
 import { parseDestination } from "../ledger/destination";
 import { FormattedPaymentChannelCreateSpecification } from "../../types/payment_channels";
 
-function parsePaymentChannelCreate(tx: PaymentChannelCreate): FormattedPaymentChannelCreateSpecification {
+function parsePaymentChannelCreate(tx: PaymentChannelCreate, nativeCurrency?: string): FormattedPaymentChannelCreateSpecification {
   assert.ok(tx.TransactionType === "PaymentChannelCreate");
 
   return removeUndefined({
@@ -26,6 +27,7 @@ function parsePaymentChannelCreate(tx: PaymentChannelCreate): FormattedPaymentCh
     publicKey: tx.PublicKey,
     cancelAfter: tx.CancelAfter && parseTimestamp(tx.CancelAfter),
     emittedDetails: parseEmittedDetails(tx),
+    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),
   });
 }

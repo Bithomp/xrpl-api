@@ -4,6 +4,7 @@ import { removeUndefined } from "../../common";
 import { parseTimestamp } from "../utils";
 import parseAmount from "../ledger/amount";
 import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
@@ -12,7 +13,7 @@ import { parseSource } from "../ledger/source";
 import { parseDestination } from "../ledger/destination";
 import { FormattedCheckCreateSpecification } from "../../types/checks";
 
-function parseCheckCreate(tx: CheckCreate): FormattedCheckCreateSpecification {
+function parseCheckCreate(tx: CheckCreate, nativeCurrency?: string): FormattedCheckCreateSpecification {
   assert.ok(tx.TransactionType === "CheckCreate");
 
   return removeUndefined({
@@ -25,6 +26,7 @@ function parseCheckCreate(tx: CheckCreate): FormattedCheckCreateSpecification {
     expiration: tx.Expiration && parseTimestamp(tx.Expiration),
     invoiceID: tx.InvoiceID,
     emittedDetails: parseEmittedDetails(tx),
+    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),
   });
 }

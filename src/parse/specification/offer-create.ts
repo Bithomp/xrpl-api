@@ -9,12 +9,12 @@ import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
 import { parseDelegate } from "../ledger/delegate";
 import { parseSource } from "../ledger/source";
-import parseOfferCreateFlags from "../ledger/offer-create-flags";
+import parseTxOfferCreateFlags from "../ledger/tx-offer-create-flags";
 import { FormattedOfferCreateSpecification, IssuedCurrencyAmount } from "../../types";
 
-function parseOfferCreate(tx: OfferCreate): FormattedOfferCreateSpecification {
+function parseOfferCreate(tx: OfferCreate, nativeCurrency?: string): FormattedOfferCreateSpecification {
   assert.ok(tx.TransactionType === "OfferCreate");
-  const flags = parseOfferCreateFlags(tx.Flags as number);
+  const flags = parseTxOfferCreateFlags(tx.Flags as number, { nativeCurrency });
   const takerGets = parseAmount(tx.TakerGets) as IssuedCurrencyAmount;
   const takerPays = parseAmount(tx.TakerPays) as IssuedCurrencyAmount;
   const quantity = flags.sell === true ? takerGets : takerPays;
@@ -28,17 +28,16 @@ function parseOfferCreate(tx: OfferCreate): FormattedOfferCreateSpecification {
     flags,
     quantity: quantity,
     totalPrice: totalPrice,
-
-    /* eslint-disable no-bitwise */
-    direction: ((tx.Flags as number) & OfferCreateFlags.tfSell) === 0 ? "buy" : "sell", // @deprecated
-    passive: ((tx.Flags as number) & OfferCreateFlags.tfPassive) !== 0 || undefined, // @deprecated
-    immediateOrCancel: ((tx.Flags as number) & OfferCreateFlags.tfImmediateOrCancel) !== 0 || undefined, // @deprecated
-    fillOrKill: ((tx.Flags as number) & OfferCreateFlags.tfFillOrKill) !== 0 || undefined, // @deprecated
-    /* eslint-enable no-bitwise */
-
     expirationTime: parseTimestamp(tx.Expiration),
     emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
+
+    /* eslint-disable no-bitwise */
+    direction: ((tx.Flags as number) & OfferCreateFlags.tfSell) === 0 ? "buy" : "sell", // @deprecated, use flags.sell
+    passive: ((tx.Flags as number) & OfferCreateFlags.tfPassive) !== 0 || undefined, // @deprecated, use flags.passive
+    immediateOrCancel: ((tx.Flags as number) & OfferCreateFlags.tfImmediateOrCancel) !== 0 || undefined, // @deprecated, use flags.immediateOrCancel
+    fillOrKill: ((tx.Flags as number) & OfferCreateFlags.tfFillOrKill) !== 0 || undefined, // @deprecated, use flags.fillOrKill
+    /* eslint-enable no-bitwise */
   });
 }
 

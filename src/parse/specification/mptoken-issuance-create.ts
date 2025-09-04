@@ -2,14 +2,14 @@ import * as assert from "assert";
 import { MPTokenIssuanceCreate } from "xrpl";
 import { removeUndefined } from "../../common";
 import { parseMemos } from "../ledger/memos";
-import parseMPTokenIssuanceCreateFlags from "../ledger/mptoken-issuance-create-flags";
+import parseTxMPTokenIssuanceCreateFlags from "../ledger/tx-mptoken-issuance-create-flags";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
 import { parseDelegate } from "../ledger/delegate";
 import { parseSource } from "../ledger/source";
 import { FormattedMPTokenIssuanceCreateSpecification } from "../../types/mptokens";
 
-function parseMPTokenIssuanceCreate(tx: MPTokenIssuanceCreate): FormattedMPTokenIssuanceCreateSpecification {
+function parseMPTokenIssuanceCreate(tx: MPTokenIssuanceCreate, nativeCurrency?: string): FormattedMPTokenIssuanceCreateSpecification {
   assert.ok(tx.TransactionType === "MPTokenIssuanceCreate");
 
   return removeUndefined({
@@ -18,7 +18,7 @@ function parseMPTokenIssuanceCreate(tx: MPTokenIssuanceCreate): FormattedMPToken
     delegate: parseDelegate(tx),
     source: parseSource(tx),
     scale: tx.AssetScale,
-    flags: parseMPTokenIssuanceCreateFlags(tx.Flags as number),
+    flags: parseTxMPTokenIssuanceCreateFlags(tx.Flags as number, { nativeCurrency }),
     metadata: tx.MPTokenMetadata,
     maximumAmount: tx.MaximumAmount,
     transferFee: tx.TransferFee,

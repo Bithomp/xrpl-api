@@ -84,6 +84,8 @@ import { FormattedSetRemarksSpecification } from "../types/remarks";
 
 import { FormattedGenesisMintSpecification } from "../types/genesis_mint";
 
+import { FormattedBatchSpecification } from "../types/batch";
+
 import { FormattedAmendmentSpecification } from "../types/amendments";
 import { FormattedFeeUpdateSpecification } from "../types/fees";
 
@@ -154,6 +156,8 @@ import parseCredentialAccept from "./specification/credential-accept";
 import parseCredentialDelete from "./specification/credential-delete";
 
 import parseGenesisMint from "./specification/genesis-mint";
+
+import parseBatch from "./specification/batch";
 
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
 import parseFeeUpdate from "./specification/fee-update"; // pseudo-transaction
@@ -229,6 +233,8 @@ const transactionTypeToType = {
 
   GenesisMint: "genesisMint",
 
+  Batch: "Batch",
+
   EnableAmendment: "amendment", // pseudo-transaction
   SetFee: "feeUpdate", // pseudo-transaction
 };
@@ -237,7 +243,7 @@ function parseTransactionType(type: string): string {
   return transactionTypeToType[type] || type;
 }
 
-const parserTypeFunc = {
+export const parserTypeFunc = {
   settings: parseSettings,
   accountDelete: parseAccountDelete,
   checkCancel: parseCheckCancel,
@@ -305,6 +311,8 @@ const parserTypeFunc = {
 
   genesisMint: parseGenesisMint,
 
+  Batch: parseBatch,
+
   amendment: parseAmendment, // pseudo-transaction
   feeUpdate: parseFeeUpdate, // pseudo-transaction
 };
@@ -351,9 +359,6 @@ export type FormattedSpecification =
   | FormattedAmmWithdrawSpecification
   | FormattedAmmVoteSpecification
   | FormattedAmmClawbackSpecification
-  | FormattedGenesisMintSpecification
-  | FormattedAmendmentSpecification
-  | FormattedFeeUpdateSpecification
   | FormattedDIDSetSpecification
   | FormattedDIDDeleteSpecification
   | FormattedOracleSetSpecification
@@ -366,7 +371,11 @@ export type FormattedSpecification =
   | FormattedCredentialAcceptSpecification
   | FormattedCredentialDeleteSpecification
   | FormattedDelegateSetSpecification
-  | FormattedSetRemarksSpecification;
+  | FormattedSetRemarksSpecification
+  | FormattedGenesisMintSpecification
+  | FormattedBatchSpecification
+  | FormattedAmendmentSpecification
+  | FormattedFeeUpdateSpecification;
 
 export interface FormattedTransaction {
   type: string;
@@ -393,14 +402,14 @@ function parseTransaction(
   const type = parseTransactionType(universalTx.TransactionType);
   const parser: Function = parserTypeFunc[type];
 
-  const specification = parser ? parser(universalTx) : unrecognizedParser(universalTx);
+  const specification = parser ? parser(universalTx, nativeCurrency, definitions) : unrecognizedParser(universalTx);
   if (!parser && includeRawTransaction !== false) {
     includeRawTransaction = true; // eslint-disable-line no-param-reassign
   }
 
   const outcome = parseOutcome(universalTx, nativeCurrency, definitions);
   return removeUndefined({
-    type: type,
+    type,
     address: parseAccount(universalTx.Account),
     sequence: universalTx.Sequence,
     ticketSequence: universalTx.TicketSequence,

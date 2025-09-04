@@ -2,6 +2,7 @@ import * as assert from "assert";
 import { DepositPreauth, AuthorizeCredential } from "xrpl";
 import { removeUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
@@ -17,7 +18,7 @@ function parseCredentials(credential: AuthorizeCredential): FormattedAuthorizeCr
   };
 }
 
-function parseDepositPreauth(tx: DepositPreauth): FormattedDepositPreauthSpecification {
+function parseDepositPreauth(tx: DepositPreauth, nativeCurrency?: string): FormattedDepositPreauthSpecification {
   assert.ok(tx.TransactionType === "DepositPreauth");
 
   return removeUndefined({
@@ -30,6 +31,7 @@ function parseDepositPreauth(tx: DepositPreauth): FormattedDepositPreauthSpecifi
     authorizeCredentials: tx.AuthorizeCredentials ? tx.AuthorizeCredentials.map(parseCredentials) : undefined,
     unauthorizeCredentials: tx.UnauthorizeCredentials ? tx.UnauthorizeCredentials.map(parseCredentials) : undefined,
     emittedDetails: parseEmittedDetails(tx),
+    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),
   });
 }

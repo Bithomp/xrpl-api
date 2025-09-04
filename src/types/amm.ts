@@ -1,6 +1,8 @@
-import { AMMDepositFlags, AMMWithdrawFlags } from "xrpl";
+import { AMMDepositFlags, AMMWithdrawFlags, AMMClawbackFlags } from "xrpl";
 import { FormattedBaseSpecification } from "./specification";
 import { FormattedAmount, FormattedIssuedCurrency } from "./amounts";
+import { TxGlobalFlagsKeysInterface, getTxGlobalFlagsKeys } from "./global";
+import { MAINNET_NATIVE_CURRENCY } from "../common";
 
 export interface VoteSlotInterface {
   VoteEntry: {
@@ -19,7 +21,24 @@ export const AMMDepositFlagsKeys = {
   twoAssetIfEmpty: AMMDepositFlags.tfTwoAssetIfEmpty,
 };
 
-export interface AMMDepositFlagsKeysInterface {
+const nativeCurrencyAMMDepositFlags = {};
+
+export function getAMMDepositFlagsKeys(nativeCurrency?: string): Record<string, number> {
+  if (!nativeCurrency) {
+    nativeCurrency = MAINNET_NATIVE_CURRENCY; // eslint-disable-line no-param-reassign
+  }
+
+  if (!nativeCurrencyAMMDepositFlags[nativeCurrency]) {
+    nativeCurrencyAMMDepositFlags[nativeCurrency] = {
+      ...getTxGlobalFlagsKeys(nativeCurrency),
+      ...AMMDepositFlagsKeys,
+    };
+  }
+
+  return nativeCurrencyAMMDepositFlags[nativeCurrency];
+}
+
+export interface AMMDepositFlagsKeysInterface extends TxGlobalFlagsKeysInterface {
   lpToken?: boolean;
   singleAsset?: boolean;
   twoAsset?: boolean;
@@ -37,7 +56,24 @@ export const AMMWithdrawFlagsKeys = {
   limitLPToken: AMMWithdrawFlags.tfLimitLPToken,
 };
 
-export interface AMMWithdrawFlagsKeysInterface {
+const nativeCurrencyAMMWithdrawFlags = {};
+
+export function getAMMWithdrawFlagsKeys(nativeCurrency?: string): Record<string, number> {
+  if (!nativeCurrency) {
+    nativeCurrency = MAINNET_NATIVE_CURRENCY; // eslint-disable-line no-param-reassign
+  }
+
+  if (!nativeCurrencyAMMWithdrawFlags[nativeCurrency]) {
+    nativeCurrencyAMMWithdrawFlags[nativeCurrency] = {
+      ...getTxGlobalFlagsKeys(nativeCurrency),
+      ...AMMWithdrawFlagsKeys,
+    };
+  }
+
+  return nativeCurrencyAMMWithdrawFlags[nativeCurrency];
+}
+
+export interface AMMWithdrawFlagsKeysInterface extends TxGlobalFlagsKeysInterface {
   lpToken?: boolean;
   withdrawAll?: boolean;
   oneAssetWithdrawAll?: boolean;
@@ -47,15 +83,29 @@ export interface AMMWithdrawFlagsKeysInterface {
   limitLPToken?: boolean;
 }
 
-export enum AMMClawbackFlags {
-  tfClawTwoAssets = 0x00000001,
-}
-
 export const AMMClawbackFlagsKeys = {
   clawTwoAssets: AMMClawbackFlags.tfClawTwoAssets,
 };
 
-export interface AMMClawbackFlagsKeysInterface {
+const nativeCurrencyAMMClawbackFlags = {};
+
+export function getAMMClawbackFlagsKeys(nativeCurrency?: string): Record<string, number> {
+  if (!nativeCurrency) {
+    nativeCurrency = MAINNET_NATIVE_CURRENCY; // eslint-disable-line no-param-reassign
+  }
+
+  if (!nativeCurrencyAMMClawbackFlags[nativeCurrency]) {
+    nativeCurrencyAMMClawbackFlags[nativeCurrency] = {
+      ...getTxGlobalFlagsKeys(nativeCurrency),
+      ...AMMClawbackFlagsKeys,
+    };
+  }
+
+  return nativeCurrencyAMMClawbackFlags[nativeCurrency];
+}
+
+
+export interface AMMClawbackFlagsKeysInterface extends TxGlobalFlagsKeysInterface {
   clawTwoAssets?: boolean;
 }
 

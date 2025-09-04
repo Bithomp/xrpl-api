@@ -1,7 +1,7 @@
 import { LedgerEntry, AccountSetAsfFlags } from "xrpl";
 import BigNumber from "bignumber.js";
 
-import { BLACKHOLE_ACCOUNTS } from "../common";
+import { XAHAU_NATIVE_CURRENCY, BLACKHOLE_ACCOUNTS } from "../common";
 import { parseFlags } from "../parse/ledger/flags";
 import { QueueData } from "../types/queue_data";
 
@@ -51,7 +51,7 @@ export const XahauAccountRootFlagsKeys = {
 
 export function getAccountRootFlagsKeys(): Record<string, number> {
   const nativeCurrency = getNativeCurrency();
-  if (nativeCurrency === "XAH") {
+  if (nativeCurrency === XAHAU_NATIVE_CURRENCY) {
     // Xahau specific
     return XahauAccountRootFlagsKeys;
   } else {

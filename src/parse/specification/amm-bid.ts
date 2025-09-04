@@ -4,6 +4,7 @@ import { removeUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
 import parseAsset from "../ledger/asset";
 import parseAuthAccounts from "../ledger/auth-accounts";
+import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
@@ -11,7 +12,7 @@ import { parseDelegate } from "../ledger/delegate";
 import { parseSource } from "../ledger/source";
 import { FormattedAmmBidSpecification } from "../../types/amm";
 
-function parseAmmBid(tx: AMMBid): FormattedAmmBidSpecification {
+function parseAmmBid(tx: AMMBid, nativeCurrency?: string): FormattedAmmBidSpecification {
   assert.ok(tx.TransactionType === "AMMBid");
 
   return removeUndefined({
@@ -24,6 +25,7 @@ function parseAmmBid(tx: AMMBid): FormattedAmmBidSpecification {
     bidMin: tx.BidMin ? parseAmount(tx.BidMin) : undefined,
     bidMax: tx.BidMax ? parseAmount(tx.BidMax) : undefined,
     authAccounts: parseAuthAccounts(tx.AuthAccounts),
+    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),
   });
 }

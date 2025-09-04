@@ -9,9 +9,9 @@ import { parseSignerRegularKey } from "../ledger/regular-key";
 import { parseDelegate } from "../ledger/delegate";
 import { parseSource } from "../ledger/source";
 import { FormattedAmmDepositSpecification } from "../../types/amm";
-import parseAmmDepositFlags from "../ledger/amm-deposit-flags";
+import parseTxAmmDepositFlags from "../ledger/tx-amm-deposit-flags";
 
-function parseAmmDeposit(tx: AMMDeposit): FormattedAmmDepositSpecification {
+function parseAmmDeposit(tx: AMMDeposit, nativeCurrency?: string): FormattedAmmDepositSpecification {
   assert.ok(tx.TransactionType === "AMMDeposit");
 
   return removeUndefined({
@@ -25,7 +25,7 @@ function parseAmmDeposit(tx: AMMDeposit): FormattedAmmDepositSpecification {
     amount2: tx.Amount2 ? parseAmount(tx.Amount2) : undefined,
     ePrice: tx.EPrice ? parseAmount(tx.EPrice) : undefined,
     lpTokenOut: tx.LPTokenOut ? parseAmount(tx.LPTokenOut) : undefined,
-    flags: parseAmmDepositFlags(tx.Flags as number),
+    flags: parseTxAmmDepositFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),
   });
 }

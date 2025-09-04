@@ -3,6 +3,7 @@ import { TrustSetFlags, TrustSet } from "xrpl";
 import { parseQuality } from "../utils";
 import { removeUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
+import parseTxTrustSetFlags from "../ledger/tx-trust-set-flags";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
@@ -24,7 +25,7 @@ function parseFlag(flagsValue: number, trueValue: number, falseValue: number): b
   return undefined;
 }
 
-function parseTrustSet(tx: TrustSet): FormattedTrustlineSpecification {
+function parseTrustSet(tx: TrustSet, nativeCurrency?: string): FormattedTrustlineSpecification {
   assert.ok(tx.TransactionType === "TrustSet");
 
   return removeUndefined({
@@ -42,6 +43,7 @@ function parseTrustSet(tx: TrustSet): FormattedTrustlineSpecification {
     deepFrozen: parseFlag(tx.Flags as number, TrustSetFlags.tfSetDeepFreeze, TrustSetFlags.tfClearDeepFreeze),
     authorized: parseFlag(tx.Flags as number, TrustSetFlags.tfSetfAuth, 0),
     emittedDetails: parseEmittedDetails(tx),
+    flags: parseTxTrustSetFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),
   });
 }

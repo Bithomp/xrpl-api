@@ -216,6 +216,7 @@ describe("Client", () => {
         expect(result.specification).to.eql({
           source: { address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6" },
           depositAuth: false,
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
           memos: [
             {
               data: "28ae197d-76a0-42bd-a703-e6f793c25c14",
@@ -240,6 +241,7 @@ describe("Client", () => {
         );
         expect(result.specification).to.eql({
           source: { address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6" },
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
           memos: [
             {
               data: '"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW5jZWxsZWRfc2FsZV9zZXF1ZW5jZSI6ODQwLCJjdXJyZW5jeSI6IjAyMzAzMTUxNkQ1MjcyMzE0RTQ2NTQwMDAwMDAwMDAwMDAwMDAwMDAiLCJpc3N1ZXIiOiJyVVk1ZHo4VFVWVmdxcktQbWRraHpZNVgyaGJrQjNwYUY1IiwiaWF0IjoxNjQ1MTE3MTA2LCJpc3MiOiJTb2xvZ2VuaWMgRm91bmRhdGlvbiJ9.z46Ccefl9djKats0FkXKJfhb4Krf-98Jqr75nwdMi9NH9z7UcgLSGVLAEpRIEySSu1NylNBgbbSUuJgllWsPJQ"',
@@ -275,6 +277,7 @@ describe("Client", () => {
           specification: {
             source: { address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6" },
             depositAuth: false,
+            flags: { fullyCanonicalSig: true, innerBatchTxn: false },
             memos: [
               {
                 data: "28ae197d-76a0-42bd-a703-e6f793c25c14",
@@ -320,6 +323,7 @@ describe("Client", () => {
           specification: {
             source: { address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6" },
             depositAuth: false,
+            flags: { fullyCanonicalSig: true, innerBatchTxn: false },
             memos: [
               {
                 data: "28ae197d-76a0-42bd-a703-e6f793c25c14",
@@ -344,6 +348,7 @@ describe("Client", () => {
           specification: {
             source: { address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6" },
             depositAuth: false,
+            flags: { fullyCanonicalSig: true, innerBatchTxn: false },
             memos: [
               {
                 data: "28ae197d-76a0-42bd-a703-e6f793c25c14",
@@ -538,6 +543,7 @@ describe("Client", () => {
           specification: {
             source: { address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6" },
             depositAuth: false,
+            flags: { fullyCanonicalSig: true, innerBatchTxn: false },
             memos: [
               {
                 data: "28ae197d-76a0-42bd-a703-e6f793c25c14",
@@ -2443,6 +2449,7 @@ describe("Client", () => {
                 ],
                 specification: {
                   source: { address: "rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1" },
+                  flags: { fullyCanonicalSig: false, innerBatchTxn: false },
                 },
                 outcome: {
                   balanceChanges: {
@@ -2468,7 +2475,6 @@ describe("Client", () => {
         const tx = require("../examples/responses/Import2.json");
         const xahauDefinitions = new Wallet.XrplDefinitions(xahauEnums);
         const result: any = Models.getTxDetails(tx, false, "XAH", xahauDefinitions);
-
         expect(result).to.eql({
           type: "import",
           address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T",
@@ -2717,11 +2723,7 @@ describe("Client", () => {
                         PreviousTxnLgrSeq: 39419641,
                         PreviousTxnID: "6DC9814FD34FA93751DEFB7705220EF84ECC779A51AF198D2E7209EA97416BEB",
                         LedgerIndex: "AB28F55952D30905E86AFAFC72064ECEE139FCFA100E747968518DD8A304E5EA",
-                        PreviousFields: {
-                          Sequence: 39419543,
-                          OwnerCount: 1,
-                          Balance: "9999999988",
-                        },
+                        PreviousFields: { Sequence: 39419543, OwnerCount: 1, Balance: "9999999988" },
                         FinalFields: {
                           Flags: 0,
                           Sequence: 39419544,
@@ -2779,18 +2781,12 @@ describe("Client", () => {
                 specification: {
                   source: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
                   nftokenID: "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000",
+                  flags: { fullyCanonicalSig: false, innerBatchTxn: false },
                 },
                 outcome: {
                   result: "tesSUCCESS",
                   fee: "0.000012",
-                  balanceChanges: {
-                    rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T: [
-                      {
-                        currency: "XRP",
-                        value: "-0.000012",
-                      },
-                    ],
-                  },
+                  balanceChanges: { rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T: [{ currency: "XRP", value: "-0.000012" }] },
                   nftokenChanges: {
                     rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T: [
                       {
@@ -2828,14 +2824,7 @@ describe("Client", () => {
             result: "tesSUCCESS",
             timestamp: "2023-07-12T10:09:20.000Z",
             fee: "0.011087",
-            balanceChanges: {
-              rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T: [
-                {
-                  currency: "XAH",
-                  value: "-0.011075",
-                },
-              ],
-            },
+            balanceChanges: { rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T: [{ currency: "XAH", value: "-0.011075" }] },
             hooksExecutions: [
               {
                 account: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU",
@@ -2854,9 +2843,7 @@ describe("Client", () => {
                 id: "9FFF77CEA7B0A61452E0E6560C6AD1DECFA7DE78DDAB6567E10C54B5547371F8",
                 specification: {
                   uri: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
-                  flags: {
-                    burnable: false,
-                  },
+                  flags: { fullyCanonicalSig: true, burnable: false },
                   source: { address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU" },
                   destination: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
                   emittedDetails: {
@@ -2891,10 +2878,7 @@ describe("Client", () => {
             ledgerIndex: 4722789,
             ledgerVersion: 4722789,
             indexInLedger: 0,
-            deliveredAmount: {
-              currency: "XAH",
-              value: "0.011075",
-            },
+            deliveredAmount: { currency: "XAH", value: "0.011075" },
           },
         });
       });

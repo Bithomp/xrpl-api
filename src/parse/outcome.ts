@@ -28,7 +28,7 @@ import {
 } from "./outcome/index";
 
 import { parseTimestamp } from "./utils";
-import { removeUndefined, dropsToXrp } from "../common";
+import { MAINNET_NATIVE_CURRENCY, XAHAU_NATIVE_CURRENCY, removeUndefined, dropsToXrp } from "../common";
 import { Outcome } from "../types/outcome";
 
 const ESCROW_TYPES = ["EscrowFinish", "EscrowCreate", "EscrowCancel"];
@@ -242,7 +242,7 @@ function getURITokenSellOfferChanges(tx: any): any {
  * only Xahau
  */
 function getHooksExecutions(tx: any, nativeCurrency?: string): any {
-  if (nativeCurrency !== "XAH") {
+  if (nativeCurrency !== XAHAU_NATIVE_CURRENCY) {
     return undefined;
   }
 
@@ -253,11 +253,11 @@ function getHooksExecutions(tx: any, nativeCurrency?: string): any {
  * only Xahau
  */
 function getEmittedTxns(tx: any, nativeCurrency?: string, definitions?: XrplDefinitionsBase): any {
-  if (nativeCurrency !== "XAH") {
+  if (nativeCurrency !== XAHAU_NATIVE_CURRENCY) {
     return undefined;
   }
 
-  return parseEmittedTxns(tx, definitions);
+  return parseEmittedTxns(tx, nativeCurrency, definitions);
 }
 
 /**
@@ -303,7 +303,7 @@ function getOracleChanges(tx: any): any {
  * only Xahau
  */
 function getUNLReportChanges(tx: any, nativeCurrency?: string): any {
-  if (nativeCurrency !== "XAH") {
+  if (nativeCurrency !== XAHAU_NATIVE_CURRENCY) {
     return undefined;
   }
 
@@ -318,7 +318,7 @@ function getUNLReportChanges(tx: any, nativeCurrency?: string): any {
  * only XRPL
  */
 function getMPTokenChanges(tx: any, nativeCurrency?: string): any {
-  if (nativeCurrency !== "XRP") {
+  if (nativeCurrency !== MAINNET_NATIVE_CURRENCY) {
     return undefined;
   }
 
@@ -335,7 +335,7 @@ function getMPTokenChanges(tx: any, nativeCurrency?: string): any {
  * only XRPL
  */
 function getMPTokenIssuanceChanges(tx: any, nativeCurrency?: string): any {
-  if (nativeCurrency !== "XRP") {
+  if (nativeCurrency !== MAINNET_NATIVE_CURRENCY) {
     return undefined;
   }
 
@@ -350,7 +350,7 @@ function getMPTokenIssuanceChanges(tx: any, nativeCurrency?: string): any {
  * only XRPL
  */
 function getCredentialChanges(tx: any, nativeCurrency?: string): any {
-  if (nativeCurrency !== "XRP") {
+  if (nativeCurrency !== MAINNET_NATIVE_CURRENCY) {
     return undefined;
   }
 
@@ -365,7 +365,7 @@ function getCredentialChanges(tx: any, nativeCurrency?: string): any {
  * only XRPL
  */
 function getDelegateChanges(tx: any, nativeCurrency?: string): any {
-  if (nativeCurrency !== "XRP") {
+  if (nativeCurrency !== MAINNET_NATIVE_CURRENCY) {
     return undefined;
   }
 
@@ -380,7 +380,7 @@ function getDelegateChanges(tx: any, nativeCurrency?: string): any {
  * only XRPL
  */
 function getRemarksChanges(tx: any, nativeCurrency?: string): any {
-  if (nativeCurrency !== "XAH") {
+  if (nativeCurrency !== XAHAU_NATIVE_CURRENCY) {
     return undefined;
   }
 

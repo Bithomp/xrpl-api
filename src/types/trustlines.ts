@@ -1,6 +1,45 @@
-import { LedgerEntry } from "xrpl";
+import { LedgerEntry, TrustSetFlags } from "xrpl";
 const { RippleStateFlags } = LedgerEntry;
 import { FormattedBaseSpecification } from "./specification";
+import { TxGlobalFlagsKeysInterface, getTxGlobalFlagsKeys } from "./global";
+import { MAINNET_NATIVE_CURRENCY } from "../common";
+
+export const TrustSetFlagsKeys = {
+  setfAuth: TrustSetFlags.tfSetfAuth,
+  setNoRipple: TrustSetFlags.tfSetNoRipple,
+  clearNoRipple: TrustSetFlags.tfClearNoRipple,
+  setFreeze: TrustSetFlags.tfSetFreeze,
+  clearFreeze: TrustSetFlags.tfClearFreeze,
+  setDeepFreeze: TrustSetFlags.tfSetDeepFreeze,
+  clearDeepFreeze: TrustSetFlags.tfClearDeepFreeze,
+};
+
+const nativeCurrencyTrustSetFlags = {};
+
+export function getTrustSetFlagsKeys(nativeCurrency?: string): Record<string, number> {
+  if (!nativeCurrency) {
+    nativeCurrency = MAINNET_NATIVE_CURRENCY; // eslint-disable-line no-param-reassign
+  }
+
+  if (!nativeCurrencyTrustSetFlags[nativeCurrency]) {
+    nativeCurrencyTrustSetFlags[nativeCurrency] = {
+      ...getTxGlobalFlagsKeys(nativeCurrency),
+      ...TrustSetFlagsKeys,
+    };
+  }
+
+  return nativeCurrencyTrustSetFlags[nativeCurrency];
+}
+
+export interface TrustSetFlagsKeysInterface extends TxGlobalFlagsKeysInterface {
+  setfAuth?: boolean;
+  setNoRipple?: boolean;
+  clearNoRipple?: boolean;
+  setFreeze?: boolean;
+  clearFreeze?: boolean;
+  setDeepFreeze?: boolean;
+  clearDeepFreeze?: boolean;
+}
 
 export const TrustlineFlagsKeys = {
   lowReserve: RippleStateFlags.lsfLowReserve,

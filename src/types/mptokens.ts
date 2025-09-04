@@ -1,5 +1,7 @@
 import { MPTokenIssuanceCreateFlags, MPTokenIssuanceSetFlags, MPTokenAuthorizeFlags } from "xrpl";
 import { FormattedBaseSpecification } from "./specification";
+import { TxGlobalFlagsKeysInterface, getTxGlobalFlagsKeys } from "./global";
+import { MAINNET_NATIVE_CURRENCY } from "../common";
 
 export const MPTokenIssuanceCreateFlagsKeys = {
   canLock: MPTokenIssuanceCreateFlags.tfMPTCanLock,
@@ -10,7 +12,24 @@ export const MPTokenIssuanceCreateFlagsKeys = {
   canClawback: MPTokenIssuanceCreateFlags.tfMPTCanClawback,
 };
 
-export interface MPTokenIssuanceCreateFlagsKeysInterface {
+const nativeCurrencyMPTokenIssuanceCreateFlags = {};
+
+export function getMPTokenIssuanceCreateFlagsKeys(nativeCurrency?: string): Record<string, number> {
+  if (!nativeCurrency) {
+    nativeCurrency = MAINNET_NATIVE_CURRENCY; // eslint-disable-line no-param-reassign
+  }
+
+  if (!nativeCurrencyMPTokenIssuanceCreateFlags[nativeCurrency]) {
+    nativeCurrencyMPTokenIssuanceCreateFlags[nativeCurrency] = {
+      ...getTxGlobalFlagsKeys(nativeCurrency),
+      ...MPTokenIssuanceCreateFlagsKeys,
+    };
+  }
+
+  return nativeCurrencyMPTokenIssuanceCreateFlags[nativeCurrency];
+}
+
+export interface MPTokenIssuanceCreateFlagsKeysInterface extends TxGlobalFlagsKeysInterface {
   canLock?: boolean;
   requireAuth?: boolean;
   canEscrow?: boolean;
@@ -24,7 +43,24 @@ export const MPTokenIssuanceSetFlagsKeys = {
   unlock: MPTokenIssuanceSetFlags.tfMPTUnlock,
 };
 
-export interface MPTokenIssuanceSetFlagsKeysInterface {
+const nativeCurrencyMPTokenIssuanceSetFlags = {};
+
+export function getMPTokenIssuanceSetFlagsKeys(nativeCurrency?: string): Record<string, number> {
+  if (!nativeCurrency) {
+    nativeCurrency = MAINNET_NATIVE_CURRENCY; // eslint-disable-line no-param-reassign
+  }
+
+  if (!nativeCurrencyMPTokenIssuanceSetFlags[nativeCurrency]) {
+    nativeCurrencyMPTokenIssuanceSetFlags[nativeCurrency] = {
+      ...getTxGlobalFlagsKeys(nativeCurrency),
+      ...MPTokenIssuanceSetFlagsKeys,
+    };
+  }
+
+  return nativeCurrencyMPTokenIssuanceSetFlags[nativeCurrency];
+}
+
+export interface MPTokenIssuanceSetFlagsKeysInterface extends TxGlobalFlagsKeysInterface {
   lock?: boolean;
   unlock?: boolean;
 }
@@ -33,7 +69,24 @@ export const MPTokenAuthorizeFlagsKeys = {
   unauthorize: MPTokenAuthorizeFlags.tfMPTUnauthorize,
 };
 
-export interface MPTokenAuthorizeFlagsKeysInterface {
+const nativeCurrencyMPTokenAuthorizeFlags = {};
+
+export function getMPTokenAuthorizeFlagsKeys(nativeCurrency?: string): Record<string, number> {
+  if (!nativeCurrency) {
+    nativeCurrency = MAINNET_NATIVE_CURRENCY; // eslint-disable-line no-param-reassign
+  }
+
+  if (!nativeCurrencyMPTokenAuthorizeFlags[nativeCurrency]) {
+    nativeCurrencyMPTokenAuthorizeFlags[nativeCurrency] = {
+      ...getTxGlobalFlagsKeys(nativeCurrency),
+      ...MPTokenAuthorizeFlagsKeys,
+    };
+  }
+
+  return nativeCurrencyMPTokenAuthorizeFlags[nativeCurrency];
+}
+
+export interface MPTokenAuthorizeFlagsKeysInterface extends TxGlobalFlagsKeysInterface {
   unauthorize?: boolean;
 }
 

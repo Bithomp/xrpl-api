@@ -2,6 +2,8 @@ import { NFTokenMintFlags, NFTokenCreateOfferFlags } from "xrpl";
 import { FormattedBaseSpecification } from "./specification";
 import { Amount } from "./amounts";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "./account";
+import { TxGlobalFlagsKeysInterface, getTxGlobalFlagsKeys } from "./global";
+import { MAINNET_NATIVE_CURRENCY } from "../common";
 
 export const NFTokenFlagsKeys = {
   burnable: NFTokenMintFlags.tfBurnable,
@@ -11,7 +13,24 @@ export const NFTokenFlagsKeys = {
   mutable: NFTokenMintFlags.tfMutable,
 };
 
-export interface NFTokenFlagsKeysInterface {
+const nativeCurrencyNFTokenMintFlags = {};
+
+export function getNFTokenMintFlagsKeys(nativeCurrency?: string): Record<string, number> {
+  if (!nativeCurrency) {
+    nativeCurrency = MAINNET_NATIVE_CURRENCY; // eslint-disable-line no-param-reassign
+  }
+
+  if (!nativeCurrencyNFTokenMintFlags[nativeCurrency]) {
+    nativeCurrencyNFTokenMintFlags[nativeCurrency] = {
+      ...getTxGlobalFlagsKeys(nativeCurrency),
+      ...NFTokenFlagsKeys,
+    };
+  }
+
+  return nativeCurrencyNFTokenMintFlags[nativeCurrency];
+}
+
+export interface NFTokenFlagsKeysInterface extends TxGlobalFlagsKeysInterface {
   burnable?: boolean;
   onlyXRP?: boolean;
   trustLine?: boolean;
@@ -23,7 +42,24 @@ export const NFTokenOfferFlagsKeys = {
   sellToken: NFTokenCreateOfferFlags.tfSellNFToken,
 };
 
-export interface NFTokenOfferFlagsKeysInterface {
+const nativeCurrencyNFTokenOfferCreateFlags = {};
+
+export function getNFTokenOfferCreateFlagsKeys(nativeCurrency?: string): Record<string, number> {
+  if (!nativeCurrency) {
+    nativeCurrency = MAINNET_NATIVE_CURRENCY; // eslint-disable-line no-param-reassign
+  }
+
+  if (!nativeCurrencyNFTokenOfferCreateFlags[nativeCurrency]) {
+    nativeCurrencyNFTokenOfferCreateFlags[nativeCurrency] = {
+      ...getTxGlobalFlagsKeys(nativeCurrency),
+      ...NFTokenOfferFlagsKeys,
+    };
+  }
+
+  return nativeCurrencyNFTokenOfferCreateFlags[nativeCurrency];
+}
+
+export interface NFTokenOfferFlagsKeysInterface extends TxGlobalFlagsKeysInterface {
   sellToken?: boolean;
 }
 

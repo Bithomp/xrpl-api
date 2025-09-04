@@ -1,0 +1,67 @@
+{
+  "Account": "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq",
+  "Fee": "4",
+  "Flags": 524288,
+  "LastLedgerSequence": 5897170,
+  "RawTransactions": [
+    {
+      "RawTransaction": {
+        "Account": "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq",
+        "CredentialType": "4C6574277320476F21",
+        "Fee": "0",
+        "Flags": 1073741824,
+        "Sequence": 5233467,
+        "SigningPubKey": "",
+        "Subject": "rGbPD53938FNRSMufrnte4PmkrqM8RdnQ7",
+        "TransactionType": "CredentialCreate"
+      }
+    },
+    {
+      "RawTransaction": {
+        "Account": "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq",
+        "CredentialType": "4C6574277320476F21",
+        "Fee": "0",
+        "Flags": 1073741824,
+        "Sequence": 5233468,
+        "SigningPubKey": "",
+        "Subject": "r43sjcv7u6A4pqVdPY2rqcy4G54gedVbUf",
+        "TransactionType": "CredentialCreate"
+      }
+    }
+  ],
+  "Sequence": 5233466,
+  "SigningPubKey": "ED0BA70A22C28111574923A76C757816AB49571C6250E32A0FC0431F43972EB37D",
+  "TransactionType": "Batch",
+  "TxnSignature": "0F53636C58F3BEC9AB2F64F22E000CD3955112E92034A1FA9AC0EEFDE2E77F287EB9B287444E697BCDD8A1198C8F440B2C4A63176E5F65BF4545D57871A2CE0F",
+  "ctid": "C059FBC000040002",
+  "date": 810287531,
+  "hash": "0C5956CF40BD544278D72697FF3FAC00571A52196252E006A2EDB8381D96E252",
+  "inLedger": 5897152,
+  "ledger_index": 5897152,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq",
+            "Balance": "549999779",
+            "Flags": 0,
+            "OwnerCount": 26,
+            "Sequence": 5233467
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "5AEE2A91C8EAF6C40CD888C334FC36A511DADE674F4009801EEAD804AC8CBFDE",
+          "PreviousFields": {
+            "Balance": "549999783",
+            "Sequence": 5233466
+          },
+          "PreviousTxnID": "EAFDEEA3F260B80218DC3487ECAEC338BA19CD307E0A74F0CA9ABE5EA2815314",
+          "PreviousTxnLgrSeq": 5869922
+        }
+      }
+    ],
+    "TransactionIndex": 4,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

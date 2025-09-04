@@ -4,6 +4,10 @@ import sha512Half from "./sha512Half";
 export * from "./utils";
 export { errors, sha512Half };
 
+export const MAINNET_NATIVE_CURRENCY = "XRP";
+export const XAHAU_NATIVE_CURRENCY = "XAH";
+
+
 export const dropsInXRP = 1000000;
 
 export const ACCOUNT_ZERO = "rrrrrrrrrrrrrrrrrrrrrhoLvTp";

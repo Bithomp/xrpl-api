@@ -1,4 +1,5 @@
 import _ from "lodash";
+import * as Client from "../../client";
 import { removeUndefined } from "../../common";
 import { ledgerTimeToUnixTime, ledgerTimeToISO8601 } from "../../models";
 import { parseTransaction } from "../transaction";
@@ -10,7 +11,7 @@ function parseTransactionWrapper(ledgerIndex: number, includeRawTransaction: boo
     meta: tx.metaData,
     ledger_index: ledgerIndex,
   });
-  const result = parseTransaction(transaction, includeRawTransaction);
+  const result = parseTransaction(transaction, includeRawTransaction, Client.getNativeCurrency());
   if (!result.outcome) {
     result.outcome = {};
   }

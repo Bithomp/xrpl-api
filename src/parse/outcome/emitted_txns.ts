@@ -37,19 +37,24 @@ interface FormattedEmittedTxnInterface {
 // calculate hash(id) of tx
 export function parseEmittedTxns(
   tx: any,
+  nativeCurrency: string,
   definitions?: XrplDefinitionsBase
 ): FormattedEmittedTxnInterface[] | undefined {
-  return new EmittedTxns(tx, definitions).call();
+  return new EmittedTxns(tx, nativeCurrency, definitions).call();
 }
 
 class EmittedTxns {
-  tx: any;
   emittedTxns: FormattedEmittedTxnInterface[];
+
+  tx: any;
+  nativeCurrency?: string;
   definitions?: XrplDefinitionsBase;
 
-  constructor(tx: any, definitions?: XrplDefinitionsBase) {
-    this.tx = tx;
+  constructor(tx: any, nativeCurrency?: string, definitions?: XrplDefinitionsBase) {
     this.emittedTxns = [];
+
+    this.tx = tx;
+    this.nativeCurrency = nativeCurrency;
     this.definitions = definitions;
   }
 
@@ -96,7 +101,7 @@ class EmittedTxns {
           this.emittedTxns.push(
             removeUndefined({
               id,
-              specification: parseTransaction(tx, false).specification,
+              specification: parseTransaction(tx, false, this.nativeCurrency, this.definitions).specification,
               tx,
             })
           );

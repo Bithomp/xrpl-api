@@ -1,10 +1,11 @@
 import _ from "lodash";
-import { AccountSet } from "xrpl";
+import { AccountSet, SetRegularKey, SignerListSet } from "xrpl";
 import * as assert from "assert";
 import { getAccountRootFlagsKeys } from "../../models/account_info";
 import { removeUndefined } from "../../common";
 import parseFields from "../ledger/fields";
 import { parseEmittedDetails } from "../ledger/emit_details";
+import parseTxAccountSetFlags from "../ledger/tx-account-set-flags";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
@@ -63,7 +64,7 @@ function parseSettingsFlags(tx: AccountSet): any {
   return settings;
 }
 
-function parseSettings(tx: any) {
+function parseSettings(tx: AccountSet | SetRegularKey | SignerListSet, nativeCurrency?: string) {
   const txType = tx.TransactionType;
   assert.ok(txType === "AccountSet" || txType === "SetRegularKey" || txType === "SignerListSet");
 
@@ -73,10 +74,11 @@ function parseSettings(tx: any) {
     signer: parseSignerRegularKey(tx),
     delegate: parseDelegate(tx),
     emittedDetails: parseEmittedDetails(tx),
+    flags: parseTxAccountSetFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),
   });
 
-  return Object.assign(baseSettings, parseSettingsFlags(tx), parseFields(tx));
+  return Object.assign(baseSettings, parseSettingsFlags(tx as AccountSet), parseFields(tx));
 }
 
 export default parseSettings;

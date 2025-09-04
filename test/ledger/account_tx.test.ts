@@ -449,6 +449,13 @@ describe("Client", () => {
             },
             tag: 1617004677,
           },
+          flags: {
+            fullyCanonicalSig: true,
+            innerBatchTxn: false,
+            limitQuality: false,
+            noRippleDirect: false,
+            partialPayment: false,
+          },
         });
         expect(result[0].outcome).to.eql({
           balanceChanges: {
@@ -501,6 +508,13 @@ describe("Client", () => {
             },
             tag: 1617004677,
           },
+          flags: {
+            fullyCanonicalSig: true,
+            innerBatchTxn: false,
+            limitQuality: false,
+            noRippleDirect: false,
+            partialPayment: false,
+          },
         });
         expect(result[0].outcome).to.eql({
           balanceChanges: {
@@ -551,6 +565,13 @@ describe("Client", () => {
             },
             destination: {
               address: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+            },
+            flags: {
+              fullyCanonicalSig: true,
+              innerBatchTxn: false,
+              limitQuality: false,
+              noRippleDirect: false,
+              partialPayment: false,
             },
           },
           outcome: {
@@ -609,6 +630,13 @@ describe("Client", () => {
             },
             destination: {
               address: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+            },
+            flags: {
+              fullyCanonicalSig: true,
+              innerBatchTxn: false,
+              limitQuality: false,
+              noRippleDirect: false,
+              partialPayment: false,
             },
           },
           outcome: {
@@ -1019,6 +1047,13 @@ describe("Client", () => {
             },
             tag: 1617004677,
           },
+          flags: {
+            fullyCanonicalSig: true,
+            innerBatchTxn: false,
+            limitQuality: false,
+            noRippleDirect: false,
+            partialPayment: false,
+          },
         });
         expect(result.transactions[0].outcome).to.eql({
           balanceChanges: {
@@ -1071,6 +1106,13 @@ describe("Client", () => {
             },
             tag: 1617004677,
           },
+          flags: {
+            fullyCanonicalSig: true,
+            innerBatchTxn: false,
+            limitQuality: false,
+            noRippleDirect: false,
+            partialPayment: false,
+          },
         });
         expect(result.transactions[0].outcome).to.eql({
           balanceChanges: {
@@ -1121,6 +1163,13 @@ describe("Client", () => {
             },
             destination: {
               address: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+            },
+            flags: {
+              fullyCanonicalSig: true,
+              innerBatchTxn: false,
+              limitQuality: false,
+              noRippleDirect: false,
+              partialPayment: false,
             },
           },
           outcome: {
@@ -1179,6 +1228,13 @@ describe("Client", () => {
             },
             destination: {
               address: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
+            },
+            flags: {
+              fullyCanonicalSig: true,
+              innerBatchTxn: false,
+              limitQuality: false,
+              noRippleDirect: false,
+              partialPayment: false,
             },
           },
           outcome: {

@@ -168,6 +168,7 @@ describe("Models", () => {
       expect(result).to.eql({
         source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
         nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
+        flags: { fullyCanonicalSig: false, innerBatchTxn: false },
       });
     });
   });
@@ -180,6 +181,8 @@ describe("Models", () => {
       expect(result).to.eql({
         source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
         flags: {
+          fullyCanonicalSig: true,
+          innerBatchTxn: false,
           burnable: true,
           onlyXRP: true,
           transferable: true,
@@ -200,6 +203,7 @@ describe("Models", () => {
       expect(result).to.eql({
         source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
         nftokenOffers: ["D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8"],
+        flags: { fullyCanonicalSig: false, innerBatchTxn: false },
       });
     });
   });
@@ -211,9 +215,7 @@ describe("Models", () => {
 
       expect(result).to.eql({
         amount: "1000000000000000",
-        flags: {
-          sellToken: true,
-        },
+        flags: { fullyCanonicalSig: false, innerBatchTxn: false, sellToken: true },
         nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
         source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
       });
@@ -225,9 +227,7 @@ describe("Models", () => {
 
       expect(result).to.eql({
         amount: "1",
-        flags: {
-          sellToken: false,
-        },
+        flags: { fullyCanonicalSig: false, innerBatchTxn: false, sellToken: false },
         owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
         nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
         source: { address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw" },
@@ -243,6 +243,7 @@ describe("Models", () => {
       expect(result).to.eql({
         source: { address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw" },
         nftokenSellOffer: "D3C21058E60B6597BCB33A7A77B5FC90959082C96057EDBB388CE365E8D3245D",
+        flags: { fullyCanonicalSig: false, innerBatchTxn: false },
       });
     });
 
@@ -253,6 +254,7 @@ describe("Models", () => {
       expect(result).to.eql({
         source: { address: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz" },
         nftokenBuyOffer: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
+        flags: { fullyCanonicalSig: false, innerBatchTxn: false },
       });
     });
   });

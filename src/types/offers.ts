@@ -2,6 +2,8 @@ import { LedgerEntry, OfferCreateFlags } from "xrpl";
 const { OfferFlags } = LedgerEntry;
 import { FormattedBaseSpecification } from "./specification";
 import { FormattedIssuedCurrencyAmount } from "./amounts";
+import { getTxGlobalFlagsKeys, TxGlobalFlagsKeysInterface } from "./global";
+import { MAINNET_NATIVE_CURRENCY } from "../common";
 
 export const OfferCreateFlagsKeys = {
   passive: OfferCreateFlags.tfPassive,
@@ -10,7 +12,24 @@ export const OfferCreateFlagsKeys = {
   sell: OfferCreateFlags.tfSell,
 };
 
-export interface OfferCreateFlagsKeysInterface {
+const nativeCurrencyOfferCreateFlags = {};
+
+export function getOfferCreateFlagsKeys(nativeCurrency?: string): Record<string, number> {
+  if (!nativeCurrency) {
+    nativeCurrency = MAINNET_NATIVE_CURRENCY; // eslint-disable-line no-param-reassign
+  }
+
+  if (!nativeCurrencyOfferCreateFlags[nativeCurrency]) {
+    nativeCurrencyOfferCreateFlags[nativeCurrency] = {
+      ...getTxGlobalFlagsKeys(nativeCurrency),
+      ...OfferCreateFlagsKeys,
+    };
+  }
+
+  return nativeCurrencyOfferCreateFlags[nativeCurrency];
+}
+
+export interface OfferCreateFlagsKeysInterface extends TxGlobalFlagsKeysInterface {
   passive: boolean;
   immediateOrCancel: boolean;
   fillOrKill: boolean;

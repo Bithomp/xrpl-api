@@ -2,6 +2,7 @@ import * as assert from "assert";
 import { CheckCancel } from "xrpl";
 import { removeUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
@@ -9,7 +10,7 @@ import { parseDelegate } from "../ledger/delegate";
 import { parseSource } from "../ledger/source";
 import { FormattedCheckCancelSpecification } from "../../types/checks";
 
-function parseCheckCancel(tx: CheckCancel): FormattedCheckCancelSpecification {
+function parseCheckCancel(tx: CheckCancel, nativeCurrency?: string): FormattedCheckCancelSpecification {
   assert.ok(tx.TransactionType === "CheckCancel");
 
   return removeUndefined({
@@ -19,6 +20,7 @@ function parseCheckCancel(tx: CheckCancel): FormattedCheckCancelSpecification {
     source: parseSource(tx),
     checkID: tx.CheckID,
     emittedDetails: parseEmittedDetails(tx),
+    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),
   });
 }

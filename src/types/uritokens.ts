@@ -2,12 +2,31 @@ import { URITokenMintFlags } from "../models/transactions/URITokenMint";
 import { FormattedBaseSpecification } from "./specification";
 import { Amount } from "./amounts";
 import { FormattedSourceAddress, FormattedDestinationAddress } from "./account";
+import { TxGlobalFlagsKeysInterface, getTxGlobalFlagsKeys } from "./global";
+import { MAINNET_NATIVE_CURRENCY } from "../common";
 
 export const URITokenFlagsKeys = {
   burnable: URITokenMintFlags.tfBurnable,
 };
 
-export interface URITokenFlagsKeysInterface {
+const nativeCurrencyURITokenMintFlags = {};
+
+export function getURITokenMintFlagsKeys(nativeCurrency?: string): Record<string, number> {
+  if (!nativeCurrency) {
+    nativeCurrency = MAINNET_NATIVE_CURRENCY; // eslint-disable-line no-param-reassign
+  }
+
+  if (!nativeCurrencyURITokenMintFlags[nativeCurrency]) {
+    nativeCurrencyURITokenMintFlags[nativeCurrency] = {
+      ...getTxGlobalFlagsKeys(nativeCurrency),
+      ...URITokenFlagsKeys,
+    };
+  }
+
+  return nativeCurrencyURITokenMintFlags[nativeCurrency];
+}
+
+export interface URITokenFlagsKeysInterface extends TxGlobalFlagsKeysInterface {
   burnable?: boolean;
 }
 

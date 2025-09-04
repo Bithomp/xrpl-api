@@ -1,6 +1,7 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
@@ -71,7 +72,7 @@ function parseMintURIToken(mintURIToken?: {
   });
 }
 
-function parseRemit(tx: any): FormattedRemitsSpecification {
+function parseRemit(tx: any, nativeCurrency?: string): FormattedRemitsSpecification {
   assert.ok(tx.TransactionType === "Remit");
 
   return removeUndefined({
@@ -86,6 +87,7 @@ function parseRemit(tx: any): FormattedRemitsSpecification {
     inform: tx.Inform,
     invoiceID: tx.InvoiceID,
     emittedDetails: parseEmittedDetails(tx),
+    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),
   });
 }

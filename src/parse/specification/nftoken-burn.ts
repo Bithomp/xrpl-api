@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { NFTokenBurn } from "xrpl";
 import { removeUndefined } from "../../common";
-import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
@@ -9,7 +9,7 @@ import { parseDelegate } from "../ledger/delegate";
 import { parseSource } from "../ledger/source";
 import { FormattedNFTokenBurnSpecification } from "../../types/nftokens";
 
-function parseNFTokenBurn(tx: NFTokenBurn): FormattedNFTokenBurnSpecification {
+function parseNFTokenBurn(tx: NFTokenBurn, nativeCurrency?: string): FormattedNFTokenBurnSpecification {
   assert.ok(tx.TransactionType === "NFTokenBurn");
 
   return removeUndefined({
@@ -18,7 +18,7 @@ function parseNFTokenBurn(tx: NFTokenBurn): FormattedNFTokenBurnSpecification {
     delegate: parseDelegate(tx),
     source: parseSource(tx),
     nftokenID: tx.NFTokenID,
-    emittedDetails: parseEmittedDetails(tx),
+    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),
   });
 }

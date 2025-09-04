@@ -1,4 +1,5 @@
 import { Connection, ConnectionOptions } from "./connection";
+import { MAINNET_NATIVE_CURRENCY } from "./common";
 
 export * from "./ledger";
 export let feeCushion: number = 1.3; // 30% fee cushion
@@ -6,7 +7,7 @@ export let logger: any;
 
 let clientConnections: Connection[] = [];
 let loadBalancing = false;
-let nativeCurrency = "XRP";
+let nativeCurrency = MAINNET_NATIVE_CURRENCY;
 
 export interface ClientOptions extends ConnectionOptions {
   feeCushion?: number;
@@ -86,7 +87,7 @@ export async function disconnect() {
 }
 
 export function getNativeCurrency() {
-  return nativeCurrency || "XRP";
+  return nativeCurrency || MAINNET_NATIVE_CURRENCY;
 }
 
 /**

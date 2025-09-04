@@ -3,6 +3,7 @@ import { EscrowCreate } from "xrpl";
 import { removeUndefined } from "../../common";
 import { parseTimestamp } from "../utils";
 import { parseEmittedDetails } from "../ledger/emit_details";
+import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
@@ -11,7 +12,7 @@ import { parseSource } from "../ledger/source";
 import { parseDestination } from "../ledger/destination";
 import { FormattedEscrowCreateSpecification } from "../../types/escrows";
 
-function parseEscrowCreation(tx: EscrowCreate): FormattedEscrowCreateSpecification {
+function parseEscrowCreation(tx: EscrowCreate, nativeCurrency?: string): FormattedEscrowCreateSpecification {
   assert.ok(tx.TransactionType === "EscrowCreate");
 
   return removeUndefined({
@@ -25,6 +26,7 @@ function parseEscrowCreation(tx: EscrowCreate): FormattedEscrowCreateSpecificati
     allowCancelAfter: parseTimestamp(tx.CancelAfter),
     allowExecuteAfter: parseTimestamp(tx.FinishAfter),
     emittedDetails: parseEmittedDetails(tx),
+    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),
   });
 }

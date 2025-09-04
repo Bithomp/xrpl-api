@@ -117,7 +117,12 @@ export async function getTransaction(
 
   if (typeof result === "object") {
     if (formatted === true) {
-      return getTxDetails(result, options.includeRawTransaction === true, undefined, options.definitions);
+      return getTxDetails(
+        result,
+        options.includeRawTransaction === true,
+        Client.getNativeCurrency(),
+        options.definitions
+      );
     }
 
     if (options.balanceChanges === true && typeof result.meta === "object") {
@@ -125,7 +130,12 @@ export async function getTransaction(
     }
 
     if (options.specification === true) {
-      const details = getTxDetails(result, options.includeRawTransaction, undefined, options.definitions);
+      const details = getTxDetails(
+        result,
+        options.includeRawTransaction,
+        Client.getNativeCurrency(),
+        options.definitions
+      );
       result.specification = details.specification;
       result.outcome = details.outcome;
       if (details.rawTransaction) {
@@ -218,7 +228,12 @@ export async function getTransactionByCTID(
   ledgerTx.ctid = ctid;
   const result = ledgerTxToTx(ledgerTx, ledgerIndex, ledger.close_time);
   if (formatted === true) {
-    return getTxDetails(result, options.includeRawTransaction === true, undefined, options.definitions);
+    return getTxDetails(
+      result,
+      options.includeRawTransaction === true,
+      Client.getNativeCurrency(),
+      options.definitions
+    );
   }
 
   if (options.balanceChanges === true && typeof result.meta === "object") {
@@ -226,7 +241,12 @@ export async function getTransactionByCTID(
   }
 
   if (options.specification === true) {
-    const details = getTxDetails(result, options.includeRawTransaction, undefined, options.definitions);
+    const details = getTxDetails(
+      result,
+      options.includeRawTransaction,
+      Client.getNativeCurrency(),
+      options.definitions
+    );
     result.specification = details.specification;
     result.outcome = details.outcome;
     if (details.rawTransaction) {

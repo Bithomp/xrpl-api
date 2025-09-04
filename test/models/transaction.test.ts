@@ -12,7 +12,7 @@ describe("Models", () => {
   describe("getTxDetails", () => {
     it("Unknown with includeRawTransaction is false", function () {
       const tx = require("../examples/responses/Unknown.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "Unknown",
@@ -23,6 +23,7 @@ describe("Models", () => {
           UNAVAILABLE: "Unrecognized transaction type.",
           SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is may included in this response.",
           source: { address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH" },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -51,6 +52,7 @@ describe("Models", () => {
           UNAVAILABLE: "Unrecognized transaction type.",
           SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is may included in this response.",
           source: { address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH" },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -81,6 +83,7 @@ describe("Models", () => {
           UNAVAILABLE: "Unrecognized transaction type.",
           SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is may included in this response.",
           source: { address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH" },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -122,6 +125,7 @@ describe("Models", () => {
           UNAVAILABLE: "Unrecognized transaction type.",
           SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is may included in this response.",
           source: { address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH" },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -154,7 +158,7 @@ describe("Models", () => {
 
     it("NFTokenMint", function () {
       const tx = require("../examples/responses/NFTokenMint.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3",
@@ -192,7 +196,15 @@ describe("Models", () => {
         sequence: 1309348,
         specification: {
           source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
-          flags: { burnable: true, onlyXRP: true, transferable: true, trustLine: false, mutable: false },
+          flags: {
+            fullyCanonicalSig: true,
+            innerBatchTxn: false,
+            burnable: true,
+            onlyXRP: true,
+            transferable: true,
+            trustLine: false,
+            mutable: false,
+          },
           nftokenTaxon: 0,
           uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
         },
@@ -202,7 +214,7 @@ describe("Models", () => {
 
     it("NFTokenModify", function () {
       const tx = require("../examples/responses/NFTokenModify.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "NFTokenModify",
@@ -214,6 +226,7 @@ describe("Models", () => {
           source: { address: "rniNyQQA1bzfSQ4mF7f1QCQQsh5VYb7BoG" },
           nftokenID: "0010000035308C84A98C961A792FD63695C66FFD4120DE0D46DD60CE0020B433",
           uri: "ABC123",
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -250,7 +263,7 @@ describe("Models", () => {
 
     it("NFTokenAcceptOfferBuy", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferBuy.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
@@ -321,6 +334,7 @@ describe("Models", () => {
         specification: {
           source: { address: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz" },
           nftokenBuyOffer: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "nftokenAcceptOffer",
       });
@@ -328,7 +342,7 @@ describe("Models", () => {
 
     it("NFTokenAcceptOfferSell", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferSell.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
@@ -396,6 +410,7 @@ describe("Models", () => {
         specification: {
           source: { address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw" },
           nftokenSellOffer: "D3C21058E60B6597BCB33A7A77B5FC90959082C96057EDBB388CE365E8D3245D",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "nftokenAcceptOffer",
       });
@@ -403,7 +418,7 @@ describe("Models", () => {
 
     it("NFTokenAcceptOffer broker", function () {
       const tx = require("../examples/responses/transaction/3A794368D4D7F6CEAF7BF967EFCB2A249498D9E1BF16FE4A642CD7A85400ED42.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "nftokenAcceptOffer",
@@ -415,6 +430,7 @@ describe("Models", () => {
           nftokenSellOffer: "863FF280CD94CBC759A403C0050D46BE1AE679E7D648F00DC07A69C2CB5DF9A2",
           nftokenBuyOffer: "7CA48473A15C908EF0616976EF11D54DD730D2168D44C89BA0C61CAE26AEE534",
           nftokenBrokerFee: "1000000",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -503,7 +519,7 @@ describe("Models", () => {
 
     it("NFTokenBurn", function () {
       const tx = require("../examples/responses/NFTokenBurn.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "nftokenBurn",
@@ -513,6 +529,7 @@ describe("Models", () => {
         specification: {
           source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
           nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -549,7 +566,7 @@ describe("Models", () => {
 
     it("NFTokenBurn with offers", function () {
       const tx = require("../examples/responses/NFTokenBurn2.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "nftokenBurn",
@@ -559,6 +576,7 @@ describe("Models", () => {
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           nftokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765727D1EA000000005",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -636,7 +654,7 @@ describe("Models", () => {
 
     it("NFTokenCreateOfferBuy", function () {
       const tx = require("../examples/responses/NFTokenCreateOfferBuy.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "nftokenCreateOffer",
@@ -648,7 +666,7 @@ describe("Models", () => {
           amount: "1",
           source: { address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw" },
           owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
-          flags: { sellToken: false },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false, sellToken: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -695,7 +713,7 @@ describe("Models", () => {
 
     it("NFTokenCreateOfferSellDestination", function () {
       const tx = require("../examples/responses/NFTokenCreateOfferSellDestination.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "nftokenCreateOffer",
@@ -708,7 +726,7 @@ describe("Models", () => {
           source: { address: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg" },
           destination: { address: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw" },
           expiration: 5241652095,
-          flags: { sellToken: true },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false, sellToken: true },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -757,7 +775,7 @@ describe("Models", () => {
 
     it("NFTokenCreateOfferBuyIOU", function () {
       const tx = require("../examples/responses/NFTokenCreateOfferBuyIOU.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "nftokenCreateOffer",
@@ -770,7 +788,7 @@ describe("Models", () => {
           owner: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw",
           source: { address: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg" },
           expiration: 5241652095,
-          flags: { sellToken: false },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false, sellToken: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -818,7 +836,7 @@ describe("Models", () => {
 
     it("NFTokenCancelOffer", function () {
       const tx = require("../examples/responses/NFTokenCancelOffer.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "nftokenCancelOffer",
@@ -828,6 +846,7 @@ describe("Models", () => {
         specification: {
           source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
           nftokenOffers: ["D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8"],
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -877,7 +896,7 @@ describe("Models", () => {
 
     it("AccountSetMinter", function () {
       const tx = require("../examples/responses/AccountSetMinter.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz",
@@ -895,6 +914,7 @@ describe("Models", () => {
         specification: {
           source: { address: "rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz" },
           nftokenMinter: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
         },
         type: "settings",
       });
@@ -902,7 +922,7 @@ describe("Models", () => {
 
     it("OfferCreate", function () {
       const tx = require("../examples/responses/OfferCreate.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "rogue5HnPRSszD9CWGSUz8UGHMVwSSKF6",
@@ -974,6 +994,8 @@ describe("Models", () => {
         specification: {
           source: { address: "rogue5HnPRSszD9CWGSUz8UGHMVwSSKF6" },
           flags: {
+            fullyCanonicalSig: false,
+            innerBatchTxn: false,
             fillOrKill: false,
             immediateOrCancel: true,
             passive: false,
@@ -1000,7 +1022,7 @@ describe("Models", () => {
 
     it("OfferCreate with delegate", function () {
       const tx = require("../examples/responses/OfferCreate2.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "order",
@@ -1012,7 +1034,14 @@ describe("Models", () => {
           signer: { address: "rffJ2L2nris6qYamn3C4RZYNcMoTfxjUUs" },
           delegate: { address: "rffJ2L2nris6qYamn3C4RZYNcMoTfxjUUs" },
           source: { address: "rKM71RiJmqvZQfKUP3E7bwuZhvp8ArwxMi" },
-          flags: { passive: false, immediateOrCancel: false, fillOrKill: false, sell: false },
+          flags: {
+            fullyCanonicalSig: false,
+            innerBatchTxn: false,
+            passive: false,
+            immediateOrCancel: false,
+            fillOrKill: false,
+            sell: false,
+          },
           quantity: { currency: "XRP", value: "0.01" },
           totalPrice: {
             issuer: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
@@ -1088,7 +1117,7 @@ describe("Models", () => {
 
     it("PaymentChannelCreate", function () {
       const tx = require("../examples/responses/PaymentChannelCreate.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "paymentChannelCreate",
@@ -1102,6 +1131,7 @@ describe("Models", () => {
           signer: { address: "rD9iJmieYHn8jTtPjwwkW2Wm9sVDvPXLoJ" },
           settleDelay: 60,
           publicKey: "03CFD18E689434F032A4E84C63E2A3A6472D684EAF4FD52CA67742F3E24BAE81B2",
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1125,7 +1155,7 @@ describe("Models", () => {
 
     it("PaymentChannelFund", function () {
       const tx = require("../examples/responses/PaymentChannelFund.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "paymentChannelFund",
@@ -1137,6 +1167,7 @@ describe("Models", () => {
           source: { address: "rNixEReo8KruCW6pekB5dJS4JGwoU2WbxJ" },
           channel: "1804E5E43616131C9292E738269DB882D1659D1216CD24EEB91DAE34654F94C2",
           amount: { currency: "XRP", value: "10" },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1165,7 +1196,7 @@ describe("Models", () => {
 
     it("PaymentChannelClaim", function () {
       const tx = require("../examples/responses/PaymentChannelClaim.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "paymentChannelClaim",
@@ -1177,6 +1208,7 @@ describe("Models", () => {
           source: { address: "rK6g2UYc4GpQH8DYdPG7wywyQbxkJpQTTN" },
           channel: "467D994665CBC68A483FE56EFEB079314D8EF0AEAD069F25885034D378616A29",
           balance: { currency: "XRP", value: "0.03" },
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1205,7 +1237,7 @@ describe("Models", () => {
 
     it("PaymentChannelClaim2", function () {
       const tx = require("../examples/responses/PaymentChannelClaim2.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "paymentChannelClaim",
@@ -1217,6 +1249,7 @@ describe("Models", () => {
           source: { address: "rGuVmkbuFWGwcvCpNhKCzXBP7pwAWjvHZG" },
           channel: "9ECE979F8C9C92F4520050A5E251902050419F8EF45F0E7F05EBBDE8E5DF3077",
           close: true,
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1242,7 +1275,7 @@ describe("Models", () => {
 
     it("EscrowCreate", function () {
       const tx = require("../examples/responses/transaction/C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "escrowCreation",
@@ -1257,6 +1290,7 @@ describe("Models", () => {
           condition: "A0258020A82A88B2DF843A54F58772E4A3861866ECDB4157645DD9AE528C1D3AEEDABAB6810120",
           allowCancelAfter: "2017-04-13T23:10:32.000Z",
           allowExecuteAfter: "2017-04-12T23:15:32.000Z",
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1301,6 +1335,7 @@ describe("Models", () => {
           source: { address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk" },
           destination: { address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk" },
           allowExecuteAfter: "2022-06-22T10:16:00.000Z",
+          flags: { fullyCanonicalSig: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1341,7 +1376,7 @@ describe("Models", () => {
 
     it("EscrowFinish", function () {
       const tx = require("../examples/responses/transaction/DA9C1C116F256B6ABD31F1D15895C5E617CBBB6CD7AFE9A988803304E7C3DAD6.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "escrowExecution",
@@ -1354,6 +1389,7 @@ describe("Models", () => {
           source: { address: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz" },
           owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
           escrowSequence: 8013,
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
           memos: [{ type: "memo", format: "plain/text", data: "Auto execution by xrplexplorer.com" }],
         },
         outcome: {
@@ -1392,6 +1428,7 @@ describe("Models", () => {
           source: { address: "rELeasERs3m4inA1UinRLTpXemqyStqzwh" },
           owner: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
           escrowSequence: 3334565,
+          flags: { fullyCanonicalSig: true },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1444,6 +1481,7 @@ describe("Models", () => {
           source: { address: "rELeasERs3m4inA1UinRLTpXemqyStqzwh" },
           owner: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
           escrowSequence: 753804730,
+          flags: { fullyCanonicalSig: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1480,7 +1518,7 @@ describe("Models", () => {
 
     it("EscrowCancel", function () {
       const tx = require("../examples/responses/transaction/B24B9D7843F99AED7FB8A3929151D0CCF656459AE40178B77C9D44CED64E839B.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "escrowCancellation",
@@ -1492,6 +1530,7 @@ describe("Models", () => {
           source: { address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn" },
           owner: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
           escrowSequence: 366,
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1520,7 +1559,7 @@ describe("Models", () => {
 
     it("Settings with Memo", function () {
       const tx = require("../examples/responses/transaction/E5535D1C02FAAB40F0B7652DC7EB86D1366B13D4517A7305F53BC664C686351A.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "settings",
@@ -1531,6 +1570,7 @@ describe("Models", () => {
           source: { address: "r4eecBHFbkHpLQEvSnB93bc3C2SVMjVKie" },
           memos: [{ data: "LEDGER2", type: "[https://xrpl.services]-Memo" }],
           regularKey: "rJ6kUAyW5uzxM1yjHtjXVYRscM9pogCt1C",
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1546,7 +1586,7 @@ describe("Models", () => {
 
     it("Remit with uritoken mint", function () {
       const tx = require("../examples/responses/Remit.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "remit",
@@ -1561,6 +1601,7 @@ describe("Models", () => {
             uri: "626974686F6D705F72656D697424746573742E78616861756578706C6F7265722E636F6D",
             flags: { burnable: true },
           },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1601,7 +1642,7 @@ describe("Models", () => {
 
     it("Remit with payment", function () {
       const tx = require("../examples/responses/Remit2.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "remit",
@@ -1613,6 +1654,7 @@ describe("Models", () => {
           source: { address: "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h" },
           destination: { address: "rMVjmjek75ZADVE7c5LfChRHYvbhNNbsBg" },
           amounts: [{ currency: "TST", issuer: "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h", value: "1000" }],
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1647,7 +1689,7 @@ describe("Models", () => {
 
     it("GenesisMint", function () {
       const tx = require("../examples/responses/GenesisMint.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "genesisMint",
@@ -1676,6 +1718,7 @@ describe("Models", () => {
             emitNonce: "198789B4BAA79FD6D522211B8AEE777E4846A887A435CA8B7C7452A64AF4A617",
             emitParentTxnID: "FDCA3EBCB58E6A0E927AE58A77AB50BAC1582CDA82913A624370D49284E33AC4",
           },
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1703,7 +1746,7 @@ describe("Models", () => {
 
     it("URITokenMint", function () {
       const tx = require("../examples/responses/URITokenMint.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -1742,7 +1785,7 @@ describe("Models", () => {
         sequence: 7751097,
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
-          flags: { burnable: false },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false, burnable: false },
           uri: "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D",
         },
         type: "uritokenMint",
@@ -1751,7 +1794,7 @@ describe("Models", () => {
 
     it("URITokenMint with flags", function () {
       const tx = require("../examples/responses/URITokenMint2.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -1791,7 +1834,7 @@ describe("Models", () => {
         sequence: 7751104,
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
-          flags: { burnable: true },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false, burnable: true },
           uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
         },
         type: "uritokenMint",
@@ -1800,7 +1843,7 @@ describe("Models", () => {
 
     it("URITokenMint with offer", function () {
       const tx = require("../examples/responses/URITokenMint3.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -1851,7 +1894,7 @@ describe("Models", () => {
         },
         sequence: 7751113,
         specification: {
-          flags: { burnable: true },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false, burnable: true },
           amount: "1000000",
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
@@ -1863,7 +1906,7 @@ describe("Models", () => {
 
     it("URITokenBurn with offer", function () {
       const tx = require("../examples/responses/URITokenBurn.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -1916,6 +1959,7 @@ describe("Models", () => {
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenBurn",
       });
@@ -1923,7 +1967,7 @@ describe("Models", () => {
 
     it("URITokenMint with emit", function () {
       const tx = require("../examples/responses/URITokenMint4.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "uritokenMint",
@@ -1933,7 +1977,7 @@ describe("Models", () => {
         ctid: "C04810660000535A",
         specification: {
           uri: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
-          flags: { burnable: false },
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false, burnable: false },
           source: { address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU" },
           destination: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
           emittedDetails: {
@@ -1979,7 +2023,7 @@ describe("Models", () => {
 
     it("URITokenBuy", function () {
       const tx = require("../examples/responses/URITokenBuy.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM",
@@ -2043,6 +2087,7 @@ describe("Models", () => {
           source: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
           uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
           amount: "1000000",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenBuy",
       });
@@ -2050,7 +2095,7 @@ describe("Models", () => {
 
     it("URITokenCreateSellOffer", function () {
       const tx = require("../examples/responses/URITokenCreateSellOffer.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -2094,6 +2139,7 @@ describe("Models", () => {
           amount: "4000000",
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenCreateSellOffer",
       });
@@ -2101,7 +2147,7 @@ describe("Models", () => {
 
     it("URITokenCreateSellOffer with offer amount update", function () {
       const tx = require("../examples/responses/URITokenCreateSellOffer2.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -2151,6 +2197,7 @@ describe("Models", () => {
           amount: "1000000",
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenCreateSellOffer",
       });
@@ -2158,7 +2205,7 @@ describe("Models", () => {
 
     it("URITokenCreateSellOffer with offer destination update", function () {
       const tx = require("../examples/responses/URITokenCreateSellOffer3.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -2206,6 +2253,7 @@ describe("Models", () => {
           amount: "1000000",
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenCreateSellOffer",
       });
@@ -2213,7 +2261,7 @@ describe("Models", () => {
 
     it("URITokenCreateSellOffer with offer destination removing", function () {
       const tx = require("../examples/responses/URITokenCreateSellOffer4.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -2260,6 +2308,7 @@ describe("Models", () => {
           uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
           amount: "1000000",
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenCreateSellOffer",
       });
@@ -2267,7 +2316,7 @@ describe("Models", () => {
 
     it("URITokenCancelSellOffer", function () {
       const tx = require("../examples/responses/URITokenCancelSellOffer.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -2307,6 +2356,7 @@ describe("Models", () => {
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenCancelSellOffer",
       });
@@ -2314,7 +2364,7 @@ describe("Models", () => {
 
     it("URITokenCancelSellOffer without offer", function () {
       const tx = require("../examples/responses/URITokenCancelSellOffer2.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh",
@@ -2333,6 +2383,7 @@ describe("Models", () => {
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenCancelSellOffer",
       });
@@ -2340,7 +2391,7 @@ describe("Models", () => {
 
     it("Import", function () {
       const tx = require("../examples/responses/Import.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         address: "rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1",
@@ -3521,7 +3572,10 @@ describe("Models", () => {
                 "809956DD229FAD8682B7A04D05CC5EC2740575D5637E193E226CA1B30654D23B",
                 "0831D4BC39770DE5660C05CA6F75A478EB25A467F214C24FBC046F907E9F063A",
               ],
-              specification: { source: { address: "rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1" } },
+              specification: {
+                source: { address: "rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1" },
+                flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+              },
               outcome: {
                 balanceChanges: { rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1: [{ currency: "XRP", value: "-0.001337" }] },
                 fee: "0.001337",
@@ -3845,6 +3899,7 @@ describe("Models", () => {
               specification: {
                 nftokenID: "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000",
                 source: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
+                flags: { fullyCanonicalSig: false, innerBatchTxn: false },
               },
               outcome: {
                 result: "tesSUCCESS",
@@ -3899,7 +3954,7 @@ describe("Models", () => {
             {
               specification: {
                 uri: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
-                flags: { burnable: false },
+                flags: { fullyCanonicalSig: true, burnable: false },
                 source: { address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU" },
                 destination: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
                 emittedDetails: {
@@ -4043,7 +4098,7 @@ describe("Models", () => {
 
     it("UNLReport without changes", function () {
       const tx = require("../examples/responses/UNLReport3.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "unlReport",
@@ -4098,7 +4153,7 @@ describe("Models", () => {
 
     it("AMMCreate", function () {
       const tx = require("../examples/responses/AMMCreate.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "ammCreate",
@@ -4116,6 +4171,7 @@ describe("Models", () => {
             counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
           },
           tradingFee: 1000,
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -4205,7 +4261,7 @@ describe("Models", () => {
 
     it("AMMDeposit", function () {
       const tx = require("../examples/responses/AMMDeposit.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "ammDeposit",
@@ -4235,6 +4291,8 @@ describe("Models", () => {
             counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
           },
           flags: {
+            fullyCanonicalSig: false,
+            innerBatchTxn: false,
             limitLPToken: false,
             lpToken: false,
             oneAssetLPToken: false,
@@ -4338,7 +4396,7 @@ describe("Models", () => {
 
     it("AMMVote", function () {
       const tx = require("../examples/responses/AMMVote.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "ammVote",
@@ -4355,6 +4413,7 @@ describe("Models", () => {
             counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
           },
           tradingFee: 200,
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -4415,7 +4474,7 @@ describe("Models", () => {
 
     it("AMMVote2", function () {
       const tx = require("../examples/responses/AMMVote2.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "ammVote",
         address: "rJvmNLNfjnUwoECUmF5qZrgvdNnkzxZsAD",
@@ -4431,6 +4490,7 @@ describe("Models", () => {
             counterparty: "rcEGREd8NmkKRE8GE424sksyt1tJVFZwu",
           },
           tradingFee: 980,
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -4491,7 +4551,7 @@ describe("Models", () => {
 
     it("AMMWithdraw", function () {
       const tx = require("../examples/responses/AMMWithdraw.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "ammWithdraw",
         address: "rMCrWrijywQBB5PPRD1pXgraw9EL8LoncN",
@@ -4508,6 +4568,8 @@ describe("Models", () => {
           },
           amount: { currency: "XRP", value: "16.858683" },
           flags: {
+            fullyCanonicalSig: false,
+            innerBatchTxn: false,
             lpToken: false,
             withdrawAll: false,
             oneAssetWithdrawAll: true,
@@ -4590,7 +4652,7 @@ describe("Models", () => {
 
     it("AMMBid", function () {
       const tx = require("../examples/responses/AMMBid.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "ammBid",
         address: "rs8aNjM13G824PA132sDBJM5hqeh92bGPr",
@@ -4617,6 +4679,7 @@ describe("Models", () => {
             value: "21000",
             counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
           },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -4695,7 +4758,7 @@ describe("Models", () => {
 
     it("AMMBid2", function () {
       const tx = require("../examples/responses/AMMBid2.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "ammBid",
         address: "rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk",
@@ -4724,6 +4787,7 @@ describe("Models", () => {
             counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
           },
           authAccounts: ["rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk"],
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -4819,7 +4883,7 @@ describe("Models", () => {
 
     it("AMMBid3", function () {
       const tx = require("../examples/responses/AMMBid3.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "ammBid",
         address: "rfJWWH8aXhYT49DC8yztadsAzdqpmPXycH",
@@ -4846,6 +4910,7 @@ describe("Models", () => {
             value: "192615",
             counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
           },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -4940,7 +5005,7 @@ describe("Models", () => {
 
     it("AMMClawback", function () {
       const tx = require("../examples/responses/AMMClawback.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
 
       expect(result).to.eql({
         type: "AMMClawback",
@@ -4963,7 +5028,7 @@ describe("Models", () => {
             counterparty: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B",
           },
           holder: "raRjfQPhoZPukjd7av9LjnsNYAJ6KXHbyu",
-          flags: { clawTwoAssets: false },
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false, clawTwoAssets: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5041,7 +5106,7 @@ describe("Models", () => {
 
     it("Clawback", function () {
       const tx = require("../examples/responses/Clawback.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "clawback",
         address: "rYNKrtQaf3vUVWVK5sw9rJdPGDLbxZu89",
@@ -5057,6 +5122,7 @@ describe("Models", () => {
             value: "1",
             counterparty: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",
           },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5090,7 +5156,7 @@ describe("Models", () => {
 
     it("DIDSet", function () {
       const tx = require("../examples/responses/DIDSet.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "didSet",
         address: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
@@ -5101,6 +5167,7 @@ describe("Models", () => {
           uri: "A1B1",
           data: "A1B1",
           didDocument: "A1B1",
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5124,13 +5191,17 @@ describe("Models", () => {
 
     it("DIDSet update", function () {
       const tx = require("../examples/responses/DIDSet2.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "didSet",
         address: "rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC",
         sequence: 4098099,
         id: "382DC2286F1B4425C6808FD32D6F0B12805797286A29B36D19BF71B512E06768",
-        specification: { source: { address: "rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC" }, didDocument: "" },
+        specification: {
+          source: { address: "rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC" },
+          didDocument: "",
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+        },
         outcome: {
           result: "tesSUCCESS",
           timestamp: "2024-09-12T23:20:20.000Z",
@@ -5153,13 +5224,16 @@ describe("Models", () => {
 
     it("DIDDelete", function () {
       const tx = require("../examples/responses/DIDDelete.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "didDelete",
         address: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq",
         sequence: 4098100,
         id: "EAF3B729B4EB78E2DA65C3CDFF60910CF78776C046F72EB6F2CCD1A47CFE5DC8",
-        specification: { source: { address: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq" } },
+        specification: {
+          source: { address: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq" },
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+        },
         outcome: {
           result: "tesSUCCESS",
           timestamp: "2024-09-12T23:20:22.000Z",
@@ -5182,7 +5256,7 @@ describe("Models", () => {
 
     it("OracleSet", function () {
       const tx = require("../examples/responses/OracleSet.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "oracleSet",
         address: "rnggG2p5R3tLNAXaw1YUsDGaXDupavQEb3",
@@ -5239,6 +5313,7 @@ describe("Models", () => {
               originalAssetPrice: "0.6017375",
             },
           ],
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5305,7 +5380,7 @@ describe("Models", () => {
 
     it("OracleSet update", function () {
       const tx = require("../examples/responses/OracleSet2.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "oracleSet",
         address: "rnggG2p5R3tLNAXaw1YUsDGaXDupavQEb3",
@@ -5355,6 +5430,7 @@ describe("Models", () => {
               originalAssetPrice: "0.56495833",
             },
           ],
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5451,7 +5527,7 @@ describe("Models", () => {
 
     it("OracleSet update 2", function () {
       const tx = require("../examples/responses/OracleSet3.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "oracleSet",
         address: "rPNQEyvtT2xVqhuNSFSzRQjqdHUEUeHr8h",
@@ -5481,6 +5557,7 @@ describe("Models", () => {
             },
             { baseAsset: "XRP", quoteAsset: "USD", assetPrice: "624100000", scale: 9, originalAssetPrice: "0.6241" },
           ],
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5553,7 +5630,7 @@ describe("Models", () => {
 
     it("OracleSet with 0 scale", function () {
       const tx = require("../examples/responses/OracleSet5.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "oracleSet",
         address: "rMS69A6J39RmBg5yWDft5XAM8zTGbtMMZy",
@@ -5576,6 +5653,7 @@ describe("Models", () => {
             { baseAsset: "XRP", quoteAsset: "THB", assetPrice: "1949", scale: 2, originalAssetPrice: "19.49" },
             { baseAsset: "XRP", quoteAsset: "USD", assetPrice: "53126667", scale: 8, originalAssetPrice: "0.53126667" },
           ],
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5620,14 +5698,18 @@ describe("Models", () => {
 
     it("OracleDelete", function () {
       const tx = require("../examples/responses/OracleDelete.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "oracleDelete",
         address: "rhMB4JUAmKRBSha6QcgRim93hWb3py87qt",
         sequence: 4599329,
         id: "1D5648206811AB004C857856F4EA6DBDF7509DF076843847F47CFA148D2E1FB0",
         ctid: "C0462E2200000002",
-        specification: { source: { address: "rhMB4JUAmKRBSha6QcgRim93hWb3py87qt" }, oracleDocumentID: 1 },
+        specification: {
+          source: { address: "rhMB4JUAmKRBSha6QcgRim93hWb3py87qt" },
+          oracleDocumentID: 1,
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+        },
         outcome: {
           result: "tesSUCCESS",
           timestamp: "2024-09-30T23:33:40.000Z",
@@ -5652,7 +5734,7 @@ describe("Models", () => {
 
     it("payment with conversion", function () {
       const tx = require("../examples/responses/Payment8.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "payment",
         address: "rsdMbYxHmYswHCg1V6vBsnxmHuCjpn6SC4",
@@ -5664,6 +5746,13 @@ describe("Models", () => {
           destination: { address: "rsdMbYxHmYswHCg1V6vBsnxmHuCjpn6SC4" },
           paths:
             '[[{"currency":"STR","issuer":"rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS","type":48},{"account":"rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS","type":1},{"currency":"XLM","issuer":"rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y","type":48},{"account":"rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y","type":1}]]',
+          flags: {
+            fullyCanonicalSig: false,
+            innerBatchTxn: false,
+            limitQuality: true,
+            noRippleDirect: true,
+            partialPayment: true,
+          },
           allowPartialPayment: true,
           noDirectRipple: true,
           limitQuality: true,
@@ -5943,7 +6032,7 @@ describe("Models", () => {
 
     it("payment MPToken from issuer", function () {
       const tx = require("../examples/responses/Payment_MPToken.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "payment",
         address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
@@ -5956,6 +6045,13 @@ describe("Models", () => {
             maxAmount: { mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578", value: "1000" },
           },
           destination: { address: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt" },
+          flags: {
+            fullyCanonicalSig: false,
+            innerBatchTxn: false,
+            limitQuality: false,
+            noRippleDirect: false,
+            partialPayment: false,
+          },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6003,7 +6099,7 @@ describe("Models", () => {
 
     it("payment MPToken to issuer", function () {
       const tx = require("../examples/responses/Payment_MPToken2.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "payment",
         address: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
@@ -6016,6 +6112,13 @@ describe("Models", () => {
             maxAmount: { mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578", value: "100" },
           },
           destination: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
+          flags: {
+            fullyCanonicalSig: false,
+            innerBatchTxn: false,
+            limitQuality: false,
+            noRippleDirect: false,
+            partialPayment: false,
+          },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6063,7 +6166,7 @@ describe("Models", () => {
 
     it("clawback MPToken", function () {
       const tx = require("../examples/responses/Clawback_MPToken.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "clawback",
         address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
@@ -6073,6 +6176,7 @@ describe("Models", () => {
         specification: {
           source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
           amount: { mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578", value: "10000" },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6118,7 +6222,7 @@ describe("Models", () => {
 
     it("MPTokenAuthorize", function () {
       const tx = require("../examples/responses/MPTokenAuthorize.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "MPTokenAuthorize",
         address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
@@ -6127,7 +6231,7 @@ describe("Models", () => {
         ctid: "C064190E00000002",
         specification: {
           source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
-          flags: { unauthorize: false },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false, unauthorize: false },
           holder: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
           mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
         },
@@ -6156,7 +6260,7 @@ describe("Models", () => {
 
     it("MPTokenIssuanceCreate", function () {
       const tx = require("../examples/responses/MPTokenIssuanceCreate.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "MPTokenIssuanceCreate",
         address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
@@ -6167,6 +6271,8 @@ describe("Models", () => {
           source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
           scale: 2,
           flags: {
+            fullyCanonicalSig: false,
+            innerBatchTxn: false,
             canLock: true,
             requireAuth: true,
             canEscrow: true,
@@ -6204,7 +6310,7 @@ describe("Models", () => {
 
     it("MPTokenIssuanceDestroy", function () {
       const tx = require("../examples/responses/MPTokenIssuanceDestroy.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "MPTokenIssuanceDestroy",
         address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
@@ -6214,6 +6320,7 @@ describe("Models", () => {
         specification: {
           source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
           mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6242,7 +6349,7 @@ describe("Models", () => {
 
     it("MPTokenIssuanceSet", function () {
       const tx = require("../examples/responses/MPTokenIssuanceSet.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "MPTokenIssuanceSet",
         address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
@@ -6251,7 +6358,7 @@ describe("Models", () => {
         ctid: "C064191400010002",
         specification: {
           source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
-          flags: { lock: true, unlock: false },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false, lock: true, unlock: false },
           mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
         },
         outcome: {
@@ -6283,7 +6390,7 @@ describe("Models", () => {
 
     it("Payment with signers", function () {
       const tx = require("../examples/responses/transaction/2B495E748FE751B0364FEE828F4C2E4C599E47C952B1650C9047B37DB809D21A.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "payment",
         address: "rEXmdJZRfjXN3XGVdz99dGSZpQyJqUeirE",
@@ -6297,6 +6404,13 @@ describe("Models", () => {
             { address: "rpFtpLAdkkrVzAmsf1gvpRnxs4t6kwb93C" },
             { address: "rpxfwNAyPPrMMySaxAsU94ym7U5SHY6c1D" },
           ],
+          flags: {
+            fullyCanonicalSig: true,
+            innerBatchTxn: false,
+            limitQuality: false,
+            noRippleDirect: false,
+            partialPayment: false,
+          },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6316,7 +6430,7 @@ describe("Models", () => {
 
     it("Payment with signer", function () {
       const tx = require("../examples/responses/transaction/7DF0F2A6DCDB43B2EC36FBE90891632CFD435D8E9496484AE16DDCB0FB0ED45E.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "settings",
         address: "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh",
@@ -6328,6 +6442,7 @@ describe("Models", () => {
           signer: { address: "rBmVUQNF6tJy4cLvoKdPXb4BNqKBk5JY1Y" },
           emailHash: "00000000000000000000000000000000",
           domain: "",
+          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6343,7 +6458,7 @@ describe("Models", () => {
 
     it("CheckCreate", function () {
       const tx = require("../examples/responses/CheckCreate.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "checkCreate",
         address: "r3bHm7MsgqDi3HPFeTuZrxM5oiF4L4eMjX",
@@ -6360,6 +6475,7 @@ describe("Models", () => {
             counterparty: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
           },
           expiration: "2025-02-14T22:52:51.000Z",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6389,7 +6505,7 @@ describe("Models", () => {
 
     it("CheckCash", function () {
       const tx = require("../examples/responses/CheckCash.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "checkCash",
         address: "r9PpzByDqSefhyU82bLDzr125NwQTKXEut",
@@ -6405,6 +6521,7 @@ describe("Models", () => {
             value: "80000000",
             counterparty: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
           },
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
           memos: [{ data: "First Ledger token claim" }],
         },
         outcome: {
@@ -6473,7 +6590,7 @@ describe("Models", () => {
 
     it("EnableAmendment", function () {
       const tx = require("../examples/responses/EnableAmendment.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "amendment",
         address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
@@ -6483,6 +6600,7 @@ describe("Models", () => {
         specification: {
           source: { address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp" },
           amendment: "DAF3A6EB04FA5DC51E8E4F23E9B7022B693EFA636F23F22664746C77B5786B23",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6497,7 +6615,7 @@ describe("Models", () => {
 
     it("DelegateSet", function () {
       const tx = require("../examples/responses/DelegateSet.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "DelegateSet",
         address: "rKM71RiJmqvZQfKUP3E7bwuZhvp8ArwxMi",
@@ -6508,6 +6626,7 @@ describe("Models", () => {
           source: { address: "rKM71RiJmqvZQfKUP3E7bwuZhvp8ArwxMi" },
           authorize: "rffJ2L2nris6qYamn3C4RZYNcMoTfxjUUs",
           permissions: ["OfferCreate"],
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6549,6 +6668,7 @@ describe("Models", () => {
             },
           ],
           source: { address: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76" },
+          flags: { fullyCanonicalSig: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6595,6 +6715,7 @@ describe("Models", () => {
             },
           ],
           source: { address: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76" },
+          flags: { fullyCanonicalSig: false },
           memos: [{ type: "[https://xahau.services]-Memo", data: "https://ipfs.io/ipfs/f01551320<XRPL-HASH>" }],
         },
         outcome: {
@@ -6634,7 +6755,7 @@ describe("Models", () => {
 
     it("TrustSet with deep freeze", function () {
       const tx = require("../examples/responses/TrustSet.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       console.log(JSON.stringify(result));
       expect(result).to.eql({
         type: "trustline",
@@ -6650,6 +6771,17 @@ describe("Models", () => {
           frozen: true,
           deepFrozen: true,
           authorized: true,
+          flags: {
+            fullyCanonicalSig: true,
+            innerBatchTxn: false,
+            clearDeepFreeze: false,
+            clearFreeze: false,
+            clearNoRipple: false,
+            setDeepFreeze: true,
+            setFreeze: true,
+            setNoRipple: false,
+            setfAuth: true,
+          },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6665,7 +6797,7 @@ describe("Models", () => {
 
     it("CredentialCreate", function () {
       const tx = require("../examples/responses/CredentialCreate.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "CredentialCreate",
         address: "rhvCTY6KfGZunJc2Avga53eqB5GSnYgcFT",
@@ -6676,6 +6808,7 @@ describe("Models", () => {
           source: { address: "rhvCTY6KfGZunJc2Avga53eqB5GSnYgcFT" },
           subject: "r4wxAnN2D2gffEU4WQb2myHDy618DihCtP",
           credentialType: "Administration",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6699,7 +6832,7 @@ describe("Models", () => {
 
     it("CredentialAccept", function () {
       const tx = require("../examples/responses/CredentialAccept.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "CredentialAccept",
         address: "r4wxAnN2D2gffEU4WQb2myHDy618DihCtP",
@@ -6710,6 +6843,7 @@ describe("Models", () => {
           source: { address: "r4wxAnN2D2gffEU4WQb2myHDy618DihCtP" },
           issuer: "rhvCTY6KfGZunJc2Avga53eqB5GSnYgcFT",
           credentialType: "Administration",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6735,14 +6869,19 @@ describe("Models", () => {
 
     it("CredentialDelete", function () {
       const tx = require("../examples/responses/CredentialDelete.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "CredentialDelete",
         address: "rfam8wvSzpVJF5pY57QoZk5KDcbN7rmGnA",
         sequence: 5728674,
         id: "5AA77FFA41A09C6EE580A4DB98D904CFD3EA655C226B83E7DA0BD01E6B3F5CD6",
         ctid: "C05769A400030002",
-        specification: { source: { address: "rfam8wvSzpVJF5pY57QoZk5KDcbN7rmGnA" }, credentialType: "Administration" },
+        specification: {
+          source: { address: "rfam8wvSzpVJF5pY57QoZk5KDcbN7rmGnA" },
+          issuer: "rPgfVqatGapTMkpP8tm82XLqycx9aoKuBm",
+          credentialType: "Administration",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+        },
         outcome: {
           result: "tesSUCCESS",
           timestamp: "2025-08-29T07:43:31.000Z",
@@ -6765,7 +6904,7 @@ describe("Models", () => {
 
     it("DepositPreauth with AuthorizeCredentials", function () {
       const tx = require("../examples/responses/DepositPreauth.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "depositPreauth",
         address: "rLQ8TWeLQPy3w869wFRVW9cgbXGzMFNiDw",
@@ -6778,6 +6917,7 @@ describe("Models", () => {
             { issuer: "rsjmWp2jgC3Zffqvo1L753fNY7kVE5tTod", type: "Administration" },
             { issuer: "ra5n43WFRusSG8XJdTEm8HgdFJRBgPgQAZ", type: "T23DEF" },
           ],
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6793,7 +6933,7 @@ describe("Models", () => {
 
     it("DepositPreauth with UnauthorizeCredentials", function () {
       const tx = require("../examples/responses/DepositPreauth2.json");
-      const result: any = Models.getTxDetails(tx, false);
+      const result: any = Models.getTxDetails(tx, false, "XRP");
       expect(result).to.eql({
         type: "depositPreauth",
         address: "rPCCfuJLx47yPXUArYhLSBjHttci5vzBJh",
@@ -6803,6 +6943,7 @@ describe("Models", () => {
         specification: {
           source: { address: "rPCCfuJLx47yPXUArYhLSBjHttci5vzBJh" },
           unauthorizeCredentials: [{ issuer: "rU9nQu8oLefwF1WcbXCvHxBGkuUa2WzCz", type: "Administration" }],
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6812,6 +6953,64 @@ describe("Models", () => {
           ledgerIndex: 5906035,
           ledgerVersion: 5906035,
           indexInLedger: 0,
+        },
+      });
+    });
+
+    it("Batch", function () {
+      const tx = require("../examples/responses/Batch.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      expect(result).to.eql({
+        type: "Batch",
+        address: "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq",
+        sequence: 5233466,
+        id: "0C5956CF40BD544278D72697FF3FAC00571A52196252E006A2EDB8381D96E252",
+        ctid: "C059FBC000040002",
+        specification: {
+          source: { address: "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq" },
+          transactions: [
+            {
+              id: "C8D02BA16B50C5BD12126F6864EB14AF1A33B31DE9053CAC5C5667BD77A37719",
+              type: "CredentialCreate",
+              address: "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq",
+              sequence: 5233467,
+              specification: {
+                source: { address: "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq" },
+                subject: "rGbPD53938FNRSMufrnte4PmkrqM8RdnQ7",
+                credentialType: "Let's Go!",
+                flags: { fullyCanonicalSig: false, innerBatchTxn: true },
+              },
+            },
+            {
+              id: "A2FF32B071BF979F2F9FD1FF81C177DDB587BEADE84340AFDEA805DE9FE3F8AA",
+              type: "CredentialCreate",
+              address: "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq",
+              sequence: 5233468,
+              specification: {
+                source: { address: "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq" },
+                subject: "r43sjcv7u6A4pqVdPY2rqcy4G54gedVbUf",
+                credentialType: "Let's Go!",
+                flags: { fullyCanonicalSig: false, innerBatchTxn: true },
+              },
+            },
+          ],
+          flags: {
+            fullyCanonicalSig: false,
+            innerBatchTxn: false,
+            allOrNothing: false,
+            onlyOne: false,
+            untilFailure: false,
+            independent: true,
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-09-04T07:52:11.000Z",
+          fee: "0.000004",
+          balanceChanges: { r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq: [{ currency: "XRP", value: "-0.000004" }] },
+          ledgerIndex: 5897152,
+          ledgerVersion: 5897152,
+          indexInLedger: 4,
         },
       });
     });
@@ -6837,6 +7036,13 @@ describe("Models", () => {
             },
           },
           destination: { address: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V" },
+          flags: {
+            fullyCanonicalSig: true,
+            innerBatchTxn: false,
+            limitQuality: false,
+            noRippleDirect: false,
+            partialPayment: false,
+          },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6929,7 +7135,15 @@ describe("Models", () => {
         },
         sequence: 1238,
         specification: {
-          flags: { burnable: false, onlyXRP: true, transferable: true, trustLine: false, mutable: false },
+          flags: {
+            fullyCanonicalSig: false,
+            innerBatchTxn: false,
+            burnable: false,
+            onlyXRP: true,
+            transferable: true,
+            trustLine: false,
+            mutable: false,
+          },
           source: { address: "rJzaNs8UpjuC65H3wwfjQ1zqTBVpt2umMy" },
           nftokenTaxon: 0,
           transferFee: 0,
@@ -6960,6 +7174,13 @@ describe("Models", () => {
             },
           },
           destination: { address: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V" },
+          flags: {
+            fullyCanonicalSig: true,
+            innerBatchTxn: false,
+            limitQuality: false,
+            noRippleDirect: false,
+            partialPayment: false,
+          },
         },
         outcome: {
           result: "tesSUCCESS",

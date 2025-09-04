@@ -15,7 +15,7 @@ export interface CredentialFlagsKeysInterface {
 export type FormattedCredentialCreateSpecification = {
   subject?: string;
   credentialType?: string;
-  expiration?: number;
+  expiration?: number | string;
   uri?: string;
 } & FormattedBaseSpecification;
 

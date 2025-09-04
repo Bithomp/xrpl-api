@@ -1,9 +1,8 @@
 import * as assert from "assert";
 import { NFTokenCreateOffer } from "xrpl";
 import { removeUndefined } from "../../common";
-import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
-import parseNFTOfferFlags from "../ledger/nftoken-offer-flags";
+import parseTxNFTOfferCreateFlags from "../ledger/tx-nftoken-offer-create-flags";
 import { ledgerTimeToUnixTime } from "../../models/ledger";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
@@ -12,7 +11,10 @@ import { parseSource } from "../ledger/source";
 import { parseDestination } from "../ledger/destination";
 import { FormattedNFTokenCreateOfferSpecification } from "../../types/nftokens";
 
-function parseNFTokenCreateOffer(tx: NFTokenCreateOffer): FormattedNFTokenCreateOfferSpecification {
+function parseNFTokenCreateOffer(
+  tx: NFTokenCreateOffer,
+  nativeCurrency?: string
+): FormattedNFTokenCreateOfferSpecification {
   assert.ok(tx.TransactionType === "NFTokenCreateOffer");
 
   let expiration: any;
@@ -30,8 +32,7 @@ function parseNFTokenCreateOffer(tx: NFTokenCreateOffer): FormattedNFTokenCreate
     amount: tx.Amount,
     owner: tx.Owner,
     expiration,
-    flags: parseNFTOfferFlags(tx.Flags as number),
-    emittedDetails: parseEmittedDetails(tx),
+    flags: parseTxNFTOfferCreateFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),
   });
 }
