@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import { DepositPreauth } from "xrpl";
+import { DepositPreauth, AuthorizeCredential } from "xrpl";
 import { removeUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseMemos } from "../ledger/memos";
@@ -7,7 +7,15 @@ import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
 import { parseDelegate } from "../ledger/delegate";
 import { parseSource } from "../ledger/source";
-import { FormattedDepositPreauthSpecification } from "../../types/deposits";
+import { decodeHexData } from "../utils";
+import { FormattedDepositPreauthSpecification, FormattedAuthorizeCredentials } from "../../types/deposits";
+
+function parseCredentials(credential: AuthorizeCredential): FormattedAuthorizeCredentials {
+  return {
+    issuer: credential.Credential.Issuer,
+    type: decodeHexData(credential.Credential.CredentialType),
+  };
+}
 
 function parseDepositPreauth(tx: DepositPreauth): FormattedDepositPreauthSpecification {
   assert.ok(tx.TransactionType === "DepositPreauth");
@@ -19,6 +27,8 @@ function parseDepositPreauth(tx: DepositPreauth): FormattedDepositPreauthSpecifi
     source: parseSource(tx),
     authorize: tx.Authorize,
     unauthorize: tx.Unauthorize,
+    authorizeCredentials: tx.AuthorizeCredentials ? tx.AuthorizeCredentials.map(parseCredentials) : undefined,
+    unauthorizeCredentials: tx.UnauthorizeCredentials ? tx.UnauthorizeCredentials.map(parseCredentials) : undefined,
     emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
   });

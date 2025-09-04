@@ -1,0 +1,87 @@
+{
+  "Account": "rLQ8TWeLQPy3w869wFRVW9cgbXGzMFNiDw",
+  "AuthorizeCredentials": [
+    {
+      "Credential": {
+        "CredentialType": "41646D696E697374726174696F6E",
+        "Issuer": "rsjmWp2jgC3Zffqvo1L753fNY7kVE5tTod"
+      }
+    },
+    {
+      "Credential": {
+        "CredentialType": "543233444546",
+        "Issuer": "ra5n43WFRusSG8XJdTEm8HgdFJRBgPgQAZ"
+      }
+    }
+  ],
+  "Fee": "100",
+  "Sequence": 5906060,
+  "SigningPubKey": "036354EB9EE4C4016CCFBF46C25F541E5F7C759E19B71EFBD084B4B929D107D453",
+  "TransactionType": "DepositPreauth",
+  "TxnSignature": "3045022100F5B7778E721452A1BF7A05EE99DF785861049C06268AA6EB00AB2439922A4228022016F5E86114DF45BE091570003869F504339ACD08F406E810515179E4D3C664BF",
+  "ctid": "C05A1E9400000002",
+  "date": 810315822,
+  "hash": "7B389165302FE0CC8BE918EAAC4D5B2589F055A6FD40EC31D785FB4A09EFD22F",
+  "inLedger": 5906068,
+  "ledger_index": 5906068,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rLQ8TWeLQPy3w869wFRVW9cgbXGzMFNiDw",
+            "Balance": "39999800",
+            "Flags": 16777216,
+            "OwnerCount": 1,
+            "Sequence": 5906061
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "1ED87C1080E4A2D9DE5269022C049213DA8FD9B38B9B8D315E98D1F4A8E6BE40",
+          "PreviousFields": {
+            "Balance": "39999900",
+            "OwnerCount": 0,
+            "Sequence": 5906060
+          },
+          "PreviousTxnID": "705BE4CE2FC0932E5D635DDDE58A1695F222523E68A75680E29848041F38331F",
+          "PreviousTxnLgrSeq": 5906067
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "2566D5C0DED96F7D7CBC7F07609D8D53EC126162A981C02E5EBBC481B180385D",
+          "NewFields": {
+            "Owner": "rLQ8TWeLQPy3w869wFRVW9cgbXGzMFNiDw",
+            "RootIndex": "2566D5C0DED96F7D7CBC7F07609D8D53EC126162A981C02E5EBBC481B180385D"
+          }
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "DepositPreauth",
+          "LedgerIndex": "ED94BC261119D47C54E0E28D8C0BB1BE381EB89C54B2E4910BDA3A7E26BFEF3B",
+          "NewFields": {
+            "Account": "rLQ8TWeLQPy3w869wFRVW9cgbXGzMFNiDw",
+            "AuthorizeCredentials": [
+              {
+                "Credential": {
+                  "CredentialType": "41646D696E697374726174696F6E",
+                  "Issuer": "rsjmWp2jgC3Zffqvo1L753fNY7kVE5tTod"
+                }
+              },
+              {
+                "Credential": {
+                  "CredentialType": "543233444546",
+                  "Issuer": "ra5n43WFRusSG8XJdTEm8HgdFJRBgPgQAZ"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

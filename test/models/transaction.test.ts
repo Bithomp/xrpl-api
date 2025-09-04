@@ -6762,6 +6762,59 @@ describe("Models", () => {
         },
       });
     });
+
+    it("DepositPreauth with AuthorizeCredentials", function () {
+      const tx = require("../examples/responses/DepositPreauth.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "depositPreauth",
+        address: "rLQ8TWeLQPy3w869wFRVW9cgbXGzMFNiDw",
+        sequence: 5906060,
+        id: "7B389165302FE0CC8BE918EAAC4D5B2589F055A6FD40EC31D785FB4A09EFD22F",
+        ctid: "C05A1E9400000002",
+        specification: {
+          source: { address: "rLQ8TWeLQPy3w869wFRVW9cgbXGzMFNiDw" },
+          authorizeCredentials: [
+            { issuer: "rsjmWp2jgC3Zffqvo1L753fNY7kVE5tTod", type: "Administration" },
+            { issuer: "ra5n43WFRusSG8XJdTEm8HgdFJRBgPgQAZ", type: "T23DEF" },
+          ],
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-09-04T15:43:42.000Z",
+          fee: "0.0001",
+          balanceChanges: { rLQ8TWeLQPy3w869wFRVW9cgbXGzMFNiDw: [{ currency: "XRP", value: "-0.0001" }] },
+          ledgerIndex: 5906068,
+          ledgerVersion: 5906068,
+          indexInLedger: 0,
+        },
+      });
+    });
+
+    it("DepositPreauth with UnauthorizeCredentials", function () {
+      const tx = require("../examples/responses/DepositPreauth2.json");
+      const result: any = Models.getTxDetails(tx, false);
+      expect(result).to.eql({
+        type: "depositPreauth",
+        address: "rPCCfuJLx47yPXUArYhLSBjHttci5vzBJh",
+        sequence: 5906032,
+        id: "51A1917F8C8AE92CE2BBFC3EDD191EEB256B172EFE9527FAD26BF7329FDA23F2",
+        ctid: "C05A1E7300000002",
+        specification: {
+          source: { address: "rPCCfuJLx47yPXUArYhLSBjHttci5vzBJh" },
+          unauthorizeCredentials: [{ issuer: "rU9nQu8oLefwF1WcbXCvHxBGkuUa2WzCz", type: "Administration" }],
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-09-04T15:42:03.000Z",
+          fee: "0.0001",
+          balanceChanges: { rPCCfuJLx47yPXUArYhLSBjHttci5vzBJh: [{ currency: "XRP", value: "-0.0001" }] },
+          ledgerIndex: 5906035,
+          ledgerVersion: 5906035,
+          indexInLedger: 0,
+        },
+      });
+    });
   });
 
   describe("getAccountTxDetails", () => {
