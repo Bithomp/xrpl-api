@@ -102,6 +102,7 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     hooksExecutions: getHooksExecutions(tx, nativeCurrency || getNativeCurrency()),
     emittedTxns: getEmittedTxns(tx, nativeCurrency || getNativeCurrency(), definitions), // only Xahau
 
+    parentBatchID: tx.meta.ParentBatchID,
     ledgerIndex: tx.ledger_index || tx.inLedger,
     ledgerVersion: tx.ledger_index || tx.inLedger, // @deprecated, use ledgerIndex
     indexInLedger: tx.meta.TransactionIndex,

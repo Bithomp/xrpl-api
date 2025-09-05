@@ -6756,7 +6756,6 @@ describe("Models", () => {
     it("TrustSet with deep freeze", function () {
       const tx = require("../examples/responses/TrustSet.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");
-      console.log(JSON.stringify(result));
       expect(result).to.eql({
         type: "trustline",
         address: "rLwNAmcqi7ipSZ5cUc6zXZMjwEddr2yc8x",
@@ -7011,6 +7010,41 @@ describe("Models", () => {
           ledgerIndex: 5897152,
           ledgerVersion: 5897152,
           indexInLedger: 4,
+        },
+      });
+    });
+
+    it("CredentialCreate from Batch", function () {
+      const tx = require("../examples/responses/Batch_CredentialCreate1.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      expect(result).to.eql({
+        type: "CredentialCreate",
+        address: "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq",
+        sequence: 5233467,
+        id: "C8D02BA16B50C5BD12126F6864EB14AF1A33B31DE9053CAC5C5667BD77A37719",
+        ctid: "C059FBC000050002",
+        specification: {
+          source: { address: "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq" },
+          subject: "rGbPD53938FNRSMufrnte4PmkrqM8RdnQ7",
+          credentialType: "Let's Go!",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: true },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-09-04T07:52:11.000Z",
+          fee: "0",
+          credentialChanges: {
+            status: "created",
+            credentialIndex: "CB65EF612B830C68C2E1E1AA56136DC43EE2BF6B33C59D8CF227ADA7B952A748",
+            issuer: "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq",
+            subject: "rGbPD53938FNRSMufrnte4PmkrqM8RdnQ7",
+            credentialType: "Let's Go!",
+            flags: { accepted: false },
+          },
+          parentBatchID: "0C5956CF40BD544278D72697FF3FAC00571A52196252E006A2EDB8381D96E252",
+          ledgerIndex: 5897152,
+          ledgerVersion: 5897152,
+          indexInLedger: 5,
         },
       });
     });
