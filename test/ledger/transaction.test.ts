@@ -159,26 +159,11 @@ describe("Client", () => {
           "A34F834AA65C01458FC0AFCDDE7F8F433DAD7B871282E8511ECDEE8E28758DCE",
           { balanceChanges: true }
         );
-        expect(result.balanceChanges).to.eql([
-          {
-            account: "rhUYLd2aUiUVYkBZYwTc5RYgCAbNHAwkeZ",
-            balances: [
-              {
-                currency: "XRP",
-                value: "-20.000013",
-              },
-            ],
-          },
-          {
-            account: "rKHdxvrzyCQvNzcsjLRX2mz7XiqdQHwyBH",
-            balances: [
-              {
-                currency: "XRP",
-                value: "20",
-              },
-            ],
-          },
-        ]);
+
+        expect(result.balanceChanges).to.eql({
+          rhUYLd2aUiUVYkBZYwTc5RYgCAbNHAwkeZ: [{ currency: "XRP", value: "-20.000013" }],
+          rKHdxvrzyCQvNzcsjLRX2mz7XiqdQHwyBH: [{ currency: "XRP", value: "20" }],
+        });
       });
 
       it("works with binary", async function () {

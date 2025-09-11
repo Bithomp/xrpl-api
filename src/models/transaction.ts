@@ -4,6 +4,7 @@ import { XrplDefinitionsBase } from "ripple-binary-codec";
 import { parseTransaction, FormattedSpecification, FormattedTransaction } from "../parse/transaction";
 export { FormattedTransaction } from "../parse/transaction";
 import { Outcome } from "../types/outcome";
+import { BalanceChanges } from "../parse/outcome/balance_changes";
 
 const CTID_REGEX = /^[cC]{1}[a-fA-F0-9]{15}$/;
 
@@ -24,7 +25,7 @@ export interface TransactionBaseResponse {
    */
   date?: number;
 
-  balanceChanges?: any[];
+  balanceChanges?: BalanceChanges;
   specification?: FormattedSpecification;
   outcome?: Outcome;
   rawTransaction?: string;

@@ -1,6 +1,6 @@
-import * as xrpl from "xrpl";
 import { decode, XrplDefinitionsBase } from "ripple-binary-codec";
 import { Transaction } from "xrpl";
+import { parseBalanceChanges } from "../parse/outcome/balance_changes";
 
 import * as Client from "../client";
 import { Connection } from "../connection";
@@ -126,7 +126,7 @@ export async function getTransaction(
     }
 
     if (options.balanceChanges === true && typeof result.meta === "object") {
-      result.balanceChanges = xrpl.getBalanceChanges(result.meta);
+      result.balanceChanges = parseBalanceChanges(result.meta, Client.getNativeCurrency());
     }
 
     if (options.specification === true) {
@@ -237,7 +237,7 @@ export async function getTransactionByCTID(
   }
 
   if (options.balanceChanges === true && typeof result.meta === "object") {
-    result.balanceChanges = xrpl.getBalanceChanges(result.meta);
+    result.balanceChanges = parseBalanceChanges(result.meta, Client.getNativeCurrency())
   }
 
   if (options.specification === true) {

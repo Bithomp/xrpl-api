@@ -113,26 +113,10 @@ describe("Client", () => {
         const address = "rKHdxvrzyCQvNzcsjLRX2mz7XiqdQHwyBH";
         const result: any = await Client.getTransactions(address, { limit: 1, balanceChanges: true });
 
-        expect(result.transactions[0].balanceChanges).to.eql([
-          {
-            account: "rhUYLd2aUiUVYkBZYwTc5RYgCAbNHAwkeZ",
-            balances: [
-              {
-                currency: "XRP",
-                value: "-20.000013",
-              },
-            ],
-          },
-          {
-            account: "rKHdxvrzyCQvNzcsjLRX2mz7XiqdQHwyBH",
-            balances: [
-              {
-                currency: "XRP",
-                value: "20",
-              },
-            ],
-          },
-        ]);
+        expect(result.transactions[0].balanceChanges).to.eql({
+          rhUYLd2aUiUVYkBZYwTc5RYgCAbNHAwkeZ: [{ currency: "XRP", value: "-20.000013" }],
+          rKHdxvrzyCQvNzcsjLRX2mz7XiqdQHwyBH: [{ currency: "XRP", value: "20" }],
+        });
       });
     });
 
@@ -418,10 +402,10 @@ describe("Client", () => {
           balanceChanges: true,
         });
 
-        expect(result[0].balanceChanges).to.eql([
-          { account: "rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk", balances: [{ currency: "XRP", value: "-31.020002" }] },
-          { account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z", balances: [{ currency: "XRP", value: "31" }] },
-        ]);
+        expect(result[0].balanceChanges).to.eql({
+          rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk: [{ currency: "XRP", value: "-31.020002" }],
+          rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z: [{ currency: "XRP", value: "31" }],
+        });
       });
 
       it("returns transaction with specification", async function () {
@@ -1016,10 +1000,10 @@ describe("Client", () => {
           balanceChanges: true,
         });
 
-        expect(result.transactions[0].balanceChanges).to.eql([
-          { account: "rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk", balances: [{ currency: "XRP", value: "-31.020002" }] },
-          { account: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z", balances: [{ currency: "XRP", value: "31" }] },
-        ]);
+        expect(result.transactions[0].balanceChanges).to.eql({
+          rBRVqcXrm1YAbanngTxDfH15LNb6TjNmxk: [{ currency: "XRP", value: "-31.020002" }],
+          rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z: [{ currency: "XRP", value: "31" }],
+        });
       });
 
       it("returns transaction with specification", async function () {

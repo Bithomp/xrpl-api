@@ -1,10 +1,10 @@
 import _ from "lodash";
-import { getBalanceChanges } from "xrpl";
 
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
 import { compareTransactions, parseMarker, createMarker, removeUndefined } from "../common/utils";
 import { getAccountTxDetails, encodeCTIDforTransaction } from "../models/transaction";
+import { parseBalanceChanges } from "../parse/outcome/balance_changes";
 import { ErrorResponse } from "../models/base_model";
 
 const MAX_LIMIT = 1000;
@@ -164,7 +164,7 @@ export async function getTransactions(
     if (options.balanceChanges === true || options.specification === true) {
       for (const transaction of result.transactions) {
         if (options.balanceChanges === true) {
-          transaction.balanceChanges = getBalanceChanges(transaction.meta);
+          transaction.balanceChanges = parseBalanceChanges(transaction.meta, Client.getNativeCurrency());
         }
 
         if (options.specification === true) {
@@ -307,7 +307,7 @@ export async function findTransactionsExt(
     if (formatted !== true && (loadOptions.balanceChanges === true || loadOptions.specification === true)) {
       for (const newTransaction of newTransactions) {
         if (loadOptions.balanceChanges === true) {
-          newTransaction.balanceChanges = getBalanceChanges(newTransaction.meta);
+          newTransaction.balanceChanges = parseBalanceChanges(newTransaction.meta, Client.getNativeCurrency());
         }
 
         if (loadOptions.specification === true) {
