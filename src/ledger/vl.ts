@@ -113,6 +113,10 @@ export async function getVLBlobValidatorsManifest(validatorsPublicKeys: string[]
         Promise.reject(response.error);
       }
 
+      if (!response.result || !response.result.manifest) {
+        return Promise.reject(new Error("Failed to get validator manifest"));
+      }
+
       return response.result;
     })
   );
