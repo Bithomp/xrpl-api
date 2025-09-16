@@ -1,6 +1,6 @@
 {
   "name": "@bithomp/xrpl-api",
-  "version": "3.6.2",
+  "version": "3.6.3",
   "description": "A Bithomp JavaScript/TypeScript library for interacting with the XRP Ledger",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -52,7 +52,7 @@
     "lib/**/*"
   ],
   "dependencies": {
-    "axios": "^1.11.0",
+    "axios": "^1.12.2",
     "base-x": "^5.0.1",
     "bignumber.js": "^9.3.1",
     "elliptic": "^6.6.1",
@@ -70,19 +70,19 @@
     "@types/mocha": "^10.0.10",
     "@types/nconf": "^0.10.7",
     "@types/node": "^22.15.21",
-    "@typescript-eslint/eslint-plugin": "^8.42.0",
-    "@typescript-eslint/parser": "^8.42.0",
+    "@typescript-eslint/eslint-plugin": "^8.44.0",
+    "@typescript-eslint/parser": "^8.44.0",
     "chai": "^6.0.1",
     "chai-as-promised": "^8.0.2",
-    "eslint": "^9.34.0",
+    "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-chai-friendly": "^1.1.0",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-n": "^17.21.3",
+    "eslint-plugin-n": "^17.23.0",
     "eslint-plugin-promise": "^7.2.1",
     "mocha": "^11.7.2",
     "nconf": "^0.13.0",
-    "ts-jest": "^29.4.1",
+    "ts-jest": "^29.4.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
   }

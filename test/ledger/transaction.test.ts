@@ -2,9 +2,6 @@ import nconf from "nconf";
 import { Transaction } from "xrpl";
 import { expect } from "chai";
 
-// import * as enums from ".node_modules/ripple-binary-codec/dist/enums/src/enums/definitions.json";
-// https://github.com/Transia-RnD/xrpl.js/blob/3b234ec8ec1c677e0f3f534fd2985c985871c87e/packages/ripple-binary-codec/src/enums/definitions.json
-import * as xahauEnums from "../../config/xahau_definitions.json";
 import { Client, Models, Wallet } from "../../src/index";
 
 describe("Client", () => {
@@ -755,7 +752,7 @@ describe("Client", () => {
 
     describe("submitPaymentTransactionV1", () => {
       it("is OK with manual fee", async function () {
-        const xahauDefinitions = new Wallet.XrplDefinitions(xahauEnums);
+        const xahauDefinitions = Wallet.getXahauDefinitions();
 
         this.timeout(15000);
         const payment = {
@@ -777,7 +774,7 @@ describe("Client", () => {
       });
 
       it("is OK with auto fee", async function () {
-        const xahauDefinitions = new Wallet.XrplDefinitions(xahauEnums);
+        const xahauDefinitions = Wallet.getXahauDefinitions();
 
         this.timeout(15000);
         const payment = {
@@ -801,7 +798,7 @@ describe("Client", () => {
     // xahau tests network was reset, so we skip this test
     describe.skip("getTransaction", () => {
       it("works with NFT burn2mint", async function () {
-        const xahauDefinitions = new Wallet.XrplDefinitions(xahauEnums);
+        const xahauDefinitions = Wallet.getXahauDefinitions();
         const result: any = await Client.getTransaction(
           "BD3338E3799624DF13EA1CA46CD7305A643B99941F3563FAC35FB3D456153622",
           { formatted: true, definitions: xahauDefinitions }
@@ -2458,7 +2455,7 @@ describe("Client", () => {
 
       it("Import with NFT", function () {
         const tx = require("../examples/responses/Import2.json");
-        const xahauDefinitions = new Wallet.XrplDefinitions(xahauEnums);
+        const xahauDefinitions = Wallet.getXahauDefinitions();
         const result: any = Models.getTxDetails(tx, false, "XAH", xahauDefinitions);
         expect(result).to.eql({
           type: "import",

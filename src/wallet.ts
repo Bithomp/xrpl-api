@@ -368,5 +368,18 @@ function hashSignedTx(tx: Transaction | string, definitions?: XrplDefinitionsBas
   return sha512Half(prefix.concat(txBlob));
 }
 
+function getXahauDefinitions(): XrplDefinitionsBase | undefined {
+  try {
+    const xahauEnums = require("../config/xahau_definitions.json");
+    const xahauDefinitions = new XrplDefinitions(xahauEnums);
+
+    return xahauDefinitions;
+  } catch (_err) {
+    // Ignore error
+  }
+
+  return undefined;
+}
+
 // export XrplDefinitionsBase for custom definitions, in case old binary codec is used
-export { XrplDefinitionsBase, XrplDefinitions, DEFAULT_DEFINITIONS, hashSignedTx };
+export { XrplDefinitionsBase, XrplDefinitions, DEFAULT_DEFINITIONS, hashSignedTx, getXahauDefinitions };

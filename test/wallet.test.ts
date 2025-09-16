@@ -5,7 +5,7 @@ import { Wallet } from "../src/index";
 
 // import * as enums from ".node_modules/ripple-binary-codec/dist/enums/src/enums/definitions.json";
 // https://github.com/Transia-RnD/xrpl.js/blob/3b234ec8ec1c677e0f3f534fd2985c985871c87e/packages/ripple-binary-codec/src/enums/definitions.json
-import * as xahauEnums from "../config/xahau_definitions.json";
+// import * as xahauEnums from "../config/xahau_definitions.json";
 
 describe("Wallet", () => {
   describe("isValidClassicAddress", () => {
@@ -62,7 +62,7 @@ describe("Wallet", () => {
     });
 
     it("works for valid xahau", async function () {
-      const xahauDefinitions = new Wallet.XrplDefinitions(xahauEnums);
+      const xahauDefinitions = Wallet.getXahauDefinitions();
 
       const signedTransaction =
         "12000321000053592200000000242EA2D7E6201B0096C73B68400000000000000073210380AA600ECCE48424CD6036BF103E8E598C546534D508C68539F6D3C8C2A9D76C7446304402202575F1711905D14D7183E7FD68FF0DEC87AFB5D4A736EA6BA070BF1223F3DC1B0220596DEEC2A4BF87381509AD7F3D4C3039F622077F225BA468EC39653E80045F6E811494E1ECAE0A6ECE58DE0A500EB5B30FA1FB26E429F9EA7C046A736F6E7D327B22616374696F6E223A2261646441646472657373222C22656D61696C223A22696E666F40626974686F6D702E636F6D227DE1F1";

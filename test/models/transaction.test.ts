@@ -6600,7 +6600,6 @@ describe("Models", () => {
         specification: {
           source: { address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp" },
           amendment: "DAF3A6EB04FA5DC51E8E4F23E9B7022B693EFA636F23F22664746C77B5786B23",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -7045,6 +7044,33 @@ describe("Models", () => {
           ledgerIndex: 5897152,
           ledgerVersion: 5897152,
           indexInLedger: 5,
+        },
+      });
+    });
+
+    it("UNLModify", function () {
+      const tx = require("../examples/responses/UNLModify.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      console.log(JSON.stringify(result));
+      expect(result).to.eql({
+        type: "UNLModify",
+        address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+        sequence: 0,
+        id: "C3079B044064938C4CFEEBA27BF1C3EC5E65FB77AF7A40AB04DC90E882DCF227",
+        ctid: "C5E3570000310000",
+        specification: {
+          source: { address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp" },
+          nUNL: false,
+          PublicKey: "EDA4074FD039407BD2464F14C378440D5B02CA8FBA661B286D1C82A3D59E8E6EC0",
+          publicKey: "nHUbgDd63HiuP68VRWazKwZRzS61N37K3NbfQaZLhSQ24LGGmjtn",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-09-11T18:35:01.000Z",
+          fee: "0",
+          ledgerIndex: 98785024,
+          ledgerVersion: 98785024,
+          indexInLedger: 49,
         },
       });
     });

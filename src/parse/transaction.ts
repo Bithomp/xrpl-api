@@ -161,6 +161,7 @@ import parseBatch from "./specification/batch";
 
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
 import parseFeeUpdate from "./specification/fee-update"; // pseudo-transaction
+import parseUNLModify from "./specification/unl-modify"; // pseudo-transaction
 
 // Ordering matches https://developers.ripple.com/transaction-types.html
 const transactionTypeToType = {
@@ -237,6 +238,7 @@ const transactionTypeToType = {
 
   EnableAmendment: "amendment", // pseudo-transaction
   SetFee: "feeUpdate", // pseudo-transaction
+  UNLModify: "UNLModify", // pseudo-transaction
 };
 
 function parseTransactionType(type: string): string {
@@ -315,6 +317,7 @@ export const parserTypeFunc = {
 
   amendment: parseAmendment, // pseudo-transaction
   feeUpdate: parseFeeUpdate, // pseudo-transaction
+  UNLModify: parseUNLModify, // pseudo-transaction
 };
 
 export type FormattedSpecification =

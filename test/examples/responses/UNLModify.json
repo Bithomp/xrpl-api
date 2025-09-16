@@ -1,0 +1,43 @@
+{
+  "Account": "",
+  "Fee": "0",
+  "LedgerSequence": 98785024,
+  "Sequence": 0,
+  "SigningPubKey": "",
+  "TransactionType": "UNLModify",
+  "UNLModifyDisabling": 0,
+  "UNLModifyValidator": "EDA4074FD039407BD2464F14C378440D5B02CA8FBA661B286D1C82A3D59E8E6EC0",
+  "ctid": "C5E3570000310000",
+  "date": 810930901,
+  "hash": "C3079B044064938C4CFEEBA27BF1C3EC5E65FB77AF7A40AB04DC90E882DCF227",
+  "inLedger": 98785024,
+  "ledger_index": 98785024,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "DisabledValidators": [
+              {
+                "DisabledValidator": {
+                  "FirstLedgerSequence": 98784768,
+                  "PublicKey": "EDA4074FD039407BD2464F14C378440D5B02CA8FBA661B286D1C82A3D59E8E6EC0"
+                }
+              }
+            ],
+            "Flags": 0,
+            "ValidatorToReEnable": "EDA4074FD039407BD2464F14C378440D5B02CA8FBA661B286D1C82A3D59E8E6EC0"
+          },
+          "LedgerEntryType": "NegativeUNL",
+          "LedgerIndex": "2E8A59AA9D3B5B186B0B9E0F62E6C02587CA74A4D778938E957B6357D364B244",
+          "PreviousFields": {},
+          "PreviousTxnID": "F56D8AC4D78BC683547845A70A37BF2B1980F874BE0AD4B572751982BE62D024",
+          "PreviousTxnLgrSeq": 98784512
+        }
+      }
+    ],
+    "TransactionIndex": 49,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}
