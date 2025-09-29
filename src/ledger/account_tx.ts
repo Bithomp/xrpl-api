@@ -237,7 +237,7 @@ export async function findTransactionsExt(
   options: FindTransactionsOptions = { limit: DEFAULT_LIMIT, timeout: 15000 }
 ): Promise<FindTransactionsResponse | ErrorResponse> {
   let transactions = [];
-  let accountTransactionsError = null;
+  let accountTransactionsError: ErrorResponse | null = null;
   const timeStart = new Date();
 
   // create new object to prevent mutation of the original one
@@ -370,6 +370,11 @@ export async function findTransactionsExt(
 
   // return error information
   if (accountTransactionsError && transactions.length === 0) {
+    // if we had marker don't miss it, it still can be useful for continuation
+    if (loadOptions.marker) {
+      accountTransactionsError.marker = loadOptions.marker;
+    }
+
     return accountTransactionsError;
   }
 
