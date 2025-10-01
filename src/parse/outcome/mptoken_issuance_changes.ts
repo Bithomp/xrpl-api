@@ -3,6 +3,9 @@ import BigNumber from "bignumber.js";
 import { removeUndefined } from "../../common";
 import { buildMPTokenIssuanceID } from "../../models/mptoken";
 
+import parseMPTokenIssuanceFlags from "../ledger/mptoken-issuance-flags";
+import { MPTokenIssuanceFlagsKeysInterface } from "../../types/mptokens";
+
 export function parseMPTokenIssuanceChanges(tx: object): object {
   return new MPTokenIssuanceChanges(tx).call();
 }
@@ -10,7 +13,7 @@ export function parseMPTokenIssuanceChanges(tx: object): object {
 interface MPTokenIssuanceChangesInterface {
   status: "added" | "modified" | "removed";
   scale?: number;
-  flags?: number;
+  flags?: MPTokenIssuanceFlagsKeysInterface;
   issuer: string;
   metadata?: string;
   maximumAmount?: string;
@@ -21,7 +24,7 @@ interface MPTokenIssuanceChangesInterface {
 
   // changes
   outstandingAmountChange?: string; // amount difference
-  flagsChange?: number; // previous flags
+  flagsChange?: MPTokenIssuanceFlagsKeysInterface; // previous flags
 }
 
 class MPTokenIssuanceChanges {
@@ -70,7 +73,7 @@ class MPTokenIssuanceChanges {
 
           this.addChange(mptIssuanceID, {
             status: "added",
-            flags: node.NewFields.Flags,
+            flags: parseMPTokenIssuanceFlags(node.NewFields.Flags),
             mptIssuanceID,
             issuer: node.NewFields.Issuer,
             sequence: node.NewFields.Sequence,
@@ -98,7 +101,7 @@ class MPTokenIssuanceChanges {
 
           this.addChange(mptIssuanceID, {
             status: "modified",
-            flags: node.FinalFields.Flags,
+            flags: parseMPTokenIssuanceFlags(node.FinalFields.Flags),
             mptIssuanceID,
             issuer: node.FinalFields.Issuer,
             sequence: node.FinalFields.Sequence,
@@ -110,7 +113,7 @@ class MPTokenIssuanceChanges {
 
             // changes
             outstandingAmountChange,
-            flagsChange: node.PreviousFields.Flags,
+            flagsChange: node.PreviousFields.hasOwnProperty("Flags") ? parseMPTokenIssuanceFlags(node.PreviousFields.Flags) : undefined,
           });
         }
 
@@ -121,7 +124,7 @@ class MPTokenIssuanceChanges {
 
           this.addChange(mptIssuanceID, {
             status: "removed",
-            flags: node.FinalFields.Flags,
+            flags: parseMPTokenIssuanceFlags(node.FinalFields.Flags),
             mptIssuanceID,
             issuer: node.FinalFields.Issuer,
             sequence: node.FinalFields.Sequence,

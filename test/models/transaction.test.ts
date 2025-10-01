@@ -6066,7 +6066,15 @@ describe("Models", () => {
           mptokenIssuanceChanges: {
             "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
               status: "modified",
-              flags: 126,
+              flags: {
+                canClawback: true,
+                canEscrow: true,
+                canLock: true,
+                canTrade: true,
+                canTransfer: true,
+                locked: false,
+                requireAuth: true,
+              },
               mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
               issuer: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
               sequence: 6560006,
@@ -6133,7 +6141,15 @@ describe("Models", () => {
           mptokenIssuanceChanges: {
             "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
               status: "modified",
-              flags: 126,
+              flags: {
+                canClawback: true,
+                canEscrow: true,
+                canLock: true,
+                canTrade: true,
+                canTransfer: true,
+                locked: false,
+                requireAuth: true,
+              },
               mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
               issuer: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
               sequence: 6560006,
@@ -6191,7 +6207,15 @@ describe("Models", () => {
           mptokenIssuanceChanges: {
             "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
               status: "modified",
-              flags: 127,
+              flags: {
+                canClawback: true,
+                canEscrow: true,
+                canLock: true,
+                canTrade: true,
+                canTransfer: true,
+                locked: true,
+                requireAuth: true,
+              },
               mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
               issuer: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
               sequence: 6560006,
@@ -6292,7 +6316,15 @@ describe("Models", () => {
           mptokenIssuanceChanges: {
             "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
               status: "added",
-              flags: 126,
+              flags: {
+                canClawback: true,
+                canEscrow: true,
+                canLock: true,
+                canTrade: true,
+                canTransfer: true,
+                locked: false,
+                requireAuth: true,
+              },
               mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
               issuer: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
               sequence: 6560006,
@@ -6330,7 +6362,15 @@ describe("Models", () => {
           mptokenIssuanceChanges: {
             "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
               status: "removed",
-              flags: 127,
+              flags: {
+                canClawback: true,
+                canEscrow: true,
+                canLock: true,
+                canTrade: true,
+                canTransfer: true,
+                locked: true,
+                requireAuth: true,
+              },
               mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
               issuer: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
               sequence: 6560006,
@@ -6369,7 +6409,15 @@ describe("Models", () => {
           mptokenIssuanceChanges: {
             "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
               status: "modified",
-              flags: 127,
+              flags: {
+                canClawback: true,
+                canEscrow: true,
+                canLock: true,
+                canTrade: true,
+                canTransfer: true,
+                locked: true,
+                requireAuth: true,
+              },
               mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
               issuer: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak",
               sequence: 6560006,
@@ -6378,7 +6426,15 @@ describe("Models", () => {
               outstandingAmount: "900",
               scale: 2,
               outstandingAmountChange: "900",
-              flagsChange: 126,
+              flagsChange: {
+                canClawback: true,
+                canEscrow: true,
+                canLock: true,
+                canTrade: true,
+                canTransfer: true,
+                locked: false,
+                requireAuth: true,
+              },
             },
           },
           ledgerIndex: 6560020,

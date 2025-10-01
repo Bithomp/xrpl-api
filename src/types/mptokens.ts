@@ -3,6 +3,26 @@ import { FormattedBaseSpecification } from "./specification";
 import { TxGlobalFlagsKeysInterface, getTxGlobalFlagsKeys } from "./global";
 import { MAINNET_NATIVE_CURRENCY } from "../common";
 
+export const MPTokenIssuanceFlagsKeys = {
+  locked: 0x00000001,
+  canLock: MPTokenIssuanceCreateFlags.tfMPTCanLock,
+  requireAuth: MPTokenIssuanceCreateFlags.tfMPTRequireAuth,
+  canEscrow: MPTokenIssuanceCreateFlags.tfMPTCanEscrow,
+  canTrade: MPTokenIssuanceCreateFlags.tfMPTCanTrade,
+  canTransfer: MPTokenIssuanceCreateFlags.tfMPTCanTransfer,
+  canClawback: MPTokenIssuanceCreateFlags.tfMPTCanClawback,
+};
+
+export interface MPTokenIssuanceFlagsKeysInterface {
+  locked?: boolean;
+  canLock?: boolean;
+  requireAuth?: boolean;
+  canEscrow?: boolean;
+  canTrade?: boolean;
+  canTransfer?: boolean;
+  canClawback?: boolean;
+}
+
 export const MPTokenIssuanceCreateFlagsKeys = {
   canLock: MPTokenIssuanceCreateFlags.tfMPTCanLock,
   requireAuth: MPTokenIssuanceCreateFlags.tfMPTRequireAuth,
