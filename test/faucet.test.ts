@@ -157,6 +157,7 @@ describe("Faucet", () => {
       this.timeout(15000);
       const res = await Faucet.foundWallet("xahau-test", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
 
+      expect(res.error).not.to.exist;
       expect(res.hash).to.be.a("string");
       delete res.hash;
       expect(res).to.eql({
@@ -173,6 +174,7 @@ describe("Faucet", () => {
       this.timeout(15000);
       const res = await Faucet.foundWallet("xahau-jshooks", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
 
+      expect(res.error).not.to.exist;
       expect(res.hash).to.be.a("string");
       delete res.hash;
       expect(res).to.eql({
