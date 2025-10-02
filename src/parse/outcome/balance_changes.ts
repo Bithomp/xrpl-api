@@ -4,6 +4,7 @@ import { TransactionMetadata } from "xrpl"; // Node, CreatedNode, ModifiedNode, 
 import { dropsToXrp } from "../../common";
 import { getNativeCurrency } from "../../client";
 import { NormalizedNode, normalizeNode } from "../utils";
+import { buildMPTokenIssuanceID } from "../../models/mptoken";
 
 interface BalanceChangeQuantity {
   issuer?: string; // currency issuer
@@ -33,7 +34,7 @@ function groupByAddress(balanceChanges: AddressBalanceChangeQuantity[]) {
   });
 }
 
-function parseValue(value): BigNumber {
+function parseValue(value: any): BigNumber {
   // MPToken has array for previous fields if it is created/empty
   if (Array.isArray(value)) {
     return new BigNumber(0);
@@ -43,7 +44,7 @@ function parseValue(value): BigNumber {
     return new BigNumber(value);
   }
 
-  return new BigNumber(value.value ?? value.MPTAmount ?? 0);
+  return new BigNumber(value.value ?? 0);
 }
 
 function computeBalanceChange(node: NormalizedNode): BigNumber | null {
@@ -55,7 +56,11 @@ function computeBalanceChange(node: NormalizedNode): BigNumber | null {
   } else if (node.previousFields.Balance && node.finalFields.Balance) {
     value = parseValue(node.finalFields.Balance).minus(parseValue(node.previousFields.Balance));
   } else if (node.previousFields.MPTAmount || node.finalFields.MPTAmount) {
-    value = parseValue(node.finalFields).minus(parseValue(node.previousFields));
+    value = parseValue(node.finalFields.MPTAmount ?? 0).minus(parseValue(node.previousFields.MPTAmount ?? 0));
+  } else if (node.previousFields.OutstandingAmount) {
+    value = parseValue(node.previousFields.OutstandingAmount ?? 0).minus(
+      parseValue(node.finalFields.OutstandingAmount ?? 0)
+    );
   }
 
   return value === null ? null : value.isZero() ? null : value;
@@ -68,6 +73,8 @@ function parseFinalBalance(node: NormalizedNode): BigNumber | null {
     return parseValue(node.finalFields.Balance);
   } else if (node.finalFields.MPTAmount) {
     return parseValue(node.finalFields);
+  } else if (node.finalFields.MPTAmount) {
+    return parseValue(node.finalFields.MaximumAmount).minus(parseValue(node.finalFields.OutstandingAmount));
   }
 
   return null;
@@ -164,10 +171,28 @@ function parseMPTQuantity(node: NormalizedNode, valueParser: any): AddressBalanc
   };
 }
 
+function parseMPTokenIssuanceQuantity(node: NormalizedNode, valueParser: any): AddressBalanceChangeQuantity | null {
+  const value = valueParser(node);
+
+  if (value === null) {
+    return null;
+  }
+
+  const fields = _.isEmpty(node.newFields) ? node.finalFields : (node.newFields as any);
+
+  return {
+    address: fields.Issuer,
+    balance: {
+      value: value.toString(),
+      mpt_issuance_id: buildMPTokenIssuanceID(fields.Sequence, fields.Issuer),
+    },
+  };
+}
+
 function parseQuantities(metadata: TransactionMetadata, valueParser: any, nativeCurrency?: string) {
   const values = metadata.AffectedNodes.map(function (affectedNode: any) {
     const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
-    if (!["AccountRoot", "RippleState", "MPToken"].includes(node.LedgerEntryType)) {
+    if (!["AccountRoot", "RippleState", "MPToken", "MPTokenIssuance"].includes(node.LedgerEntryType)) {
       return [];
     }
 
@@ -178,6 +203,8 @@ function parseQuantities(metadata: TransactionMetadata, valueParser: any, native
       return parseTrustlineQuantity(normalizedNode, valueParser);
     } else if (node.LedgerEntryType === "MPToken") {
       return [parseMPTQuantity(normalizedNode, valueParser)];
+    } else if (node.LedgerEntryType === "MPTokenIssuance") {
+      return [parseMPTokenIssuanceQuantity(normalizedNode, valueParser)];
     }
 
     return [];

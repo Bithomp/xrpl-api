@@ -6058,7 +6058,10 @@ describe("Models", () => {
           timestamp: "2024-12-10T12:14:21.000Z",
           fee: "0.00012",
           balanceChanges: {
-            raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [{ currency: "XRP", value: "-0.00012" }],
+            raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [
+              { currency: "XRP", value: "-0.00012" },
+              { value: "-1000", mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578" },
+            ],
             rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: [
               { value: "1000", mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578" },
             ],
@@ -6137,6 +6140,9 @@ describe("Models", () => {
               { currency: "XRP", value: "-0.00012" },
               { value: "-100", mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578" },
             ],
+            raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [
+              { value: "100", mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578" },
+            ],
           },
           mptokenIssuanceChanges: {
             "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
@@ -6199,7 +6205,10 @@ describe("Models", () => {
           timestamp: "2024-12-10T12:14:40.000Z",
           fee: "0.00012",
           balanceChanges: {
-            raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [{ currency: "XRP", value: "-0.00012" }],
+            raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [
+              { currency: "XRP", value: "-0.00012" },
+              { value: "900", mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578" },
+            ],
             rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: [
               { value: "-900", mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578" },
             ],
