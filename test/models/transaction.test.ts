@@ -6321,7 +6321,12 @@ describe("Models", () => {
           result: "tesSUCCESS",
           timestamp: "2024-12-10T12:14:01.000Z",
           fee: "0.00012",
-          balanceChanges: { raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [{ currency: "XRP", value: "-0.00012" }] },
+          balanceChanges: {
+            raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [
+              { currency: "XRP", value: "-0.00012" },
+              { mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578", value: "50000000" },
+            ],
+          },
           mptokenIssuanceChanges: {
             "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
               status: "added",
@@ -6367,7 +6372,12 @@ describe("Models", () => {
           result: "tesSUCCESS",
           timestamp: "2024-12-10T12:14:42.000Z",
           fee: "0.00012",
-          balanceChanges: { raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [{ currency: "XRP", value: "-0.00012" }] },
+          balanceChanges: {
+            raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [
+              { currency: "XRP", value: "-0.00012" },
+              { mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578", value: "-50000000" },
+            ],
+          },
           mptokenIssuanceChanges: {
             "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
               status: "removed",
@@ -7116,7 +7126,6 @@ describe("Models", () => {
     it("UNLModify", function () {
       const tx = require("../examples/responses/UNLModify.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");
-      console.log(JSON.stringify(result));
       expect(result).to.eql({
         type: "UNLModify",
         address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",

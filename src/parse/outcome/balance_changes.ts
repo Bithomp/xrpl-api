@@ -57,7 +57,14 @@ function computeBalanceChange(node: NormalizedNode): BigNumber | null {
     value = parseValue(node.finalFields.Balance).minus(parseValue(node.previousFields.Balance));
   } else if (node.previousFields.MPTAmount || node.finalFields.MPTAmount) {
     value = parseValue(node.finalFields.MPTAmount ?? 0).minus(parseValue(node.previousFields.MPTAmount ?? 0));
+  } else if (node.newFields.MaximumAmount) {
+    // MPT issuance creation
+    value = parseValue(node.newFields.MaximumAmount);
+  } else if (node.diffType === "DeletedNode" && node.finalFields.MaximumAmount) {
+    // MPT issuance burning
+    value = parseValue(node.finalFields.MaximumAmount).multipliedBy(-1);
   } else if (node.previousFields.OutstandingAmount) {
+    // MPT issuance transfer or swap
     value = parseValue(node.previousFields.OutstandingAmount ?? 0).minus(
       parseValue(node.finalFields.OutstandingAmount ?? 0)
     );
@@ -73,7 +80,14 @@ function parseFinalBalance(node: NormalizedNode): BigNumber | null {
     return parseValue(node.finalFields.Balance);
   } else if (node.finalFields.MPTAmount) {
     return parseValue(node.finalFields.MPTAmount);
+  } else if (node.newFields.MaximumAmount) {
+    // MPT issuance creation
+    return parseValue(node.newFields.MaximumAmount);
+  } else if (node.diffType === "DeletedNode" && node.finalFields.MaximumAmount) {
+    // MPT issuance burning
+    return new BigNumber(0);
   } else if (node.finalFields.MaximumAmount) {
+    // MPT issuance transfer or swap
     return parseValue(node.finalFields.MaximumAmount).minus(parseValue(node.finalFields.OutstandingAmount));
   }
 

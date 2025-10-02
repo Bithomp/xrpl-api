@@ -64,7 +64,7 @@ describe("Models", () => {
       });
     });
 
-    it("parses for MPToken", function () {
+    it("parses for MPToken transfer", function () {
       const tx = require("../examples/responses/Payment_MPToken2.json");
       const result: any = Models.parseFinalBalances(tx.meta);
       expect(result).to.eql({
@@ -79,6 +79,34 @@ describe("Models", () => {
           {
             value: "49999100",
             mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+          },
+        ],
+      });
+    });
+
+    it("parses for MPToken create", function () {
+      const tx = require("../examples/responses/MPTokenIssuanceCreate.json");
+      const result: any = Models.parseFinalBalances(tx.meta);
+      expect(result).to.eql({
+        raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [
+          { currency: "XRP", value: "99.99988" },
+          {
+            mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+            value: "50000000",
+          },
+        ],
+      });
+    });
+
+    it("parses for MPToken destroy", function () {
+      const tx = require("../examples/responses/MPTokenIssuanceDestroy.json");
+      const result: any = Models.parseFinalBalances(tx.meta);
+      expect(result).to.eql({
+        raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [
+          { currency: "XRP", value: "99.99928" },
+          {
+            mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+            value: "0",
           },
         ],
       });
