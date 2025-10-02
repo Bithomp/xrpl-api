@@ -72,8 +72,8 @@ function parseFinalBalance(node: NormalizedNode): BigNumber | null {
   } else if (node.finalFields.Balance) {
     return parseValue(node.finalFields.Balance);
   } else if (node.finalFields.MPTAmount) {
-    return parseValue(node.finalFields);
-  } else if (node.finalFields.MPTAmount) {
+    return parseValue(node.finalFields.MPTAmount);
+  } else if (node.finalFields.MaximumAmount) {
     return parseValue(node.finalFields.MaximumAmount).minus(parseValue(node.finalFields.OutstandingAmount));
   }
 

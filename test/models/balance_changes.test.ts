@@ -63,5 +63,25 @@ describe("Models", () => {
         ],
       });
     });
+
+    it("parses for MPToken", function () {
+      const tx = require("../examples/responses/Payment_MPToken2.json");
+      const result: any = Models.parseFinalBalances(tx.meta);
+      expect(result).to.eql({
+        rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: [
+          { currency: "XRP", value: "99.99976" },
+          {
+            value: "900",
+            mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+          },
+        ],
+        raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [
+          {
+            value: "49999100",
+            mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
+          },
+        ],
+      });
+    });
   });
 });
