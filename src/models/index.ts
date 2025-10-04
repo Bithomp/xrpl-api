@@ -39,6 +39,7 @@ import parseTrustlineFlags from "../parse/ledger/trustline-flags";
 import parseOfferFlags from "../parse/ledger/offer-flags";
 import parseCredentialFlags from "../parse/ledger/credential-flags";
 import parseMPTokenIssuanceFlags from "../parse/ledger/mptoken-issuance-flags";
+import parseMPTokenFlags from "../parse/ledger/mptoken-flags";
 
 export {
   parseNFTokenMint,
@@ -53,4 +54,5 @@ export {
   parseOfferFlags,
   parseCredentialFlags,
   parseMPTokenIssuanceFlags,
+  parseMPTokenFlags,
 };

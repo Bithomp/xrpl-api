@@ -2,20 +2,23 @@ import BigNumber from "bignumber.js";
 
 import { removeUndefined } from "../../common";
 
+import parseMPTokenFlags from "../ledger/mptoken-flags";
+import { MPTokenFlagsKeysInterface } from "../../types/mptokens";
+
 export function parseMPTokenChanges(tx: object): object {
   return new MPTokenChanges(tx).call();
 }
 
 interface MPTokenChangesInterface {
   status: "added" | "modified" | "removed";
-  flags?: number;
+  flags?: MPTokenFlagsKeysInterface;
   account: string;
   amount?: string;
   mptIssuanceID?: string;
 
   // changes
   amountChange?: string; // amount difference
-  flagsChange?: number; // previous flags
+  flagsChange?: MPTokenFlagsKeysInterface; // previous flags
 }
 
 class MPTokenChanges {
@@ -68,7 +71,7 @@ class MPTokenChanges {
 
           this.addChange(mptIssuanceID, account, {
             status: "added",
-            flags: node.NewFields.Flags,
+            flags: parseMPTokenFlags(node.NewFields.Flags),
             mptIssuanceID,
             account,
             amount: node.NewFields.MPTAmount,
@@ -89,16 +92,21 @@ class MPTokenChanges {
             amountChange = undefined;
           }
 
+          let flagsChange: MPTokenFlagsKeysInterface | undefined;
+          if (node.PreviousFields?.Flags !== undefined) {
+            flagsChange = parseMPTokenFlags(node.PreviousFields.Flags);
+          }
+
           this.addChange(mptIssuanceID, account, {
             status: "modified",
-            flags: node.FinalFields.Flags,
+            flags: parseMPTokenFlags(node.FinalFields.Flags),
             mptIssuanceID,
             account,
             amount: node.FinalFields.MPTAmount,
 
             // changes
             amountChange,
-            flagsChange: node.PreviousFields.Flags,
+            flagsChange,
           });
         }
 
@@ -109,7 +117,7 @@ class MPTokenChanges {
 
           this.addChange(mptIssuanceID, account, {
             status: "removed",
-            flags: node.FinalFields.Flags,
+            flags: parseMPTokenFlags(node.FinalFields.Flags),
             mptIssuanceID,
             account,
             amount: node.FinalFields.MPTAmount,

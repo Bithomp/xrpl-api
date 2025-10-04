@@ -59,7 +59,14 @@ describe("Client", () => {
       it("works with obligations", async function () {
         const result: any = await Client.getAccountObligations("rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z");
         delete result._nodepref;
-        expect(Object.keys(result)).to.be.eql(["account", "ledger_hash", "ledger_index", "validated", "lines"]);
+        expect(Object.keys(result)).to.be.eql([
+          "account",
+          "ledger_hash",
+          "ledger_index",
+          "locked",
+          "validated",
+          "lines",
+        ]);
         expect(result.lines).to.be.eql([]);
       });
     });

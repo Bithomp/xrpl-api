@@ -6092,7 +6092,7 @@ describe("Models", () => {
             "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
               rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: {
                 status: "modified",
-                flags: 2,
+                flags: { locked: false, authorized: true },
                 mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
                 account: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
                 amount: "1000",
@@ -6170,7 +6170,7 @@ describe("Models", () => {
             "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
               rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: {
                 status: "modified",
-                flags: 2,
+                flags: { locked: false, authorized: true },
                 mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
                 account: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
                 amount: "900",
@@ -6239,7 +6239,7 @@ describe("Models", () => {
             "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
               rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: {
                 status: "modified",
-                flags: 2,
+                flags: { locked: false, authorized: true },
                 mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
                 account: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
                 amountChange: "-900",
@@ -6277,10 +6277,10 @@ describe("Models", () => {
             "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578": {
               rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt: {
                 status: "modified",
-                flags: 2,
+                flags: { locked: false, authorized: true },
                 mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
                 account: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
-                flagsChange: 0,
+                flagsChange: { locked: false, authorized: false },
               },
             },
           },

@@ -135,3 +135,13 @@ export type FormattedMPTokenIssuanceSetSpecification = {
   holder?: string;
   mptIssuanceID?: string;
 } & FormattedBaseSpecification;
+
+export const MPTokenFlagsKeys = {
+  locked: 0x00000001,
+  authorized: 0x00000002,
+};
+
+export interface MPTokenFlagsKeysInterface {
+  locked?: boolean;
+  authorized?: boolean;
+}
