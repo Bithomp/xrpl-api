@@ -164,7 +164,8 @@ export async function getTransactions(
     if (options.balanceChanges === true || options.specification === true) {
       for (const transaction of result.transactions) {
         if (options.balanceChanges === true) {
-          transaction.balanceChanges = parseBalanceChanges(transaction.meta, Client.getNativeCurrency());
+          const tx = transaction.tx || transaction;
+          transaction.balanceChanges = parseBalanceChanges(transaction.meta, Client.getNativeCurrency(), tx);
         }
 
         if (options.specification === true) {
@@ -307,7 +308,8 @@ export async function findTransactionsExt(
     if (formatted !== true && (loadOptions.balanceChanges === true || loadOptions.specification === true)) {
       for (const newTransaction of newTransactions) {
         if (loadOptions.balanceChanges === true) {
-          newTransaction.balanceChanges = parseBalanceChanges(newTransaction.meta, Client.getNativeCurrency());
+          const tx = newTransaction.tx || newTransaction;
+          newTransaction.balanceChanges = parseBalanceChanges(newTransaction.meta, Client.getNativeCurrency(), tx);
         }
 
         if (loadOptions.specification === true) {

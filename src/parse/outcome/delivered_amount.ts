@@ -14,7 +14,7 @@ function parseDeliveredAmount(
   }
 
   if (tx.TransactionType === "Payment") {
-    const txBalanceChanges = balanceChanges || parseBalanceChanges(tx.meta, getNativeCurrency());
+    const txBalanceChanges = balanceChanges || parseBalanceChanges(tx.meta, getNativeCurrency(), tx);
     if (txBalanceChanges) {
       const account = tx.Destination;
       const changes = txBalanceChanges[account];
@@ -27,7 +27,7 @@ function parseDeliveredAmount(
       }
     }
   } else if (tx.TransactionType === "CheckCash") {
-    const txBalanceChanges = balanceChanges || parseBalanceChanges(tx.meta, getNativeCurrency());
+    const txBalanceChanges = balanceChanges || parseBalanceChanges(tx.meta, getNativeCurrency(), tx);
     if (txBalanceChanges) {
       const account = tx.Account;
       const changes = txBalanceChanges[account];
@@ -40,7 +40,7 @@ function parseDeliveredAmount(
       }
     }
   } else if (tx.TransactionType === "Import") {
-    const txBalanceChanges = balanceChanges || parseBalanceChanges(tx.meta, getNativeCurrency());
+    const txBalanceChanges = balanceChanges || parseBalanceChanges(tx.meta, getNativeCurrency(), tx);
     const blob = parseImportBlob(tx.Blob);
     if (typeof blob === "object") {
       const account = blob.transaction.tx.Account;

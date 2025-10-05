@@ -114,7 +114,7 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
  * XRPL and Xahau
  */
 function getBalanceChanges(tx: any, nativeCurrency?: string): BalanceChanges | undefined {
-  const balanceChanges = parseBalanceChanges(tx.meta, nativeCurrency);
+  const balanceChanges = parseBalanceChanges(tx.meta, nativeCurrency, tx);
 
   return Object.keys(balanceChanges).length > 0 ? balanceChanges : undefined;
 }

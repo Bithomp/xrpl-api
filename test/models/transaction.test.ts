@@ -6253,6 +6253,147 @@ describe("Models", () => {
       });
     });
 
+    it("EscrowCreate MPToken", function () {
+      const tx = require("../examples/responses/EscrowCreateMPT.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      expect(result).to.eql({
+        type: "escrowCreation",
+        address: "rh6iZBNDiDSDmekSJqTZTHRnT2hNQJk5fA",
+        sequence: 54906,
+        id: "45D255B56446F337295158E10CED9868A62C156D41BD14A0727A14E43726BDA2",
+        ctid: "C000D67F00020002",
+        specification: {
+          source: { address: "rh6iZBNDiDSDmekSJqTZTHRnT2hNQJk5fA" },
+          destination: { address: "r3etb2R2JDcQS2gXBJk4M4ShutXJe2zkhs" },
+          amount: {
+            mpt_issuance_id: "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D",
+            value: "10000",
+            currencyDetails: null,
+          },
+          allowExecuteAfter: "2025-10-05T12:59:45.000Z",
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-10-05T12:59:32.000Z",
+          fee: "0.0001",
+          balanceChanges: {
+            rh6iZBNDiDSDmekSJqTZTHRnT2hNQJk5fA: [{ currency: "XRP", value: "-0.0001" }],
+          },
+          lockedBalanceChanges: {
+            rh6iZBNDiDSDmekSJqTZTHRnT2hNQJk5fA: [
+              { value: "10000", mpt_issuance_id: "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D" },
+            ],
+          },
+          escrowChanges: {
+            status: "created",
+            escrowIndex: "0C353F704FC83A79EC3EBC2C844C0B1A0397BE8E2F38228AD955B47AB63870FF",
+            escrowSequence: 54906,
+            amount: { mpt_issuance_id: "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D", value: "10000" },
+            source: { address: "rh6iZBNDiDSDmekSJqTZTHRnT2hNQJk5fA" },
+            destination: { address: "r3etb2R2JDcQS2gXBJk4M4ShutXJe2zkhs" },
+            allowExecuteAfter: "2025-10-05T12:59:45.000Z",
+            previousTxnID: "45D255B56446F337295158E10CED9868A62C156D41BD14A0727A14E43726BDA2",
+            previousTxnLgrSeq: 54911,
+          },
+          mptokenIssuanceChanges: {
+            "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D": {
+              status: "modified",
+              flags: {
+                locked: false,
+                canLock: false,
+                requireAuth: false,
+                canEscrow: true,
+                canTrade: false,
+                canTransfer: true,
+                canClawback: true,
+              },
+              mptIssuanceID: "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D",
+              issuer: "rhbqxHTJ82kPkNPcMCLNkB7LZYK3RWvjDN",
+              sequence: 54904,
+              maximumAmount: "10000",
+              outstandingAmount: "10000",
+              outstandingAmountChange: "10000",
+            },
+          },
+          ledgerIndex: 54911,
+          ledgerVersion: 54911,
+          indexInLedger: 2,
+        },
+      });
+    });
+
+    it("EscrowFinish MPToken", function () {
+      const tx = require("../examples/responses/EscrowFinishMPT.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      expect(result).to.eql({
+        type: "escrowExecution",
+        address: "r3etb2R2JDcQS2gXBJk4M4ShutXJe2zkhs",
+        sequence: 54907,
+        id: "5065E2DB078E7D4A98180099F66A126545BC5A6323B67C00B5BAC32C69C1E62F",
+        ctid: "C000D68600000002",
+        specification: {
+          source: { address: "r3etb2R2JDcQS2gXBJk4M4ShutXJe2zkhs" },
+          owner: "rh6iZBNDiDSDmekSJqTZTHRnT2hNQJk5fA",
+          escrowSequence: 54906,
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-10-05T12:59:52.000Z",
+          fee: "0.0001",
+          balanceChanges: {
+            r3etb2R2JDcQS2gXBJk4M4ShutXJe2zkhs: [
+              { currency: "XRP", value: "-0.0001" },
+              { value: "10000", mpt_issuance_id: "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D" },
+            ],
+            rh6iZBNDiDSDmekSJqTZTHRnT2hNQJk5fA: [
+              { value: "-10000", mpt_issuance_id: "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D" },
+            ],
+          },
+          lockedBalanceChanges: {
+            rh6iZBNDiDSDmekSJqTZTHRnT2hNQJk5fA: [
+              { value: "-10000", mpt_issuance_id: "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D" },
+            ],
+          },
+          escrowChanges: {
+            status: "executed",
+            escrowIndex: "0C353F704FC83A79EC3EBC2C844C0B1A0397BE8E2F38228AD955B47AB63870FF",
+            escrowSequence: 54906,
+            amount: { mpt_issuance_id: "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D", value: "10000" },
+            source: { address: "rh6iZBNDiDSDmekSJqTZTHRnT2hNQJk5fA" },
+            destination: { address: "r3etb2R2JDcQS2gXBJk4M4ShutXJe2zkhs" },
+            allowExecuteAfter: "2025-10-05T12:59:45.000Z",
+            previousTxnID: "45D255B56446F337295158E10CED9868A62C156D41BD14A0727A14E43726BDA2",
+            previousTxnLgrSeq: 54911,
+          },
+          mptokenIssuanceChanges: {
+            "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D": {
+              status: "modified",
+              flags: {
+                locked: false,
+                canLock: false,
+                requireAuth: false,
+                canEscrow: true,
+                canTrade: false,
+                canTransfer: true,
+                canClawback: true,
+              },
+              mptIssuanceID: "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D",
+              issuer: "rhbqxHTJ82kPkNPcMCLNkB7LZYK3RWvjDN",
+              sequence: 54904,
+              maximumAmount: "10000",
+              outstandingAmount: "10000",
+              outstandingAmountChange: "10000",
+            },
+          },
+          ledgerIndex: 54918,
+          ledgerVersion: 54918,
+          indexInLedger: 0,
+        },
+      });
+    });
+
     it("MPTokenAuthorize", function () {
       const tx = require("../examples/responses/MPTokenAuthorize.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");

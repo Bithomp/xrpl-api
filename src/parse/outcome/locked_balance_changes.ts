@@ -4,10 +4,11 @@ import { TransactionMetadata } from "xrpl";
 import { NormalizedNode, normalizeNode } from "../utils";
 
 interface LockedBalanceChangeQuantity {
-  issuer: string; // currency issuer
-  currency: string; // currency code
+  issuer?: string; // currency issuer
+  currency?: string; // currency code
   value: string; // balance change
-  counterparty: string; // address of the counterparty (issuer of the currency or holder of the balance)
+  counterparty?: string; // address of the counterparty (issuer of the currency or holder of the balance)
+  mpt_issuance_id?: string; // MPToken issuance ID
 }
 
 export interface AddressLockedBalanceChangeQuantity {
@@ -30,8 +31,12 @@ function groupByAddress(lockedBalanceChanges: AddressLockedBalanceChangeQuantity
   });
 }
 
-function parseValue(value): BigNumber {
-  return new BigNumber(value.value ?? value);
+function parseValue(value: any): BigNumber {
+  if (typeof value === "string" || typeof value === "number") {
+    return new BigNumber(value);
+  }
+
+  return new BigNumber(value.value ?? 0);
 }
 
 function computeBalanceChange(node: NormalizedNode) {
@@ -42,7 +47,10 @@ function computeBalanceChange(node: NormalizedNode) {
     value = parseValue(node.finalFields.LockedBalance).minus(parseValue(node.previousFields.LockedBalance));
   } else if (node.previousFields.LockedBalance) {
     value = parseValue(node.previousFields.LockedBalance).negated();
+  } else if (node.finalFields.LockedAmount || node.previousFields.LockedAmount) {
+    value = parseValue(node.finalFields.LockedAmount ?? 0).minus(parseValue(node.previousFields.LockedAmount ?? 0));
   }
+
   return value === null ? null : value.isZero() ? null : value;
 }
 
@@ -95,16 +103,36 @@ function parseTrustlineQuantity(node, valueParser): AddressLockedBalanceChangeQu
   return [result];
 }
 
+function parseMPTQuantity(node: NormalizedNode, valueParser: any): AddressLockedBalanceChangeQuantity | null {
+  const value = valueParser(node);
+
+  if (value === null) {
+    return null;
+  }
+
+  const fields = _.isEmpty(node.newFields) ? node.finalFields : (node.newFields as any);
+
+  return {
+    address: fields.Account,
+    lockedBalance: {
+      value: value.toString(),
+      mpt_issuance_id: fields.MPTokenIssuanceID,
+    },
+  };
+}
+
 function parseQuantities(metadata: TransactionMetadata, valueParser) {
   const values = metadata.AffectedNodes.map(function (affectedNode: any) {
     const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
-    if (node.LedgerEntryType !== "RippleState") {
+    if (!["RippleState", "MPToken"].includes(node.LedgerEntryType)) {
       return [];
     }
 
     const normalizedNode = normalizeNode(affectedNode);
     if (node.LedgerEntryType === "RippleState") {
       return parseTrustlineQuantity(normalizedNode, valueParser);
+    } else if (node.LedgerEntryType === "MPToken") {
+      return [parseMPTQuantity(normalizedNode, valueParser)];
     }
 
     return [];
@@ -120,7 +148,7 @@ function parseQuantities(metadata: TransactionMetadata, valueParser) {
  *  @param {Object} metadata Transaction metadata
  *  @returns {Object} parsed lockedBalance changes
  */
-function parseLockedBalanceChanges(metadata: TransactionMetadata) {
+function parseLockedBalanceChanges(metadata: TransactionMetadata): LockedBalanceChanges {
   return parseQuantities(metadata, computeBalanceChange);
 }
 

@@ -53,7 +53,7 @@
           },
           "LedgerEntryType": "MPToken",
           "LedgerIndex": "79DA17687A44857ADC3D81DAA7C86D626187919CAA2BCAC45475514ECBE45FAC",
-          "PreviousFields": [],
+          "PreviousFields": {},
           "PreviousTxnID": "7D444B9006061FC5E47623596D61A57862AE951A2D62BCA17A26103EA3A67A19",
           "PreviousTxnLgrSeq": 6560014
         }

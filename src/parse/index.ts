@@ -3,3 +3,4 @@ export * as Utils from "./utils";
 export * as Outcomes from "./outcome/index";
 export { parseOutcome } from "./outcome";
 export { parseTransactionType, parseTransaction } from "./transaction";
+export { normalizeMPTokensPreviousFields } from "./mptoken_normalize";

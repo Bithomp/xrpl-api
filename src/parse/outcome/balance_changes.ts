@@ -1,10 +1,11 @@
 import _ from "lodash";
 import BigNumber from "bignumber.js";
 import { TransactionMetadata } from "xrpl"; // Node, CreatedNode, ModifiedNode, DeletedNode,
-import { dropsToXrp } from "../../common";
+import { dropsToXrp, MAINNET_NATIVE_CURRENCY } from "../../common";
 import { getNativeCurrency } from "../../client";
 import { NormalizedNode, normalizeNode } from "../utils";
 import { buildMPTokenIssuanceID } from "../../models/mptoken";
+import { normalizeMPTokensPreviousFields } from "../mptoken_normalize";
 
 interface BalanceChangeQuantity {
   issuer?: string; // currency issuer
@@ -35,11 +36,6 @@ function groupByAddress(balanceChanges: AddressBalanceChangeQuantity[]) {
 }
 
 function parseValue(value: any): BigNumber {
-  // MPToken has array for previous fields if it is created/empty
-  if (Array.isArray(value)) {
-    return new BigNumber(0);
-  }
-
   if (typeof value === "string" || typeof value === "number") {
     return new BigNumber(value);
   }
@@ -55,19 +51,27 @@ function computeBalanceChange(node: NormalizedNode): BigNumber | null {
     value = parseValue(node.newFields);
   } else if (node.previousFields.Balance && node.finalFields.Balance) {
     value = parseValue(node.finalFields.Balance).minus(parseValue(node.previousFields.Balance));
-  } else if (node.previousFields.MPTAmount || node.finalFields.MPTAmount) {
-    value = parseValue(node.finalFields.MPTAmount ?? 0).minus(parseValue(node.previousFields.MPTAmount ?? 0));
-  } else if (node.newFields.MaximumAmount) {
-    // MPT issuance creation
-    value = parseValue(node.newFields.MaximumAmount);
-  } else if (node.diffType === "DeletedNode" && node.finalFields.MaximumAmount) {
-    // MPT issuance burning
-    value = parseValue(node.finalFields.MaximumAmount).multipliedBy(-1);
-  } else if (node.previousFields.OutstandingAmount) {
-    // MPT issuance transfer or swap
-    value = parseValue(node.previousFields.OutstandingAmount ?? 0).minus(
-      parseValue(node.finalFields.OutstandingAmount ?? 0)
-    );
+  } else if (node.entryType === "MPToken" && (node.previousFields.MPTAmount || node.previousFields.LockedAmount)) {
+    // here we assume what mpt amount and locked amount it is general balance, locking unlocking will not be considered as balance change
+    // similar to IOU
+    // locked balance change will be calculated in locked_balance_changes.ts
+    value = parseValue(node.finalFields.MPTAmount ?? 0)
+      .minus(parseValue(node.previousFields.MPTAmount ?? 0))
+      .plus(parseValue(node.finalFields.LockedAmount ?? 0))
+      .minus(parseValue(node.previousFields.LockedAmount ?? 0));
+  } else if (node.entryType === "MPTokenIssuance") {
+    if (node.newFields.MaximumAmount) {
+      // MPT issuance issuing
+      value = parseValue(node.newFields.MaximumAmount);
+    } else if (node.diffType === "DeletedNode" && node.finalFields.MaximumAmount) {
+      // MPT issuance burning
+      value = parseValue(node.finalFields.MaximumAmount).multipliedBy(-1);
+    } else if (node.previousFields.OutstandingAmount) {
+      // MPT issuance transfer or swap
+      value = parseValue(node.previousFields.OutstandingAmount ?? 0).minus(
+        parseValue(node.finalFields.OutstandingAmount ?? 0)
+      );
+    }
   }
 
   return value === null ? null : value.isZero() ? null : value;
@@ -78,17 +82,19 @@ function parseFinalBalance(node: NormalizedNode): BigNumber | null {
     return parseValue(node.newFields.Balance);
   } else if (node.finalFields.Balance) {
     return parseValue(node.finalFields.Balance);
-  } else if (node.finalFields.MPTAmount) {
+  } else if (node.entryType === "MPToken") {
     return parseValue(node.finalFields.MPTAmount);
-  } else if (node.newFields.MaximumAmount) {
-    // MPT issuance creation
-    return parseValue(node.newFields.MaximumAmount);
-  } else if (node.diffType === "DeletedNode" && node.finalFields.MaximumAmount) {
-    // MPT issuance burning
-    return new BigNumber(0);
-  } else if (node.finalFields.MaximumAmount) {
-    // MPT issuance transfer or swap
-    return parseValue(node.finalFields.MaximumAmount).minus(parseValue(node.finalFields.OutstandingAmount));
+  } else if (node.entryType === "MPTokenIssuance") {
+    if (node.newFields.MaximumAmount) {
+      // MPT issuance creation
+      return parseValue(node.newFields.MaximumAmount);
+    } else if (node.diffType === "DeletedNode" && node.finalFields.MaximumAmount) {
+      // MPT issuance burning
+      return new BigNumber(0);
+    } else if (node.finalFields.MaximumAmount) {
+      // MPT issuance transfer or swap
+      return parseValue(node.finalFields.MaximumAmount).minus(parseValue(node.finalFields.OutstandingAmount));
+    }
   }
 
   return null;
@@ -234,7 +240,13 @@ function parseQuantities(metadata: TransactionMetadata, valueParser: any, native
  *  @param {Object} metadata Transaction metadata
  *  @returns {Object} parsed balance changes
  */
-function parseBalanceChanges(metadata: TransactionMetadata, nativeCurrency?: string): BalanceChanges {
+function parseBalanceChanges(metadata: TransactionMetadata, nativeCurrency?: string, tx?: any): BalanceChanges {
+  // in case MPToken with Escrow transactions, some data can be missing in PreviousFields, normalizeMPTokensPreviousFields is fixing it
+  // in case MPTokenIssuance transfer value MPToken destination is missing in PreviousFields it is initial amount
+  if (tx && nativeCurrency === MAINNET_NATIVE_CURRENCY && metadata.TransactionResult === "tesSUCCESS") {
+    normalizeMPTokensPreviousFields(metadata, tx);
+  }
+
   return parseQuantities(metadata, computeBalanceChange, nativeCurrency);
 }
 

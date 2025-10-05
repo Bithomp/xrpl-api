@@ -126,7 +126,8 @@ export async function getTransaction(
     }
 
     if (options.balanceChanges === true && typeof result.meta === "object") {
-      result.balanceChanges = parseBalanceChanges(result.meta, Client.getNativeCurrency());
+      const tx = result.tx || result.tx_json || result;
+      result.balanceChanges = parseBalanceChanges(result.meta, Client.getNativeCurrency(), tx);
     }
 
     if (options.specification === true) {
@@ -237,7 +238,8 @@ export async function getTransactionByCTID(
   }
 
   if (options.balanceChanges === true && typeof result.meta === "object") {
-    result.balanceChanges = parseBalanceChanges(result.meta, Client.getNativeCurrency())
+    const tx = result.tx || result.tx_json || result;
+    result.balanceChanges = parseBalanceChanges(result.meta, Client.getNativeCurrency(), tx);
   }
 
   if (options.specification === true) {
