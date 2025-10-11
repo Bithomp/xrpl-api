@@ -14,10 +14,12 @@ interface MPTokenChangesInterface {
   flags?: MPTokenFlagsKeysInterface;
   account: string;
   amount?: string;
+  lockedAmount?: string;
   mptIssuanceID?: string;
 
   // changes
   amountChange?: string; // amount difference
+  lockedAmountChange?: string; // locked amount difference
   flagsChange?: MPTokenFlagsKeysInterface; // previous flags
 }
 
@@ -64,17 +66,17 @@ class MPTokenChanges {
     for (const affectedNode of this.tx.meta.AffectedNodes) {
       const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
       if (node?.LedgerEntryType === "MPToken" && node?.LedgerIndex) {
-        // create a new AMM entry
+        // create a new MPToken entry
         if (affectedNode.CreatedNode) {
           const mptIssuanceID = node.NewFields.MPTokenIssuanceID;
           const account = node.NewFields.Account;
-
           this.addChange(mptIssuanceID, account, {
             status: "added",
             flags: parseMPTokenFlags(node.NewFields.Flags),
             mptIssuanceID,
             account,
             amount: node.NewFields.MPTAmount,
+            lockedAmount: node.NewFields.LockedAmount,
           });
         }
 
@@ -92,6 +94,18 @@ class MPTokenChanges {
             amountChange = undefined;
           }
 
+          // calc locked amount change
+          let lockedAmountChange: string | undefined = undefined;
+          if (node.PreviousFields.LockedAmount !== undefined) {
+            lockedAmountChange = new BigNumber(node.FinalFields.LockedAmount ?? 0)
+              .minus(node.PreviousFields.LockedAmount ?? 0)
+              .toString();
+
+            if (lockedAmountChange === "0") {
+              lockedAmountChange = undefined;
+            }
+          }
+
           let flagsChange: MPTokenFlagsKeysInterface | undefined;
           if (node.PreviousFields?.Flags !== undefined) {
             flagsChange = parseMPTokenFlags(node.PreviousFields.Flags);
@@ -103,9 +117,11 @@ class MPTokenChanges {
             mptIssuanceID,
             account,
             amount: node.FinalFields.MPTAmount,
+            lockedAmount: node.FinalFields.LockedAmount,
 
             // changes
             amountChange,
+            lockedAmountChange,
             flagsChange,
           });
         }
@@ -121,6 +137,7 @@ class MPTokenChanges {
             mptIssuanceID,
             account,
             amount: node.FinalFields.MPTAmount,
+            lockedAmount: node.FinalFields.LockedAmount,
           });
         }
       }

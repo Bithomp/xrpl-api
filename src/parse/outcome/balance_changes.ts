@@ -48,7 +48,7 @@ function computeBalanceChange(node: NormalizedNode): BigNumber | null {
   if (node.newFields.Balance) {
     value = parseValue(node.newFields.Balance);
   } else if (node.newFields.MPTAmount) {
-    value = parseValue(node.newFields);
+    value = parseValue(node.newFields.MPTAmount);
   } else if (node.previousFields.Balance && node.finalFields.Balance) {
     value = parseValue(node.finalFields.Balance).minus(parseValue(node.previousFields.Balance));
   } else if (node.entryType === "MPToken" && (node.previousFields.MPTAmount || node.previousFields.LockedAmount)) {

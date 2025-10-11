@@ -61,6 +61,9 @@ const MPTOKEN_TYPES = [
   "MPTokenIssuanceDestroy",
   "Payment",
   "Clawback",
+  "EscrowFinish",
+  "EscrowCreate",
+  "EscrowCancel",
 ];
 const CREDENTIAL_TYPES = ["CredentialCreate", "CredentialAccept", "CredentialDelete"];
 const DELEGATE_TYPES = ["DelegateSet"];

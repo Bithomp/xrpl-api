@@ -18,12 +18,14 @@ interface MPTokenIssuanceChangesInterface {
   metadata?: string;
   maximumAmount?: string;
   outstandingAmount?: string;
+  lockedAmount?: string;
   sequence?: number;
   transferFee?: number;
   mptIssuanceID?: string;
 
   // changes
   outstandingAmountChange?: string; // amount difference
+  lockedAmountChange?: string; // locked amount difference
   flagsChange?: MPTokenIssuanceFlagsKeysInterface; // previous flags
 }
 
@@ -80,6 +82,7 @@ class MPTokenIssuanceChanges {
             transferFee: node.NewFields.TransferFee,
             maximumAmount: node.NewFields.MaximumAmount,
             outstandingAmount: node.NewFields.OutstandingAmount,
+            lockedAmount: node.NewFields.LockedAmount,
             metadata: node.NewFields.Metadata,
             scale: node.NewFields.AssetScale,
           });
@@ -99,6 +102,27 @@ class MPTokenIssuanceChanges {
             outstandingAmountChange = undefined;
           }
 
+          let lockedAmountChange: string | undefined = undefined;
+          if (node.PreviousFields.LockedAmount !== undefined) {
+            lockedAmountChange = new BigNumber(node.FinalFields.LockedAmount ?? 0)
+              .minus(new BigNumber(node.PreviousFields.LockedAmount ?? 0))
+              .toString();
+
+            if (lockedAmountChange === "0") {
+              lockedAmountChange = undefined;
+            }
+          }
+
+          let lockedAmount = node.FinalFields.LockedAmount;
+          if (lockedAmount === undefined && lockedAmountChange !== undefined) {
+            lockedAmount = "0";
+          }
+
+          let flagsChange: MPTokenIssuanceFlagsKeysInterface | undefined;
+          if (node.PreviousFields?.Flags !== undefined) {
+            flagsChange = parseMPTokenIssuanceFlags(node.PreviousFields.Flags);
+          }
+
           this.addChange(mptIssuanceID, {
             status: "modified",
             flags: parseMPTokenIssuanceFlags(node.FinalFields.Flags),
@@ -108,12 +132,14 @@ class MPTokenIssuanceChanges {
             transferFee: node.FinalFields.TransferFee,
             maximumAmount: node.FinalFields.MaximumAmount,
             outstandingAmount: node.FinalFields.OutstandingAmount,
+            lockedAmount,
             metadata: node.FinalFields.Metadata,
             scale: node.FinalFields.AssetScale,
 
             // changes
             outstandingAmountChange,
-            flagsChange: node.PreviousFields.hasOwnProperty("Flags") ? parseMPTokenIssuanceFlags(node.PreviousFields.Flags) : undefined,
+            lockedAmountChange,
+            flagsChange,
           });
         }
 
@@ -131,6 +157,7 @@ class MPTokenIssuanceChanges {
             transferFee: node.FinalFields.TransferFee,
             maximumAmount: node.FinalFields.MaximumAmount,
             outstandingAmount: node.FinalFields.OutstandingAmount,
+            lockedAmount: node.FinalFields.LockedAmount,
             metadata: node.FinalFields.Metadata,
             scale: node.FinalFields.AssetScale,
           });

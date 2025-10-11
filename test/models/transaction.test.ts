@@ -6296,6 +6296,22 @@ describe("Models", () => {
             previousTxnID: "45D255B56446F337295158E10CED9868A62C156D41BD14A0727A14E43726BDA2",
             previousTxnLgrSeq: 54911,
           },
+          mptokenChanges: {
+            "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D": {
+              rh6iZBNDiDSDmekSJqTZTHRnT2hNQJk5fA: {
+                account: "rh6iZBNDiDSDmekSJqTZTHRnT2hNQJk5fA",
+                amountChange: "-10000",
+                flags: {
+                  authorized: false,
+                  locked: false,
+                },
+                lockedAmount: "10000",
+                lockedAmountChange: "10000",
+                mptIssuanceID: "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D",
+                status: "modified",
+              },
+            },
+          },
           mptokenIssuanceChanges: {
             "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D": {
               status: "modified",
@@ -6314,6 +6330,8 @@ describe("Models", () => {
               maximumAmount: "10000",
               outstandingAmount: "10000",
               outstandingAmountChange: "10000",
+              lockedAmount: "10000",
+              lockedAmountChange: "10000",
             },
           },
           ledgerIndex: 54911,
@@ -6367,6 +6385,33 @@ describe("Models", () => {
             previousTxnID: "45D255B56446F337295158E10CED9868A62C156D41BD14A0727A14E43726BDA2",
             previousTxnLgrSeq: 54911,
           },
+          mptokenChanges: {
+            "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D": {
+              r3etb2R2JDcQS2gXBJk4M4ShutXJe2zkhs: {
+                account: "r3etb2R2JDcQS2gXBJk4M4ShutXJe2zkhs",
+                amount: "10000",
+                amountChange: "10000",
+                flags: {
+                  authorized: false,
+                  locked: false,
+                },
+                mptIssuanceID: "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D",
+                status: "modified",
+              },
+              rh6iZBNDiDSDmekSJqTZTHRnT2hNQJk5fA: {
+                account: "rh6iZBNDiDSDmekSJqTZTHRnT2hNQJk5fA",
+                amount: "0",
+                flags: {
+                  authorized: false,
+                  locked: false,
+                },
+                lockedAmount: "0",
+                lockedAmountChange: "-10000",
+                mptIssuanceID: "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D",
+                status: "modified",
+              },
+            },
+          },
           mptokenIssuanceChanges: {
             "0000D678277F62543F873DD8018E1BC8740EB7040B6A636D": {
               status: "modified",
@@ -6385,11 +6430,112 @@ describe("Models", () => {
               maximumAmount: "10000",
               outstandingAmount: "10000",
               outstandingAmountChange: "10000",
+              lockedAmount: "0",
+              lockedAmountChange: "-10000",
             },
           },
           ledgerIndex: 54918,
           ledgerVersion: 54918,
           indexInLedger: 0,
+        },
+      });
+    });
+
+    it("EscrowFinish MPToken 2", function () {
+      const tx = require("../examples/responses/EscrowFinishMPT2.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      expect(result).to.eql({
+        type: "escrowExecution",
+        address: "r9zgqVkhUa8KwtZ5h83eSCsavH1UzJ13qU",
+        sequence: 12566,
+        id: "6A70505AFD7AECF0776942CDA893DE1A3269BF2B2A60B8FA29BCC046557B5D44",
+        ctid: "C000311C00240002",
+        specification: {
+          source: { address: "r9zgqVkhUa8KwtZ5h83eSCsavH1UzJ13qU" },
+          owner: "rs9yZSfsJorVDAqGHqR1cbAVvzjbYPcrv3",
+          escrowSequence: 12562,
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-10-04T00:49:10.000Z",
+          fee: "0.0001",
+          balanceChanges: {
+            rs9yZSfsJorVDAqGHqR1cbAVvzjbYPcrv3: [
+              { value: "-10000", mpt_issuance_id: "0000310F59D2E30E5891EB724AC64CFCC6C16E4C6D6DD72A" },
+            ],
+            r9zgqVkhUa8KwtZ5h83eSCsavH1UzJ13qU: [
+              { value: "10000", mpt_issuance_id: "0000310F59D2E30E5891EB724AC64CFCC6C16E4C6D6DD72A" },
+              { currency: "XRP", value: "-0.0001" },
+            ],
+          },
+          lockedBalanceChanges: {
+            rs9yZSfsJorVDAqGHqR1cbAVvzjbYPcrv3: [
+              { value: "-10000", mpt_issuance_id: "0000310F59D2E30E5891EB724AC64CFCC6C16E4C6D6DD72A" },
+            ],
+          },
+          escrowChanges: {
+            status: "executed",
+            escrowIndex: "8B44D9D1EEEB5BB22C6F60B5A2A5004BE0D1674286C9D62DE7A68DE47FCC0673",
+            escrowSequence: 12562,
+            amount: { mpt_issuance_id: "0000310F59D2E30E5891EB724AC64CFCC6C16E4C6D6DD72A", value: "10000" },
+            source: { address: "rs9yZSfsJorVDAqGHqR1cbAVvzjbYPcrv3" },
+            destination: { address: "r9zgqVkhUa8KwtZ5h83eSCsavH1UzJ13qU" },
+            allowExecuteAfter: "2025-10-04T00:48:57.000Z",
+            previousTxnID: "033714851307AE8639698EB25937969755A1202121DCAE17D6A20283148178C4",
+            previousTxnLgrSeq: 12568,
+          },
+          mptokenChanges: {
+            "0000310F59D2E30E5891EB724AC64CFCC6C16E4C6D6DD72A": {
+              r9zgqVkhUa8KwtZ5h83eSCsavH1UzJ13qU: {
+                account: "r9zgqVkhUa8KwtZ5h83eSCsavH1UzJ13qU",
+                amount: "10000",
+                flags: {
+                  authorized: false,
+                  locked: false,
+                },
+                mptIssuanceID: "0000310F59D2E30E5891EB724AC64CFCC6C16E4C6D6DD72A",
+                status: "added",
+              },
+              rs9yZSfsJorVDAqGHqR1cbAVvzjbYPcrv3: {
+                account: "rs9yZSfsJorVDAqGHqR1cbAVvzjbYPcrv3",
+                amount: "0",
+                flags: {
+                  authorized: false,
+                  locked: false,
+                },
+                mptIssuanceID: "0000310F59D2E30E5891EB724AC64CFCC6C16E4C6D6DD72A",
+                lockedAmount: "0",
+                lockedAmountChange: "-10000",
+                status: "modified",
+              },
+            },
+          },
+          mptokenIssuanceChanges: {
+            "0000310F59D2E30E5891EB724AC64CFCC6C16E4C6D6DD72A": {
+              status: "modified",
+              flags: {
+                locked: false,
+                canLock: false,
+                requireAuth: false,
+                canEscrow: true,
+                canTrade: false,
+                canTransfer: true,
+                canClawback: false,
+              },
+              mptIssuanceID: "0000310F59D2E30E5891EB724AC64CFCC6C16E4C6D6DD72A",
+              issuer: "r9BAmkkBN88GSwzkwKoMsWYLSBnxuftEMM",
+              sequence: 12559,
+              maximumAmount: "10000",
+              outstandingAmount: "10000",
+              outstandingAmountChange: "10000",
+              lockedAmount: "0",
+              lockedAmountChange: "-10000",
+            },
+          },
+          ledgerIndex: 12572,
+          ledgerVersion: 12572,
+          indexInLedger: 36,
         },
       });
     });
