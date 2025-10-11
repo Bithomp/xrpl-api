@@ -55,10 +55,14 @@ function computeBalanceChange(node: NormalizedNode): BigNumber | null {
     // here we assume what mpt amount and locked amount it is general balance, locking unlocking will not be considered as balance change
     // similar to IOU
     // locked balance change will be calculated in locked_balance_changes.ts
-    value = parseValue(node.finalFields.MPTAmount ?? 0)
-      .minus(parseValue(node.previousFields.MPTAmount ?? 0))
-      .plus(parseValue(node.finalFields.LockedAmount ?? 0))
-      .minus(parseValue(node.previousFields.LockedAmount ?? 0));
+    value = parseValue(node.finalFields.MPTAmount ?? 0).minus(parseValue(node.previousFields.MPTAmount ?? 0));
+
+    // consider locked amount if. only if it is was changed
+    if (node.previousFields.LockedAmount) {
+      value = value
+        .plus(parseValue(node.finalFields.LockedAmount ?? 0))
+        .minus(parseValue(node.previousFields.LockedAmount ?? 0));
+    }
   } else if (node.entryType === "MPTokenIssuance") {
     if (node.newFields.MaximumAmount) {
       // MPT issuance issuing

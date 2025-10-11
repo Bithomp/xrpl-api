@@ -6186,6 +6186,84 @@ describe("Models", () => {
       });
     });
 
+    it("payment MPToken to issuer with locked amount", function () {
+      const tx = require("../examples/responses/Payment_MPToken3.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      console.log(JSON.stringify(result));
+      expect(result).to.eql({
+        type: "payment",
+        address: "r4JV72N4b1tsVxBpJiJhE2Q6xPYaaptqkM",
+        sequence: 12684,
+        id: "9A24EE573987068DB22C502401F20A75CB743C0D6BA6A5266E76D7786D946620",
+        ctid: "C000319300060002",
+        specification: {
+          source: {
+            address: "r4JV72N4b1tsVxBpJiJhE2Q6xPYaaptqkM",
+            maxAmount: { mpt_issuance_id: "0000318AE9A97B9D8EA92949881B1EFEEEC8780DDD0B85E7", value: "10000" },
+          },
+          destination: { address: "rBFMrYMtQxG3pYquJEbUYag8PprfhBLFqW" },
+          flags: {
+            fullyCanonicalSig: false,
+            innerBatchTxn: false,
+            noRippleDirect: false,
+            partialPayment: false,
+            limitQuality: false,
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-10-04T00:56:00.000Z",
+          fee: "0.0001",
+          balanceChanges: {
+            r4JV72N4b1tsVxBpJiJhE2Q6xPYaaptqkM: [
+              { value: "-10000", mpt_issuance_id: "0000318AE9A97B9D8EA92949881B1EFEEEC8780DDD0B85E7" },
+              { currency: "XRP", value: "-0.0001" },
+            ],
+            rBFMrYMtQxG3pYquJEbUYag8PprfhBLFqW: [
+              { value: "10000", mpt_issuance_id: "0000318AE9A97B9D8EA92949881B1EFEEEC8780DDD0B85E7" },
+            ],
+          },
+          mptokenIssuanceChanges: {
+            "0000318AE9A97B9D8EA92949881B1EFEEEC8780DDD0B85E7": {
+              status: "modified",
+              flags: {
+                locked: false,
+                canLock: false,
+                requireAuth: false,
+                canEscrow: true,
+                canTrade: false,
+                canTransfer: true,
+                canClawback: false,
+              },
+              mptIssuanceID: "0000318AE9A97B9D8EA92949881B1EFEEEC8780DDD0B85E7",
+              issuer: "r4JV72N4b1tsVxBpJiJhE2Q6xPYaaptqkM",
+              sequence: 12682,
+              outstandingAmount: "20000",
+              lockedAmount: "10000",
+              outstandingAmountChange: "10000",
+            },
+          },
+          mptokenChanges: {
+            "0000318AE9A97B9D8EA92949881B1EFEEEC8780DDD0B85E7": {
+              rBFMrYMtQxG3pYquJEbUYag8PprfhBLFqW: {
+                status: "modified",
+                flags: { locked: false, authorized: false },
+                mptIssuanceID: "0000318AE9A97B9D8EA92949881B1EFEEEC8780DDD0B85E7",
+                account: "rBFMrYMtQxG3pYquJEbUYag8PprfhBLFqW",
+                amount: "10000",
+                lockedAmount: "10000",
+                amountChange: "10000",
+              },
+            },
+          },
+          ledgerIndex: 12691,
+          ledgerVersion: 12691,
+          indexInLedger: 6,
+          deliveredAmount: { value: "10000", mpt_issuance_id: "0000318AE9A97B9D8EA92949881B1EFEEEC8780DDD0B85E7" },
+        },
+      });
+    });
+
     it("clawback MPToken", function () {
       const tx = require("../examples/responses/Clawback_MPToken.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");
