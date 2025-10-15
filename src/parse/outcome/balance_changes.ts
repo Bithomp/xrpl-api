@@ -6,6 +6,9 @@ import { getNativeCurrency } from "../../client";
 import { NormalizedNode, normalizeNode } from "../utils";
 import { buildMPTokenIssuanceID } from "../../models/mptoken";
 import { normalizeMPTokensPreviousFields } from "../mptoken_normalize";
+import parseAmount from "../ledger/amount";
+
+const ESCROW_TYPES = ["EscrowFinish", "EscrowCreate", "EscrowCancel"];
 
 interface BalanceChangeQuantity {
   issuer?: string; // currency issuer
@@ -22,6 +25,10 @@ export interface AddressBalanceChangeQuantity {
 
 export interface BalanceChanges {
   [key: string]: BalanceChangeQuantity[];
+}
+
+interface ParseBalanceChangesOptions {
+  adjustBalancesForNativeEscrow?: boolean; // escrow amount consider as locked change
 }
 
 function groupByAddress(balanceChanges: AddressBalanceChangeQuantity[]) {
@@ -46,10 +53,13 @@ function parseValue(value: any): BigNumber {
 function computeBalanceChange(node: NormalizedNode): BigNumber | null {
   let value: null | BigNumber = null;
   if (node.newFields.Balance) {
+    // XRP(XAH), IOU
     value = parseValue(node.newFields.Balance);
   } else if (node.newFields.MPTAmount) {
+    // MPToken
     value = parseValue(node.newFields.MPTAmount);
   } else if (node.previousFields.Balance && node.finalFields.Balance) {
+    // XRP(XAH), IOU
     value = parseValue(node.finalFields.Balance).minus(parseValue(node.previousFields.Balance));
   } else if (node.entryType === "MPToken" && (node.previousFields.MPTAmount || node.previousFields.LockedAmount)) {
     // here we assume what mpt amount and locked amount it is general balance, locking unlocking will not be considered as balance change
@@ -237,6 +247,63 @@ function parseQuantities(metadata: TransactionMetadata, valueParser: any, native
   return groupByAddress(_.compact(_.flatten(values)));
 }
 
+function adjustBalancesForNativeEscrow(
+  balanceChanges: BalanceChanges,
+  metadata: TransactionMetadata,
+  nativeCurrency?: string,
+  tx?: any
+) {
+  let escrow: any;
+  if (tx.TransactionType === "EscrowCreate") {
+    escrow = metadata.AffectedNodes.find((node: any) => node.CreatedNode?.LedgerEntryType === "Escrow");
+  } else {
+    escrow = metadata.AffectedNodes.find((node: any) => node.DeletedNode?.LedgerEntryType === "Escrow");
+  }
+
+  if (!escrow) {
+    return;
+  }
+
+  const fields = escrow.CreatedNode?.NewFields || (escrow.DeletedNode?.FinalFields as any);
+  if (!fields || !fields.Amount) {
+    return;
+  }
+
+  const amount = parseAmount(fields.Amount) as any;
+  if (!amount || amount.currency !== (nativeCurrency || MAINNET_NATIVE_CURRENCY) || !amount.value) {
+    return;
+  }
+
+  const source = fields.Account;
+
+  if (tx.TransactionType === "EscrowCreate") {
+    adjustBalancesChanges(balanceChanges, source, [{ currency: amount.currency, value: amount.value }]);
+  } else if (tx.TransactionType === "EscrowFinish" || tx.TransactionType === "EscrowCancel") {
+    adjustBalancesChanges(balanceChanges, source, [{ currency: amount.currency, value: `-${amount.value}` }]);
+  }
+}
+
+function adjustBalancesChanges(balanceChanges: BalanceChanges, address: string, changes: BalanceChangeQuantity[]) {
+  const existingChanges = balanceChanges[address] || [];
+  const change = existingChanges.find((c) => c.currency === changes[0].currency && c.issuer === changes[0].issuer);
+  if (change) {
+    const newValue = new BigNumber(change.value).plus(new BigNumber(changes[0].value));
+    if (newValue.isZero()) {
+      // remove change
+      balanceChanges[address] = existingChanges.filter((c) => c !== change);
+      if (balanceChanges[address].length === 0) {
+        delete balanceChanges[address];
+      }
+    } else {
+      change.value = newValue.toString();
+    }
+  } else {
+    // add new change
+    existingChanges.push(changes[0]);
+    balanceChanges[address] = existingChanges;
+  }
+}
+
 /**
  *  Computes the complete list of every balance that changed in the ledger
  *  as a result of the given transaction.
@@ -244,14 +311,37 @@ function parseQuantities(metadata: TransactionMetadata, valueParser: any, native
  *  @param {Object} metadata Transaction metadata
  *  @returns {Object} parsed balance changes
  */
-function parseBalanceChanges(metadata: TransactionMetadata, nativeCurrency?: string, tx?: any): BalanceChanges {
+function parseBalanceChanges(
+  metadata: TransactionMetadata,
+  nativeCurrency?: string,
+  tx?: any,
+  options?: ParseBalanceChangesOptions
+): BalanceChanges {
   // in case MPToken with Escrow transactions, some data can be missing in PreviousFields, normalizeMPTokensPreviousFields is fixing it
   // in case MPTokenIssuance transfer value MPToken destination is missing in PreviousFields it is initial amount
   if (tx && nativeCurrency === MAINNET_NATIVE_CURRENCY && metadata.TransactionResult === "tesSUCCESS") {
     normalizeMPTokensPreviousFields(metadata, tx);
   }
 
-  return parseQuantities(metadata, computeBalanceChange, nativeCurrency);
+  const balanceChanges = parseQuantities(metadata, computeBalanceChange, nativeCurrency);
+
+  // EscrowFinish with XRP(native currency) does not have locked balance change in metadata
+  // by default transfer after escrow finish is not considered as balance change in source account
+  // the same unlock funds should not be counted as balance change
+  // options.adjustBalancesForNativeEscrow as true, // escrow create, finish with unlock will not consider as balance change
+
+  if (tx && options && options.adjustBalancesForNativeEscrow) {
+    // if escrow create, remove escrow balance deduction to escrow
+    // if escrow finish with unlock, remove escrow balance addition
+    // if escrow finish with transfer, deduct balance from source account
+    // if escrow cancel, remove balance addition from escrow
+
+    if (tx.TransactionType && ESCROW_TYPES.includes(tx.TransactionType)) {
+      adjustBalancesForNativeEscrow(balanceChanges, metadata, nativeCurrency, tx);
+    }
+  }
+
+  return balanceChanges;
 }
 
 /**

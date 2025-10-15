@@ -1374,7 +1374,7 @@ describe("Models", () => {
       });
     });
 
-    it("EscrowFinish", function () {
+    it("EscrowFinish unlock", function () {
       const tx = require("../examples/responses/transaction/DA9C1C116F256B6ABD31F1D15895C5E617CBBB6CD7AFE9A988803304E7C3DAD6.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");
 
@@ -1415,7 +1415,49 @@ describe("Models", () => {
       });
     });
 
-    it("EscrowFinish IOU", function () {
+    it("EscrowFinish transfer", function () {
+      const tx = require("../examples/responses/EscrowFinish2.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+
+      expect(result).to.eql({
+        type: "escrowExecution",
+        address: "rprvkvUyxkZVtEtqa3gQ7g7qNEfDzD4tB9",
+        sequence: 66922965,
+        id: "B4085487547341DA75F439B90AB2A86D4B6F1AA325A6250A66A8080069DB9D87",
+        ctid: "C54C18F0000D0000",
+        specification: {
+          source: { address: "rprvkvUyxkZVtEtqa3gQ7g7qNEfDzD4tB9" },
+          owner: "rprvkvUyxkZVtEtqa3gQ7g7qNEfDzD4tB9",
+          escrowSequence: 66922953,
+          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2024-06-22T20:57:31.000Z",
+          fee: "0.000012",
+          balanceChanges: {
+            rWsWrfgbhim1Quy7JjvoCJBo1QdcJftKF: [{ currency: "XRP", value: "205" }],
+            rprvkvUyxkZVtEtqa3gQ7g7qNEfDzD4tB9: [{ currency: "XRP", value: "-0.000012" }],
+          },
+          escrowChanges: {
+            status: "executed",
+            escrowIndex: "34049C3357B9D126EDB33A82DDB2357E8C17BDFF036DCEA98AE4A6A326392887",
+            escrowSequence: 66922953,
+            amount: "205000000",
+            source: { address: "rprvkvUyxkZVtEtqa3gQ7g7qNEfDzD4tB9" },
+            destination: { address: "rWsWrfgbhim1Quy7JjvoCJBo1QdcJftKF" },
+            allowExecuteAfter: "2024-06-15T15:00:00.000Z",
+            previousTxnID: "165A5D3FF932988B702E27B46F683E504DB70EE6B01BBD213BDCA296B8E75DB9",
+            previousTxnLgrSeq: 82207335,
+          },
+          ledgerIndex: 88873200,
+          ledgerVersion: 88873200,
+          indexInLedger: 13,
+        },
+      });
+    });
+
+    it("EscrowFinish IOU unlock", function () {
       const tx = require("../examples/responses/transaction/CB192FC862D00F6A49E819EF99053BE534A6EC703418306E415C6230F5786FDB.json");
       const result: any = Models.getTxDetails(tx, false, "XAH");
 
@@ -1467,7 +1509,7 @@ describe("Models", () => {
       });
     });
 
-    it("EscrowFinish IOU 2", function () {
+    it("EscrowFinish IOU unlock 2", function () {
       const tx = require("../examples/responses/EscrowFinishIOU.json");
       const result: any = Models.getTxDetails(tx, false, "XAH");
 
@@ -6189,7 +6231,7 @@ describe("Models", () => {
     it("payment MPToken to issuer with locked amount", function () {
       const tx = require("../examples/responses/Payment_MPToken3.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");
-      console.log(JSON.stringify(result));
+
       expect(result).to.eql({
         type: "payment",
         address: "r4JV72N4b1tsVxBpJiJhE2Q6xPYaaptqkM",

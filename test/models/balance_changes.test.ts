@@ -1,7 +1,96 @@
 import { expect } from "chai";
 import { Models } from "../../src/index";
+import { MAINNET_NATIVE_CURRENCY } from "../../src/common";
 
 describe("Models", () => {
+  describe("parseBalanceChanges", () => {
+    it("parses for EscrowCreate", function () {
+      const tx = require("../examples/responses/transaction/C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7.json");
+      const result: any = Models.parseBalanceChanges(tx.meta);
+
+      expect(result).to.eql({ rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn: [{ currency: "XRP", value: "-0.01001" }] });
+    });
+
+    it("parses for EscrowCreate with adjustBalancesForNativeEscrow", function () {
+      const tx = require("../examples/responses/transaction/C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForNativeEscrow: true,
+      });
+
+      expect(result).to.eql({ rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn: [{ currency: "XRP", value: "-0.00001" }] });
+    });
+
+    it("parses for EscrowFinish IOU unlock", function () {
+      const tx = require("../examples/responses/transaction/CB192FC862D00F6A49E819EF99053BE534A6EC703418306E415C6230F5786FDB.json");
+      const result: any = Models.parseBalanceChanges(tx.meta);
+
+      expect(result).to.eql({ rELeasERs3m4inA1UinRLTpXemqyStqzwh: [{ currency: "XRP", value: "-0.000012" }] });
+    });
+
+    it("parses for EscrowFinish transfer", function () {
+      const tx = require("../examples/responses/EscrowFinish2.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForNativeEscrow: false,
+      });
+
+      expect(result).to.eql({
+        rWsWrfgbhim1Quy7JjvoCJBo1QdcJftKF: [{ currency: "XRP", value: "205" }],
+        rprvkvUyxkZVtEtqa3gQ7g7qNEfDzD4tB9: [{ currency: "XRP", value: "-0.000012" }],
+      });
+    });
+
+    it("parses for EscrowFinish transfer with adjustBalancesForNativeEscrow", function () {
+      const tx = require("../examples/responses/EscrowFinish2.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForNativeEscrow: true,
+      });
+
+      expect(result).to.eql({
+        rWsWrfgbhim1Quy7JjvoCJBo1QdcJftKF: [{ currency: "XRP", value: "205" }],
+        rprvkvUyxkZVtEtqa3gQ7g7qNEfDzD4tB9: [{ currency: "XRP", value: "-205.000012" }],
+      });
+    });
+
+    it("parses for EscrowFinish unlock", function () {
+      const tx = require("../examples/responses/EscrowFinish.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForNativeEscrow: false,
+      });
+
+      expect(result).to.eql({
+        rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn: [{ currency: "XRP", value: "-0.005" }],
+        rKDvgGUsNPZxsgmoemfrgXPS2Not4co2op: [{ currency: "XRP", value: "1000000000" }],
+      });
+    });
+
+    it("parses for EscrowFinish unlock with adjustBalancesForNativeEscrow", function () {
+      const tx = require("../examples/responses/EscrowFinish.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForNativeEscrow: true,
+      });
+
+      expect(result).to.eql({ rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn: [{ currency: "XRP", value: "-0.005" }] });
+    });
+
+    it("parses for EscrowCancel unlock", function () {
+      const tx = require("../examples/responses/transaction/B24B9D7843F99AED7FB8A3929151D0CCF656459AE40178B77C9D44CED64E839B.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForNativeEscrow: false,
+      });
+
+      expect(result).to.eql({ rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn: [{ currency: "XRP", value: "0.009988" }] });
+    });
+
+    it("parses for EscrowCancel unlock with adjustBalancesForNativeEscrow", function () {
+      const tx = require("../examples/responses/transaction/B24B9D7843F99AED7FB8A3929151D0CCF656459AE40178B77C9D44CED64E839B.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForNativeEscrow: true,
+      });
+
+      expect(result).to.eql({ rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn: [{ currency: "XRP", value: "-0.000012" }] });
+    });
+  });
+
   describe("parseFinalBalances", () => {
     it("parses for NFTokenAcceptOfferSell", function () {
       const tx = require("../examples/responses/NFTokenAcceptOfferSell.json");
@@ -13,7 +102,7 @@ describe("Models", () => {
       });
     });
 
-    it("parses for Escrow IOU", function () {
+    it("parses for Escrow IOU unlock", function () {
       const tx = require("../examples/responses/transaction/CB192FC862D00F6A49E819EF99053BE534A6EC703418306E415C6230F5786FDB.json");
       const result: any = Models.parseFinalBalances(tx.meta);
 
