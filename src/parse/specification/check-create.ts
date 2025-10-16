@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { CheckCreate } from "xrpl";
-import { removeUndefined } from "../../common";
+import { removeUndefined, emptyObjectToUndefined } from "../../common";
 import { parseTimestamp } from "../utils";
 import parseAmount from "../ledger/amount";
 import { parseEmittedDetails } from "../ledger/emit_details";
@@ -26,7 +26,7 @@ function parseCheckCreate(tx: CheckCreate, nativeCurrency?: string): FormattedCh
     expiration: tx.Expiration && parseTimestamp(tx.Expiration),
     invoiceID: tx.InvoiceID,
     emittedDetails: parseEmittedDetails(tx),
-    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
+    flags: emptyObjectToUndefined(parseTxGlobalFlags(tx.Flags as number, { nativeCurrency })),
     memos: parseMemos(tx),
   });
 }

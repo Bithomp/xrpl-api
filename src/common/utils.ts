@@ -186,13 +186,26 @@ export function xrpToDrops(xrp: BigNumber.Value): string {
 }
 
 /**
- * Removes undefined values from an object.
+ * Removes undefined and null values from an object.
  *
- * @param obj - The object to remove undefined values from.
- * @returns The object with undefined values removed.
+ * @param obj - The object to remove values from.
+ * @returns The object with values removed.
  */
 export function removeUndefined<T extends object>(obj: T): T {
   return _.omitBy(obj, (value) => value == null) as T; // eslint-disable-line eqeqeq
+}
+
+/**
+ * If the object is empty, returns undefined; otherwise, returns the object.
+ *
+ * @param obj - The object to check.
+ * @returns The object or undefined if it is empty.
+ */
+export function emptyObjectToUndefined<T extends object>(obj: T): T | undefined {
+  if (_.isEmpty(obj)) {
+    return undefined;
+  }
+  return obj;
 }
 
 /**

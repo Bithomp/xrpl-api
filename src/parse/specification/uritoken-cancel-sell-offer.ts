@@ -1,14 +1,13 @@
 import * as assert from "assert";
 import { removeUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
-import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
 import { parseSource } from "../ledger/source";
 import { FormattedURITokenCancelSellOfferSpecification } from "../../types/uritokens";
 
-function parseURITokenCancelSellOffer(tx: any, nativeCurrency?: string): FormattedURITokenCancelSellOfferSpecification {
+function parseURITokenCancelSellOffer(tx: any): FormattedURITokenCancelSellOfferSpecification {
   assert.ok(tx.TransactionType === "URITokenCancelSellOffer");
 
   return removeUndefined({
@@ -17,7 +16,6 @@ function parseURITokenCancelSellOffer(tx: any, nativeCurrency?: string): Formatt
     source: parseSource(tx),
     signer: parseSignerRegularKey(tx),
     emittedDetails: parseEmittedDetails(tx),
-    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),
   });
 }

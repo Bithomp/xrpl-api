@@ -1,6 +1,13 @@
 import { XAHAU_NATIVE_CURRENCY } from "../common";
 
 export enum GlobalFlags {
+  // The tfFullyCanonicalSig flag was used from 2014 until 2020 to protect against transaction malleability while
+  // maintaining compatibility with legacy signing software. The RequireFullyCanonicalSig amendment ended compatibility
+  // with such legacy software and made the protections the default for all transactions. If you are using a parallel
+  // network that does not have RequireFullyCanonicalSig enabled, you should always enable the tfFullyCanonicalSig flag
+  // to protect against transaction malleability.
+
+  // DEPRECATED No effect. (If the RequireFullyCanonicalSig amendment is not enabled, this flag enforces a fully-canonical signature.)
   tfFullyCanonicalSig = 0x80000000,
 
   // XRPL specific
@@ -15,7 +22,8 @@ export interface TxGlobalFlagsKeysInterface {
 }
 
 export const TxGlobalFlagsKeys = {
-  fullyCanonicalSig: GlobalFlags.tfFullyCanonicalSig,
+  // DEPRECATED No effect. (If the RequireFullyCanonicalSig amendment is not enabled, this flag enforces a fully-canonical signature.)
+  // fullyCanonicalSig: GlobalFlags.tfFullyCanonicalSig,
 };
 
 // XRPL specific (default)

@@ -23,7 +23,7 @@ describe("Models", () => {
           UNAVAILABLE: "Unrecognized transaction type.",
           SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is may included in this response.",
           source: { address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH" },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -52,7 +52,7 @@ describe("Models", () => {
           UNAVAILABLE: "Unrecognized transaction type.",
           SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is may included in this response.",
           source: { address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH" },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -83,7 +83,7 @@ describe("Models", () => {
           UNAVAILABLE: "Unrecognized transaction type.",
           SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is may included in this response.",
           source: { address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH" },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -125,7 +125,7 @@ describe("Models", () => {
           UNAVAILABLE: "Unrecognized transaction type.",
           SEE_RAW_TRANSACTION: "Since this type is unrecognized, `rawTransaction` is may included in this response.",
           source: { address: "r223rsyz1cfqPbjmiX6oYu1hFgNwCkWZH" },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -197,7 +197,6 @@ describe("Models", () => {
         specification: {
           source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
           flags: {
-            fullyCanonicalSig: true,
             innerBatchTxn: false,
             burnable: true,
             onlyXRP: true,
@@ -226,7 +225,7 @@ describe("Models", () => {
           source: { address: "rniNyQQA1bzfSQ4mF7f1QCQQsh5VYb7BoG" },
           nftokenID: "0010000035308C84A98C961A792FD63695C66FFD4120DE0D46DD60CE0020B433",
           uri: "ABC123",
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -334,7 +333,7 @@ describe("Models", () => {
         specification: {
           source: { address: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz" },
           nftokenBuyOffer: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         type: "nftokenAcceptOffer",
       });
@@ -410,7 +409,7 @@ describe("Models", () => {
         specification: {
           source: { address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw" },
           nftokenSellOffer: "D3C21058E60B6597BCB33A7A77B5FC90959082C96057EDBB388CE365E8D3245D",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         type: "nftokenAcceptOffer",
       });
@@ -430,7 +429,7 @@ describe("Models", () => {
           nftokenSellOffer: "863FF280CD94CBC759A403C0050D46BE1AE679E7D648F00DC07A69C2CB5DF9A2",
           nftokenBuyOffer: "7CA48473A15C908EF0616976EF11D54DD730D2168D44C89BA0C61CAE26AEE534",
           nftokenBrokerFee: "1000000",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -529,7 +528,7 @@ describe("Models", () => {
         specification: {
           source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
           nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC916E5DA9C00000001",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -576,7 +575,7 @@ describe("Models", () => {
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           nftokenID: "000B0000F1475F5D5FFB1E867825D2C11C78CBDCC4EF6765727D1EA000000005",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -666,7 +665,7 @@ describe("Models", () => {
           amount: "1",
           source: { address: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw" },
           owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false, sellToken: false },
+          flags: { innerBatchTxn: false, sellToken: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -726,7 +725,7 @@ describe("Models", () => {
           source: { address: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg" },
           destination: { address: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw" },
           expiration: 5241652095,
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false, sellToken: true },
+          flags: { innerBatchTxn: false, sellToken: true },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -788,7 +787,7 @@ describe("Models", () => {
           owner: "rKndKCQ3KHWMkRMmhhvRAEZuT2nepTctxw",
           source: { address: "rDruU1JTwpxc7dxhWmAFFKJpq3BwreFAFg" },
           expiration: 5241652095,
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false, sellToken: false },
+          flags: { innerBatchTxn: false, sellToken: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -846,7 +845,7 @@ describe("Models", () => {
         specification: {
           source: { address: "r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3" },
           nftokenOffers: ["D3789371E082D2DF4B49AA853E31D3A7E86A1D3B8C5531C160AF5B62AA2B8CA8"],
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -914,7 +913,7 @@ describe("Models", () => {
         specification: {
           source: { address: "rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz" },
           nftokenMinter: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         type: "settings",
       });
@@ -994,7 +993,6 @@ describe("Models", () => {
         specification: {
           source: { address: "rogue5HnPRSszD9CWGSUz8UGHMVwSSKF6" },
           flags: {
-            fullyCanonicalSig: false,
             innerBatchTxn: false,
             fillOrKill: false,
             immediateOrCancel: true,
@@ -1035,7 +1033,6 @@ describe("Models", () => {
           delegate: { address: "rffJ2L2nris6qYamn3C4RZYNcMoTfxjUUs" },
           source: { address: "rKM71RiJmqvZQfKUP3E7bwuZhvp8ArwxMi" },
           flags: {
-            fullyCanonicalSig: false,
             innerBatchTxn: false,
             passive: false,
             immediateOrCancel: false,
@@ -1131,7 +1128,7 @@ describe("Models", () => {
           signer: { address: "rD9iJmieYHn8jTtPjwwkW2Wm9sVDvPXLoJ" },
           settleDelay: 60,
           publicKey: "03CFD18E689434F032A4E84C63E2A3A6472D684EAF4FD52CA67742F3E24BAE81B2",
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1167,7 +1164,7 @@ describe("Models", () => {
           source: { address: "rNixEReo8KruCW6pekB5dJS4JGwoU2WbxJ" },
           channel: "1804E5E43616131C9292E738269DB882D1659D1216CD24EEB91DAE34654F94C2",
           amount: { currency: "XRP", value: "10" },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1208,7 +1205,7 @@ describe("Models", () => {
           source: { address: "rK6g2UYc4GpQH8DYdPG7wywyQbxkJpQTTN" },
           channel: "467D994665CBC68A483FE56EFEB079314D8EF0AEAD069F25885034D378616A29",
           balance: { currency: "XRP", value: "0.03" },
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1249,7 +1246,7 @@ describe("Models", () => {
           source: { address: "rGuVmkbuFWGwcvCpNhKCzXBP7pwAWjvHZG" },
           channel: "9ECE979F8C9C92F4520050A5E251902050419F8EF45F0E7F05EBBDE8E5DF3077",
           close: true,
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1290,7 +1287,7 @@ describe("Models", () => {
           condition: "A0258020A82A88B2DF843A54F58772E4A3861866ECDB4157645DD9AE528C1D3AEEDABAB6810120",
           allowCancelAfter: "2017-04-13T23:10:32.000Z",
           allowExecuteAfter: "2017-04-12T23:15:32.000Z",
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1335,7 +1332,6 @@ describe("Models", () => {
           source: { address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk" },
           destination: { address: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk" },
           allowExecuteAfter: "2022-06-22T10:16:00.000Z",
-          flags: { fullyCanonicalSig: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1389,7 +1385,7 @@ describe("Models", () => {
           source: { address: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz" },
           owner: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
           escrowSequence: 8013,
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
           memos: [{ type: "memo", format: "plain/text", data: "Auto execution by xrplexplorer.com" }],
         },
         outcome: {
@@ -1429,7 +1425,7 @@ describe("Models", () => {
           source: { address: "rprvkvUyxkZVtEtqa3gQ7g7qNEfDzD4tB9" },
           owner: "rprvkvUyxkZVtEtqa3gQ7g7qNEfDzD4tB9",
           escrowSequence: 66922953,
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1470,7 +1466,6 @@ describe("Models", () => {
           source: { address: "rELeasERs3m4inA1UinRLTpXemqyStqzwh" },
           owner: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
           escrowSequence: 3334565,
-          flags: { fullyCanonicalSig: true },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1523,7 +1518,6 @@ describe("Models", () => {
           source: { address: "rELeasERs3m4inA1UinRLTpXemqyStqzwh" },
           owner: "r9N4v3cWxfh4x6yUNjxNy3DbWUgbzMBLdk",
           escrowSequence: 753804730,
-          flags: { fullyCanonicalSig: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1572,7 +1566,7 @@ describe("Models", () => {
           source: { address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn" },
           owner: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
           escrowSequence: 366,
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1612,7 +1606,7 @@ describe("Models", () => {
           source: { address: "r4eecBHFbkHpLQEvSnB93bc3C2SVMjVKie" },
           memos: [{ data: "LEDGER2", type: "[https://xrpl.services]-Memo" }],
           regularKey: "rJ6kUAyW5uzxM1yjHtjXVYRscM9pogCt1C",
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1643,7 +1637,6 @@ describe("Models", () => {
             uri: "626974686F6D705F72656D697424746573742E78616861756578706C6F7265722E636F6D",
             flags: { burnable: true },
           },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1696,7 +1689,6 @@ describe("Models", () => {
           source: { address: "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h" },
           destination: { address: "rMVjmjek75ZADVE7c5LfChRHYvbhNNbsBg" },
           amounts: [{ currency: "TST", issuer: "r42Dswghppme2z9yMFzc12YsxiL9Xbss6h", value: "1000" }],
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1760,7 +1752,7 @@ describe("Models", () => {
             emitNonce: "198789B4BAA79FD6D522211B8AEE777E4846A887A435CA8B7C7452A64AF4A617",
             emitParentTxnID: "FDCA3EBCB58E6A0E927AE58A77AB50BAC1582CDA82913A624370D49284E33AC4",
           },
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -1827,7 +1819,7 @@ describe("Models", () => {
         sequence: 7751097,
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false, burnable: false },
+          flags: { innerBatchTxn: false, burnable: false },
           uri: "626974686F6D7024746573742E78616861756578706C6F7265722E636F6D",
         },
         type: "uritokenMint",
@@ -1876,7 +1868,7 @@ describe("Models", () => {
         sequence: 7751104,
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false, burnable: true },
+          flags: { innerBatchTxn: false, burnable: true },
           uri: "626974686F6D703224746573742E78616861756578706C6F7265722E636F6D",
         },
         type: "uritokenMint",
@@ -1936,7 +1928,7 @@ describe("Models", () => {
         },
         sequence: 7751113,
         specification: {
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false, burnable: true },
+          flags: { innerBatchTxn: false, burnable: true },
           amount: "1000000",
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
@@ -2001,7 +1993,6 @@ describe("Models", () => {
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenBurn",
       });
@@ -2019,7 +2010,7 @@ describe("Models", () => {
         ctid: "C04810660000535A",
         specification: {
           uri: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false, burnable: false },
+          flags: { innerBatchTxn: false, burnable: false },
           source: { address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU" },
           destination: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
           emittedDetails: {
@@ -2129,7 +2120,6 @@ describe("Models", () => {
           source: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
           uritokenID: "DEEA03EB3FC3D87C5224135C50AE68445714D9CF0F16AC14105C18A30FCF8FCB",
           amount: "1000000",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenBuy",
       });
@@ -2181,7 +2171,6 @@ describe("Models", () => {
           amount: "4000000",
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenCreateSellOffer",
       });
@@ -2239,7 +2228,6 @@ describe("Models", () => {
           amount: "1000000",
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenCreateSellOffer",
       });
@@ -2295,7 +2283,6 @@ describe("Models", () => {
           amount: "1000000",
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           destination: { address: "rN6tv3mZtnvjfDWdyvR47uwP4uEi2HuVKM" },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenCreateSellOffer",
       });
@@ -2350,7 +2337,6 @@ describe("Models", () => {
           uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
           amount: "1000000",
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenCreateSellOffer",
       });
@@ -2398,7 +2384,6 @@ describe("Models", () => {
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenCancelSellOffer",
       });
@@ -2425,7 +2410,6 @@ describe("Models", () => {
         specification: {
           source: { address: "r4zmMHH32XVDhGo8V2dFPZRJexKZc9YDUh" },
           uritokenID: "04988340515E5960B069FDBAC2FD995C2C4F45FCDC15B4A9173CFC9F063AC38B",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
         },
         type: "uritokenCancelSellOffer",
       });
@@ -3616,7 +3600,7 @@ describe("Models", () => {
               ],
               specification: {
                 source: { address: "rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1" },
-                flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+                flags: { innerBatchTxn: false },
               },
               outcome: {
                 balanceChanges: { rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1: [{ currency: "XRP", value: "-0.001337" }] },
@@ -3941,7 +3925,7 @@ describe("Models", () => {
               specification: {
                 nftokenID: "0008013AAC8B8F22E7C42AE160DBD7961899DF6AD5FF80880000099B00000000",
                 source: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
-                flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+                flags: { innerBatchTxn: false },
               },
               outcome: {
                 result: "tesSUCCESS",
@@ -3996,7 +3980,7 @@ describe("Models", () => {
             {
               specification: {
                 uri: "68747470733A2F2F692E6B796D2D63646E2E636F6D2F656E74726965732F69636F6E732F6F726967696E616C2F3030302F3032372F3437352F53637265656E5F53686F745F323031382D31302D32355F61745F31312E30322E31355F414D2E706E67",
-                flags: { fullyCanonicalSig: true, burnable: false },
+                flags: { burnable: false },
                 source: { address: "r3Q5KufJdkQyaLvHD22fJFVSZCqq4GczyU" },
                 destination: { address: "rGjLQjWZ1vRPzdqPXQM4jksdKQE8oRNd8T" },
                 emittedDetails: {
@@ -4213,7 +4197,7 @@ describe("Models", () => {
             counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
           },
           tradingFee: 1000,
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -4333,7 +4317,6 @@ describe("Models", () => {
             counterparty: "r9zeQhjj3scQFDRriCJpMjDtW6eWjWnp6M",
           },
           flags: {
-            fullyCanonicalSig: false,
             innerBatchTxn: false,
             limitLPToken: false,
             lpToken: false,
@@ -4455,7 +4438,7 @@ describe("Models", () => {
             counterparty: "rswh1fvyLqHizBS2awu1vs6QcmwTBd9qiv",
           },
           tradingFee: 200,
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -4532,7 +4515,7 @@ describe("Models", () => {
             counterparty: "rcEGREd8NmkKRE8GE424sksyt1tJVFZwu",
           },
           tradingFee: 980,
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -4610,7 +4593,6 @@ describe("Models", () => {
           },
           amount: { currency: "XRP", value: "16.858683" },
           flags: {
-            fullyCanonicalSig: false,
             innerBatchTxn: false,
             lpToken: false,
             withdrawAll: false,
@@ -4721,7 +4703,7 @@ describe("Models", () => {
             value: "21000",
             counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
           },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -4829,7 +4811,7 @@ describe("Models", () => {
             counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
           },
           authAccounts: ["rPy3sSmeFnibFVpUSckSMBHUei5pRJ23Sk"],
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -4952,7 +4934,7 @@ describe("Models", () => {
             value: "192615",
             counterparty: "rUGqgPbzKFVsSkTYUk4hdRoPwTaLv1iSDS",
           },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5070,7 +5052,7 @@ describe("Models", () => {
             counterparty: "rwRcbaKH781tVavtAnZvZ1gJZm5zZkxK2B",
           },
           holder: "raRjfQPhoZPukjd7av9LjnsNYAJ6KXHbyu",
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false, clawTwoAssets: false },
+          flags: { innerBatchTxn: false, clawTwoAssets: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5164,7 +5146,7 @@ describe("Models", () => {
             value: "1",
             counterparty: "rGnBUCwMJSX57QDecdyT5drdG3gvsmVqxD",
           },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5209,7 +5191,7 @@ describe("Models", () => {
           uri: "A1B1",
           data: "A1B1",
           didDocument: "A1B1",
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5242,7 +5224,7 @@ describe("Models", () => {
         specification: {
           source: { address: "rKdJTo619gUWvpaFUcWQmxCjbeZuNyCdKC" },
           didDocument: "",
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5274,7 +5256,7 @@ describe("Models", () => {
         id: "EAF3B729B4EB78E2DA65C3CDFF60910CF78776C046F72EB6F2CCD1A47CFE5DC8",
         specification: {
           source: { address: "rN8J1VxfTP9hzVU6VE3aQY89BhRh1ZHzwq" },
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5355,7 +5337,7 @@ describe("Models", () => {
               originalAssetPrice: "0.6017375",
             },
           ],
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5472,7 +5454,7 @@ describe("Models", () => {
               originalAssetPrice: "0.56495833",
             },
           ],
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5599,7 +5581,7 @@ describe("Models", () => {
             },
             { baseAsset: "XRP", quoteAsset: "USD", assetPrice: "624100000", scale: 9, originalAssetPrice: "0.6241" },
           ],
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5695,7 +5677,7 @@ describe("Models", () => {
             { baseAsset: "XRP", quoteAsset: "THB", assetPrice: "1949", scale: 2, originalAssetPrice: "19.49" },
             { baseAsset: "XRP", quoteAsset: "USD", assetPrice: "53126667", scale: 8, originalAssetPrice: "0.53126667" },
           ],
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5750,7 +5732,7 @@ describe("Models", () => {
         specification: {
           source: { address: "rhMB4JUAmKRBSha6QcgRim93hWb3py87qt" },
           oracleDocumentID: 1,
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -5789,7 +5771,6 @@ describe("Models", () => {
           paths:
             '[[{"currency":"STR","issuer":"rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS","type":48},{"account":"rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS","type":1},{"currency":"XLM","issuer":"rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y","type":48},{"account":"rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y","type":1}]]',
           flags: {
-            fullyCanonicalSig: false,
             innerBatchTxn: false,
             limitQuality: true,
             noRippleDirect: true,
@@ -6088,7 +6069,6 @@ describe("Models", () => {
           },
           destination: { address: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt" },
           flags: {
-            fullyCanonicalSig: false,
             innerBatchTxn: false,
             limitQuality: false,
             noRippleDirect: false,
@@ -6166,7 +6146,6 @@ describe("Models", () => {
           },
           destination: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
           flags: {
-            fullyCanonicalSig: false,
             innerBatchTxn: false,
             limitQuality: false,
             noRippleDirect: false,
@@ -6245,7 +6224,6 @@ describe("Models", () => {
           },
           destination: { address: "rBFMrYMtQxG3pYquJEbUYag8PprfhBLFqW" },
           flags: {
-            fullyCanonicalSig: false,
             innerBatchTxn: false,
             noRippleDirect: false,
             partialPayment: false,
@@ -6318,7 +6296,7 @@ describe("Models", () => {
         specification: {
           source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
           amount: { mpt_issuance_id: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578", value: "10000" },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6391,7 +6369,7 @@ describe("Models", () => {
             currencyDetails: null,
           },
           allowExecuteAfter: "2025-10-05T12:59:45.000Z",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6474,7 +6452,7 @@ describe("Models", () => {
           source: { address: "r3etb2R2JDcQS2gXBJk4M4ShutXJe2zkhs" },
           owner: "rh6iZBNDiDSDmekSJqTZTHRnT2hNQJk5fA",
           escrowSequence: 54906,
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6574,7 +6552,7 @@ describe("Models", () => {
           source: { address: "r9zgqVkhUa8KwtZ5h83eSCsavH1UzJ13qU" },
           owner: "rs9yZSfsJorVDAqGHqR1cbAVvzjbYPcrv3",
           escrowSequence: 12562,
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6671,7 +6649,7 @@ describe("Models", () => {
         ctid: "C064190E00000002",
         specification: {
           source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false, unauthorize: false },
+          flags: { innerBatchTxn: false, unauthorize: false },
           holder: "rLWSJKbwYSzG32JuGissYd66MFTvfMk4Bt",
           mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
         },
@@ -6711,7 +6689,6 @@ describe("Models", () => {
           source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
           scale: 2,
           flags: {
-            fullyCanonicalSig: false,
             innerBatchTxn: false,
             canLock: true,
             requireAuth: true,
@@ -6773,7 +6750,7 @@ describe("Models", () => {
         specification: {
           source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
           mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6824,7 +6801,7 @@ describe("Models", () => {
         ctid: "C064191400010002",
         specification: {
           source: { address: "raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak" },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false, lock: true, unlock: false },
+          flags: { innerBatchTxn: false, lock: true, unlock: false },
           mptIssuanceID: "006419063CEBEB49FC20032206CE0F203138BFC59F1AC578",
         },
         outcome: {
@@ -6887,7 +6864,6 @@ describe("Models", () => {
             { address: "rpxfwNAyPPrMMySaxAsU94ym7U5SHY6c1D" },
           ],
           flags: {
-            fullyCanonicalSig: true,
             innerBatchTxn: false,
             limitQuality: false,
             noRippleDirect: false,
@@ -6924,7 +6900,7 @@ describe("Models", () => {
           signer: { address: "rBmVUQNF6tJy4cLvoKdPXb4BNqKBk5JY1Y" },
           emailHash: "00000000000000000000000000000000",
           domain: "",
-          flags: { fullyCanonicalSig: true, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -6957,7 +6933,7 @@ describe("Models", () => {
             counterparty: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
           },
           expiration: "2025-02-14T22:52:51.000Z",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -7003,7 +6979,7 @@ describe("Models", () => {
             value: "80000000",
             counterparty: "rsbKWsVx8io3WhKaLhs4ehfeFhwQRmX6BC",
           },
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
           memos: [{ data: "First Ledger token claim" }],
         },
         outcome: {
@@ -7107,7 +7083,7 @@ describe("Models", () => {
           source: { address: "rKM71RiJmqvZQfKUP3E7bwuZhvp8ArwxMi" },
           authorize: "rffJ2L2nris6qYamn3C4RZYNcMoTfxjUUs",
           permissions: ["OfferCreate"],
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -7149,7 +7125,6 @@ describe("Models", () => {
             },
           ],
           source: { address: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76" },
-          flags: { fullyCanonicalSig: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -7196,7 +7171,7 @@ describe("Models", () => {
             },
           ],
           source: { address: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76" },
-          flags: { fullyCanonicalSig: false },
+
           memos: [{ type: "[https://xahau.services]-Memo", data: "https://ipfs.io/ipfs/f01551320<XRPL-HASH>" }],
         },
         outcome: {
@@ -7252,7 +7227,6 @@ describe("Models", () => {
           deepFrozen: true,
           authorized: true,
           flags: {
-            fullyCanonicalSig: true,
             innerBatchTxn: false,
             clearDeepFreeze: false,
             clearFreeze: false,
@@ -7288,7 +7262,7 @@ describe("Models", () => {
           source: { address: "rhvCTY6KfGZunJc2Avga53eqB5GSnYgcFT" },
           subject: "r4wxAnN2D2gffEU4WQb2myHDy618DihCtP",
           credentialType: "Administration",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -7323,7 +7297,7 @@ describe("Models", () => {
           source: { address: "r4wxAnN2D2gffEU4WQb2myHDy618DihCtP" },
           issuer: "rhvCTY6KfGZunJc2Avga53eqB5GSnYgcFT",
           credentialType: "Administration",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -7360,7 +7334,7 @@ describe("Models", () => {
           source: { address: "rfam8wvSzpVJF5pY57QoZk5KDcbN7rmGnA" },
           issuer: "rPgfVqatGapTMkpP8tm82XLqycx9aoKuBm",
           credentialType: "Administration",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -7397,7 +7371,7 @@ describe("Models", () => {
             { issuer: "rsjmWp2jgC3Zffqvo1L753fNY7kVE5tTod", type: "Administration" },
             { issuer: "ra5n43WFRusSG8XJdTEm8HgdFJRBgPgQAZ", type: "T23DEF" },
           ],
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -7423,7 +7397,7 @@ describe("Models", () => {
         specification: {
           source: { address: "rPCCfuJLx47yPXUArYhLSBjHttci5vzBJh" },
           unauthorizeCredentials: [{ issuer: "rU9nQu8oLefwF1WcbXCvHxBGkuUa2WzCz", type: "Administration" }],
-          flags: { fullyCanonicalSig: false, innerBatchTxn: false },
+          flags: { innerBatchTxn: false },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -7458,7 +7432,7 @@ describe("Models", () => {
                 source: { address: "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq" },
                 subject: "rGbPD53938FNRSMufrnte4PmkrqM8RdnQ7",
                 credentialType: "Let's Go!",
-                flags: { fullyCanonicalSig: false, innerBatchTxn: true },
+                flags: { innerBatchTxn: true },
               },
             },
             {
@@ -7470,12 +7444,11 @@ describe("Models", () => {
                 source: { address: "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq" },
                 subject: "r43sjcv7u6A4pqVdPY2rqcy4G54gedVbUf",
                 credentialType: "Let's Go!",
-                flags: { fullyCanonicalSig: false, innerBatchTxn: true },
+                flags: { innerBatchTxn: true },
               },
             },
           ],
           flags: {
-            fullyCanonicalSig: false,
             innerBatchTxn: false,
             allOrNothing: false,
             onlyOne: false,
@@ -7508,7 +7481,7 @@ describe("Models", () => {
           source: { address: "r9GrSn8m1KyW6VYFrY8mnJSahWp92eztzq" },
           subject: "rGbPD53938FNRSMufrnte4PmkrqM8RdnQ7",
           credentialType: "Let's Go!",
-          flags: { fullyCanonicalSig: false, innerBatchTxn: true },
+          flags: { innerBatchTxn: true },
         },
         outcome: {
           result: "tesSUCCESS",
@@ -7578,7 +7551,6 @@ describe("Models", () => {
           },
           destination: { address: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V" },
           flags: {
-            fullyCanonicalSig: true,
             innerBatchTxn: false,
             limitQuality: false,
             noRippleDirect: false,
@@ -7677,7 +7649,6 @@ describe("Models", () => {
         sequence: 1238,
         specification: {
           flags: {
-            fullyCanonicalSig: false,
             innerBatchTxn: false,
             burnable: false,
             onlyXRP: true,
@@ -7716,7 +7687,6 @@ describe("Models", () => {
           },
           destination: { address: "r3pZSivmsTG3D3sTJZASkJcfpL7eLq4Y9V" },
           flags: {
-            fullyCanonicalSig: true,
             innerBatchTxn: false,
             limitQuality: false,
             noRippleDirect: false,

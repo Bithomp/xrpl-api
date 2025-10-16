@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { EscrowFinish } from "xrpl";
-import { removeUndefined } from "../../common";
+import { removeUndefined, emptyObjectToUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
 import { parseMemos } from "../ledger/memos";
@@ -23,7 +23,7 @@ function parseEscrowFinish(tx: EscrowFinish, nativeCurrency?: string): Formatted
     condition: tx.Condition,
     fulfillment: tx.Fulfillment,
     emittedDetails: parseEmittedDetails(tx),
-    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
+    flags: emptyObjectToUndefined(parseTxGlobalFlags(tx.Flags as number, { nativeCurrency })),
     memos: parseMemos(tx),
   });
 }

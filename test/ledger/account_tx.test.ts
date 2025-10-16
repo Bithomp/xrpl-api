@@ -434,7 +434,6 @@ describe("Client", () => {
             tag: 1617004677,
           },
           flags: {
-            fullyCanonicalSig: true,
             innerBatchTxn: false,
             limitQuality: false,
             noRippleDirect: false,
@@ -493,7 +492,6 @@ describe("Client", () => {
             tag: 1617004677,
           },
           flags: {
-            fullyCanonicalSig: true,
             innerBatchTxn: false,
             limitQuality: false,
             noRippleDirect: false,
@@ -551,7 +549,6 @@ describe("Client", () => {
               address: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
             },
             flags: {
-              fullyCanonicalSig: true,
               innerBatchTxn: false,
               limitQuality: false,
               noRippleDirect: false,
@@ -616,7 +613,6 @@ describe("Client", () => {
               address: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
             },
             flags: {
-              fullyCanonicalSig: true,
               innerBatchTxn: false,
               limitQuality: false,
               noRippleDirect: false,
@@ -1032,7 +1028,6 @@ describe("Client", () => {
             tag: 1617004677,
           },
           flags: {
-            fullyCanonicalSig: true,
             innerBatchTxn: false,
             limitQuality: false,
             noRippleDirect: false,
@@ -1091,7 +1086,6 @@ describe("Client", () => {
             tag: 1617004677,
           },
           flags: {
-            fullyCanonicalSig: true,
             innerBatchTxn: false,
             limitQuality: false,
             noRippleDirect: false,
@@ -1149,7 +1143,6 @@ describe("Client", () => {
               address: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
             },
             flags: {
-              fullyCanonicalSig: true,
               innerBatchTxn: false,
               limitQuality: false,
               noRippleDirect: false,
@@ -1214,7 +1207,6 @@ describe("Client", () => {
               address: "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z",
             },
             flags: {
-              fullyCanonicalSig: true,
               innerBatchTxn: false,
               limitQuality: false,
               noRippleDirect: false,

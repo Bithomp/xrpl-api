@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { Clawback } from "xrpl";
-import { removeUndefined } from "../../common";
+import { removeUndefined, emptyObjectToUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
@@ -21,7 +21,7 @@ function parseClawback(tx: Clawback, nativeCurrency?: string): FormattedClawback
     source: parseSource(tx),
     amount: tx.Amount ? parseAmount(tx.Amount) : undefined,
     emittedDetails: parseEmittedDetails(tx),
-    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
+    flags: emptyObjectToUndefined(parseTxGlobalFlags(tx.Flags as number, { nativeCurrency })),
     memos: parseMemos(tx),
   });
 }

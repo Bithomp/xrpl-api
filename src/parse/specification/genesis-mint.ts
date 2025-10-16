@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import { removeUndefined } from "../../common";
+import { removeUndefined, emptyObjectToUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
 import { parseMemos } from "../ledger/memos";
@@ -14,7 +14,7 @@ function parseGenesisMint(tx: any, nativeCurrency?: string): FormattedGenesisMin
     source: parseSource(tx),
     genesisMints: parseGenesisMints(tx),
     emittedDetails: parseEmittedDetails(tx),
-    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
+    flags: emptyObjectToUndefined(parseTxGlobalFlags(tx.Flags as number, { nativeCurrency })),
     memos: parseMemos(tx),
   });
 }

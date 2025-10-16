@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { DepositPreauth, AuthorizeCredential } from "xrpl";
-import { removeUndefined } from "../../common";
+import { removeUndefined, emptyObjectToUndefined } from "../../common";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
 import { parseMemos } from "../ledger/memos";
@@ -31,7 +31,7 @@ function parseDepositPreauth(tx: DepositPreauth, nativeCurrency?: string): Forma
     authorizeCredentials: tx.AuthorizeCredentials ? tx.AuthorizeCredentials.map(parseCredentials) : undefined,
     unauthorizeCredentials: tx.UnauthorizeCredentials ? tx.UnauthorizeCredentials.map(parseCredentials) : undefined,
     emittedDetails: parseEmittedDetails(tx),
-    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
+    flags: emptyObjectToUndefined(parseTxGlobalFlags(tx.Flags as number, { nativeCurrency })),
     memos: parseMemos(tx),
   });
 }

@@ -6,11 +6,12 @@ function parseTxAccountSetFlags(value: number, options: { nativeCurrency?: strin
   const flags = {} as any;
 
   /* eslint-disable no-bitwise */
-  if (value & GlobalFlags.tfFullyCanonicalSig) {
-    flags.fullyCanonicalSig = true;
-  } else {
-    flags.fullyCanonicalSig = false;
-  }
+  // DEPRECATED No effect. (If the RequireFullyCanonicalSig amendment is not enabled, this flag enforces a fully-canonical signature.)
+  // if (value & GlobalFlags.tfFullyCanonicalSig) {
+  //   flags.fullyCanonicalSig = true;
+  // } else {
+  //   flags.fullyCanonicalSig = false;
+  // }
 
   if (options.nativeCurrency === MAINNET_NATIVE_CURRENCY) {
     if (value & GlobalFlags.tfInnerBatchTxn) {

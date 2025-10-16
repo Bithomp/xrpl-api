@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { PaymentChannelCreate } from "xrpl";
-import { removeUndefined } from "../../common";
+import { removeUndefined, emptyObjectToUndefined } from "../../common";
 import { parseTimestamp } from "../utils";
 import parseAmount from "../ledger/amount";
 import { parseEmittedDetails } from "../ledger/emit_details";
@@ -27,7 +27,7 @@ function parsePaymentChannelCreate(tx: PaymentChannelCreate, nativeCurrency?: st
     publicKey: tx.PublicKey,
     cancelAfter: tx.CancelAfter && parseTimestamp(tx.CancelAfter),
     emittedDetails: parseEmittedDetails(tx),
-    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
+    flags: emptyObjectToUndefined(parseTxGlobalFlags(tx.Flags as number, { nativeCurrency })),
     memos: parseMemos(tx),
   });
 }

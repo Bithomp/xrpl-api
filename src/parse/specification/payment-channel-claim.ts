@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import { PaymentChannelClaimFlags, PaymentChannelClaim } from "xrpl";
-import { removeUndefined } from "../../common";
+import { removeUndefined, emptyObjectToUndefined } from "../../common";
 import parseAmount from "../ledger/amount";
 import { parseEmittedDetails } from "../ledger/emit_details";
 import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
@@ -28,7 +28,7 @@ function parsePaymentChannelClaim(tx: PaymentChannelClaim, nativeCurrency?: stri
     // eslint-disable-next-line no-bitwise
     close: Boolean((tx.Flags as number) & PaymentChannelClaimFlags.tfClose) || undefined,
     emittedDetails: parseEmittedDetails(tx),
-    flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
+    flags: emptyObjectToUndefined(parseTxGlobalFlags(tx.Flags as number, { nativeCurrency })),
     memos: parseMemos(tx),
   });
 }
