@@ -100,7 +100,9 @@ function parseFinalBalance(node: NormalizedNode): BigNumber | null {
   } else if (node.finalFields.Balance) {
     return parseValue(node.finalFields.Balance);
   } else if (node.entryType === "MPToken") {
-    return parseValue(node.finalFields.MPTAmount);
+    if (node.finalFields.MPTAmount) {
+      return parseValue(node.finalFields.MPTAmount);
+    }
   } else if (node.entryType === "MPTokenIssuance") {
     if (node.newFields.MaximumAmount) {
       // MPT issuance creation

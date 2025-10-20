@@ -275,5 +275,13 @@ describe("Models", () => {
         ],
       });
     });
+
+    it("parses for MPTokenAuthorize", function () {
+      const tx = require("../examples/responses/MPTokenAuthorize.json");
+      const result: any = Models.parseFinalBalances(tx.meta);
+      expect(result).to.eql({
+        raZ3wTTKiMHn3BiStvz4ET9rbCHfU1DMak: [{ currency: "XRP", value: "99.99976" }],
+      });
+    });
   });
 });
