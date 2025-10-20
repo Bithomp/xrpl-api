@@ -84,8 +84,8 @@ function summarizePaymentChannel(node: NormalizedNode): FormattedChannelSummaryI
     summary.channelAmountChangeDrops = new BigNumber(final.Amount).minus(new BigNumber(prev.Amount || 0)).toString(10);
 
     summary.amountChange = parseAmount(prev.Amount) as IssuedCurrencyAmount;
-    summary.amountChange.value = new BigNumber(summary.amountChange.value)
-      .minus(new BigNumber(summary.amount.value))
+    summary.amountChange.value = new BigNumber(summary.amount.value)
+      .minus(new BigNumber(summary.amountChange.value))
       .toString(10);
   }
 

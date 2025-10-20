@@ -7,8 +7,10 @@ import { NormalizedNode, normalizeNode } from "../utils";
 import { buildMPTokenIssuanceID } from "../../models/mptoken";
 import { normalizeMPTokensPreviousFields } from "../mptoken_normalize";
 import parseAmount from "../ledger/amount";
+import { parseChannelChanges } from "./channel_changes";
 
 const ESCROW_TYPES = ["EscrowFinish", "EscrowCreate", "EscrowCancel"];
+const PAYMENT_CHANNEL_TYPES = ["PaymentChannelClaim", "PaymentChannelCreate", "PaymentChannelFund"];
 
 interface BalanceChangeQuantity {
   issuer?: string; // currency issuer
@@ -29,6 +31,7 @@ export interface BalanceChanges {
 
 interface ParseBalanceChangesOptions {
   adjustBalancesForNativeEscrow?: boolean; // escrow amount consider as locked change
+  adjustBalancesForPaymentChannel?: boolean; // payment channel amount consider as locked change
 }
 
 function groupByAddress(balanceChanges: AddressBalanceChangeQuantity[]) {
@@ -283,6 +286,51 @@ function adjustBalancesForNativeEscrow(
   }
 }
 
+function adjustBalancesForPaymentChannel(
+  balanceChanges: BalanceChanges,
+  metadata: TransactionMetadata,
+  nativeCurrency?: string,
+  tx?: any
+) {
+  const channelChanges = parseChannelChanges(metadata);
+  if (!channelChanges) {
+    return;
+  }
+
+  if (!channelChanges.source?.address) {
+    return;
+  }
+
+  if (tx.TransactionType === "PaymentChannelCreate") {
+    adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
+      { currency: channelChanges.amount.currency, value: channelChanges.amount.value },
+    ]);
+  } else if (tx.TransactionType === "PaymentChannelFund") {
+    if (channelChanges.amountChange) {
+      adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
+        { currency: channelChanges.amountChange.currency, value: channelChanges.amountChange.value },
+      ]);
+    }
+  } else if (tx.TransactionType === "PaymentChannelClaim") {
+    if (tx.Account === channelChanges.source.address && channelChanges.amountChange) {
+      adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
+        { currency: channelChanges.amountChange.currency, value: channelChanges.amountChange.value },
+      ]);
+    } else if (channelChanges.status === "deleted") {
+      const unlockedAmount = new BigNumber(channelChanges.amount.value).minus(
+        new BigNumber(channelChanges?.balance?.value || "0")
+      );
+      adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
+        { currency: channelChanges.amount.currency, value: `-${unlockedAmount.toString()}` },
+      ]);
+    } else if (channelChanges.balanceChange) {
+      adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
+        { currency: channelChanges.balanceChange.currency, value: channelChanges.balanceChange.value },
+      ]);
+    }
+  }
+}
+
 function adjustBalancesChanges(balanceChanges: BalanceChanges, address: string, changes: BalanceChangeQuantity[]) {
   const existingChanges = balanceChanges[address] || [];
   const change = existingChanges.find((c) => c.currency === changes[0].currency && c.issuer === changes[0].issuer);
@@ -325,19 +373,25 @@ function parseBalanceChanges(
 
   const balanceChanges = parseQuantities(metadata, computeBalanceChange, nativeCurrency);
 
-  // EscrowFinish with XRP(native currency) does not have locked balance change in metadata
-  // by default transfer after escrow finish is not considered as balance change in source account
-  // the same unlock funds should not be counted as balance change
-  // options.adjustBalancesForNativeEscrow as true, // escrow create, finish with unlock will not consider as balance change
-
-  if (tx && options && options.adjustBalancesForNativeEscrow) {
+  if (tx && tx.TransactionType && options) {
     // if escrow create, remove escrow balance deduction to escrow
     // if escrow finish with unlock, remove escrow balance addition
     // if escrow finish with transfer, deduct balance from source account
     // if escrow cancel, remove balance addition from escrow
 
-    if (tx.TransactionType && ESCROW_TYPES.includes(tx.TransactionType)) {
+    if (options.adjustBalancesForNativeEscrow && ESCROW_TYPES.includes(tx.TransactionType)) {
+      // EscrowFinish with XRP(native currency) does not have locked balance change in metadata
+      // by default transfer after escrow finish is not considered as balance change in source account
+      // the same unlock funds should not be counted as balance change
+      // options.adjustBalancesForNativeEscrow as true, // escrow create, finish with unlock will not consider as balance change
+
       adjustBalancesForNativeEscrow(balanceChanges, metadata, nativeCurrency, tx);
+    } else if (options.adjustBalancesForPaymentChannel && PAYMENT_CHANNEL_TYPES.includes(tx.TransactionType)) {
+      // Consider PayChannel with XRP(native currency) as locked balance change, react as balance change in source account
+      // if only destination account acquires funds from the channel
+      // options.adjustBalancesForPaymentChannel as true
+
+      adjustBalancesForPaymentChannel(balanceChanges, metadata, nativeCurrency, tx);
     }
   }
 

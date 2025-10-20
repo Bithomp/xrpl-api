@@ -1181,7 +1181,7 @@ describe("Models", () => {
             channelBalanceDrops: "0",
             balance: { currency: "XRP", value: "0" },
             channelAmountChangeDrops: "10000000",
-            amountChange: { currency: "XRP", value: "-10" },
+            amountChange: { currency: "XRP", value: "10" },
             previousTxnID: "4AA23FFA33512CFEFFEDFCC5B1812D633D39B12647CB8160793E8A2D5800ED44",
           },
           ledgerIndex: 87660411,
