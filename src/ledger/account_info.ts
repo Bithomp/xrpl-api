@@ -1,3 +1,4 @@
+import { Request } from "xrpl";
 import * as Client from "../client";
 import { Connection } from "../connection";
 import { LedgerIndex } from "../models/ledger";
@@ -6,6 +7,7 @@ import { ErrorResponse } from "../models/base_model";
 import { parseAccountInfoData } from "../parse/ledger/account-info";
 import { FormattedAccountInfoData } from "../types";
 import { removeUndefined } from "../common";
+import { isClioResponse } from "../common/utils";
 
 export interface GetAccountInfoOptions {
   ledgerIndex?: LedgerIndex;
@@ -43,12 +45,14 @@ export async function getAccountInfo(
     throw new Error("There is no connection");
   }
 
-  const response = await connection.request({
+  const request: Request = {
     command: "account_info",
     account,
     ledger_index: options.ledgerIndex || "validated",
     signer_lists: !!options.signerLists,
-  });
+  };
+
+  const response = await connection.request(request);
 
   if (!response) {
     return {
@@ -85,6 +89,15 @@ export async function getAccountInfo(
   if (result.signer_lists) {
     // duplicate signer_lists to account_data, to prevent breaking changes and backward compatibility
     result.account_data.signer_lists = result.signer_lists.slice();
+  }
+
+  // NOTE: in clio response signer_lists could be missing in account_data
+  // after this commit https://github.com/XRPLF/clio/commit/c780ef8a0b0a3e735eceea796c89213079c0e812 for version 2.6.0
+  // remove this check after clio is updated in production
+  if (request.signer_lists === true && isClioResponse(response)) {
+    if (result.account_data.signer_lists === undefined) {
+      result.account_data.signer_lists = [];
+    }
   }
 
   return result;

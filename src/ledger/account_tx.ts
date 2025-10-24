@@ -2,7 +2,7 @@ import _ from "lodash";
 
 import * as Client from "../client";
 import { LedgerIndex } from "../models/ledger";
-import { compareTransactions, parseMarker, createMarker, removeUndefined } from "../common/utils";
+import { compareTransactions, parseMarker, createMarker, removeUndefined, isClioResponse } from "../common/utils";
 import { getAccountTxDetails, encodeCTIDforTransaction } from "../models/transaction";
 import { parseBalanceChanges } from "../parse/outcome/balance_changes";
 import { ErrorResponse } from "../models/base_model";
@@ -338,7 +338,7 @@ export async function findTransactionsExt(
       // check how many transactions we can take from new transactions
       const transactionsToTake = loadOptions.limit - transactions.length;
       if (transactionsToTake !== newTransactions.length) {
-        const isClio = accountTransactions.warnings?.some((w: any) => w.id === 2001);
+        const isClio = isClioResponse(accountTransactions);
         let markerTransaction: any = null;
         if (isClio) {
           markerTransaction = newTransactions[transactionsToTake - 1];

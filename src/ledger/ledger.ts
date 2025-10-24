@@ -1,3 +1,4 @@
+import { Request } from "xrpl";
 import * as Client from "../client";
 import { Connection } from "../connection";
 
@@ -59,7 +60,7 @@ export async function getLedger(options: GetLedgerOptions = {}): Promise<object 
     };
   }
 
-  const request: any = {
+  const request: Request = {
     command: "ledger",
     transactions: !!options.transactions,
     expand: !!options.expand,

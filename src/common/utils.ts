@@ -231,3 +231,17 @@ export function getConstructorName(object: object): string | undefined {
 
   return undefined;
 }
+
+/**
+ * Determines if the given response object is a Clio response by checking for a specific warning.
+ *
+ * @param response - The response object to check.
+ * @returns `true` if the response contains a warning with `id` 2001, indicating a Clio response; otherwise, `false`.
+ */
+export function isClioResponse(response: any): boolean {
+  if (!response || !response.warnings) {
+    return false;
+  }
+
+  return response.warnings?.some((w: any) => w.id === 2001);
+}
