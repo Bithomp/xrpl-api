@@ -9,6 +9,7 @@ import { removeUndefined } from "../common/utils";
 
 export interface GetLedgerOptions {
   ledgerIndex?: LedgerIndex;
+  ledgerHash?: string;
   transactions?: boolean;
   expand?: boolean;
   legacy?: boolean; // @deprecated, use formatted
@@ -50,7 +51,7 @@ export async function getLedger(options: GetLedgerOptions = {}): Promise<object 
     throw new Error("There is no connection");
   }
 
-  if (!connection.isLedgerIndexAvailable(options.ledgerIndex)) {
+  if (options.ledgerIndex && !connection.isLedgerIndexAvailable(options.ledgerIndex)) {
     return {
       status: "error",
       error: "lgrNotFound",
@@ -58,12 +59,21 @@ export async function getLedger(options: GetLedgerOptions = {}): Promise<object 
     };
   }
 
-  const response: any = await connection.request({
+  const request: any = {
     command: "ledger",
-    ledger_index: options.ledgerIndex || "validated",
     transactions: !!options.transactions,
     expand: !!options.expand,
-  });
+  };
+
+  if (options.ledgerHash) {
+    request.ledger_hash = options.ledgerHash;
+  } else if (options.ledgerIndex) {
+    request.ledger_index = options.ledgerIndex;
+  } else {
+    request.ledger_index = "validated";
+  }
+
+  const response: any = await connection.request(request);
 
   if (response.error) {
     const { error, error_code, error_message, error_exception, status, validated } = response;

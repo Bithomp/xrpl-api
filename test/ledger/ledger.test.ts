@@ -186,11 +186,33 @@ describe("Client", () => {
           includeRawTransactions: true,
         });
 
+        expect(result.ledger.ledgerIndex).to.eql(66816622);
+        expect(result.ledger.ledgerHash).to.eql("E5C1E68EED45C6A72B9BA777AC9BA08F3D34C23D42B52B19276C3E2F5E9E1EFC");
+
         const transactions: any = result.ledger.transactions.sort((a: any, b: any) => a.id.localeCompare(b.id));
         expect(transactions[0].id).to.eql("05403FE48CCFCB45888FB3FDA0A791B0B3AA29360050412B95FCA436E1A41DCF");
         expect(transactions[0].outcome.result).to.eql("tesSUCCESS");
         expect(transactions[0].outcome.ledgerIndex).to.eql(66816622);
         expect(transactions[0].outcome.ledgerVersion).to.eql(66816622);
+      });
+
+      it("hash with expand and formatted", async function () {
+        const result: any = await Client.getLedger({
+          ledgerHash: "94986EA10EB3F015CB4DCF0740C7377196039C4E0F457C49581386F0D794F08B",
+          transactions: true,
+          expand: true,
+          formatted: true,
+          includeRawTransactions: true,
+        });
+
+        expect(result.ledger.ledgerIndex).to.eql(61770679);
+        expect(result.ledger.ledgerHash).to.eql("94986EA10EB3F015CB4DCF0740C7377196039C4E0F457C49581386F0D794F08B");
+
+        const transactions: any = result.ledger.transactions.sort((a: any, b: any) => a.id.localeCompare(b.id));
+        expect(transactions[0].id).to.eql("0ADC68CE80708F6E0321C95E33198388F1A856A5B982F13D624CCC6474A94F47");
+        expect(transactions[0].outcome.result).to.eql("tesSUCCESS");
+        expect(transactions[0].outcome.ledgerIndex).to.eql(61770679);
+        expect(transactions[0].outcome.ledgerVersion).to.eql(61770679);
       });
     });
   });
