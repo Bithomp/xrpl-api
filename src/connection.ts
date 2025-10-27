@@ -142,17 +142,30 @@ class Connection extends EventEmitter {
     const result = await this._request(request, options);
 
     // handle mass timeout errors
-    if (result?.error === "timeout") {
-      // if we have more then 3 timeouts in last 10 requests, reconnect
-      const timeouts = this.latency.filter((info) => info.delta >= this.timeout).length;
-      if (timeouts >= 3) {
+    if (result?.error) {
+      if (result.error === "timeout") {
+        // if we have more then 3 timeouts in last 10 requests, reconnect
+        const timeouts = this.latency.filter((info) => info.delta >= this.timeout).length;
+        if (timeouts >= 3) {
+          this.logger?.debug({
+            service: "Bithomp::XRPL::Connection",
+            function: "request",
+            url: this.url,
+            error: `Too many timeouts (${timeouts}) in last ${this.latency.length} requests, reconnecting...`,
+          });
+
+          this.reconnect(); // trigger reconnect, don't await here
+        }
+      } else if (result.error === "websocket was closed,") {
+        // websocket was closed, reconnect
         this.logger?.debug({
           service: "Bithomp::XRPL::Connection",
           function: "request",
           url: this.url,
-          error: `Too many timeouts (${timeouts}) in last ${this.latency.length} requests, reconnecting...`,
+          error: "Websocket was closed, reconnecting...",
         });
-        this.reconnect();
+
+        this.reconnect(); // trigger reconnect, don't await here
       }
     }
 
@@ -189,7 +202,8 @@ class Connection extends EventEmitter {
       const startTimestamp = getTimestamp();
 
       // check apiVersion, if not present in original request or if different from DEFAULT_API_VERSION
-      // add apiVersion to request, NOTE: this will mutate the request object
+      // add apiVersion to request
+      // NOTE: this will mutate the request object
       if (this.apiVersion && !request.hasOwnProperty("api_version") && DEFAULT_API_VERSION !== this.apiVersion) {
         request.api_version = this.apiVersion;
       }
@@ -325,9 +339,7 @@ class Connection extends EventEmitter {
     if (!this.shutdown) {
       this.emit("reconnect");
       try {
-        await this.removeClient();
-        await sleep(RECONNECT_TIMEOUT);
-
+        this.removeClient();
         this.updateTypes();
         this.serverInfoUpdating = false;
 
@@ -345,12 +357,17 @@ class Connection extends EventEmitter {
     }
   }
 
-  private async removeClient(): Promise<void> {
+  private removeClient(): void {
     try {
       if (this.client) {
-        await this.client.disconnect();
-        this.client.removeAllListeners();
+        const client = this.client;
         this.client = undefined;
+
+        // remove all listeners and disconnect
+        client.removeAllListeners();
+
+        // don't await here to prevent blocking
+        client.disconnect();
       }
     } catch (_err: any) {
       // ignore
