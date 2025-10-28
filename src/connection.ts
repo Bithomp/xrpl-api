@@ -156,7 +156,7 @@ class Connection extends EventEmitter {
 
           this.reconnect(); // trigger reconnect, don't await here
         }
-      } else if (result.error === "websocket was closed,") {
+      } else if (result.error.startsWith("websocket was closed")) {
         // websocket was closed, reconnect
         this.logger?.debug({
           service: "Bithomp::XRPL::Connection",
