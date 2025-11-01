@@ -34,7 +34,7 @@ describe("Client", () => {
 
       it("returns connection with by url and strong filter ", async function () {
         const connection = Client.findConnection(undefined, "wss://test.com", true);
-        expect(connection).to.eq(undefined);
+        expect(connection).to.eq(null);
       });
     });
   });

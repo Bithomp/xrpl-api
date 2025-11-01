@@ -70,9 +70,11 @@ export async function connect() {
     function: "connect",
   });
 
-  for (const connection of clientConnections) {
-    await connection.connect();
-  }
+  await Promise.all(
+    clientConnections.map(async (connection) => {
+      await connection.connect();
+    })
+  );
 }
 
 export async function disconnect() {
@@ -178,6 +180,12 @@ export function findConnection(
         return true;
       });
     }
+  }
+
+  if (connections.length === 0) {
+    return null;
+  } else if (connections.length === 1) {
+    return connections[0];
   }
 
   if (loadBalancing) {

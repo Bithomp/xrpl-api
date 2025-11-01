@@ -106,7 +106,7 @@ class Connection extends EventEmitter {
         shutdown: this.shutdown,
       });
 
-      await this.removeClient();
+      this.removeClient();
 
       this.client = new XRPLConnection.Connection(
         this.url,
@@ -264,7 +264,11 @@ class Connection extends EventEmitter {
       return false;
     }
 
-    return this.client.isConnected();
+    if (!this.client.isConnected()) {
+      return false;
+    }
+
+    return true;
   }
 
   public getOnlinePeriodMs(): number | null {
@@ -339,6 +343,9 @@ class Connection extends EventEmitter {
     if (!this.shutdown) {
       this.emit("reconnect");
       try {
+        // emit disconnect event
+        this.emit("disconnected", 1000);
+
         this.removeClient();
         this.updateTypes();
         this.serverInfoUpdating = false;
