@@ -62,7 +62,7 @@ class Connection extends EventEmitter {
   private serverInfoUpdating: boolean;
   public serverInfo: any = {};
   private shutdown: boolean = false;
-  private connectionTimer: any = null;
+  private connectionWatchTimer: any = null;
   public streams: ConnectionStreamsInfo;
   public accounts: ConnectionAccountsInfo;
   private streamsSubscribed: boolean;
@@ -73,7 +73,7 @@ class Connection extends EventEmitter {
     this.shutdown = false;
     this.url = url;
     this.type = type;
-    this.updateTypes();
+    this.resetTypes();
 
     this.client = null;
     this.logger = options.logger;
@@ -135,11 +135,13 @@ class Connection extends EventEmitter {
     await this.unsubscribe();
     await this.client?.disconnect();
     delete this.client;
-    clearTimeout(this.connectionTimer);
+    clearTimeout(this.connectionWatchTimer);
   }
 
   public async request(request: Request, options?: any): Promise<Response | any> {
     const result = await this._request(request, options);
+
+    let validResponse = true;
 
     // handle mass timeout errors
     if (result?.error) {
@@ -154,7 +156,7 @@ class Connection extends EventEmitter {
             error: `Too many timeouts (${timeouts}) in last ${this.latency.length} requests, reconnecting...`,
           });
 
-          this.reconnect(); // trigger reconnect, don't await here
+          validResponse = false;
         }
       } else if (result.error.startsWith("websocket was closed")) {
         // websocket was closed, reconnect
@@ -165,8 +167,14 @@ class Connection extends EventEmitter {
           error: "Websocket was closed, reconnecting...",
         });
 
-        this.reconnect(); // trigger reconnect, don't await here
+        validResponse = false;
       }
+    }
+
+    if (validResponse) {
+      // trigger connectionValidation to as we have response
+      // Xahau could be delayed with ledgerClosed event stream
+      this.connectionValidation();
     }
 
     return result;
@@ -213,10 +221,6 @@ class Connection extends EventEmitter {
       const response = await this.client.request(request);
 
       this.updateLatency(getTimestamp() - startTimestamp);
-
-      // trigger connectionValidation to as we have response
-      // Xahau could be delayed with ledgerClosed event stream
-      this.connectionValidation();
 
       return response;
     } catch (err: any) {
@@ -347,7 +351,7 @@ class Connection extends EventEmitter {
         this.emit("disconnected", 1000);
 
         this.removeClient();
-        this.updateTypes();
+        this.resetTypes();
         this.serverInfoUpdating = false;
 
         await this.connect();
@@ -367,14 +371,10 @@ class Connection extends EventEmitter {
   private removeClient(): void {
     try {
       if (this.client) {
-        const client = this.client;
+        this.client.removeAllListeners();
+        this.client.disconnect();
+
         this.client = undefined;
-
-        // remove all listeners and disconnect
-        client.removeAllListeners();
-
-        // don't await here to prevent blocking
-        client.disconnect();
       }
     } catch (_err: any) {
       // ignore
@@ -387,7 +387,7 @@ class Connection extends EventEmitter {
     }
 
     this.client.on("connected", () => {
-      this.logger?.debug({
+      this.logger?.info({
         service: "Bithomp::XRPL::Connection",
         emit: "connected",
         url: this.url,
@@ -467,7 +467,7 @@ class Connection extends EventEmitter {
     });
   }
 
-  private updateTypes(): void {
+  private resetTypes(): void {
     if (typeof this.type === "string") {
       this.types = this.type.split(",").map((v) => v.trim());
     } else {
@@ -675,36 +675,34 @@ class Connection extends EventEmitter {
       shutdown: this.shutdown,
     });
 
-    if (this.connectionTimer !== null) {
-      clearTimeout(this.connectionTimer);
-      this.connectionTimer = null;
+    if (this.connectionWatchTimer !== null) {
+      clearTimeout(this.connectionWatchTimer);
+      this.connectionWatchTimer = null;
     }
 
     if (!this.shutdown) {
       if (this.streamsSubscribed === false) {
         this.subscribe();
       }
-      if (this.serverInfo === null) {
+      if (this.serverInfo === null && this.isConnected()) {
         this.updateServerInfo();
       }
-      this.connectionTimer = setTimeout(() => {
-        this.connectionValidationTimeout();
-      }, LEDGER_CLOSED_TIMEOUT);
+      this.connectionWatchTimer = setTimeout(this.connectionWatchTimeout.bind(this), LEDGER_CLOSED_TIMEOUT);
     } else {
       this.client?.disconnect();
     }
   }
 
-  private async connectionValidationTimeout(): Promise<void> {
+  private async connectionWatchTimeout(): Promise<void> {
     this.logger?.debug({
       service: "Bithomp::XRPL::Connection",
-      function: "connectionValidationTimeout",
+      function: "connectionWatchTimeout",
       url: this.url,
       timeout: LEDGER_CLOSED_TIMEOUT,
       shutdown: this.shutdown,
     });
 
-    this.connectionTimer = null;
+    this.connectionWatchTimer = null;
 
     this.updateLatency(LEDGER_CLOSED_TIMEOUT);
     try {
@@ -712,7 +710,7 @@ class Connection extends EventEmitter {
     } catch (e: any) {
       this.logger?.warn({
         service: "Bithomp::XRPL::Connection",
-        function: "connectionValidationTimeout",
+        function: "connectionWatchTimeout",
         url: this.url,
         error: e.message,
       });
