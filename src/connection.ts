@@ -387,7 +387,7 @@ class Connection extends EventEmitter {
     }
 
     this.client.on("connected", () => {
-      this.logger?.info({
+      this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         emit: "connected",
         url: this.url,
