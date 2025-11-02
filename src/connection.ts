@@ -130,12 +130,24 @@ class Connection extends EventEmitter {
   }
 
   public async disconnect(): Promise<void> {
+    this.logger?.debug({
+      service: "Bithomp::XRPL::Connection",
+      function: "disconnect",
+      url: this.url,
+    });
+
     this.shutdown = true;
 
-    await this.unsubscribe();
-    await this.client?.disconnect();
-    delete this.client;
-    clearTimeout(this.connectionWatchTimer);
+    if (this.connectionWatchTimer !== null) {
+      clearTimeout(this.connectionWatchTimer);
+      this.connectionWatchTimer = null;
+    }
+
+    if (this.isConnected()) {
+      await this.unsubscribe();
+    }
+
+    this.removeClient();
   }
 
   public async request(request: Request, options?: any): Promise<Response | any> {
@@ -157,6 +169,8 @@ class Connection extends EventEmitter {
           });
 
           validResponse = false;
+          // this connection is not stable, remove client to force reconnect
+          this.removeClient();
         }
       } else if (result.error.startsWith("websocket was closed")) {
         // websocket was closed, reconnect
@@ -168,6 +182,8 @@ class Connection extends EventEmitter {
         });
 
         validResponse = false;
+        // this connection is not stable, remove client to force reconnect
+        this.removeClient();
       }
     }
 
@@ -689,7 +705,7 @@ class Connection extends EventEmitter {
       }
       this.connectionWatchTimer = setTimeout(this.connectionWatchTimeout.bind(this), LEDGER_CLOSED_TIMEOUT);
     } else {
-      this.client?.disconnect();
+      this.removeClient();
     }
   }
 
