@@ -137,8 +137,6 @@ async function decodeXlf15d(currencyCode: string): Promise<DecodedNFTCurrencyInt
         ctiLedgerCheck(cti) === ctiLedgerCheckGen(ledger.hash || ledger.ledger_hash) &&
         ctiTransactionCheck(cti) === ctiTransactionCheckGen(ctiTx.hash);
     }
-  } else if (ledgerInfo?.error === "lgrNotFound") {
-    ctiVerified = true;
   }
 
   return {

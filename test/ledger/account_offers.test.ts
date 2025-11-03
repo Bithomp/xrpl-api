@@ -26,7 +26,7 @@ describe("Client", () => {
       const offer = result.offers[0];
 
       expect(Object.keys(offer).sort()).to.eql(["properties", "specification"]);
-      expect(Object.keys(offer.specification).sort()).to.eql(["direction", "flags", "quantity", "totalPrice"]);
+      expect(Object.keys(offer.specification).sort()).to.eql(["direction", "flags", "quantity", "takerGets", "takerPays", "totalPrice"]);
     });
   });
 
@@ -59,7 +59,7 @@ describe("Client", () => {
       const offer = result.offers[0];
 
       expect(Object.keys(offer).sort()).to.eql(["properties", "specification"]);
-      expect(Object.keys(offer.specification).sort()).to.eql(["direction", "flags", "quantity", "totalPrice"]);
+      expect(Object.keys(offer.specification).sort()).to.eql(["direction", "flags", "quantity", "takerGets", "takerPays", "totalPrice"]);
     });
 
     it("works as formatted with no offers", async function () {

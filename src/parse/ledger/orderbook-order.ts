@@ -44,13 +44,15 @@ export function parseOrderbookOrder(data: BookOffer): FormattedOrderbookOrder {
   // so we can omit those flags here
   const specification: FormattedOfferCreateSpecification = removeUndefined({
     flags: flags as OfferCreateFlagsKeysInterface,
-    quantity: quantity,
-    totalPrice: totalPrice,
     expirationTime: parseTimestamp(data.Expiration),
+    takerGets,
+    takerPays,
 
     /* eslint-disable no-bitwise */
     direction: (data.Flags & LedgerEntry.OfferFlags.lsfSell) === 0 ? "buy" : "sell", // @deprecated
-    passive: (data.Flags & LedgerEntry.OfferFlags.lsfPassive) !== 0 || undefined,
+    passive: (data.Flags & LedgerEntry.OfferFlags.lsfPassive) !== 0 || undefined, // @deprecated
+    quantity: quantity, // @deprecated
+    totalPrice: totalPrice, // @deprecated
     /* eslint-enable no-bitwise */
   });
 

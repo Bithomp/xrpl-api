@@ -14,19 +14,23 @@ import {
   FormattedIssuedCurrencyAmount,
   OfferFlagsKeysInterface,
 } from "../../types";
+
 import { getNativeCurrency } from "../../client";
 
 type OfferDescription = {
   flags: OfferFlagsKeysInterface;
   account?: string;
-  quantity: any;
-  totalPrice: any;
   sequence: number;
+  takerGets?: FormattedAmount;
+  takerPays?: FormattedAmount;
   status?: string;
   makerExchangeRate: string;
   expirationTime?: string;
+  domainID?: string;
 
   direction: string; // @deprecated
+  quantity: any; // @deprecated
+  totalPrice: any; // @deprecated
 };
 
 type Orderbook = {
@@ -44,10 +48,14 @@ function getExpirationTime(node: NormalizedNode): string | undefined {
 function getQuality(node: NormalizedNode): string {
   const takerGets = (node.finalFields.TakerGets || node.newFields.TakerGets) as any;
   const takerPays = (node.finalFields.TakerPays || node.newFields.TakerPays) as any;
-  const takerGetsCurrency = takerGets.currency || getNativeCurrency();
-  const takerPaysCurrency = takerPays.currency || getNativeCurrency();
+
+  // it is only for native currency we need to adjust quality
+  const takerGetsCurrency = typeof takerGets === "string" ? getNativeCurrency() : null;
+  const takerPaysCurrency = typeof takerPays === "string" ? getNativeCurrency() : null;
+
   const bookDirectory = (node.finalFields.BookDirectory || node.newFields.BookDirectory) as string;
   const qualityHex = bookDirectory.substring(bookDirectory.length - 16);
+
   return parseOrderbookQuality(qualityHex, takerGetsCurrency, takerPaysCurrency);
 }
 
@@ -111,15 +119,18 @@ function parseOrderChange(node: NormalizedNode): OfferDescription {
 
   const orderChange = removeUndefined({
     flags,
-    quantity: flags.sell === true ? takerGets : takerPays,
-    totalPrice: flags.sell === true ? takerPays : takerGets,
+    takerGets,
+    takerPays,
     sequence: (node.finalFields.Sequence || node.newFields.Sequence) as number,
     status: parseOrderStatus(node),
     makerExchangeRate: getQuality(node),
     expirationTime: getExpirationTime(node),
+    domainID: node.finalFields.Domain as string,
 
     // eslint-disable-next-line no-bitwise
     direction: ((node.finalFields.Flags as any) & LedgerEntry.OfferFlags.lsfSell) === 0 ? "buy" : "sell", // @deprecated
+    quantity: flags.sell === true ? takerGets : takerPays, // @deprecated
+    totalPrice: flags.sell === true ? takerPays : takerGets, // @deprecated
   });
 
   // make sure address does not show up in the final object

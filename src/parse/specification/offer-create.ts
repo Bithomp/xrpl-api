@@ -26,8 +26,8 @@ function parseOfferCreate(tx: OfferCreate, nativeCurrency?: string): FormattedOf
     delegate: parseDelegate(tx),
     source: parseSource(tx),
     flags,
-    quantity: quantity,
-    totalPrice: totalPrice,
+    takerGets,
+    takerPays,
     expirationTime: parseTimestamp(tx.Expiration),
     emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
@@ -37,6 +37,8 @@ function parseOfferCreate(tx: OfferCreate, nativeCurrency?: string): FormattedOf
     passive: ((tx.Flags as number) & OfferCreateFlags.tfPassive) !== 0 || undefined, // @deprecated, use flags.passive
     immediateOrCancel: ((tx.Flags as number) & OfferCreateFlags.tfImmediateOrCancel) !== 0 || undefined, // @deprecated, use flags.immediateOrCancel
     fillOrKill: ((tx.Flags as number) & OfferCreateFlags.tfFillOrKill) !== 0 || undefined, // @deprecated, use flags.fillOrKill
+    quantity: quantity, // @deprecated, use takerGets instead
+    totalPrice: totalPrice, // @deprecated, use takerPays instead
     /* eslint-enable no-bitwise */
   });
 }

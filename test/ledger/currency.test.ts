@@ -280,7 +280,7 @@ describe("Client", () => {
           });
         });
 
-        it("is OK for not valid but verified on not existed ledger", async function () {
+        it("is OK for not valid and not verified on not existed ledger", async function () {
           this.timeout(15000);
           expect(await Client.parseCurrencyInformation("023031516D6258454E4654000000000000000000")).to.eql({
             type: "nft",
@@ -290,7 +290,7 @@ describe("Client", () => {
             ctiLedger: 1835161669,
             ctiTxIndex: 12625,
             ctiValid: false,
-            ctiVerified: true,
+            ctiVerified: false,
             timestamp: undefined,
             ctiTx: {},
           });
@@ -364,7 +364,7 @@ describe("Client", () => {
       });
 
       describe("when NFT", () => {
-        it("is OK for not valid but verified on not existed ledger", async function () {
+        it("is OK for not valid and not verified on not existed ledger", async function () {
           this.timeout(15000);
           expect(await Client.parseCurrencyInformation("023031516D6258454E4654000000000000000000")).to.eql({
             type: "nft",
@@ -374,7 +374,7 @@ describe("Client", () => {
             ctiLedger: 1835161669,
             ctiTxIndex: 12625,
             ctiValid: false,
-            ctiVerified: true,
+            ctiVerified: false,
             timestamp: undefined,
             ctiTx: {},
           });
@@ -385,7 +385,7 @@ describe("Client", () => {
 
   describe("disconnected", () => {
     before(async function () {
-      Client.disconnect();
+      await Client.disconnect();
       await sleep(1000);
     });
 

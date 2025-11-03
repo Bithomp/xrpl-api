@@ -83,9 +83,11 @@ export async function disconnect() {
     function: "disconnect",
   });
 
-  for (const connection of clientConnections) {
-    await connection.disconnect();
-  }
+  await Promise.all(
+    clientConnections.map(async (connection) => {
+      await connection.disconnect();
+    })
+  );
 }
 
 export function getNativeCurrency() {

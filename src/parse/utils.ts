@@ -18,13 +18,19 @@ type NormalizedNode = {
   PreviousTxnLgrSeq?: number;
 };
 
-function adjustQualityForXRP(quality: string, takerGetsCurrency: string, takerPaysCurrency: string) {
+/**
+ * The quality, as stored in the last 64 bits of a directory index, is stored as
+ * the quotient of TakerPays/TakerGets. It uses drops (1e-6 XRP) for XRP values.
+ */
+function adjustQualityForXRP(quality: string, takerGetsCurrency: string | null, takerPaysCurrency: string | null) : string {
   // quality = takerPays.value/takerGets.value
   // using drops (1e-6 XRP) for XRP values
   const numeratorShift = takerPaysCurrency === getNativeCurrency() ? -6 : 0;
   const denominatorShift = takerGetsCurrency === getNativeCurrency() ? -6 : 0;
   const shift = numeratorShift - denominatorShift;
-  return shift === 0 ? quality : new BigNumber(quality).shiftedBy(shift).toString();
+
+  // return shift === 0 ? quality : new BigNumber(quality).shiftedBy(shift).toString();
+  return shift === 0 ? new BigNumber(quality).toString() : new BigNumber(quality).shiftedBy(shift).toString();
 }
 
 function parseQuality(quality?: number | null): number | undefined {

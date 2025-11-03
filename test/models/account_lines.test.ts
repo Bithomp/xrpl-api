@@ -3,7 +3,7 @@ import { Models } from "../../src/index";
 
 describe("Models", () => {
   describe("parseTrustlineFlags", () => {
-    it("parses flags for not burnable", function () {
+    it("parses flags default", function () {
       const result: any = Models.parseTrustlineFlags(0);
       expect(result).to.eql({
         lowReserve: false,

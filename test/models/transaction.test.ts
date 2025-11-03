@@ -968,10 +968,17 @@ describe("Models", () => {
           orderbookChanges: {
             rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z: [
               {
-                flags: {
-                  passive: false,
-                  sell: false,
+                flags: { passive: false, sell: false, hybrid: false },
+                sequence: 282,
+                takerGets: { currency: "XRP", value: "53.357465" },
+                takerPays: {
+                  issuer: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
+                  currency: "BTH",
+                  value: "0.0592860722222222",
+                  counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
                 },
+                makerExchangeRate: "0.001111111111111111",
+                status: "filled",
                 direction: "buy",
                 quantity: {
                   issuer: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
@@ -980,9 +987,6 @@ describe("Models", () => {
                   counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
                 },
                 totalPrice: { currency: "XRP", value: "53.357465" },
-                sequence: 282,
-                status: "filled",
-                makerExchangeRate: "0.001111111111111111",
               },
             ],
           },
@@ -998,14 +1002,22 @@ describe("Models", () => {
             immediateOrCancel: true,
             passive: false,
             sell: true,
+            hybrid: false,
           },
-          direction: "sell",
-          immediateOrCancel: true,
+          takerGets: {
+            issuer: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
+            currency: "BTH",
+            value: "0.07712338548602358",
+            counterparty: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
+          },
+          takerPays: { currency: "XRP", value: "63.100951" },
           memos: [
             {
               data: "1FCFAB861BB2983F7C7DCA751BFFD289765289090000011A408C1FFFFD2AC3E73FAE5ABE7DA9B9EA404AADC169C23B793FF0000000000000",
             },
           ],
+          direction: "sell",
+          immediateOrCancel: true,
           quantity: {
             issuer: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
             currency: "BTH",
@@ -1038,7 +1050,15 @@ describe("Models", () => {
             immediateOrCancel: false,
             fillOrKill: false,
             sell: false,
+            hybrid: false,
           },
+          takerGets: {
+            issuer: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
+            currency: "USD",
+            value: "10000",
+            counterparty: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
+          },
+          takerPays: { currency: "XRP", value: "0.01" },
           quantity: { currency: "XRP", value: "0.01" },
           totalPrice: {
             issuer: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
@@ -1090,7 +1110,18 @@ describe("Models", () => {
           orderbookChanges: {
             rs1u43vgYD9Fhj8sqmfeupuRx1W8iFFBtY: [
               {
-                flags: { passive: false, sell: false },
+                flags: { passive: false, sell: false, hybrid: false },
+                takerGets: { currency: "XRP", value: "0.01" },
+                takerPays: {
+                  issuer: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
+                  currency: "USD",
+                  value: "10000",
+                  counterparty: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
+                },
+                sequence: 4098678,
+                status: "filled",
+                makerExchangeRate: "1000000",
+                direction: "buy",
                 quantity: {
                   issuer: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
                   currency: "USD",
@@ -1098,10 +1129,6 @@ describe("Models", () => {
                   counterparty: "rKGPXykGx4YvdxF7ypW56JMJhykkWmtMZw",
                 },
                 totalPrice: { currency: "XRP", value: "0.01" },
-                sequence: 4098678,
-                status: "filled",
-                makerExchangeRate: "1000000",
-                direction: "buy",
               },
             ],
           },
@@ -5770,12 +5797,7 @@ describe("Models", () => {
           destination: { address: "rsdMbYxHmYswHCg1V6vBsnxmHuCjpn6SC4" },
           paths:
             '[[{"currency":"STR","issuer":"rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS","type":48},{"account":"rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS","type":1},{"currency":"XLM","issuer":"rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y","type":48},{"account":"rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y","type":1}]]',
-          flags: {
-            innerBatchTxn: false,
-            limitQuality: true,
-            noRippleDirect: true,
-            partialPayment: true,
-          },
+          flags: { innerBatchTxn: false, noRippleDirect: true, partialPayment: true, limitQuality: true },
           allowPartialPayment: true,
           noDirectRipple: true,
           limitQuality: true,
@@ -5917,10 +5939,22 @@ describe("Models", () => {
           orderbookChanges: {
             rMxkau5LJiidEk1S9X8RxxnX1uCx1zryvb: [
               {
-                flags: {
-                  passive: false,
-                  sell: false,
+                flags: { passive: false, sell: false, hybrid: false },
+                takerGets: {
+                  issuer: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+                  currency: "XLM",
+                  value: "224.139246",
+                  counterparty: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
                 },
+                takerPays: {
+                  issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                  currency: "STR",
+                  value: "221.639552586397",
+                  counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                },
+                sequence: 119367,
+                status: "partially-filled",
+                makerExchangeRate: "0.9888475871217922",
                 direction: "buy",
                 quantity: {
                   issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
@@ -5934,17 +5968,26 @@ describe("Models", () => {
                   value: "224.139246",
                   counterparty: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
                 },
-                sequence: 119367,
-                status: "partially-filled",
-                makerExchangeRate: "0.9888475871217922",
               },
             ],
             rKRJXyp435p1RTWAMfpqnv6uvyPDFvQm5g: [
               {
-                flags: {
-                  passive: false,
-                  sell: false,
+                flags: { passive: false, sell: false, hybrid: false },
+                takerGets: {
+                  issuer: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+                  currency: "XLM",
+                  value: "97.321473",
+                  counterparty: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
                 },
+                takerPays: {
+                  issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                  currency: "STR",
+                  value: "96.126982",
+                  counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                },
+                sequence: 158077,
+                status: "filled",
+                makerExchangeRate: "0.9877263366122706",
                 direction: "buy",
                 quantity: {
                   issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
@@ -5958,17 +6001,21 @@ describe("Models", () => {
                   value: "97.321473",
                   counterparty: "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
                 },
-                sequence: 158077,
-                status: "filled",
-                makerExchangeRate: "0.9877263366122706",
               },
             ],
             rGMNHZyj7NizdpDYW4mLZeeWEXeMm6Vv1y: [
               {
-                flags: {
-                  passive: false,
-                  sell: false,
+                flags: { passive: false, sell: false, hybrid: false },
+                takerGets: {
+                  issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                  currency: "STR",
+                  value: "231.990345952928",
+                  counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
                 },
+                takerPays: { currency: "XRP", value: "67.854057" },
+                sequence: 293916,
+                status: "partially-filled",
+                makerExchangeRate: "0.2924865523293398",
                 direction: "buy",
                 quantity: { currency: "XRP", value: "67.854057" },
                 totalPrice: {
@@ -5977,17 +6024,21 @@ describe("Models", () => {
                   value: "231.990345952928",
                   counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
                 },
-                sequence: 293916,
-                status: "partially-filled",
-                makerExchangeRate: "0.2924865523293398",
               },
             ],
             r3bjHrjg5y1xE2VzGLuQYMW97ZTSfgN32x: [
               {
-                flags: {
-                  passive: false,
-                  sell: false,
+                flags: { passive: false, sell: false, hybrid: false },
+                takerGets: {
+                  issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                  currency: "STR",
+                  value: "0.05008039739634",
+                  counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
                 },
+                takerPays: { currency: "XRP", value: "0.014594" },
+                sequence: 145259,
+                status: "filled",
+                makerExchangeRate: "0.2913978587417789",
                 direction: "buy",
                 quantity: { currency: "XRP", value: "0.014594" },
                 totalPrice: {
@@ -5996,17 +6047,21 @@ describe("Models", () => {
                   value: "0.05008039739634",
                   counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
                 },
-                sequence: 145259,
-                status: "filled",
-                makerExchangeRate: "0.2913978587417789",
               },
             ],
             rsdMbYxHmYswHCg1V6vBsnxmHuCjpn6SC4: [
               {
-                flags: {
-                  passive: false,
-                  sell: false,
+                flags: { passive: false, sell: false, hybrid: false },
+                takerGets: {
+                  issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                  currency: "STR",
+                  value: "33.25485454522",
+                  counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
                 },
+                takerPays: { currency: "XRP", value: "9.680707" },
+                sequence: 565,
+                status: "filled",
+                makerExchangeRate: "0.2911065807500724",
                 direction: "buy",
                 quantity: { currency: "XRP", value: "9.680707" },
                 totalPrice: {
@@ -6015,17 +6070,21 @@ describe("Models", () => {
                   value: "33.25485454522",
                   counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
                 },
-                sequence: 565,
-                status: "filled",
-                makerExchangeRate: "0.2911065807500724",
               },
             ],
             r4najz5nPC2zoYWiereTZN6kxJezP2ZJrD: [
               {
-                flags: {
-                  passive: false,
-                  sell: false,
+                flags: { passive: false, sell: false, hybrid: false },
+                takerGets: {
+                  issuer: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
+                  currency: "STR",
+                  value: "53.1067867600263",
+                  counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
                 },
+                takerPays: { currency: "XRP", value: "15.53285" },
+                sequence: 862709,
+                status: "filled",
+                makerExchangeRate: "0.2924833262619007",
                 direction: "buy",
                 quantity: { currency: "XRP", value: "15.53285" },
                 totalPrice: {
@@ -6034,9 +6093,6 @@ describe("Models", () => {
                   value: "53.1067867600263",
                   counterparty: "rB3gZey7VWHYRqJHLoHDEJXJ2pEPNieKiS",
                 },
-                sequence: 862709,
-                status: "filled",
-                makerExchangeRate: "0.2924833262619007",
               },
             ],
           },
