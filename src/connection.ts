@@ -369,8 +369,13 @@ class Connection extends EventEmitter {
         this.emit("disconnected", 1000);
 
         this.removeClient();
+
+        // reset dependent states
         this.resetTypes();
         this.serverInfoUpdating = false;
+        this.onlineSince = 0;
+        this.serverInfo = null;
+        this.streamsSubscribed = false;
 
         await this.connect();
       } catch (e: any) {
