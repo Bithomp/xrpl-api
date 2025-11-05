@@ -67,6 +67,8 @@ class Connection extends EventEmitter {
   public accounts: ConnectionAccountsInfo;
   private streamsSubscribed: boolean;
 
+  private bindConnectionWatchTimeout = this.connectionWatchTimeout.bind(this);
+
   public constructor(url: string, type?: string, options: ConnectionOptions = {}) {
     super();
 
@@ -703,7 +705,7 @@ class Connection extends EventEmitter {
       if (this.serverInfo === null && this.isConnected()) {
         this.updateServerInfo();
       }
-      this.connectionWatchTimer = setTimeout(this.connectionWatchTimeout.bind(this), LEDGER_CLOSED_TIMEOUT);
+      this.connectionWatchTimer = setTimeout(this.bindConnectionWatchTimeout, LEDGER_CLOSED_TIMEOUT);
     } else {
       this.removeClient();
     }
