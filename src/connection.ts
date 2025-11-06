@@ -345,6 +345,35 @@ class Connection extends EventEmitter {
     return true;
   }
 
+  public isLedgerIndexPresent(ledgerIndex: any): boolean {
+    // only for numbered ledger index
+    if (typeof ledgerIndex !== "number") {
+      return true;
+    }
+
+    // we don't have serverInfo to make sure ledger is available
+    if (!this.serverInfo?.complete_ledgers) {
+      return false;
+    }
+
+    // check if ledger is in complete_ledgers
+    const completeLedgers = this.serverInfo.complete_ledgers.split("-");
+
+    // complete_ledgers is not valid
+    if (completeLedgers.length !== 2) {
+      return true;
+    }
+    completeLedgers[0] = parseInt(completeLedgers[0], 10); // min
+    completeLedgers[1] = parseInt(completeLedgers[1], 10); // max
+
+    // check if ledger is in available windows
+    if (ledgerIndex < completeLedgers[0] || ledgerIndex > completeLedgers[1]) {
+      return false;
+    }
+
+    return true;
+  }
+
   private updateLatency(delta: number): void {
     this.latency.push({
       timestamp: new Date(),

@@ -47,7 +47,7 @@ export interface GetLedgerOptions {
  */
 export async function getLedger(options: GetLedgerOptions = {}): Promise<object | FormattedLedger | ErrorResponse> {
   const formatted = options.legacy === true || options.formatted === true;
-  const connection: any = options.connection || Client.findConnection("history");
+  const connection: any = options.connection || Client.findConnectionByLedger(options.ledgerIndex, options.ledgerHash);
   if (!connection) {
     throw new Error("There is no connection");
   }

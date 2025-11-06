@@ -1,5 +1,6 @@
 import { Connection, ConnectionOptions } from "./connection";
 import { MAINNET_NATIVE_CURRENCY } from "./common";
+import { LedgerIndex } from "./models/ledger";
 
 export * from "./ledger";
 export let feeCushion: number = 1.3; // 30% fee cushion
@@ -200,6 +201,56 @@ export function findConnection(
   connections = connections.sort(sortHelperConnections);
 
   return connections[0];
+}
+
+export function findConnectionByLedger(
+  ledgerIndex?: LedgerIndex,
+  ledgerHash?: string,
+  networkID?: number
+): Connection | null {
+  // if hash is provided, use it to find connection
+  if (ledgerHash) {
+    return findConnection("history", undefined, false, undefined, networkID);
+  }
+
+  if (typeof ledgerIndex === "string" || ledgerIndex === undefined) {
+    // any connection is fine
+    return findConnection(undefined, undefined, false, undefined, networkID);
+  }
+
+  // find connection which has requested ledger index available
+  const availableConnections = clientConnections.filter((con) => {
+    if (!con.isConnected()) {
+      return false;
+    }
+
+    // networkID could be missed on old rippled or clio
+    if (typeof networkID === "number" && typeof con.getNetworkID() === "number") {
+      if (con.getNetworkID() !== networkID) {
+        return false;
+      }
+    }
+
+    return con.isLedgerIndexPresent(ledgerIndex);
+  });
+
+  if (availableConnections.length === 0) {
+    // retry any connection
+    return findConnection(undefined, undefined, false, undefined, networkID);
+  } else if (availableConnections.length === 1) {
+    return availableConnections[0];
+  }
+
+  if (loadBalancing) {
+    // pick next connection randomly
+    const index = Math.floor(Math.random() * availableConnections.length);
+    return availableConnections[index];
+  }
+
+  // get the fastest one
+  const sortedConnections = availableConnections.sort(sortHelperConnections);
+
+  return sortedConnections[0];
 }
 
 function sortHelperConnections(a: Connection, b: Connection): -1 | 0 | 1 {
