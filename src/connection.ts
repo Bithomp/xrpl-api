@@ -126,9 +126,12 @@ class Connection extends EventEmitter {
         url: this.url,
         error: err?.message || err?.name || err,
       });
+
+      this.removeClient();
     }
 
-    this.connectionValidation();
+    // start connection validation timer
+    this.connectionValidation("connect");
   }
 
   public async disconnect(): Promise<void> {
@@ -159,7 +162,17 @@ class Connection extends EventEmitter {
 
     // handle mass timeout errors
     if (result?.error) {
-      if (result.error === "timeout") {
+      // too many requests
+      if (result.error === "slowDown" || result.error === "Unexpected server response: 429") {
+        this.logger?.debug({
+          service: "Bithomp::XRPL::Connection",
+          function: "request",
+          url: this.url,
+          error: `Received slowdown error, reconnecting...`,
+        });
+
+        validResponse = false;
+      } else if (result.error === "timeout") {
         // if we have more then 3 timeouts in last 10 requests, reconnect
         const timeouts = this.latency.filter((info) => info.delta >= this.timeout).length;
         if (timeouts >= 3) {
@@ -171,10 +184,8 @@ class Connection extends EventEmitter {
           });
 
           validResponse = false;
-          // this connection is not stable, remove client to force reconnect
-          this.removeClient();
         }
-      } else if (result.error.startsWith("websocket was closed")) {
+      } else if (result.error.toLowerCase().startsWith("websocket was closed")) {
         // websocket was closed, reconnect
         this.logger?.debug({
           service: "Bithomp::XRPL::Connection",
@@ -184,15 +195,16 @@ class Connection extends EventEmitter {
         });
 
         validResponse = false;
-        // this connection is not stable, remove client to force reconnect
-        this.removeClient();
       }
     }
 
     if (validResponse) {
       // trigger connectionValidation to as we have response
       // Xahau could be delayed with ledgerClosed event stream
-      this.connectionValidation();
+      this.connectionValidation("request");
+    } else {
+      // this connection is not stable, remove client to force reconnect
+      this.removeClient();
     }
 
     return result;
@@ -394,9 +406,6 @@ class Connection extends EventEmitter {
     if (!this.shutdown) {
       this.emit("reconnect");
       try {
-        // emit disconnect event
-        this.emit("disconnected", 1000);
-
         this.removeClient();
 
         // reset dependent states
@@ -416,17 +425,18 @@ class Connection extends EventEmitter {
         });
       }
 
-      this.connectionValidation();
+      this.connectionValidation("reconnect");
     }
   }
 
-  private removeClient(): void {
+  private removeClient(code = 1000): void {
     try {
       if (this.client) {
         this.client.removeAllListeners();
         this.client.disconnect();
-
         this.client = undefined;
+
+        this.emit("disconnected", code);
       }
     } catch (_err: any) {
       // ignore
@@ -457,9 +467,10 @@ class Connection extends EventEmitter {
         url: this.url,
       });
 
-      this.onlineSince = 0;
-      this.serverInfo = null;
-      this.streamsSubscribed = false;
+      if (this.client) {
+        this.client.removeAllListeners();
+        this.client = undefined;
+      }
 
       this.emit("disconnected", code);
     });
@@ -483,9 +494,6 @@ class Connection extends EventEmitter {
           error: err?.message || err?.name || err,
         });
       }
-
-      // trigger connectionValidation to reconnect
-      this.connectionValidation();
     });
 
     this.client.on("ledgerClosed", (ledgerStream) => {
@@ -624,7 +632,7 @@ class Connection extends EventEmitter {
 
     const result = await this.request(request, { skip_subscription_update: true });
 
-    if (result.result) {
+    if (result.result && !result.error) {
       this.streamsSubscribed = true;
     }
 
@@ -685,7 +693,7 @@ class Connection extends EventEmitter {
       this.updateServerInfo();
     }
 
-    this.connectionValidation();
+    this.connectionValidation("ledgerClosed");
   }
 
   private async updateServerInfo(): Promise<void> {
@@ -719,10 +727,11 @@ class Connection extends EventEmitter {
     this.serverInfoUpdating = false;
   }
 
-  private connectionValidation(): void {
+  private connectionValidation(event: string): void {
     this.logger?.debug({
       service: "Bithomp::XRPL::Connection",
       function: "connectionValidation",
+      event,
       url: this.url,
       shutdown: this.shutdown,
     });
@@ -732,16 +741,20 @@ class Connection extends EventEmitter {
       this.connectionWatchTimer = null;
     }
 
-    if (!this.shutdown) {
-      if (this.streamsSubscribed === false) {
-        this.subscribe();
-      }
-      if (this.serverInfo === null && this.isConnected()) {
-        this.updateServerInfo();
-      }
-      this.connectionWatchTimer = setTimeout(this.bindConnectionWatchTimeout, LEDGER_CLOSED_TIMEOUT);
-    } else {
+    if (this.shutdown) {
       this.removeClient();
+      return;
+    }
+
+    // start connection watch timer
+    this.connectionWatchTimer = setTimeout(this.bindConnectionWatchTimeout, LEDGER_CLOSED_TIMEOUT);
+
+    if (this.streamsSubscribed === false) {
+      this.subscribe();
+    }
+
+    if (this.serverInfo === null && this.isConnected()) {
+      this.updateServerInfo();
     }
   }
 
@@ -767,7 +780,7 @@ class Connection extends EventEmitter {
         error: e.message,
       });
 
-      this.connectionValidation();
+      this.connectionValidation("connectionWatchTimeout");
     }
   }
 }
