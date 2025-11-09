@@ -135,6 +135,18 @@ describe("Faucet", () => {
       });
     });
 
+    it("works with existing address on alphanet xrpl network", async function () {
+      this.timeout(10000);
+      const res = await Faucet.foundWallet("alphanet", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
+
+      delete res.transactionHash; // can be missing
+      expect(res).to.eql({
+        account: {
+          classicAddress: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",
+        },
+      });
+    });
+
     // skip to not generate new accounts every time
     it.skip("works with new address on xahau-test network", async function () {
       const res = await Faucet.foundWallet("xahau-test");

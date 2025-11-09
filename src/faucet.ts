@@ -52,6 +52,12 @@ export const FaucetNetworks = {
     url: "https://faucet.devnet.rippletest.net/accounts",
     format: "xrpl",
   },
+  alphanet: {
+    // dev, devnet, or devnet.altnet are all the same
+    // https://alphanet.bithomp.com
+    url: "https://alphanet.faucet.nerdnest.xyz/accounts",
+    format: "xrpl",
+  },
   "xahau-test": {
     // beta, hooks-testnet-v3, hooks-v3, beta, xahau-test are all the same
     // https://test.xahauexplorer.com
