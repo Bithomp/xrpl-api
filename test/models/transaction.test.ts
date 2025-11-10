@@ -7150,8 +7150,8 @@ describe("Models", () => {
           timestamp: "2025-05-04T12:09:01.000Z",
           fee: "0",
           amendmentChanges: {
-            status: "enabled",
             amendment: "DAF3A6EB04FA5DC51E8E4F23E9B7022B693EFA636F23F22664746C77B5786B23",
+            status: "enabled",
           },
           ledgerIndex: 95893505,
           ledgerVersion: 95893505,
@@ -7178,8 +7178,9 @@ describe("Models", () => {
           timestamp: "2025-11-10T08:37:30.000Z",
           fee: "0",
           amendmentChanges: {
-            status: "majority",
             amendment: "7FE392C21A2880B3223A2CAF8DC59ADDAE5B03BD4B0500A1F63DF9893E852DBA",
+            status: "majority",
+            closeTime: 1762763842000,
           },
           ledgerIndex: 18424833,
           ledgerVersion: 18424833,
@@ -7206,8 +7207,9 @@ describe("Models", () => {
           timestamp: "2020-06-09T23:59:51.000Z",
           fee: "0",
           amendmentChanges: {
-            status: "lostMajority",
             amendment: "86E83A7D2ECE3AD5FA87AB2195AE015C950469ABF0B72EAACED318F74886AE90",
+            status: "lostMajority",
+            closeTime: 1591741111000,
           },
           ledgerIndex: 56043009,
           ledgerVersion: 56043009,

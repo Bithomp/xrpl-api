@@ -1,10 +1,12 @@
 import { NormalizedNode, normalizeNode } from "../utils";
+import { ledgerTimeToTimestamp } from "../../models/ledger";
 import { AmendmentsMajority } from "../../types/ledger_entries";
 
 type AmendmentStatus = "majority" | "enabled" | "lostMajority" | "obsolete";
 interface FormattedAmendmentSummaryInterface {
   status?: AmendmentStatus;
   amendment?: string;
+  closeTime?: number;
 }
 
 function parseAmendmentStatus(tx: any, node: NormalizedNode): AmendmentStatus | undefined {
@@ -50,9 +52,40 @@ function parseAmendmentStatus(tx: any, node: NormalizedNode): AmendmentStatus | 
 
 function summarizeAmendment(tx: any, node: NormalizedNode): FormattedAmendmentSummaryInterface {
   const summary: FormattedAmendmentSummaryInterface = {
-    status: parseAmendmentStatus(tx, node),
     amendment: tx.Amendment,
+    status: parseAmendmentStatus(tx, node),
   };
+
+  // Include the close time if the amendment is marked as majority
+  if (summary.status === "majority") {
+    const final = node.diffType === "CreatedNode" ? node.newFields : (node.finalFields as any);
+    const majority: AmendmentsMajority[] = final.Majorities || [];
+
+    for (const maj of majority) {
+      if (maj.Majority.Amendment === tx.Amendment) {
+        if (maj.Majority.CloseTime) {
+          summary.closeTime = ledgerTimeToTimestamp(maj.Majority.CloseTime as number);
+        }
+
+        break;
+      }
+    }
+  } else if (summary.status === "lostMajority") {
+    const prev = node.previousFields as any;
+    if (prev && prev.Majorities) {
+      const prevMajority: AmendmentsMajority[] = prev.Majorities;
+
+      for (const maj of prevMajority) {
+        if (maj.Majority.Amendment === tx.Amendment) {
+          if (maj.Majority.CloseTime) {
+            summary.closeTime = ledgerTimeToTimestamp(maj.Majority.CloseTime as number);
+          }
+
+          break;
+        }
+      }
+    }
+  }
 
   return summary;
 }
