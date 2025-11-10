@@ -15,6 +15,7 @@ import {
   parseHooksExecutions,
   parseEmittedTxns,
   parseEscrowChanges,
+  parseAmendmentChanges,
   parseUNLReportChanges,
   parseAmmChanges,
   parseDIDChanges,
@@ -68,6 +69,7 @@ const MPTOKEN_TYPES = [
 const CREDENTIAL_TYPES = ["CredentialCreate", "CredentialAccept", "CredentialDelete"];
 const DELEGATE_TYPES = ["DelegateSet"];
 const REMARKS_TYPES = ["SetRemarks"];
+const AMENDMENT_TYPES = ["EnableAmendment"];
 
 function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefinitionsBase): Outcome | undefined {
   const metadata = tx.meta || tx.metaData;
@@ -88,6 +90,7 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     channelChanges: getChannelChanges(tx),
     checkChanges: getCheckChanges(tx),
     escrowChanges: getEscrowChanges(tx),
+    amendmentChanges: getAmendmentChanges(tx),
     nftokenChanges: getNFTokenChanges(tx),
     nftokenOfferChanges: getNFTokenOfferChanges(tx),
     uritokenChanges: getURITokenChanges(tx),
@@ -175,6 +178,17 @@ function getEscrowChanges(tx: any): any {
   }
 
   return parseEscrowChanges(tx);
+}
+
+/**
+ * XRPL and Xahau: EscrowFinish, EscrowCreate, EscrowCancel
+ */
+function getAmendmentChanges(tx: any): any {
+  if (!AMENDMENT_TYPES.includes(tx.TransactionType)) {
+    return undefined;
+  }
+
+  return parseAmendmentChanges(tx);
 }
 
 /**

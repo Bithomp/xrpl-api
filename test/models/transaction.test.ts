@@ -7149,9 +7149,69 @@ describe("Models", () => {
           result: "tesSUCCESS",
           timestamp: "2025-05-04T12:09:01.000Z",
           fee: "0",
+          amendmentChanges: {
+            status: "enabled",
+            amendment: "DAF3A6EB04FA5DC51E8E4F23E9B7022B693EFA636F23F22664746C77B5786B23",
+          },
           ledgerIndex: 95893505,
           ledgerVersion: 95893505,
           indexInLedger: 36,
+        },
+      });
+    });
+
+    it("EnableAmendment for majority", function () {
+      const tx = require("../examples/responses/EnableAmendmentMajority.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      expect(result).to.eql({
+        type: "amendment",
+        address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+        sequence: 0,
+        id: "EF5FA677E227DF47FBAA2E1AFEC13A003536A183BEBF597E081C9C0ACFDFF214",
+        ctid: "C119240100015359",
+        specification: {
+          source: { address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp" },
+          amendment: "7FE392C21A2880B3223A2CAF8DC59ADDAE5B03BD4B0500A1F63DF9893E852DBA",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-11-10T08:37:30.000Z",
+          fee: "0",
+          amendmentChanges: {
+            status: "majority",
+            amendment: "7FE392C21A2880B3223A2CAF8DC59ADDAE5B03BD4B0500A1F63DF9893E852DBA",
+          },
+          ledgerIndex: 18424833,
+          ledgerVersion: 18424833,
+          indexInLedger: 1,
+        },
+      });
+    });
+
+    it("EnableAmendment for lost majority", function () {
+      const tx = require("../examples/responses/EnableAmendmentMajority2.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      expect(result).to.eql({
+        type: "amendment",
+        address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+        sequence: 0,
+        id: "2B09DC01F52F42697AC9805482FD376FA8E8BBACC4192B109806A6ED8CFFE545",
+        ctid: "C357260100210000",
+        specification: {
+          source: { address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp" },
+          amendment: "86E83A7D2ECE3AD5FA87AB2195AE015C950469ABF0B72EAACED318F74886AE90",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2020-06-09T23:59:51.000Z",
+          fee: "0",
+          amendmentChanges: {
+            status: "lostMajority",
+            amendment: "86E83A7D2ECE3AD5FA87AB2195AE015C950469ABF0B72EAACED318F74886AE90",
+          },
+          ledgerIndex: 56043009,
+          ledgerVersion: 56043009,
+          indexInLedger: 33,
         },
       });
     });

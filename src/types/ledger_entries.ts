@@ -20,10 +20,17 @@ export interface AccountRootLedgerEntry {
   WalletLocator?: string;
 }
 
+export interface AmendmentsMajority {
+  Majority: {
+    Amendment?: string;
+    CloseTime?: number;
+  };
+}
+
 export interface AmendmentsLedgerEntry {
   LedgerEntryType: "Amendments";
   Amendments?: string[];
-  Majorities?: any[];
+  Majorities?: AmendmentsMajority[];
   Flags: 0;
 }
 
