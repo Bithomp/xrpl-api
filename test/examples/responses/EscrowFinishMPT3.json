@@ -1,0 +1,169 @@
+{
+  "Account": "ra7Hb2nXmaG8tqvkargwZf7kTLeRpTV2vT",
+  "Condition": "A0258020124581DCA84333AED489C4AAAEF35B75EF7863B5938A72180230DB1A7327D05E810120",
+  "Fee": "36",
+  "Flags": 0,
+  "Fulfillment": "A02280203D52EACA3BEA4A62B7E5FF3458E98BA5BE42EF3391D904564DB4945DBF651EE3",
+  "LastLedgerSequence": 302980,
+  "OfferSequence": 302942,
+  "Owner": "rwT8tPE221GzTutkYy3WrYjALVQwoCRvir",
+  "Sequence": 302944,
+  "SigningPubKey": "ED435625A3A18567A687613896F9FF77CC16705E6DF7583B27B93DF2C446D43315",
+  "TransactionType": "EscrowFinish",
+  "TxnSignature": "11DDC8EEA35876971E5441DE3C339778F95E9D5B4ACE987541D59D32FE2E8246F2A5B8C2C70D07C1FDE705BFF98FDC06621AF8949EE13707DA4023286CC6EA09",
+  "ctid": "C0049F7200000002",
+  "date": 813750302,
+  "hash": "A6787B51DC9D72ADB6A82DA6A00DF435FAB28FA6B2DBBF85AD36D97EA4D70B2B",
+  "inLedger": 302962,
+  "ledger_index": 302962,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "ra7Hb2nXmaG8tqvkargwZf7kTLeRpTV2vT",
+            "Balance": "99999963",
+            "Flags": 0,
+            "OwnerCount": 1,
+            "Sequence": 302945
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "003183B2D6BB3B0606F7191C573E171FE65E580C153BC5746D950D932A2FDF77",
+          "PreviousFields": {
+            "Balance": "99999999",
+            "Sequence": 302944
+          },
+          "PreviousTxnID": "410350E4D88EF45FE70CB7801CD33527CB00B4E4965102A1C78F126E56EFC920",
+          "PreviousTxnLgrSeq": 302955
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "ra7Hb2nXmaG8tqvkargwZf7kTLeRpTV2vT",
+            "Flags": 0,
+            "MPTAmount": "100000",
+            "MPTokenIssuanceID": "00049F5B0E03A3031B3E0C1D16A700640EA5CF727268E14F",
+            "OwnerNode": "0"
+          },
+          "LedgerEntryType": "MPToken",
+          "LedgerIndex": "44CB8CF59E28635390A70C68CCB5CB1FB20995A68DDA7F07EFE40B108AC3C997",
+          "PreviousFields": {
+            "MPTAmount": "0"
+          },
+          "PreviousTxnID": "2DCF94E164FEDFD7CA5001EDDF3F1EA180EC9B5A7AC0E03039E9750FACB1A137",
+          "PreviousTxnLgrSeq": 302951
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "rwT8tPE221GzTutkYy3WrYjALVQwoCRvir",
+            "RootIndex": "5EC9B8ED9E499CD6634045ED6AED833FD4B9A9C3A666BB001396BB866DE19545"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "5EC9B8ED9E499CD6634045ED6AED833FD4B9A9C3A666BB001396BB866DE19545",
+          "PreviousTxnID": "410350E4D88EF45FE70CB7801CD33527CB00B4E4965102A1C78F126E56EFC920",
+          "PreviousTxnLgrSeq": 302955
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "AssetScale": 2,
+            "Flags": 56,
+            "Issuer": "rpHaF4cKTzCk8v7GQcVkjM6GPKD65LTVkc",
+            "MPTokenMetadata": "7B226E616D65223A22457363726F7761626C6520546F6B656E222C227469636B6572223A22455343222C226465736372697074696F6E223A224120746F6B656E2064657369676E656420666F7220657363726F77206F7065726174696F6E73222C22646563696D616C73223A322C22746F74616C5F737570706C79223A223130303030303030222C2261737365745F636C617373223A226F74686572222C2269636F6E223A2268747470733A2F2F7872706C2E6F72672F6173736574732F66617669636F6E2E313636393866396265653830653536383734393365643131366632346136363333626235656161333037313431346436346233626564333063336462316431642E38613565646162322E69636F222C226973737565725F6E616D65223A22796F757266617664657672656C227D",
+            "MaximumAmount": "10000000",
+            "OutstandingAmount": "500000",
+            "OwnerNode": "0",
+            "Sequence": 302939
+          },
+          "LedgerEntryType": "MPTokenIssuance",
+          "LedgerIndex": "645176A8AEC37BFB8F7999F56F55E835757E04852CC025B5E3341385EA8862B6",
+          "PreviousFields": {
+            "LockedAmount": "100000"
+          },
+          "PreviousTxnID": "410350E4D88EF45FE70CB7801CD33527CB00B4E4965102A1C78F126E56EFC920",
+          "PreviousTxnLgrSeq": 302955
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rwT8tPE221GzTutkYy3WrYjALVQwoCRvir",
+            "Balance": "99999998",
+            "Flags": 0,
+            "OwnerCount": 1,
+            "Sequence": 302943
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "79B80EEBD840A6B7EE0AFCDA408B14A8976FFCAC21F96D5747D61B3C758186FC",
+          "PreviousFields": {
+            "OwnerCount": 2
+          },
+          "PreviousTxnID": "410350E4D88EF45FE70CB7801CD33527CB00B4E4965102A1C78F126E56EFC920",
+          "PreviousTxnLgrSeq": 302955
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "ra7Hb2nXmaG8tqvkargwZf7kTLeRpTV2vT",
+            "RootIndex": "8C2917B9C0E58887FBF2D57E327C6D5B2B44D8D15DC71A814A47636284D6AC21"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "8C2917B9C0E58887FBF2D57E327C6D5B2B44D8D15DC71A814A47636284D6AC21",
+          "PreviousTxnID": "410350E4D88EF45FE70CB7801CD33527CB00B4E4965102A1C78F126E56EFC920",
+          "PreviousTxnLgrSeq": 302955
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rwT8tPE221GzTutkYy3WrYjALVQwoCRvir",
+            "Flags": 0,
+            "MPTAmount": "400000",
+            "MPTokenIssuanceID": "00049F5B0E03A3031B3E0C1D16A700640EA5CF727268E14F",
+            "OwnerNode": "0",
+            "LockedAmount": "0"
+          },
+          "LedgerEntryType": "MPToken",
+          "LedgerIndex": "B0EFA775D42062DEAF2E7D37A5BCE41AF4D54262801C6CC94DB5DF76738005C3",
+          "PreviousFields": {
+            "LockedAmount": "100000"
+          },
+          "PreviousTxnID": "410350E4D88EF45FE70CB7801CD33527CB00B4E4965102A1C78F126E56EFC920",
+          "PreviousTxnLgrSeq": 302955
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "Account": "rwT8tPE221GzTutkYy3WrYjALVQwoCRvir",
+            "Amount": {
+              "mpt_issuance_id": "00049F5B0E03A3031B3E0C1D16A700640EA5CF727268E14F",
+              "value": "100000"
+            },
+            "CancelAfter": 813750324,
+            "Condition": "A0258020124581DCA84333AED489C4AAAEF35B75EF7863B5938A72180230DB1A7327D05E810120",
+            "Destination": "ra7Hb2nXmaG8tqvkargwZf7kTLeRpTV2vT",
+            "DestinationNode": "0",
+            "FinishAfter": 813750294,
+            "Flags": 0,
+            "OwnerNode": "0",
+            "PreviousTxnID": "410350E4D88EF45FE70CB7801CD33527CB00B4E4965102A1C78F126E56EFC920",
+            "PreviousTxnLgrSeq": 302955
+          },
+          "LedgerEntryType": "Escrow",
+          "LedgerIndex": "BD8798246550893B21BA435265A8061F64DEEF34B485B80297A86F2864956A14"
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

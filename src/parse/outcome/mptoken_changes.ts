@@ -86,12 +86,16 @@ class MPTokenChanges {
           const account = node.FinalFields.Account;
 
           // calc amount change
-          let amountChange: string | undefined = new BigNumber(node.FinalFields.MPTAmount ?? 0)
-            .minus(node.PreviousFields.MPTAmount ?? 0)
-            .toString();
+          let amountChange: string | undefined = undefined;
+          if (node.PreviousFields.MPTAmount !== undefined) {
+            amountChange = new BigNumber(node.FinalFields.MPTAmount ?? 0)
+              .minus(node.PreviousFields.MPTAmount ?? 0)
+              .toString();
 
-          if (amountChange === "0") {
-            amountChange = undefined;
+            console.log("amountChange", amountChange);
+            if (amountChange === "0") {
+              amountChange = undefined;
+            }
           }
 
           // calc locked amount change

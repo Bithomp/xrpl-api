@@ -6724,6 +6724,105 @@ describe("Models", () => {
       });
     });
 
+    it("EscrowFinish MPToken 3", function () {
+      const tx = require("../examples/responses/EscrowFinishMPT3.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      expect(result).to.eql({
+        type: "escrowExecution",
+        address: "ra7Hb2nXmaG8tqvkargwZf7kTLeRpTV2vT",
+        sequence: 302944,
+        id: "A6787B51DC9D72ADB6A82DA6A00DF435FAB28FA6B2DBBF85AD36D97EA4D70B2B",
+        ctid: "C0049F7200000002",
+        specification: {
+          source: { address: "ra7Hb2nXmaG8tqvkargwZf7kTLeRpTV2vT" },
+          owner: "rwT8tPE221GzTutkYy3WrYjALVQwoCRvir",
+          escrowSequence: 302942,
+          condition: "A0258020124581DCA84333AED489C4AAAEF35B75EF7863B5938A72180230DB1A7327D05E810120",
+          fulfillment: "A02280203D52EACA3BEA4A62B7E5FF3458E98BA5BE42EF3391D904564DB4945DBF651EE3",
+          flags: { innerBatchTxn: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-10-14T09:45:02.000Z",
+          fee: "0.000036",
+          balanceChanges: {
+            ra7Hb2nXmaG8tqvkargwZf7kTLeRpTV2vT: [
+              { currency: "XRP", value: "-0.000036" },
+              { value: "100000", mpt_issuance_id: "00049F5B0E03A3031B3E0C1D16A700640EA5CF727268E14F" },
+            ],
+            rwT8tPE221GzTutkYy3WrYjALVQwoCRvir: [
+              { value: "-100000", mpt_issuance_id: "00049F5B0E03A3031B3E0C1D16A700640EA5CF727268E14F" },
+            ],
+          },
+          lockedBalanceChanges: {
+            rwT8tPE221GzTutkYy3WrYjALVQwoCRvir: [
+              { value: "-100000", mpt_issuance_id: "00049F5B0E03A3031B3E0C1D16A700640EA5CF727268E14F" },
+            ],
+          },
+          escrowChanges: {
+            status: "executed",
+            escrowIndex: "BD8798246550893B21BA435265A8061F64DEEF34B485B80297A86F2864956A14",
+            escrowSequence: 302942,
+            amount: { mpt_issuance_id: "00049F5B0E03A3031B3E0C1D16A700640EA5CF727268E14F", value: "100000" },
+            condition: "A0258020124581DCA84333AED489C4AAAEF35B75EF7863B5938A72180230DB1A7327D05E810120",
+            source: { address: "rwT8tPE221GzTutkYy3WrYjALVQwoCRvir" },
+            destination: { address: "ra7Hb2nXmaG8tqvkargwZf7kTLeRpTV2vT" },
+            allowCancelAfter: "2025-10-14T09:45:24.000Z",
+            allowExecuteAfter: "2025-10-14T09:44:54.000Z",
+            previousTxnID: "410350E4D88EF45FE70CB7801CD33527CB00B4E4965102A1C78F126E56EFC920",
+            previousTxnLgrSeq: 302955,
+          },
+          mptokenIssuanceChanges: {
+            "00049F5B0E03A3031B3E0C1D16A700640EA5CF727268E14F": {
+              status: "modified",
+              flags: {
+                locked: false,
+                canLock: false,
+                requireAuth: false,
+                canEscrow: true,
+                canTrade: true,
+                canTransfer: true,
+                canClawback: false,
+              },
+              mptIssuanceID: "00049F5B0E03A3031B3E0C1D16A700640EA5CF727268E14F",
+              issuer: "rpHaF4cKTzCk8v7GQcVkjM6GPKD65LTVkc",
+              sequence: 302939,
+              maximumAmount: "10000000",
+              outstandingAmount: "500000",
+              lockedAmount: "0",
+              scale: 2,
+              outstandingAmountChange: "500000",
+              lockedAmountChange: "-100000",
+            },
+          },
+          mptokenChanges: {
+            "00049F5B0E03A3031B3E0C1D16A700640EA5CF727268E14F": {
+              ra7Hb2nXmaG8tqvkargwZf7kTLeRpTV2vT: {
+                status: "modified",
+                flags: { locked: false, authorized: false },
+                mptIssuanceID: "00049F5B0E03A3031B3E0C1D16A700640EA5CF727268E14F",
+                account: "ra7Hb2nXmaG8tqvkargwZf7kTLeRpTV2vT",
+                amount: "100000",
+                amountChange: "100000",
+              },
+              rwT8tPE221GzTutkYy3WrYjALVQwoCRvir: {
+                status: "modified",
+                flags: { locked: false, authorized: false },
+                mptIssuanceID: "00049F5B0E03A3031B3E0C1D16A700640EA5CF727268E14F",
+                account: "rwT8tPE221GzTutkYy3WrYjALVQwoCRvir",
+                amount: "400000",
+                lockedAmount: "0",
+                lockedAmountChange: "-100000",
+              },
+            },
+          },
+          ledgerIndex: 302962,
+          ledgerVersion: 302962,
+          indexInLedger: 0,
+        },
+      });
+    });
+
     it("MPTokenAuthorize", function () {
       const tx = require("../examples/responses/MPTokenAuthorize.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");
