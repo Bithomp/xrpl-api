@@ -1,0 +1,18 @@
+{
+  "Account": "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+  "BaseFeeDrops": "10",
+  "Fee": "0",
+  "LedgerSequence": 52737,
+  "ReserveBaseDrops": "1000000",
+  "ReserveIncrementDrops": "200000",
+  "Sequence": 0,
+  "SigningPubKey": "",
+  "TransactionType": "SetFee",
+  "ctid": "C000CE01000053D9",
+  "date": 816007082,
+  "hash": "AC3E64E3CD12FBC49A94D5695C848F878B6A1B892CF9F70E219A39DE776E4695",
+  "inLedger": 52737,
+  "ledger_index": 52737,
+  "meta": { "AffectedNodes": [], "TransactionIndex": 0, "TransactionResult": "tesSUCCESS" },
+  "validated": true
+}

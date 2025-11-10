@@ -1,8 +1,11 @@
 import { FormattedBaseSpecification } from "./specification";
 
 export type FormattedFeeUpdateSpecification = {
-  baseFeeXRP: string;
-  referenceFeeUnits: number;
-  reserveBaseXRP: string;
-  reserveIncrementXRP: string;
+  baseFeeNativeCurrency: string;
+  reserveBaseNativeCurrency: string;
+  reserveIncrementNativeCurrency: string;
+
+  baseFeeXRP: string; // @deprecated use baseFeeNativeCurrency
+  reserveBaseXRP: string; // @deprecated use reserveBaseNativeCurrency
+  reserveIncrementXRP: string; // @deprecated use reserveIncrementNativeCurrency
 } & FormattedBaseSpecification;

@@ -156,6 +156,36 @@ describe("Models", () => {
       });
     });
 
+    it("SetFee", function () {
+      const tx = require("../examples/responses/SetFee.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+
+      expect(result).to.eql({
+        type: "feeUpdate",
+        address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+        sequence: 0,
+        id: "AC3E64E3CD12FBC49A94D5695C848F878B6A1B892CF9F70E219A39DE776E4695",
+        ctid: "C000CE01000053D9",
+        specification: {
+          source: { address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp" },
+          baseFeeXRP: "0.00001",
+          reserveBaseXRP: "1",
+          reserveIncrementXRP: "0.2",
+          baseFeeNativeCurrency: "0.00001",
+          reserveBaseNativeCurrency: "1",
+          reserveIncrementNativeCurrency: "0.2",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-11-09T12:38:02.000Z",
+          fee: "0",
+          ledgerIndex: 52737,
+          ledgerVersion: 52737,
+          indexInLedger: 0,
+        },
+      });
+    });
+
     it("NFTokenMint", function () {
       const tx = require("../examples/responses/NFTokenMint.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");
