@@ -75,7 +75,7 @@ class MPTokenChanges {
             flags: parseMPTokenFlags(node.NewFields.Flags),
             mptIssuanceID,
             account,
-            amount: node.NewFields.MPTAmount,
+            amount: node.NewFields.MPTAmount || "0", // can be omitted
             lockedAmount: node.NewFields.LockedAmount,
           });
         }
@@ -92,7 +92,6 @@ class MPTokenChanges {
               .minus(node.PreviousFields.MPTAmount ?? 0)
               .toString();
 
-            console.log("amountChange", amountChange);
             if (amountChange === "0") {
               amountChange = undefined;
             }
@@ -110,6 +109,15 @@ class MPTokenChanges {
             }
           }
 
+          // entire amount was locked or unlocked, so no effective should be change on amount
+          if (
+            amountChange &&
+            lockedAmountChange &&
+            new BigNumber(amountChange).abs().isEqualTo(new BigNumber(lockedAmountChange).abs())
+          ) {
+            amountChange = undefined;
+          }
+
           let flagsChange: MPTokenFlagsKeysInterface | undefined;
           if (node.PreviousFields?.Flags !== undefined) {
             flagsChange = parseMPTokenFlags(node.PreviousFields.Flags);
@@ -120,7 +128,7 @@ class MPTokenChanges {
             flags: parseMPTokenFlags(node.FinalFields.Flags),
             mptIssuanceID,
             account,
-            amount: node.FinalFields.MPTAmount,
+            amount: node.FinalFields.MPTAmount || "0", // can be omitted
             lockedAmount: node.FinalFields.LockedAmount,
 
             // changes

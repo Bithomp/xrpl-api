@@ -77,7 +77,7 @@ function computeBalanceChange(node: NormalizedNode): BigNumber | null {
         .minus(parseValue(node.previousFields.MPTAmount ?? 0));
     }
 
-    // consider locked amount if. only if it is was changed
+    // consider locked amount if only is was changed
     if (node.previousFields.LockedAmount) {
       value = value
         .plus(parseValue(node.finalFields.LockedAmount ?? 0))

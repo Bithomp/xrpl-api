@@ -90,6 +90,15 @@ describe("Models", () => {
       expect(result).to.eql({ rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn: [{ currency: "XRP", value: "-0.000012" }] });
     });
 
+    it("parses for EscrowCancel unlock for MPT", function () {
+      const tx = require("../examples/responses/EscrowCancelMPT.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {});
+
+      expect(result).to.eql({
+        rsvocQWZ4bnshYrfY3b35E25g1p9rvSpx5: [{ currency: "XRP", value: "-0.0001" }],
+      });
+    });
+
     it("parses for PaymentChannelCreate", function () {
       const tx = require("../examples/responses/PaymentChannelCreate.json");
       const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
