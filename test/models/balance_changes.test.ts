@@ -173,6 +173,30 @@ describe("Models", () => {
 
       expect(result).to.eql({ rGuVmkbuFWGwcvCpNhKCzXBP7pwAWjvHZG: [{ currency: "XRP", value: "-0.000012" }] });
     });
+
+    it("parses for PaymentChannelClaim3", function () {
+      const tx = require("../examples/responses/PaymentChannelClaim3.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForNativeEscrow: false,
+      });
+
+      expect(result).to.eql({
+        rs9PSG1NebVaqkZicNLAi9bbd1AieYoSJ8: [{ currency: "XRP", value: "-0.0001" }],
+        rs6WARimLiHZy8qB8XBD5HANgc9SshFYnK: [{ currency: "XRP", value: "0.01" }],
+      });
+    });
+
+    it("parses for PaymentChannelClaim3 with adjustBalancesForPaymentChannel", function () {
+      const tx = require("../examples/responses/PaymentChannelClaim3.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForPaymentChannel: true,
+      });
+
+      expect(result).to.eql({
+        rs9PSG1NebVaqkZicNLAi9bbd1AieYoSJ8: [{ currency: "XRP", value: "-0.0101" }],
+        rs6WARimLiHZy8qB8XBD5HANgc9SshFYnK: [{ currency: "XRP", value: "0.01" }],
+      });
+    });
   });
 
   describe("parseFinalBalances", () => {

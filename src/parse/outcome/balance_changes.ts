@@ -326,9 +326,16 @@ function adjustBalancesForPaymentChannel(
         { currency: channelChanges.amountChange.currency, value: channelChanges.amountChange.value },
       ]);
     } else if (channelChanges.status === "deleted") {
-      const unlockedAmount = new BigNumber(channelChanges.amount.value).minus(
-        new BigNumber(channelChanges?.balance?.value || "0")
-      );
+      let unlockedAmount = new BigNumber(0);
+      if (channelChanges?.balanceChange) {
+        unlockedAmount = new BigNumber(channelChanges?.balanceChange?.value || "0").abs();
+      } else {
+        unlockedAmount = new BigNumber(channelChanges.amount.value).minus(channelChanges?.balance?.value || "0");
+      }
+
+      if (unlockedAmount.isZero()) {
+        return;
+      }
       adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
         { currency: channelChanges.amount.currency, value: `-${unlockedAmount.toString()}` },
       ]);
