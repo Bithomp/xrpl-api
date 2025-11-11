@@ -193,7 +193,7 @@ export function normalizeMPTokensPreviousFieldsEscrowFinish(meta: any): void {
     if (mptokenNode) {
       const finalFields = mptokenNode.ModifiedNode.FinalFields;
       const prevFields = mptokenNode.ModifiedNode.PreviousFields;
-      if (prevFields && prevFields.LockedAmount === undefined) {
+      if (prevFields) {
         if (finalFields.LockedAmount === undefined) {
           finalFields.LockedAmount = "0"; // entire value is unlocked
         }
