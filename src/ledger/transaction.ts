@@ -603,7 +603,7 @@ async function waitForFinalTransactionOutcome(
   const tx = await getTransaction(txHash);
   const error = (tx as any)?.error;
   // there is no network connection
-  if (error === "notConnected") {
+  if (error === "notConnected" || error === "shutdownConnection") {
     return tx;
   }
 

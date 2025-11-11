@@ -108,6 +108,12 @@ class Connection extends EventEmitter {
         shutdown: this.shutdown,
       });
 
+      // remove current watch timer
+      if (this.connectionWatchTimer !== null) {
+        clearTimeout(this.connectionWatchTimer);
+        this.connectionWatchTimer = null;
+      }
+
       this.removeClient();
 
       this.client = new XRPLConnection.Connection(
@@ -119,6 +125,9 @@ class Connection extends EventEmitter {
       await this.client.connect();
       await this.updateServerInfo();
       await this.subscribe();
+
+      // start connection validation timer
+      this.connectionValidation("connect");
     } catch (err: any) {
       this.logger?.warn({
         service: "Bithomp::XRPL::Connection",
@@ -128,10 +137,10 @@ class Connection extends EventEmitter {
       });
 
       this.removeClient();
-    }
 
-    // start connection validation timer
-    this.connectionValidation("connect");
+      // set timer to reconnect by watch timeout
+      this.connectionWatchTimer = setTimeout(this.bindConnectionWatchTimeout, RECONNECT_TIMEOUT);
+    }
   }
 
   public async disconnect(): Promise<void> {
@@ -143,13 +152,13 @@ class Connection extends EventEmitter {
 
     this.shutdown = true;
 
+    if (this.isConnected()) {
+      await this.unsubscribe();
+    }
+
     if (this.connectionWatchTimer !== null) {
       clearTimeout(this.connectionWatchTimer);
       this.connectionWatchTimer = null;
-    }
-
-    if (this.isConnected()) {
-      await this.unsubscribe();
     }
 
     this.removeClient();
@@ -201,7 +210,9 @@ class Connection extends EventEmitter {
     if (validResponse) {
       // trigger connectionValidation to as we have response
       // Xahau could be delayed with ledgerClosed event stream
-      this.connectionValidation("request");
+      if (result?.error !== "notConnected") {
+        this.connectionValidation("request");
+      }
     } else {
       // this connection is not stable, remove client to force reconnect
       this.removeClient();
@@ -403,27 +414,29 @@ class Connection extends EventEmitter {
       shutdown: this.shutdown,
     });
 
-    if (!this.shutdown) {
-      this.emit("reconnect");
-      try {
-        this.removeClient();
+    if (this.shutdown) {
+      return;
+    }
 
-        // reset dependent states
-        this.resetTypes();
-        this.serverInfoUpdating = false;
-        this.onlineSince = 0;
-        this.serverInfo = null;
-        this.streamsSubscribed = false;
+    this.emit("reconnect");
+    try {
+      this.removeClient();
 
-        await this.connect();
-      } catch (e: any) {
-        this.logger?.warn({
-          service: "Bithomp::XRPL::Connection",
-          function: "reconnect",
-          url: this.url,
-          error: e.message,
-        });
-      }
+      // reset dependent states
+      this.resetTypes();
+      this.serverInfoUpdating = false;
+      this.onlineSince = 0;
+      this.serverInfo = null;
+      this.streamsSubscribed = false;
+
+      await this.connect();
+    } catch (e: any) {
+      this.logger?.warn({
+        service: "Bithomp::XRPL::Connection",
+        function: "reconnect",
+        url: this.url,
+        error: e.message,
+      });
 
       this.connectionValidation("reconnect");
     }
@@ -780,7 +793,8 @@ class Connection extends EventEmitter {
         error: e.message,
       });
 
-      this.connectionValidation("connectionWatchTimeout");
+      // set timer to reconnect by watch timeout
+      this.connectionWatchTimer = setTimeout(this.bindConnectionWatchTimeout, RECONNECT_TIMEOUT);
     }
   }
 }
