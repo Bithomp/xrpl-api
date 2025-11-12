@@ -108,12 +108,7 @@ class Connection extends EventEmitter {
         shutdown: this.shutdown,
       });
 
-      // remove current watch timer
-      if (this.connectionWatchTimer !== null) {
-        clearTimeout(this.connectionWatchTimer);
-        this.connectionWatchTimer = null;
-      }
-
+      this.removeWatchTimer();
       this.removeClient();
 
       this.client = new XRPLConnection.Connection(
@@ -136,10 +131,11 @@ class Connection extends EventEmitter {
         error: err?.message || err?.name || err,
       });
 
+      this.removeWatchTimer();
       this.removeClient();
 
-      // set timer to reconnect by watch timeout
-      this.connectionWatchTimer = setTimeout(this.bindConnectionWatchTimeout, RECONNECT_TIMEOUT);
+      // set timer to reconnect, with some delay by watch timeout
+      this.connectionWatchTimer = setTimeout(this.bindConnectionWatchTimeout, LEDGER_CLOSED_TIMEOUT);
     }
   }
 
@@ -156,11 +152,7 @@ class Connection extends EventEmitter {
       await this.unsubscribe();
     }
 
-    if (this.connectionWatchTimer !== null) {
-      clearTimeout(this.connectionWatchTimer);
-      this.connectionWatchTimer = null;
-    }
-
+    this.removeWatchTimer();
     this.removeClient();
   }
 
@@ -453,6 +445,13 @@ class Connection extends EventEmitter {
       }
     } catch (_err: any) {
       // ignore
+    }
+  }
+
+  private removeWatchTimer(): void {
+    if (this.connectionWatchTimer !== null) {
+      clearTimeout(this.connectionWatchTimer);
+      this.connectionWatchTimer = null;
     }
   }
 
@@ -749,10 +748,7 @@ class Connection extends EventEmitter {
       shutdown: this.shutdown,
     });
 
-    if (this.connectionWatchTimer !== null) {
-      clearTimeout(this.connectionWatchTimer);
-      this.connectionWatchTimer = null;
-    }
+    this.removeWatchTimer();
 
     if (this.shutdown) {
       this.removeClient();

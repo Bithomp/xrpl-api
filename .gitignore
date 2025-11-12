@@ -113,3 +113,4 @@ lib
 config/test.json
 
 test/ledger/account_nfts.live.test.ts
+test/connection_manual.test.ts
