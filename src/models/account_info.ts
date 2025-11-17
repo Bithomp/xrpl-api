@@ -109,6 +109,7 @@ export const AccountSetFlags = {
 
   // XRPL specific
   allowTrustLineClawback: AccountSetAsfFlags.asfAllowTrustLineClawback,
+  allowTrustLineLocking: AccountSetAsfFlags.asfAllowTrustLineLocking,
 
   // Xahau specific
   tshCollect: XahauAccountSetAsfFlags.asfTshCollect,
@@ -121,6 +122,14 @@ export const SignerListFlagsKeys = {
 
 export interface SignerListFlagsKeysInterface {
   oneOwnerCount?: boolean;
+}
+
+export interface AccountFieldParametersInterface {
+  name: string;
+  encoding?: string;
+  length?: number;
+  defaults?: any;
+  shift?: number;
 }
 
 export const AccountFields = {

@@ -949,6 +949,65 @@ describe("Models", () => {
       });
     });
 
+    it("AccountSetClearMinter", function () {
+      const tx = require("../examples/responses/AccountSetClearMinter.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+
+      expect(result).to.eql({
+        type: "settings",
+        address: "raNf8ibQZECTaiFqkDXKRmM2GfdWK76cSu",
+        sequence: 471,
+        id: "14049027152C527C0DA987C5294D89C0DEEB075883921E88073C9D23498B96BE",
+        ctid: "C5C6D48C002C0000",
+        specification: {
+          source: { address: "raNf8ibQZECTaiFqkDXKRmM2GfdWK76cSu", tag: 42697468 },
+          nftokenMinter: "",
+          flags: { innerBatchTxn: false },
+          memos: [{ data: "bithomp.com" }],
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-06-19T16:27:50.000Z",
+          fee: "0.000012",
+          balanceChanges: { raNf8ibQZECTaiFqkDXKRmM2GfdWK76cSu: [{ currency: "XRP", value: "-0.000012" }] },
+          ledgerIndex: 96916620,
+          ledgerVersion: 96916620,
+          indexInLedger: 44,
+        },
+      });
+    });
+
+    it("SignerListSet", function () {
+      const tx = require("../examples/responses/SignerListSet.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+
+      expect(result).to.eql({
+        type: "settings",
+        address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
+        sequence: 364,
+        id: "09A9C86BF20695735AB03620EB1C32606635AC3DA0B70282F37C674FC889EFE7",
+        ctid: "C152701A00200000",
+        specification: {
+          source: { address: "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn" },
+          flags: { innerBatchTxn: false },
+          signerEntries: [
+            { account: "ra5nK24KXen9AHvsdFTKHSANinZseWnPcX", signerWeight: 1 },
+            { account: "rsA2LpzuawewSBQXkiju3YQTMzW13pAAdW", signerWeight: 1 },
+          ],
+          signerQuorum: 2,
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2016-06-28T00:38:01.000Z",
+          fee: "0.000015",
+          balanceChanges: { rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn: [{ currency: "XRP", value: "-0.000015" }] },
+          ledgerIndex: 22179866,
+          ledgerVersion: 22179866,
+          indexInLedger: 32,
+        },
+      });
+    });
+
     it("OfferCreate", function () {
       const tx = require("../examples/responses/OfferCreate.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");

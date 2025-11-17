@@ -11,6 +11,7 @@ import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
 import { parseDelegate } from "../ledger/delegate";
 import { parseSource } from "../ledger/source";
+import { FormattedSettingsSpecification } from "../../types/settings";
 
 function getAccountRootModifiedNode(tx: any) {
   const modifiedNodes = tx.meta.AffectedNodes.filter((node) => node.ModifiedNode?.LedgerEntryType === "AccountRoot");
@@ -64,11 +65,14 @@ function parseSettingsFlags(tx: AccountSet): any {
   return settings;
 }
 
-function parseSettings(tx: AccountSet | SetRegularKey | SignerListSet, nativeCurrency?: string) {
+function parseSettings(
+  tx: AccountSet | SetRegularKey | SignerListSet,
+  nativeCurrency?: string
+): FormattedSettingsSpecification {
   const txType = tx.TransactionType;
   assert.ok(txType === "AccountSet" || txType === "SetRegularKey" || txType === "SignerListSet");
 
-  const baseSettings = removeUndefined({
+  const baseSettings: FormattedSettingsSpecification = removeUndefined({
     source: parseSource(tx),
     signers: parseSigners(tx),
     signer: parseSignerRegularKey(tx),

@@ -1,14 +1,5 @@
 import { FormattedBaseSpecification } from "./specification";
-
-export type WeightedSigner = {
-  address: string;
-  weight: number;
-};
-
-export type Signers = {
-  threshold?: number;
-  weights: WeightedSigner[];
-};
+import { FormattedTransactionSigner } from "./signers";
 
 export type FormattedSettingsSpecification = {
   defaultRipple?: boolean;
@@ -29,7 +20,7 @@ export type FormattedSettingsSpecification = {
   regularKey?: string;
   requireAuthorization?: boolean;
   requireDestinationTag?: boolean;
-  signers?: Signers;
+  signers?: FormattedTransactionSigner[] | null;
   transferRate?: number | null;
   tickSize?: number;
   nftokenMinter?: string;
