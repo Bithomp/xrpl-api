@@ -1,0 +1,93 @@
+{
+  "Account": "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+  "DelaySeconds": 86400,
+  "Fee": "120",
+  "HookParameters": [],
+  "Memos": [],
+  "NetworkID": 21338,
+  "RepeatCount": 10,
+  "Sequence": 816520615,
+  "SigningPubKey": "02B411EE4FD3C8F9182E5B1EEA679B4D42D0B4A93EE816BBCDC62F22F4A600A702",
+  "StartTime": 0,
+  "TransactionType": "CronSet",
+  "TxnSignature": "3045022100EC0A638511891D0D1E008069B4EC07214DFC463AE6275F466A956B3E9D1017240220243DA41150EC8A5AEFF9950247F89E87EAF61EF12CA6067E3FBAAA912DAFA1CF",
+  "ctid": "C0378F120000535A",
+  "date": 816528670,
+  "hash": "2D5F631D3FB38DCA761967F485E43D1D50C4BC4E426A9C6E87F4EBAB710CE211",
+  "inLedger": 3641106,
+  "ledger_index": 3641106,
+
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+            "RootIndex": "7D513B01995FFF841EC9689C645516BCA513CB37132265A79C8E4D8AF04B400A"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "7D513B01995FFF841EC9689C645516BCA513CB37132265A79C8E4D8AF04B400A"
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+            "AccountIndex": "c5a",
+            "AccountTxnID": "2D5F631D3FB38DCA761967F485E43D1D50C4BC4E426A9C6E87F4EBAB710CE211",
+            "Balance": "999889228",
+            "Cron": "F7B645436187CC6130AB3D154C2DC7EBD80B415D443B4FE4351954AE07475088",
+            "Domain": "6578616D706C652E636F6D",
+            "Flags": 0,
+            "MessageKey": "03AB40A0490F9B7ED8DF29D246BF2D6269820A0EE7742ACDD457BEA7C7D0931EDB",
+            "OwnerCount": 2,
+            "Sequence": 816520616,
+            "TouchCount": "1"
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "E696138D7AEB06B6C1CBC1A888A3BC0F2F435754D2F6B6E4A689D10D0E62C062",
+          "PreviousFields": {
+            "AccountTxnID": "4C87C6603F5169379BC4018C95BCD75F08D09F044BE81516F01A21846567EA38",
+            "Balance": "999889348",
+            "Cron": "F7B645436187CC6130AC863AD454ABF35279146415C9A2B0DD04C8D1BBF84281",
+            "Sequence": 816520615
+          },
+          "PreviousTxnID": "DBF32DDCFC65D6DF2E3BEFEA06B02072AB1DD8EEB9AAC1435FFAE434882AB9E4",
+          "PreviousTxnLgrSeq": 3640538
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "Cron",
+          "LedgerIndex": "F7B645436187CC6130AB3D154C2DC7EBD80B415D443B4FE4351954AE07475088",
+          "NewFields": {
+            "DelaySeconds": 86400,
+            "Owner": "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+            "RepeatCount": 10,
+            "StartTime": 816528661
+          }
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "DelaySeconds": 86400,
+            "Flags": 0,
+            "Owner": "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+            "OwnerNode": "0",
+            "PreviousTxnID": "DBF32DDCFC65D6DF2E3BEFEA06B02072AB1DD8EEB9AAC1435FFAE434882AB9E4",
+            "PreviousTxnLgrSeq": 3640538,
+            "RepeatCount": 9,
+            "StartTime": 816612922
+          },
+          "LedgerEntryType": "Cron",
+          "LedgerIndex": "F7B645436187CC6130AC863AD454ABF35279146415C9A2B0DD04C8D1BBF84281"
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

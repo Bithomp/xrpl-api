@@ -1,0 +1,85 @@
+{
+  "Account": "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+  "Fee": "0",
+  "LedgerSequence": 3687098,
+  "Owner": "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+  "Sequence": 0,
+  "SigningPubKey": "",
+  "TransactionType": "Cron",
+  "ctid": "C03842BA0000535A",
+  "date": 816701462,
+  "hash": "52C4984D4F0CEF7A4212EE793A56BBAC37DEF45F63558C50E8D78CAABC4FB480",
+  "inLedger": 3687098,
+  "ledger_index": 3687098,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+            "RootIndex": "7D513B01995FFF841EC9689C645516BCA513CB37132265A79C8E4D8AF04B400A"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "7D513B01995FFF841EC9689C645516BCA513CB37132265A79C8E4D8AF04B400A"
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+            "AccountIndex": "c5a",
+            "AccountTxnID": "D429FBAAF900DC47D0EACFBDD03C412260B6DB129E399E65A31A599B1E4ADC98",
+            "Balance": "999005136",
+            "Cron": "F7B645436187CC6130AF3195373D6E97C7E9C8C0E2B0C10BC500F3827B1DAD39",
+            "Domain": "6578616D706C652E636F6D",
+            "Flags": 0,
+            "MessageKey": "03AB40A0490F9B7ED8DF29D246BF2D6269820A0EE7742ACDD457BEA7C7D0931EDB",
+            "OwnerCount": 2,
+            "Sequence": 816520625,
+            "TouchCount": "4"
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "E696138D7AEB06B6C1CBC1A888A3BC0F2F435754D2F6B6E4A689D10D0E62C062",
+          "PreviousFields": {
+            "Cron": "F7B645436187CC6130ADE015843C04DA131F0DB74C3188F2760819FE07C297F2",
+            "TouchCount": "3"
+          },
+          "PreviousTxnID": "D429FBAAF900DC47D0EACFBDD03C412260B6DB129E399E65A31A599B1E4ADC98",
+          "PreviousTxnLgrSeq": 3679049
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "DelaySeconds": 86400,
+            "Flags": 0,
+            "Owner": "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+            "OwnerNode": "0",
+            "PreviousTxnID": "AA52EEAC1A121F2A8F22FFCAC539E5A6A6E84C60C8693610F9283F82ACAFAE49",
+            "PreviousTxnLgrSeq": 3664103,
+            "RepeatCount": 8,
+            "StartTime": 816701461
+          },
+          "LedgerEntryType": "Cron",
+          "LedgerIndex": "F7B645436187CC6130ADE015843C04DA131F0DB74C3188F2760819FE07C297F2"
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "Cron",
+          "LedgerIndex": "F7B645436187CC6130AF3195373D6E97C7E9C8C0E2B0C10BC500F3827B1DAD39",
+          "NewFields": {
+            "DelaySeconds": 86400,
+            "Owner": "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+            "RepeatCount": 7,
+            "StartTime": 816787861
+          }
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

@@ -7700,6 +7700,119 @@ describe("Models", () => {
       });
     });
 
+    it("CronSet", function () {
+      const tx = require("../examples/responses/CronSet.json");
+      const result: any = Models.getTxDetails(tx, false, "XAH");
+
+      expect(result).to.eql({
+        type: "CronSet",
+        address: "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+        sequence: 816520614,
+        id: "4C87C6603F5169379BC4018C95BCD75F08D09F044BE81516F01A21846567EA38",
+        ctid: "C0378CD90000535A",
+        specification: {
+          source: { address: "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz" },
+          startTime: 0,
+          repeatCount: 10,
+          delaySeconds: 86400,
+          flags: { cronUnset: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-11-15T12:55:30.000Z",
+          fee: "0.00012",
+          balanceChanges: { rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz: [{ currency: "XAH", value: "-0.00012" }] },
+          cronChanges: {
+            status: "created",
+            cronIndex: "F7B645436187CC6130AB34BA58BC8C3A551628C6E9DBB48023D74E85BEFB7D1C",
+            owner: "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+            startTime: 1763211322000,
+            repeatCount: 10,
+            delaySeconds: 86400,
+          },
+          ledgerIndex: 3640537,
+          ledgerVersion: 3640537,
+          indexInLedger: 0,
+        },
+      });
+    });
+
+    it("CronSet modify", function () {
+      const tx = require("../examples/responses/CronSetUpdate.json");
+      const result: any = Models.getTxDetails(tx, false, "XAH");
+
+      expect(result).to.eql({
+        type: "CronSet",
+        address: "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+        sequence: 816520615,
+        id: "2D5F631D3FB38DCA761967F485E43D1D50C4BC4E426A9C6E87F4EBAB710CE211",
+        ctid: "C0378F120000535A",
+        specification: {
+          source: { address: "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz" },
+          startTime: 0,
+          repeatCount: 10,
+          delaySeconds: 86400,
+          flags: { cronUnset: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-11-15T13:31:10.000Z",
+          fee: "0.00012",
+          balanceChanges: { rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz: [{ currency: "XAH", value: "-0.00012" }] },
+          cronChanges: {
+            status: "modified",
+            cronIndex: "F7B645436187CC6130AB3D154C2DC7EBD80B415D443B4FE4351954AE07475088",
+            owner: "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+            startTime: 1763213461000,
+            repeatCount: 10,
+            delaySeconds: 86400,
+            previousCronIndex: "F7B645436187CC6130AC863AD454ABF35279146415C9A2B0DD04C8D1BBF84281",
+            previousTxnID: "DBF32DDCFC65D6DF2E3BEFEA06B02072AB1DD8EEB9AAC1435FFAE434882AB9E4",
+            previousTxnLgrSeq: 3640538,
+          },
+          ledgerIndex: 3641106,
+          ledgerVersion: 3641106,
+          indexInLedger: 0,
+        },
+      });
+    });
+
+    it("Cron", function () {
+      const tx = require("../examples/responses/Cron.json");
+      const result: any = Models.getTxDetails(tx, false, "XAH");
+
+      expect(result).to.eql({
+        type: "Cron",
+        address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+        sequence: 0,
+        id: "52C4984D4F0CEF7A4212EE793A56BBAC37DEF45F63558C50E8D78CAABC4FB480",
+        ctid: "C03842BA0000535A",
+        specification: {
+          source: { address: "rrrrrrrrrrrrrrrrrrrrrhoLvTp" },
+          owner: "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-11-17T13:31:02.000Z",
+          fee: "0",
+          cronChanges: {
+            status: "executed",
+            cronIndex: "F7B645436187CC6130AF3195373D6E97C7E9C8C0E2B0C10BC500F3827B1DAD39",
+            owner: "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+            startTime: 1763472661000,
+            repeatCount: 7,
+            delaySeconds: 86400,
+            previousCronIndex: "F7B645436187CC6130ADE015843C04DA131F0DB74C3188F2760819FE07C297F2",
+            previousTxnID: "AA52EEAC1A121F2A8F22FFCAC539E5A6A6E84C60C8693610F9283F82ACAFAE49",
+            previousTxnLgrSeq: 3664103,
+          },
+          ledgerIndex: 3687098,
+          ledgerVersion: 3687098,
+          indexInLedger: 0,
+        },
+      });
+    });
+
     it("TrustSet with deep freeze", function () {
       const tx = require("../examples/responses/TrustSet.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");

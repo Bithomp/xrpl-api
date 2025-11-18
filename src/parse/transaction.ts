@@ -158,6 +158,8 @@ import parseCredentialDelete from "./specification/credential-delete";
 import parseGenesisMint from "./specification/genesis-mint";
 
 import parseBatch from "./specification/batch";
+import parseCron from "./specification/cron";
+import parseCronSet from "./specification/cron-set";
 
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
 import parseFeeUpdate from "./specification/fee-update"; // pseudo-transaction
@@ -235,6 +237,9 @@ const transactionTypeToType = {
   GenesisMint: "genesisMint",
 
   Batch: "Batch",
+
+  Cron: "Cron",
+  CronSet: "CronSet",
 
   EnableAmendment: "amendment", // pseudo-transaction
   SetFee: "feeUpdate", // pseudo-transaction
@@ -314,6 +319,9 @@ export const parserTypeFunc = {
   genesisMint: parseGenesisMint,
 
   Batch: parseBatch,
+
+  Cron: parseCron,
+  CronSet: parseCronSet,
 
   amendment: parseAmendment, // pseudo-transaction
   feeUpdate: parseFeeUpdate, // pseudo-transaction

@@ -26,6 +26,7 @@ import {
   parseCredentialChanges,
   parseDelegateChanges,
   parseRemarksChanges,
+  parseCronChanges,
 } from "./outcome/index";
 
 import { parseTimestamp } from "./utils";
@@ -69,6 +70,7 @@ const MPTOKEN_TYPES = [
 const CREDENTIAL_TYPES = ["CredentialCreate", "CredentialAccept", "CredentialDelete"];
 const DELEGATE_TYPES = ["DelegateSet"];
 const REMARKS_TYPES = ["SetRemarks"];
+const CRON_TYPES = ["Cron", "CronSet"];
 const AMENDMENT_TYPES = ["EnableAmendment"];
 
 function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefinitionsBase): Outcome | undefined {
@@ -104,6 +106,7 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     credentialChanges: getCredentialChanges(tx, nativeCurrency || getNativeCurrency()),
     delegateChanges: getDelegateChanges(tx, nativeCurrency || getNativeCurrency()),
     remarksChanges: getRemarksChanges(tx, nativeCurrency || getNativeCurrency()),
+    cronChanges: getCronChanges(tx, nativeCurrency || getNativeCurrency()),
     unlReportChanges: getUNLReportChanges(tx, nativeCurrency || getNativeCurrency()),
     hooksExecutions: getHooksExecutions(tx, nativeCurrency || getNativeCurrency()),
     emittedTxns: getEmittedTxns(tx, nativeCurrency || getNativeCurrency(), definitions), // only Xahau
@@ -395,7 +398,7 @@ function getDelegateChanges(tx: any, nativeCurrency?: string): any {
 }
 
 /**
- * only XRPL
+ * only Xahau
  */
 function getRemarksChanges(tx: any, nativeCurrency?: string): any {
   if (nativeCurrency !== XAHAU_NATIVE_CURRENCY) {
@@ -409,4 +412,18 @@ function getRemarksChanges(tx: any, nativeCurrency?: string): any {
   return parseRemarksChanges(tx);
 }
 
+/**
+ * only Xahau
+ */
+function getCronChanges(tx: any, nativeCurrency?: string): any {
+  if (nativeCurrency !== XAHAU_NATIVE_CURRENCY) {
+    return undefined;
+  }
+
+  if (!CRON_TYPES.includes(tx.TransactionType)) {
+    return undefined;
+  }
+
+  return parseCronChanges(tx);
+}
 export { parseOutcome };
