@@ -923,6 +923,38 @@ describe("Models", () => {
       });
     });
 
+    it("AccountSet with signer", function () {
+      const tx = require("../examples/responses/transaction/7DF0F2A6DCDB43B2EC36FBE90891632CFD435D8E9496484AE16DDCB0FB0ED45E.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      expect(result).to.eql({
+        type: "settings",
+        address: "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh",
+        sequence: 44195,
+        id: "7DF0F2A6DCDB43B2EC36FBE90891632CFD435D8E9496484AE16DDCB0FB0ED45E",
+        ctid: "C06B94E900010000",
+        specification: {
+          source: { address: "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh" },
+          signer: { address: "rBmVUQNF6tJy4cLvoKdPXb4BNqKBk5JY1Y" },
+          emailHash: "00000000000000000000000000000000",
+          domain: "",
+          flags: { innerBatchTxn: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2014-06-06T19:58:00.000Z",
+          fee: "0.00001",
+          settingsChanges: {
+            domain: null,
+            emailHash: null,
+          },
+          balanceChanges: { rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh: [{ currency: "XRP", value: "-0.00001" }] },
+          ledgerIndex: 7050473,
+          ledgerVersion: 7050473,
+          indexInLedger: 1,
+        },
+      });
+    });
+
     it("AccountSetMinter", function () {
       const tx = require("../examples/responses/AccountSetMinter.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");
@@ -930,7 +962,16 @@ describe("Models", () => {
       expect(result).to.eql({
         address: "rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz",
         id: "18B19F840ED19A27F539006412A5D61986F27B2C2A71A73AA4ED6869009D6BB0",
+        sequence: 42030,
+        specification: {
+          source: { address: "rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz" },
+          nftokenMinter: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+          flags: { innerBatchTxn: false },
+        },
         outcome: {
+          settingsChanges: {
+            nftokenMinter: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
+          },
           balanceChanges: { rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz: [{ currency: "XRP", value: "-0.000015" }] },
           fee: "0.000015",
           ledgerIndex: 44093,
@@ -938,12 +979,6 @@ describe("Models", () => {
           indexInLedger: 0,
           result: "tesSUCCESS",
           timestamp: "2022-03-03T12:47:41.000Z",
-        },
-        sequence: 42030,
-        specification: {
-          source: { address: "rHuR2oGL34Wr4DK7z3bBCbCEVqD4ihVhmz" },
-          nftokenMinter: "rrrrrrrrrrrrrrrrrrrrrhoLvTp",
-          flags: { innerBatchTxn: false },
         },
         type: "settings",
       });
@@ -969,10 +1004,71 @@ describe("Models", () => {
           result: "tesSUCCESS",
           timestamp: "2025-06-19T16:27:50.000Z",
           fee: "0.000012",
+          settingsChanges: {
+            nftokenMinter: null,
+          },
           balanceChanges: { raNf8ibQZECTaiFqkDXKRmM2GfdWK76cSu: [{ currency: "XRP", value: "-0.000012" }] },
           ledgerIndex: 96916620,
           ledgerVersion: 96916620,
           indexInLedger: 44,
+        },
+      });
+    });
+
+    it("AccountSetSetFlag5", function () {
+      const tx = require("../examples/responses/AccountSetSetFlag5.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+
+      expect(result).to.eql({
+        type: "settings",
+        address: "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+        sequence: 816520612,
+        id: "DB277E1CAD2AC12A01D297FFC64BAD030D9F12CD5718B400447A3DEBCDACDE96",
+        ctid: "C0378A080000535A",
+        specification: {
+          source: { address: "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz" },
+          flags: { innerBatchTxn: false },
+          messageKey: "03AB40A0490F9B7ED8DF29D246BF2D6269820A0EE7742ACDD457BEA7C7D0931EDB",
+          domain: "example.com",
+          enableTransactionIDTracking: true,
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-11-15T12:10:21.000Z",
+          fee: "0.00001",
+          settingsChanges: { enableTransactionIDTracking: true },
+          balanceChanges: { rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz: [{ currency: "XRP", value: "-0.00001" }] },
+          ledgerIndex: 3639816,
+          ledgerVersion: 3639816,
+          indexInLedger: 0,
+        },
+      });
+    });
+
+    it("AccountSetSetFlag9", function () {
+      const tx = require("../examples/responses/AccountSetSetFlag9.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+
+      expect(result).to.eql({
+        type: "settings",
+        address: "raNf8ibQZECTaiFqkDXKRmM2GfdWK76cSu",
+        sequence: 467,
+        id: "A89E4F393AFE935E415DAF5D338294A17D7C0EA4E4FECD07578CE0741BEC8BE8",
+        ctid: "C5C6D434002F0000",
+        specification: {
+          source: { address: "raNf8ibQZECTaiFqkDXKRmM2GfdWK76cSu", tag: 42697468 },
+          flags: { innerBatchTxn: false },
+          memos: [{ data: "bithomp.com" }],
+          depositAuth: true,
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2025-06-19T16:22:01.000Z",
+          fee: "0.000012",
+          balanceChanges: { raNf8ibQZECTaiFqkDXKRmM2GfdWK76cSu: [{ currency: "XRP", value: "-0.000012" }] },
+          ledgerIndex: 96916532,
+          ledgerVersion: 96916532,
+          indexInLedger: 47,
         },
       });
     });
@@ -7311,34 +7407,6 @@ describe("Models", () => {
           ledgerVersion: 93937440,
           indexInLedger: 54,
           deliveredAmount: { currency: "XRP", value: "32079955" },
-        },
-      });
-    });
-
-    it("Payment with signer", function () {
-      const tx = require("../examples/responses/transaction/7DF0F2A6DCDB43B2EC36FBE90891632CFD435D8E9496484AE16DDCB0FB0ED45E.json");
-      const result: any = Models.getTxDetails(tx, false, "XRP");
-      expect(result).to.eql({
-        type: "settings",
-        address: "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh",
-        sequence: 44195,
-        id: "7DF0F2A6DCDB43B2EC36FBE90891632CFD435D8E9496484AE16DDCB0FB0ED45E",
-        ctid: "C06B94E900010000",
-        specification: {
-          source: { address: "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh" },
-          signer: { address: "rBmVUQNF6tJy4cLvoKdPXb4BNqKBk5JY1Y" },
-          emailHash: "00000000000000000000000000000000",
-          domain: "",
-          flags: { innerBatchTxn: false },
-        },
-        outcome: {
-          result: "tesSUCCESS",
-          timestamp: "2014-06-06T19:58:00.000Z",
-          fee: "0.00001",
-          balanceChanges: { rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh: [{ currency: "XRP", value: "-0.00001" }] },
-          ledgerIndex: 7050473,
-          ledgerVersion: 7050473,
-          indexInLedger: 1,
         },
       });
     });

@@ -27,6 +27,7 @@ import {
   parseDelegateChanges,
   parseRemarksChanges,
   parseCronChanges,
+  parseAccountSettingChanges,
 } from "./outcome/index";
 
 import { parseTimestamp } from "./utils";
@@ -72,6 +73,7 @@ const DELEGATE_TYPES = ["DelegateSet"];
 const REMARKS_TYPES = ["SetRemarks"];
 const CRON_TYPES = ["Cron", "CronSet"];
 const AMENDMENT_TYPES = ["EnableAmendment"];
+const ACCOUNT_SETTING_TYPES = ["AccountSet"];
 
 function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefinitionsBase): Outcome | undefined {
   const metadata = tx.meta || tx.metaData;
@@ -86,6 +88,7 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     timestamp: parseTimestamp(tx.date),
     fee: dropsToXrp(tx.Fee),
 
+    settingsChanges: getSettingsChanges(tx),
     balanceChanges,
     lockedBalanceChanges: getLockedBalanceChanges(tx),
     orderbookChanges: getOrderbookChanges(tx),
@@ -192,6 +195,14 @@ function getAmendmentChanges(tx: any): any {
   }
 
   return parseAmendmentChanges(tx);
+}
+
+function getSettingsChanges(tx: any): any {
+  if (!ACCOUNT_SETTING_TYPES.includes(tx.TransactionType)) {
+    return undefined;
+  }
+
+  return parseAccountSettingChanges(tx.meta);
 }
 
 /**

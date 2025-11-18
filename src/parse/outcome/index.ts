@@ -23,3 +23,4 @@ export { parseDelegateChanges } from "./delegate_changes";
 export { parseRemarksChanges } from "./remarks_changes";
 export { parseAmendmentChanges } from "./amendment_changes";
 export { parseCronChanges } from "./cron_changes";
+export { parseAccountSettingChanges } from "./account_setting_changes";

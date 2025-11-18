@@ -1,0 +1,49 @@
+{
+  "Account": "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+  "Domain": "6578616D706C652E636F6D",
+  "Fee": "10",
+  "HookParameters": [],
+  "Memos": [],
+  "MessageKey": "03AB40A0490F9B7ED8DF29D246BF2D6269820A0EE7742ACDD457BEA7C7D0931EDB",
+  "NetworkID": 21338,
+  "Sequence": 816520612,
+  "SetFlag": 5,
+  "SigningPubKey": "02B411EE4FD3C8F9182E5B1EEA679B4D42D0B4A93EE816BBCDC62F22F4A600A702",
+  "TransactionType": "AccountSet",
+  "TxnSignature": "304402206787BE6A5A41C7D8EFF8124C64C463B3A4152B97FAFD38E213ED2E15AF42DB53022006D749D7C4E14A1C67A86FE6293623067E3A3D66D3C443BEC2B1E023F997396B",
+  "ctid": "C0378A080000535A",
+  "date": 816523821,
+  "hash": "DB277E1CAD2AC12A01D297FFC64BAD030D9F12CD5718B400447A3DEBCDACDE96",
+  "inLedger": 3639816,
+  "ledger_index": 3639816,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rKpxUm5rS5b3A8mPjUFjh7MQViW8axXEQz",
+            "AccountIndex": "c5a",
+            "AccountTxnID": "0000000000000000000000000000000000000000000000000000000000000000",
+            "Balance": "999889480",
+            "Domain": "6578616D706C652E636F6D",
+            "Flags": 0,
+            "MessageKey": "03AB40A0490F9B7ED8DF29D246BF2D6269820A0EE7742ACDD457BEA7C7D0931EDB",
+            "OwnerCount": 1,
+            "Sequence": 816520613
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "E696138D7AEB06B6C1CBC1A888A3BC0F2F435754D2F6B6E4A689D10D0E62C062",
+          "PreviousFields": {
+            "Balance": "999889490",
+            "Sequence": 816520612
+          },
+          "PreviousTxnID": "F5C58CF6DD4838C70A2A4F02E10465DEE463F18CAC0EDF46A95496E371E87544",
+          "PreviousTxnLgrSeq": 3639766
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

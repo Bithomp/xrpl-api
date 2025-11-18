@@ -1,0 +1,52 @@
+{
+  "Account": "raNf8ibQZECTaiFqkDXKRmM2GfdWK76cSu",
+  "Fee": "12",
+  "LastLedgerSequence": 96916550,
+  "Memos": [
+    {
+      "Memo": {
+        "MemoData": "626974686F6D702E636F6D"
+      }
+    }
+  ],
+  "Sequence": 467,
+  "SetFlag": 9,
+  "SigningPubKey": "02DDCCFD1629CFC1A6DDD3E84B4F3047C234003C15180E14BDF215AFE969083995",
+  "SourceTag": 42697468,
+  "TransactionType": "AccountSet",
+  "TxnSignature": "304502210092143D97ED0D6DB4A89883FDEA9CC4AC508346496AAE83532F810EB04CB5C7EC02203E3BE125D3869C6839865294DC906D8B92DFF658EDE1B824A8DA4370FB7B818F",
+  "ctid": "C5C6D434002F0000",
+  "date": 803665321,
+  "hash": "A89E4F393AFE935E415DAF5D338294A17D7C0EA4E4FECD07578CE0741BEC8BE8",
+  "inLedger": 96916532,
+  "ledger_index": 96916532,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "raNf8ibQZECTaiFqkDXKRmM2GfdWK76cSu",
+            "Balance": "78466992",
+            "BurnedNFTokens": 5,
+            "FirstNFTokenSequence": 361,
+            "Flags": 27262976,
+            "MintedNFTokens": 17,
+            "OwnerCount": 19,
+            "Sequence": 468
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "D00F1F87DBFB09C0E9EBC1B42A29F2852C94759A3FE80E55ED2D96313FFD2B9D",
+          "PreviousFields": {
+            "Balance": "78467004",
+            "Sequence": 467
+          },
+          "PreviousTxnID": "61C423E4C34FA8CCB8F693B799DC3D629DD742EC3DBD1F36D25542126CF70768",
+          "PreviousTxnLgrSeq": 96916527
+        }
+      }
+    ],
+    "TransactionIndex": 47,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

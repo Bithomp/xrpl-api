@@ -206,6 +206,9 @@ describe("Client", () => {
           ],
         });
         expect(result.outcome).to.eql({
+          settingsChanges: {
+            depositAuth: false,
+          },
           balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
           fee: "0.00001",
           ledgerIndex: 69773479,
@@ -270,6 +273,9 @@ describe("Client", () => {
             result: "tesSUCCESS",
             timestamp: "2022-02-18T13:13:21.000Z",
             fee: "0.00001",
+            settingsChanges: {
+              depositAuth: false,
+            },
             balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
             ledgerIndex: 69773479,
             ledgerVersion: 69773479,
@@ -291,15 +297,6 @@ describe("Client", () => {
         expect(result).to.eql({
           address: "rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6",
           id: "B4ECFC303FDE0331725B546A13EA3ED9BA5FEB7FA08195C953362527455E223C",
-          outcome: {
-            result: "tesSUCCESS",
-            timestamp: "2022-02-18T13:13:21.000Z",
-            fee: "0.00001",
-            balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
-            ledgerIndex: 69773479,
-            ledgerVersion: 69773479,
-            indexInLedger: 42,
-          },
           type: "settings",
           sequence: 865,
           specification: {
@@ -311,6 +308,18 @@ describe("Client", () => {
                 data: "28ae197d-76a0-42bd-a703-e6f793c25c14",
               },
             ],
+          },
+          outcome: {
+            result: "tesSUCCESS",
+            timestamp: "2022-02-18T13:13:21.000Z",
+            fee: "0.00001",
+            settingsChanges: {
+              depositAuth: false,
+            },
+            balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
+            ledgerIndex: 69773479,
+            ledgerVersion: 69773479,
+            indexInLedger: 42,
           },
         });
       });
@@ -341,6 +350,9 @@ describe("Client", () => {
             result: "tesSUCCESS",
             timestamp: "2022-02-18T13:13:21.000Z",
             fee: "0.00001",
+            settingsChanges: {
+              depositAuth: false,
+            },
             balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
             ledgerIndex: 69773479,
             ledgerVersion: 69773479,
@@ -536,6 +548,9 @@ describe("Client", () => {
             result: "tesSUCCESS",
             timestamp: "2022-02-18T13:13:21.000Z",
             fee: "0.00001",
+            settingsChanges: {
+              depositAuth: false,
+            },
             balanceChanges: { rL54wzknUXxqiC8Tzs6mzLi3QJTtX5uVK6: [{ currency: "XRP", value: "-0.00001" }] },
             ledgerIndex: 69773479,
             ledgerVersion: 69773479,

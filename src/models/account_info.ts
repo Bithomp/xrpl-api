@@ -74,9 +74,11 @@ export interface AccountRootFlagsKeysInterface {
   disallowIncomingCheck?: boolean;
   disallowIncomingPayChan?: boolean;
   disallowIncomingTrustline?: boolean;
+  enableTransactionIDTracking?: boolean;
 
   // XRPL specific
   allowTrustLineClawback?: boolean;
+  allowTrustLineLocking?: boolean;
 
   // Xahau specific
   tshCollect?: boolean;

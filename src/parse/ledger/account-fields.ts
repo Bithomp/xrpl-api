@@ -2,7 +2,7 @@ import BigNumber from "bignumber.js";
 import { AccountSet, SetRegularKey, SignerListSet } from "xrpl";
 import { AccountFieldParametersInterface, AccountSetFlags, AccountFields } from "../../models/account_info";
 
-function parseField(info: AccountFieldParametersInterface, value: any) {
+export function parseField(info: AccountFieldParametersInterface, value: any) {
   if (info.encoding === "hex" && !info.length) {
     // e.g. "domain"
     return Buffer.from(value, "hex").toString("ascii");
@@ -13,7 +13,7 @@ function parseField(info: AccountFieldParametersInterface, value: any) {
   return value;
 }
 
-function parseFields(tx: AccountSet | SetRegularKey | SignerListSet): object {
+function parseAccountFields(tx: AccountSet | SetRegularKey | SignerListSet): object {
   const settings: any = {};
   for (const fieldName in AccountFields) {
     const fieldValue = tx[fieldName];
@@ -48,4 +48,4 @@ function parseFields(tx: AccountSet | SetRegularKey | SignerListSet): object {
   return settings;
 }
 
-export default parseFields;
+export default parseAccountFields;
