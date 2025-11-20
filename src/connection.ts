@@ -489,6 +489,18 @@ class Connection extends EventEmitter {
 
     this.client.on("error", (source, message, error) => {
       try {
+        // force XRPLConnection to handle correct noPermission errors
+        if (source === "noPermission") {
+          if (!error.status) {
+            error.status = "error";
+          }
+
+          if (this.client) {
+            (this.client as any).requestManager.handleResponse(error);
+            return;
+          }
+        }
+
         this.logger?.error({
           service: "Bithomp::XRPL::Connection",
           emit: "error",

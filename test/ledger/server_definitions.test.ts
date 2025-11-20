@@ -44,6 +44,32 @@ describe("Client", () => {
         ]);
       }
     });
+
+    it("command features", async function () {
+      const connection = Client.findConnection(undefined, "wss://xrplcluster.com");
+      if (!connection) {
+        throw new Error("There is no connection");
+      }
+
+      const response = await connection.request({
+        command: "feature",
+      });
+
+      expect(response.error).to.be.eql("noPermission");
+    });
+
+    it("command features", async function () {
+      const connection = Client.findConnection("features", undefined, true);
+      if (!connection) {
+        throw new Error("There is no connection");
+      }
+
+      const response = await connection.request({
+        command: "feature",
+      });
+
+      expect(response.result).to.have.property("features");
+    });
   });
 
   describe("xahau-test", () => {
