@@ -3,7 +3,8 @@ import { encode, XrplDefinitionsBase } from "ripple-binary-codec";
 
 import * as Client from "../client";
 import { Connection } from "../connection";
-import { dropsInXRP } from "../common";
+import { dropsInXRP, removeUndefined } from "../common";
+import { ErrorResponse } from "../models/base_model";
 
 export interface GetFeeOptions {
   connection?: Connection;
@@ -11,11 +12,11 @@ export interface GetFeeOptions {
   definitions?: XrplDefinitionsBase;
 }
 
-/**
- * @returns {string | null}
- * @exception {Error}
- */
-export async function getFee(options: GetFeeOptions = {}): Promise<string | null> {
+export interface GetFeeDataResult {
+  fee: string | null;
+}
+
+export async function getFeeData(options: GetFeeOptions = {}): Promise<GetFeeDataResult | ErrorResponse> {
   const connection: any = options.connection || Client.findConnection();
   if (!connection) {
     throw new Error("There is no connection");
@@ -33,9 +34,32 @@ export async function getFee(options: GetFeeOptions = {}): Promise<string | null
     tx_blob: txBlob,
   });
 
+  if (!response) {
+    return {
+      status: "error",
+      error: "invalidResponse",
+    };
+  }
+
+  if (response.error) {
+    const { error, error_code, error_message, error_exception, status, validated } = response;
+
+    return removeUndefined({
+      error,
+      error_code,
+      error_message,
+      error_exception,
+      status,
+      validated,
+    });
+  }
+
   const openLedgerFee: any = response?.result?.drops?.open_ledger_fee;
   if (!openLedgerFee) {
-    return null;
+    return {
+      status: "error",
+      error: "No open_ledger_fee data in response",
+    };
   }
 
   const fee: any = new BigNumber(openLedgerFee)
@@ -43,5 +67,20 @@ export async function getFee(options: GetFeeOptions = {}): Promise<string | null
     .dividedBy(dropsInXRP)
     .decimalPlaces(6, BigNumber.ROUND_UP);
 
-  return fee.toString();
+  return {
+    fee: fee.toString(),
+  };
+}
+
+/**
+ * @returns {string | null}
+ * @exception {Error}
+ */
+export async function getFee(options: GetFeeOptions = {}): Promise<string | null> {
+  const response = await getFeeData(options);
+  if ("fee" in response) {
+    return response.fee;
+  }
+
+  return null;
 }
