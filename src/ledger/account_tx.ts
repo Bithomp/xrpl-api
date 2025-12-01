@@ -14,6 +14,8 @@ const MAX_LIMIT_WITH_TAG = 3;
 
 const LIMIT_INCREASE_COUNT = 10;
 
+const DEFAULT_TIMEOUT = 15000; // in milliseconds
+
 export interface GetTransactionsOptions {
   ledgerIndexMin?: number;
   ledgerIndexMax?: number;
@@ -235,7 +237,7 @@ interface FindTransactionsResponse {
 
 export async function findTransactionsExt(
   account: string,
-  options: FindTransactionsOptions = { limit: DEFAULT_LIMIT, timeout: 15000 }
+  options: FindTransactionsOptions = { limit: DEFAULT_LIMIT, timeout: DEFAULT_TIMEOUT }
 ): Promise<FindTransactionsResponse | ErrorResponse> {
   let transactions = [];
   let accountTransactionsError: ErrorResponse | null = null;
@@ -243,6 +245,17 @@ export async function findTransactionsExt(
 
   // create new object to prevent mutation of the original one
   const loadOptions = { ...options };
+
+  // set default limit
+  if (!loadOptions.limit || loadOptions.limit <= 0) {
+    loadOptions.limit = DEFAULT_LIMIT;
+  }
+
+  // set default timeout
+  if (!loadOptions.timeout || loadOptions.timeout <= 0) {
+    loadOptions.timeout = DEFAULT_TIMEOUT;
+  }
+
   const formatted = loadOptions.legacy === true || loadOptions.formatted === true;
 
   // TODO: Add support for binary
@@ -418,11 +431,11 @@ export async function findTransactions(
 
 function applyLimitOptions(options: FindProcessTransactionsOptions) {
   if ((options.sourceTag as number) > 0 || (options.destinationTag as number) > 0) {
-    if (options.limit > MAX_LIMIT_WITH_TAG) {
+    if (!options.limit || options.limit > MAX_LIMIT_WITH_TAG) {
       options.limit = MAX_LIMIT_WITH_TAG;
     }
   } else if (options.types || options.initiated || options.counterparty) {
-    if (options.limit > MAX_LIMIT_WITH_FILTER) {
+    if (!options.limit || options.limit > MAX_LIMIT_WITH_FILTER) {
       options.limit = MAX_LIMIT_WITH_FILTER;
     }
   }

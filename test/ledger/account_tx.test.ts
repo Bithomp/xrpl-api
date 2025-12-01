@@ -847,6 +847,20 @@ describe("Client", () => {
         ); // 68996869
       });
 
+      it("finds one next with startTxHash and types without limit set", async function () {
+        const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
+        const result: any = await Client.findTransactionsExt(address, {
+          startTxHash: "CBFCE6811F41ACA9F66FF42A6BAF8F1492ACA31183F721F5EBCCAD70C7AF1DF0",
+          forward: true,
+          types: ["Payment"],
+        } as any);
+
+        expect(result.transactions.length).to.eq(1);
+        expect(result.transactions[0].tx.hash).to.eq(
+          "098DBCFB42DF80036BAFEE85641090BA982E33132DC506C4D958E2CF5978DAB9"
+        );
+      });
+
       it("finds one previous with startTxHash and ledgerIndexMax", async function () {
         const address = "rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z";
         const result: any = await Client.findTransactionsExt(address, {
