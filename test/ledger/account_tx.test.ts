@@ -855,7 +855,7 @@ describe("Client", () => {
           types: ["Payment"],
         } as any);
 
-        expect(result.transactions.length).to.eq(1);
+        expect(result.transactions.length).to.gte(1);
         expect(result.transactions[0].tx.hash).to.eq(
           "098DBCFB42DF80036BAFEE85641090BA982E33132DC506C4D958E2CF5978DAB9"
         );

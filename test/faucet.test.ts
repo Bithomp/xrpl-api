@@ -140,6 +140,7 @@ describe("Faucet", () => {
       const res = await Faucet.foundWallet("alphanet", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
 
       delete res.transactionHash; // can be missing
+      expect(res.error).not.to.exist;
       expect(res).to.eql({
         account: {
           classicAddress: "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj",

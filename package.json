@@ -1,6 +1,6 @@
 {
   "name": "@bithomp/xrpl-api",
-  "version": "3.7.20",
+  "version": "3.7.21",
   "description": "A Bithomp JavaScript/TypeScript library for interacting with the XRP Ledger",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -57,9 +57,9 @@
     "elliptic": "^6.6.1",
     "lodash": "^4.17.21",
     "ripple-address-codec": "5.0.0",
-    "ripple-binary-codec": "2.5.1",
+    "ripple-binary-codec": "2.6.0",
     "ripple-keypairs": "2.0.0",
-    "xrpl": "4.4.3"
+    "xrpl": "4.5.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
@@ -69,11 +69,11 @@
     "@types/mocha": "^10.0.10",
     "@types/nconf": "^0.10.7",
     "@types/node": "^22.15.21",
-    "@typescript-eslint/eslint-plugin": "^8.48.0",
-    "@typescript-eslint/parser": "^8.48.0",
-    "chai": "^6.2.1",
+    "@typescript-eslint/eslint-plugin": "^8.50.1",
+    "@typescript-eslint/parser": "^8.50.1",
+    "chai": "^6.2.2",
     "chai-as-promised": "^8.0.2",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-chai-friendly": "^1.1.0",
     "eslint-plugin-import": "^2.32.0",
@@ -81,7 +81,7 @@
     "eslint-plugin-promise": "^7.2.1",
     "mocha": "^11.7.5",
     "nconf": "^0.13.0",
-    "ts-jest": "^29.4.5",
+    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
