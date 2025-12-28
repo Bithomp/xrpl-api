@@ -18,6 +18,12 @@ const AVAILABLE_LEDGER_INDEX_WINDOW = 1000;
 // Set default api version to 1, so it will be compatible with rippled and xahaud servers
 export const DEFAULT_API_VERSION = RIPPLED_API_V1;
 
+const SLOW_DOWN_ERROR_MESSAGES = [
+  "slowDown",
+  "Unexpected server response: 429",
+  "You are placing too much load on the server."
+];
+
 export interface ConnectionOptions {
   logger?: any;
   timeout?: number; // request timeout
@@ -164,7 +170,7 @@ class Connection extends EventEmitter {
     // handle mass timeout errors
     if (result?.error) {
       // too many requests
-      if (result.error === "slowDown" || result.error === "Unexpected server response: 429") {
+      if (SLOW_DOWN_ERROR_MESSAGES.includes(result.error)) {
         this.logger?.debug({
           service: "Bithomp::XRPL::Connection",
           function: "request",
