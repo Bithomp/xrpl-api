@@ -1,12 +1,13 @@
 import * as assert from "assert";
 import { encodeAccountID, decodeNodePublic, encodeNodePublic, codec } from "ripple-address-codec";
 import * as Crypto from "crypto";
-import elliptic from "elliptic";
-const secp256k1 = new elliptic.ec("secp256k1");
-const ed25519 = new elliptic.eddsa("ed25519");
 import * as rippleKeypairs from "ripple-keypairs";
-
 import { bytesToHex } from "./parse/utils";
+import * as secp256k1 from "@noble/secp256k1";
+
+import * as ed25519 from "@noble/ed25519";
+import { sha512 } from '@noble/hashes/sha2.js';
+ed25519.hashes.sha512 = sha512;
 
 const DER_PRIVATE_KEY_PREFIX = Buffer.from("302E020100300506032B657004220420", "hex");
 const DER_PUBLIC_KEY_PREFIX = Buffer.from("302A300506032B6570032100", "hex");
@@ -107,18 +108,13 @@ export function verify2(message: Buffer, signature: string, publicKey: string): 
   }
 
   if (publicKey.slice(0, 2) === VALIDATOR_HEX_PREFIX_ED25519) {
-    const verifyKey = ed25519.keyFromPublic(publicKey.slice(2), "hex");
-    if (verifyKey.verify(message.toString("hex"), signature)) {
-      return true;
-    }
+    const publicKeyBytes = Buffer.from(publicKey.slice(2), "hex");
+    const signatureBytes = Buffer.from(signature, "hex");
+    return ed25519.verify(signatureBytes, message, publicKeyBytes);
   } else {
-    const computedHash = Crypto.createHash("sha512").update(message).digest().toString("hex").slice(0, 64);
-    const verifyKey = secp256k1.keyFromPublic(publicKey, "hex");
-
-    if (verifyKey.verify(computedHash, signature)) {
-      return true;
-    }
+    const computedHash = Crypto.createHash("sha512").update(message).digest().slice(0, 32);
+    const publicKeyBytes = Buffer.from(publicKey, "hex");
+    const signatureBytes = Buffer.from(signature, "hex");
+    return secp256k1.verify(signatureBytes, computedHash, publicKeyBytes);
   }
-
-  return false;
 }
