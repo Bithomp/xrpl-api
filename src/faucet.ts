@@ -89,32 +89,38 @@ export async function foundWallet(network: string | FaucetNetworkInterface, acco
   }
 
   const options = getAxiosFaucetOptions(network, account);
-  const data = (await axios(options)).data;
+  try {
+    const data = (await axios(options)).data;
 
-  // return xrpl-labs SUCCESS response in xrpl format
-  if (network.format === "xrpl-labs" && data.code === "tesSUCCESS") {
+    // return xrpl-labs SUCCESS response in xrpl format
+    if (network.format === "xrpl-labs" && data.code === "tesSUCCESS") {
+      // {
+      //   address: 'rh19DztENXTjC2xPpjFXULmDzWdkS479Zx',
+      //   secret: 's____________________________',
+      //   xrp: 10000,
+      //   hash: '74BCB80645EA4F194EB2AF0CB97671B9E85F6A03CA037EB37A16D467D45DF0D2',
+      //   code: 'tesSUCCESS'
+      // }
+
+      return xrplLabsToXrplResponse(data);
+    }
+
     // {
-    //   address: 'rh19DztENXTjC2xPpjFXULmDzWdkS479Zx',
-    //   secret: 's____________________________',
-    //   xrp: 10000,
-    //   hash: '74BCB80645EA4F194EB2AF0CB97671B9E85F6A03CA037EB37A16D467D45DF0D2',
-    //   code: 'tesSUCCESS'
+    //   account: {
+    //     xAddress: 'TVaRHtuHAZAPhfy7gBqnP1uEWvgqnrae4h7MZzpuxs9mapV',
+    //     secret: 's____________________________',
+    //     classicAddress: 'rDgvtnmeAY3o1pjcBwN2RZhqwLg6tV7r4w',
+    //     address: 'rDgvtnmeAY3o1pjcBwN2RZhqwLg6tV7r4w'
+    //   },
+    //   amount: 1000,
+    //   balance: 1000
     // }
-
-    return xrplLabsToXrplResponse(data);
+    return data;
+  } catch (err: any) {
+    return {
+      error: err.message,
+    }
   }
-
-  // {
-  //   account: {
-  //     xAddress: 'TVaRHtuHAZAPhfy7gBqnP1uEWvgqnrae4h7MZzpuxs9mapV',
-  //     secret: 's____________________________',
-  //     classicAddress: 'rDgvtnmeAY3o1pjcBwN2RZhqwLg6tV7r4w',
-  //     address: 'rDgvtnmeAY3o1pjcBwN2RZhqwLg6tV7r4w'
-  //   },
-  //   amount: 1000,
-  //   balance: 1000
-  // }
-  return data;
 }
 
 export function getAxiosFaucetOptions(network: FaucetNetworkInterface, account?: string): AxiosFaucetOptionsInterface {
