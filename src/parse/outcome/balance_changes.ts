@@ -339,6 +339,20 @@ function adjustBalancesForPaymentChannel(
       adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
         { currency: channelChanges.amount.currency, value: `-${unlockedAmount.toString()}` },
       ]);
+
+      // if it is claimed by destination and some amount left in the channel, it is returned to source account
+      if (channelChanges.source.address !== tx.Account && channelChanges?.balance && channelChanges?.amount) {
+        const returnedAmount = new BigNumber(channelChanges.amount.value).minus(
+          new BigNumber(channelChanges.balance.value)
+        );
+
+        // adjust remaining amount for source account
+        if (!returnedAmount.isZero()) {
+          adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
+            { currency: channelChanges.amount.currency, value: `-${returnedAmount}` },
+          ]);
+        }
+      }
     } else if (channelChanges.balanceChange) {
       adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
         { currency: channelChanges.balanceChange.currency, value: channelChanges.balanceChange.value },
