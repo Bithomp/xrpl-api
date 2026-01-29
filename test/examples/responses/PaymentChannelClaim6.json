@@ -1,0 +1,106 @@
+{
+  "Account": "rfXsKb5z4tRjw7J6fdAQopDcszf7pKu621",
+  "Channel": "968AB351B25473B693FF190259527E1444BF4C73EF65C141A4912D85B3C5C01F",
+  "Fee": "1",
+  "Flags": 131072,
+  "Sequence": 2899330,
+  "SigningPubKey": "026B8980F8756681214DAFA2F9A90131BE1BA041D970BC223188DA2F24B2681B4A",
+  "TransactionType": "PaymentChannelClaim",
+  "TxnSignature": "3045022100A181B4F36D5B477592F10819674EE5A545DD9E00C3308039F242ACD98299E6980220218586A360737B2EBF39A69E40A09F9BFD773CF4F0B89C2CD00D933F1B0FC4CC",
+  "ctid": "C02C3D84000C0002",
+  "date": 821814661,
+  "hash": "61C6A2CB3FA93EC1646CEDAB620E6813EDC62E62F2ABE1A073965CEA613ADC83",
+  "inLedger": 2899332,
+  "ledger_index": 2899332,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rfXsKb5z4tRjw7J6fdAQopDcszf7pKu621",
+            "Balance": "39999999",
+            "Flags": 0,
+            "OwnerCount": 0,
+            "Sequence": 2899331
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "4C9EF008E1B712EF973A63AA0D20A49431B327E25CAE03DCD53D655A9E25E523",
+          "PreviousFields": {
+            "Balance": "40000000",
+            "Sequence": 2899330
+          },
+          "PreviousTxnID": "30E55C7B48A696AEDAD13014C790F96AEDF11AD71C99BAE27DA8B166BCFA8275",
+          "PreviousTxnLgrSeq": 2899331
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rDrySARgN1beWu52MjP9PRaHaHMVsik1Ak",
+            "Balance": "39999999",
+            "Flags": 0,
+            "OwnerCount": 0,
+            "Sequence": 2899330
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "6307947A7C7D2E78103462FFC32A45D79F111FAB8AF7EE0F30BB355F0B1B997C",
+          "PreviousFields": {
+            "Balance": "39989999",
+            "OwnerCount": 1
+          },
+          "PreviousTxnID": "30E55C7B48A696AEDAD13014C790F96AEDF11AD71C99BAE27DA8B166BCFA8275",
+          "PreviousTxnLgrSeq": 2899331
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "Account": "rDrySARgN1beWu52MjP9PRaHaHMVsik1Ak",
+            "Amount": "10000",
+            "Balance": "0",
+            "Destination": "rfXsKb5z4tRjw7J6fdAQopDcszf7pKu621",
+            "DestinationNode": "0",
+            "Flags": 0,
+            "OwnerNode": "0",
+            "PreviousTxnID": "30E55C7B48A696AEDAD13014C790F96AEDF11AD71C99BAE27DA8B166BCFA8275",
+            "PreviousTxnLgrSeq": 2899331,
+            "PublicKey": "02750BB392259E0E96FA383DCC4F68E0ED9960F59B029E523320AF675A2392FC00",
+            "Sequence": 2899329,
+            "SettleDelay": 20
+          },
+          "LedgerEntryType": "PayChannel",
+          "LedgerIndex": "968AB351B25473B693FF190259527E1444BF4C73EF65C141A4912D85B3C5C01F"
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "rDrySARgN1beWu52MjP9PRaHaHMVsik1Ak",
+            "RootIndex": "9B5170CC845EBC650DB93EFFA9FA708AF2EAC4A79F168B83274CB35C21BD531D"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "9B5170CC845EBC650DB93EFFA9FA708AF2EAC4A79F168B83274CB35C21BD531D",
+          "PreviousTxnID": "30E55C7B48A696AEDAD13014C790F96AEDF11AD71C99BAE27DA8B166BCFA8275",
+          "PreviousTxnLgrSeq": 2899331
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "rfXsKb5z4tRjw7J6fdAQopDcszf7pKu621",
+            "RootIndex": "DF10017E49CDACEAE51B5E9624A8FB123FE1763306C5EDF8087E564E0ED8534F"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "DF10017E49CDACEAE51B5E9624A8FB123FE1763306C5EDF8087E564E0ED8534F",
+          "PreviousTxnID": "30E55C7B48A696AEDAD13014C790F96AEDF11AD71C99BAE27DA8B166BCFA8275",
+          "PreviousTxnLgrSeq": 2899331
+        }
+      }
+    ],
+    "TransactionIndex": 12,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

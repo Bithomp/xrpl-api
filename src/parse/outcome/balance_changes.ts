@@ -333,24 +333,24 @@ function adjustBalancesForPaymentChannel(
         unlockedAmount = new BigNumber(channelChanges.amount.value).minus(channelChanges?.balance?.value || "0");
       }
 
-      if (unlockedAmount.isZero()) {
-        return;
+      if (!unlockedAmount.isZero()) {
+        adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
+          { currency: channelChanges.amount.currency, value: `-${unlockedAmount.toString()}` },
+        ]);
       }
-      adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
-        { currency: channelChanges.amount.currency, value: `-${unlockedAmount.toString()}` },
-      ]);
 
-      // if it is claimed by destination and some amount left in the channel, it is returned to source account
-      if (channelChanges.source.address !== tx.Account && channelChanges?.balance && channelChanges?.amount) {
-        const returnedAmount = new BigNumber(channelChanges.amount.value).minus(
-          new BigNumber(channelChanges.balance.value)
-        );
-
-        // adjust remaining amount for source account
-        if (!returnedAmount.isZero()) {
-          adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
-            { currency: channelChanges.amount.currency, value: `-${returnedAmount}` },
-          ]);
+      if (channelChanges.balanceChange) {
+        // if it is claimed by destination and some amount left in the channel, it is returned to source account
+        if (channelChanges.source.address !== tx.Account && channelChanges?.balance && channelChanges?.amount) {
+          const returnedAmount = new BigNumber(channelChanges.amount.value).minus(
+            new BigNumber(channelChanges.balance.value)
+          );
+          // adjust remaining amount for source account
+          if (!returnedAmount.isZero()) {
+            adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
+              { currency: channelChanges.amount.currency, value: `-${returnedAmount.toString()}` },
+            ]);
+          }
         }
       }
     } else if (channelChanges.balanceChange) {
