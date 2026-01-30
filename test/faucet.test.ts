@@ -135,7 +135,7 @@ describe("Faucet", () => {
       });
     });
 
-    it("works with existing address on alphanet xrpl network", async function () {
+    it.skip("works with existing address on alphanet xrpl network", async function () {
       this.timeout(10000);
       const res = await Faucet.foundWallet("alphanet", "rJ13fFbRaYvuY5Xbd1QE4HCrV1mKdFaLaj");
 

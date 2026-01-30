@@ -21,7 +21,7 @@ export const DEFAULT_API_VERSION = RIPPLED_API_V1;
 const SLOW_DOWN_ERROR_MESSAGES = [
   "slowDown",
   "Unexpected server response: 429",
-  "You are placing too much load on the server."
+  "You are placing too much load on the server.",
 ];
 
 export interface ConnectionOptions {
@@ -130,18 +130,24 @@ class Connection extends EventEmitter {
       // start connection validation timer
       this.connectionValidation("connect");
     } catch (err: any) {
+      const errorMessage = err?.message || err?.name || err;
       this.logger?.warn({
         service: "Bithomp::XRPL::Connection",
         function: "connect",
         url: this.url,
-        error: err?.message || err?.name || err,
+        error: errorMessage,
       });
 
       this.removeWatchTimer();
       this.removeClient();
 
+      let reconnectDelay = LEDGER_CLOSED_TIMEOUT;
+      if (SLOW_DOWN_ERROR_MESSAGES.includes(errorMessage)) {
+        reconnectDelay = LEDGER_CLOSED_TIMEOUT * 5;
+      }
+
       // set timer to reconnect, with some delay by watch timeout
-      this.connectionWatchTimer = setTimeout(this.bindConnectionWatchTimeout, LEDGER_CLOSED_TIMEOUT);
+      this.connectionWatchTimer = setTimeout(this.bindConnectionWatchTimeout, reconnectDelay);
     }
   }
 
