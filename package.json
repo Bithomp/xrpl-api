@@ -1,6 +1,6 @@
 {
   "name": "@bithomp/xrpl-api",
-  "version": "3.7.25",
+  "version": "3.7.26",
   "description": "A Bithomp JavaScript/TypeScript library for interacting with the XRP Ledger",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -70,7 +70,7 @@
     "@types/lodash": "^4.17.23",
     "@types/mocha": "^10.0.10",
     "@types/nconf": "^0.10.7",
-    "@types/node": "^25.0.10",
+    "@types/node": "^25.2.0",
     "@typescript-eslint/eslint-plugin": "^8.54.0",
     "@typescript-eslint/parser": "^8.54.0",
     "chai": "^6.2.2",

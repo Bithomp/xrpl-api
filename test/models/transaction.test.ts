@@ -8083,6 +8083,32 @@ describe("Models", () => {
       });
     });
 
+    it("PermissionedDomainSet", function () {
+      const tx = require("../examples/responses/PermissionedDomainSet.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      expect(result).to.eql({
+        type: "PermissionedDomainSet",
+        address: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76",
+        sequence: 2813,
+        id: "2B3C36F662EC5755A873CB8FA8E5506621940FAFC881771BF87D6C77BC77FD9E",
+        ctid: "C614AB0400200000",
+        specification: {
+          source: { address: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76" },
+          acceptedCredentials: [{ issuer: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76", type: "Certified 3D XRP Symbol" }],
+          flags: { innerBatchTxn: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2026-02-04T10:06:51.000Z",
+          fee: "0.000589",
+          balanceChanges: { rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76: [{ currency: "XRP", value: "-0.000589" }] },
+          ledgerIndex: 102017796,
+          ledgerVersion: 102017796,
+          indexInLedger: 32,
+        },
+      });
+    });
+
     it("Batch", function () {
       const tx = require("../examples/responses/Batch.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");

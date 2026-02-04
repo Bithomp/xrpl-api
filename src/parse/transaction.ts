@@ -76,6 +76,7 @@ import {
   FormattedCredentialCreateSpecification,
   FormattedCredentialAcceptSpecification,
   FormattedCredentialDeleteSpecification,
+  FormattedPermissionedDomainSetSpecification,
 } from "../types/credentials";
 
 import { FormattedDelegateSetSpecification } from "../types/delegate";
@@ -155,6 +156,8 @@ import parseCredentialCreate from "./specification/credential-create";
 import parseCredentialAccept from "./specification/credential-accept";
 import parseCredentialDelete from "./specification/credential-delete";
 
+import parsePermissionedDomainSet from "./specification/permissioned-domain-set";
+
 import parseGenesisMint from "./specification/genesis-mint";
 
 import parseBatch from "./specification/batch";
@@ -229,6 +232,8 @@ const transactionTypeToType = {
   CredentialCreate: "CredentialCreate",
   CredentialAccept: "CredentialAccept",
   CredentialDelete: "CredentialDelete",
+
+  PermissionedDomainSet: "PermissionedDomainSet",
 
   DelegateSet: "DelegateSet",
 
@@ -312,6 +317,8 @@ export const parserTypeFunc = {
   CredentialAccept: parseCredentialAccept,
   CredentialDelete: parseCredentialDelete,
 
+  PermissionedDomainSet: parsePermissionedDomainSet,
+
   DelegateSet: parseDelegateSet,
 
   SetRemarks: parseSetRemarks,
@@ -381,6 +388,7 @@ export type FormattedSpecification =
   | FormattedCredentialCreateSpecification
   | FormattedCredentialAcceptSpecification
   | FormattedCredentialDeleteSpecification
+  | FormattedPermissionedDomainSetSpecification
   | FormattedDelegateSetSpecification
   | FormattedSetRemarksSpecification
   | FormattedGenesisMintSpecification

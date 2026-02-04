@@ -1,3 +1,4 @@
+import { FormattedAuthorizeCredentials } from "./deposits";
 import { FormattedBaseSpecification } from "./specification";
 
 export enum CredentialFlags {
@@ -28,4 +29,8 @@ export type FormattedCredentialDeleteSpecification = {
   issuer?: string;
   subject?: string;
   credentialType?: string;
+} & FormattedBaseSpecification;
+
+export type FormattedPermissionedDomainSetSpecification = {
+  acceptedCredentials?: FormattedAuthorizeCredentials[];
 } & FormattedBaseSpecification;
