@@ -85,7 +85,7 @@ function parseCronChanges(tx: any): FormattedCronSummaryInterface | undefined {
   // could be 1 or 2 nodes affected
   // 1 - for create, cancel, last execution
   // 2 - execution when Cron is deleted and new Cron is created
-  if (affectedNodes.length > 2) {
+  if (affectedNodes.length > 2 || affectedNodes.length === 0) {
     return undefined;
   }
 
