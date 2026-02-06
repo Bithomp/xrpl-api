@@ -20,6 +20,7 @@ function parsePermissionedDomainSet(
     source: parseSource(tx),
     signers: parseSigners(tx),
     signer: parseSignerRegularKey(tx),
+    domainID: tx.DomainID,
     acceptedCredentials: tx.AcceptedCredentials ? tx.AcceptedCredentials.map(parseCredentials) : undefined,
     flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),
     memos: parseMemos(tx),

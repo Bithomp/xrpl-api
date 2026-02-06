@@ -32,5 +32,6 @@ export type FormattedCredentialDeleteSpecification = {
 } & FormattedBaseSpecification;
 
 export type FormattedPermissionedDomainSetSpecification = {
+  domainID?: string;
   acceptedCredentials?: FormattedAuthorizeCredentials[];
 } & FormattedBaseSpecification;
