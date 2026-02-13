@@ -216,6 +216,7 @@ describe("Client", () => {
           disallowIncomingPayChan: false,
           disallowIncomingTrustline: false,
           allowTrustLineClawback: false,
+          allowTrustLineLocking: false,
         });
       });
     });
@@ -268,6 +269,7 @@ describe("Client", () => {
           disallowIncomingPayChan: false,
           disallowIncomingTrustline: false,
           allowTrustLineClawback: false,
+          allowTrustLineLocking: false,
         });
       });
 
@@ -357,6 +359,7 @@ describe("Client", () => {
           disallowIncomingPayChan: false,
           disallowIncomingTrustline: false,
           allowTrustLineClawback: false,
+          allowTrustLineLocking: false,
         });
       });
     });

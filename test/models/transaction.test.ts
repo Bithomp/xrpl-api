@@ -1073,6 +1073,34 @@ describe("Models", () => {
       });
     });
 
+    it("AccountSetSetFlag17", function () {
+      const tx = require("../examples/responses/AccountSetSetFlag17.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+
+      expect(result).to.eql({
+        type: "settings",
+        sequence: 3640120,
+        id: "6497D4B114004F7C7916C330849F8A533B5A23FAEC80E732B788641BED9005D6",
+        ctid: "C0E2CEC900010001",
+        specification: {
+          signer: { address: "rLYFztDp3rKEwFiB99Gtqv6eykVH8PWSrG" },
+          flags: { innerBatchTxn: false },
+          memos: [{ data: "test.bithomp.com" }],
+          allowTrustLineLocking: true,
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2026-02-13T13:49:23.000Z",
+          fee: "0.000012",
+          settingsChanges: { allowTrustLineLocking: true },
+          balanceChanges: { rLYFztDp3rKEwFiB99Gtqv6eykVH8PWSrG: [{ currency: "XRP", value: "-0.000012" }] },
+          ledgerIndex: 14864073,
+          ledgerVersion: 14864073,
+          indexInLedger: 1,
+        },
+      });
+    });
+
     it("SignerListSet", function () {
       const tx = require("../examples/responses/SignerListSet.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");

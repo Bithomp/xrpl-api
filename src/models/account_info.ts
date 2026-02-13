@@ -38,6 +38,7 @@ export const XRPLAccountRootFlagsKeys = {
   ...AccountRootFlagsKeys,
 
   allowTrustLineClawback: LedgerEntry.AccountRootFlags.lsfAllowTrustLineClawback,
+  allowTrustLineLocking: LedgerEntry.AccountRootFlags.lsfAllowTrustLineLocking,
 };
 
 // Xahau specific
