@@ -135,6 +135,24 @@ describe("Models", () => {
       expect(result).to.eql({ rNixEReo8KruCW6pekB5dJS4JGwoU2WbxJ: [{ currency: "XRP", value: "-0.000012" }] });
     });
 
+    it("parses for PaymentChannelFund2", function () {
+      const tx = require("../examples/responses/PaymentChannelFund2.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForNativeEscrow: false,
+      });
+
+      expect(result).to.eql({ rwUHGdSMbo6xuVSoq728HzULAkjMjbXGQJ: [{ currency: "XRP", value: "2.001224" }] });
+    });
+
+    it("parses for PaymentChannelFund2 with adjustBalancesForPaymentChannel", function () {
+      const tx = require("../examples/responses/PaymentChannelFund2.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForPaymentChannel: true,
+      });
+
+      expect(result).to.eql({ rwUHGdSMbo6xuVSoq728HzULAkjMjbXGQJ: [{ currency: "XRP", value: "-0.00001" }] });
+    });
+
     it("parses for PaymentChannelClaim", function () {
       const tx = require("../examples/responses/PaymentChannelClaim.json");
       const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {

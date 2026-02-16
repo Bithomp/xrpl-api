@@ -319,6 +319,19 @@ function adjustBalancesForPaymentChannel(
       adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
         { currency: channelChanges.amountChange.currency, value: channelChanges.amountChange.value },
       ]);
+    } else if (channelChanges.status === "deleted") {
+      let unlockedAmount = new BigNumber(0);
+      if (channelChanges?.balanceChange) {
+        unlockedAmount = new BigNumber(channelChanges?.balanceChange?.value || "0").abs();
+      } else {
+        unlockedAmount = new BigNumber(channelChanges.amount.value).minus(channelChanges?.balance?.value || "0");
+      }
+
+      if (!unlockedAmount.isZero()) {
+        adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
+          { currency: channelChanges.amount.currency, value: `-${unlockedAmount.toString()}` },
+        ]);
+      }
     }
   } else if (tx.TransactionType === "PaymentChannelClaim") {
     if (tx.Account === channelChanges.source.address && channelChanges.amountChange) {
