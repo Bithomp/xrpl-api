@@ -29,6 +29,7 @@ function parseOfferCreate(tx: OfferCreate, nativeCurrency?: string): FormattedOf
     takerGets,
     takerPays,
     expirationTime: parseTimestamp(tx.Expiration),
+    domainID: tx.DomainID,
     emittedDetails: parseEmittedDetails(tx),
     memos: parseMemos(tx),
 

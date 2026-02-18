@@ -60,6 +60,7 @@ export type FormattedOfferCreateSpecification = {
   takerPays: IssuedCurrencyAmount;
   expirationTime?: string;
   orderToReplace?: number;
+  domainID?: string;
 
   direction: string; // @deprecated, use flags.sell instead
   immediateOrCancel?: boolean; // @deprecated, use flags.immediateOrCancel instead

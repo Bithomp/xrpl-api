@@ -113,19 +113,21 @@ function parseChangeAmount(node: NormalizedNode, type: string): FormattedAmount 
 }
 
 function parseOrderChange(node: NormalizedNode): OfferDescription {
-  const flags = parseOfferFlags(node.finalFields.Flags as number);
   const takerPays = parseChangeAmount(node, "TakerPays");
   const takerGets = parseChangeAmount(node, "TakerGets");
+
+  const fields = Object.keys(node.finalFields).length > 0 ? node.finalFields : node.newFields;
+  const flags = parseOfferFlags(fields.Flags as number);
 
   const orderChange = removeUndefined({
     flags,
     takerGets,
     takerPays,
-    sequence: (node.finalFields.Sequence || node.newFields.Sequence) as number,
+    sequence: fields.Sequence as number,
     status: parseOrderStatus(node),
     makerExchangeRate: getQuality(node),
     expirationTime: getExpirationTime(node),
-    domainID: node.finalFields.Domain as string,
+    domainID: fields.DomainID as string,
 
     // eslint-disable-next-line no-bitwise
     direction: ((node.finalFields.Flags as any) & LedgerEntry.OfferFlags.lsfSell) === 0 ? "buy" : "sell", // @deprecated
@@ -135,7 +137,7 @@ function parseOrderChange(node: NormalizedNode): OfferDescription {
 
   // make sure address does not show up in the final object
   Object.defineProperty(orderChange, "account", {
-    value: node.finalFields.Account || node.newFields.Account,
+    value: fields.Account,
   });
 
   return orderChange;

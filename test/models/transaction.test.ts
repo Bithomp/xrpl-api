@@ -1352,6 +1352,82 @@ describe("Models", () => {
       });
     });
 
+    it("OfferCreate with domain", function () {
+      const tx = require("../examples/responses/OfferCreate3.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+
+      expect(result).to.eql({
+        type: "order",
+        address: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76",
+        sequence: 0,
+        ticketSequence: 2795,
+        id: "A751C33B67245BC616E92B6E21DE61093CC8B994F9C26A9E99559F216E234F7A",
+        ctid: "C6196706001C0000",
+        specification: {
+          source: { address: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76" },
+          flags: {
+            innerBatchTxn: false,
+            passive: false,
+            immediateOrCancel: false,
+            fillOrKill: false,
+            sell: true,
+            hybrid: false,
+          },
+          domainID: "23F8D10AF1960447DA3B37C7F6F64C1986146AE34A93582872722AB8879DEE53",
+          takerGets: { currency: "XRP", value: "5.89" },
+          takerPays: {
+            issuer: "rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De",
+            currency: "524C555344000000000000000000000000000000",
+            value: "589",
+            counterparty: "rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De",
+          },
+          direction: "sell",
+          quantity: { currency: "XRP", value: "5.89" },
+          totalPrice: {
+            issuer: "rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De",
+            currency: "524C555344000000000000000000000000000000",
+            value: "589",
+            counterparty: "rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De",
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2026-02-18T10:58:30.000Z",
+          fee: "0.000589",
+          balanceChanges: { rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76: [{ currency: "XRP", value: "-0.000589" }] },
+          orderbookChanges: {
+            rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76: [
+              {
+                flags: { passive: false, sell: true, hybrid: false },
+                domainID: "23F8D10AF1960447DA3B37C7F6F64C1986146AE34A93582872722AB8879DEE53",
+                takerGets: { currency: "XRP", value: "5.89" },
+                takerPays: {
+                  issuer: "rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De",
+                  currency: "524C555344000000000000000000000000000000",
+                  value: "589",
+                  counterparty: "rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De",
+                },
+                sequence: 2795,
+                status: "created",
+                makerExchangeRate: "100",
+                direction: "buy",
+                quantity: { currency: "XRP", value: "5.89" },
+                totalPrice: {
+                  issuer: "rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De",
+                  currency: "524C555344000000000000000000000000000000",
+                  value: "589",
+                  counterparty: "rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De",
+                },
+              },
+            ],
+          },
+          ledgerIndex: 102328070,
+          ledgerVersion: 102328070,
+          indexInLedger: 28,
+        },
+      });
+    });
+
     it("PaymentChannelCreate", function () {
       const tx = require("../examples/responses/PaymentChannelCreate.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");
