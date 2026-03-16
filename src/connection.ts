@@ -9,6 +9,7 @@ import * as XRPLConnection from "xrpl/dist/npm/client/connection";
 
 const RECONNECT_TIMEOUT = 1000 * 5; // 5 sec (in ms)
 const LEDGER_CLOSED_TIMEOUT = 1000 * 20; // 20 sec (in ms)
+const SCHEDULE_RECONNECT_TIMEOUT = 1000 * 60; // 1 min (in ms), x5 to LEDGER_CLOSED_TIMEOUT
 const SERVER_INFO_UPDATE_INTERVAL = 1000 * 60 * 5; // 5 min (in ms)
 
 // min and max ledger index window to consider ledger as available,
@@ -67,7 +68,7 @@ class Connection extends EventEmitter {
   private apiVersion: APIVersion;
   private serverInfoUpdating: boolean;
   public serverInfo: any = {};
-  private shutdown: boolean = false;
+  private shutdown: boolean = false; // if true, application is closing, no need to reconnect in any case
   private connectionWatchTimer: any = null;
   public streams: ConnectionStreamsInfo;
   public accounts: ConnectionAccountsInfo;
@@ -103,6 +104,15 @@ class Connection extends EventEmitter {
     };
     this.accounts = {};
     this.streamsSubscribed = false;
+  }
+
+  private scheduleReconnect(delay = RECONNECT_TIMEOUT): void {
+    if (this.shutdown) {
+      return;
+    }
+
+    this.removeWatchTimer();
+    this.connectionWatchTimer = setTimeout(this.bindConnectionWatchTimeout, delay);
   }
 
   public async connect(): Promise<void> {
@@ -141,13 +151,8 @@ class Connection extends EventEmitter {
       this.removeWatchTimer();
       this.removeClient();
 
-      let reconnectDelay = LEDGER_CLOSED_TIMEOUT;
-      if (SLOW_DOWN_ERROR_MESSAGES.includes(errorMessage)) {
-        reconnectDelay = LEDGER_CLOSED_TIMEOUT * 5;
-      }
-
-      // set timer to reconnect, with some delay by watch timeout
-      this.connectionWatchTimer = setTimeout(this.bindConnectionWatchTimeout, reconnectDelay);
+      const isSlowDown = SLOW_DOWN_ERROR_MESSAGES.includes(errorMessage);
+      this.scheduleReconnect(isSlowDown ? SCHEDULE_RECONNECT_TIMEOUT : RECONNECT_TIMEOUT);
     }
   }
 
@@ -220,6 +225,9 @@ class Connection extends EventEmitter {
     } else {
       // this connection is not stable, remove client to force reconnect
       this.removeClient();
+
+      const isSlowDown = SLOW_DOWN_ERROR_MESSAGES.includes(result?.error);
+      this.scheduleReconnect(isSlowDown ? SCHEDULE_RECONNECT_TIMEOUT : RECONNECT_TIMEOUT);
     }
 
     return result;
@@ -497,6 +505,11 @@ class Connection extends EventEmitter {
       }
 
       this.emit("disconnected", code);
+
+      // remote close/rate-limit close: always try to recover
+      if (!this.shutdown) {
+        this.scheduleReconnect(RECONNECT_TIMEOUT);
+      }
     });
 
     this.client.on("error", (source, message, error) => {
