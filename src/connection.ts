@@ -225,9 +225,6 @@ class Connection extends EventEmitter {
     } else {
       // this connection is not stable, remove client to force reconnect
       this.removeClient();
-
-      const isSlowDown = SLOW_DOWN_ERROR_MESSAGES.includes(result?.error);
-      this.scheduleReconnect(isSlowDown ? SCHEDULE_RECONNECT_TIMEOUT : RECONNECT_TIMEOUT);
     }
 
     return result;
@@ -505,11 +502,6 @@ class Connection extends EventEmitter {
       }
 
       this.emit("disconnected", code);
-
-      // remote close/rate-limit close: always try to recover
-      if (!this.shutdown) {
-        this.scheduleReconnect(RECONNECT_TIMEOUT);
-      }
     });
 
     this.client.on("error", (source, message, error) => {
