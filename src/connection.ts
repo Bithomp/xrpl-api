@@ -8,8 +8,8 @@ import { sleep, getTimestamp } from "./common/utils";
 import * as XRPLConnection from "xrpl/dist/npm/client/connection";
 
 const RECONNECT_TIMEOUT = 1000 * 5; // 5 sec (in ms)
-const LEDGER_CLOSED_TIMEOUT = 1000 * 20; // 20 sec (in ms)
-const SCHEDULE_RECONNECT_TIMEOUT = 1000 * 60; // 1 min (in ms), x5 to LEDGER_CLOSED_TIMEOUT
+const LEDGER_CLOSED_TIMEOUT = 1000 * 15; // 15 sec (in ms)
+const SLOW_RECONNECT_TIMEOUT = LEDGER_CLOSED_TIMEOUT * 5; // x5 to LEDGER_CLOSED_TIMEOUT
 const SERVER_INFO_UPDATE_INTERVAL = 1000 * 60 * 5; // 5 min (in ms)
 
 // min and max ledger index window to consider ledger as available,
@@ -106,15 +106,6 @@ class Connection extends EventEmitter {
     this.streamsSubscribed = false;
   }
 
-  private scheduleReconnect(delay = RECONNECT_TIMEOUT): void {
-    if (this.shutdown) {
-      return;
-    }
-
-    this.removeWatchTimer();
-    this.connectionWatchTimer = setTimeout(this.bindConnectionWatchTimeout, delay);
-  }
-
   public async connect(): Promise<void> {
     try {
       this.logger?.debug({
@@ -134,6 +125,7 @@ class Connection extends EventEmitter {
       this.setupEmitter();
 
       await this.client.connect();
+      this.latency = []; // reset latency on new connection
       await this.updateServerInfo();
       await this.subscribe();
 
@@ -151,8 +143,13 @@ class Connection extends EventEmitter {
       this.removeWatchTimer();
       this.removeClient();
 
-      const isSlowDown = SLOW_DOWN_ERROR_MESSAGES.includes(errorMessage);
-      this.scheduleReconnect(isSlowDown ? SCHEDULE_RECONNECT_TIMEOUT : RECONNECT_TIMEOUT);
+      let reconnectDelay = LEDGER_CLOSED_TIMEOUT;
+      if (SLOW_DOWN_ERROR_MESSAGES.includes(errorMessage)) {
+        reconnectDelay = SLOW_RECONNECT_TIMEOUT;
+      }
+
+      // set timer to reconnect, with some delay by watch timeout
+      this.connectionWatchTimer = setTimeout(this.bindConnectionWatchTimeout, reconnectDelay);
     }
   }
 
@@ -243,13 +240,13 @@ class Connection extends EventEmitter {
       // Check connection after updateSubscriptions to make sure we will not miss any streams update.
       const waitTime = getTimestamp() + RECONNECT_TIMEOUT;
       while (!this.client || !this.isConnected()) {
-        // Give it time to reconnect
-        await sleep(100);
-
         // check if connection is shutdown, there is no way to be connected again
         if (this.shutdown) {
           return { error: "shutdownConnection", error_message: "Connection is shutdown.", status: "error" };
         }
+
+        // Give it time to reconnect
+        await sleep(100);
 
         // check if we are waiting too long
         if (getTimestamp() > waitTime) {
