@@ -4,6 +4,7 @@
     "module": "commonjs",
     "lib": ["ES2020"],
     "declaration": true,
+    "rootDir": "./src",
     "outDir": "./lib",
     "strict": true,
     "esModuleInterop": true,
@@ -11,7 +12,8 @@
     "noUnusedLocals": true,
     "noImplicitAny": false,
     "removeComments": true,
-    "typeRoots": ["./node_modules/@types", "./@types"]
+    "typeRoots": ["./node_modules/@types", "./@types"],
+    "types": ["node", "mocha"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
