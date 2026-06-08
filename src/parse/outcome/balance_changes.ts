@@ -408,6 +408,10 @@ function parseBalanceChanges(
   tx?: any,
   options?: ParseBalanceChangesOptions
 ): BalanceChanges {
+  if (!metadata) {
+    return {};
+  }
+
   // in case MPToken with Escrow transactions, some data can be missing in PreviousFields, normalizeMPTokensPreviousFields is fixing it
   // in case MPTokenIssuance transfer value MPToken destination is missing in PreviousFields it is initial amount
   if (tx && nativeCurrency === MAINNET_NATIVE_CURRENCY && metadata.TransactionResult === "tesSUCCESS") {
@@ -448,7 +452,11 @@ function parseBalanceChanges(
  *  @param {Object} metadata Transaction metadata
  *  @returns {Object} parsed balances
  */
-function parseFinalBalances(metadata: TransactionMetadata, nativeCurrency?: string) {
+function parseFinalBalances(metadata: TransactionMetadata, nativeCurrency?: string): BalanceChanges {
+  if (!metadata) {
+    return {};
+  }
+
   return parseQuantities(metadata, parseFinalBalance, nativeCurrency);
 }
 
