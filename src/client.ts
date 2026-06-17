@@ -136,8 +136,16 @@ export function findConnection(
       return false;
     }
 
-    // invalid type, skipping filtering
+    // no or invalid type
     if (typeof type !== "string") {
+      // no type, use all, except if $requiredType type is set, then skip default connections, which are used when no type is provided
+      // required for servers with high limits on requests like Ripple's public servers, to avoid hitting limits on them in case high load
+
+      if (con.types.includes("$requiredType")) {
+        return false;
+      }
+
+      // skipping filtering by type
       return true;
     }
 

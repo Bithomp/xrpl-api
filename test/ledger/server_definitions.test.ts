@@ -28,13 +28,21 @@ describe("Client", () => {
           expect(result.native_currency_code).to.eql("XRP");
         }
 
-        delete result.native_currency_code; // can be omitted from some servers
+        delete result.ACCOUNT_SET_FLAGS; // can be omitted from some servers
+        delete result.LEDGER_ENTRY_FLAGS; // can be omitted from some servers
+        delete result.LEDGER_ENTRY_FORMATS; // can be omitted from some servers
         delete result.TRANSACTION_FLAGS; // can be omitted from some servers
+        delete result.TRANSACTION_FORMATS; // can be omitted from some servers
         delete result.TRANSACTION_FLAGS_INDICES; // can be omitted from some servers
+        delete result.native_currency_code; // can be omitted from some servers
         expect(Object.keys(result).sort()).to.eql([
+          // "ACCOUNT_SET_FLAGS",
           "FIELDS",
+          // "LEDGER_ENTRY_FLAGS",
+          // "LEDGER_ENTRY_FORMATS",
           "LEDGER_ENTRY_TYPES",
           // "TRANSACTION_FLAGS",
+          // "TRANSACTION_FORMATS",
           // "TRANSACTION_FLAGS_INDICES",
           "TRANSACTION_RESULTS",
           "TRANSACTION_TYPES",
