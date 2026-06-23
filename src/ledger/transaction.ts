@@ -374,7 +374,7 @@ export async function getAccountPaymentParams(
       }
 
       if (!fee) {
-        throw new Error("Fee is not defined");
+        throw new Error("Cannot not resolve fee from network");
       }
 
       resolve(xrpToDrops(fee.toString()));
@@ -470,7 +470,7 @@ export async function getTxSubmitParams(
           }
 
           if (!fee) {
-            throw new Error("Fee is not defined");
+            throw new Error("Cannot not resolve fee from network");
           }
 
           resolve(xrpToDrops(fee.toString()));
