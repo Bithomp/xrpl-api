@@ -105,5 +105,6 @@ export async function getLedgerEntryURIToken(
     URI: response.node.URI,
     Amount: response.node.Amount,
     Destination: response.node.Destination,
+    Remarks: response.node.Remarks,
   });
 }

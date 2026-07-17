@@ -23,6 +23,7 @@ export { parseChannelChanges } from "../parse/outcome/channel_changes";
 export { parseOrderbookChanges } from "../parse/outcome/orderbook_changes";
 export { parseMPTokenIssuanceChanges } from "../parse/outcome/mptoken_issuance_changes";
 export { parseMPTokenChanges } from "../parse/outcome/mptoken_changes";
+export { parseRemarksChanges } from "../parse/outcome/remarks_changes";
 
 import parseNFTokenBurn from "../parse/specification/nftoken-burn";
 import parseNFTokenMint from "../parse/specification/nftoken-mint";
