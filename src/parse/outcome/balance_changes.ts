@@ -12,7 +12,7 @@ import { parseSponsorshipChanges } from "./sponsorship_changes";
 
 const ESCROW_TYPES = ["EscrowFinish", "EscrowCreate", "EscrowCancel"];
 const PAYMENT_CHANNEL_TYPES = ["PaymentChannelClaim", "PaymentChannelCreate", "PaymentChannelFund"];
-const CONFIDENTIAL_MPT_CONVERT_TYPES = ["ConfidentialMPTConvert"];
+const CONFIDENTIAL_MPT_CONVERT_TYPES = ["ConfidentialMPTConvert", "ConfidentialMPTConvertBack"];
 
 interface BalanceChangeQuantity {
   issuer?: string; // currency issuer
@@ -379,10 +379,6 @@ function adjustBalancesForPaymentChannel(
 }
 
 function adjustBalancesForConfidentialMPTConvert(balanceChanges: BalanceChanges, tx?: any) {
-  if (tx.TransactionType !== "ConfidentialMPTConvert") {
-    return;
-  }
-
   // balance change has decreased amount
   // but since it was just converted to confidential, the real amount still exists in the holder account
   // so we need remove the balance change for the holder account
@@ -412,7 +408,13 @@ function adjustBalancesForConfidentialMPTConvert(balanceChanges: BalanceChanges,
   }
 
   // adjust holder balance change
-  adjustBalancesChanges(balanceChanges, holder, [{ value: `${amount}`, mpt_issuance_id: mptIssuanceID }]);
+  if (tx.TransactionType === "ConfidentialMPTConvertBack") {
+    // negative for convert back
+    adjustBalancesChanges(balanceChanges, holder, [{ value: `-${amount}`, mpt_issuance_id: mptIssuanceID }]);
+  } else {
+    // positive for convert
+    adjustBalancesChanges(balanceChanges, holder, [{ value: `${amount}`, mpt_issuance_id: mptIssuanceID }]);
+  }
 }
 
 function adjustBalancesForConfidentialMPTClawback(balanceChanges: BalanceChanges, tx?: any) {

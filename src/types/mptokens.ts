@@ -146,6 +146,16 @@ export type FormattedConfidentialMPTConvertSpecification = {
   zkProof?: string;
 } & FormattedBaseSpecification;
 
+export type FormattedConfidentialMPTConvertBackSpecification = {
+  balanceCommitment?: string;
+  blindingFactor?: string;
+  holderEncryptedAmount?: string;
+  issuerEncryptedAmount?: string;
+  amount?: Amount;
+  mptIssuanceID?: string;
+  zkProof?: string;
+} & FormattedBaseSpecification;
+
 export type FormattedConfidentialMPTClawbackSpecification = {
   holder?: string;
   zkProof?: string;

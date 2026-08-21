@@ -64,6 +64,7 @@ const MPTOKEN_TYPES = [
   "MPTokenIssuanceSet",
   "MPTokenIssuanceDestroy",
   "ConfidentialMPTConvert",
+  "ConfidentialMPTConvertBack",
   "ConfidentialMPTClawback",
   "Payment",
   "Clawback",

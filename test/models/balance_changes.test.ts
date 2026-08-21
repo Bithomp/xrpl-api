@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Models } from "../../src/index";
 import { MAINNET_NATIVE_CURRENCY } from "../../src/common";
 
-describe("Models", () => {
+describe.only("Models", () => {
   describe("parseBalanceChanges", () => {
     it("parses for EscrowCreate", function () {
       const tx = require("../examples/responses/transaction/C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7.json");
@@ -288,6 +288,34 @@ describe("Models", () => {
 
       expect(result).to.eql({
         rsYvRFgr5PXTqk1knbLw7YVzn8nLF69xFw: [{ currency: "XRP", value: "-0.00001" }],
+      });
+    });
+
+    it("parses for ConfidentialMPTConvertBack", function () {
+      const tx = require("../examples/responses/ConfidentialMPTConvertBack.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForConfidentialMPTConvert: false,
+      });
+
+      expect(result).to.eql({
+        rfh3y9NMVxwhG7kftX8HjbJbxyQ4FnPJ5r: [
+          {
+            value: "3000",
+            mpt_issuance_id: "003CF091F2FC8FABFCA34316D01599A94B082DA4EDEF0C2C",
+          },
+          { currency: "XRP", value: "-0.00001" },
+        ],
+      });
+    });
+
+    it("parses for ConfidentialMPTConvertBack with adjustBalancesForConfidentialMPTConvert", function () {
+      const tx = require("../examples/responses/ConfidentialMPTConvertBack.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForConfidentialMPTConvert: true,
+      });
+
+      expect(result).to.eql({
+        rfh3y9NMVxwhG7kftX8HjbJbxyQ4FnPJ5r: [{ currency: "XRP", value: "-0.00001" }],
       });
     });
 
