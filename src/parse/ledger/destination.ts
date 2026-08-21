@@ -13,3 +13,11 @@ export function parseDestination(tx: any): FormattedDestinationAddress | undefin
     });
   }
 }
+
+export function parseAddress(tx: any, field: string = "Destination"): FormattedDestinationAddress | undefined {
+  if (tx && tx[field]) {
+    return removeUndefined({
+      address: tx[field],
+    });
+  }
+}

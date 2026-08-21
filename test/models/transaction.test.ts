@@ -8500,6 +8500,98 @@ describe("Models", () => {
         },
       });
     });
+
+    it("SponsorshipSet for deletion", function () {
+      const tx = require("../examples/responses/SponsorshipSet.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      expect(result).to.eql({
+        type: "SponsorshipSet",
+        address: "rKXz8xbMinFtEtQH6ryj2pc2BwoK9w3q8z",
+        sequence: 3993204,
+        id: "ECB4F5CA7D767536621B0ADBD9A22FCF16D491919EBCBEAA0495558744C8122C",
+        ctid: "C03CEE7800110002",
+        specification: {
+          source: { address: "rKXz8xbMinFtEtQH6ryj2pc2BwoK9w3q8z" },
+          sponsee: { address: "r4zP5TL1RBdWN9o9SbX12QeWvFmtw1A1kS" },
+          flags: {
+            clearRequireSignForFee: false,
+            clearRequireSignForReserve: false,
+            deleteObject: true,
+            innerBatchTxn: false,
+            setRequireSignForFee: false,
+            setRequireSignForReserve: false,
+          },
+        },
+        outcome: {
+          balanceChanges: {
+            rKXz8xbMinFtEtQH6ryj2pc2BwoK9w3q8z: [
+              {
+                currency: "XRP",
+                value: "99.999999",
+              },
+            ],
+          },
+          sponsorshipChanges: {
+            feeAmount: { currency: "XRP", value: "100" },
+            feeAmountDrops: "100000000",
+            owner: { address: "rKXz8xbMinFtEtQH6ryj2pc2BwoK9w3q8z" },
+            sponsee: { address: "r4zP5TL1RBdWN9o9SbX12QeWvFmtw1A1kS" },
+            sponsorshipID: "BA90C8B7E911BC5B0CC5ADFB05EC7CD8BCCD2736D7FB4C695C169BE00C0BF154",
+            status: "deleted",
+          },
+          result: "tesSUCCESS",
+          timestamp: "2026-07-27T16:13:50.000Z",
+          fee: "0.000001",
+          ledgerIndex: 3993208,
+          ledgerVersion: 3993208,
+          indexInLedger: 17,
+        },
+      });
+    });
+
+    it("Payment with Sponsorship", function () {
+      const tx = require("../examples/responses/PaymentSponsorship.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+
+      expect(result).to.eql({
+        type: "payment",
+        address: "rBasWxS3cB1CvvzayhZrszQsT3uwmJbAcm",
+        sequence: 3993249,
+        id: "F625CE6A969F5A4E9E3EB6CE4C449857DB43D5A2B5323606A5B8DA42F91D2808",
+        ctid: "C03CEEA600070002",
+        specification: {
+          source: { address: "rBasWxS3cB1CvvzayhZrszQsT3uwmJbAcm", maxAmount: { currency: "XRP", value: "0.01" } },
+          destination: { address: "rnUj36g6k5Xgz4d3moG9jzuHjXkUff5viv" },
+          signer: { address: "rL8pvgc7HynaKZsCgcXDGJa8VRsCLNxSSq" },
+          flags: { innerBatchTxn: false, noRippleDirect: false, partialPayment: false, limitQuality: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2026-07-27T16:16:31.000Z",
+          fee: "0.000001",
+          balanceChanges: {
+            rBasWxS3cB1CvvzayhZrszQsT3uwmJbAcm: [{ currency: "XRP", value: "-0.01" }],
+            rnUj36g6k5Xgz4d3moG9jzuHjXkUff5viv: [{ currency: "XRP", value: "0.01" }],
+          },
+          sponsorshipChanges: {
+            status: "modified",
+            sponsorshipID: "27D320B1017CEE4AD1A2732AF3C89C97EB2B085BE40BFE68F0DB19B46C3F46A0",
+            owner: { address: "rBzn2HHjZtFpV27HAmhenX7dNbqm8Yw6or" },
+            sponsee: { address: "rBasWxS3cB1CvvzayhZrszQsT3uwmJbAcm" },
+            feeAmountDrops: "99999999",
+            feeAmount: { currency: "XRP", value: "99.999999" },
+            feeAmountChangeDrops: "-1",
+            feeAmountChange: { currency: "XRP", value: "-0.000001" },
+            previousTxnID: "7140261CB4592FDEB4B61AC27A750501D1E27E416919C814107F40BD855F1BD5",
+            previousTxnLgrSeq: 3993253,
+          },
+          ledgerIndex: 3993254,
+          ledgerVersion: 3993254,
+          indexInLedger: 7,
+          deliveredAmount: { currency: "XRP", value: "0.01" },
+        },
+      });
+    });
   });
 
   describe("getAccountTxDetails", () => {

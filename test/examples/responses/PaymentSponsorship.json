@@ -1,0 +1,83 @@
+{
+  "Account": "rBasWxS3cB1CvvzayhZrszQsT3uwmJbAcm",
+  "Amount": "10000",
+  "DeliverMax": "10000",
+  "Destination": "rnUj36g6k5Xgz4d3moG9jzuHjXkUff5viv",
+  "Fee": "1",
+  "Sequence": 3993249,
+  "SigningPubKey": "03351497EECFE507900B6BF8B47D6C2432B384C57F884E80022C1E6CAA346537EA",
+  "Sponsor": "rBzn2HHjZtFpV27HAmhenX7dNbqm8Yw6or",
+  "SponsorFlags": 1,
+  "TransactionType": "Payment",
+  "TxnSignature": "3044022007EF578411A9D77409B0F9810386C30DA6B9102130FD25FC31D5C9720EA972BE02206AD0CC719A9E2F403606094F0726EE86291983A41C51F536637BBC0B50763C8A",
+  "ctid": "C03CEEA600070002",
+  "date": 838484191,
+  "hash": "F625CE6A969F5A4E9E3EB6CE4C449857DB43D5A2B5323606A5B8DA42F91D2808",
+  "inLedger": 3993254,
+  "ledger_index": 3993254,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "FeeAmount": "99999999",
+            "Flags": 0,
+            "Owner": "rBzn2HHjZtFpV27HAmhenX7dNbqm8Yw6or",
+            "OwnerNode": "0",
+            "Sponsee": "rBasWxS3cB1CvvzayhZrszQsT3uwmJbAcm",
+            "SponseeNode": "0"
+          },
+          "LedgerEntryType": "Sponsorship",
+          "LedgerIndex": "27D320B1017CEE4AD1A2732AF3C89C97EB2B085BE40BFE68F0DB19B46C3F46A0",
+          "PreviousFields": {
+            "FeeAmount": "100000000"
+          },
+          "PreviousTxnID": "7140261CB4592FDEB4B61AC27A750501D1E27E416919C814107F40BD855F1BD5",
+          "PreviousTxnLgrSeq": 3993253
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rBasWxS3cB1CvvzayhZrszQsT3uwmJbAcm",
+            "Balance": "39989999",
+            "Flags": 65536,
+            "OwnerCount": 0,
+            "RegularKey": "rL8pvgc7HynaKZsCgcXDGJa8VRsCLNxSSq",
+            "Sequence": 3993250
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "70F8580AB65C995B93638D6DA8D186B717646D16E9A3D71CB99B842CE571E067",
+          "PreviousFields": {
+            "Balance": "39999999",
+            "Sequence": 3993249
+          },
+          "PreviousTxnID": "E9CDE0CE4B094A71C17AB84AF22ED2824C841FCCFD911DF5D0A023B3AF79DCEA",
+          "PreviousTxnLgrSeq": 3993251
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rnUj36g6k5Xgz4d3moG9jzuHjXkUff5viv",
+            "Balance": "40010000",
+            "Flags": 0,
+            "OwnerCount": 0,
+            "Sequence": 3993250
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "F48FD6FEEC25F54450DD71CFBC426C25452683018463B5A8471B5A2CC694FC25",
+          "PreviousFields": {
+            "Balance": "40000000"
+          },
+          "PreviousTxnID": "B9B297BD27D472EC82111F328E16DF7D1985BD1A460BD5236693662EC13D8215",
+          "PreviousTxnLgrSeq": 3993250
+        }
+      }
+    ],
+    "TransactionIndex": 7,
+    "TransactionResult": "tesSUCCESS",
+    "delivered_amount": "10000"
+  },
+  "validated": true
+}

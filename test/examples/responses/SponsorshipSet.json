@@ -1,0 +1,84 @@
+{
+  "Account": "rKXz8xbMinFtEtQH6ryj2pc2BwoK9w3q8z",
+  "Fee": "1",
+  "Flags": 1048576,
+  "Sequence": 3993204,
+  "SigningPubKey": "03FF7458882C1169D3840724F67532FEAB8B37EB2F430A4EA5A523BB8CFD8C9C53",
+  "Sponsee": "r4zP5TL1RBdWN9o9SbX12QeWvFmtw1A1kS",
+  "TransactionType": "SponsorshipSet",
+  "TxnSignature": "304402204BAFD2D9B35D3D5084087D9170209FEB433DDF255399FDC47CBE93D19931673502200873A925B8CA22966EE9230548A43E5A5C368F233746D3E47373A64FCCD28E65",
+  "ctid": "C03CEE7800110002",
+  "date": 838484030,
+  "hash": "ECB4F5CA7D767536621B0ADBD9A22FCF16D491919EBCBEAA0495558744C8122C",
+  "inLedger": 3993208,
+  "ledger_index": 3993208,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rKXz8xbMinFtEtQH6ryj2pc2BwoK9w3q8z",
+            "Balance": "339999998",
+            "Flags": 0,
+            "OwnerCount": 0,
+            "Sequence": 3993205
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "2AE916125F0753CD427BD405587EABDA8103EB00D209EFBD1E67BB9F60925AFD",
+          "PreviousFields": {
+            "Balance": "239999999",
+            "OwnerCount": 1,
+            "Sequence": 3993204
+          },
+          "PreviousTxnID": "178B01F9178A7FFF35CADD54A4A6B882331112CCE0F03722772C853AFA07E12B",
+          "PreviousTxnLgrSeq": 3993207
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "r4zP5TL1RBdWN9o9SbX12QeWvFmtw1A1kS",
+            "PreviousTxnID": "178B01F9178A7FFF35CADD54A4A6B882331112CCE0F03722772C853AFA07E12B",
+            "PreviousTxnLgrSeq": 3993207,
+            "RootIndex": "36FE9E21FC21726B0526E04C1DA1733C3CF6C17AB169A3FFBB46748AF5B58C06"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "36FE9E21FC21726B0526E04C1DA1733C3CF6C17AB169A3FFBB46748AF5B58C06"
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "rKXz8xbMinFtEtQH6ryj2pc2BwoK9w3q8z",
+            "PreviousTxnID": "178B01F9178A7FFF35CADD54A4A6B882331112CCE0F03722772C853AFA07E12B",
+            "PreviousTxnLgrSeq": 3993207,
+            "RootIndex": "53A474C1E214074CCB28302C55098F5E8671457164804BCA93C6CA0579A17C5D"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "53A474C1E214074CCB28302C55098F5E8671457164804BCA93C6CA0579A17C5D"
+        }
+      },
+      {
+        "DeletedNode": {
+          "FinalFields": {
+            "FeeAmount": "100000000",
+            "Flags": 0,
+            "Owner": "rKXz8xbMinFtEtQH6ryj2pc2BwoK9w3q8z",
+            "OwnerNode": "0",
+            "PreviousTxnID": "178B01F9178A7FFF35CADD54A4A6B882331112CCE0F03722772C853AFA07E12B",
+            "PreviousTxnLgrSeq": 3993207,
+            "Sponsee": "r4zP5TL1RBdWN9o9SbX12QeWvFmtw1A1kS",
+            "SponseeNode": "0"
+          },
+          "LedgerEntryType": "Sponsorship",
+          "LedgerIndex": "BA90C8B7E911BC5B0CC5ADFB05EC7CD8BCCD2736D7FB4C695C169BE00C0BF154"
+        }
+      }
+    ],
+    "TransactionIndex": 17,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

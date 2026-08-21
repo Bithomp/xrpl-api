@@ -25,6 +25,7 @@ import {
   parseMPTokenChanges,
   parseCredentialChanges,
   parseDelegateChanges,
+  parseSponsorshipChanges,
   parseRemarksChanges,
   parseCronChanges,
   parseAccountSettingChanges,
@@ -110,6 +111,7 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     mptokenChanges: getMPTokenChanges(tx, nativeCurrency || getNativeCurrency()),
     credentialChanges: getCredentialChanges(tx, nativeCurrency || getNativeCurrency()),
     delegateChanges: getDelegateChanges(tx, nativeCurrency || getNativeCurrency()),
+    sponsorshipChanges: getSponsorshipChanges(tx, nativeCurrency || getNativeCurrency()),
     remarksChanges: getRemarksChanges(tx, nativeCurrency || getNativeCurrency()),
     cronChanges: getCronChanges(tx, nativeCurrency || getNativeCurrency()),
     unlReportChanges: getUNLReportChanges(tx, nativeCurrency || getNativeCurrency()),
@@ -408,6 +410,14 @@ function getDelegateChanges(tx: any, nativeCurrency?: string): any {
   }
 
   return parseDelegateChanges(tx.meta);
+}
+
+function getSponsorshipChanges(tx: any, nativeCurrency?: string): any {
+  if (nativeCurrency !== MAINNET_NATIVE_CURRENCY) {
+    return undefined;
+  }
+
+  return parseSponsorshipChanges(tx.meta);
 }
 
 /**

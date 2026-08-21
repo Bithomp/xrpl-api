@@ -166,6 +166,8 @@ import parseBatch from "./specification/batch";
 import parseCron from "./specification/cron";
 import parseCronSet from "./specification/cron-set";
 
+import parseSponsorshipSet from "./specification/sponsorship-set";
+
 import parseAmendment from "./specification/amendment"; // pseudo-transaction
 import parseFeeUpdate from "./specification/fee-update"; // pseudo-transaction
 import parseUNLModify from "./specification/unl-modify"; // pseudo-transaction
@@ -249,6 +251,8 @@ const transactionTypeToType = {
 
   Cron: "Cron",
   CronSet: "CronSet",
+
+  SponsorshipSet: "SponsorshipSet",
 
   EnableAmendment: "amendment", // pseudo-transaction
   SetFee: "feeUpdate", // pseudo-transaction
@@ -335,6 +339,8 @@ export const parserTypeFunc = {
 
   Cron: parseCron,
   CronSet: parseCronSet,
+
+  SponsorshipSet: parseSponsorshipSet,
 
   amendment: parseAmendment, // pseudo-transaction
   feeUpdate: parseFeeUpdate, // pseudo-transaction

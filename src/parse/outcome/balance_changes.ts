@@ -8,6 +8,7 @@ import { buildMPTokenIssuanceID } from "../../models/mptoken";
 import { normalizeMPTokensPreviousFields } from "../mptoken_normalize";
 import parseAmount from "../ledger/amount";
 import { parseChannelChanges } from "./channel_changes";
+import { parseSponsorshipChanges } from "./sponsorship_changes";
 
 const ESCROW_TYPES = ["EscrowFinish", "EscrowCreate", "EscrowCancel"];
 const PAYMENT_CHANNEL_TYPES = ["PaymentChannelClaim", "PaymentChannelCreate", "PaymentChannelFund"];
@@ -34,6 +35,7 @@ interface ParseBalanceChangesOptions {
   adjustBalancesForNativeEscrow?: boolean; // escrow amount consider as locked change
   adjustBalancesForPaymentChannel?: boolean; // payment channel amount consider as locked change
   adjustBalancesForConfidentialMPTConvert?: boolean; // confidential MPT convert amount consider as locked change
+  adjustBalancesForSponsorship?: boolean; // sponsorship amount consider as locked change
 }
 
 function groupByAddress(balanceChanges: AddressBalanceChangeQuantity[]) {
@@ -447,6 +449,66 @@ function adjustBalancesForConfidentialMPTClawback(balanceChanges: BalanceChanges
   adjustBalancesChanges(balanceChanges, holder, [{ value: `-${amount}`, mpt_issuance_id: mptIssuanceID }]);
 }
 
+function adjustBalancesForSponsorship(
+  balanceChanges: BalanceChanges,
+  metadata: TransactionMetadata,
+  nativeCurrency?: string,
+  tx?: any
+) {
+  // ledger entry Sponsorship hold some amount in native currency
+  // this amount is reflected in the balance change for SponsorshipSet, but we want to lock flow, similar to payment channel
+
+  const sponsorshipChanges = parseSponsorshipChanges(metadata);
+  if (!sponsorshipChanges) {
+    return;
+  }
+
+  const owner = sponsorshipChanges.owner?.address;
+  const sponsee = sponsorshipChanges.sponsee?.address;
+
+  if (!owner || !sponsee) {
+    return;
+  }
+
+  if (sponsorshipChanges.status === "created") {
+    // entire sponsorship is created, so we need to lock the amount for the sponsee
+    // with positive sign, because it is reflected in the balance change for the owner already
+    adjustBalancesChanges(balanceChanges, owner, [
+      { currency: sponsorshipChanges.feeAmount.currency, value: `${sponsorshipChanges.feeAmount.value}` },
+    ]);
+  } else if (sponsorshipChanges.status === "modified") {
+    // some amount could be added or removed by the owner,
+    // this is reflected in the balance change for the owner already, so we need to lock/unlock the amount for the owner
+    if (tx.Account === owner) {
+      if (sponsorshipChanges.feeAmountChange) {
+        adjustBalancesChanges(balanceChanges, owner, [
+          {
+            currency: sponsorshipChanges.feeAmountChange.currency,
+            value: `${sponsorshipChanges.feeAmountChange.value}`,
+          },
+        ]);
+      }
+    } else {
+      // owner is paying the fee
+      if (sponsorshipChanges.feeAmountChange) {
+        // assuming amount is decreased by the sponsee and have negative sign, we need to unlock the amount for the owner
+        adjustBalancesChanges(balanceChanges, owner, [
+          {
+            currency: sponsorshipChanges.feeAmountChange.currency,
+            value: sponsorshipChanges.feeAmountChange.value,
+          },
+        ]);
+      }
+    }
+  } else if (sponsorshipChanges.status === "deleted") {
+    // entire sponsorship is deleted, so we need to unlock the amount for the sponsee
+    // with negative sign, because it is reflected in the balance change for the owner already
+    adjustBalancesChanges(balanceChanges, owner, [
+      { currency: sponsorshipChanges.feeAmount.currency, value: `-${sponsorshipChanges.feeAmount.value}` },
+    ]);
+  }
+}
+
 function adjustBalancesChanges(balanceChanges: BalanceChanges, address: string, changes: BalanceChangeQuantity[]) {
   const existingChanges = balanceChanges[address] || [];
   const change = existingChanges.find((c) => c.currency === changes[0].currency && c.issuer === changes[0].issuer);
@@ -521,6 +583,13 @@ function parseBalanceChanges(
         // if only destination account acquires funds from the convert
         // options.adjustBalancesForConfidentialMPTConvert as true
         adjustBalancesForConfidentialMPTConvert(balanceChanges, tx);
+      }
+
+      if (options.adjustBalancesForSponsorship && nativeCurrency === MAINNET_NATIVE_CURRENCY) {
+        // Consider SponsorshipSet as locked balance change, react as balance change in source account
+        // if only destination account acquires funds from the sponsorship
+        // options.adjustBalancesForSponsorship as true
+        adjustBalancesForSponsorship(balanceChanges, metadata, nativeCurrency, tx);
       }
     }
 

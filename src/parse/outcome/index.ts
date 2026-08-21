@@ -20,6 +20,7 @@ export { parseMPTokenIssuanceChanges } from "./mptoken_issuance_changes";
 export { parseMPTokenChanges } from "./mptoken_changes";
 export { parseCredentialChanges } from "./credential_changes";
 export { parseDelegateChanges } from "./delegate_changes";
+export { parseSponsorshipChanges } from "./sponsorship_changes";
 export { parseRemarksChanges } from "./remarks_changes";
 export { parseAmendmentChanges } from "./amendment_changes";
 export { parseCronChanges } from "./cron_changes";

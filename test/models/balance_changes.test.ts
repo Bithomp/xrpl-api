@@ -311,6 +311,53 @@ describe("Models", () => {
         ],
       });
     });
+
+    it("parses for SponsorshipSet for deletion", function () {
+      const tx = require("../examples/responses/SponsorshipSet.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForSponsorship: false,
+      });
+
+      expect(result).to.eql({
+        rKXz8xbMinFtEtQH6ryj2pc2BwoK9w3q8z: [{ currency: "XRP", value: "99.999999" }],
+      });
+    });
+
+    it("parses for SponsorshipSet for deletion with adjustBalancesForSponsorship", function () {
+      const tx = require("../examples/responses/SponsorshipSet.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForSponsorship: true,
+      });
+
+      expect(result).to.eql({
+        rKXz8xbMinFtEtQH6ryj2pc2BwoK9w3q8z: [{ currency: "XRP", value: "-0.000001" }],
+      });
+    });
+
+    it("parses for PaymentSponsorship with sponsorship", function () {
+      const tx = require("../examples/responses/PaymentSponsorship.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForSponsorship: false,
+      });
+
+      expect(result).to.eql({
+        rBasWxS3cB1CvvzayhZrszQsT3uwmJbAcm: [{ currency: "XRP", value: "-0.01" }],
+        rnUj36g6k5Xgz4d3moG9jzuHjXkUff5viv: [{ currency: "XRP", value: "0.01" }],
+      });
+    });
+
+    it("parses for PaymentSponsorship with sponsorship and adjustBalancesForSponsorship", function () {
+      const tx = require("../examples/responses/PaymentSponsorship.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForSponsorship: true,
+      });
+
+      expect(result).to.eql({
+        rBasWxS3cB1CvvzayhZrszQsT3uwmJbAcm: [{ currency: "XRP", value: "-0.01" }],
+        rnUj36g6k5Xgz4d3moG9jzuHjXkUff5viv: [{ currency: "XRP", value: "0.01" }],
+        rBzn2HHjZtFpV27HAmhenX7dNbqm8Yw6or: [{ currency: "XRP", value: "-0.000001" }],
+      });
+    });
   });
 
   describe("parseFinalBalances", () => {
