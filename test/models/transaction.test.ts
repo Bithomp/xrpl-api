@@ -2,7 +2,7 @@ import nconf from "nconf";
 import { expect } from "chai";
 import { Client, Models } from "../../src/index";
 
-describe.only("Models", () => {
+describe("Models", () => {
   before(async function () {
     this.timeout(15000);
     Client.setup(nconf.get("xrpl:connections:mainnet"), { loadBalancing: true, nativeCurrency: "XRP" });
@@ -8607,20 +8607,78 @@ describe.only("Models", () => {
               },
             ],
           },
-          sponsorshipChanges: {
-            feeAmount: { currency: "XRP", value: "100" },
-            feeAmountDrops: "100000000",
-            owner: { address: "rKXz8xbMinFtEtQH6ryj2pc2BwoK9w3q8z" },
-            sponsee: { address: "r4zP5TL1RBdWN9o9SbX12QeWvFmtw1A1kS" },
-            sponsorshipID: "BA90C8B7E911BC5B0CC5ADFB05EC7CD8BCCD2736D7FB4C695C169BE00C0BF154",
-            status: "deleted",
-          },
+          sponsorshipChanges: [
+            {
+              feeAmount: { currency: "XRP", value: "100" },
+              feeAmountDrops: "100000000",
+              owner: { address: "rKXz8xbMinFtEtQH6ryj2pc2BwoK9w3q8z" },
+              sponsee: { address: "r4zP5TL1RBdWN9o9SbX12QeWvFmtw1A1kS" },
+              sponsorshipID: "BA90C8B7E911BC5B0CC5ADFB05EC7CD8BCCD2736D7FB4C695C169BE00C0BF154",
+              status: "deleted",
+            },
+          ],
           result: "tesSUCCESS",
           timestamp: "2026-07-27T16:13:50.000Z",
           fee: "0.000001",
           ledgerIndex: 3993208,
           ledgerVersion: 3993208,
           indexInLedger: 17,
+        },
+      });
+    });
+
+    it("SponsorshipSet for modify", function () {
+      const tx = require("../examples/responses/SponsorshipSet2.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      expect(result).to.eql({
+        type: "SponsorshipSet",
+        address: "rw9XEydogRsWzt2wr7nJcvoNrYi3ygDg7G",
+        sequence: 4396802,
+        id: "E5E44AB6950F1391EB46CF941B50C86EB7755232D96067171155BE6F589455A7",
+        ctid: "C043170500040002",
+        specification: {
+          source: { address: "rw9XEydogRsWzt2wr7nJcvoNrYi3ygDg7G" },
+          feeAmountDelta: { currency: "XRP", value: "100" },
+          sponsee: { address: "rnMusMzQJ98gDbCjU1Prsw9i88KM8HDfNU" },
+          flags: {
+            innerBatchTxn: false,
+            setRequireSignForFee: false,
+            clearRequireSignForFee: false,
+            setRequireSignForReserve: false,
+            clearRequireSignForReserve: false,
+            deleteObject: false,
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2026-08-11T22:53:01.000Z",
+          fee: "0.000001",
+          balanceChanges: { rw9XEydogRsWzt2wr7nJcvoNrYi3ygDg7G: [{ currency: "XRP", value: "-100" }] },
+          sponsorshipChanges: [
+            {
+              status: "created",
+              sponsorshipID: "4452EDA26D94CE8F7A57A6BE475BA934A759E789A8882AB89298C8FA67F0DEB2",
+              owner: { address: "rw9XEydogRsWzt2wr7nJcvoNrYi3ygDg7G" },
+              sponsee: { address: "rnMusMzQJ98gDbCjU1Prsw9i88KM8HDfNU" },
+              feeAmountDrops: "100000000",
+              feeAmount: { currency: "XRP", value: "100" },
+            },
+            {
+              status: "modified",
+              sponsorshipID: "558269A8B74E1C8A8E3FC252179BAFE3B6DDB2C221FC5FD64EAA2344C5C6314D",
+              owner: { address: "r3m1RnMuFhb1EbnD69TDWzmyG21PafvCwz" },
+              sponsee: { address: "rw9XEydogRsWzt2wr7nJcvoNrYi3ygDg7G" },
+              feeAmountDrops: "99999999",
+              feeAmount: { currency: "XRP", value: "99.999999" },
+              feeAmountChangeDrops: "-1",
+              feeAmountChange: { currency: "XRP", value: "-0.000001" },
+              previousTxnID: "30A50C0D59CF93EE0D714E36E135F9117937EA919E08DD149E3DFC257DD8A00B",
+              previousTxnLgrSeq: 4396804,
+            },
+          ],
+          ledgerIndex: 4396805,
+          ledgerVersion: 4396805,
+          indexInLedger: 4,
         },
       });
     });
@@ -8649,18 +8707,20 @@ describe.only("Models", () => {
             rBasWxS3cB1CvvzayhZrszQsT3uwmJbAcm: [{ currency: "XRP", value: "-0.01" }],
             rnUj36g6k5Xgz4d3moG9jzuHjXkUff5viv: [{ currency: "XRP", value: "0.01" }],
           },
-          sponsorshipChanges: {
-            status: "modified",
-            sponsorshipID: "27D320B1017CEE4AD1A2732AF3C89C97EB2B085BE40BFE68F0DB19B46C3F46A0",
-            owner: { address: "rBzn2HHjZtFpV27HAmhenX7dNbqm8Yw6or" },
-            sponsee: { address: "rBasWxS3cB1CvvzayhZrszQsT3uwmJbAcm" },
-            feeAmountDrops: "99999999",
-            feeAmount: { currency: "XRP", value: "99.999999" },
-            feeAmountChangeDrops: "-1",
-            feeAmountChange: { currency: "XRP", value: "-0.000001" },
-            previousTxnID: "7140261CB4592FDEB4B61AC27A750501D1E27E416919C814107F40BD855F1BD5",
-            previousTxnLgrSeq: 3993253,
-          },
+          sponsorshipChanges: [
+            {
+              status: "modified",
+              sponsorshipID: "27D320B1017CEE4AD1A2732AF3C89C97EB2B085BE40BFE68F0DB19B46C3F46A0",
+              owner: { address: "rBzn2HHjZtFpV27HAmhenX7dNbqm8Yw6or" },
+              sponsee: { address: "rBasWxS3cB1CvvzayhZrszQsT3uwmJbAcm" },
+              feeAmountDrops: "99999999",
+              feeAmount: { currency: "XRP", value: "99.999999" },
+              feeAmountChangeDrops: "-1",
+              feeAmountChange: { currency: "XRP", value: "-0.000001" },
+              previousTxnID: "7140261CB4592FDEB4B61AC27A750501D1E27E416919C814107F40BD855F1BD5",
+              previousTxnLgrSeq: 3993253,
+            },
+          ],
           ledgerIndex: 3993254,
           ledgerVersion: 3993254,
           indexInLedger: 7,

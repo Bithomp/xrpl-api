@@ -461,53 +461,59 @@ function adjustBalancesForSponsorship(
   // this amount is reflected in the balance change for SponsorshipSet, but we want to lock flow, similar to payment channel
 
   const sponsorshipChanges = parseSponsorshipChanges(metadata);
-  if (!sponsorshipChanges) {
+  if (!sponsorshipChanges || sponsorshipChanges.length === 0) {
     return;
   }
 
-  const owner = sponsorshipChanges.owner?.address;
-  const sponsee = sponsorshipChanges.sponsee?.address;
+  for (const sponsorshipChange of sponsorshipChanges) {
+    const owner = sponsorshipChange.owner?.address;
+    const sponsee = sponsorshipChange.sponsee?.address;
 
-  if (!owner || !sponsee) {
-    return;
-  }
+    if (!owner || !sponsee) {
+      return;
+    }
 
-  if (sponsorshipChanges.status === "created") {
-    // entire sponsorship is created, so we need to lock the amount for the sponsee
-    // with positive sign, because it is reflected in the balance change for the owner already
-    adjustBalancesChanges(balanceChanges, owner, [
-      { currency: sponsorshipChanges.feeAmount.currency, value: `${sponsorshipChanges.feeAmount.value}` },
-    ]);
-  } else if (sponsorshipChanges.status === "modified") {
-    // some amount could be added or removed by the owner,
-    // this is reflected in the balance change for the owner already, so we need to lock/unlock the amount for the owner
-    if (tx.Account === owner) {
-      if (sponsorshipChanges.feeAmountChange) {
+    if (sponsorshipChange.status === "created") {
+      // entire sponsorship is created, so we need to lock the amount for the sponsee
+      // with positive sign, because it is reflected in the balance change for the owner already
+      if (sponsorshipChange.feeAmount) {
         adjustBalancesChanges(balanceChanges, owner, [
-          {
-            currency: sponsorshipChanges.feeAmountChange.currency,
-            value: `${sponsorshipChanges.feeAmountChange.value}`,
-          },
+          { currency: sponsorshipChange.feeAmount.currency, value: `${sponsorshipChange.feeAmount.value}` },
         ]);
       }
-    } else {
-      // owner is paying the fee
-      if (sponsorshipChanges.feeAmountChange) {
-        // assuming amount is decreased by the sponsee and have negative sign, we need to unlock the amount for the owner
+    } else if (sponsorshipChange.status === "modified") {
+      // some amount could be added or removed by the owner,
+      // this is reflected in the balance change for the owner already, so we need to lock/unlock the amount for the owner
+      if (tx.Account === owner) {
+        if (sponsorshipChange.feeAmountChange) {
+          adjustBalancesChanges(balanceChanges, owner, [
+            {
+              currency: sponsorshipChange.feeAmountChange.currency,
+              value: `${sponsorshipChange.feeAmountChange.value}`,
+            },
+          ]);
+        }
+      } else {
+        // owner is paying the fee
+        if (sponsorshipChange.feeAmountChange) {
+          // assuming amount is decreased by the sponsee and have negative sign, we need to unlock the amount for the owner
+          adjustBalancesChanges(balanceChanges, owner, [
+            {
+              currency: sponsorshipChange.feeAmountChange.currency,
+              value: sponsorshipChange.feeAmountChange.value,
+            },
+          ]);
+        }
+      }
+    } else if (sponsorshipChange.status === "deleted") {
+      // entire sponsorship is deleted, so we need to unlock the amount for the sponsee
+      // with negative sign, because it is reflected in the balance change for the owner already
+      if (sponsorshipChange.feeAmount) {
         adjustBalancesChanges(balanceChanges, owner, [
-          {
-            currency: sponsorshipChanges.feeAmountChange.currency,
-            value: sponsorshipChanges.feeAmountChange.value,
-          },
+          { currency: sponsorshipChange.feeAmount.currency, value: `-${sponsorshipChange.feeAmount.value}` },
         ]);
       }
     }
-  } else if (sponsorshipChanges.status === "deleted") {
-    // entire sponsorship is deleted, so we need to unlock the amount for the sponsee
-    // with negative sign, because it is reflected in the balance change for the owner already
-    adjustBalancesChanges(balanceChanges, owner, [
-      { currency: sponsorshipChanges.feeAmount.currency, value: `-${sponsorshipChanges.feeAmount.value}` },
-    ]);
   }
 }
 

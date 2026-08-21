@@ -95,7 +95,7 @@ function summarizeSponsorship(node: NormalizedNode): FormattedSponsorshipSummary
   return summary;
 }
 
-function parseSponsorshipChanges(metadata: TransactionMetadata): FormattedSponsorshipSummaryInterface | undefined {
+function parseSponsorshipChanges(metadata: TransactionMetadata): FormattedSponsorshipSummaryInterface[] | undefined {
   if (!metadata || !metadata.AffectedNodes) {
     return undefined;
   }
@@ -105,13 +105,16 @@ function parseSponsorshipChanges(metadata: TransactionMetadata): FormattedSponso
     return node.LedgerEntryType === "Sponsorship";
   });
 
-  if (affectedNodes.length !== 1) {
+  if (affectedNodes.length === 0) {
     return undefined;
   }
 
-  const normalizedNode = normalizeNode(affectedNodes[0]);
+  const sponsorshipChanges: FormattedSponsorshipSummaryInterface[] = affectedNodes.map((affectedNode: any) => {
+    const normalizedNode = normalizeNode(affectedNode);
+    return summarizeSponsorship(normalizedNode);
+  });
 
-  return summarizeSponsorship(normalizedNode);
+  return sponsorshipChanges;
 }
 
 export { parseSponsorshipChanges };

@@ -413,7 +413,7 @@ function getDelegateChanges(tx: any, nativeCurrency?: string): any {
   return parseDelegateChanges(tx.meta);
 }
 
-function getSponsorshipChanges(tx: any, nativeCurrency?: string): any {
+function getSponsorshipChanges(tx: any, nativeCurrency?: string): any[] | undefined {
   if (nativeCurrency !== MAINNET_NATIVE_CURRENCY) {
     return undefined;
   }

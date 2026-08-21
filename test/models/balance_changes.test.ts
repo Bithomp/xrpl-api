@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Models } from "../../src/index";
 import { MAINNET_NATIVE_CURRENCY } from "../../src/common";
 
-describe.only("Models", () => {
+describe("Models", () => {
   describe("parseBalanceChanges", () => {
     it("parses for EscrowCreate", function () {
       const tx = require("../examples/responses/transaction/C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7.json");
@@ -359,6 +359,28 @@ describe.only("Models", () => {
 
       expect(result).to.eql({
         rKXz8xbMinFtEtQH6ryj2pc2BwoK9w3q8z: [{ currency: "XRP", value: "-0.000001" }],
+      });
+    });
+
+    it("parses for SponsorshipSet for modify", function () {
+      const tx = require("../examples/responses/SponsorshipSet2.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForSponsorship: false,
+      });
+
+      expect(result).to.eql({
+        rw9XEydogRsWzt2wr7nJcvoNrYi3ygDg7G: [{ currency: "XRP", value: "-100" }],
+      });
+    });
+
+    it("parses for SponsorshipSet for modify with adjustBalancesForSponsorship", function () {
+      const tx = require("../examples/responses/SponsorshipSet2.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForSponsorship: true,
+      });
+
+      expect(result).to.eql({
+        r3m1RnMuFhb1EbnD69TDWzmyG21PafvCwz: [{ currency: "XRP", value: "-0.000001" }],
       });
     });
 
