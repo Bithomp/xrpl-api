@@ -11,6 +11,7 @@ import { parseChannelChanges } from "./channel_changes";
 
 const ESCROW_TYPES = ["EscrowFinish", "EscrowCreate", "EscrowCancel"];
 const PAYMENT_CHANNEL_TYPES = ["PaymentChannelClaim", "PaymentChannelCreate", "PaymentChannelFund"];
+const CONFIDENTIAL_MPT_CONVERT_TYPES = ["ConfidentialMPTConvert"];
 
 interface BalanceChangeQuantity {
   issuer?: string; // currency issuer
@@ -32,6 +33,7 @@ export interface BalanceChanges {
 interface ParseBalanceChangesOptions {
   adjustBalancesForNativeEscrow?: boolean; // escrow amount consider as locked change
   adjustBalancesForPaymentChannel?: boolean; // payment channel amount consider as locked change
+  adjustBalancesForConfidentialMPTConvert?: boolean; // confidential MPT convert amount consider as locked change
 }
 
 function groupByAddress(balanceChanges: AddressBalanceChangeQuantity[]) {
@@ -374,6 +376,77 @@ function adjustBalancesForPaymentChannel(
   }
 }
 
+function adjustBalancesForConfidentialMPTConvert(balanceChanges: BalanceChanges, tx?: any) {
+  if (tx.TransactionType !== "ConfidentialMPTConvert") {
+    return;
+  }
+
+  // balance change has decreased amount
+  // but since it was just converted to confidential, the real amount still exists in the holder account
+  // so we need remove the balance change for the holder account
+
+  const amount = tx.MPTAmount;
+  const mptIssuanceID = tx.MPTokenIssuanceID;
+
+  if (!amount || !mptIssuanceID) {
+    return;
+  }
+
+  const holder = tx.Account;
+
+  if (!holder) {
+    return;
+  }
+
+  // check holder has balance change for this mpt issuance
+  const holderChanges = balanceChanges[holder];
+  if (!holderChanges) {
+    return;
+  }
+
+  const holderChange = holderChanges.find((c) => c.mpt_issuance_id === mptIssuanceID);
+  if (!holderChange) {
+    return;
+  }
+
+  // adjust holder balance change
+  adjustBalancesChanges(balanceChanges, holder, [{ value: `${amount}`, mpt_issuance_id: mptIssuanceID }]);
+}
+
+function adjustBalancesForConfidentialMPTClawback(balanceChanges: BalanceChanges, tx?: any) {
+  // For ConfidentialMPTClawback, the balance change reflects only amount of issuer,
+  // but amount of holder is not reflected in the balance change, so we need to adjust it manually
+  // just mirror the amount of issuer to the holder, but with negative sign
+
+  const amount = tx.MPTAmount;
+  const mptIssuanceID = tx.MPTokenIssuanceID;
+
+  if (!amount || !mptIssuanceID) {
+    return;
+  }
+
+  const issuer = tx.Account;
+  const holder = tx.Holder;
+
+  if (!issuer || !holder) {
+    return;
+  }
+
+  // check issuer has balance change for this mpt issuance
+  const issuerChanges = balanceChanges[issuer];
+  if (!issuerChanges) {
+    return;
+  }
+
+  const issuerChange = issuerChanges.find((c) => c.mpt_issuance_id === mptIssuanceID);
+  if (!issuerChange) {
+    return;
+  }
+
+  // adjust holder balance change
+  adjustBalancesChanges(balanceChanges, holder, [{ value: `-${amount}`, mpt_issuance_id: mptIssuanceID }]);
+}
+
 function adjustBalancesChanges(balanceChanges: BalanceChanges, address: string, changes: BalanceChangeQuantity[]) {
   const existingChanges = balanceChanges[address] || [];
   const change = existingChanges.find((c) => c.currency === changes[0].currency && c.issuer === changes[0].issuer);
@@ -420,25 +493,39 @@ function parseBalanceChanges(
 
   const balanceChanges = parseQuantities(metadata, computeBalanceChange, nativeCurrency);
 
-  if (tx && tx.TransactionType && options) {
-    // if escrow create, remove escrow balance deduction to escrow
-    // if escrow finish with unlock, remove escrow balance addition
-    // if escrow finish with transfer, deduct balance from source account
-    // if escrow cancel, remove balance addition from escrow
+  if (tx && tx.TransactionType) {
+    if (options) {
+      // if escrow create, remove escrow balance deduction to escrow
+      // if escrow finish with unlock, remove escrow balance addition
+      // if escrow finish with transfer, deduct balance from source account
+      // if escrow cancel, remove balance addition from escrow
 
-    if (options.adjustBalancesForNativeEscrow && ESCROW_TYPES.includes(tx.TransactionType)) {
-      // EscrowFinish with XRP(native currency) does not have locked balance change in metadata
-      // by default transfer after escrow finish is not considered as balance change in source account
-      // the same unlock funds should not be counted as balance change
-      // options.adjustBalancesForNativeEscrow as true, // escrow create, finish with unlock will not consider as balance change
+      if (options.adjustBalancesForNativeEscrow && ESCROW_TYPES.includes(tx.TransactionType)) {
+        // EscrowFinish with XRP(native currency) does not have locked balance change in metadata
+        // by default transfer after escrow finish is not considered as balance change in source account
+        // the same unlock funds should not be counted as balance change
+        // options.adjustBalancesForNativeEscrow as true, // escrow create, finish with unlock will not consider as balance change
 
-      adjustBalancesForNativeEscrow(balanceChanges, metadata, nativeCurrency, tx);
-    } else if (options.adjustBalancesForPaymentChannel && PAYMENT_CHANNEL_TYPES.includes(tx.TransactionType)) {
-      // Consider PayChannel with XRP(native currency) as locked balance change, react as balance change in source account
-      // if only destination account acquires funds from the channel
-      // options.adjustBalancesForPaymentChannel as true
+        adjustBalancesForNativeEscrow(balanceChanges, metadata, nativeCurrency, tx);
+      } else if (options.adjustBalancesForPaymentChannel && PAYMENT_CHANNEL_TYPES.includes(tx.TransactionType)) {
+        // Consider PayChannel with XRP(native currency) as locked balance change, react as balance change in source account
+        // if only destination account acquires funds from the channel
+        // options.adjustBalancesForPaymentChannel as true
 
-      adjustBalancesForPaymentChannel(balanceChanges, metadata, nativeCurrency, tx);
+        adjustBalancesForPaymentChannel(balanceChanges, metadata, nativeCurrency, tx);
+      } else if (
+        options.adjustBalancesForConfidentialMPTConvert &&
+        CONFIDENTIAL_MPT_CONVERT_TYPES.includes(tx.TransactionType)
+      ) {
+        // Consider ConfidentialMPTConvert as locked balance change, react as balance change in source account
+        // if only destination account acquires funds from the convert
+        // options.adjustBalancesForConfidentialMPTConvert as true
+        adjustBalancesForConfidentialMPTConvert(balanceChanges, tx);
+      }
+    }
+
+    if (tx.TransactionType === "ConfidentialMPTClawback") {
+      adjustBalancesForConfidentialMPTClawback(balanceChanges, tx);
     }
   }
 

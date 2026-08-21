@@ -1,0 +1,89 @@
+{
+  "Account": "rGnSQythhg8vxLgy2vNBdMh5ho5fHtoBAJ",
+  "Fee": "10",
+  "Holder": "r9bFDKTqSJT4xLtLGUmyq4QjxGRWRMRJkk",
+  "MPTAmount": "10025",
+  "MPTokenIssuanceID": "003CEE06A560C3C2DC5A94244E540B5EC963AFD83980FD76",
+  "Sequence": 3993098,
+  "SigningPubKey": "023AD3B16C9809B194261C172551A09E3C8BECF02CCD960652EC89B2BDAC544127",
+  "TransactionType": "ConfidentialMPTClawback",
+  "TxnSignature": "3045022100FED3FC30D550C837011523A9C4CBEE04A2E7C986BB18910F358E49A232EF9A5C022052B9588E1CF7C02763F0449A2F28D180766639165F7EA682A60B5A9ED6B7ADDF",
+  "ZKProof": "378507F442194E80AAD13987B82C31566B833C5073483BCB9D7062A81E2704075855BBB6D899AF698E68DADABB1F819C6B3A953ACB21280FE1B15FB3A94877E7",
+  "ctid": "C03CEE1900C10002",
+  "date": 838483690,
+  "hash": "AF2AAA8921F3A6996F5439ED9EA6BCCDCC6E77FBC142AD4C6CA19F92DC2143A8",
+  "inLedger": 3993113,
+  "ledger_index": 3993113,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "r9bFDKTqSJT4xLtLGUmyq4QjxGRWRMRJkk",
+            "ConfidentialBalanceInbox": "0259DCF710A9631CA01C05DDB505C0406FD3D56E96D880BB6D7E16CF90208ACEEF033F67AD3DF3398AA48A01F80913AD26BBB69A0F04D23516250B52B9933DC1EC4B",
+            "ConfidentialBalanceSpending": "0259DCF710A9631CA01C05DDB505C0406FD3D56E96D880BB6D7E16CF90208ACEEF033F67AD3DF3398AA48A01F80913AD26BBB69A0F04D23516250B52B9933DC1EC4B",
+            "ConfidentialBalanceVersion": 3,
+            "Flags": 0,
+            "HolderEncryptionKey": "03CBD19CC7C05F4E5234C174CA09471885A0890191AD13EB752761FC698CEDBF7C",
+            "IssuerEncryptedBalance": "0259DCF710A9631CA01C05DDB505C0406FD3D56E96D880BB6D7E16CF90208ACEEF03412BECF7591A878CE3B3F796DC03192D8BDE79807689B31AE2F138316F27DF71",
+            "MPTokenIssuanceID": "003CEE06A560C3C2DC5A94244E540B5EC963AFD83980FD76",
+            "OwnerNode": "0"
+          },
+          "LedgerEntryType": "MPToken",
+          "LedgerIndex": "426D7ECF23CFD8F7E63CEF70849048387A056272CAF044347C1EDB3611FDBBFB",
+          "PreviousFields": {
+            "ConfidentialBalanceSpending": "0374144D10E7575BB002CF1E22BAB0428FFE2C0D6EDA03AF39A9E4B8F7385637BF03EA5D3B958085EDF4C1A5CA2794C52B1E16C82F96F15379CBC29D82F901E96808",
+            "ConfidentialBalanceVersion": 2,
+            "IssuerEncryptedBalance": "03C70EBEDEF54FB910F7215776F74E3A78140A2A9BE36433DF6C03E193AEF95C7A02DD68C2FF02F87393830768C087D5881565DD35CA351DFD615952679BFAC5EA41"
+          },
+          "PreviousTxnID": "488CCC3F33A65BF0F321B1481032D525EE68360977A813F7B4997D7C49F847A6",
+          "PreviousTxnLgrSeq": 3993111
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "ConfidentialOutstandingAmount": "9975",
+            "Flags": 224,
+            "Issuer": "rGnSQythhg8vxLgy2vNBdMh5ho5fHtoBAJ",
+            "IssuerEncryptionKey": "03BC32D1E1030A3AC00BD19AA23A604C3426DE87CC4EFDCF8ED9ABC08CDB47F763",
+            "MaximumAmount": "9223372036854775807",
+            "OutstandingAmount": "9975",
+            "OwnerNode": "0",
+            "Sequence": 3993094
+          },
+          "LedgerEntryType": "MPTokenIssuance",
+          "LedgerIndex": "98490EBB57A95B8DCBE0B0A3C741602430A3A77A26FD411C4D0485B39A6135D3",
+          "PreviousFields": {
+            "ConfidentialOutstandingAmount": "20000",
+            "OutstandingAmount": "20000"
+          },
+          "PreviousTxnID": "69DF8E9F1DD4C7652D36FD6911B9459593DD0CEC1D46CABA1D966DD2A5244357",
+          "PreviousTxnLgrSeq": 3993106
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rGnSQythhg8vxLgy2vNBdMh5ho5fHtoBAJ",
+            "Balance": "39999986",
+            "Flags": 0,
+            "OwnerCount": 1,
+            "Sequence": 3993099
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "F3D3BEFDD29499D301F63541114E1942807E9ED6F95D630874AF52B7FD188970",
+          "PreviousFields": {
+            "Balance": "39999996",
+            "Sequence": 3993098
+          },
+          "PreviousTxnID": "B3E0D904455DFB98C292088185A5235A6A44008CF3D6DAC72E24ACF157DAC18C",
+          "PreviousTxnLgrSeq": 3993102
+        }
+      }
+    ],
+    "TransactionIndex": 193,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

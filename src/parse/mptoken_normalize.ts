@@ -14,6 +14,8 @@ export function normalizeMPTokensPreviousFields(meta: any, tx: any): void {
     normalizeMPTokensPreviousFieldsEscrowFinish(meta);
   } else if (tx.TransactionType === "EscrowCancel") {
     normalizeMPTokensPreviousFieldsEscrowCancel(meta);
+  } else if (tx.TransactionType === "ConfidentialMPTConvert") {
+    normalizeMPTokensPreviousFieldsConfidentialMPTConvert(meta);
   } else if (TRANSFER_TRANSACTION_TYPES.includes(tx.TransactionType)) {
     normalizeMPTokensPreviousFieldsTransfer(meta, tx);
   }
@@ -370,6 +372,25 @@ export function normalizeMPTokensPreviousFieldsEscrowCancel(meta: any): void {
       if (prevFields.MPTAmount === undefined) {
         prevFields.MPTAmount = "0"; // entire value was locked
       }
+    }
+  }
+}
+
+export function normalizeMPTokensPreviousFieldsConfidentialMPTConvert(meta: any): void {
+  // find deleted Escrow node, need amount and mpt_issuance_id
+  const confidentialMPTConvertNode = meta.AffectedNodes.find((node: any) => {
+    const modifiedNode = node.ModifiedNode;
+    return modifiedNode && modifiedNode.LedgerEntryType === "MPTokenIssuance";
+  });
+
+  if (!confidentialMPTConvertNode) {
+    return;
+  }
+
+  const prevFields = confidentialMPTConvertNode.ModifiedNode.PreviousFields;
+  if (prevFields && prevFields.ConfidentialOutstandingAmount === undefined) {
+    if (prevFields.ConfidentialOutstandingAmount === undefined) {
+      prevFields.ConfidentialOutstandingAmount = "0";
     }
   }
 }

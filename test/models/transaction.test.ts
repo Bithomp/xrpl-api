@@ -7266,6 +7266,176 @@ describe("Models", () => {
       });
     });
 
+    it("ConfidentialMPTConvert", function () {
+      const tx = require("../examples/responses/ConfidentialMPTConvert.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      expect(result).to.eql({
+        type: "ConfidentialMPTConvert",
+        address: "rsYvRFgr5PXTqk1knbLw7YVzn8nLF69xFw",
+        sequence: 3993071,
+        id: "10AE3F3D2A7C6BD26EBB082C40499513474AC5F7AC58F079AE975D7FE628BD8E",
+        ctid: "C03CEDF700040002",
+        specification: {
+          source: { address: "rsYvRFgr5PXTqk1knbLw7YVzn8nLF69xFw" },
+          amount: {
+            mpt_issuance_id: "003CEDEDAA9E0D8011FFAB47CEEE3C07C51A3B4DDC5DEC4A",
+            value: "10000",
+          },
+          holderEncryptedAmount:
+            "0263A2E3ADAA124549EEBB5BF075C168013D98667746A8A922DD3AB3DDFB32D3B102AC9827C582E65BBB6E88655897963198C50E4BAC451B90C48090050A4E1584A7",
+          holderEncryptionKey: "02CB5B22DF9FF7F35996A28910C1FDD423E49B901BC9AA56B281286903FA18746C",
+          issuerEncryptedAmount:
+            "0263A2E3ADAA124549EEBB5BF075C168013D98667746A8A922DD3AB3DDFB32D3B102E150FC4BC64B92FC5D3AFC471BB750A2E6DE854EA76F6AB27FF3AC2DB0E51395",
+          zkProof:
+            "8CE8026B697FBC4F43D4AA3AF667B1C42E7A04959AE738EF5ED04586B337E4AB8E1046800E60F3A3661ED4AB71DC7E026A34A6A6D5D6337F37DADB8838FE0BDD",
+          flags: { innerBatchTxn: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2026-07-27T16:06:02.000Z",
+          fee: "0.00001",
+          balanceChanges: {
+            rsYvRFgr5PXTqk1knbLw7YVzn8nLF69xFw: [
+              { currency: "XRP", value: "-0.00001" },
+              {
+                mpt_issuance_id: "003CEDEDAA9E0D8011FFAB47CEEE3C07C51A3B4DDC5DEC4A",
+                value: "-10000",
+              },
+            ],
+          },
+          mptokenChanges: {
+            "003CEDEDAA9E0D8011FFAB47CEEE3C07C51A3B4DDC5DEC4A": {
+              rsYvRFgr5PXTqk1knbLw7YVzn8nLF69xFw: {
+                account: "rsYvRFgr5PXTqk1knbLw7YVzn8nLF69xFw",
+                flags: {
+                  authorized: false,
+                  locked: false,
+                },
+                amount: "0",
+                amountChange: "-10000",
+                confidentialBalanceInbox:
+                  "0263A2E3ADAA124549EEBB5BF075C168013D98667746A8A922DD3AB3DDFB32D3B102AC9827C582E65BBB6E88655897963198C50E4BAC451B90C48090050A4E1584A7",
+                confidentialBalanceSpending:
+                  "033B609AAF9857CB4E1966B259244DDE8CE15A539090161B0E00007496E419EFE702E498450E0EB5DEC9B7960989FE7090DE9E4AD219FE2030F8AB858A9FA8B9517C",
+                mptIssuanceID: "003CEDEDAA9E0D8011FFAB47CEEE3C07C51A3B4DDC5DEC4A",
+                status: "modified",
+              },
+            },
+          },
+          mptokenIssuanceChanges: {
+            "003CEDEDAA9E0D8011FFAB47CEEE3C07C51A3B4DDC5DEC4A": {
+              status: "modified",
+              flags: {
+                locked: false,
+                canLock: false,
+                requireAuth: false,
+                canEscrow: false,
+                canTrade: false,
+                canTransfer: true,
+                canClawback: true,
+              },
+              mptIssuanceID: "003CEDEDAA9E0D8011FFAB47CEEE3C07C51A3B4DDC5DEC4A",
+              issuer: "rGZ9DJiHwxW9qUFv16sdPttFrkB5n1Huzs",
+              sequence: 3993069,
+              maximumAmount: "9223372036854775807",
+              outstandingAmount: "10000",
+              confidentialOutstandingAmount: "10000",
+              confidentialOutstandingAmountChange: "10000",
+            },
+          },
+          ledgerIndex: 3993079,
+          ledgerVersion: 3993079,
+          indexInLedger: 4,
+        },
+      });
+    });
+
+    it("ConfidentialMPTClawback", function () {
+      const tx = require("../examples/responses/ConfidentialMPTClawback.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      expect(result).to.eql({
+        type: "ConfidentialMPTClawback",
+        address: "rGnSQythhg8vxLgy2vNBdMh5ho5fHtoBAJ",
+        sequence: 3993098,
+        id: "AF2AAA8921F3A6996F5439ED9EA6BCCDCC6E77FBC142AD4C6CA19F92DC2143A8",
+        ctid: "C03CEE1900C10002",
+        specification: {
+          source: { address: "rGnSQythhg8vxLgy2vNBdMh5ho5fHtoBAJ" },
+          amount: {
+            mpt_issuance_id: "003CEE06A560C3C2DC5A94244E540B5EC963AFD83980FD76",
+            value: "10025",
+          },
+          holder: "r9bFDKTqSJT4xLtLGUmyq4QjxGRWRMRJkk",
+          zkProof:
+            "378507F442194E80AAD13987B82C31566B833C5073483BCB9D7062A81E2704075855BBB6D899AF698E68DADABB1F819C6B3A953ACB21280FE1B15FB3A94877E7",
+          flags: { innerBatchTxn: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2026-07-27T16:08:10.000Z",
+          fee: "0.00001",
+          balanceChanges: {
+            rGnSQythhg8vxLgy2vNBdMh5ho5fHtoBAJ: [
+              {
+                mpt_issuance_id: "003CEE06A560C3C2DC5A94244E540B5EC963AFD83980FD76",
+                value: "10025",
+              },
+              { currency: "XRP", value: "-0.00001" },
+            ],
+            r9bFDKTqSJT4xLtLGUmyq4QjxGRWRMRJkk: [
+              {
+                mpt_issuance_id: "003CEE06A560C3C2DC5A94244E540B5EC963AFD83980FD76",
+                value: "-10025",
+              },
+            ],
+          },
+          mptokenChanges: {
+            "003CEE06A560C3C2DC5A94244E540B5EC963AFD83980FD76": {
+              r9bFDKTqSJT4xLtLGUmyq4QjxGRWRMRJkk: {
+                account: "r9bFDKTqSJT4xLtLGUmyq4QjxGRWRMRJkk",
+                flags: {
+                  authorized: false,
+                  locked: false,
+                },
+                amount: "0",
+                confidentialBalanceVersion: 3,
+                confidentialBalanceInbox:
+                  "0259DCF710A9631CA01C05DDB505C0406FD3D56E96D880BB6D7E16CF90208ACEEF033F67AD3DF3398AA48A01F80913AD26BBB69A0F04D23516250B52B9933DC1EC4B",
+                confidentialBalanceSpending:
+                  "0259DCF710A9631CA01C05DDB505C0406FD3D56E96D880BB6D7E16CF90208ACEEF033F67AD3DF3398AA48A01F80913AD26BBB69A0F04D23516250B52B9933DC1EC4B",
+                mptIssuanceID: "003CEE06A560C3C2DC5A94244E540B5EC963AFD83980FD76",
+                status: "modified",
+              },
+            },
+          },
+          mptokenIssuanceChanges: {
+            "003CEE06A560C3C2DC5A94244E540B5EC963AFD83980FD76": {
+              status: "modified",
+              flags: {
+                locked: false,
+                canLock: false,
+                requireAuth: false,
+                canEscrow: false,
+                canTrade: false,
+                canTransfer: true,
+                canClawback: true,
+              },
+              mptIssuanceID: "003CEE06A560C3C2DC5A94244E540B5EC963AFD83980FD76",
+              issuer: "rGnSQythhg8vxLgy2vNBdMh5ho5fHtoBAJ",
+              sequence: 3993094,
+              maximumAmount: "9223372036854775807",
+              outstandingAmount: "9975",
+              confidentialOutstandingAmount: "9975",
+              confidentialOutstandingAmountChange: "-10025",
+            },
+          },
+          ledgerIndex: 3993113,
+          ledgerVersion: 3993113,
+          indexInLedger: 193,
+        },
+      });
+    });
+
     it("MPTokenAuthorize", function () {
       const tx = require("../examples/responses/MPTokenAuthorize.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");

@@ -71,5 +71,21 @@ describe("Parse", () => {
       expect(mptokenNode).to.exist;
       expect(mptokenNode.ModifiedNode.PreviousFields).to.have.property("MPTAmount", "0");
     });
+
+    it("should add initial balance PreviousFields.ConfidentialOutstandingAmount with '0' value for ConfidentialMPTConvert", () => {
+      const tx = require("../examples/responses/ConfidentialMPTConvert.json");
+      const meta = tx.meta;
+
+      normalizeMPTokensPreviousFields(meta, tx);
+
+      const mptokenNode = meta.AffectedNodes.find(
+        (node: any) =>
+          node.ModifiedNode &&
+          node.ModifiedNode.LedgerEntryType === "MPTokenIssuance" &&
+          node.ModifiedNode.PreviousFields
+      );
+      expect(mptokenNode).to.exist;
+      expect(mptokenNode.ModifiedNode.PreviousFields).to.have.property("ConfidentialOutstandingAmount", "0");
+    });
   });
 });

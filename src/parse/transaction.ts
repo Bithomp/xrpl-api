@@ -147,6 +147,8 @@ import parseMPTokenIssuanceCreate from "./specification/mptoken-issuance-create"
 import parseMPTokenAuthorize from "./specification/mptoken-authorize";
 import parseMPTokenIssuanceSet from "./specification/mptoken-issuance-set";
 import parseMPTokenIssuanceDestroy from "./specification/mptoken-issuance-destroy";
+import parseConfidentialMPTConvert from "./specification/confidential-mpt-convert";
+import parseConfidentialMPTClawback from "./specification/confidential-mpt-clawback";
 
 import parseDelegateSet from "./specification/delegate-set";
 
@@ -228,6 +230,8 @@ const transactionTypeToType = {
   MPTokenAuthorize: "MPTokenAuthorize",
   MPTokenIssuanceSet: "MPTokenIssuanceSet",
   MPTokenIssuanceDestroy: "MPTokenIssuanceDestroy",
+  ConfidentialMPTConvert: "ConfidentialMPTConvert",
+  ConfidentialMPTClawback: "ConfidentialMPTClawback",
 
   CredentialCreate: "CredentialCreate",
   CredentialAccept: "CredentialAccept",
@@ -312,6 +316,8 @@ export const parserTypeFunc = {
   MPTokenAuthorize: parseMPTokenAuthorize,
   MPTokenIssuanceSet: parseMPTokenIssuanceSet,
   MPTokenIssuanceDestroy: parseMPTokenIssuanceDestroy,
+  ConfidentialMPTConvert: parseConfidentialMPTConvert,
+  ConfidentialMPTClawback: parseConfidentialMPTClawback,
 
   CredentialCreate: parseCredentialCreate,
   CredentialAccept: parseCredentialAccept,

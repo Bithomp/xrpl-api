@@ -18,6 +18,7 @@ interface MPTokenIssuanceChangesInterface {
   metadata?: string;
   maximumAmount?: string;
   outstandingAmount?: string;
+  confidentialOutstandingAmount?: string;
   lockedAmount?: string;
   sequence?: number;
   transferFee?: number;
@@ -25,7 +26,9 @@ interface MPTokenIssuanceChangesInterface {
 
   // changes
   outstandingAmountChange?: string; // amount difference
+  confidentialOutstandingAmountChange?: string; // amount difference
   lockedAmountChange?: string; // locked amount difference
+
   flagsChange?: MPTokenIssuanceFlagsKeysInterface; // previous flags
 }
 
@@ -82,6 +85,7 @@ class MPTokenIssuanceChanges {
             transferFee: node.NewFields.TransferFee,
             maximumAmount: node.NewFields.MaximumAmount,
             outstandingAmount: node.NewFields.OutstandingAmount,
+            confidentialOutstandingAmount: node.NewFields.ConfidentialOutstandingAmount,
             lockedAmount: node.NewFields.LockedAmount,
             metadata: node.NewFields.Metadata,
             scale: node.NewFields.AssetScale,
@@ -93,10 +97,24 @@ class MPTokenIssuanceChanges {
           // generate mptIssuanceID
           const mptIssuanceID = buildMPTokenIssuanceID(node.FinalFields.Sequence, node.FinalFields.Issuer);
 
-          // calc amount change
-          let outstandingAmountChange: string | undefined = new BigNumber(node.FinalFields.OutstandingAmount ?? 0)
-            .minus(node.PreviousFields.OutstandingAmount ?? 0)
-            .toString();
+          let confidentialOutstandingAmountChange: string | undefined;
+          let outstandingAmountChange: string | undefined;
+
+          // calc confidential outstanding amount change
+          if (node.PreviousFields.hasOwnProperty("ConfidentialOutstandingAmount")) {
+            confidentialOutstandingAmountChange = new BigNumber(node.FinalFields.ConfidentialOutstandingAmount ?? 0)
+              .minus(node.PreviousFields.ConfidentialOutstandingAmount ?? 0)
+              .toString();
+          } else {
+            // calc amount change
+            outstandingAmountChange = new BigNumber(node.FinalFields.OutstandingAmount ?? 0)
+              .minus(node.PreviousFields.OutstandingAmount ?? 0)
+              .toString();
+          }
+
+          if (confidentialOutstandingAmountChange === "0") {
+            confidentialOutstandingAmountChange = undefined;
+          }
 
           if (outstandingAmountChange === "0") {
             outstandingAmountChange = undefined;
@@ -132,12 +150,14 @@ class MPTokenIssuanceChanges {
             transferFee: node.FinalFields.TransferFee,
             maximumAmount: node.FinalFields.MaximumAmount,
             outstandingAmount: node.FinalFields.OutstandingAmount,
+            confidentialOutstandingAmount: node.FinalFields.ConfidentialOutstandingAmount,
             lockedAmount,
             metadata: node.FinalFields.Metadata,
             scale: node.FinalFields.AssetScale,
 
             // changes
             outstandingAmountChange,
+            confidentialOutstandingAmountChange,
             lockedAmountChange,
             flagsChange,
           });
@@ -157,6 +177,7 @@ class MPTokenIssuanceChanges {
             transferFee: node.FinalFields.TransferFee,
             maximumAmount: node.FinalFields.MaximumAmount,
             outstandingAmount: node.FinalFields.OutstandingAmount,
+            confidentialOutstandingAmount: node.FinalFields.ConfidentialOutstandingAmount,
             lockedAmount: node.FinalFields.LockedAmount,
             metadata: node.FinalFields.Metadata,
             scale: node.FinalFields.AssetScale,

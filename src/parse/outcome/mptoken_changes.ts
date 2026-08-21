@@ -16,6 +16,9 @@ interface MPTokenChangesInterface {
   amount?: string;
   lockedAmount?: string;
   mptIssuanceID?: string;
+  confidentialBalanceVersion?: number;
+  confidentialBalanceInbox?: string;
+  confidentialBalanceSpending?: string;
 
   // changes
   amountChange?: string; // amount difference
@@ -77,6 +80,9 @@ class MPTokenChanges {
             account,
             amount: node.NewFields.MPTAmount || "0", // can be omitted
             lockedAmount: node.NewFields.LockedAmount,
+            confidentialBalanceVersion: node.NewFields.ConfidentialBalanceVersion, // can be omitted
+            confidentialBalanceInbox: node.NewFields.ConfidentialBalanceInbox, // can be omitted
+            confidentialBalanceSpending: node.NewFields.ConfidentialBalanceSpending, // can be omitted
           });
         }
 
@@ -130,6 +136,9 @@ class MPTokenChanges {
             account,
             amount: node.FinalFields.MPTAmount || "0", // can be omitted
             lockedAmount: node.FinalFields.LockedAmount,
+            confidentialBalanceVersion: node.FinalFields.ConfidentialBalanceVersion, // can be omitted
+            confidentialBalanceInbox: node.FinalFields.ConfidentialBalanceInbox, // can be omitted
+            confidentialBalanceSpending: node.FinalFields.ConfidentialBalanceSpending, // can be omitted
 
             // changes
             amountChange,
@@ -150,6 +159,8 @@ class MPTokenChanges {
             account,
             amount: node.FinalFields.MPTAmount,
             lockedAmount: node.FinalFields.LockedAmount,
+            confidentialBalanceInbox: node.FinalFields.ConfidentialBalanceInbox,
+            confidentialBalanceSpending: node.FinalFields.ConfidentialBalanceSpending,
           });
         }
       }

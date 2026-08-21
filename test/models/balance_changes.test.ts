@@ -262,6 +262,55 @@ describe("Models", () => {
         rfXsKb5z4tRjw7J6fdAQopDcszf7pKu621: [{ currency: "XRP", value: "-0.000001" }],
       });
     });
+
+    it("parses for ConfidentialMPTConvert", function () {
+      const tx = require("../examples/responses/ConfidentialMPTConvert.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForConfidentialMPTConvert: false,
+      });
+
+      expect(result).to.eql({
+        rsYvRFgr5PXTqk1knbLw7YVzn8nLF69xFw: [
+          { currency: "XRP", value: "-0.00001" },
+          {
+            mpt_issuance_id: "003CEDEDAA9E0D8011FFAB47CEEE3C07C51A3B4DDC5DEC4A",
+            value: "-10000",
+          },
+        ],
+      });
+    });
+
+    it("parses for ConfidentialMPTConvert with adjustBalancesForConfidentialMPTConvert", function () {
+      const tx = require("../examples/responses/ConfidentialMPTConvert.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {
+        adjustBalancesForConfidentialMPTConvert: true,
+      });
+
+      expect(result).to.eql({
+        rsYvRFgr5PXTqk1knbLw7YVzn8nLF69xFw: [{ currency: "XRP", value: "-0.00001" }],
+      });
+    });
+
+    it("parses for ConfidentialMPTClawback", function () {
+      const tx = require("../examples/responses/ConfidentialMPTClawback.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {});
+
+      expect(result).to.eql({
+        rGnSQythhg8vxLgy2vNBdMh5ho5fHtoBAJ: [
+          {
+            mpt_issuance_id: "003CEE06A560C3C2DC5A94244E540B5EC963AFD83980FD76",
+            value: "10025",
+          },
+          { currency: "XRP", value: "-0.00001" },
+        ],
+        r9bFDKTqSJT4xLtLGUmyq4QjxGRWRMRJkk: [
+          {
+            mpt_issuance_id: "003CEE06A560C3C2DC5A94244E540B5EC963AFD83980FD76",
+            value: "-10025",
+          },
+        ],
+      });
+    });
   });
 
   describe("parseFinalBalances", () => {

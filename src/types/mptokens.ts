@@ -2,6 +2,7 @@ import { MPTokenIssuanceCreateFlags, MPTokenIssuanceSetFlags, MPTokenAuthorizeFl
 import { FormattedBaseSpecification } from "./specification";
 import { TxGlobalFlagsKeysInterface, getTxGlobalFlagsKeys } from "./global";
 import { MAINNET_NATIVE_CURRENCY } from "../common";
+import { Amount } from "./amounts";
 
 export const MPTokenIssuanceFlagsKeys = {
   locked: 0x00000001,
@@ -134,6 +135,20 @@ export type FormattedMPTokenIssuanceSetSpecification = {
   flags?: MPTokenIssuanceSetFlagsKeysInterface;
   holder?: string;
   mptIssuanceID?: string;
+} & FormattedBaseSpecification;
+
+export type FormattedConfidentialMPTConvertSpecification = {
+  holderEncryptedAmount?: string;
+  holderEncryptionKey?: string;
+  issuerEncryptedAmount?: string;
+  amount?: Amount;
+  mptIssuanceID?: string;
+  zkProof?: string;
+} & FormattedBaseSpecification;
+
+export type FormattedConfidentialMPTClawbackSpecification = {
+  holder?: string;
+  zkProof?: string;
 } & FormattedBaseSpecification;
 
 export const MPTokenFlagsKeys = {
