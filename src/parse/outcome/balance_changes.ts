@@ -6,6 +6,7 @@ import { getNativeCurrency } from "../../client";
 import { NormalizedNode, normalizeNode } from "../utils";
 import { buildMPTokenIssuanceID } from "../../models/mptoken";
 import { normalizeMPTokensPreviousFields } from "../mptoken_normalize";
+import { normalizeSponsorshipPreviousFields } from "../sponsorship_normalize";
 import parseAmount from "../ledger/amount";
 import { parseChannelChanges } from "./channel_changes";
 import { parseSponsorshipChanges } from "./sponsorship_changes";
@@ -559,6 +560,7 @@ function parseBalanceChanges(
   // in case MPTokenIssuance transfer value MPToken destination is missing in PreviousFields it is initial amount
   if (tx && nativeCurrency === MAINNET_NATIVE_CURRENCY && metadata.TransactionResult === "tesSUCCESS") {
     normalizeMPTokensPreviousFields(metadata, tx);
+    normalizeSponsorshipPreviousFields(metadata, tx);
   }
 
   const balanceChanges = parseQuantities(metadata, computeBalanceChange, nativeCurrency);

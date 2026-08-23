@@ -1,0 +1,63 @@
+{
+  "Account": "rLLckzTWCXqXMg4FLtyJeREcMr6Smrgs9A",
+  "Fee": "12",
+  "FeeAmountDelta": "20000000",
+  "LastLedgerSequence": 4083061,
+  "MaxFee": "10000000",
+  "Sequence": 4083026,
+  "SigningPubKey": "ED92952957F34CAE8D42A8B390B91FA282BE4CD20AA725027E13A8C96542EB8F33",
+  "Sponsee": "rQDqkU9xeEoxaavjcN3ZM3ownr832Wp1CM",
+  "TransactionType": "SponsorshipSet",
+  "TxnSignature": "D3AC27B32B1692246749D5E4744D59F75914FDEA3193DB53D667932B3BF734908303C9E9A2389B98862B945C070B7E1B9F610487EE18844DD667576148D38E04",
+  "ctid": "C03E4D6200000002",
+  "date": 838789450,
+  "hash": "539CA2ADDEDE0381FA2F91C985FAB908F911A8409EFD3A35F81563383A565D9D",
+  "inLedger": 4083042,
+  "ledger_index": 4083042,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "FeeAmount": "20000000",
+            "Flags": 0,
+            "MaxFee": "10000000",
+            "Owner": "rLLckzTWCXqXMg4FLtyJeREcMr6Smrgs9A",
+            "OwnerNode": "0",
+            "Sponsee": "rQDqkU9xeEoxaavjcN3ZM3ownr832Wp1CM",
+            "SponseeNode": "0"
+          },
+          "LedgerEntryType": "Sponsorship",
+          "LedgerIndex": "A4D3FE7850C15D8A7C884E79D3393CFD09585553967EA06C039CB413ED783903",
+          "PreviousFields": {
+            "MaxFee": "1000000"
+          },
+          "PreviousTxnID": "FCFCED4930C893848379FA03C53F76A2099D5BB027D6F6111716AB647D316930",
+          "PreviousTxnLgrSeq": 4083040
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rLLckzTWCXqXMg4FLtyJeREcMr6Smrgs9A",
+            "Balance": "79999916",
+            "Flags": 0,
+            "OwnerCount": 1,
+            "Sequence": 4083027
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "D837B467D3B3C969D88AB1E9505B30E83D532428B883EB9ACE7D26948735CBF0",
+          "PreviousFields": {
+            "Balance": "99999928",
+            "Sequence": 4083026
+          },
+          "PreviousTxnID": "541BBA2295986669FD27CB529E16ADC69D46524D2281A470711033C5612358C7",
+          "PreviousTxnLgrSeq": 4083030
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

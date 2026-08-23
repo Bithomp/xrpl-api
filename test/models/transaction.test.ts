@@ -8683,6 +8683,56 @@ describe("Models", () => {
       });
     });
 
+    it("SponsorshipSet for modify top up from 0", function () {
+      const tx = require("../examples/responses/SponsorshipSet3.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+      console.log(JSON.stringify(result));
+      expect(result).to.eql({
+        type: "SponsorshipSet",
+        address: "rLLckzTWCXqXMg4FLtyJeREcMr6Smrgs9A",
+        sequence: 4083026,
+        id: "539CA2ADDEDE0381FA2F91C985FAB908F911A8409EFD3A35F81563383A565D9D",
+        ctid: "C03E4D6200000002",
+        specification: {
+          source: { address: "rLLckzTWCXqXMg4FLtyJeREcMr6Smrgs9A" },
+          feeAmountDelta: { currency: "XRP", value: "20" },
+          maxFee: { currency: "XRP", value: "10" },
+          sponsee: { address: "rQDqkU9xeEoxaavjcN3ZM3ownr832Wp1CM" },
+          flags: {
+            innerBatchTxn: false,
+            setRequireSignForFee: false,
+            clearRequireSignForFee: false,
+            setRequireSignForReserve: false,
+            clearRequireSignForReserve: false,
+            deleteObject: false,
+          },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2026-07-31T05:04:10.000Z",
+          fee: "0.000012",
+          balanceChanges: { rLLckzTWCXqXMg4FLtyJeREcMr6Smrgs9A: [{ currency: "XRP", value: "-20.000012" }] },
+          sponsorshipChanges: [
+            {
+              status: "modified",
+              sponsorshipID: "A4D3FE7850C15D8A7C884E79D3393CFD09585553967EA06C039CB413ED783903",
+              owner: { address: "rLLckzTWCXqXMg4FLtyJeREcMr6Smrgs9A" },
+              sponsee: { address: "rQDqkU9xeEoxaavjcN3ZM3ownr832Wp1CM" },
+              feeAmountDrops: "20000000",
+              feeAmount: { currency: "XRP", value: "20" },
+              feeAmountChangeDrops: "20000000",
+              feeAmountChange: { currency: "XRP", value: "20" },
+              previousTxnID: "FCFCED4930C893848379FA03C53F76A2099D5BB027D6F6111716AB647D316930",
+              previousTxnLgrSeq: 4083040,
+            },
+          ],
+          ledgerIndex: 4083042,
+          ledgerVersion: 4083042,
+          indexInLedger: 0,
+        },
+      });
+    });
+
     it("Payment with Sponsorship", function () {
       const tx = require("../examples/responses/PaymentSponsorship.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");
