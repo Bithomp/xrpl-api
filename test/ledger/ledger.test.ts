@@ -82,7 +82,7 @@ describe("Client", () => {
         expect(result).to.eql({
           error: "lgrNotFound",
           error_code: 21,
-          error_message: "ledgerNotFound",
+          error_message: "Ledger not found.",
           status: "error",
         });
       });

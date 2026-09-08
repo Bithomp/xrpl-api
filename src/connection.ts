@@ -21,6 +21,7 @@ export const DEFAULT_API_VERSION = RIPPLED_API_V1;
 
 const SLOW_DOWN_ERROR_MESSAGES = [
   "slowDown",
+  "tooBusy",
   "Unexpected server response: 429",
   "You are placing too much load on the server.",
 ];
@@ -178,7 +179,7 @@ class Connection extends EventEmitter {
     // handle mass timeout errors
     if (result?.error) {
       // too many requests
-      if (SLOW_DOWN_ERROR_MESSAGES.includes(result.error)) {
+      if (SLOW_DOWN_ERROR_MESSAGES.includes(result.error) || result.error.toLowerCase().startsWith("rate limit")) {
         this.logger?.debug({
           service: "Bithomp::XRPL::Connection",
           function: "request",
