@@ -354,20 +354,20 @@ class Connection extends EventEmitter {
       return true;
     }
 
-    // check if ledger is in complete_ledgers
-    const completeLedgers = this.serverInfo.complete_ledgers.split("-");
-
-    // complete_ledgers is not valid
-    if (completeLedgers.length !== 2) {
+    const ranges = this.serverInfo.complete_ledgers.split(",");
+    if (ranges.length === 0) {
       return true;
     }
-    completeLedgers[0] = parseInt(completeLedgers[0], 10); // min
-    completeLedgers[1] = parseInt(completeLedgers[1], 10); // max
 
-    // check if ledger is in available windows
+    const firstRange = ranges[0].split("-").map((v) => parseInt(v, 10));
+    const lastRange = ranges[ranges.length - 1].split("-").map((v) => parseInt(v, 10));
+
+    const minLedgerIndex = firstRange[0];
+    const maxLedgerIndex = lastRange[1] + AVAILABLE_LEDGER_INDEX_WINDOW;
+
     if (
-      ledgerIndex < completeLedgers[0] - AVAILABLE_LEDGER_INDEX_WINDOW ||
-      ledgerIndex > completeLedgers[1] + AVAILABLE_LEDGER_INDEX_WINDOW
+      ledgerIndex < minLedgerIndex - AVAILABLE_LEDGER_INDEX_WINDOW ||
+      ledgerIndex > maxLedgerIndex + AVAILABLE_LEDGER_INDEX_WINDOW
     ) {
       return false;
     }
@@ -386,22 +386,19 @@ class Connection extends EventEmitter {
       return false;
     }
 
-    // check if ledger is in complete_ledgers
-    const completeLedgers = this.serverInfo.complete_ledgers.split("-");
-
-    // complete_ledgers is not valid
-    if (completeLedgers.length !== 2) {
+    const ranges = this.serverInfo.complete_ledgers.split(",");
+    if (ranges.length === 0) {
       return true;
     }
-    completeLedgers[0] = parseInt(completeLedgers[0], 10); // min
-    completeLedgers[1] = parseInt(completeLedgers[1], 10); // max
 
-    // check if ledger is in available windows
-    if (ledgerIndex < completeLedgers[0] || ledgerIndex > completeLedgers[1]) {
-      return false;
+    for (const range of ranges) {
+      const [rangeMin, rangeMax] = range.split("-").map((v: string) => parseInt(v, 10));
+      if (ledgerIndex >= rangeMin && ledgerIndex <= rangeMax + AVAILABLE_LEDGER_INDEX_WINDOW) {
+        return true;
+      }
     }
 
-    return true;
+    return false;
   }
 
   private updateLatency(delta: number): void {

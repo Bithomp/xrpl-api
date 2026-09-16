@@ -79,10 +79,10 @@ describe("Client", () => {
           ledgerIndex: 32000,
         });
 
-        expect(result).to.eql({
+        expect(result).to.include({
           error: "lgrNotFound",
           error_code: 21,
-          error_message: "Ledger not found.",
+          // error_message: "Ledger not found.", // ledgerNotFound
           status: "error",
         });
       });

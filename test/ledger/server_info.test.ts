@@ -61,7 +61,8 @@ describe("Client", () => {
         delete result.info.load_factor_server;
         delete result.info.network_id;
         delete result.info.ports;
-        expect(Object.keys(result.info)).to.eql([
+
+        expect(Object.keys(result.info).sort()).to.eql([
           "build_version",
           "complete_ledgers",
           "hostid",
@@ -103,7 +104,7 @@ describe("Client", () => {
         delete result.info.load_factor_server;
         delete result.info.network_id;
         delete result.info.ports;
-        expect(Object.keys(result.info)).to.eql([
+        expect(Object.keys(result.info).sort()).to.eql([
           "build_version",
           "complete_ledgers",
           "hostid",
