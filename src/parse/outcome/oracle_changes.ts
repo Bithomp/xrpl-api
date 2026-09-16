@@ -205,6 +205,10 @@ function summarizeOracle(node: NormalizedNode): FormattedOracleSummaryInterface 
 }
 
 function parseOracleChanges(metadata: TransactionMetadata): FormattedOracleSummaryInterface | undefined {
+  if (!metadata || !metadata.AffectedNodes) {
+    return undefined;
+  }
+
   const affectedNodes = metadata.AffectedNodes.filter((affectedNode: any) => {
     const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
     return node.LedgerEntryType === "Oracle";

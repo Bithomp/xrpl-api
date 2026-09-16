@@ -15,7 +15,7 @@ import {
 import { AccountLinesResponse } from "../models/account_lines";
 import { ErrorResponse } from "../models/base_model";
 import { LedgerIndex } from "../models/ledger";
-import { parseMarker, createMarker, removeUndefined } from "../common/utils";
+import { parseMarker, createMarker, removeUndefined, sleep } from "../common/utils";
 
 const OBJECTS_LIMIT_DEFAULT = 200;
 const OBJECTS_LIMIT_MAX = 400;
@@ -121,7 +121,8 @@ export async function getAccountObjects(
 }
 
 export interface GetAccountAllObjectsOptions extends GetAccountObjectsOptions {
-  timeout?: number;
+  timeout?: number; // in ms, wait time before giving up on loading all objects
+  delay?: number; // in ms, wait time before the next request to prevent Time-based rate limiting
 }
 
 export async function getAccountAllObjects(
@@ -133,11 +134,16 @@ export async function getAccountAllObjects(
 
   // NOTE: set default connection, to make sure we have loaded all objects from the same server,
   // otherwise it can fail with marker malformed
+  // this could lead to Time-based rate limiting, use delay if connected to public servers
   loadOptions.connection =
     loadOptions.connection || (Client.findConnection("account_objects", undefined, undefined) as Connection);
 
   const timeStart = new Date();
   const limit = loadOptions.limit;
+  if (!loadOptions.limit) {
+    loadOptions.limit = OBJECTS_LIMIT_MAX;
+  }
+
   let response: any;
   const accountObjects: AccountObjects[] = [];
 
@@ -173,6 +179,10 @@ export async function getAccountAllObjects(
 
     if (response.marker) {
       loadOptions.marker = response.marker;
+      if (loadOptions.delay) {
+        // wait before the next request to prevent Time-based rate limiting
+        await sleep(loadOptions.delay);
+      }
     } else {
       break;
     }

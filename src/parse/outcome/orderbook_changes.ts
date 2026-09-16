@@ -159,6 +159,10 @@ function groupByAddress(orderChanges: OfferDescription[]): Orderbook {
  *
  */
 function parseOrderbookChanges(metadata: TransactionMetadata): Orderbook {
+  if (!metadata || !metadata.AffectedNodes) {
+    return {};
+  }
+
   const affectedNodes = metadata.AffectedNodes.filter((affectedNode: any) => {
     const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
     return node.LedgerEntryType === "Offer";

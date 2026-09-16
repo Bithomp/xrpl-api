@@ -172,6 +172,8 @@ describe("Client", () => {
           timeout: 4000,
         });
 
+        expect(result.length).to.be.greaterThan(0);
+
         delete result[0].tx.inLedger; // can be missed, depending on the server
         delete result[0].tx.DeliverMax; // can be missed, depending on the server 2.0.0 and greater
         delete result[0].tx.ctid; // can be missed, depending on the server
@@ -650,6 +652,7 @@ describe("Client", () => {
           ledgerIndexMin: 61770679,
           ledgerIndexMax: 61770679,
         });
+        expect(result.transactions.length).to.be.greaterThan(0);
 
         delete result.transactions[0].tx.inLedger; // can be missed, depending on the server
         delete result.transactions[0].tx.DeliverMax; // can be missed, depending on the server 2.0.0 and greater

@@ -112,6 +112,10 @@ function summarizePaymentChannel(node: NormalizedNode): FormattedChannelSummaryI
 }
 
 function parseChannelChanges(metadata: TransactionMetadata): FormattedChannelSummaryInterface | undefined {
+  if (!metadata || !metadata.AffectedNodes) {
+    return undefined;
+  }
+
   const affectedNodes = metadata.AffectedNodes.filter((affectedNode: any) => {
     const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
     return node.LedgerEntryType === "PayChannel";

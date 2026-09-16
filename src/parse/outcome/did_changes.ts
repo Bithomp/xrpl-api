@@ -32,7 +32,7 @@ function parseDIDStatus(node: NormalizedNode): "created" | "modified" | "deleted
 }
 
 function summarizeDID(node: NormalizedNode): FormattedDIDSummaryInterface {
-  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields as any;
+  const final = node.diffType === "CreatedNode" ? node.newFields : (node.finalFields as any);
   const prev = node.previousFields as any;
 
   const summary: FormattedDIDSummaryInterface = {
@@ -60,6 +60,10 @@ function summarizeDID(node: NormalizedNode): FormattedDIDSummaryInterface {
 }
 
 function parseDIDChanges(metadata: TransactionMetadata): FormattedDIDSummaryInterface | undefined {
+  if (!metadata || !metadata.AffectedNodes) {
+    return undefined;
+  }
+
   const affectedNodes = metadata.AffectedNodes.filter((affectedNode: any) => {
     const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
     return node.LedgerEntryType === "DID";

@@ -13,6 +13,7 @@ describe("Client", () => {
     it("works", async function () {
       this.timeout(10000);
       const result: any = await Client.getAccountOffers("rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z");
+      expect(result.offers.length).to.be.greaterThan(0);
       const offer = result.offers[0];
 
       expect(Object.keys(offer).sort()).to.eql(["flags", "quality", "seq", "taker_gets", "taker_pays"]);
@@ -26,13 +27,20 @@ describe("Client", () => {
       const offer = result.offers[0];
 
       expect(Object.keys(offer).sort()).to.eql(["properties", "specification"]);
-      expect(Object.keys(offer.specification).sort()).to.eql(["direction", "flags", "quantity", "takerGets", "takerPays", "totalPrice"]);
+      expect(Object.keys(offer.specification).sort()).to.eql([
+        "direction",
+        "flags",
+        "quantity",
+        "takerGets",
+        "takerPays",
+        "totalPrice",
+      ]);
     });
   });
 
   describe("getAccountAllOffers", () => {
     before(async function () {
-      this.timeout(15000);
+      this.timeout(25000);
       Client.setup(nconf.get("xrpl:connections:mainnet"), { loadBalancing: true, nativeCurrency: "XRP" });
       await Client.connect();
     });
@@ -47,7 +55,7 @@ describe("Client", () => {
     });
 
     it("works with no offers", async function () {
-      this.timeout(10000);
+      this.timeout(20000);
       const result: any = await Client.getAccountAllOffers("r4UPddYeGeZgDhSGPkooURsQtmGda4oYQW");
       expect(result.offers.length).to.eql(0);
       expect(result.marker).to.be.undefined;
@@ -59,11 +67,18 @@ describe("Client", () => {
       const offer = result.offers[0];
 
       expect(Object.keys(offer).sort()).to.eql(["properties", "specification"]);
-      expect(Object.keys(offer.specification).sort()).to.eql(["direction", "flags", "quantity", "takerGets", "takerPays", "totalPrice"]);
+      expect(Object.keys(offer.specification).sort()).to.eql([
+        "direction",
+        "flags",
+        "quantity",
+        "takerGets",
+        "takerPays",
+        "totalPrice",
+      ]);
     });
 
     it("works as formatted with no offers", async function () {
-      this.timeout(10000);
+      this.timeout(20000);
       const result: any = await Client.getAccountAllOffers("r4UPddYeGeZgDhSGPkooURsQtmGda4oYQW", { formatted: true });
       expect(result.offers.length).to.eql(0);
       expect(result.marker).to.be.undefined;

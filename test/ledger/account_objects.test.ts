@@ -27,8 +27,11 @@ describe("Client", () => {
     });
 
     it("works", async function () {
-      this.timeout(240000);
-      const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B");
+      this.timeout(400000);
+      const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", { delay: 2500 });
+
+      expect(result.error).not.to.exist;
+
       delete result._nodepref; // can be omitted
       expect(Object.keys(result).sort()).to.eql([
         "account",
@@ -37,7 +40,8 @@ describe("Client", () => {
         "ledger_index",
         "validated",
       ]);
-      expect(result.account_objects.length).to.gt(500);
+      console.log(result.account_objects.length);
+      expect(result.account_objects.length).to.gt(5000); // 47311
     });
 
     it("works with limit 50", async function () {

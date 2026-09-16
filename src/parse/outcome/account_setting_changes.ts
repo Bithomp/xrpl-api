@@ -61,6 +61,10 @@ function summarizeSetting(modifiedNode: any): AccountRootFlagsKeysInterface {
 }
 
 function parseAccountSettingChanges(metadata: TransactionMetadata): AccountRootFlagsKeysInterface | undefined {
+  if (!metadata || !metadata.AffectedNodes) {
+    return undefined;
+  }
+
   const affectedNodes = metadata.AffectedNodes.filter((affectedNode: any) => {
     if (!affectedNode.ModifiedNode) {
       return false;

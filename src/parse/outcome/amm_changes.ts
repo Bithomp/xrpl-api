@@ -168,7 +168,7 @@ function summarizeVoteSlotsChanges(node: NormalizedNode): FormattedAmmVoteSlotCh
 }
 
 function summarizeActionSlotChanges(node: NormalizedNode): FormattedAuctionSlotChanges | undefined {
-  const final = node.diffType === "CreatedNode" ? node.newFields : node.finalFields as any;
+  const final = node.diffType === "CreatedNode" ? node.newFields : (node.finalFields as any);
   const prev = node.previousFields as any;
 
   const changes: FormattedAmmActionSlotChanges = {};
@@ -316,6 +316,10 @@ function summarizeAmm(node: NormalizedNode): FormattedAmmSummaryInterface {
 }
 
 function parseAmmChanges(metadata: TransactionMetadata): FormattedAmmSummaryInterface | undefined {
+  if (!metadata || !metadata.AffectedNodes) {
+    return undefined;
+  }
+
   const affectedNodes = metadata.AffectedNodes.filter((affectedNode: any) => {
     const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
     return node.LedgerEntryType === "AMM";
