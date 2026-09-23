@@ -1466,6 +1466,61 @@ describe("Models", () => {
       });
     });
 
+    it("IOU PaymentChannelCreate2", function () {
+      const tx = require("../examples/responses/PaymentChannelCreate2.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+
+      console.log(JSON.stringify(result));
+
+      expect(result).to.eql({
+        type: "paymentChannelCreate",
+        address: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+        sequence: 840909268,
+        id: "84A390E8E6EBDC24C68DC73A0CE224CBABDB9EEB9374DB678D31F6AFBB7D651D",
+        ctid: "C0B2D5730000535A",
+        specification: {
+          source: { address: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz" },
+          destination: { address: "rzPvmRYCGt5Mk8ewL3PvrRWrJJSC45trG" },
+          amount: {
+            issuer: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+            currency: "USD",
+            value: "1000",
+            counterparty: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+          },
+          settleDelay: 10,
+          publicKey: "029B0A771FD336C518C4C316F0DE2DC422BC4E2866EB332EDFE069ABD5C853E49A",
+          flags: { innerBatchTxn: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2026-08-24T17:58:51.000Z",
+          fee: "2",
+          balanceChanges: { rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz: [{ currency: "XRP", value: "-2" }] },
+          channelChanges: {
+            status: "created",
+            channelId: "69917B2F91C0204A946D381F3EDD1085E08688A5C356861736FC1E84A48CD9ED",
+            source: { address: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz" },
+            destination: { address: "rzPvmRYCGt5Mk8ewL3PvrRWrJJSC45trG" },
+            amount: {
+              issuer: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+              currency: "USD",
+              value: "1000",
+              counterparty: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+            },
+            balance: {
+              issuer: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+              currency: "USD",
+              value: "0",
+              counterparty: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+            },
+          },
+          ledgerIndex: 11720051,
+          ledgerVersion: 11720051,
+          indexInLedger: 0,
+        },
+      });
+    });
+
     it("PaymentChannelFund", function () {
       const tx = require("../examples/responses/PaymentChannelFund.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");

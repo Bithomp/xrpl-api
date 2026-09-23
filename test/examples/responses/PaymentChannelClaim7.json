@@ -79,6 +79,5 @@
     "TransactionIndex": 0,
     "TransactionResult": "tesSUCCESS"
   },
-  "validated": true,
-  "balanceChanges": { "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz": [{ "currency": "XAH", "value": "-2" }] }
+  "validated": true
 }

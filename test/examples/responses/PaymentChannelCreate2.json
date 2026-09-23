@@ -1,0 +1,105 @@
+{
+  "Account": "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+  "Amount": { "currency": "USD", "issuer": "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz", "value": "1000" },
+  "Destination": "rzPvmRYCGt5Mk8ewL3PvrRWrJJSC45trG",
+  "Fee": "2000000",
+  "Flags": 0,
+  "LastLedgerSequence": 11720149,
+  "NetworkID": 21338,
+  "PublicKey": "029B0A771FD336C518C4C316F0DE2DC422BC4E2866EB332EDFE069ABD5C853E49A",
+  "Sequence": 840909268,
+  "SettleDelay": 10,
+  "SigningPubKey": "029B0A771FD336C518C4C316F0DE2DC422BC4E2866EB332EDFE069ABD5C853E49A",
+  "TransactionType": "PaymentChannelCreate",
+  "TxnSignature": "304402204B7650C4A1FD042F24E527042E5C25A5E431C11F7D996795544E572BA81BBB6B0220411AEE4C1B27AC602C388C605B6C6DFEA1D7B8A9EB357385952939C00ADD5BC6",
+  "ctid": "C0B2D5730000535A",
+  "date": 840909531,
+  "hash": "84A390E8E6EBDC24C68DC73A0CE224CBABDB9EEB9374DB678D31F6AFBB7D651D",
+  "inLedger": 11720051,
+  "ledger_index": 11720051,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+            "RootIndex": "1E87DE2758B732A059C70F1DEE20B7857F779D65FB555C72620B718F356089EB"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "1E87DE2758B732A059C70F1DEE20B7857F779D65FB555C72620B718F356089EB",
+          "PreviousTxnID": "741F14562F0F98C2C8ECCBBF1FD12BE8B23504AA7408D96F07CD99A3328A7EA9",
+          "PreviousTxnLgrSeq": 11720032
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Flags": 0,
+            "Owner": "rzPvmRYCGt5Mk8ewL3PvrRWrJJSC45trG",
+            "RootIndex": "21161CD2FE84C5E62AFC0CDA8B7960409486077285EF4D3E081212EFDF1CE1CC"
+          },
+          "LedgerEntryType": "DirectoryNode",
+          "LedgerIndex": "21161CD2FE84C5E62AFC0CDA8B7960409486077285EF4D3E081212EFDF1CE1CC",
+          "PreviousTxnID": "3AF5B9F87499B3BFF1C0FE1E266A7DE8546B8B63D87383D01EA6C82D8FAF8F39",
+          "PreviousTxnLgrSeq": 11720049
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+            "AccountIndex": "554b",
+            "Balance": "984000000",
+            "Flags": 8388608,
+            "OwnerCount": 1,
+            "Sequence": 840909269,
+            "TouchCount": "c",
+            "TransferRate": 1250000000
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "4E0462699F72B152F4CF70DC302186FE82036AE91E210E8EDAC4D77B2A8D3B88",
+          "PreviousFields": { "Balance": "986000000", "OwnerCount": 0, "Sequence": 840909268, "TouchCount": "b" },
+          "PreviousTxnID": "3AF5B9F87499B3BFF1C0FE1E266A7DE8546B8B63D87383D01EA6C82D8FAF8F39",
+          "PreviousTxnLgrSeq": 11720049
+        }
+      },
+      {
+        "CreatedNode": {
+          "LedgerEntryType": "PayChannel",
+          "LedgerIndex": "69917B2F91C0204A946D381F3EDD1085E08688A5C356861736FC1E84A48CD9ED",
+          "NewFields": {
+            "Account": "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+            "Amount": { "currency": "USD", "issuer": "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz", "value": "1000" },
+            "Balance": { "currency": "USD", "issuer": "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz", "value": "0" },
+            "Destination": "rzPvmRYCGt5Mk8ewL3PvrRWrJJSC45trG",
+            "PublicKey": "029B0A771FD336C518C4C316F0DE2DC422BC4E2866EB332EDFE069ABD5C853E49A",
+            "SettleDelay": 10,
+            "TransferRate": 1250000000
+          }
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rzPvmRYCGt5Mk8ewL3PvrRWrJJSC45trG",
+            "AccountIndex": "554c",
+            "Balance": "992000000",
+            "Flags": 0,
+            "OwnerCount": 1,
+            "Sequence": 840909327,
+            "TouchCount": "7"
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "F7AE2304C1F7101BBB0EF5B0BDE57F21D33F88BE2F501C2F6B19C9DFA54B0B6C",
+          "PreviousFields": { "TouchCount": "6" },
+          "PreviousTxnID": "3AF5B9F87499B3BFF1C0FE1E266A7DE8546B8B63D87383D01EA6C82D8FAF8F39",
+          "PreviousTxnLgrSeq": 11720049
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}
