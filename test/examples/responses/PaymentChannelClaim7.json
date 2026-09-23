@@ -1,0 +1,84 @@
+{
+  "Account": "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+  "Channel": "69917B2F91C0204A946D381F3EDD1085E08688A5C356861736FC1E84A48CD9ED",
+  "Fee": "2000000",
+  "Flags": 131072,
+  "LastLedgerSequence": 11720151,
+  "NetworkID": 21338,
+  "Sequence": 840909269,
+  "SigningPubKey": "029B0A771FD336C518C4C316F0DE2DC422BC4E2866EB332EDFE069ABD5C853E49A",
+  "TransactionType": "PaymentChannelClaim",
+  "TxnSignature": "3045022100D33E6F7AC8284214E0385F6F88AFE2847E1026F4425F93AFF70CA0AAD95E4123022079DCBB9933EAE38C0E21670A8C3B70DC7D2029C5BD170F187EA12BE59F7B90AA",
+  "ctid": "C0B2D5750000535A",
+  "date": 840909540,
+  "hash": "C35924EDC6A656FE35C5B000F779BF6E59B3533950643E5B3387197E69A58F9C",
+  "inLedger": 11720053,
+  "ledger_index": 11720053,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+            "AccountIndex": "554b",
+            "Balance": "982000000",
+            "Flags": 8388608,
+            "OwnerCount": 1,
+            "Sequence": 840909270,
+            "TouchCount": "d",
+            "TransferRate": 1250000000
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "4E0462699F72B152F4CF70DC302186FE82036AE91E210E8EDAC4D77B2A8D3B88",
+          "PreviousFields": { "Balance": "984000000", "Sequence": 840909269, "TouchCount": "c" },
+          "PreviousTxnID": "84A390E8E6EBDC24C68DC73A0CE224CBABDB9EEB9374DB678D31F6AFBB7D651D",
+          "PreviousTxnLgrSeq": 11720051
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+            "Amount": { "currency": "USD", "issuer": "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz", "value": "1000" },
+            "Balance": { "currency": "USD", "issuer": "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz", "value": "0" },
+            "Destination": "rzPvmRYCGt5Mk8ewL3PvrRWrJJSC45trG",
+            "DestinationNode": "0",
+            "Expiration": 840909542,
+            "Flags": 0,
+            "OwnerNode": "0",
+            "PublicKey": "029B0A771FD336C518C4C316F0DE2DC422BC4E2866EB332EDFE069ABD5C853E49A",
+            "SettleDelay": 10,
+            "TransferRate": 1250000000
+          },
+          "LedgerEntryType": "PayChannel",
+          "LedgerIndex": "69917B2F91C0204A946D381F3EDD1085E08688A5C356861736FC1E84A48CD9ED",
+          "PreviousFields": {},
+          "PreviousTxnID": "84A390E8E6EBDC24C68DC73A0CE224CBABDB9EEB9374DB678D31F6AFBB7D651D",
+          "PreviousTxnLgrSeq": 11720051
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rzPvmRYCGt5Mk8ewL3PvrRWrJJSC45trG",
+            "AccountIndex": "554c",
+            "Balance": "992000000",
+            "Flags": 0,
+            "OwnerCount": 1,
+            "Sequence": 840909327,
+            "TouchCount": "8"
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "F7AE2304C1F7101BBB0EF5B0BDE57F21D33F88BE2F501C2F6B19C9DFA54B0B6C",
+          "PreviousFields": { "TouchCount": "7" },
+          "PreviousTxnID": "84A390E8E6EBDC24C68DC73A0CE224CBABDB9EEB9374DB678D31F6AFBB7D651D",
+          "PreviousTxnLgrSeq": 11720051
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true,
+  "balanceChanges": { "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz": [{ "currency": "XAH", "value": "-2" }] }
+}

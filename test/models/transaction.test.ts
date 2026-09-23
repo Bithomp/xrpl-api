@@ -1586,6 +1586,55 @@ describe("Models", () => {
       });
     });
 
+    it("IOU PaymentChannelClaim7", function () {
+      const tx = require("../examples/responses/PaymentChannelClaim7.json");
+      const result: any = Models.getTxDetails(tx, false, "XRP");
+
+      console.log(JSON.stringify(result));
+
+      expect(result).to.eql({
+        type: "paymentChannelClaim",
+        address: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+        sequence: 840909269,
+        id: "C35924EDC6A656FE35C5B000F779BF6E59B3533950643E5B3387197E69A58F9C",
+        ctid: "C0B2D5750000535A",
+        specification: {
+          source: { address: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz" },
+          channel: "69917B2F91C0204A946D381F3EDD1085E08688A5C356861736FC1E84A48CD9ED",
+          close: true,
+          flags: { innerBatchTxn: false },
+        },
+        outcome: {
+          result: "tesSUCCESS",
+          timestamp: "2026-08-24T17:59:00.000Z",
+          fee: "2",
+          balanceChanges: { rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz: [{ currency: "XRP", value: "-2" }] },
+          channelChanges: {
+            status: "modified",
+            channelId: "69917B2F91C0204A946D381F3EDD1085E08688A5C356861736FC1E84A48CD9ED",
+            source: { address: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz" },
+            destination: { address: "rzPvmRYCGt5Mk8ewL3PvrRWrJJSC45trG" },
+            amount: {
+              issuer: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+              currency: "USD",
+              value: "1000",
+              counterparty: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+            },
+            balance: {
+              issuer: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+              currency: "USD",
+              value: "0",
+              counterparty: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
+            },
+            previousTxnID: "84A390E8E6EBDC24C68DC73A0CE224CBABDB9EEB9374DB678D31F6AFBB7D651D",
+          },
+          ledgerIndex: 11720053,
+          ledgerVersion: 11720053,
+          indexInLedger: 0,
+        },
+      });
+    });
+
     it("EscrowCreate", function () {
       const tx = require("../examples/responses/transaction/C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");

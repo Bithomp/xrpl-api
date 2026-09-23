@@ -12,7 +12,7 @@ interface FormattedChannelSummaryInterface {
   channelId: string;
   source?: FormattedSourceAddress;
   destination?: FormattedDestinationAddress;
-  channelAmountDrops: string;
+  channelAmountDrops?: string;
   amount: IssuedCurrencyAmount;
   channelBalanceDrops?: string;
   balance?: IssuedCurrencyAmount;
@@ -61,27 +61,37 @@ function summarizePaymentChannel(node: NormalizedNode): FormattedChannelSummaryI
     // that created the channel.
     destination: parseDestination(final),
 
-    // Total XRP, in drops, that has been allocated to this channel.
-    // This includes XRP that has been paid to the destination address.
-    // This is initially set by the transaction that created the channel and
-    // can be increased if the source address sends a PaymentChannelFund transaction.
-    channelAmountDrops: new BigNumber(final.Amount || 0).toString(10),
     amount: parseAmount(final.Amount) as IssuedCurrencyAmount,
   };
+
+  // Total XRP, in drops, that has been allocated to this channel.
+  // This includes XRP that has been paid to the destination address.
+  // This is initially set by the transaction that created the channel and
+  // can be increased if the source address sends a PaymentChannelFund transaction.
+  if (typeof final.Amount !== "object") {
+    summary.channelAmountDrops = new BigNumber(final.Amount || 0).toString(10);
+  }
 
   if (final.Balance) {
     // Total XRP, in drops, already paid out by the channel.
     // The difference between this value and the Amount field is how much XRP can still
     // be paid to the destination address with PaymentChannelClaim transactions.
     // If the channel closes, the remaining difference is returned to the source address.
-    summary.channelBalanceDrops = new BigNumber(final.Balance || 0).toString(10);
+    if (typeof final.Balance !== "object") {
+      summary.channelBalanceDrops = new BigNumber(final.Balance || 0).toString(10);
+    }
+
     summary.balance = parseAmount(final.Balance) as IssuedCurrencyAmount;
   }
 
   if (prev.Amount) {
     // The change in the number of XRP drops allocated to this channel.
     // This is positive if this is a PaymentChannelFund transaction.
-    summary.channelAmountChangeDrops = new BigNumber(final.Amount).minus(new BigNumber(prev.Amount || 0)).toString(10);
+    if (typeof final.Amount !== "object" && typeof prev.Amount !== "object") {
+      summary.channelAmountChangeDrops = new BigNumber(final.Amount)
+        .minus(new BigNumber(prev.Amount || 0))
+        .toString(10);
+    }
 
     summary.amountChange = parseAmount(prev.Amount) as IssuedCurrencyAmount;
     summary.amountChange.value = new BigNumber(summary.amount.value)
@@ -91,9 +101,11 @@ function summarizePaymentChannel(node: NormalizedNode): FormattedChannelSummaryI
 
   if (prev.Balance) {
     // The change in the number of XRP drops already paid out by the channel.
-    summary.channelBalanceChangeDrops = new BigNumber(final.Balance)
-      .minus(new BigNumber(prev.Balance || 0))
-      .toString(10);
+    if (typeof final.Balance !== "object" && typeof prev.Balance !== "object") {
+      summary.channelBalanceChangeDrops = new BigNumber(final.Balance)
+        .minus(new BigNumber(prev.Balance || 0))
+        .toString(10);
+    }
 
     summary.balanceChange = parseAmount(prev.Balance) as IssuedCurrencyAmount;
     summary.balanceChange.value = new BigNumber(summary.balanceChange.value)

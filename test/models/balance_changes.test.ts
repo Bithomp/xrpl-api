@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { Models } from "../../src/index";
-import { MAINNET_NATIVE_CURRENCY } from "../../src/common";
+import { MAINNET_NATIVE_CURRENCY, XAHAU_NATIVE_CURRENCY } from "../../src/common";
 
 describe("Models", () => {
   describe("parseBalanceChanges", () => {
@@ -260,6 +260,28 @@ describe("Models", () => {
 
       expect(result).to.eql({
         rfXsKb5z4tRjw7J6fdAQopDcszf7pKu621: [{ currency: "XRP", value: "-0.000001" }],
+      });
+    });
+
+    it("parses for IOU PaymentChannelClaim7 with adjustBalancesForPaymentChannel", function () {
+      const tx = require("../examples/responses/PaymentChannelClaim7.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, XAHAU_NATIVE_CURRENCY, tx, {
+        adjustBalancesForPaymentChannel: true,
+      });
+
+      expect(result).to.eql({
+        rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz: [{ currency: "XAH", value: "-2" }],
+      });
+    });
+
+    it("parses for IOU PaymentChannelClaim7", function () {
+      const tx = require("../examples/responses/PaymentChannelClaim7.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, XAHAU_NATIVE_CURRENCY, tx, {
+        adjustBalancesForNativeEscrow: false,
+      });
+
+      expect(result).to.eql({
+        rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz: [{ currency: "XAH", value: "-2" }],
       });
     });
 
