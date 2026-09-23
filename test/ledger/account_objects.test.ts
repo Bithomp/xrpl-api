@@ -40,7 +40,6 @@ describe("Client", () => {
         "ledger_index",
         "validated",
       ]);
-      console.log(result.account_objects.length);
       expect(result.account_objects.length).to.gt(5000); // 47311
     });
 

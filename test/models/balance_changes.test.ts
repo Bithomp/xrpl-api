@@ -117,6 +117,24 @@ describe("Models", () => {
       expect(result).to.eql({ rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn: [{ currency: "XRP", value: "-0.00001" }] });
     });
 
+    it("parses for IOU PaymentChannelCreate2", function () {
+      const tx = require("../examples/responses/PaymentChannelCreate2.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, XAHAU_NATIVE_CURRENCY, tx, {
+        adjustBalancesForNativeEscrow: false,
+      });
+
+      expect(result).to.eql({ rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz: [{ currency: "XAH", value: "-2" }] });
+    });
+
+    it("parses for IOU PaymentChannelCreate2 with adjustBalancesForPaymentChannel", function () {
+      const tx = require("../examples/responses/PaymentChannelCreate2.json");
+      const result: any = Models.parseBalanceChanges(tx.meta, XAHAU_NATIVE_CURRENCY, tx, {
+        adjustBalancesForPaymentChannel: true,
+      });
+
+      expect(result).to.eql({ rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz: [{ currency: "XAH", value: "-2" }] });
+    });
+
     it("parses for PaymentChannelFund", function () {
       const tx = require("../examples/responses/PaymentChannelFund.json");
       const result: any = Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, {

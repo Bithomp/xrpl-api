@@ -1470,8 +1470,6 @@ describe("Models", () => {
       const tx = require("../examples/responses/PaymentChannelCreate2.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");
 
-      console.log(JSON.stringify(result));
-
       expect(result).to.eql({
         type: "paymentChannelCreate",
         address: "rHNnZe1CttQ2bT2jGVBvamEXNzkU7nVbNz",
@@ -1644,8 +1642,6 @@ describe("Models", () => {
     it("IOU PaymentChannelClaim7", function () {
       const tx = require("../examples/responses/PaymentChannelClaim7.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");
-
-      console.log(JSON.stringify(result));
 
       expect(result).to.eql({
         type: "paymentChannelClaim",
@@ -8790,7 +8786,7 @@ describe("Models", () => {
     it("SponsorshipSet for modify top up from 0", function () {
       const tx = require("../examples/responses/SponsorshipSet3.json");
       const result: any = Models.getTxDetails(tx, false, "XRP");
-      console.log(JSON.stringify(result));
+
       expect(result).to.eql({
         type: "SponsorshipSet",
         address: "rLLckzTWCXqXMg4FLtyJeREcMr6Smrgs9A",

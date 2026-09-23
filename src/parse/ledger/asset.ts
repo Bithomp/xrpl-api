@@ -7,7 +7,7 @@ function parseAsset(asset: IssuedCurrency): IssuedCurrency | FormattedIssuedCurr
     return undefined;
   }
 
-  if (asset.currency === getNativeCurrency()) {
+  if (asset.currency === getNativeCurrency() && !asset.issuer) {
     return {
       currency: asset.currency,
     };

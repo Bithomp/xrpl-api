@@ -315,14 +315,27 @@ function adjustBalancesForPaymentChannel(
     return;
   }
 
+  // only for native token without issuer
+  if (channelChanges.amount.currency !== getNativeCurrency() && channelChanges.amount.issuer) {
+    return;
+  }
+
   if (tx.TransactionType === "PaymentChannelCreate") {
     adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
-      { currency: channelChanges.amount.currency, value: channelChanges.amount.value },
+      {
+        currency: channelChanges.amount.currency,
+        value: channelChanges.amount.value,
+        // issuer: channelChanges.amount.issuer,
+      },
     ]);
   } else if (tx.TransactionType === "PaymentChannelFund") {
     if (channelChanges.amountChange) {
       adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
-        { currency: channelChanges.amountChange.currency, value: channelChanges.amountChange.value },
+        {
+          currency: channelChanges.amountChange.currency,
+          value: channelChanges.amountChange.value,
+          // issuer: channelChanges.amountChange.issuer,
+        },
       ]);
     } else if (channelChanges.status === "deleted") {
       let unlockedAmount = new BigNumber(0);
@@ -334,14 +347,22 @@ function adjustBalancesForPaymentChannel(
 
       if (!unlockedAmount.isZero()) {
         adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
-          { currency: channelChanges.amount.currency, value: `-${unlockedAmount.toString()}` },
+          {
+            currency: channelChanges.amount.currency,
+            value: `-${unlockedAmount.toString()}`,
+            // issuer: channelChanges.amount.issuer,
+          },
         ]);
       }
     }
   } else if (tx.TransactionType === "PaymentChannelClaim") {
     if (tx.Account === channelChanges.source.address && channelChanges.amountChange) {
       adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
-        { currency: channelChanges.amountChange.currency, value: channelChanges.amountChange.value },
+        {
+          currency: channelChanges.amountChange.currency,
+          value: channelChanges.amountChange.value,
+          // issuer: channelChanges.amountChange.issuer,
+        },
       ]);
     } else if (channelChanges.status === "deleted") {
       let unlockedAmount = new BigNumber(0);
@@ -353,7 +374,11 @@ function adjustBalancesForPaymentChannel(
 
       if (!unlockedAmount.isZero()) {
         adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
-          { currency: channelChanges.amount.currency, value: `-${unlockedAmount.toString()}` },
+          {
+            currency: channelChanges.amount.currency,
+            value: `-${unlockedAmount.toString()}`,
+            // issuer: channelChanges.amount.issuer,
+          },
         ]);
       }
 
@@ -366,14 +391,22 @@ function adjustBalancesForPaymentChannel(
           // adjust remaining amount for source account
           if (!returnedAmount.isZero()) {
             adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
-              { currency: channelChanges.amount.currency, value: `-${returnedAmount.toString()}` },
+              {
+                currency: channelChanges.amount.currency,
+                value: `-${returnedAmount.toString()}`,
+                // issuer: channelChanges.amount.issuer,
+              },
             ]);
           }
         }
       }
     } else if (channelChanges.balanceChange) {
       adjustBalancesChanges(balanceChanges, channelChanges.source.address, [
-        { currency: channelChanges.balanceChange.currency, value: channelChanges.balanceChange.value },
+        {
+          currency: channelChanges.balanceChange.currency,
+          value: channelChanges.balanceChange.value,
+          // issuer: channelChanges.balanceChange.issuer,
+        },
       ]);
     }
   }
