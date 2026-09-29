@@ -4,7 +4,7 @@ import { Client, Models } from "../../src/index";
 
 describe("Models", () => {
   before(async function () {
-    this.timeout(15000);
+    this.timeout(30000);
     Client.setup(nconf.get("xrpl:connections:mainnet"), { loadBalancing: true, nativeCurrency: "XRP" });
     await Client.connect();
   });
@@ -8140,6 +8140,18 @@ describe("Models", () => {
           timestamp: "2025-05-18T10:26:22.000Z",
           fee: "0.000589",
           balanceChanges: { rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76: [{ currency: "XAH", value: "-0.000589" }] },
+          affectedObjects: {
+            uritokens: {
+              E01B554D195050862E03A139E93C5856FF6E629D5EC85F3D9A743E19BE042702: {
+                uritokenID: "E01B554D195050862E03A139E93C5856FF6E629D5EC85F3D9A743E19BE042702",
+                flags: { burnable: false },
+                uri: "697066733A2F2F6261667962656968633433677161376764346937726B676A7575626E797064357533336C6535746436343579797A677734366C76746C6169726A612F312E6A736F6E",
+                digest: "FD57A70285DAD02BBECF9164149F8494D18B1E2ECFE93A122CC65B5D9C0BD1D0",
+                issuer: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76",
+                owner: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76",
+              },
+            },
+          },
           remarksChanges: {
             objectID: "E01B554D195050862E03A139E93C5856FF6E629D5EC85F3D9A743E19BE042702",
             entryType: "URIToken",
@@ -8180,7 +8192,6 @@ describe("Models", () => {
             },
           ],
           source: { address: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76" },
-
           memos: [{ type: "[https://xahau.services]-Memo", data: "https://ipfs.io/ipfs/f01551320<XRPL-HASH>" }],
         },
         outcome: {
@@ -8188,6 +8199,17 @@ describe("Models", () => {
           timestamp: "2025-06-17T13:11:01.000Z",
           fee: "0.000589",
           balanceChanges: { rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76: [{ currency: "XAH", value: "-0.000589" }] },
+          affectedObjects: {
+            uritokens: {
+              A5E3089238CC58ADFBADDBF225A682222FA3235CACD183222E156596284A5300: {
+                uritokenID: "A5E3089238CC58ADFBADDBF225A682222FA3235CACD183222E156596284A5300",
+                flags: { burnable: false },
+                uri: "7B226E616D65223A22436F6F70657261746976652042616E6B206F66204F726F6D6961222C226465736372697074696F6E223A224E4654222C22696D616765223A22646174613A696D6167652F7376672B786D6C2C25336373766720786D6C6E733D27687474703A2F2F7777772E77332E6F72672F323030302F737667272076696577426F783D272D3430202D3430203830203830272533652533637465787420646F6D696E616E742D626173656C696E653D2763656E7472616C2720666F6E742D73697A653D2736352720746578742D616E63686F723D276D6964646C6527253365F09F8FA62533632F746578742533652533632F737667253365227D",
+                issuer: "rhSTwqSK13zdRmzHMZZP8i7DnuG27pwX76",
+                owner: "rphyguxqDYeQs1mU2x9ydpZem2AvnwQvcP",
+              },
+            },
+          },
           remarksChanges: {
             objectID: "A5E3089238CC58ADFBADDBF225A682222FA3235CACD183222E156596284A5300",
             entryType: "URIToken",

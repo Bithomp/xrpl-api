@@ -125,7 +125,7 @@ describe("Client", () => {
       ]);
       expect(result.marker).to.not.eq(undefined);
       expect(result.marker).to.be.a("string");
-      expect(result.account_objects.length).to.eq(200);
+      expect(result.account_objects.length).to.eq(400);
     });
   });
 

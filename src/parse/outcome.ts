@@ -53,6 +53,7 @@ const URITOKEN_TYPES = [
   "URITokenBuy",
   "URITokenCreateSellOffer",
   "URITokenCancelSellOffer",
+  "SetRemarks",
 ];
 const AMM_TYPES = ["AMMBid", "AMMCreate", "AMMDelete", "AMMDeposit", "AMMWithdraw", "AMMVote", "AMMClawback"];
 const DID_TYPES = ["DIDSet", "DIDDelete"];
