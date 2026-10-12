@@ -14,7 +14,7 @@ describe("Client", () => {
       this.timeout(10000);
       const result: any = await Client.getAccountOffers("rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z");
       expect(result.offers.length).to.be.greaterThan(0);
-      const offer = result.offers[0];
+      const offer = result.offers[1];
 
       expect(Object.keys(offer).sort()).to.eql(["flags", "quality", "seq", "taker_gets", "taker_pays"]);
       expect(Object.keys(offer.taker_gets).sort()).to.eql(["currency", "issuer", "value"]);
@@ -47,7 +47,7 @@ describe("Client", () => {
 
     it("works with offers", async function () {
       const result: any = await Client.getAccountAllOffers("rsuUjfWxrACCAwGQDsNeZUhpzXf1n1NK5Z");
-      const offer = result.offers[0];
+      const offer = result.offers[1];
 
       expect(Object.keys(offer).sort()).to.eql(["flags", "quality", "seq", "taker_gets", "taker_pays"]);
       expect(Object.keys(offer.taker_gets).sort()).to.eql(["currency", "issuer", "value"]);

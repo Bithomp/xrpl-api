@@ -4,6 +4,7 @@ import { removeUndefined } from "../../common";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseDelegate } from "../ledger/delegate";
 import { parseSource } from "../ledger/source";
 import { FormattedPermissionedDomainSetSpecification } from "../../types/credentials";
 import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
@@ -20,6 +21,7 @@ function parsePermissionedDomainSet(
     source: parseSource(tx),
     signers: parseSigners(tx),
     signer: parseSignerRegularKey(tx),
+    delegate: parseDelegate(tx),
     domainID: tx.DomainID,
     acceptedCredentials: tx.AcceptedCredentials ? tx.AcceptedCredentials.map(parseCredentials) : undefined,
     flags: parseTxGlobalFlags(tx.Flags as number, { nativeCurrency }),

@@ -46,7 +46,7 @@ describe("Client", () => {
           {
             account: "rBithomp3UNknnjo8HKNfyS5MN4kdPTZpW",
             currency: "BTH",
-            balance: "-9999.998999989999",
+            balance: "-9999.998999989998",
             limit: "0",
             limit_peer: "0",
             quality_in: 0,

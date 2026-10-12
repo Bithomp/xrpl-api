@@ -5,6 +5,7 @@ import { parseTxGlobalFlags } from "../ledger/tx-global-flags";
 import { parseMemos } from "../ledger/memos";
 import { parseSigners } from "../ledger/signers";
 import { parseSignerRegularKey } from "../ledger/regular-key";
+import { parseDelegate } from "../ledger/delegate";
 import { parseSource } from "../ledger/source";
 import { hexToString } from "../utils";
 import { FormattedCredentialDeleteSpecification } from "../../types/credentials";
@@ -16,6 +17,7 @@ function parseCredentialDelete(tx: CredentialDelete, nativeCurrency?: string): F
     source: parseSource(tx),
     signers: parseSigners(tx),
     signer: parseSignerRegularKey(tx),
+    delegate: parseDelegate(tx),
     issuer: tx.Issuer,
     subject: tx.Subject,
     credentialType: hexToString(tx.CredentialType),
