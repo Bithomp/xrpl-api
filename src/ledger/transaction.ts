@@ -25,10 +25,12 @@ import {
 import { AccountInfoDataResponse } from "../models/account_info";
 import { signTransaction, walletFromSeed } from "../wallet";
 
-const submitErrorsGroup = ["tem", "tef", "tel", "ter"];
+const SUBMIT_ERRORS_GROUP = ["tem", "tef", "tel", "ter"];
+const REQUIRE_CONFIRMATION_RESULTS = ["terQUEUED", "tefNO_TICKET"]; // in same rare cases Xahau returns tefNO_TICKET on transactions that are actually queued
+
 const FEE_LIMIT = 0.5; // native currency (XRP, XAH)
-const LEDGER_CLOSE_TIME_AWAIT = 2000; // ms
-const MAX_LEDGERS_AWAIT = 5;
+const LEDGER_CLOSE_TIME_AWAIT = 1000; // ms
+const MAX_LEDGERS_AWAIT = 15;
 
 export interface GetTransactionOptions {
   binary?: boolean;
@@ -559,9 +561,11 @@ export async function submit(
   }
 
   const result = response?.result;
-  const resultGroup = result?.engine_result?.slice(0, 3);
+  const engineResult = result?.engine_result;
+  const resultGroup = engineResult?.slice(0, 3);
+
   // if tx is failed and not queued or kept
-  if ((submitErrorsGroup.includes(resultGroup) && result?.engine_result !== "terQUEUED") || result?.kept === false) {
+  if (SUBMIT_ERRORS_GROUP.includes(resultGroup) && !REQUIRE_CONFIRMATION_RESULTS.includes(resultGroup)) {
     return result;
   }
 
