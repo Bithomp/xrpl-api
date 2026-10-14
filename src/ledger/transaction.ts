@@ -565,7 +565,7 @@ export async function submit(
   const resultGroup = engineResult?.slice(0, 3);
 
   // if tx is failed and not queued or kept
-  if (SUBMIT_ERRORS_GROUP.includes(resultGroup) && !REQUIRE_CONFIRMATION_RESULTS.includes(resultGroup)) {
+  if (SUBMIT_ERRORS_GROUP.includes(resultGroup) && !REQUIRE_CONFIRMATION_RESULTS.includes(engineResult)) {
     return result;
   }
 
