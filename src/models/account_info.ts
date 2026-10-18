@@ -236,7 +236,7 @@ export function parseAccountFields(
 ): AccountFieldsInterface {
   const settings: AccountFieldsInterface = {};
 
-  if (accountInfo.hasOwnProperty("signer_lists")) {
+  if (Object.prototype.hasOwnProperty.call(accountInfo, "signer_lists")) {
     if (
       // eslint-disable-next-line no-bitwise
       accountInfo.Flags & AccountRootFlagsKeys.disableMaster &&

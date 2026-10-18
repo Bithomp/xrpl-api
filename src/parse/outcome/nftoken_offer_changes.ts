@@ -15,12 +15,17 @@ class NFTokenOfferChanges {
     this.changes = {};
   }
 
+  private getAffectedNodes(): any[] {
+    return this.tx.meta?.AffectedNodes ?? this.tx.metaData?.AffectedNodes ?? [];
+  }
+
   public call(): any {
-    if (this.hasAffectedNodes() === false) {
+    const affectedNodes = this.getAffectedNodes();
+    if (affectedNodes.length === 0) {
       return this.changes;
     }
 
-    for (const affectedNode of this.tx.meta.AffectedNodes) {
+    for (const affectedNode of affectedNodes) {
       this.parseAffectedNode(affectedNode);
     }
 
@@ -33,18 +38,6 @@ class NFTokenOfferChanges {
     }
 
     this.changes[account].push(removeUndefined(change));
-  }
-
-  private hasAffectedNodes(): boolean {
-    if (this.tx.meta?.AffectedNodes === undefined) {
-      return false;
-    }
-
-    if (this.tx.meta?.AffectedNodes?.length === 0) {
-      return false;
-    }
-
-    return true;
   }
 
   private parseAffectedNode(affectedNode: any): void {

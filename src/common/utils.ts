@@ -1,4 +1,3 @@
-import _ from "lodash";
 import BigNumber from "bignumber.js";
 import { ValidationError } from "./errors";
 import { dropsInXRP } from "./index";
@@ -7,7 +6,7 @@ export type SortDirection = -1 | 0 | 1;
 
 // https://github.com/XRPLF/xrpl.js/blob/6e0fff2ad642c2f94ddb83a23f57dff49d1678ec/src/ledger/utils.ts#L80
 export function signum(num: number): SortDirection {
-  return num === 0 ? 0 : num > 0 ? 1 : -1;
+  return Number.isNaN(num) || num === 0 ? 0 : num > 0 ? 1 : -1;
 }
 
 // https://github.com/XRPLF/xrpl.js/blob/6e0fff2ad642c2f94ddb83a23f57dff49d1678ec/src/ledger/utils.ts#L90
@@ -22,11 +21,23 @@ export function compareTransactions(first: any, second: any): SortDirection {
     return 0;
   }
 
-  if (first.tx.ledger_index === second.tx.ledger_index) {
-    return signum(first.meta.TransactionIndex - second.meta.TransactionIndex);
+  const firstLedgerIndex = first.tx.ledger_index ?? first.tx.inLedger;
+  const secondLedgerIndex = second.tx.ledger_index ?? second.tx.inLedger;
+  if (!Number.isFinite(firstLedgerIndex) || !Number.isFinite(secondLedgerIndex)) {
+    return 0;
   }
 
-  return first.tx.ledger_index < second.tx.ledger_index ? -1 : 1;
+  if (firstLedgerIndex !== secondLedgerIndex) {
+    return firstLedgerIndex < secondLedgerIndex ? -1 : 1;
+  }
+
+  const firstTransactionIndex = first.meta.TransactionIndex;
+  const secondTransactionIndex = second.meta.TransactionIndex;
+  if (!Number.isFinite(firstTransactionIndex) || !Number.isFinite(secondTransactionIndex)) {
+    return 0;
+  }
+
+  return signum(firstTransactionIndex - secondTransactionIndex);
 }
 
 /**
@@ -44,7 +55,7 @@ export async function sleep(ms: number): Promise<void> {
  * @return {Number} ms since unix epoch
  */
 export function getTimestamp(): number {
-  return new Date().getTime();
+  return Date.now();
 }
 
 /**
@@ -53,11 +64,7 @@ export function getTimestamp(): number {
  * "hash", { ledger: 16658790, seq: 1 } } => { ledger: 16658790, seq: 1, bithompHash: "hash" }
  */
 export function createMarker(hash: string, marker?: any): any {
-  if (marker === undefined) {
-    return undefined;
-  }
-
-  if (marker === null) {
+  if (marker === undefined || marker === null) {
     return undefined;
   }
 
@@ -66,7 +73,7 @@ export function createMarker(hash: string, marker?: any): any {
   }
 
   if (typeof marker === "object") {
-    marker.bithompHash = hash;
+    return { ...marker, bithompHash: hash };
   }
 
   return marker;
@@ -82,23 +89,20 @@ export function createMarker(hash: string, marker?: any): any {
 export function parseMarker(marker?: any): any {
   let hash: undefined | string;
 
-  if (typeof marker === "object" && marker.bithompHash) {
-    hash = marker.bithompHash;
-    delete marker.bithompHash;
-    return { hash, marker };
+  if (marker && typeof marker === "object" && Object.prototype.hasOwnProperty.call(marker, "bithompHash")) {
+    const { bithompHash, ...rest } = marker;
+    hash = bithompHash;
+    return { hash, marker: rest };
   }
 
   if (typeof marker !== "string") {
     return { hash, marker };
   }
 
-  if (marker) {
-    const markerParams = marker.split(",");
-    if (markerParams.length > 1) {
-      hash = markerParams[0];
-      markerParams.shift();
-      marker = markerParams.join(","); // eslint-disable-line no-param-reassign
-    }
+  const separator = marker.indexOf(",");
+  if (separator !== -1) {
+    hash = marker.slice(0, separator);
+    marker = marker.slice(separator + 1); // eslint-disable-line no-param-reassign
   }
 
   return { hash, marker };
@@ -127,7 +131,8 @@ export function dropsToXrp(drops: BigNumber.Value): string {
   // Converting to BigNumber and then back to string should remove any
   // decimal point followed by zeros, e.g. '1.00'.
   // Important: specify base 10 to avoid exponential notation, e.g. '1e-7'.
-  drops = new BigNumber(drops).toString(10); // eslint-disable-line no-param-reassign
+  const dropsValue = new BigNumber(drops);
+  drops = dropsValue.toString(10); // eslint-disable-line no-param-reassign
 
   // drops are only whole units
   if (drops.includes(".")) {
@@ -141,7 +146,7 @@ export function dropsToXrp(drops: BigNumber.Value): string {
     throw new ValidationError(`dropsToXrp: failed sanity check - value '${drops}', does not match (^-?[0-9]+$).`);
   }
 
-  return new BigNumber(drops).dividedBy(dropsInXRP).toString(10);
+  return dropsValue.dividedBy(dropsInXRP).toString(10);
 }
 
 /**
@@ -163,7 +168,8 @@ export function xrpToDrops(xrp: BigNumber.Value): string {
   }
 
   // Important: specify base 10 to avoid exponential notation, e.g. '1e-7'.
-  xrp = new BigNumber(xrp).toString(10); // eslint-disable-line no-param-reassign
+  const xrpValue = new BigNumber(xrp);
+  xrp = xrpValue.toString(10); // eslint-disable-line no-param-reassign
 
   // This should never happen; the value has already been
   // validated above. This just ensures BigNumber did not do
@@ -182,7 +188,7 @@ export function xrpToDrops(xrp: BigNumber.Value): string {
     throw new ValidationError(`xrpToDrops: value '${xrp}' has too many decimal places.`);
   }
 
-  return new BigNumber(xrp).times(dropsInXRP).integerValue(BigNumber.ROUND_FLOOR).toString(10);
+  return xrpValue.times(dropsInXRP).integerValue(BigNumber.ROUND_FLOOR).toString(10);
 }
 
 /**
@@ -192,7 +198,19 @@ export function xrpToDrops(xrp: BigNumber.Value): string {
  * @returns The object with values removed.
  */
 export function removeUndefined<T extends object>(obj: T): T {
-  return _.omitBy(obj, (value) => value == null) as T; // eslint-disable-line eqeqeq
+  const cleaned: Record<string, any> = {};
+
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      const value = (obj as Record<string, any>)[key];
+      // eslint-disable-next-line eqeqeq
+      if (value != null) {
+        cleaned[key] = value;
+      }
+    }
+  }
+
+  return cleaned as T;
 }
 
 /**
@@ -202,7 +220,7 @@ export function removeUndefined<T extends object>(obj: T): T {
  * @returns The object or undefined if it is empty.
  */
 export function emptyObjectToUndefined<T extends object>(obj: T): T | undefined {
-  if (_.isEmpty(obj)) {
+  if (!obj || Object.keys(obj).length === 0) {
     return undefined;
   }
   return obj;
@@ -215,11 +233,15 @@ export function emptyObjectToUndefined<T extends object>(obj: T): T | undefined 
  * @returns The constructor name of the object, or undefined if it cannot be determined.
  */
 export function getConstructorName(object: object): string | undefined {
-  if (object.constructor.name) {
-    return object.constructor.name;
+  const constructor = object?.constructor;
+  if (constructor?.name) {
+    return constructor.name;
+  }
+  if (!constructor || typeof constructor.toString !== "function") {
+    return undefined;
   }
   // try to guess it on legacy browsers (ie)
-  const constructorString = object.constructor.toString();
+  const constructorString = constructor.toString();
   const functionConstructor = constructorString.match(/^function\s+([^(]*)/);
   const classConstructor = constructorString.match(/^class\s([^\s]*)/);
 
@@ -239,9 +261,9 @@ export function getConstructorName(object: object): string | undefined {
  * @returns `true` if the response contains a warning with `id` 2001, indicating a Clio response; otherwise, `false`.
  */
 export function isClioResponse(response: any): boolean {
-  if (!response || !response.warnings) {
+  if (!Array.isArray(response?.warnings)) {
     return false;
   }
 
-  return response.warnings?.some((w: any) => w.id === 2001);
+  return response.warnings.some((warning: any) => warning?.id === 2001);
 }

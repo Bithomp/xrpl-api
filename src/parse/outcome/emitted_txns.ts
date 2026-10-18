@@ -59,11 +59,12 @@ class EmittedTxns {
   }
 
   call(): FormattedEmittedTxnInterface[] | undefined {
-    if (this.hasAffectedNodes() === false) {
+    const affectedNodes = this.getAffectedNodes();
+    if (affectedNodes.length === 0) {
       return undefined;
     }
 
-    this.parseAffectedNodes();
+    this.parseAffectedNodes(affectedNodes);
 
     if (this.emittedTxns.length === 0) {
       return undefined;
@@ -72,41 +73,36 @@ class EmittedTxns {
     return this.emittedTxns;
   }
 
-  private hasAffectedNodes(): boolean {
-    if (this.tx.meta?.AffectedNodes === undefined) {
-      return false;
-    }
-
-    if (this.tx.meta?.AffectedNodes?.length === 0) {
-      return false;
-    }
-
-    return true;
+  private getAffectedNodes(): any[] {
+    return this.tx.meta?.AffectedNodes ?? this.tx.metaData?.AffectedNodes ?? [];
   }
 
-  private parseAffectedNodes(): void {
-    for (const affectedNode of this.tx.meta.AffectedNodes) {
+  private parseAffectedNodes(affectedNodes: any[]): void {
+    for (const affectedNode of affectedNodes) {
       const node = affectedNode.CreatedNode;
-      if (node?.LedgerEntryType === "EmittedTxn" && node?.LedgerIndex) {
-        if (affectedNode.CreatedNode) {
-          const tx = node.NewFields.EmittedTxn;
-
-          let id: string | undefined;
-          try {
-            id = hashSignedTx(tx, this.definitions, false);
-          } catch (_err: any) {
-            // ignore
-          }
-
-          this.emittedTxns.push(
-            removeUndefined({
-              id,
-              specification: parseTransaction(tx, false, this.nativeCurrency, this.definitions).specification,
-              tx,
-            })
-          );
-        }
+      if (node?.LedgerEntryType !== "EmittedTxn" || !node?.LedgerIndex) {
+        continue;
       }
+
+      const tx = node.NewFields?.EmittedTxn;
+      if (!tx) {
+        continue;
+      }
+
+      let id: string | undefined;
+      try {
+        id = hashSignedTx(tx, this.definitions, false);
+      } catch (_err: any) {
+        // ignore
+      }
+
+      this.emittedTxns.push(
+        removeUndefined({
+          id,
+          specification: parseTransaction(tx, false, this.nativeCurrency, this.definitions).specification,
+          tx,
+        })
+      );
     }
   }
 }

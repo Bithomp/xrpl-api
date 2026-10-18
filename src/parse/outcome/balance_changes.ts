@@ -1,4 +1,3 @@
-import _ from "lodash";
 import BigNumber from "bignumber.js";
 import { TransactionMetadata } from "xrpl"; // Node, CreatedNode, ModifiedNode, DeletedNode,
 import { dropsToXrp, MAINNET_NATIVE_CURRENCY } from "../../common";
@@ -11,9 +10,10 @@ import parseAmount from "../ledger/amount";
 import { parseChannelChanges } from "./channel_changes";
 import { parseSponsorshipChanges } from "./sponsorship_changes";
 
-const ESCROW_TYPES = ["EscrowFinish", "EscrowCreate", "EscrowCancel"];
-const PAYMENT_CHANNEL_TYPES = ["PaymentChannelClaim", "PaymentChannelCreate", "PaymentChannelFund"];
-const CONFIDENTIAL_MPT_CONVERT_TYPES = ["ConfidentialMPTConvert", "ConfidentialMPTConvertBack"];
+const ESCROW_TYPES = new Set(["EscrowFinish", "EscrowCreate", "EscrowCancel"]);
+const PAYMENT_CHANNEL_TYPES = new Set(["PaymentChannelClaim", "PaymentChannelCreate", "PaymentChannelFund"]);
+const CONFIDENTIAL_MPT_CONVERT_TYPES = new Set(["ConfidentialMPTConvert", "ConfidentialMPTConvertBack"]);
+const RELEVANT_ENTRY_TYPES = new Set(["AccountRoot", "RippleState", "MPToken", "MPTokenIssuance"]);
 
 interface BalanceChangeQuantity {
   issuer?: string; // currency issuer
@@ -39,15 +39,8 @@ interface ParseBalanceChangesOptions {
   adjustBalancesForSponsorship?: boolean; // sponsorship amount consider as locked change
 }
 
-function groupByAddress(balanceChanges: AddressBalanceChangeQuantity[]) {
-  const grouped = _.groupBy(balanceChanges, function (node) {
-    return node.address;
-  });
-  return _.mapValues(grouped, function (group) {
-    return _.map(group, function (node) {
-      return node.balance;
-    });
-  });
+function pickFields(node: NormalizedNode): any {
+  return Object.keys(node.newFields).length > 0 ? (node.newFields as any) : (node.finalFields as any);
 }
 
 function parseValue(value: any): BigNumber {
@@ -55,47 +48,60 @@ function parseValue(value: any): BigNumber {
     return new BigNumber(value);
   }
 
-  return new BigNumber(value.value ?? 0);
+  return new BigNumber(value?.value ?? 0);
+}
+
+type BalanceValueParser = (node: NormalizedNode) => BigNumber | null;
+
+function addBalanceChange(grouped: BalanceChanges, entry: AddressBalanceChangeQuantity | null): void {
+  if (!entry || !entry.address) {
+    return;
+  }
+
+  (grouped[entry.address] ??= []).push(entry.balance);
 }
 
 function computeBalanceChange(node: NormalizedNode): BigNumber | null {
   let value: null | BigNumber = null;
-  if (node.newFields.Balance) {
+  if (node.newFields.Balance !== undefined) {
     // XRP(XAH), IOU
     value = parseValue(node.newFields.Balance);
-  } else if (node.newFields.MPTAmount) {
+  } else if (node.newFields.MPTAmount !== undefined) {
     // MPToken
     value = parseValue(node.newFields.MPTAmount);
-  } else if (node.previousFields.Balance && node.finalFields.Balance) {
+  } else if (node.previousFields.Balance !== undefined && node.finalFields.Balance !== undefined) {
     // XRP(XAH), IOU
     value = parseValue(node.finalFields.Balance).minus(parseValue(node.previousFields.Balance));
-  } else if (node.entryType === "MPToken" && (node.previousFields.MPTAmount || node.previousFields.LockedAmount)) {
+  } else if (
+    node.entryType === "MPToken" &&
+    (node.previousFields.MPTAmount !== undefined || node.previousFields.LockedAmount !== undefined)
+  ) {
     // here we assume what mpt amount and locked amount it is general balance, locking unlocking will not be considered as balance change
     // similar to IOU
     // locked balance change will be calculated in locked_balance_changes.ts
     value = new BigNumber(0);
 
     // handle mpt amount change, it could be keep the same, but locked amount changed
-    if (node.previousFields.MPTAmount) {
+    if (node.previousFields.MPTAmount !== undefined) {
       value = value
         .plus(parseValue(node.finalFields.MPTAmount ?? 0))
         .minus(parseValue(node.previousFields.MPTAmount ?? 0));
     }
 
     // consider locked amount if only is was changed
-    if (node.previousFields.LockedAmount) {
+    if (node.previousFields.LockedAmount !== undefined) {
       value = value
         .plus(parseValue(node.finalFields.LockedAmount ?? 0))
         .minus(parseValue(node.previousFields.LockedAmount ?? 0));
     }
   } else if (node.entryType === "MPTokenIssuance") {
-    if (node.newFields.MaximumAmount) {
+    if (node.newFields.MaximumAmount !== undefined) {
       // MPT issuance issuing
       value = parseValue(node.newFields.MaximumAmount);
-    } else if (node.diffType === "DeletedNode" && node.finalFields.MaximumAmount) {
+    } else if (node.diffType === "DeletedNode" && node.finalFields.MaximumAmount !== undefined) {
       // MPT issuance burning
       value = parseValue(node.finalFields.MaximumAmount).multipliedBy(-1);
-    } else if (node.previousFields.OutstandingAmount) {
+    } else if (node.previousFields.OutstandingAmount !== undefined) {
       // MPT issuance transfer or swap
       value = parseValue(node.previousFields.OutstandingAmount ?? 0).minus(
         parseValue(node.finalFields.OutstandingAmount ?? 0)
@@ -107,22 +113,22 @@ function computeBalanceChange(node: NormalizedNode): BigNumber | null {
 }
 
 function parseFinalBalance(node: NormalizedNode): BigNumber | null {
-  if (node.newFields.Balance) {
+  if (node.newFields.Balance !== undefined) {
     return parseValue(node.newFields.Balance);
-  } else if (node.finalFields.Balance) {
+  } else if (node.finalFields.Balance !== undefined) {
     return parseValue(node.finalFields.Balance);
   } else if (node.entryType === "MPToken") {
-    if (node.finalFields.MPTAmount) {
+    if (node.finalFields.MPTAmount !== undefined) {
       return parseValue(node.finalFields.MPTAmount);
     }
   } else if (node.entryType === "MPTokenIssuance") {
-    if (node.newFields.MaximumAmount) {
+    if (node.newFields.MaximumAmount !== undefined) {
       // MPT issuance creation
       return parseValue(node.newFields.MaximumAmount);
-    } else if (node.diffType === "DeletedNode" && node.finalFields.MaximumAmount) {
+    } else if (node.diffType === "DeletedNode" && node.finalFields.MaximumAmount !== undefined) {
       // MPT issuance burning
       return new BigNumber(0);
-    } else if (node.finalFields.MaximumAmount) {
+    } else if (node.finalFields.MaximumAmount !== undefined) {
       // MPT issuance transfer or swap
       return parseValue(node.finalFields.MaximumAmount).minus(parseValue(node.finalFields.OutstandingAmount));
     }
@@ -176,18 +182,26 @@ function parseTrustlineQuantity(node: NormalizedNode, valueParser: any): Address
    * If an offer is placed to acquire an asset with no existing trustline,
    * the trustline can be created when the offer is taken.
    */
-  const fields = _.isEmpty(node.newFields) ? node.finalFields : (node.newFields as any);
+  const fields = pickFields(node);
   const previousFields = node.previousFields as any;
+  const balanceField = fields?.Balance ?? previousFields?.Balance;
+
+  if (!balanceField || typeof balanceField.value === "undefined") {
+    return null;
+  }
+
+  const balanceValue = typeof balanceField.value === "string" ? balanceField.value : String(balanceField.value);
   let viewLowest = true;
 
-  if (previousFields && previousFields.Balance && previousFields.Balance.value !== "0") {
-    viewLowest = previousFields.Balance.value[0] !== "-"; // if positive, viewLowest is true, else false
+  if (previousFields && previousFields.Balance && previousFields.Balance.value !== "0" && previousFields.Balance.value !== 0) {
+    const previousValue = typeof previousFields.Balance.value === "string" ? previousFields.Balance.value : String(previousFields.Balance.value);
+    viewLowest = previousValue[0] !== "-"; // if positive, viewLowest is true, else false
   } else {
-    viewLowest = fields.Balance.value[0] !== "-"; // if positive, viewLowest is true, else false
+    viewLowest = balanceValue[0] !== "-"; // if positive, viewLowest is true, else false
   }
 
   const sign = viewLowest ? 1 : -1;
-  const currency = fields.Balance.currency;
+  const currency = balanceField.currency;
   const issuer = viewLowest ? fields.HighLimit.issuer : fields.LowLimit.issuer;
   const holder = viewLowest ? fields.LowLimit.issuer : fields.HighLimit.issuer;
 
@@ -211,7 +225,7 @@ function parseMPTQuantity(node: NormalizedNode, valueParser: any): AddressBalanc
     return null;
   }
 
-  const fields = _.isEmpty(node.newFields) ? node.finalFields : (node.newFields as any);
+  const fields = pickFields(node);
 
   return {
     address: fields.Account,
@@ -229,7 +243,7 @@ function parseMPTokenIssuanceQuantity(node: NormalizedNode, valueParser: any): A
     return null;
   }
 
-  const fields = _.isEmpty(node.newFields) ? node.finalFields : (node.newFields as any);
+  const fields = pickFields(node);
 
   return {
     address: fields.Issuer,
@@ -240,28 +254,36 @@ function parseMPTokenIssuanceQuantity(node: NormalizedNode, valueParser: any): A
   };
 }
 
-function parseQuantities(metadata: TransactionMetadata, valueParser: any, nativeCurrency?: string) {
-  const values = metadata.AffectedNodes.map(function (affectedNode: any) {
+function parseQuantities(metadata: TransactionMetadata, valueParser: BalanceValueParser, nativeCurrency?: string) {
+  const affectedNodes = metadata?.AffectedNodes || [];
+  const grouped: BalanceChanges = {};
+  let resolvedNativeCurrency = nativeCurrency;
+
+  for (let i = 0; i < affectedNodes.length; i++) {
+    const affectedNode: any = affectedNodes[i];
     const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
-    if (!["AccountRoot", "RippleState", "MPToken", "MPTokenIssuance"].includes(node.LedgerEntryType)) {
-      return [];
+    if (!node || !RELEVANT_ENTRY_TYPES.has(node.LedgerEntryType)) {
+      continue;
     }
 
     const normalizedNode = normalizeNode(affectedNode);
     if (node.LedgerEntryType === "AccountRoot") {
-      return [parseXRPQuantity(normalizedNode, valueParser, nativeCurrency)];
+      resolvedNativeCurrency ??= getNativeCurrency();
+      addBalanceChange(grouped, parseXRPQuantity(normalizedNode, valueParser, resolvedNativeCurrency));
     } else if (node.LedgerEntryType === "RippleState") {
-      return parseTrustlineQuantity(normalizedNode, valueParser);
+      const parsed = parseTrustlineQuantity(normalizedNode, valueParser);
+      if (parsed) {
+        addBalanceChange(grouped, parsed[0]);
+        addBalanceChange(grouped, parsed[1]);
+      }
     } else if (node.LedgerEntryType === "MPToken") {
-      return [parseMPTQuantity(normalizedNode, valueParser)];
+      addBalanceChange(grouped, parseMPTQuantity(normalizedNode, valueParser));
     } else if (node.LedgerEntryType === "MPTokenIssuance") {
-      return [parseMPTokenIssuanceQuantity(normalizedNode, valueParser)];
+      addBalanceChange(grouped, parseMPTokenIssuanceQuantity(normalizedNode, valueParser));
     }
+  }
 
-    return [];
-  });
-
-  return groupByAddress(_.compact(_.flatten(values)));
+  return grouped;
 }
 
 function adjustBalancesForNativeEscrow(
@@ -316,7 +338,8 @@ function adjustBalancesForPaymentChannel(
   }
 
   // only for native token without issuer
-  if (channelChanges.amount.currency !== getNativeCurrency() || channelChanges.amount.issuer) {
+  const nativeCurrencyForChannel = getNativeCurrency();
+  if (channelChanges.amount.currency !== nativeCurrencyForChannel || channelChanges.amount.issuer) {
     return;
   }
 
@@ -504,7 +527,7 @@ function adjustBalancesForSponsorship(
     const sponsee = sponsorshipChange.sponsee?.address;
 
     if (!owner || !sponsee) {
-      return;
+      continue;
     }
 
     if (sponsorshipChange.status === "created") {
@@ -551,11 +574,24 @@ function adjustBalancesForSponsorship(
   }
 }
 
+function isSameCurrency(a: BalanceChangeQuantity, b: BalanceChangeQuantity): boolean {
+  return a.currency === b.currency && a.issuer === b.issuer && a.mpt_issuance_id === b.mpt_issuance_id;
+}
+
 function adjustBalancesChanges(balanceChanges: BalanceChanges, address: string, changes: BalanceChangeQuantity[]) {
+  if (!changes || changes.length === 0) {
+    return;
+  }
+
   const existingChanges = balanceChanges[address] || [];
-  const change = existingChanges.find((c) => c.currency === changes[0].currency && c.issuer === changes[0].issuer);
+  const candidate = changes[0];
+  const change = existingChanges.find(
+    (c) =>
+      isSameCurrency(c, candidate)
+  );
+
   if (change) {
-    const newValue = new BigNumber(change.value).plus(new BigNumber(changes[0].value));
+    const newValue = new BigNumber(change.value).plus(new BigNumber(candidate.value));
     if (newValue.isZero()) {
       // remove change
       balanceChanges[address] = existingChanges.filter((c) => c !== change);
@@ -567,7 +603,7 @@ function adjustBalancesChanges(balanceChanges: BalanceChanges, address: string, 
     }
   } else {
     // add new change
-    existingChanges.push(changes[0]);
+    existingChanges.push(candidate);
     balanceChanges[address] = existingChanges;
   }
 }
@@ -605,14 +641,14 @@ function parseBalanceChanges(
       // if escrow finish with transfer, deduct balance from source account
       // if escrow cancel, remove balance addition from escrow
 
-      if (options.adjustBalancesForNativeEscrow && ESCROW_TYPES.includes(tx.TransactionType)) {
+      if (options.adjustBalancesForNativeEscrow && ESCROW_TYPES.has(tx.TransactionType)) {
         // EscrowFinish with XRP(native currency) does not have locked balance change in metadata
         // by default transfer after escrow finish is not considered as balance change in source account
         // the same unlock funds should not be counted as balance change
         // options.adjustBalancesForNativeEscrow as true, // escrow create, finish with unlock will not consider as balance change
 
         adjustBalancesForNativeEscrow(balanceChanges, metadata, nativeCurrency, tx);
-      } else if (options.adjustBalancesForPaymentChannel && PAYMENT_CHANNEL_TYPES.includes(tx.TransactionType)) {
+      } else if (options.adjustBalancesForPaymentChannel && PAYMENT_CHANNEL_TYPES.has(tx.TransactionType)) {
         // Consider PayChannel with XRP(native currency) as locked balance change, react as balance change in source account
         // if only destination account acquires funds from the channel
         // options.adjustBalancesForPaymentChannel as true
@@ -620,7 +656,7 @@ function parseBalanceChanges(
         adjustBalancesForPaymentChannel(balanceChanges, metadata, nativeCurrency, tx);
       } else if (
         options.adjustBalancesForConfidentialMPTConvert &&
-        CONFIDENTIAL_MPT_CONVERT_TYPES.includes(tx.TransactionType)
+        CONFIDENTIAL_MPT_CONVERT_TYPES.has(tx.TransactionType)
       ) {
         // Consider ConfidentialMPTConvert as locked balance change, react as balance change in source account
         // if only destination account acquires funds from the convert

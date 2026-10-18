@@ -35,18 +35,18 @@ import { parseTimestamp } from "./utils";
 import { MAINNET_NATIVE_CURRENCY, XAHAU_NATIVE_CURRENCY, removeUndefined, dropsToXrp } from "../common";
 import { Outcome } from "../types/outcome";
 
-const ESCROW_TYPES = ["EscrowFinish", "EscrowCreate", "EscrowCancel"];
-const CHANNEL_TYPES = ["PaymentChannelCreate", "PaymentChannelFund", "PaymentChannelClaim"];
-const CHECK_TYPES = ["CheckCreate", "CheckCash", "CheckCancel"];
-const NFTOKEN_TYPES = [
+const ESCROW_TYPES = new Set(["EscrowFinish", "EscrowCreate", "EscrowCancel"]);
+const CHANNEL_TYPES = new Set(["PaymentChannelCreate", "PaymentChannelFund", "PaymentChannelClaim"]);
+const CHECK_TYPES = new Set(["CheckCreate", "CheckCash", "CheckCancel"]);
+const NFTOKEN_TYPES = new Set([
   "NFTokenMint",
   "NFTokenBurn",
   "NFTokenCreateOffer",
   "NFTokenCancelOffer",
   "NFTokenAcceptOffer",
   "NFTokenModify",
-];
-const URITOKEN_TYPES = [
+]);
+const URITOKEN_TYPES = new Set([
   "Remit",
   "URITokenMint",
   "URITokenBurn",
@@ -54,12 +54,12 @@ const URITOKEN_TYPES = [
   "URITokenCreateSellOffer",
   "URITokenCancelSellOffer",
   "SetRemarks",
-];
-const AMM_TYPES = ["AMMBid", "AMMCreate", "AMMDelete", "AMMDeposit", "AMMWithdraw", "AMMVote", "AMMClawback"];
-const DID_TYPES = ["DIDSet", "DIDDelete"];
-const ORACLE_TYPES = ["OracleSet", "OracleDelete"];
-const UNL_REPORT_TYPES = ["UNLReport"];
-const MPTOKEN_TYPES = [
+]);
+const AMM_TYPES = new Set(["AMMBid", "AMMCreate", "AMMDelete", "AMMDeposit", "AMMWithdraw", "AMMVote", "AMMClawback"]);
+const DID_TYPES = new Set(["DIDSet", "DIDDelete"]);
+const ORACLE_TYPES = new Set(["OracleSet", "OracleDelete"]);
+const UNL_REPORT_TYPES = new Set(["UNLReport"]);
+const MPTOKEN_TYPES = new Set([
   "MPTokenIssuanceCreate",
   "MPTokenAuthorize",
   "MPTokenIssuanceSet",
@@ -72,13 +72,13 @@ const MPTOKEN_TYPES = [
   "EscrowFinish",
   "EscrowCreate",
   "EscrowCancel",
-];
-const CREDENTIAL_TYPES = ["CredentialCreate", "CredentialAccept", "CredentialDelete"];
-const DELEGATE_TYPES = ["DelegateSet"];
-const REMARKS_TYPES = ["SetRemarks"];
-const CRON_TYPES = ["Cron", "CronSet"];
-const AMENDMENT_TYPES = ["EnableAmendment"];
-const ACCOUNT_SETTING_TYPES = ["AccountSet"];
+]);
+const CREDENTIAL_TYPES = new Set(["CredentialCreate", "CredentialAccept", "CredentialDelete"]);
+const DELEGATE_TYPES = new Set(["DelegateSet"]);
+const REMARKS_TYPES = new Set(["SetRemarks"]);
+const CRON_TYPES = new Set(["Cron", "CronSet"]);
+const AMENDMENT_TYPES = new Set(["EnableAmendment"]);
+const ACCOUNT_SETTING_TYPES = new Set(["AccountSet"]);
 
 function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefinitionsBase): Outcome | undefined {
   const metadata = tx.meta || tx.metaData;
@@ -86,44 +86,46 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
     return undefined;
   }
 
-  const balanceChanges = getBalanceChanges(tx, nativeCurrency || getNativeCurrency());
+  const resolvedNativeCurrency = nativeCurrency || getNativeCurrency();
+  const txType = tx.TransactionType;
+  const balanceChanges = getBalanceChanges(tx, resolvedNativeCurrency);
 
   return removeUndefined({
-    result: tx.meta.TransactionResult,
+    result: metadata.TransactionResult,
     timestamp: parseTimestamp(tx.date),
     fee: dropsToXrp(tx.Fee),
 
-    settingsChanges: getSettingsChanges(tx),
+    settingsChanges: getSettingsChanges(tx, txType),
     balanceChanges,
-    lockedBalanceChanges: getLockedBalanceChanges(tx),
+    lockedBalanceChanges: getLockedBalanceChanges(tx, txType),
     orderbookChanges: getOrderbookChanges(tx),
-    channelChanges: getChannelChanges(tx),
-    checkChanges: getCheckChanges(tx),
-    escrowChanges: getEscrowChanges(tx),
-    amendmentChanges: getAmendmentChanges(tx),
-    nftokenChanges: getNFTokenChanges(tx),
-    nftokenOfferChanges: getNFTokenOfferChanges(tx),
-    uritokenChanges: getURITokenChanges(tx),
-    uritokenSellOfferChanges: getURITokenSellOfferChanges(tx),
-    affectedObjects: getAffectedObjects(tx),
-    ammChanges: getAmmChanges(tx),
-    didChanges: getDIDChanges(tx),
-    oracleChanges: getOracleChanges(tx),
-    mptokenIssuanceChanges: getMPTokenIssuanceChanges(tx, nativeCurrency || getNativeCurrency()),
-    mptokenChanges: getMPTokenChanges(tx, nativeCurrency || getNativeCurrency()),
-    credentialChanges: getCredentialChanges(tx, nativeCurrency || getNativeCurrency()),
-    delegateChanges: getDelegateChanges(tx, nativeCurrency || getNativeCurrency()),
-    sponsorshipChanges: getSponsorshipChanges(tx, nativeCurrency || getNativeCurrency()),
-    remarksChanges: getRemarksChanges(tx, nativeCurrency || getNativeCurrency()),
-    cronChanges: getCronChanges(tx, nativeCurrency || getNativeCurrency()),
-    unlReportChanges: getUNLReportChanges(tx, nativeCurrency || getNativeCurrency()),
-    hooksExecutions: getHooksExecutions(tx, nativeCurrency || getNativeCurrency()),
-    emittedTxns: getEmittedTxns(tx, nativeCurrency || getNativeCurrency(), definitions), // only Xahau
+    channelChanges: getChannelChanges(tx, txType),
+    checkChanges: getCheckChanges(tx, txType),
+    escrowChanges: getEscrowChanges(tx, txType),
+    amendmentChanges: getAmendmentChanges(tx, txType),
+    nftokenChanges: getNFTokenChanges(tx, txType),
+    nftokenOfferChanges: getNFTokenOfferChanges(tx, txType),
+    uritokenChanges: getURITokenChanges(tx, txType),
+    uritokenSellOfferChanges: getURITokenSellOfferChanges(tx, txType),
+    affectedObjects: getAffectedObjects(tx, txType),
+    ammChanges: getAmmChanges(tx, txType),
+    didChanges: getDIDChanges(tx, txType),
+    oracleChanges: getOracleChanges(tx, txType),
+    mptokenIssuanceChanges: getMPTokenIssuanceChanges(tx, resolvedNativeCurrency),
+    mptokenChanges: getMPTokenChanges(tx, resolvedNativeCurrency),
+    credentialChanges: getCredentialChanges(tx, resolvedNativeCurrency),
+    delegateChanges: getDelegateChanges(tx, resolvedNativeCurrency),
+    sponsorshipChanges: getSponsorshipChanges(tx, resolvedNativeCurrency),
+    remarksChanges: getRemarksChanges(tx, resolvedNativeCurrency),
+    cronChanges: getCronChanges(tx, resolvedNativeCurrency),
+    unlReportChanges: getUNLReportChanges(tx, resolvedNativeCurrency),
+    hooksExecutions: getHooksExecutions(tx, resolvedNativeCurrency),
+    emittedTxns: getEmittedTxns(tx, resolvedNativeCurrency, definitions), // only Xahau
 
-    parentBatchID: tx.meta.ParentBatchID,
+    parentBatchID: metadata.ParentBatchID,
     ledgerIndex: tx.ledger_index || tx.inLedger,
     ledgerVersion: tx.ledger_index || tx.inLedger, // @deprecated, use ledgerIndex
-    indexInLedger: tx.meta.TransactionIndex,
+    indexInLedger: metadata.TransactionIndex,
     deliveredAmount: parseDeliveredAmount(tx, balanceChanges as BalanceChanges),
   });
 }
@@ -132,7 +134,8 @@ function parseOutcome(tx: any, nativeCurrency?: string, definitions?: XrplDefini
  * XRPL and Xahau
  */
 function getBalanceChanges(tx: any, nativeCurrency?: string): BalanceChanges | undefined {
-  const balanceChanges = parseBalanceChanges(tx.meta, nativeCurrency, tx);
+  const metadata = tx.meta || tx.metaData;
+  const balanceChanges = parseBalanceChanges(metadata, nativeCurrency, tx);
 
   return Object.keys(balanceChanges).length > 0 ? balanceChanges : undefined;
 }
@@ -140,12 +143,12 @@ function getBalanceChanges(tx: any, nativeCurrency?: string): BalanceChanges | u
 /**
  * only Xahau, EscrowFinish, EscrowCreate, EscrowCancel
  */
-function getLockedBalanceChanges(tx: any): any {
-  if (!ESCROW_TYPES.includes(tx.TransactionType)) {
+function getLockedBalanceChanges(tx: any, txType?: string): any {
+  if (!txType || !ESCROW_TYPES.has(txType)) {
     return undefined;
   }
 
-  const lockedBalanceChanges = parseLockedBalanceChanges(tx.meta);
+  const lockedBalanceChanges = parseLockedBalanceChanges(tx.meta || tx.metaData);
 
   return Object.keys(lockedBalanceChanges).length > 0 ? lockedBalanceChanges : undefined;
 }
@@ -154,7 +157,7 @@ function getLockedBalanceChanges(tx: any): any {
  * XRPL and Xahau: OfferCreate, OfferCancel, etc...
  */
 function getOrderbookChanges(tx: any): any {
-  const orderbookChanges = parseOrderbookChanges(tx.meta);
+  const orderbookChanges = parseOrderbookChanges(tx.meta || tx.metaData);
 
   return Object.keys(orderbookChanges).length > 0 ? orderbookChanges : undefined;
 }
@@ -162,30 +165,30 @@ function getOrderbookChanges(tx: any): any {
 /**
  * XRPL and Xahau: PaymentChannelCreate, PaymentChannelFund, PaymentChannelClaim
  */
-function getChannelChanges(tx: any): any {
-  if (!CHANNEL_TYPES.includes(tx.TransactionType)) {
+function getChannelChanges(tx: any, txType?: string): any {
+  if (!txType || !CHANNEL_TYPES.has(txType)) {
     return undefined;
   }
 
-  return parseChannelChanges(tx.meta);
+  return parseChannelChanges(tx.meta || tx.metaData);
 }
 
 /**
  * XRPL and Xahau: CheckCreate, CheckCash, CheckCancel
  */
-function getCheckChanges(tx: any): any {
-  if (!CHECK_TYPES.includes(tx.TransactionType)) {
+function getCheckChanges(tx: any, txType?: string): any {
+  if (!txType || !CHECK_TYPES.has(txType)) {
     return undefined;
   }
 
-  return parseCheckChanges(tx.meta);
+  return parseCheckChanges(tx.meta || tx.metaData);
 }
 
 /**
  * XRPL and Xahau: EscrowFinish, EscrowCreate, EscrowCancel
  */
-function getEscrowChanges(tx: any): any {
-  if (!ESCROW_TYPES.includes(tx.TransactionType)) {
+function getEscrowChanges(tx: any, txType?: string): any {
+  if (!txType || !ESCROW_TYPES.has(txType)) {
     return undefined;
   }
 
@@ -195,27 +198,27 @@ function getEscrowChanges(tx: any): any {
 /**
  * XRPL and Xahau: EscrowFinish, EscrowCreate, EscrowCancel
  */
-function getAmendmentChanges(tx: any): any {
-  if (!AMENDMENT_TYPES.includes(tx.TransactionType)) {
+function getAmendmentChanges(tx: any, txType?: string): any {
+  if (!txType || !AMENDMENT_TYPES.has(txType)) {
     return undefined;
   }
 
   return parseAmendmentChanges(tx);
 }
 
-function getSettingsChanges(tx: any): any {
-  if (!ACCOUNT_SETTING_TYPES.includes(tx.TransactionType)) {
+function getSettingsChanges(tx: any, txType?: string): any {
+  if (!txType || !ACCOUNT_SETTING_TYPES.has(txType)) {
     return undefined;
   }
 
-  return parseAccountSettingChanges(tx.meta);
+  return parseAccountSettingChanges(tx.meta || tx.metaData);
 }
 
 /**
  * XRPL and Xahau
  */
-function getAffectedObjects(tx: any): any {
-  if (!NFTOKEN_TYPES.includes(tx.TransactionType) && !URITOKEN_TYPES.includes(tx.TransactionType)) {
+function getAffectedObjects(tx: any, txType?: string): any {
+  if (!txType || (!NFTOKEN_TYPES.has(txType) && !URITOKEN_TYPES.has(txType))) {
     return undefined;
   }
 
@@ -227,8 +230,8 @@ function getAffectedObjects(tx: any): any {
 /**
  * XRPL and Xahau
  */
-function getNFTokenChanges(tx: any): any {
-  if (!NFTOKEN_TYPES.includes(tx.TransactionType)) {
+function getNFTokenChanges(tx: any, txType?: string): any {
+  if (!txType || !NFTOKEN_TYPES.has(txType)) {
     return undefined;
   }
 
@@ -240,8 +243,8 @@ function getNFTokenChanges(tx: any): any {
 /**
  * XRPL and Xahau
  */
-function getNFTokenOfferChanges(tx: any): any {
-  if (!NFTOKEN_TYPES.includes(tx.TransactionType)) {
+function getNFTokenOfferChanges(tx: any, txType?: string): any {
+  if (!txType || !NFTOKEN_TYPES.has(txType)) {
     return undefined;
   }
 
@@ -253,8 +256,8 @@ function getNFTokenOfferChanges(tx: any): any {
 /**
  * only Xahau
  */
-function getURITokenChanges(tx: any): any {
-  if (!URITOKEN_TYPES.includes(tx.TransactionType)) {
+function getURITokenChanges(tx: any, txType?: string): any {
+  if (!txType || !URITOKEN_TYPES.has(txType)) {
     return undefined;
   }
 
@@ -266,8 +269,8 @@ function getURITokenChanges(tx: any): any {
 /**
  * only Xahau
  */
-function getURITokenSellOfferChanges(tx: any): any {
-  if (!URITOKEN_TYPES.includes(tx.TransactionType)) {
+function getURITokenSellOfferChanges(tx: any, txType?: string): any {
+  if (!txType || !URITOKEN_TYPES.has(txType)) {
     return undefined;
   }
 
@@ -301,12 +304,12 @@ function getEmittedTxns(tx: any, nativeCurrency?: string, definitions?: XrplDefi
 /**
  * only XRPL
  */
-function getAmmChanges(tx: any): any {
-  if (!AMM_TYPES.includes(tx.TransactionType)) {
+function getAmmChanges(tx: any, txType?: string): any {
+  if (!txType || !AMM_TYPES.has(txType)) {
     return undefined;
   }
 
-  const ammChanges = parseAmmChanges(tx.meta);
+  const ammChanges = parseAmmChanges(tx.meta || tx.metaData);
 
   return ammChanges ? removeUndefined(ammChanges) : undefined;
 }
@@ -314,12 +317,12 @@ function getAmmChanges(tx: any): any {
 /**
  * only XRPL
  */
-function getDIDChanges(tx: any): any {
-  if (!DID_TYPES.includes(tx.TransactionType)) {
+function getDIDChanges(tx: any, txType?: string): any {
+  if (!txType || !DID_TYPES.has(txType)) {
     return undefined;
   }
 
-  const didChanges = parseDIDChanges(tx.meta);
+  const didChanges = parseDIDChanges(tx.meta || tx.metaData);
 
   return didChanges ? removeUndefined(didChanges) : undefined;
 }
@@ -327,12 +330,12 @@ function getDIDChanges(tx: any): any {
 /**
  * only XRPL
  */
-function getOracleChanges(tx: any): any {
-  if (!ORACLE_TYPES.includes(tx.TransactionType)) {
+function getOracleChanges(tx: any, txType?: string): any {
+  if (!txType || !ORACLE_TYPES.has(txType)) {
     return undefined;
   }
 
-  const oracleChanges = parseOracleChanges(tx.meta);
+  const oracleChanges = parseOracleChanges(tx.meta || tx.metaData);
 
   return oracleChanges ? removeUndefined(oracleChanges) : undefined;
 }
@@ -345,7 +348,7 @@ function getUNLReportChanges(tx: any, nativeCurrency?: string): any {
     return undefined;
   }
 
-  if (!UNL_REPORT_TYPES.includes(tx.TransactionType)) {
+  if (!tx.TransactionType || !UNL_REPORT_TYPES.has(tx.TransactionType)) {
     return undefined;
   }
 
@@ -360,7 +363,7 @@ function getMPTokenChanges(tx: any, nativeCurrency?: string): any {
     return undefined;
   }
 
-  if (!MPTOKEN_TYPES.includes(tx.TransactionType)) {
+  if (!tx.TransactionType || !MPTOKEN_TYPES.has(tx.TransactionType)) {
     return undefined;
   }
 
@@ -392,11 +395,11 @@ function getCredentialChanges(tx: any, nativeCurrency?: string): any {
     return undefined;
   }
 
-  if (!CREDENTIAL_TYPES.includes(tx.TransactionType)) {
+  if (!tx.TransactionType || !CREDENTIAL_TYPES.has(tx.TransactionType)) {
     return undefined;
   }
 
-  return parseCredentialChanges(tx.meta);
+  return parseCredentialChanges(tx.meta || tx.metaData);
 }
 
 /**
@@ -407,11 +410,11 @@ function getDelegateChanges(tx: any, nativeCurrency?: string): any {
     return undefined;
   }
 
-  if (!DELEGATE_TYPES.includes(tx.TransactionType)) {
+  if (!tx.TransactionType || !DELEGATE_TYPES.has(tx.TransactionType)) {
     return undefined;
   }
 
-  return parseDelegateChanges(tx.meta);
+  return parseDelegateChanges(tx.meta || tx.metaData);
 }
 
 function getSponsorshipChanges(tx: any, nativeCurrency?: string): any[] | undefined {
@@ -419,7 +422,7 @@ function getSponsorshipChanges(tx: any, nativeCurrency?: string): any[] | undefi
     return undefined;
   }
 
-  return parseSponsorshipChanges(tx.meta);
+  return parseSponsorshipChanges(tx.meta || tx.metaData);
 }
 
 /**
@@ -430,7 +433,7 @@ function getRemarksChanges(tx: any, nativeCurrency?: string): any {
     return undefined;
   }
 
-  if (!REMARKS_TYPES.includes(tx.TransactionType)) {
+  if (!tx.TransactionType || !REMARKS_TYPES.has(tx.TransactionType)) {
     return undefined;
   }
 
@@ -445,7 +448,7 @@ function getCronChanges(tx: any, nativeCurrency?: string): any {
     return undefined;
   }
 
-  if (!CRON_TYPES.includes(tx.TransactionType)) {
+  if (!tx.TransactionType || !CRON_TYPES.has(tx.TransactionType)) {
     return undefined;
   }
 

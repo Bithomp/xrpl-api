@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/Bithomp/xrpl-api#readme",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha",
+    "test": "node ./node_modules/mocha/bin/mocha --reporter dot",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "eslint",

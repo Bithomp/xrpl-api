@@ -1,4 +1,3 @@
-import _ from "lodash";
 import * as AddressCodec from "ripple-address-codec";
 import { removeUndefined } from "../../common";
 
@@ -28,8 +27,13 @@ class NFTokenChanges {
     this.previousNFTokens = {};
   }
 
+  private getAffectedNodes(): any[] {
+    return this.tx.meta?.AffectedNodes ?? this.tx.metaData?.AffectedNodes ?? [];
+  }
+
   public call(): any {
-    if (this.hasAffectedNodes() === false) {
+    const affectedNodes = this.getAffectedNodes();
+    if (affectedNodes.length === 0) {
       return this.changes;
     }
 
@@ -43,18 +47,6 @@ class NFTokenChanges {
     return this.changes;
   }
 
-  private hasAffectedNodes(): boolean {
-    if (this.tx.meta?.AffectedNodes === undefined) {
-      return false;
-    }
-
-    if (this.tx.meta?.AffectedNodes?.length === 0) {
-      return false;
-    }
-
-    return true;
-  }
-
   private addChange(account: string, change: AccountNFTokenChangesInterface): void {
     if (!this.changes[account]) {
       this.changes[account] = [];
@@ -64,27 +56,29 @@ class NFTokenChanges {
   }
 
   private parseAffectedNodes(): void {
-    for (const affectedNode of this.tx.meta.AffectedNodes) {
+    for (const affectedNode of this.getAffectedNodes()) {
       const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
-      if (node?.LedgerEntryType === "NFTokenPage" && node?.LedgerIndex) {
-        const account = AddressCodec.encodeAccountID(Buffer.from(node?.LedgerIndex.slice(0, 40), "hex"));
+      if (node?.LedgerEntryType !== "NFTokenPage" || !node?.LedgerIndex) {
+        continue;
+      }
 
-        if (this.affectedAccounts.includes(account) === false) {
-          this.affectedAccounts.push(account);
-        }
+      const account = AddressCodec.encodeAccountID(Buffer.from(node.LedgerIndex.slice(0, 40), "hex"));
 
-        if (affectedNode.CreatedNode) {
-          this.parseFinalNFTokens(account, node.NewFields?.NFTokens);
-        }
+      if (this.affectedAccounts.indexOf(account) === -1) {
+        this.affectedAccounts.push(account);
+      }
 
-        if ((affectedNode.ModifiedNode || affectedNode.DeletedNode) && Array.isArray(node.PreviousFields?.NFTokens)) {
-          this.parseFinalNFTokens(account, node.FinalFields?.NFTokens);
-          this.parsePreviousNFTokens(account, node.PreviousFields?.NFTokens);
-        }
+      if (affectedNode.CreatedNode) {
+        this.parseFinalNFTokens(account, node.NewFields?.NFTokens);
+      }
 
-        if (affectedNode.DeletedNode && node.PreviousFields === undefined) {
-          this.parsePreviousNFTokens(account, node.FinalFields?.NFTokens);
-        }
+      if ((affectedNode.ModifiedNode || affectedNode.DeletedNode) && Array.isArray(node.PreviousFields?.NFTokens)) {
+        this.parseFinalNFTokens(account, node.FinalFields?.NFTokens);
+        this.parsePreviousNFTokens(account, node.PreviousFields?.NFTokens);
+      }
+
+      if (affectedNode.DeletedNode && node.PreviousFields === undefined) {
+        this.parsePreviousNFTokens(account, node.FinalFields?.NFTokens);
       }
     }
   }
@@ -95,7 +89,7 @@ class NFTokenChanges {
     }
 
     if (Array.isArray(NFTokens)) {
-      this.finalNFTokens[account] = _.concat(this.finalNFTokens[account], NFTokens);
+      this.finalNFTokens[account] = this.finalNFTokens[account].concat(NFTokens);
     }
   }
 
@@ -105,11 +99,13 @@ class NFTokenChanges {
     }
 
     if (Array.isArray(NFTokens)) {
-      this.previousNFTokens[account] = _.concat(this.previousNFTokens[account], NFTokens);
+      this.previousNFTokens[account] = this.previousNFTokens[account].concat(NFTokens);
     }
   }
 
   private parseNFTokensChanges(): void {
+    const uriByTokenId = this.buildTokenUriIndex();
+
     for (const account of this.affectedAccounts) {
       let finalTokens: string[] = [];
       if (Array.isArray(this.finalNFTokens[account])) {
@@ -123,60 +119,54 @@ class NFTokenChanges {
         previousTokens = [...new Set(previousTokens)];
       }
 
-      const added: string[] = _.difference(finalTokens, previousTokens);
-      const removed: string[] = _.difference(previousTokens, finalTokens);
+      const finalTokenSet = new Set(finalTokens);
+      const previousTokenSet = new Set(previousTokens);
+      const added: string[] = finalTokens.filter((token) => !previousTokenSet.has(token));
+      const removed: string[] = previousTokens.filter((token) => !finalTokenSet.has(token));
 
       for (const nftokenID of added) {
-        const uri = this.findNFTokenUri(nftokenID);
         this.addChange(account, {
           status: "added",
           nftokenID,
-          uri,
+          uri: uriByTokenId.get(nftokenID),
         });
       }
 
       for (const nftokenID of removed) {
-        const uri = this.findNFTokenUri(nftokenID);
         this.addChange(account, {
           status: "removed",
           nftokenID,
-          uri,
+          uri: uriByTokenId.get(nftokenID),
         });
       }
     }
   }
 
-  private findNFTokenUri(nftokenID: string): string | undefined {
-    for (const affectedNode of this.tx.meta.AffectedNodes) {
+  private buildTokenUriIndex(): Map<string, string | undefined> {
+    const uriByTokenId = new Map<string, string | undefined>();
+
+    for (const affectedNode of this.getAffectedNodes()) {
       const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
-      if (node?.LedgerEntryType === "NFTokenPage") {
-        if (Array.isArray(node.NewFields?.NFTokens)) {
-          for (const tokenNode of node.NewFields?.NFTokens) {
-            if (tokenNode.NFToken.NFTokenID === nftokenID) {
-              return tokenNode.NFToken.URI;
-            }
-          }
+      if (node?.LedgerEntryType !== "NFTokenPage") {
+        continue;
+      }
+
+      const collectibles = [node.NewFields?.NFTokens, node.FinalFields?.NFTokens, node.PreviousFields?.NFTokens];
+      for (const collection of collectibles) {
+        if (!Array.isArray(collection)) {
+          continue;
         }
 
-        if (Array.isArray(node.FinalFields?.NFTokens)) {
-          for (const tokenNode of node.FinalFields?.NFTokens) {
-            if (tokenNode.NFToken.NFTokenID === nftokenID) {
-              return tokenNode.NFToken.URI;
-            }
-          }
-        }
-
-        if (Array.isArray(node.PreviousFields?.NFTokens)) {
-          for (const tokenNode of node.PreviousFields?.NFTokens) {
-            if (tokenNode.NFToken.NFTokenID === nftokenID) {
-              return tokenNode.NFToken.URI;
-            }
+        for (const tokenNode of collection) {
+          const nftokenID = tokenNode?.NFToken?.NFTokenID;
+          if (nftokenID && !uriByTokenId.has(nftokenID)) {
+            uriByTokenId.set(nftokenID, tokenNode.NFToken.URI);
           }
         }
       }
     }
 
-    return undefined;
+    return uriByTokenId;
   }
 
   private parseNFTokensURIChanges(): void {
@@ -207,34 +197,34 @@ class NFTokenChanges {
     let currentTokenNode: any;
     let previousTokenNode: any;
 
-    for (const affectedNode of this.tx.meta.AffectedNodes) {
+    for (const affectedNode of this.getAffectedNodes()) {
       const node = affectedNode.ModifiedNode;
-      if (node?.LedgerEntryType === "NFTokenPage") {
-        if (Array.isArray(node.FinalFields?.NFTokens)) {
-          for (const tokenNode of node.FinalFields?.NFTokens) {
-            if (tokenNode.NFToken.NFTokenID === nftokenID) {
-              currentTokenNode = tokenNode.NFToken;
+      if (node?.LedgerEntryType !== "NFTokenPage") {
+        continue;
+      }
 
-              const account = AddressCodec.encodeAccountID(Buffer.from(node?.LedgerIndex.slice(0, 40), "hex"));
-              currentTokenNode.account = account;
+      if (Array.isArray(node.FinalFields?.NFTokens)) {
+        for (const tokenNode of node.FinalFields.NFTokens) {
+          if (tokenNode.NFToken.NFTokenID === nftokenID) {
+            currentTokenNode = tokenNode.NFToken;
 
-              // early return if we have both current and previous token nodes
-              if (currentTokenNode && previousTokenNode) {
-                return [currentTokenNode, previousTokenNode];
-              }
+            const account = AddressCodec.encodeAccountID(Buffer.from(node.LedgerIndex.slice(0, 40), "hex"));
+            currentTokenNode.account = account;
+
+            if (currentTokenNode && previousTokenNode) {
+              return [currentTokenNode, previousTokenNode];
             }
           }
         }
+      }
 
-        if (Array.isArray(node.PreviousFields?.NFTokens)) {
-          for (const tokenNode of node.PreviousFields?.NFTokens) {
-            if (tokenNode.NFToken.NFTokenID === nftokenID) {
-              previousTokenNode = tokenNode.NFToken;
+      if (Array.isArray(node.PreviousFields?.NFTokens)) {
+        for (const tokenNode of node.PreviousFields.NFTokens) {
+          if (tokenNode.NFToken.NFTokenID === nftokenID) {
+            previousTokenNode = tokenNode.NFToken;
 
-              // early return if we have both current and previous token nodes
-              if (currentTokenNode && previousTokenNode) {
-                return [currentTokenNode, previousTokenNode];
-              }
+            if (currentTokenNode && previousTokenNode) {
+              return [currentTokenNode, previousTokenNode];
             }
           }
         }

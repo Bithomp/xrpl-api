@@ -21,12 +21,17 @@ class AffectedObjects {
   public readonly affectedObjects: any;
   private nftChanges?: any;
   private nftOfferChanges?: any;
+  private nftokenInfoCache = new Map<string, any>();
 
   public constructor(tx: any) {
     this.tx = tx;
     this.affectedObjects = {};
     this.nftChanges = undefined;
     this.nftOfferChanges = undefined;
+  }
+
+  private getAffectedNodes(): any[] {
+    return this.tx.meta?.AffectedNodes ?? this.tx.metaData?.AffectedNodes ?? [];
   }
 
   public call(): AffectedObjectsInterface | undefined {
@@ -61,6 +66,16 @@ class AffectedObjects {
     return this.nftOfferChanges;
   }
 
+  private getNFTokensMetadata(nftokenID: string): any {
+    if (this.nftokenInfoCache.has(nftokenID)) {
+      return this.nftokenInfoCache.get(nftokenID);
+    }
+
+    const parsed = parseNFTokenID(nftokenID);
+    this.nftokenInfoCache.set(nftokenID, parsed);
+    return parsed;
+  }
+
   private parseNFTokens(): void {
     const nftokens = {};
     const nftokenChanges = this.getNFTokenChanges();
@@ -70,11 +85,10 @@ class AffectedObjects {
           continue;
         }
 
-        const nftokenIDInfo = parseNFTokenID(nftsChange.nftokenID);
+        const nftokenIDInfo = this.getNFTokensMetadata(nftsChange.nftokenID);
         if (nftokenIDInfo) {
           nftokens[nftsChange.nftokenID] = {
             nftokenID: nftsChange.nftokenID,
-            // uri: nftsChange.uri,
             flags: parseNFTokenFlags(nftokenIDInfo.Flags),
             transferFee: nftokenIDInfo.TransferFee,
             issuer: nftokenIDInfo.Issuer,
@@ -92,7 +106,7 @@ class AffectedObjects {
           continue;
         }
 
-        const nftokenIDInfo = parseNFTokenID(nftokenOfferChange.nftokenID);
+        const nftokenIDInfo = this.getNFTokensMetadata(nftokenOfferChange.nftokenID);
         if (nftokenIDInfo) {
           nftokens[nftokenOfferChange.nftokenID] = {
             nftokenID: nftokenOfferChange.nftokenID,
@@ -137,37 +151,42 @@ class AffectedObjects {
 
   private parseURITokenChanges(): void {
     const uritokens = {};
+    const affectedNodes = this.getAffectedNodes();
 
-    for (const affectedNode of this.tx.meta.AffectedNodes) {
+    for (const affectedNode of affectedNodes) {
       const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
-      if (node?.LedgerEntryType === "URIToken" && node?.LedgerIndex) {
-        const uritokenID = node.LedgerIndex;
+      if (node?.LedgerEntryType !== "URIToken" || !node?.LedgerIndex) {
+        continue;
+      }
 
-        if (affectedNode.CreatedNode) {
-          uritokens[uritokenID] = removeUndefined({
-            uritokenID,
-            flags: parseURITokenFlags(node.NewFields.Flags),
-            uri: node.NewFields.URI,
-            digest: node.NewFields.Digest,
-            issuer: node.NewFields.Issuer,
-            owner: node.NewFields.Owner,
-            amount: node.NewFields.Amount,
-            destination: node.NewFields.Destination,
-          });
-        }
+      const uritokenID = node.LedgerIndex;
+      const finalFields = node.FinalFields || {};
+      const newFields = node.NewFields || {};
 
-        if (affectedNode.ModifiedNode || affectedNode.DeletedNode) {
-          uritokens[uritokenID] = removeUndefined({
-            uritokenID,
-            flags: parseURITokenFlags(node.FinalFields.Flags),
-            uri: node.FinalFields.URI,
-            digest: node.FinalFields.Digest,
-            issuer: node.FinalFields.Issuer,
-            owner: node.FinalFields.Owner,
-            amount: node.FinalFields.Amount,
-            destination: node.FinalFields.Destination,
-          });
-        }
+      if (affectedNode.CreatedNode) {
+        uritokens[uritokenID] = removeUndefined({
+          uritokenID,
+          flags: parseURITokenFlags(newFields.Flags),
+          uri: newFields.URI,
+          digest: newFields.Digest,
+          issuer: newFields.Issuer,
+          owner: newFields.Owner,
+          amount: newFields.Amount,
+          destination: newFields.Destination,
+        });
+      }
+
+      if (affectedNode.ModifiedNode || affectedNode.DeletedNode) {
+        uritokens[uritokenID] = removeUndefined({
+          uritokenID,
+          flags: parseURITokenFlags(finalFields.Flags),
+          uri: finalFields.URI,
+          digest: finalFields.Digest,
+          issuer: finalFields.Issuer,
+          owner: finalFields.Owner,
+          amount: finalFields.Amount,
+          destination: finalFields.Destination,
+        });
       }
     }
 

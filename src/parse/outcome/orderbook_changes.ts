@@ -1,4 +1,3 @@
-import _ from "lodash";
 import GlobalBigNumber from "bignumber.js";
 const BigNumber = GlobalBigNumber.clone({ DECIMAL_PLACES: 40 });
 import { LedgerEntry, TransactionMetadata } from "xrpl";
@@ -109,7 +108,7 @@ function parseChangeAmount(node: NormalizedNode, type: string): FormattedAmount 
   const finalAmount = parseCurrencyAmount(node.finalFields[type] as IssuedCurrencyAmount) as IssuedCurrencyAmount;
   const previousAmount = parseCurrencyAmount(node.previousFields[type] as IssuedCurrencyAmount) as IssuedCurrencyAmount;
   const value = calculateDelta(finalAmount, previousAmount);
-  return _.assign({}, finalAmount, { value: value });
+  return { ...finalAmount, value };
 }
 
 function parseOrderChange(node: NormalizedNode): OfferDescription {
@@ -144,9 +143,22 @@ function parseOrderChange(node: NormalizedNode): OfferDescription {
 }
 
 function groupByAddress(orderChanges: OfferDescription[]): Orderbook {
-  return _.groupBy(orderChanges, function (change) {
-    return change.account;
-  });
+  const grouped: Orderbook = {};
+
+  for (let i = 0; i < orderChanges.length; i++) {
+    const change = orderChanges[i];
+    const address = change.account;
+    if (!address) {
+      continue;
+    }
+
+    if (!grouped[address]) {
+      grouped[address] = [];
+    }
+    grouped[address].push(change);
+  }
+
+  return grouped;
 }
 
 /**
@@ -163,15 +175,19 @@ function parseOrderbookChanges(metadata: TransactionMetadata): Orderbook {
     return {};
   }
 
-  const affectedNodes = metadata.AffectedNodes.filter((affectedNode: any) => {
-    const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
-    return node.LedgerEntryType === "Offer";
-  });
+  const affectedNodes = metadata.AffectedNodes;
+  const orderChanges: OfferDescription[] = [];
 
-  const orderChanges = affectedNodes.map((affectedNode: any) => {
+  for (let i = 0; i < affectedNodes.length; i++) {
+    const affectedNode: any = affectedNodes[i];
+    const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
+    if (!node || node.LedgerEntryType !== "Offer") {
+      continue;
+    }
+
     const normalizedNode = normalizeNode(affectedNode);
-    return parseOrderChange(normalizedNode);
-  });
+    orderChanges.push(parseOrderChange(normalizedNode));
+  }
 
   return groupByAddress(orderChanges);
 }

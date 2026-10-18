@@ -52,15 +52,8 @@ class MPTokenIssuanceChanges {
   }
 
   private hasAffectedNodes(): boolean {
-    if (this.tx.meta?.AffectedNodes === undefined) {
-      return false;
-    }
-
-    if (this.tx.meta?.AffectedNodes?.length === 0) {
-      return false;
-    }
-
-    return true;
+    const metadata = this.tx.meta || this.tx.metaData;
+    return Array.isArray(metadata?.AffectedNodes) && metadata.AffectedNodes.length > 0;
   }
 
   private addChange(mptIssuanceID: string, change: MPTokenIssuanceChangesInterface): void {
@@ -68,7 +61,8 @@ class MPTokenIssuanceChanges {
   }
 
   private parseAffectedNodes(): void {
-    for (const affectedNode of this.tx.meta.AffectedNodes) {
+    const metadata = this.tx.meta || this.tx.metaData;
+    for (const affectedNode of metadata?.AffectedNodes || []) {
       const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
       if (node?.LedgerEntryType === "MPTokenIssuance" && node?.LedgerIndex) {
         // create a new URIToken entry with or without offer

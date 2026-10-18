@@ -1,7 +1,8 @@
-import _ from "lodash";
 import BigNumber from "bignumber.js";
 import { TransactionMetadata } from "xrpl";
 import { NormalizedNode, normalizeNode } from "../utils";
+
+const RELEVANT_LOCKED_ENTRY_TYPES = new Set(["RippleState", "MPToken"]);
 
 interface LockedBalanceChangeQuantity {
   issuer?: string; // currency issuer
@@ -20,15 +21,8 @@ export interface LockedBalanceChanges {
   [key: string]: LockedBalanceChangeQuantity[];
 }
 
-function groupByAddress(lockedBalanceChanges: AddressLockedBalanceChangeQuantity[]) {
-  const grouped = _.groupBy(lockedBalanceChanges, function (node) {
-    return node.address;
-  });
-  return _.mapValues(grouped, function (group) {
-    return _.map(group, function (node) {
-      return node.lockedBalance;
-    });
-  });
+function pickFields(node: NormalizedNode): any {
+  return Object.keys(node.newFields).length > 0 ? (node.newFields as any) : (node.finalFields as any);
 }
 
 function parseValue(value: any): BigNumber {
@@ -36,34 +30,59 @@ function parseValue(value: any): BigNumber {
     return new BigNumber(value);
   }
 
-  return new BigNumber(value.value ?? 0);
+  return new BigNumber(value?.value ?? 0);
 }
 
-function computeBalanceChange(node: NormalizedNode) {
+type BalanceValueParser = (node: NormalizedNode) => BigNumber | null;
+
+function addLockedBalanceChange(
+  grouped: LockedBalanceChanges,
+  entry: AddressLockedBalanceChangeQuantity | null
+): void {
+  if (!entry || !entry.address) {
+    return;
+  }
+
+  (grouped[entry.address] ??= []).push(entry.lockedBalance);
+}
+
+function computeBalanceChange(node: NormalizedNode): BigNumber | null {
   let value: null | BigNumber = null;
-  if (node.newFields.LockedBalance) {
+  if (node.newFields.LockedBalance !== undefined) {
     value = parseValue(node.newFields.LockedBalance);
-  } else if (node.previousFields.LockedBalance && node.finalFields.LockedBalance) {
+  } else if (
+    node.previousFields.LockedBalance !== undefined &&
+    node.finalFields.LockedBalance !== undefined
+  ) {
     value = parseValue(node.finalFields.LockedBalance).minus(parseValue(node.previousFields.LockedBalance));
-  } else if (node.previousFields.LockedBalance) {
+  } else if (node.previousFields.LockedBalance !== undefined) {
     value = parseValue(node.previousFields.LockedBalance).negated();
-  } else if (node.finalFields.LockedAmount || node.previousFields.LockedAmount) {
-    value = parseValue(node.finalFields.LockedAmount ?? 0).minus(parseValue(node.previousFields.LockedAmount ?? 0));
+  } else if (node.diffType === "DeletedNode" && node.finalFields.LockedBalance !== undefined) {
+    value = parseValue(node.finalFields.LockedBalance).negated();
+  } else if (node.newFields.LockedAmount !== undefined) {
+    value = parseValue(node.newFields.LockedAmount);
+  } else if (node.previousFields.LockedAmount !== undefined) {
+    value = parseValue(node.finalFields.LockedAmount ?? 0).minus(parseValue(node.previousFields.LockedAmount));
+  } else if (node.diffType === "DeletedNode" && node.finalFields.LockedAmount !== undefined) {
+    value = parseValue(node.finalFields.LockedAmount).negated();
   }
 
   return value === null ? null : value.isZero() ? null : value;
 }
 
-function parseFinalBalance(node) {
-  if (node.newFields.LockedBalance) {
+function parseFinalBalance(node: NormalizedNode): BigNumber | null {
+  if (node.newFields.LockedBalance !== undefined) {
     return parseValue(node.newFields.LockedBalance);
-  } else if (node.finalFields.LockedBalance) {
+  } else if (node.diffType !== "DeletedNode" && node.finalFields.LockedBalance !== undefined) {
     return parseValue(node.finalFields.LockedBalance);
   }
   return null;
 }
 
-function parseTrustlineQuantity(node, valueParser): AddressLockedBalanceChangeQuantity[] | null {
+function parseTrustlineQuantity(
+  node: NormalizedNode,
+  valueParser: BalanceValueParser
+): AddressLockedBalanceChangeQuantity[] | null {
   const value = valueParser(node);
 
   if (value === null) {
@@ -75,18 +94,26 @@ function parseTrustlineQuantity(node, valueParser): AddressLockedBalanceChangeQu
    * If an offer is placed to acquire an asset with no existing trustline,
    * the trustline can be created when the offer is taken.
    */
-  const fields = _.isEmpty(node.newFields) ? node.finalFields : node.newFields;
+  const fields = pickFields(node);
   const previousFields = node.previousFields as any;
+  const balanceField = fields?.Balance ?? previousFields?.Balance;
+
+  if (!balanceField || typeof balanceField.value === "undefined") {
+    return null;
+  }
+
+  const balanceValue = typeof balanceField.value === "string" ? balanceField.value : String(balanceField.value);
   let viewLowest = true;
 
-  if (previousFields && previousFields.Balance && previousFields.Balance.value !== "0") {
-    viewLowest = previousFields.Balance.value[0] !== "-"; // if positive, viewLowest is true, else false
+  if (previousFields && previousFields.Balance && previousFields.Balance.value !== "0" && previousFields.Balance.value !== 0) {
+    const previousValue = typeof previousFields.Balance.value === "string" ? previousFields.Balance.value : String(previousFields.Balance.value);
+    viewLowest = previousValue[0] !== "-";
   } else {
-    viewLowest = fields.Balance.value[0] !== "-"; // if positive, viewLowest is true, else false
+    viewLowest = balanceValue[0] !== "-";
   }
 
   const sign = viewLowest ? 1 : -1;
-  const currency = fields.Balance.currency;
+  const currency = balanceField.currency;
   const issuer = viewLowest ? fields.HighLimit.issuer : fields.LowLimit.issuer;
   const holder = viewLowest ? fields.LowLimit.issuer : fields.HighLimit.issuer;
 
@@ -103,14 +130,17 @@ function parseTrustlineQuantity(node, valueParser): AddressLockedBalanceChangeQu
   return [result];
 }
 
-function parseMPTQuantity(node: NormalizedNode, valueParser: any): AddressLockedBalanceChangeQuantity | null {
+function parseMPTQuantity(
+  node: NormalizedNode,
+  valueParser: BalanceValueParser
+): AddressLockedBalanceChangeQuantity | null {
   const value = valueParser(node);
 
   if (value === null) {
     return null;
   }
 
-  const fields = _.isEmpty(node.newFields) ? node.finalFields : (node.newFields as any);
+  const fields = pickFields(node);
 
   return {
     address: fields.Account,
@@ -121,24 +151,27 @@ function parseMPTQuantity(node: NormalizedNode, valueParser: any): AddressLocked
   };
 }
 
-function parseQuantities(metadata: TransactionMetadata, valueParser) {
-  const values = metadata.AffectedNodes.map(function (affectedNode: any) {
+function parseQuantities(metadata: TransactionMetadata, valueParser: BalanceValueParser): LockedBalanceChanges {
+  const affectedNodes = metadata?.AffectedNodes || [];
+  const grouped: LockedBalanceChanges = {};
+
+  for (let i = 0; i < affectedNodes.length; i++) {
+    const affectedNode: any = affectedNodes[i];
     const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
-    if (!["RippleState", "MPToken"].includes(node.LedgerEntryType)) {
-      return [];
+    if (!node || !RELEVANT_LOCKED_ENTRY_TYPES.has(node.LedgerEntryType)) {
+      continue;
     }
 
     const normalizedNode = normalizeNode(affectedNode);
     if (node.LedgerEntryType === "RippleState") {
-      return parseTrustlineQuantity(normalizedNode, valueParser);
+      const parsed = parseTrustlineQuantity(normalizedNode, valueParser);
+      if (parsed) addLockedBalanceChange(grouped, parsed[0]);
     } else if (node.LedgerEntryType === "MPToken") {
-      return [parseMPTQuantity(normalizedNode, valueParser)];
+      addLockedBalanceChange(grouped, parseMPTQuantity(normalizedNode, valueParser));
     }
+  }
 
-    return [];
-  });
-
-  return groupByAddress(_.compact(_.flatten(values)));
+  return grouped;
 }
 
 /**
@@ -159,7 +192,7 @@ function parseLockedBalanceChanges(metadata: TransactionMetadata): LockedBalance
  *  @param {Object} metadata Transaction metadata
  *  @returns {Object} parsed balances
  */
-function parseFinalLockedBalances(metadata: TransactionMetadata) {
+function parseFinalLockedBalances(metadata: TransactionMetadata): LockedBalanceChanges {
   return parseQuantities(metadata, parseFinalBalance);
 }
 

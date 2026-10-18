@@ -77,7 +77,7 @@ export async function getAccountInfo(
   }
 
   const result = response.result as AccountInfoResponse;
-  if (!result) {
+  if (!result || !result.account_data || typeof result.account_data !== "object") {
     return {
       account,
       status: "error",
@@ -141,15 +141,26 @@ export async function getAccountInfoData(
   return response.account_data;
 }
 
-export async function isActivated(account: string): Promise<boolean> {
+/**
+ * Checks if an account is activated on the ledger.
+ * @param {string} account - The account address to check.
+ * @returns {Promise<boolean | undefined>} - Returns true if the account is activated, false if not activated, or undefined on any error (connection issues, etc.)
+ */
+export async function isActivated(account: string): Promise<boolean | undefined> {
   const response = await getAccountInfo(account);
 
   if (!response) {
-    return false;
+    // throw new Error("Failed to get account info: no response from server.");
+    return undefined;
   }
 
-  if ("error" in response /* && response.error === "actNotFound"*/) {
-    return false;
+  if ("error" in response) {
+    if (response.error === "actNotFound") {
+      return false;
+    }
+
+    // throw new Error(response.error_message || String(response.error || "Failed to get account info."));
+    return undefined;
   }
 
   return true;

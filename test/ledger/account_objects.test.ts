@@ -80,6 +80,7 @@ describe("Client", () => {
 
     it("works with limit 500", async function () {
       const result: any = await Client.getAccountAllObjects("rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B", { limit: 500 });
+      expect(result.error).not.to.exist;
       delete result._nodepref; // can be omitted
       expect(Object.keys(result).sort()).to.eql([
         "account",

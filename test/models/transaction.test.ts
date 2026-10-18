@@ -9308,6 +9308,22 @@ describe("Models", () => {
       expect(result).to.eql({});
     });
 
+    it("supports metaData fallback for NFT changes", function () {
+      const tx = require("../examples/responses/NFTokenMint.json");
+      const { meta, ...rest } = tx;
+      const result: any = Models.parseNFTokenChanges({ ...rest, metaData: meta });
+
+      expect(result).to.eql({
+        r4feBcQoNLdTkpuWSLd3HWSzNRnvgqgPr3: [
+          {
+            status: "added",
+            nftokenID: "000B0000E79C2D0D5F8FD6425722AE21C61D731DCA80ABC90000099B00000000",
+            uri: "697066733A2F2F516D516A447644686648634D7955674441784B696734416F4D547453354A72736670694545704661334639515274",
+          },
+        ],
+      });
+    });
+
     it("NFTokenCancelOffer", function () {
       const tx = require("../examples/responses/NFTokenCancelOffer.json");
       const result: any = Models.parseNFTokenChanges(tx);
@@ -9531,6 +9547,33 @@ describe("Models", () => {
     it("NFTokenCreateOfferBuy", function () {
       const tx = require("../examples/responses/NFTokenCreateOfferBuy.json");
       const result: any = Models.parseAffectedObjects(tx);
+
+      expect(result).to.eql({
+        nftokenOffers: {
+          AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021: {
+            index: "AA12128D6A55784C059FC9654FCBB8904BFCB54C850B2F94046BD9BA2743A021",
+            nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+            flags: { sellToken: false },
+            owner: "rM3UEiJzg7nMorRhdED5savWDt1Gqb6TLw",
+          },
+        },
+        nftokens: {
+          "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001": {
+            nftokenID: "000B0000C124E14881533A9AFE4A5F481795C17003A9FACF16E5DA9C00000001",
+            flags: { burnable: true, onlyXRP: true, trustLine: false, transferable: true, mutable: false },
+            transferFee: 0,
+            issuer: "rJcEbVWJ7xFjL8J9LsbxBMVSRY2C7DU7rz",
+            nftokenTaxon: 0,
+            sequence: 1,
+          },
+        },
+      });
+    });
+
+    it("supports metaData fallback for affected objects", function () {
+      const tx = require("../examples/responses/NFTokenCreateOfferBuy.json");
+      const { meta, ...rest } = tx;
+      const result: any = Models.parseAffectedObjects({ ...rest, metaData: meta });
 
       expect(result).to.eql({
         nftokenOffers: {

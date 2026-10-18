@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { TransactionMetadata, ModifiedNode } from "xrpl";
 
 import { getAccountRootFlagsKeys, AccountRootFlagsKeysInterface, AccountFields } from "../../models/account_info";
@@ -7,8 +6,8 @@ import { parseField } from "../ledger/account-fields";
 function summarizeSetting(modifiedNode: any): AccountRootFlagsKeysInterface {
   const settings: AccountRootFlagsKeysInterface = {};
 
-  const oldFlags = _.get(modifiedNode.PreviousFields, "Flags");
-  const newFlags = _.get(modifiedNode.FinalFields, "Flags");
+  const oldFlags = modifiedNode.PreviousFields?.Flags;
+  const newFlags = modifiedNode.FinalFields?.Flags;
 
   // eslint-disable-next-line eqeqeq
   if (oldFlags != null && newFlags != null) {
@@ -34,8 +33,8 @@ function summarizeSetting(modifiedNode: any): AccountRootFlagsKeysInterface {
   // enableTransactionIDTracking requires a special case because it
   // does not affect the Flags field; instead it adds/removes a field called
   // "AccountTxnID" to/from the account root.
-  const oldAccountTxnIDField = _.get(modifiedNode.PreviousFields, "AccountTxnID");
-  const newAccountTxnIDField = _.get(modifiedNode.FinalFields, "AccountTxnID");
+  const oldAccountTxnIDField = modifiedNode.PreviousFields?.AccountTxnID;
+  const newAccountTxnIDField = modifiedNode.FinalFields?.AccountTxnID;
   if (newAccountTxnIDField && !oldAccountTxnIDField) {
     settings.enableTransactionIDTracking = true;
   } else if (oldAccountTxnIDField && !newAccountTxnIDField) {
@@ -44,8 +43,8 @@ function summarizeSetting(modifiedNode: any): AccountRootFlagsKeysInterface {
 
   // domain, emailHash, messageKey, etc.
   for (const fieldName in AccountFields) {
-    const oldFieldValue = _.get(modifiedNode.PreviousFields, fieldName);
-    const newFieldValue = _.get(modifiedNode.FinalFields, fieldName);
+    const oldFieldValue = modifiedNode.PreviousFields?.[fieldName];
+    const newFieldValue = modifiedNode.FinalFields?.[fieldName];
 
     if (oldFieldValue !== undefined && newFieldValue !== undefined && oldFieldValue !== newFieldValue) {
       const info = AccountFields[fieldName];

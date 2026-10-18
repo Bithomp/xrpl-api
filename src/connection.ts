@@ -26,6 +26,26 @@ const SLOW_DOWN_ERROR_MESSAGES = [
   "You are placing too much load on the server.",
 ];
 
+type CompleteLedgerRange = [number, number];
+
+function parseCompleteLedgerRanges(completeLedgers: unknown): CompleteLedgerRange[] {
+  const ranges: CompleteLedgerRange[] = [];
+  if (typeof completeLedgers !== "string") {
+    return ranges;
+  }
+
+  for (const range of completeLedgers.split(",")) {
+    const separator = range.indexOf("-");
+    const min = Number.parseInt(separator === -1 ? range : range.slice(0, separator), 10);
+    const max = Number.parseInt(separator === -1 ? range : range.slice(separator + 1), 10);
+    if (Number.isFinite(min) && Number.isFinite(max) && min <= max) {
+      ranges.push([min, max]);
+    }
+  }
+
+  return ranges;
+}
+
 export interface ConnectionOptions {
   logger?: any;
   timeout?: number; // request timeout
@@ -60,6 +80,7 @@ class Connection extends EventEmitter {
   public readonly type?: string;
   public types: string[] = [];
   public latency: LatencyInfo[] = [];
+  private requestTimeouts: boolean[] = [];
   public readonly logger?: any;
   public readonly timeout: number; // request timeout
   public readonly connectionTimeout: number; // connection timeout
@@ -127,6 +148,7 @@ class Connection extends EventEmitter {
 
       await this.client.connect();
       this.latency = []; // reset latency on new connection
+      this.requestTimeouts = [];
       await this.updateServerInfo();
       await this.subscribe();
 
@@ -178,8 +200,9 @@ class Connection extends EventEmitter {
 
     // handle mass timeout errors
     if (result?.error) {
+      const error = typeof result.error === "string" ? result.error : String(result.error);
       // too many requests
-      if (SLOW_DOWN_ERROR_MESSAGES.includes(result.error) || result.error.toLowerCase().startsWith("rate limit")) {
+      if (SLOW_DOWN_ERROR_MESSAGES.includes(error) || error.toLowerCase().startsWith("rate limit")) {
         this.logger?.debug({
           service: "Bithomp::XRPL::Connection",
           function: "request",
@@ -189,8 +212,8 @@ class Connection extends EventEmitter {
 
         validResponse = false;
       } else if (result.error === "timeout") {
-        // if we have more then 3 timeouts in last 10 requests, reconnect
-        const timeouts = this.latency.filter((info) => info.delta >= this.timeout).length;
+        // if we have more than 3 timeouts in the last 10 requests, reconnect
+        const timeouts = this.requestTimeouts.filter(Boolean).length;
         if (timeouts >= 3) {
           this.logger?.debug({
             service: "Bithomp::XRPL::Connection",
@@ -201,7 +224,7 @@ class Connection extends EventEmitter {
 
           validResponse = false;
         }
-      } else if (result.error.toLowerCase().startsWith("websocket was closed")) {
+      } else if (error.toLowerCase().startsWith("websocket was closed")) {
         // websocket was closed, reconnect
         this.logger?.debug({
           service: "Bithomp::XRPL::Connection",
@@ -260,7 +283,11 @@ class Connection extends EventEmitter {
       // check apiVersion, if not present in original request or if different from DEFAULT_API_VERSION
       // add apiVersion to request
       // NOTE: this will mutate the request object
-      if (this.apiVersion && !request.hasOwnProperty("api_version") && DEFAULT_API_VERSION !== this.apiVersion) {
+      if (
+        this.apiVersion &&
+        !Object.prototype.hasOwnProperty.call(request, "api_version") &&
+        DEFAULT_API_VERSION !== this.apiVersion
+      ) {
         request.api_version = this.apiVersion;
       }
 
@@ -269,11 +296,14 @@ class Connection extends EventEmitter {
       const response = await this.client.request(request);
 
       this.updateLatency(getTimestamp() - startTimestamp);
+      this.recordRequestTimeout(false);
 
       return response;
     } catch (err: any) {
       // update latency, as we have error
-      this.updateLatency(err.name === "TimeoutError" ? this.timeout : this.connectionTimeout);
+      const timedOut = err?.name === "TimeoutError";
+      this.updateLatency(timedOut ? this.timeout : this.connectionTimeout);
+      this.recordRequestTimeout(timedOut);
       this.logger?.debug({
         service: "Bithomp::XRPL::Connection",
         function: "request",
@@ -282,9 +312,9 @@ class Connection extends EventEmitter {
       });
 
       // TimeoutError
-      if (err.name === "TimeoutError") {
+      if (timedOut) {
         return { error: "timeout", error_message: "Request timeout.", status: "error" };
-      } else if (err.data) {
+      } else if (err?.data) {
         return err.data;
       } else {
         return { error: err?.message || err?.name || err, status: "error" };
@@ -303,7 +333,7 @@ class Connection extends EventEmitter {
         error: err?.message || err?.name || err,
       });
 
-      if (err.data) {
+      if (err?.data) {
         return err.data;
       } else {
         return { error: err?.message || err?.name || err };
@@ -354,16 +384,13 @@ class Connection extends EventEmitter {
       return true;
     }
 
-    const ranges = this.serverInfo.complete_ledgers.split(",");
+    const ranges = parseCompleteLedgerRanges(this.serverInfo.complete_ledgers);
     if (ranges.length === 0) {
       return true;
     }
 
-    const firstRange = ranges[0].split("-").map((v) => parseInt(v, 10));
-    const lastRange = ranges[ranges.length - 1].split("-").map((v) => parseInt(v, 10));
-
-    const minLedgerIndex = firstRange[0];
-    const maxLedgerIndex = lastRange[1] + AVAILABLE_LEDGER_INDEX_WINDOW;
+    const minLedgerIndex = ranges[0][0];
+    const maxLedgerIndex = ranges[ranges.length - 1][1];
 
     if (
       ledgerIndex < minLedgerIndex - AVAILABLE_LEDGER_INDEX_WINDOW ||
@@ -386,14 +413,16 @@ class Connection extends EventEmitter {
       return false;
     }
 
-    const ranges = this.serverInfo.complete_ledgers.split(",");
+    const ranges = parseCompleteLedgerRanges(this.serverInfo.complete_ledgers);
     if (ranges.length === 0) {
-      return true;
+      return false;
     }
 
-    for (const range of ranges) {
-      const [rangeMin, rangeMax] = range.split("-").map((v: string) => parseInt(v, 10));
-      if (ledgerIndex >= rangeMin && ledgerIndex <= rangeMax + AVAILABLE_LEDGER_INDEX_WINDOW) {
+    const lastRangeIndex = ranges.length - 1;
+    for (let i = 0; i < ranges.length; i++) {
+      const [rangeMin, rangeMax] = ranges[i];
+      const maxIndex = i === lastRangeIndex ? rangeMax + AVAILABLE_LEDGER_INDEX_WINDOW : rangeMax;
+      if (ledgerIndex >= rangeMin && ledgerIndex <= maxIndex) {
         return true;
       }
     }
@@ -408,6 +437,11 @@ class Connection extends EventEmitter {
     });
 
     this.latency.splice(0, this.latency.length - 10);
+  }
+
+  private recordRequestTimeout(timedOut: boolean): void {
+    this.requestTimeouts.push(timedOut);
+    this.requestTimeouts.splice(0, this.requestTimeouts.length - 10);
   }
 
   private async reconnect(): Promise<void> {

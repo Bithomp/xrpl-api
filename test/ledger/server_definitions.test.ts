@@ -80,6 +80,7 @@ describe("Client", () => {
       delete result.TRANSACTION_FLAGS_INDICES; // can be omitted from some servers
       expect(Object.keys(result).sort()).to.eql([
         "FIELDS",
+        "HOOK",
         "LEDGER_ENTRY_TYPES",
         // "TRANSACTION_FLAGS",
         // "TRANSACTION_FLAGS_INDICES",

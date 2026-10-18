@@ -9,7 +9,9 @@ function parseDeliveredAmount(
   tx: any,
   balanceChanges: BalanceChanges
 ): IssuedCurrencyAmount | FormattedIssuedCurrencyAmount | FormattedIssuedMPTAmount | undefined {
-  if (tx.meta.TransactionResult !== "tesSUCCESS") {
+  // Transactions may use either field name depending on the server/API source.
+  const metadata = tx.meta || tx.metaData;
+  if (!metadata || metadata.TransactionResult !== "tesSUCCESS") {
     return undefined;
   }
 
@@ -56,13 +58,13 @@ function parseDeliveredAmount(
   }
 
   // parsable delivered_amount
-  if (tx.meta.delivered_amount && tx.meta.delivered_amount !== "unavailable") {
-    return parseAmount(tx.meta.delivered_amount);
+  if (metadata.delivered_amount && metadata.delivered_amount !== "unavailable") {
+    return parseAmount(metadata.delivered_amount);
   }
 
   // DeliveredAmount only present on partial payments
-  if (tx.meta.DeliveredAmount) {
-    return parseAmount(tx.meta.DeliveredAmount);
+  if (metadata.DeliveredAmount) {
+    return parseAmount(metadata.DeliveredAmount);
   }
 
   return undefined;

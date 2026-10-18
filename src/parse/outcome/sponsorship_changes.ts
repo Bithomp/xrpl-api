@@ -100,21 +100,20 @@ function parseSponsorshipChanges(metadata: TransactionMetadata): FormattedSponso
     return undefined;
   }
 
-  const affectedNodes = metadata.AffectedNodes.filter((affectedNode: any) => {
-    const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
-    return node.LedgerEntryType === "Sponsorship";
-  });
+  const affectedNodes = metadata.AffectedNodes;
+  const sponsorshipChanges: FormattedSponsorshipSummaryInterface[] = [];
 
-  if (affectedNodes.length === 0) {
-    return undefined;
+  for (let i = 0; i < affectedNodes.length; i++) {
+    const affectedNode: any = affectedNodes[i];
+    const node = affectedNode.CreatedNode || affectedNode.ModifiedNode || affectedNode.DeletedNode;
+    if (!node || node.LedgerEntryType !== "Sponsorship") {
+      continue;
+    }
+
+    sponsorshipChanges.push(summarizeSponsorship(normalizeNode(affectedNode)));
   }
 
-  const sponsorshipChanges: FormattedSponsorshipSummaryInterface[] = affectedNodes.map((affectedNode: any) => {
-    const normalizedNode = normalizeNode(affectedNode);
-    return summarizeSponsorship(normalizedNode);
-  });
-
-  return sponsorshipChanges;
+  return sponsorshipChanges.length > 0 ? sponsorshipChanges : undefined;
 }
 
 export { parseSponsorshipChanges };
