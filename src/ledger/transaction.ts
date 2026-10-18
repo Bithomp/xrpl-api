@@ -116,6 +116,12 @@ export async function getTransaction(
   }
 
   const result = response?.result;
+  if (!result) {
+    return {
+      status: "error",
+      error: "invalidResponse",
+    };
+  }
 
   if (typeof result === "object") {
     if (formatted === true) {
@@ -145,17 +151,17 @@ export async function getTransaction(
         result.rawTransaction = details.rawTransaction;
       }
     }
-  }
 
-  if (!result.hasOwnProperty("ctid")) {
-    const ctid = encodeCTIDforTransaction(result, connection.getNetworkID());
-    if (ctid) {
-      result.ctid = ctid;
+    if (!result.hasOwnProperty("ctid")) {
+      const ctid = encodeCTIDforTransaction(result, connection.getNetworkID());
+      if (ctid) {
+        result.ctid = ctid;
+      }
     }
-  }
 
-  if (result.hasOwnProperty("tx_json") && result.tx_json.hasOwnProperty("ctid")) {
-    delete result.tx_json.ctid; // added by clio
+    if (result.hasOwnProperty("tx_json") && result.tx_json.hasOwnProperty("ctid")) {
+      delete result.tx_json.ctid; // added by clio
+    }
   }
 
   return result;
@@ -376,7 +382,7 @@ export async function getAccountPaymentParams(
       }
 
       if (!fee) {
-        throw new Error("Cannot not resolve fee from network");
+        throw new Error("Cannot resolve fee from network");
       }
 
       resolve(xrpToDrops(fee.toString()));
@@ -406,12 +412,13 @@ export async function getAccountPaymentParams(
       try {
         const ledgerIndex = await Client.getLedgerIndex();
         if (ledgerIndex !== undefined) {
-          resolve(ledgerIndex + MAX_LEDGERS_AWAIT);
+          return resolve(ledgerIndex + MAX_LEDGERS_AWAIT);
         }
-        resolve(undefined);
       } catch (_err: any) {
-        resolve(undefined);
+        // ignore
       }
+
+      resolve(undefined);
     });
 
     const result = await Promise.all([feePromise, sequencePromise, lastLedgerSequencePromise]);
@@ -472,7 +479,7 @@ export async function getTxSubmitParams(
           }
 
           if (!fee) {
-            throw new Error("Cannot not resolve fee from network");
+            throw new Error("Cannot resolve fee from network");
           }
 
           resolve(xrpToDrops(fee.toString()));
@@ -509,12 +516,13 @@ export async function getTxSubmitParams(
         try {
           const ledgerIndex = await Client.getLedgerIndex();
           if (ledgerIndex !== undefined) {
-            resolve(ledgerIndex + MAX_LEDGERS_AWAIT);
+            return resolve(ledgerIndex + MAX_LEDGERS_AWAIT);
           }
-          resolve(undefined);
         } catch (_err: any) {
-          resolve(undefined);
+          // ignore
         }
+
+        resolve(undefined);
       });
     }
 
@@ -565,6 +573,7 @@ export async function submit(
   const resultGroup = engineResult?.slice(0, 3);
 
   // if tx is failed and not queued or kept
+  // ignore result?.kept === false until concurrency fix is is fully tested
   if (SUBMIT_ERRORS_GROUP.includes(resultGroup) && !REQUIRE_CONFIRMATION_RESULTS.includes(engineResult)) {
     return result;
   }

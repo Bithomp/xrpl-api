@@ -316,7 +316,7 @@ function adjustBalancesForPaymentChannel(
   }
 
   // only for native token without issuer
-  if (channelChanges.amount.currency !== getNativeCurrency() && channelChanges.amount.issuer) {
+  if (channelChanges.amount.currency !== getNativeCurrency() || channelChanges.amount.issuer) {
     return;
   }
 
