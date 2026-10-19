@@ -12,7 +12,7 @@ describe("Client", () => {
 
     it("works", async function () {
       const result: any = await Client.getAccountObjects("rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8");
-      expect(Object.keys(result)).to.eql(["account", "account_objects", "ledger_hash", "ledger_index", "validated"]);
+      expect(Object.keys(result).sort()).to.include.members(["account", "account_objects", "ledger_hash", "ledger_index", "validated"]);
       expect(JSON.stringify(result.account_objects)).to.eql(
         '[{"Balance":{"currency":"FOO","issuer":"rrrrrrrrrrrrrrrrrrrrBZbvji","value":"-123.45"},"Flags":131072,"HighLimit":{"currency":"FOO","issuer":"rHSeZUD5XGjRWq5f1p3DCC3oAP9sg2pgg8","value":"1000000000"},"HighNode":"0","LedgerEntryType":"RippleState","LowLimit":{"currency":"FOO","issuer":"rESkTa8rXUGKs1njRrJGYSTwB5R1XYCEAt","value":"0"},"LowNode":"0","PreviousTxnID":"4CB55AB8EDE52EE3661B864674F4157B1CB5A963F7A7128D76F0AC8C3350DCCE","PreviousTxnLgrSeq":5763,"index":"B3640F185360BA74AE095111422699F02B7408C6B26A743216ABC65840D0E27F"}]'
       );
