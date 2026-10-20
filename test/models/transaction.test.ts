@@ -1410,7 +1410,7 @@ describe("Models", () => {
                 sequence: 2795,
                 status: "created",
                 makerExchangeRate: "100",
-                direction: "buy",
+                direction: "sell",
                 quantity: { currency: "XRP", value: "5.89" },
                 totalPrice: {
                   issuer: "rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De",

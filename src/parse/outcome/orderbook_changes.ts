@@ -1,6 +1,6 @@
 import GlobalBigNumber from "bignumber.js";
 const BigNumber = GlobalBigNumber.clone({ DECIMAL_PLACES: 40 });
-import { LedgerEntry, TransactionMetadata } from "xrpl";
+import { TransactionMetadata } from "xrpl";
 import { removeUndefined } from "../../common";
 import { ledgerTimeToTimestamp } from "../../models";
 import { NormalizedNode, normalizeNode } from "../utils";
@@ -128,8 +128,7 @@ function parseOrderChange(node: NormalizedNode): OfferDescription {
     expirationTime: getExpirationTime(node),
     domainID: fields.DomainID as string,
 
-    // eslint-disable-next-line no-bitwise
-    direction: ((node.finalFields.Flags as any) & LedgerEntry.OfferFlags.lsfSell) === 0 ? "buy" : "sell", // @deprecated
+    direction: flags.sell === true ? "sell" : "buy", // @deprecated
     quantity: flags.sell === true ? takerGets : takerPays, // @deprecated
     totalPrice: flags.sell === true ? takerPays : takerGets, // @deprecated
   });
