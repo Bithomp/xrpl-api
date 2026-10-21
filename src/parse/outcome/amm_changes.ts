@@ -214,7 +214,7 @@ function summarizeActionSlotChanges(node: NormalizedNode): FormattedAuctionSlotC
       });
 
       const removed = prevAuthAccounts.filter((auth: AuthAccount) => {
-        return !finalAuthAccounts.includes(auth.AuthAccount.Account);
+        return !finalAuthAccounts.some((finalAuth: AuthAccount) => finalAuth.AuthAccount.Account === auth.AuthAccount.Account);
       });
 
       if (removed.length > 0) {
