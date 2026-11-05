@@ -564,7 +564,7 @@ describe("Client", () => {
   describe("testnet", () => {
     before(async function () {
       this.timeout(15000);
-      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP" });
+      Client.setup(nconf.get("xrpl:connections:testnet"), { nativeCurrency: "XRP", maxFee: 0.00001 });
       await Client.connect();
     });
 
@@ -590,6 +590,7 @@ describe("Client", () => {
         const result: any = await Client.submit(signedTransaction);
         expect(result.meta).to.be.an("object");
         expect(result.meta.TransactionResult).to.eq("tesSUCCESS");
+        expect(result.Fee).to.eq("10");
       });
 
       it("is OK for sign and submit with auto fee", async function () {

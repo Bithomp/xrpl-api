@@ -6,13 +6,16 @@ export * from "./ledger";
 export let feeCushion: number = 1.3; // 30% fee cushion
 export let logger: any;
 
+export const FEE_LIMIT = 0.5; // Fee limit for the native currency (XRP, XAH) in currency units
+
 let clientConnections: Connection[] = [];
 let loadBalancing = false;
 let nativeCurrency = MAINNET_NATIVE_CURRENCY;
+let maxFee: number = FEE_LIMIT;
 
 export interface ClientOptions extends ConnectionOptions {
   feeCushion?: number;
-  maxFeeXRP?: string;
+  maxFee?: number; // maximum fee in native currency units (XRP, XAH), default is FEE_LIMIT
   logger?: any;
   nativeCurrency?: "XRP" | "XAH";
 
@@ -62,6 +65,10 @@ export function setup(servers: ClientConnection[], options: ClientOptions = {}) 
     nativeCurrency = options.nativeCurrency;
   }
 
+  if (options.hasOwnProperty("maxFee")) {
+    maxFee = options.maxFee || FEE_LIMIT;
+  }
+
   loadBalancing = options.loadBalancing === true;
 }
 
@@ -93,6 +100,10 @@ export async function disconnect() {
 
 export function getNativeCurrency() {
   return nativeCurrency || MAINNET_NATIVE_CURRENCY;
+}
+
+export function getMaxFee() {
+  return maxFee;
 }
 
 /**

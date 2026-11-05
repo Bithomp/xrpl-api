@@ -38,6 +38,7 @@ export default [
       eqeqeq: "warn",
       "no-invalid-this": "error",
       "no-return-assign": "error",
+      "no-console": "warn",
 
       "no-unused-expressions": [
         "error",

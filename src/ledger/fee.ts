@@ -73,7 +73,8 @@ export async function getFeeData(options: GetFeeOptions = {}): Promise<GetFeeDat
 }
 
 /**
- * @returns {string | null}
+ * Get the current network fee for a transaction, optionally considering the provided transaction and definitions.
+ * @returns {string | null} Fee in native currency units (XRP, XAH) or null if it cannot be determined
  * @exception {Error}
  */
 export async function getFee(options: GetFeeOptions = {}): Promise<string | null> {

@@ -28,7 +28,6 @@ import { signTransaction, walletFromSeed } from "../wallet";
 const SUBMIT_ERRORS_GROUP = ["tem", "tef", "tel", "ter"];
 const REQUIRE_CONFIRMATION_RESULTS = ["terQUEUED", "tefNO_TICKET"]; // in same rare cases Xahau returns tefNO_TICKET on transactions that are actually queued
 
-const FEE_LIMIT = 0.5; // native currency (XRP, XAH)
 const LEDGER_CLOSE_TIME_AWAIT = 1000; // ms
 const MAX_LEDGERS_AWAIT = 15;
 
@@ -376,9 +375,13 @@ export async function getAccountPaymentParams(
 
     const feePromise = new Promise(async (resolve) => {
       const baseFee = await Client.getFee({ connection });
+      if (!baseFee) {
+        throw new Error("Cannot resolve base fee from network");
+      }
+
       let fee = parseFloat(baseFee as string);
-      if (fee > FEE_LIMIT) {
-        fee = FEE_LIMIT;
+      if (fee > Client.getMaxFee()) {
+        fee = Client.getMaxFee();
       }
 
       if (!fee) {
@@ -473,9 +476,13 @@ export async function getTxSubmitParams(
           }
 
           const baseFee = await Client.getFee({ connection, tx, definitions });
+          if (!baseFee) {
+            throw new Error("Cannot resolve base fee from network");
+          }
+
           let fee = parseFloat(baseFee as string);
-          if (fee > FEE_LIMIT) {
-            fee = FEE_LIMIT;
+          if (fee > Client.getMaxFee()) {
+            fee = Client.getMaxFee();
           }
 
           if (!fee) {
