@@ -16,8 +16,56 @@ export function normalizeMPTokensPreviousFields(meta: any, tx: any): void {
     normalizeMPTokensPreviousFieldsEscrowCancel(meta);
   } else if (tx.TransactionType === "ConfidentialMPTConvert") {
     normalizeMPTokensPreviousFieldsConfidentialMPTConvert(meta);
+  } else if (tx.TransactionType === "LoanPay") {
+    normalizeMPTokensPreviousFieldsLoanPay(meta, tx);
   } else if (TRANSFER_TRANSACTION_TYPES.includes(tx.TransactionType)) {
     normalizeMPTokensPreviousFieldsTransfer(meta, tx);
+  }
+}
+
+function normalizeMPTokensPreviousFieldsLoanPay(meta: any, tx: any): void {
+  if (!tx.LoanID) {
+    return;
+  }
+
+  // LoanPay has no Destination. Follow the loan's broker and vault to identify
+  // the repayment asset and recipients; debt changes are not token movements.
+  const nodes = meta.AffectedNodes.map((node: any) => node.ModifiedNode || node.DeletedNode);
+  const loan = nodes.find((node: any) => node?.LedgerEntryType === "Loan" && node.LedgerIndex === tx.LoanID);
+  const brokerID = loan?.FinalFields?.LoanBrokerID;
+  if (!brokerID) {
+    return;
+  }
+
+  const broker = nodes.find((node: any) => node?.LedgerEntryType === "LoanBroker" && node.LedgerIndex === brokerID);
+  const vaultID = broker?.FinalFields?.VaultID;
+  if (!vaultID) {
+    return;
+  }
+
+  const vault = nodes.find((node: any) => node?.LedgerEntryType === "Vault" && node.LedgerIndex === vaultID);
+  const issuanceID = vault?.FinalFields?.Asset?.mpt_issuance_id;
+  if (!issuanceID) {
+    return;
+  }
+
+  const recipients = new Set([vault.FinalFields.Account, broker.FinalFields.Owner]);
+  for (const affectedNode of meta.AffectedNodes) {
+    const node = affectedNode.ModifiedNode;
+    const fields = node?.FinalFields;
+    if (
+      node?.LedgerEntryType === "MPToken" &&
+      fields?.Account &&
+      recipients.has(fields.Account) &&
+      fields.MPTokenIssuanceID === issuanceID &&
+      fields.MPTAmount !== undefined &&
+      node.PreviousFields?.MPTAmount === undefined &&
+      node.PreviousFields?.LockedAmount === undefined
+    ) {
+      // Only known repayment recipients can have an omitted previous zero.
+      node.PreviousFields ??= {};
+      node.PreviousFields.MPTAmount = "0";
+    }
   }
 }
 

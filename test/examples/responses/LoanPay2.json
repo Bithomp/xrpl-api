@@ -1,0 +1,213 @@
+{
+  "Account": "ra9cX7ABeK2tWKo8FgBFWS9iLpAepCaRYY",
+  "Amount": {
+    "mpt_issuance_id": "00684122B3B2AD2D2EC6DAFB2EE8DA4EEC448A5E3CC6C099",
+    "value": "5012529"
+  },
+  "Fee": "1",
+  "Flags": 0,
+  "LastLedgerSequence": 6832588,
+  "LoanID": "94DD6728D1A554A245F6BAFAC2FDED55509FFD874EA725C673D713B35D0D65F8",
+  "Sequence": 6832428,
+  "SigningPubKey": "ED6AB47DF3F1DB6CF210D475CBCED06D553519CA36B0090A1C2645830177A86174",
+  "Sponsor": "rn8vzHqE8fYjVu2MmAfMU3kdtt25QWRhUK",
+  "SponsorFlags": 1,
+  "SponsorSignature": {
+    "SigningPubKey": "ED0B936BE5609AF76CEB54279D54CCBA43B5AA0B28F7E86048AC03FE93F50F3930",
+    "TxnSignature": "F37231DF2339CD215676F7E7C599D0095B8EC4089DE72192E6BD772B417D0EB096480DFA18C9ADCC796054642A2E9D628C862263DBCFA037347D30E3B73E630C"
+  },
+  "TransactionType": "LoanPay",
+  "TxnSignature": "7B72A63F35C899BBD2DD59B470D983726A717AB3D64A4B008978D606D9A093097A3BE520DFCBCF37EBD896E74F0CE972601701662B75C7FCFE214A929B212E09",
+  "ctid": "C06841BA00040002",
+  "date": 847623942,
+  "hash": "B7956F4A3DAD5E768335C138FE367A68A7697CD7518FBC4B6B10C39BF5FD4619",
+  "inLedger": 6832570,
+  "ledger_index": 6832570,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "ra9cX7ABeK2tWKo8FgBFWS9iLpAepCaRYY",
+            "Flags": 0,
+            "MPTAmount": "5237471",
+            "MPTokenIssuanceID": "00684122B3B2AD2D2EC6DAFB2EE8DA4EEC448A5E3CC6C099",
+            "OwnerNode": "0",
+            "Sponsor": "rn8vzHqE8fYjVu2MmAfMU3kdtt25QWRhUK"
+          },
+          "LedgerEntryType": "MPToken",
+          "LedgerIndex": "6D806C541212AF62BA4EF47663A8F0E28FE4264FBC991583123D208F85DB3039",
+          "PreviousFields": {
+            "MPTAmount": "10250000"
+          },
+          "PreviousTxnID": "276424524B2A571A4C69907F361DB4A4A6AF59B905896900E49C7A153B8522EE",
+          "PreviousTxnLgrSeq": 6832568
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rn8vzHqE8fYjVu2MmAfMU3kdtt25QWRhUK",
+            "Flags": 0,
+            "MPTAmount": "262500",
+            "MPTokenIssuanceID": "00684122B3B2AD2D2EC6DAFB2EE8DA4EEC448A5E3CC6C099",
+            "OwnerNode": "0"
+          },
+          "LedgerEntryType": "MPToken",
+          "LedgerIndex": "6E012A00D0DA1D4B0877D7284CCB2E254D6AD14FBBBEA7D1D5072CA1BE8B5D0E",
+          "PreviousFields": {
+            "MPTAmount": "250000"
+          },
+          "PreviousTxnID": "276424524B2A571A4C69907F361DB4A4A6AF59B905896900E49C7A153B8522EE",
+          "PreviousTxnLgrSeq": 6832568
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Borrower": "ra9cX7ABeK2tWKo8FgBFWS9iLpAepCaRYY",
+            "Flags": 262144,
+            "GracePeriod": 60,
+            "InterestRate": 100000,
+            "LoanBrokerID": "B7B494B26E67B1736055E0DA62761DB59FC48F1EA39451B3164F03E9AEDB2DC7",
+            "LoanBrokerNode": "0",
+            "LoanOriginationFee": "250000",
+            "LoanSequence": 1,
+            "LoanServiceFee": "12500",
+            "NextPaymentDueDate": 847624182,
+            "OwnerNode": "0",
+            "PaymentInterval": 120,
+            "PaymentRemaining": 1,
+            "PeriodicPayment": "5000028.538830602681",
+            "PreviousPaymentDueDate": 847624062,
+            "PrincipalOutstanding": "5000010",
+            "StartDate": 847623942,
+            "TotalValueOutstanding": "5000029"
+          },
+          "LedgerEntryType": "Loan",
+          "LedgerIndex": "94DD6728D1A554A245F6BAFAC2FDED55509FFD874EA725C673D713B35D0D65F8",
+          "PreviousFields": {
+            "NextPaymentDueDate": 847624062,
+            "PaymentRemaining": 2,
+            "PrincipalOutstanding": "10000000",
+            "TotalValueOutstanding": "10000058"
+          },
+          "PreviousTxnID": "276424524B2A571A4C69907F361DB4A4A6AF59B905896900E49C7A153B8522EE",
+          "PreviousTxnLgrSeq": 6832568
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rn8vzHqE8fYjVu2MmAfMU3kdtt25QWRhUK",
+            "Balance": "99199962",
+            "Flags": 0,
+            "OwnerCount": 15,
+            "Sequence": 6832430,
+            "SponsoringOwnerCount": 14
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "A9759D02BB33C1705A8627AF7538C1F512B93B0600A45BC1669185D9D126852A",
+          "PreviousFields": {
+            "Balance": "99199963"
+          },
+          "PreviousTxnID": "276424524B2A571A4C69907F361DB4A4A6AF59B905896900E49C7A153B8522EE",
+          "PreviousTxnLgrSeq": 6832568
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rMeL7uNLe9yo75UEKT7mquwUwd64VGpcxg",
+            "DebtMaximum": "20000000",
+            "DebtTotal": "5000010",
+            "Flags": 0,
+            "LoanSequence": 2,
+            "Owner": "rn8vzHqE8fYjVu2MmAfMU3kdtt25QWRhUK",
+            "OwnerCount": 1,
+            "OwnerNode": "0",
+            "Sequence": 6832427,
+            "VaultID": "F31DA054A55C6D38B2C2E9FEEFF5631DD46CD68B233457C1B568027802CFAD64",
+            "VaultNode": "0"
+          },
+          "LedgerEntryType": "LoanBroker",
+          "LedgerIndex": "B7B494B26E67B1736055E0DA62761DB59FC48F1EA39451B3164F03E9AEDB2DC7",
+          "PreviousFields": {
+            "DebtTotal": "10000000"
+          },
+          "PreviousTxnID": "276424524B2A571A4C69907F361DB4A4A6AF59B905896900E49C7A153B8522EE",
+          "PreviousTxnLgrSeq": 6832568
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rG4XxfTAUAUN2dt3yrD12ahx2AichbKQD",
+            "Flags": 0,
+            "MPTAmount": "5000029",
+            "MPTokenIssuanceID": "00684122B3B2AD2D2EC6DAFB2EE8DA4EEC448A5E3CC6C099",
+            "OwnerNode": "0"
+          },
+          "LedgerEntryType": "MPToken",
+          "LedgerIndex": "D5D4D8EC8E83AA22E771CE74EE414B52F85C5EB6B7DD2BC05A8A1D3FAFA3BF4E",
+          "PreviousFields": {},
+          "PreviousTxnID": "276424524B2A571A4C69907F361DB4A4A6AF59B905896900E49C7A153B8522EE",
+          "PreviousTxnLgrSeq": 6832568
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "ra9cX7ABeK2tWKo8FgBFWS9iLpAepCaRYY",
+            "Balance": "1200000",
+            "Flags": 0,
+            "OwnerCount": 2,
+            "Sequence": 6832429,
+            "SponsoredOwnerCount": 1
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "D9AF3DF211F6ABC8D2042748D5DB01F6375E6B9E5F80FC1933B2F37BF665C84C",
+          "PreviousFields": {
+            "Sequence": 6832428
+          },
+          "PreviousTxnID": "276424524B2A571A4C69907F361DB4A4A6AF59B905896900E49C7A153B8522EE",
+          "PreviousTxnLgrSeq": 6832568
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rG4XxfTAUAUN2dt3yrD12ahx2AichbKQD",
+            "Asset": {
+              "mpt_issuance_id": "00684122B3B2AD2D2EC6DAFB2EE8DA4EEC448A5E3CC6C099"
+            },
+            "AssetsAvailable": "5000029",
+            "AssetsMaximum": "20000000",
+            "AssetsTotal": "10000039",
+            "Flags": 65536,
+            "LEVersion": 1,
+            "Owner": "rn8vzHqE8fYjVu2MmAfMU3kdtt25QWRhUK",
+            "OwnerNode": "0",
+            "RedemptionDate": 847624510,
+            "Sequence": 6832424,
+            "ShareMPTID": "0000000102E836FC8B023C7E6A44F7840EEAF713799DCEBF",
+            "SubscriptionDate": 847623910,
+            "VaultKind": 1,
+            "WithdrawalPolicy": 1
+          },
+          "LedgerEntryType": "Vault",
+          "LedgerIndex": "F31DA054A55C6D38B2C2E9FEEFF5631DD46CD68B233457C1B568027802CFAD64",
+          "PreviousFields": {
+            "AssetsTotal": "10000000"
+          },
+          "PreviousTxnID": "276424524B2A571A4C69907F361DB4A4A6AF59B905896900E49C7A153B8522EE",
+          "PreviousTxnLgrSeq": 6832568
+        }
+      }
+    ],
+    "TransactionIndex": 4,
+    "TransactionResult": "tesSUCCESS"
+  },
+
+  "validated": true
+}

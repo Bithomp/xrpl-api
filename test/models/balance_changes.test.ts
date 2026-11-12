@@ -4,6 +4,91 @@ import { MAINNET_NATIVE_CURRENCY, XAHAU_NATIVE_CURRENCY } from "../../src/common
 
 describe("Models", () => {
   describe("parseBalanceChanges", () => {
+    describe("LoanPay", () => {
+      const cases = [
+        {
+          fixture: "LoanPay",
+          borrower: "rHgMW5NxxzxmMQosVgvATUuiDetk7eKCuf",
+          vault: "rD829K6aBc7gCjGS52b7gBq8hat9g55rj",
+          owner: "rGyxFJfzi4ZK59ZdiFBy2wkFqYu46AsEzN",
+          feePayer: "rHgMW5NxxzxmMQosVgvATUuiDetk7eKCuf",
+          issuance: "002ED4668AB208E7BC9963BC83F8FF4D4006B884D910E521",
+          debit: "-5100",
+          vaultCredit: "5000",
+          ownerCredit: "100",
+        },
+        {
+          fixture: "LoanPay2",
+          borrower: "ra9cX7ABeK2tWKo8FgBFWS9iLpAepCaRYY",
+          vault: "rG4XxfTAUAUN2dt3yrD12ahx2AichbKQD",
+          owner: "rn8vzHqE8fYjVu2MmAfMU3kdtt25QWRhUK",
+          feePayer: "rn8vzHqE8fYjVu2MmAfMU3kdtt25QWRhUK",
+          issuance: "00684122B3B2AD2D2EC6DAFB2EE8DA4EEC448A5E3CC6C099",
+          debit: "-5012529",
+          vaultCredit: "5000029",
+          ownerCredit: "12500",
+        },
+      ];
+
+      for (const entry of cases) {
+        const loadTransaction = () => structuredClone(require(`../examples/responses/${entry.fixture}.json`));
+        const expected: any = {
+          [entry.borrower]: [{ mpt_issuance_id: entry.issuance, value: entry.debit }],
+          [entry.vault]: [{ mpt_issuance_id: entry.issuance, value: entry.vaultCredit }],
+          [entry.owner]: [{ mpt_issuance_id: entry.issuance, value: entry.ownerCredit }],
+        };
+        expected[entry.feePayer].push({ currency: "XRP", value: "-0.000001" });
+
+        const parse = (tx: any) => Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx);
+        const expectChanges = (result: any) => {
+          expect(result).to.have.all.keys(Object.keys(expected));
+          for (const address of Object.keys(expected)) {
+            expect(result[address]).to.have.deep.members(expected[address]);
+          }
+          const tokenChanges = Object.values(result).flat().filter((balance: any) => balance.mpt_issuance_id);
+          expect(tokenChanges.reduce((total: bigint, balance: any) => total + BigInt(balance.value), 0n)).to.equal(0n);
+        };
+
+        it(`parses every address change for ${entry.fixture}`, () => {
+          expectChanges(parse(loadTransaction()));
+        });
+
+        it(`parses first receipts into zero-balance vault and broker owner for ${entry.fixture}`, () => {
+          const tx = loadTransaction();
+          const owner = tx.meta.AffectedNodes.find(
+            (node: any) =>
+              node.ModifiedNode?.LedgerEntryType === "MPToken" && node.ModifiedNode.FinalFields.Account === entry.owner
+          ).ModifiedNode;
+          owner.FinalFields.MPTAmount = entry.ownerCredit;
+          delete owner.PreviousFields.MPTAmount;
+
+          expectChanges(parse(tx));
+        });
+
+        it(`preserves existing nonzero recipient balances for ${entry.fixture}`, () => {
+          const tx = loadTransaction();
+          const vault = tx.meta.AffectedNodes.find(
+            (node: any) =>
+              node.ModifiedNode?.LedgerEntryType === "MPToken" && node.ModifiedNode.FinalFields.Account === entry.vault
+          ).ModifiedNode;
+          vault.PreviousFields.MPTAmount = "7000000";
+          vault.FinalFields.MPTAmount = (7000000n + BigInt(entry.vaultCredit)).toString();
+
+          expectChanges(parse(tx));
+          expect(vault.PreviousFields.MPTAmount).to.equal("7000000");
+        });
+
+        it(`returns the same changes on repeated parsing for ${entry.fixture}`, () => {
+          const tx = loadTransaction();
+          expectChanges(parse(tx));
+          const normalized = structuredClone(tx.meta);
+
+          expectChanges(parse(tx));
+          expect(tx.meta).to.eql(normalized);
+        });
+      }
+    });
+
     it("parses for EscrowCreate", function () {
       const tx = require("../examples/responses/transaction/C44F2EB84196B9AD820313DBEBA6316A15C9A2D35787579ED172B87A30131DA7.json");
       const result: any = Models.parseBalanceChanges(tx.meta);

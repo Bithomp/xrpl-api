@@ -1,0 +1,176 @@
+{
+  "Account": "rHgMW5NxxzxmMQosVgvATUuiDetk7eKCuf",
+  "Amount": {
+    "mpt_issuance_id": "002ED4668AB208E7BC9963BC83F8FF4D4006B884D910E521",
+    "value": "5100"
+  },
+  "Fee": "1",
+  "LoanID": "DF661CFE8F09A33CBCBF953766BAB09D9B53C917513B653A26F59B38D4E7740A",
+  "Sequence": 3069028,
+  "SigningPubKey": "03A5691FEE6C79F195BB612A5C53F30C595C9D20817C42AF80F8D6231E91FECD8E",
+  "TransactionType": "LoanPay",
+  "TxnSignature": "3045022100954C454792CAA54FD2B04FEF1779CD9007A120765ED9D9A1D1513580BEB61C2302202501582ED89A5C62C17F93CC83BE735E8C35C245AB74F84BA07CE91969125CBB",
+  "ctid": "C02ED47200000002",
+  "date": 822356132,
+  "hash": "127DEAECB2A9E2260CF75194425BF36AE18DE915424C24AD293306F7E2E2AF97",
+  "inLedger": 3069042,
+  "ledger_index": 3069042,
+  "meta": {
+    "AffectedNodes": [
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rHgMW5NxxzxmMQosVgvATUuiDetk7eKCuf",
+            "Balance": "39999999",
+            "Flags": 0,
+            "OwnerCount": 2,
+            "Sequence": 3069029
+          },
+          "LedgerEntryType": "AccountRoot",
+          "LedgerIndex": "08D119BD7ABB2B6BC0D48CD127D58AB38DBFEF0F981AB3727615467D3D1007E8",
+          "PreviousFields": {
+            "Balance": "40000000",
+            "Sequence": 3069028
+          },
+          "PreviousTxnID": "82651C3BC9C174616E1454A16FA27F203CDAA085D7F654BA94C58A65BEFED137",
+          "PreviousTxnLgrSeq": 3069039
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rD829K6aBc7gCjGS52b7gBq8hat9g55rj",
+            "Asset": {
+              "mpt_issuance_id": "002ED4668AB208E7BC9963BC83F8FF4D4006B884D910E521"
+            },
+            "AssetsAvailable": "5000",
+            "AssetsTotal": "10000",
+            "Data": "4D65746144617461",
+            "Flags": 0,
+            "Owner": "rGyxFJfzi4ZK59ZdiFBy2wkFqYu46AsEzN",
+            "OwnerNode": "0",
+            "Sequence": 3069028,
+            "ShareMPTID": "00000001026B085CA07E69AFEBAE0C64FB9CFC9F5DACFC47",
+            "WithdrawalPolicy": 1
+          },
+          "LedgerEntryType": "Vault",
+          "LedgerIndex": "4A6D041D81A970BE0B64B98AF69AA8C94CECC1792876B9CCE826733FEEBA2F1A",
+          "PreviousFields": {},
+          "PreviousTxnID": "82651C3BC9C174616E1454A16FA27F203CDAA085D7F654BA94C58A65BEFED137",
+          "PreviousTxnLgrSeq": 3069039
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rhNx3M5c7ejXJ4AZhFXnbHTPe1EGFXA8aU",
+            "DebtTotal": "5000",
+            "Flags": 0,
+            "LoanSequence": 2,
+            "Owner": "rGyxFJfzi4ZK59ZdiFBy2wkFqYu46AsEzN",
+            "OwnerCount": 1,
+            "OwnerNode": "0",
+            "Sequence": 3069029,
+            "VaultID": "4A6D041D81A970BE0B64B98AF69AA8C94CECC1792876B9CCE826733FEEBA2F1A",
+            "VaultNode": "0"
+          },
+          "LedgerEntryType": "LoanBroker",
+          "LedgerIndex": "4B75B3AE55A92227742822D470A3B36E526629C9AB8B1164BC3AC03F94EA09D7",
+          "PreviousFields": {
+            "DebtTotal": "10000"
+          },
+          "PreviousTxnID": "82651C3BC9C174616E1454A16FA27F203CDAA085D7F654BA94C58A65BEFED137",
+          "PreviousTxnLgrSeq": 3069039
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rGyxFJfzi4ZK59ZdiFBy2wkFqYu46AsEzN",
+            "Flags": 0,
+            "MPTAmount": "20100",
+            "MPTokenIssuanceID": "002ED4668AB208E7BC9963BC83F8FF4D4006B884D910E521",
+            "OwnerNode": "0"
+          },
+          "LedgerEntryType": "MPToken",
+          "LedgerIndex": "760E4C4457F11A35F9FB6A311BE0425956C0167B41C7EECDC72A00CF3EC05C63",
+          "PreviousFields": {
+            "MPTAmount": "20000"
+          },
+          "PreviousTxnID": "096E2F5E5DD86C1FDE027DE7C7B130E748B10FA6748B5B8F893973DCCD532076",
+          "PreviousTxnLgrSeq": 3069035
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Borrower": "rHgMW5NxxzxmMQosVgvATUuiDetk7eKCuf",
+            "Flags": 0,
+            "GracePeriod": 60,
+            "LatePaymentFee": "200",
+            "LoanBrokerID": "4B75B3AE55A92227742822D470A3B36E526629C9AB8B1164BC3AC03F94EA09D7",
+            "LoanBrokerNode": "0",
+            "LoanSequence": 1,
+            "LoanServiceFee": "100",
+            "NextPaymentDueDate": 822356931,
+            "OwnerNode": "0",
+            "PaymentInterval": 400,
+            "PaymentRemaining": 1,
+            "PeriodicPayment": "5000",
+            "PreviousPaymentDueDate": 822356531,
+            "PrincipalOutstanding": "5000",
+            "StartDate": 822356131,
+            "TotalValueOutstanding": "5000"
+          },
+          "LedgerEntryType": "Loan",
+          "LedgerIndex": "DF661CFE8F09A33CBCBF953766BAB09D9B53C917513B653A26F59B38D4E7740A",
+          "PreviousFields": {
+            "NextPaymentDueDate": 822356531,
+            "PaymentRemaining": 2,
+            "PrincipalOutstanding": "10000",
+            "TotalValueOutstanding": "10000"
+          },
+          "PreviousTxnID": "82651C3BC9C174616E1454A16FA27F203CDAA085D7F654BA94C58A65BEFED137",
+          "PreviousTxnLgrSeq": 3069039
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rHgMW5NxxzxmMQosVgvATUuiDetk7eKCuf",
+            "Flags": 0,
+            "MPTAmount": "24900",
+            "MPTokenIssuanceID": "002ED4668AB208E7BC9963BC83F8FF4D4006B884D910E521",
+            "OwnerNode": "0"
+          },
+          "LedgerEntryType": "MPToken",
+          "LedgerIndex": "E3A93A2AD1DFAE5948618ED4F24F1FFBBC060DE199C128A3062DAF669B2D59F6",
+          "PreviousFields": {
+            "MPTAmount": "30000"
+          },
+          "PreviousTxnID": "6F3DBD2233623B7FDA64B6EFD3EF7102F4A18ECF94F2FC7EFC6128C2DA09B385",
+          "PreviousTxnLgrSeq": 3069041
+        }
+      },
+      {
+        "ModifiedNode": {
+          "FinalFields": {
+            "Account": "rD829K6aBc7gCjGS52b7gBq8hat9g55rj",
+            "Flags": 0,
+            "MPTAmount": "5000",
+            "MPTokenIssuanceID": "002ED4668AB208E7BC9963BC83F8FF4D4006B884D910E521",
+            "OwnerNode": "0"
+          },
+          "LedgerEntryType": "MPToken",
+          "LedgerIndex": "F48C14C1C3956C18EC4602DC96929F27265AB9EBF2A8B83CD606FE1BEF57EC59",
+          "PreviousFields": {},
+          "PreviousTxnID": "82651C3BC9C174616E1454A16FA27F203CDAA085D7F654BA94C58A65BEFED137",
+          "PreviousTxnLgrSeq": 3069039
+        }
+      }
+    ],
+    "TransactionIndex": 0,
+    "TransactionResult": "tesSUCCESS"
+  },
+  "validated": true
+}

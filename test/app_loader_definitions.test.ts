@@ -33,25 +33,42 @@ describe("Xahau AppLoader definitions", () => {
     assert.equal(typeof tx.AppLoader, "string");
     assert.equal(Buffer.from(tx.AppLoader as string, "hex").length, 4095);
     assert.equal(encode(tx, definitions), published.blob);
-    const hash = createHash("sha512").update(Buffer.from("54584E00" + published.blob, "hex"))
-      .digest("hex").slice(0, 64).toUpperCase();
+    const hash = createHash("sha512")
+      .update(Buffer.from(`54584E00${published.blob}`, "hex"))
+      .digest("hex")
+      .slice(0, 64)
+      .toUpperCase();
     assert.equal(hash, published.hash);
   });
 
   it("serializes AppLoader ledger objects and their revision sequence", () => {
-    const object = { LedgerEntryType: "AppLoader", Owner: account, Flags: 0,
-      AppLoader: document, AppLoaderSequence: 1 };
+    const object = {
+      LedgerEntryType: "AppLoader",
+      Owner: account,
+      Flags: 0,
+      AppLoader: document,
+      AppLoaderSequence: 1,
+    };
     const blob = encode(object, definitions);
     assert.ok(blob.startsWith("11004C"));
     assert.deepEqual(decode(blob, definitions), object);
   });
 
   it("keeps ordinary AccountSet serialization unchanged", () => {
-    const original = { ...enums,
-      FIELDS: enums.FIELDS.filter(([name]) => name !== "AppLoader" && name !== "AppLoaderSequence") };
+    const original = {
+      ...enums,
+      FIELDS: enums.FIELDS.filter(([name]) => name !== "AppLoader" && name !== "AppLoaderSequence"),
+    };
     const previous = new XrplDefinitions(original);
-    const tx = { TransactionType: "AccountSet", Account: account, Domain: Buffer.from("example.com").toString("hex").toUpperCase(),
-      NetworkID: 21337, Sequence: 1, Fee: "10", SigningPubKey: "" };
+    const tx = {
+      TransactionType: "AccountSet",
+      Account: account,
+      Domain: Buffer.from("example.com").toString("hex").toUpperCase(),
+      NetworkID: 21337,
+      Sequence: 1,
+      Fee: "10",
+      SigningPubKey: "",
+    };
     assert.equal(encode(tx, definitions), encode(tx, previous));
     assert.throws(() => encode({ ...tx, AppLoader: document }, previous), /AppLoader.*not defined/);
   });

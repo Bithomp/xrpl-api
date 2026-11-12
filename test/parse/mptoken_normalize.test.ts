@@ -5,6 +5,75 @@ const { normalizeMPTokensPreviousFields } = Parse;
 
 describe("Parse", () => {
   describe("normalizeMPTokensPreviousFields", () => {
+    describe("LoanPay", () => {
+      const loadTransaction = () => structuredClone(require("../examples/responses/LoanPay2.json"));
+      const vaultToken = (tx: any) =>
+        tx.meta.AffectedNodes.find(
+          (node: any) =>
+            node.ModifiedNode?.LedgerEntryType === "MPToken" &&
+            node.ModifiedNode.FinalFields.Account === "rG4XxfTAUAUN2dt3yrD12ahx2AichbKQD"
+        ).ModifiedNode;
+
+      it("normalizes a recipient when PreviousFields is omitted", () => {
+        const tx = loadTransaction();
+        const token = vaultToken(tx);
+        delete token.PreviousFields;
+
+        normalizeMPTokensPreviousFields(tx.meta, tx);
+
+        expect(token.PreviousFields).to.eql({ MPTAmount: "0" });
+      });
+
+      it("leaves failed transactions unchanged", () => {
+        const tx = loadTransaction();
+        tx.meta.TransactionResult = "tecINSUFFICIENT_FUNDS";
+        const original = structuredClone(tx.meta);
+
+        normalizeMPTokensPreviousFields(tx.meta, tx);
+
+        expect(tx.meta).to.eql(original);
+      });
+
+      it("leaves unrelated accounts and issuances with omitted amounts unchanged", () => {
+        const tx = loadTransaction();
+        const unrelatedAccount = structuredClone(vaultToken(tx));
+        unrelatedAccount.FinalFields.Account = tx.Account;
+        const unrelatedIssuance = structuredClone(vaultToken(tx));
+        unrelatedIssuance.FinalFields.MPTokenIssuanceID = "002ED4668AB208E7BC9963BC83F8FF4D4006B884D910E521";
+        tx.meta.AffectedNodes.push({ ModifiedNode: unrelatedAccount }, { ModifiedNode: unrelatedIssuance });
+
+        normalizeMPTokensPreviousFields(tx.meta, tx);
+
+        expect(vaultToken(tx).PreviousFields.MPTAmount).to.equal("0");
+        expect(unrelatedAccount.PreviousFields).to.eql({});
+        expect(unrelatedIssuance.PreviousFields).to.eql({});
+      });
+
+      for (const entryType of ["Loan", "LoanBroker", "Vault"]) {
+        it(`requires the linked ${entryType} metadata before assuming zero`, () => {
+          const tx = loadTransaction();
+          const node = tx.meta.AffectedNodes.find((entry: any) => entry.ModifiedNode?.LedgerEntryType === entryType);
+          node.ModifiedNode.LedgerIndex = "unrelated";
+          const original = structuredClone(tx.meta);
+
+          normalizeMPTokensPreviousFields(tx.meta, tx);
+
+          expect(tx.meta).to.eql(original);
+        });
+      }
+
+      it("leaves non-MPT vault assets unchanged", () => {
+        const tx = loadTransaction();
+        const vault = tx.meta.AffectedNodes.find((node: any) => node.ModifiedNode?.LedgerEntryType === "Vault");
+        vault.ModifiedNode.FinalFields.Asset = { currency: "XRP" };
+        const original = structuredClone(tx.meta);
+
+        normalizeMPTokensPreviousFields(tx.meta, tx);
+
+        expect(tx.meta).to.eql(original);
+      });
+    });
+
     it("should add missing PreviousFields.LockedAmount with '0' value for EscrowCreate", () => {
       const tx = require("../examples/responses/EscrowCreateMPT.json");
       const meta = tx.meta;
