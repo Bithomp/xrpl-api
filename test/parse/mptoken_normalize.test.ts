@@ -5,6 +5,79 @@ const { normalizeMPTokensPreviousFields } = Parse;
 
 describe("Parse", () => {
   describe("normalizeMPTokensPreviousFields", () => {
+    describe("VaultWithdraw", () => {
+      const loadTransaction = () => structuredClone(require("../examples/responses/VaultWithdraw2.json"));
+      const recipientToken = (tx: any) =>
+        tx.meta.AffectedNodes.find(
+          (entry: any) =>
+            entry.ModifiedNode?.LedgerEntryType === "MPToken" && entry.ModifiedNode.FinalFields.Account === tx.Account
+        ).ModifiedNode;
+
+      for (const omitted of [false, true]) {
+        it(`initializes the recipient's previous zero balance with PreviousFields ${omitted ? "omitted" : "empty"}`, () => {
+          const tx = loadTransaction();
+          const token = recipientToken(tx);
+          if (omitted) {
+            delete token.PreviousFields;
+          }
+
+          normalizeMPTokensPreviousFields(tx.meta, tx);
+
+          expect(token.PreviousFields).to.eql({ MPTAmount: "0" });
+        });
+      }
+
+      it("leaves unrelated accounts and issuances unchanged", () => {
+        const tx = loadTransaction();
+        const unrelatedAccount = structuredClone(recipientToken(tx));
+        unrelatedAccount.FinalFields.Account = tx.Sponsor;
+        const unrelatedIssuance = structuredClone(recipientToken(tx));
+        unrelatedIssuance.FinalFields.MPTokenIssuanceID = tx.Amount.mpt_issuance_id;
+        tx.meta.AffectedNodes.push({ ModifiedNode: unrelatedAccount }, { ModifiedNode: unrelatedIssuance });
+
+        normalizeMPTokensPreviousFields(tx.meta, tx);
+
+        expect(recipientToken(tx).PreviousFields).to.eql({ MPTAmount: "0" });
+        expect(unrelatedAccount.PreviousFields).to.eql({});
+        expect(unrelatedIssuance.PreviousFields).to.eql({});
+      });
+
+      for (const field of ["MPTAmount", "LockedAmount"]) {
+        it(`preserves existing PreviousFields.${field}`, () => {
+          const tx = loadTransaction();
+          recipientToken(tx).PreviousFields[field] = "100";
+          const original = structuredClone(tx.meta);
+
+          normalizeMPTokensPreviousFields(tx.meta, tx);
+
+          expect(tx.meta).to.eql(original);
+        });
+      }
+
+      for (const variant of ["failed", "unlinked vault", "non-MPT asset", "missing final amount"]) {
+        it(`leaves ${variant} metadata unchanged`, () => {
+          const tx = loadTransaction();
+          const vault = tx.meta.AffectedNodes.find(
+            (entry: any) => entry.ModifiedNode?.LedgerEntryType === "Vault"
+          ).ModifiedNode;
+          if (variant === "failed") {
+            tx.meta.TransactionResult = "tecINSUFFICIENT_FUNDS";
+          } else if (variant === "unlinked vault") {
+            vault.LedgerIndex = "unrelated";
+          } else if (variant === "non-MPT asset") {
+            vault.FinalFields.Asset = { currency: "XRP" };
+          } else {
+            delete recipientToken(tx).FinalFields.MPTAmount;
+          }
+          const original = structuredClone(tx.meta);
+
+          normalizeMPTokensPreviousFields(tx.meta, tx);
+
+          expect(tx.meta).to.eql(original);
+        });
+      }
+    });
+
     describe("LoanPay", () => {
       const loadTransaction = () => structuredClone(require("../examples/responses/LoanPay2.json"));
       const vaultToken = (tx: any) =>

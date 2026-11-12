@@ -18,8 +18,43 @@ export function normalizeMPTokensPreviousFields(meta: any, tx: any): void {
     normalizeMPTokensPreviousFieldsConfidentialMPTConvert(meta);
   } else if (tx.TransactionType === "LoanPay") {
     normalizeMPTokensPreviousFieldsLoanPay(meta, tx);
+  } else if (tx.TransactionType === "VaultWithdraw") {
+    normalizeMPTokensPreviousFieldsVaultWithdraw(meta, tx);
   } else if (TRANSFER_TRANSACTION_TYPES.includes(tx.TransactionType)) {
     normalizeMPTokensPreviousFieldsTransfer(meta, tx);
+  }
+}
+
+function normalizeMPTokensPreviousFieldsVaultWithdraw(meta: any, tx: any): void {
+  if (!tx.VaultID) {
+    return;
+  }
+
+  const nodes = meta.AffectedNodes || [];
+  const vault = nodes
+    .map((entry: any) => entry.ModifiedNode || entry.DeletedNode)
+    .find((node: any) => node?.LedgerEntryType === "Vault" && node.LedgerIndex === tx.VaultID);
+  // Amount may identify redeemed shares. The recipient receives the vault's asset.
+  const issuanceID = vault?.FinalFields?.Asset?.mpt_issuance_id;
+  const recipient = tx.Destination || tx.Account;
+  if (!issuanceID || !recipient) {
+    return;
+  }
+
+  for (const entry of nodes) {
+    const node = entry.ModifiedNode;
+    const fields = node?.FinalFields;
+    if (
+      node?.LedgerEntryType === "MPToken" &&
+      fields?.Account === recipient &&
+      fields.MPTokenIssuanceID === issuanceID &&
+      fields.MPTAmount !== undefined &&
+      node.PreviousFields?.MPTAmount === undefined &&
+      node.PreviousFields?.LockedAmount === undefined
+    ) {
+      node.PreviousFields ??= {};
+      node.PreviousFields.MPTAmount = "0";
+    }
   }
 }
 

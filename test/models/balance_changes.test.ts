@@ -4,6 +4,81 @@ import { MAINNET_NATIVE_CURRENCY, XAHAU_NATIVE_CURRENCY } from "../../src/common
 
 describe("Models", () => {
   describe("parseBalanceChanges", () => {
+    describe("VaultWithdraw", () => {
+      const loadTransaction = () => structuredClone(require("../examples/responses/VaultWithdraw2.json"));
+      const asset = "004B6709310D0E87E4F8543561E065CEC14F4DC8EC377CA7";
+      const shares = "00000001DF6D5D844AA474BFBDFE8BEFB4BFF39F27002E01";
+      const vault = "rM446cXNHQGdJfhW7RY8yFSDBQYQj9gnTY";
+      const recipientToken = (tx: any) =>
+        tx.meta.AffectedNodes.find(
+          (entry: any) =>
+            entry.ModifiedNode?.LedgerEntryType === "MPToken" && entry.ModifiedNode.FinalFields.Account === tx.Account
+        );
+      const parse = (tx: any) =>
+        Models.parseBalanceChanges(tx.meta, MAINNET_NATIVE_CURRENCY, tx, { adjustBalancesForSponsorship: true });
+      const expectChanges = (tx: any, result: any) => {
+        const expected: any = {
+          [tx.Account]: [{ mpt_issuance_id: shares, value: "-830000" }],
+          [vault]: [
+            { mpt_issuance_id: asset, value: "-830000" },
+            { mpt_issuance_id: shares, value: "830000" },
+          ],
+          [tx.Sponsor]: [{ currency: "XRP", value: "-0.000001" }],
+        };
+        const recipient = tx.Destination || tx.Account;
+        expected[recipient] ??= [];
+        expected[recipient].push({ mpt_issuance_id: asset, value: "830000" });
+        expect(result).to.have.all.keys(Object.keys(expected));
+        for (const address of Object.keys(expected)) {
+          expect(result[address]).to.have.deep.members(expected[address]);
+        }
+      };
+
+      it("parses the initial asset credit, redeemed shares, vault debit and sponsored fee for VaultWithdraw2", () => {
+        const tx = loadTransaction();
+        expectChanges(tx, parse(tx));
+      });
+
+      it("credits an explicit destination with an initial zero MPT balance", () => {
+        const tx = loadTransaction();
+        const token = recipientToken(tx).ModifiedNode;
+        tx.Destination = "rs3Nvwmo7YRqLrLW9X9keELoXkDFd2Levt";
+        token.FinalFields.Account = tx.Destination;
+
+        expectChanges(tx, parse(tx));
+      });
+
+      it("preserves a nonzero recipient balance when calculating the credit", () => {
+        const tx = loadTransaction();
+        const token = recipientToken(tx).ModifiedNode;
+        token.PreviousFields.MPTAmount = "170000";
+        token.FinalFields.MPTAmount = "1000000";
+
+        expectChanges(tx, parse(tx));
+        expect(token.PreviousFields.MPTAmount).to.equal("170000");
+      });
+
+      it("parses a newly created recipient MPToken without normalizing it", () => {
+        const tx = loadTransaction();
+        const entry = recipientToken(tx);
+        const { FinalFields, LedgerIndex, LedgerEntryType } = entry.ModifiedNode;
+        entry.CreatedNode = { LedgerIndex, LedgerEntryType, NewFields: FinalFields };
+        delete entry.ModifiedNode;
+
+        expectChanges(tx, parse(tx));
+        expect(entry.CreatedNode).not.to.have.property("PreviousFields");
+      });
+
+      it("returns the same changes on repeated parsing", () => {
+        const tx = loadTransaction();
+        expectChanges(tx, parse(tx));
+        const normalized = structuredClone(tx.meta);
+
+        expectChanges(tx, parse(tx));
+        expect(tx.meta).to.eql(normalized);
+      });
+    });
+
     describe("LoanPay", () => {
       const cases = [
         {
