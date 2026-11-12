@@ -731,6 +731,16 @@
       }
     ],
     [
+      "AppLoaderSequence",
+      {
+        "isSerialized": true,
+        "isSigningField": true,
+        "isVLEncoded": false,
+        "nth": 101,
+        "type": "UInt32"
+      }
+    ],
+    [
       "IndexNext",
       {
         "isSerialized": true,
@@ -1801,6 +1811,16 @@
       }
     ],
     [
+      "AppLoader",
+      {
+        "isSerialized": true,
+        "isSigningField": true,
+        "isVLEncoded": true,
+        "nth": 96,
+        "type": "Blob"
+      }
+    ],
+    [
       "RemarkValue",
       {
         "isSerialized": true,
@@ -2625,6 +2645,7 @@
     "AccountRoot": 97,
     "Amendments": 102,
     "Any": 0,
+    "AppLoader": 76,
     "Check": 67,
     "Contract": 99,
     "Cron": 65,
