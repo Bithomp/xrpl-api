@@ -137,7 +137,8 @@ function getBatchFee(tx: any, baseFee: BigNumber, connection: Connection): BigNu
 
 function getBatchSignatureCount(batchSigners: any[]): number {
   let count = 0;
-  for (const { BatchSigner: signer } of batchSigners) {
+  for (const entry of batchSigners) {
+    const signer = entry?.BatchSigner;
     if (signer?.TxnSignature) {
       count += 1;
     } else {
