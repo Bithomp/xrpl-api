@@ -5,7 +5,6 @@ import * as Client from "../client";
 import { Connection } from "../connection";
 import { dropsInXRP, MAINNET_NATIVE_CURRENCY, removeUndefined } from "../common";
 import { ErrorResponse } from "../models/base_model";
-import { getServerInfo } from "./server_info";
 
 export interface GetFeeOptions {
   connection?: Connection;
@@ -72,7 +71,7 @@ export async function getFeeData(options: GetFeeOptions = {}): Promise<GetFeeDat
     .decimalPlaces(6, BigNumber.ROUND_UP);
 
   if (batch) {
-    fee = (await getBatchFee(batch, fee, connection)).decimalPlaces(6, BigNumber.ROUND_UP);
+    fee = getBatchFee(batch, fee, connection).decimalPlaces(6, BigNumber.ROUND_UP);
   }
 
   return { fee: fee.toString() };
@@ -111,7 +110,7 @@ function getBatchTransaction(options: GetFeeOptions): any {
 
 // rippled's fee command quotes an ordinary transaction even when given a Batch blob.
 // Add the batch overhead, inner transaction costs and signature costs to that quote.
-async function getBatchFee(tx: any, baseFee: BigNumber, connection: Connection): Promise<BigNumber> {
+function getBatchFee(tx: any, baseFee: BigNumber, connection: Connection): BigNumber {
   if (!baseFee.isFinite() || baseFee.lte(0)) {
     throw new Error("Unable to get fee from network");
   }
@@ -123,7 +122,7 @@ async function getBatchFee(tx: any, baseFee: BigNumber, connection: Connection):
   for (const { RawTransaction: inner } of tx.RawTransactions) {
     if (["AccountDelete", "AMMCreate"].includes(inner.TransactionType)) {
       if (!ownerReserve) {
-        ownerReserve = await getOwnerReserve(connection);
+        ownerReserve = getOwnerReserve(connection);
       }
       fee = fee.plus(ownerReserve);
     } else if (inner.TransactionType === "EscrowFinish" && inner.Fulfillment !== undefined && inner.Fulfillment !== null) {
@@ -148,11 +147,10 @@ function getBatchSignatureCount(batchSigners: any[]): number {
   return count;
 }
 
-async function getOwnerReserve(connection: Connection): Promise<BigNumber> {
-  const serverInfo: any = await getServerInfo({ connection });
-  const reserve = new BigNumber(serverInfo?.info?.validated_ledger?.reserve_inc_xrp ?? 0);
+function getOwnerReserve(connection: Connection): BigNumber {
+  const reserve = new BigNumber(connection.getIncrementFee() ?? 0);
   if (!reserve.isFinite() || reserve.lte(0)) {
-    throw new Error("Unable to get owner reserve from network");
+    throw new Error("Unable to get owner reserve from connection");
   }
   return reserve;
 }

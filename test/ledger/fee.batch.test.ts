@@ -29,12 +29,15 @@ function batch(count = 2, type = "NFTokenCreateOffer"): any {
   };
 }
 
-function mockConnection(fee: any = feeResponse, reserve: any = { result: { info: { validated_ledger: { reserve_inc_xrp: 0.2 } } } }) {
+function mockConnection(fee: any = feeResponse, serverInfo: any = { validated_ledger: { reserve_inc_xrp: 0.2 } }) {
   const requests: any[] = [];
   const connection = {
+    serverInfo,
+    getIncrementFee: Connection.prototype.getIncrementFee,
     async request(request: any) {
       requests.push(request);
-      return request.command === "fee" ? fee : reserve;
+      assert.equal(request.command, "fee", "Reserve increment must use cached connection data");
+      return fee;
     },
   } as unknown as Connection;
   return { connection, requests };
@@ -91,14 +94,27 @@ describe("Client Batch fees (isolated)", () => {
     assert.equal(await getFee({ connection, tx }), "0.000126");
   });
 
-  it("reuses the connection and fetches owner reserve once for special inner fees", async () => {
+  it("uses the cached increment fee for special inner fees without an extra RPC", async () => {
     const tx = batch(3);
     tx.RawTransactions[0].RawTransaction.TransactionType = "AMMCreate";
     tx.RawTransactions[1].RawTransaction.TransactionType = "AccountDelete";
     tx.RawTransactions[2].RawTransaction = { TransactionType: "EscrowFinish", Fulfillment: "AB".repeat(16) };
     const { connection, requests } = mockConnection();
     assert.equal(await getFee({ connection, tx }), "0.400504");
-    assert.deepEqual(requests.map(({ command }) => command), ["fee", "server_info"]);
+    assert.deepEqual(requests.map(({ command }) => command), ["fee"]);
+  });
+
+  it("reads updated increment fees from the connection in native currency units", async () => {
+    const tx = batch();
+    tx.RawTransactions[0].RawTransaction.TransactionType = "AMMCreate";
+    const { connection, requests } = mockConnection();
+    assert.equal(connection.getIncrementFee(), "0.2");
+    assert.equal(await getFee({ connection, tx }), "0.200042");
+
+    connection.serverInfo.validated_ledger.reserve_inc_xrp = "0.5";
+    assert.equal(connection.getIncrementFee(), "0.5");
+    assert.equal(await getFee({ connection, tx }), "0.500042");
+    assert.deepEqual(requests.map(({ command }) => command), ["fee", "fee"]);
   });
 
   it("rounds fractional drops up for conditioned EscrowFinish", async () => {
@@ -166,9 +182,17 @@ describe("Client Batch fees (isolated)", () => {
   it("rejects unavailable or invalid owner reserve", async () => {
     const tx = batch();
     tx.RawTransactions[0].RawTransaction.TransactionType = "AMMCreate";
-    for (const reserve of [null, { status: "error", error: "tooBusy" }, { result: { info: { validated_ledger: { reserve_inc_xrp: 0 } } } }]) {
-      const { connection } = mockConnection(feeResponse, reserve);
-      await assert.rejects(getFee({ connection, tx }), /Unable to get owner reserve from network/);
+    for (const increment of [undefined, null, false, {}, 0, -1, NaN, Infinity]) {
+      const serverInfo = { validated_ledger: { reserve_inc_xrp: increment } };
+      const { connection, requests } = mockConnection(feeResponse, serverInfo);
+      await assert.rejects(getFee({ connection, tx }), /Unable to get owner reserve from connection/);
+      assert.deepEqual(requests.map(({ command }) => command), ["fee"]);
+    }
+    for (const serverInfo of [null, {}, { validated_ledger: null }]) {
+      const { connection, requests } = mockConnection(feeResponse, serverInfo);
+      assert.equal(connection.getIncrementFee(), undefined);
+      await assert.rejects(getFee({ connection, tx }), /Unable to get owner reserve from connection/);
+      assert.deepEqual(requests.map(({ command }) => command), ["fee"]);
     }
   });
 

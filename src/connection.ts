@@ -373,6 +373,16 @@ class Connection extends EventEmitter {
     return this.networkID;
   }
 
+  // Owner reserve increment in native currency units, from the cached server info.
+  public getIncrementFee(): string | undefined {
+    const increment = this.serverInfo?.validated_ledger?.reserve_inc_xrp;
+    if (typeof increment === "string" || typeof increment === "number") {
+      return increment.toString();
+    }
+
+    return undefined;
+  }
+
   public isLedgerIndexAvailable(ledgerIndex: any): boolean {
     // only for numbered ledger index
     if (typeof ledgerIndex !== "number") {
